@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Giao diện quản lý - Insurance Card</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="../bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="../css/sb-admin-2.css" rel="stylesheet">
+    <link href="../css/style.css" rel="stylesheet">
+    <link href="../css/tipsy.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="../bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+
+<div id="wrapper">
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+        <div class="navbar-header">
+            <button type="button"
+                    class="navbar-toggle"
+                    data-toggle="collapse"
+                    data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="index.html">Insurance Card</a>
+        </div>
+        <!-- /.navbar-header -->
+
+
+        <div class="navbar-default sidebar" role="navigation">
+            <div class="sidebar-nav navbar-collapse">
+                <ul class="nav" id="side-menu">
+                    <li>
+                        <a href="index.html"><i class="fa fa-dashboard fa-fw"></i> Thông tin chung</a>
+                    </li>
+                    <li>
+                        <a href="customer.html"><i class="fa fa-users fa-fw"></i> Khách hàng</a>
+                    </li>
+                    <li>
+                        <a href="cards.html"><i class="fa fa-credit-card fa-fw"></i> Thẻ đã phát hành</a>
+                    </li>
+                    <li>
+                        <a href="index.html"><i class="fa fa-exclamation fa-fw"></i> Báo mất thẻ</a>
+                    </li>
+                    <li>
+                        <a href="index.html"><i class="fa fa-file-text-o fa-fw"></i> Hợp đồng</a>
+                    </li>
+                    <li>
+                        <a href="index.html"><i class="fa fa-gavel fa-fw"></i> Bồi thường</a>
+                    </li>
+                    <li>
+                        <a href="index.html"><i class="fa fa-key fa-fw"></i> Người quản lý</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.sidebar-collapse -->
+        </div>
+        <!-- /.navbar-static-side -->
+    </nav>
+    <div id="page-wrapper">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">Thẻ đã phát hành</h1>
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <div class="pull-left center-dropdown-button">
+                            <!--<input type="checkbox" class="check-all"/>-->
+                            <b>Có 435 thẻ đã phát hành</b>
+                        </div>
+                        <div class="pull-right no-wrap">
+                            <input type="text" class="form-control long-text-box"
+                                   placeholder="Tìm kiếm theo mã thẻ, tên chủ thẻ"/>
+                            <input type="button" class="btn btn-default" value="Tìm kiếm"/>
+
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <!-- /.panel-heading -->
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                <tr>
+                                    <th>Mã thẻ</th>
+                                    <th>Chủ thẻ</th>
+                                    <th>Ngày hiệu lực</th>
+                                    <th>Lần cuối truy cập</th>
+                                    <th>Trạng thái</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td><a href="detail-card.html">NFC739</a></td>
+                                    <td>Đinh Quang Trung</td>
+                                    <td>7/4/2014 lúc 16:11:02</td>
+                                    <td>6/5/2015 lúc 10:23:30</td>
+                                    <td><span class="label label-success">Hoạt động</span></td>
+                                </tr>
+                                <tr>
+                                    <td><a href="detail-card.html">NFC738</a></td>
+                                    <td>Đinh Quang Trung</td>
+                                    <td>7/7/2014 lúc 16:11:02</td>
+                                    <td>8/9/2014 lúc 08:12:03</td>
+                                    <td><span class="label label-danger">Ngưng hoạt động</span></td>
+                                </tr>
+                                <tr>
+                                    <td><a href="detail-card.html">NFC739</a></td>
+                                    <td>Đinh Quang Trung</td>
+                                    <td>7/4/2014 lúc 16:11:02</td>
+                                    <td>6/5/2015 lúc 10:23:30</td>
+                                    <td><span class="label label-success">Hoạt động</span></td>
+                                </tr>
+                                <tr>
+                                    <td><a href="detail-card.html">NFC739</a></td>
+                                    <td>Đinh Quang Trung</td>
+                                    <td>7/4/2014 lúc 16:11:02</td>
+                                    <td>6/5/2015 lúc 10:23:30</td>
+                                    <td><span class="label label-success">Hoạt động</span></td>
+                                </tr>
+                                <tr>
+                                    <td><a href="detail-card.html">NFC739</a></td>
+                                    <td>Đinh Quang Trung</td>
+                                    <td>7/4/2014 lúc 16:11:02</td>
+                                    <td>6/5/2015 lúc 10:23:30</td>
+                                    <td><span class="label label-success">Hoạt động</span></td>
+                                </tr>
+                                <tr>
+                                    <td><a href="detail-card.html">NFC739</a></td>
+                                    <td>Đinh Quang Trung</td>
+                                    <td>7/4/2014 lúc 16:11:02</td>
+                                    <td>6/5/2015 lúc 10:23:30</td>
+                                    <td><span class="label label-success">Hoạt động</span></td>
+                                </tr>
+                                <tr>
+                                    <td><a href="detail-card.html">NFC739</a></td>
+                                    <td>Đinh Quang Trung</td>
+                                    <td>7/4/2014 lúc 16:11:02</td>
+                                    <td>6/5/2015 lúc 10:23:30</td>
+                                    <td><span class="label label-success">Hoạt động</span></td>
+                                </tr>
+                                <tr>
+                                    <td><a href="detail-card.html">NFC739</a></td>
+                                    <td>Đinh Quang Trung</td>
+                                    <td>7/4/2014 lúc 16:11:02</td>
+                                    <td>6/5/2015 lúc 10:23:30</td>
+                                    <td><span class="label label-success">Hoạt động</span></td>
+                                </tr>
+                                <tr>
+                                    <td><a href="detail-card.html">NFC739</a></td>
+                                    <td>Đinh Quang Trung</td>
+                                    <td>7/4/2014 lúc 16:11:02</td>
+                                    <td>6/5/2015 lúc 10:23:30</td>
+                                    <td><span class="label label-success">Hoạt động</span></td>
+                                </tr>
+                                <tr>
+                                    <td><a href="detail-card.html">NFC739</a></td>
+                                    <td>Đinh Quang Trung</td>
+                                    <td>7/4/2014 lúc 16:11:02</td>
+                                    <td>6/5/2015 lúc 10:23:30</td>
+                                    <td><span class="label label-success">Hoạt động</span></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- /.table-responsive -->
+                        <nav class="text-right">
+                            <ul class="pagination">
+                                <li>
+                                    <a href="#" aria-label="Previous">
+                                        <span aria-hidden="true">&laquo;</span>
+                                    </a>
+                                </li>
+                                <li class="active"><a href="#">1</a></li>
+                                <li><a href="#">2</a></li>
+                                <li><a href="#">3</a></li>
+                                <li><a href="#">4</a></li>
+                                <li><a href="#">5</a></li>
+                                <li>
+                                    <a href="#" aria-label="Next">
+                                        <span aria-hidden="true">&raquo;</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                    <!-- /.panel-body -->
+                </div>
+                <!-- /.panel -->
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<!-- /#wrapper -->
+
+
+<!-- jQuery -->
+<script src="../bower_components/jquery/dist/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+<script src="../js/jquery.tipsy.js"></script>
+
+</body>
+</html>
