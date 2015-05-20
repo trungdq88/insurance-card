@@ -54,6 +54,10 @@
     display: inline-block;
     width: 160px;
 }
+.shorter-input {
+    display: inline-block;
+    width: 60px;
+}
 .label-gray {
     background-color: #9B9B9B;
 }
