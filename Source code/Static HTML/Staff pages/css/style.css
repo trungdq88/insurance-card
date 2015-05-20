@@ -45,3 +45,7 @@
 .no-wrap {
     white-space: nowrap;
 }
+
+.text-value {
+    padding-top: 7px;
+}

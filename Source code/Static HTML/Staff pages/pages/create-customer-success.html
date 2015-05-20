@@ -63,47 +63,74 @@
         </div>
         <div class="row">
             <div class="col-lg-12">
-                <p class="text-right"><b>Các ô có dấu * là bắt buộc</b></p>
-                <br/>
+                <div class="well text-success text-center">
+                    <i class="fa fa-check"></i>
+                    Đã thêm khách hàng mới thành công!
+                </div>
                 <form class="form-horizontal">
                     <fieldset>
                         <!-- Text input-->
                         <div class="form-group">
-                            <label class="col-sm-4 control-label" for="name">Tên khách hàng *</label>
+                            <label class="col-sm-4 control-label">Mã khách hàng</label>
+
                             <div class="col-sm-6">
-                                <input id="name" name="name" type="text" class="form-control input-md">
+                                <div class="text-value text-primary">
+                                    <b>HDTRU839</b>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Text input-->
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">Tên khách hàng</label>
+
+                            <div class="col-sm-6">
+                                <div class="text-value">
+                                    Đinh Quang Trung
+                                </div>
                             </div>
                         </div>
 
                         <!-- Text input-->
                         <div class="form-group">
-                            <label class="col-sm-4 control-label" for="address">Địa chỉ *</label>
+                            <label class="col-sm-4 control-label">Địa chỉ</label>
+
                             <div class="col-sm-6">
-                                <input id="address" name="address" type="text" class="form-control input-md">
+                                <div class="text-value">
+                                    Phường Tân Chánh Hiệp, Q.12, TPHCM
+                                </div>
                             </div>
                         </div>
 
                         <!-- Text input-->
                         <div class="form-group">
-                            <label class="col-sm-4 control-label" for="email">Email *</label>
+                            <label class="col-sm-4 control-label">Email</label>
+
                             <div class="col-sm-6">
-                                <input id="email" name="email" type="text" class="form-control input-md">
+                                <div class="text-value">
+                                    trungdq88@gmail.com
+                                </div>
                             </div>
                         </div>
 
                         <!-- Text input-->
                         <div class="form-group">
-                            <label class="col-sm-4 control-label" for="phone">Số điện thoại</label>
+                            <label class="col-sm-4 control-label">Số điện thoại</label>
+
                             <div class="col-sm-6">
-                                <input id="phone" name="phone" type="text" class="form-control input-md">
+                                <div class="text-value">
+                                    0987.654.321
+                                </div>
                             </div>
                         </div>
 
                         <!-- Text input-->
                         <div class="form-group">
-                            <label class="col-sm-4 control-label" for="personalid">Số CMND</label>
+                            <label class="col-sm-4 control-label">Số CMND</label>
+
                             <div class="col-sm-6">
-                                <input id="personalid" name="personalid" type="text" class="form-control input-md">
+                                <div class="text-value">
+                                    191919911
+                                </div>
                             </div>
                         </div>
 
@@ -111,11 +138,32 @@
                 </form>
 
                 <div class="text-center">
-
-                    <a href="create-customer-success.html" type="button" class="btn btn-success">
+                    <button type="button" class="btn btn-primary">
                         <i class="fa fa-arrow-right"></i>
-                        Thêm khách hàng
+                        Thêm hợp đồng cho khách hàng này
+                    </button>
+                    <br/><br/>
+                    <a href="customer.html" type="button" class="btn btn-success">
+                        <i class="fa fa-arrow-left"></i>
+                        Quay lại trang khách hàng
                     </a>
+                </div>
+
+                <br/>
+
+                <div class="panel panel-success">
+                    <div class="panel-heading">
+                        Hướng dẫn cách phát hành thẻ cho khách hàng
+                    </div>
+                    <div class="panel-body">
+                        Để cấp thẻ cho khách hàng, nhân viên cần sử dụng <b>Ứng dụng in thẻ</b> trên điện thoại để in
+                        thông tin khách hàng lên thẻ.
+                        <ol>
+                            <li>Tìm kiếm thông tin khách hàng trên ứng dụng.</li>
+                            <li>Kiểm tra chính xác thông tin khác hàng.</li>
+                            <li>In thông tin ra thẻ và chuyển phát cho khách hàng.</li>
+                        </ol>
+                    </div>
                 </div>
 
             </div>
