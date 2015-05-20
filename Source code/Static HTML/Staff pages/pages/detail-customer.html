@@ -10,7 +10,6 @@
     <!-- Custom CSS -->
     <link href="../css/sb-admin-2.css" rel="stylesheet">
     <link href="../css/style.css" rel="stylesheet">
-    <link href="../css/tipsy.css" rel="stylesheet">
 
     <!-- Custom Fonts -->
     <link href="../bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
@@ -208,7 +207,8 @@
                             <div class="col-sm-8">
                                 <div class="text-value">
                                     Ngày 7 tháng 4 năm 2015, lúc 17:20:21
-                                    <i class="fa fa-question-circle tipsy-item"
+                                    <i class="fa fa-question-circle"
+                                       data-toggle="tooltip" data-placement="bottom"
                                        title="Ghi nhận lần cuối cùng thẻ được đọc bởi thiết bị từ Cảnh Sát Giao Thông."></i>
                                     <a href="detail-card.html#card-access-history">(xem lịch sử)</a>
                                 </div>
@@ -248,7 +248,7 @@
                                     <td>Bảo hiểm bắt buộc xe cơ giới</td>
                                     <td>7/4/2015</td>
                                     <td>7/4/2016</td>
-                                    <td><span class="label label-success">Còn hạn</span></td>
+                                    <td><span class="label label-success">Sẵn sàng</span></td>
                                 </tr>
                                 <tr>
                                     <td>2</td>
@@ -372,13 +372,10 @@
 <!-- Bootstrap Core JavaScript -->
 <script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 
-<script src="../js/jquery.tipsy.js"></script>
-
 <script>
     $(function () {
-        $('.tipsy-item').tipsy();
+        $('[data-toggle="tooltip"]').tooltip()
     })
 </script>
-
 </body>
 </html>
