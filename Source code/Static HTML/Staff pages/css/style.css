@@ -54,3 +54,10 @@
     display: inline-block;
     width: 160px;
 }
+.label-gray {
+    background-color: #9B9B9B;
+}
+
+.label-dark {
+    background-color: #4C4C4C;
+}
