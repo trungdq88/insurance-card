@@ -49,3 +49,8 @@
 .text-value {
     padding-top: 7px;
 }
+
+.short-input {
+    display: inline-block;
+    width: 160px;
+}
