@@ -87,67 +87,60 @@
                 <form class="form-horizontal">
                     <fieldset>
                         <legend>Thông tin khách hàng</legend>
+
                         <!-- Text input-->
                         <div class="form-group">
-                            <label class="col-sm-4 control-label" for="customer">Chọn khách hàng *</label>
+                            <label class="col-sm-4 control-label" for="name">Tên khách hàng</label>
 
                             <div class="col-sm-4">
-                                <input id="customer" type="text" class="form-control input-md">
+                                <input id="name" name="name" type="text" class="form-control input-md">
                             </div>
-                            <div class="col-sm-2">
-                                <a class="btn btn-primary btn-block"
-                                   data-toggle="collapse" href="#new-customer"
-                                   aria-expanded="false" aria-controls="new-customer">
-                                    <i class="fa fa-plus"></i>
-                                    Tạo mới
+
+                            <div class="col-sm-2"
+                                 data-toggle="modal"
+                                 data-target="#select-customer-modal">
+                                <a href="#" class="btn btn-primary btn-block" data-toggle="tooltip"
+                                   data-placement="bottom"
+                                   title="Chọn khách hàng có sẵn trong hệ thống">
+                                    <i class="fa fa-search"></i>
+                                    Chọn
                                 </a>
                             </div>
                         </div>
 
-                        <div class="collapse" id="new-customer">
-                            <!-- Text input-->
-                            <div class="form-group">
-                                <label class="col-sm-4 control-label" for="name">Tên khách hàng</label>
+                        <!-- Text input-->
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label" for="address">Địa chỉ *</label>
 
-                                <div class="col-sm-6">
-                                    <input id="name" name="name" type="text" class="form-control input-md">
-                                </div>
+                            <div class="col-sm-6">
+                                <input id="address" name="address" type="text" class="form-control input-md">
                             </div>
+                        </div>
 
-                            <!-- Text input-->
-                            <div class="form-group">
-                                <label class="col-sm-4 control-label" for="address">Địa chỉ *</label>
+                        <!-- Text input-->
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label" for="email">Email *</label>
 
-                                <div class="col-sm-6">
-                                    <input id="address" name="address" type="text" class="form-control input-md">
-                                </div>
+                            <div class="col-sm-6">
+                                <input id="email" name="email" type="text" class="form-control input-md">
                             </div>
+                        </div>
 
-                            <!-- Text input-->
-                            <div class="form-group">
-                                <label class="col-sm-4 control-label" for="email">Email *</label>
+                        <!-- Text input-->
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label" for="phone">Số điện thoại</label>
 
-                                <div class="col-sm-6">
-                                    <input id="email" name="email" type="text" class="form-control input-md">
-                                </div>
+                            <div class="col-sm-6">
+                                <input id="phone" name="phone" type="text" class="form-control input-md">
                             </div>
+                        </div>
 
-                            <!-- Text input-->
-                            <div class="form-group">
-                                <label class="col-sm-4 control-label" for="phone">Số điện thoại</label>
+                        <!-- Text input-->
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label" for="personalid">Số CMND</label>
 
-                                <div class="col-sm-6">
-                                    <input id="phone" name="phone" type="text" class="form-control input-md">
-                                </div>
-                            </div>
-
-                            <!-- Text input-->
-                            <div class="form-group">
-                                <label class="col-sm-4 control-label" for="personalid">Số CMND</label>
-
-                                <div class="col-sm-6">
-                                    <input id="personalid" name="personalid" type="text" class="form-control input-md">
-                                </div>
+                            <div class="col-sm-6">
+                                <input id="personalid" name="personalid" type="text" class="form-control input-md">
                             </div>
                         </div>
                     </fieldset>
@@ -221,42 +214,6 @@
                             </div>
                         </div>
 
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label">&nbsp;</label>
-
-                            <div class="col-sm-6">
-                                <label  data-toggle="collapse" data-target="#contract-for-car">
-                                    <input type="checkbox"/> Hợp đồng dành cho xe ô tô
-                                </label>
-                            </div>
-                        </div>
-
-                        <div class="collapse" id="contract-for-car">
-                            <!-- Text input-->
-                            <div class="form-group">
-                                <label class="col-sm-4 control-label" for="trongtai">Trong tải *</label>
-
-                                <div class="col-sm-6">
-                                    <input id="trongtai" name="trongtai" type="text" class="form-control input-md">
-                                </div>
-                            </div>
-                            <!-- Text input-->
-                            <div class="form-group">
-                                <label class="col-sm-4 control-label" for="sochongoi">Số chỗ ngồi *</label>
-
-                                <div class="col-sm-6">
-                                    <input id="sochongoi" name="sochongoi" type="text" class="form-control input-md">
-                                </div>
-                            </div>
-                            <!-- Text input-->
-                            <div class="form-group">
-                                <label class="col-sm-4 control-label" for="mucdich">Mục đích sử dụng xe *</label>
-
-                                <div class="col-sm-6">
-                                    <input id="mucdich" name="mucdich" type="text" class="form-control input-md">
-                                </div>
-                            </div>
-                        </div>
                         <!-- Text input-->
                         <div class="form-group">
                             <label class="col-sm-4 control-label" for="cavet">Ảnh chụp cà-vẹt xe</label>
@@ -395,6 +352,7 @@
                     </fieldset>
                 </form>
                 <br/>
+
                 <div class="text-center">
 
                     <a href="create-contract-preview.html" type="button" class="btn btn-success">
@@ -420,6 +378,74 @@
 </div>
 <!-- /#wrapper -->
 
+<!-- model for select customer -->
+<div class="modal fade" id="select-customer-modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Chọn khách hàng đã có sẵn trong hệ thống</h4>
+            </div>
+            <div class="modal-body">
+
+                <input type="text" class="form-control" placeholder="Tìm theo tên KH, CMND, biển số xe"/>
+                <br/>
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered table-hover">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Mã KH</th>
+                            <th>Tên KH</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>DHTRU291</td>
+                            <td>Đinh Quang Trung</td>
+                            <td>
+                                <a href="#" class="btn btn-primary btn-xs btn-block"  data-dismiss="modal">Chọn</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>DHTRU291</td>
+                            <td>Đinh Quang Trung</td>
+                            <td>
+                                <a href="#" class="btn btn-primary btn-xs btn-block"  data-dismiss="modal">Chọn</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>DHTRU291</td>
+                            <td>Đinh Quang Trung</td>
+                            <td>
+                                <a href="#" class="btn btn-primary btn-xs btn-block"  data-dismiss="modal">Chọn</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>DHTRU291</td>
+                            <td>Đinh Quang Trung</td>
+                            <td>
+                                <a href="#" class="btn btn-primary btn-xs btn-block"  data-dismiss="modal">Chọn</a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.table-responsive -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Đóng</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
 
 <!-- jQuery -->
 <script src="../bower_components/jquery/dist/jquery.min.js"></script>
@@ -427,5 +453,10 @@
 <!-- Bootstrap Core JavaScript -->
 <script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 
+<script>
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
+</script>
 </body>
 </html>
