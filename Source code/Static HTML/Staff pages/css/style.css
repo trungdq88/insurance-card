@@ -65,3 +65,6 @@
 .label-dark {
     background-color: #4C4C4C;
 }
+th {
+    background-color: rgb(223, 223, 223);
+}
