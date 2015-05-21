@@ -137,7 +137,7 @@
 
                         <!-- Text input-->
                         <div class="form-group">
-                            <label class="col-sm-4 control-label" for="personalid">Số CMND</label>
+                            <label class="col-sm-4 control-label" for="personalid">Số CMND / Hộ chiếu</label>
 
                             <div class="col-sm-6">
                                 <input id="personalid" name="personalid" type="text" class="form-control input-md">
@@ -251,20 +251,12 @@
 
                         <!-- Text input-->
                         <div class="form-group">
-                            <label class="col-sm-4 control-label" for="contractlength">Thời hạn hợp đồng *</label>
-
-                            <div class="col-sm-6">
-                                <input id="contractlength" name="contractlength"
-                                       type="number" class="form-control shorter-input" value="1"/> &nbsp;&nbsp; năm
-                            </div>
-                        </div>
-                        <!-- Text input-->
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label">Thời điểm hết hiệu lực</label>
+                            <label class="col-sm-4 control-label" for="enddate">Thời điểm hết hiệu lực *</label>
 
                             <div class="col-sm-6">
                                 <div class="text-value">
-                                    15/03/2016 12:00:00
+                                    <input id="enddate" name="enddate"
+                                           type="date" class="form-control input-md"/>
                                 </div>
                             </div>
                         </div>
