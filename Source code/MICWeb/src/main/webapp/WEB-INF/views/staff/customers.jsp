@@ -11,7 +11,7 @@
                     Khách hàng
 
                     <div class="pull-right">
-                        <a href="create-customer.html" class="btn btn-success">
+                        <a href="${pageContext.request.contextPath}/staff/customer?action=create" class="btn btn-success">
                             <i class="fa fa-plus"></i>
                             Khách hàng mới
                         </a>
@@ -126,7 +126,7 @@
                         <tbody>
                         <tr>
                             <td>1</td>
-                            <td><a href="detail-customer.html">HDTRU839</a></td>
+                            <td><a href="${pageContext.request.contextPath}/staff/customer?action=detail">HDTRU839</a></td>
                             <td>Đinh Quang Trung</td>
                             <td>0987.654.321</td>
                             <td><a href="#">0123654789</a></td>
@@ -134,7 +134,7 @@
                         </tr>
                         <tr>
                             <td>2</td>
-                            <td><a href="detail-customer.html">HDTRU839</a></td>
+                            <td><a href="${pageContext.request.contextPath}/staff/customer?action=detail">HDTRU839</a></td>
                             <td>Đinh Quang Trung</td>
                             <td>0987.654.321</td>
                             <td><a href="#">0123654789</a></td>
@@ -142,7 +142,7 @@
                         </tr>
                         <tr>
                             <td>1</td>
-                            <td><a href="detail-customer.html">HDTRU839</a></td>
+                            <td><a href="${pageContext.request.contextPath}/staff/customer?action=detail">HDTRU839</a></td>
                             <td>Đinh Quang Trung</td>
                             <td>0987.654.321</td>
                             <td><a href="#">0123654789</a></td>
@@ -150,7 +150,7 @@
                         </tr>
                         <tr>
                             <td>1</td>
-                            <td><a href="detail-customer.html">HDTRU839</a></td>
+                            <td><a href="${pageContext.request.contextPath}/staff/customer?action=detail">HDTRU839</a></td>
                             <td>Đinh Quang Trung</td>
                             <td>0987.654.321</td>
                             <td><a href="#">0123654789</a></td>
@@ -158,7 +158,7 @@
                         </tr>
                         <tr>
                             <td>1</td>
-                            <td><a href="detail-customer.html">HDTRU839</a></td>
+                            <td><a href="${pageContext.request.contextPath}/staff/customer?action=detail">HDTRU839</a></td>
                             <td>Đinh Quang Trung</td>
                             <td>0987.654.321</td>
                             <td><a href="#">0123654789</a></td>
@@ -166,7 +166,7 @@
                         </tr>
                         <tr>
                             <td>1</td>
-                            <td><a href="detail-customer.html">HDTRU839</a></td>
+                            <td><a href="${pageContext.request.contextPath}/staff/customer?action=detail">HDTRU839</a></td>
                             <td>Đinh Quang Trung</td>
                             <td>0987.654.321</td>
                             <td><a href="#">0123654789</a></td>
@@ -174,7 +174,7 @@
                         </tr>
                         <tr>
                             <td>1</td>
-                            <td><a href="detail-customer.html">HDTRU839</a></td>
+                            <td><a href="${pageContext.request.contextPath}/staff/customer?action=detail">HDTRU839</a></td>
                             <td>Đinh Quang Trung</td>
                             <td>0987.654.321</td>
                             <td><a href="#">0123654789</a></td>
@@ -182,7 +182,7 @@
                         </tr>
                         <tr>
                             <td>1</td>
-                            <td><a href="detail-customer.html">HDTRU839</a></td>
+                            <td><a href="${pageContext.request.contextPath}/staff/customer?action=detail">HDTRU839</a></td>
                             <td>Đinh Quang Trung</td>
                             <td>0987.654.321</td>
                             <td><a href="#">0123654789</a></td>
@@ -190,7 +190,7 @@
                         </tr>
                         <tr>
                             <td>1</td>
-                            <td><a href="detail-customer.html">HDTRU839</a></td>
+                            <td><a href="${pageContext.request.contextPath}/staff/customer?action=detail">HDTRU839</a></td>
                             <td>Đinh Quang Trung</td>
                             <td>0987.654.321</td>
                             <td><a href="#">0123654789</a></td>
@@ -198,7 +198,7 @@
                         </tr>
                         <tr>
                             <td>1</td>
-                            <td><a href="detail-customer.html">HDTRU839</a></td>
+                            <td><a href="${pageContext.request.contextPath}/staff/customer?action=detail">HDTRU839</a></td>
                             <td>Đinh Quang Trung</td>
                             <td>0987.654.321</td>
                             <td><a href="#">0123654789</a></td>
@@ -206,7 +206,7 @@
                         </tr>
                         <tr>
                             <td>1</td>
-                            <td><a href="detail-customer.html">HDTRU839</a></td>
+                            <td><a href="${pageContext.request.contextPath}/staff/customer?action=detail">HDTRU839</a></td>
                             <td>Đinh Quang Trung</td>
                             <td>0987.654.321</td>
                             <td><a href="#">0123654789</a></td>

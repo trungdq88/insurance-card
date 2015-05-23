@@ -12,5 +12,8 @@
 <!-- Bootstrap Core JavaScript -->
 <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
 
+<!-- User script -->
+<script src="${pageContext.request.contextPath}/js/main.js"></script>
+
 </body>
 </html>

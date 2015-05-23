@@ -19,7 +19,7 @@
       <span class="icon-bar"></span>
       <span class="icon-bar"></span>
     </button>
-    <a class="navbar-brand" href="index.html">Insurance Card</a>
+    <a class="navbar-brand" href="${pageContext.request.contextPath}/staff">Insurance Card</a>
   </div>
   <!-- /.navbar-header -->
 
@@ -50,22 +50,22 @@
           <a href="${pageContext.request.contextPath}/staff"><i class="fa fa-dashboard fa-fw"></i> Thông tin chung</a>
         </li>
         <li>
-          <a href="${pageContext.request.contextPath}/staff/customers"><i class="fa fa-users fa-fw"></i> Khách hàng</a>
+          <a href="${pageContext.request.contextPath}/staff/customer"><i class="fa fa-users fa-fw"></i> Khách hàng</a>
         </li>
         <li>
-          <a href="${pageContext.request.contextPath}/staff/cards"><i class="fa fa-credit-card fa-fw"></i> Thẻ đã phát hành</a>
+          <a href="${pageContext.request.contextPath}/staff/card"><i class="fa fa-credit-card fa-fw"></i> Thẻ đã phát hành</a>
         </li>
         <li>
-          <a href="${pageContext.request.contextPath}/staff/new-card-requests"><i class="fa fa-exclamation fa-fw"></i> Yêu cầu cấp thẻ mới</a>
+          <a href="${pageContext.request.contextPath}/staff/card?action=newCardRequest"><i class="fa fa-exclamation fa-fw"></i> Yêu cầu cấp thẻ mới</a>
         </li>
         <li>
-          <a href="${pageContext.request.contextPath}/staff/contracts"><i class="fa fa-file-text-o fa-fw"></i> Hợp đồng</a>
+          <a href="${pageContext.request.contextPath}/staff/contract"><i class="fa fa-file-text-o fa-fw"></i> Hợp đồng</a>
         </li>
         <li>
-          <a href="${pageContext.request.contextPath}/staff/compensations"><i class="fa fa-gavel fa-fw"></i> Bồi thường</a>
+          <a href="${pageContext.request.contextPath}/staff/compensation"><i class="fa fa-gavel fa-fw"></i> Bồi thường</a>
         </li>
         <li>
-          <a href="${pageContext.request.contextPath}/staff/staffs"><i class="fa fa-key fa-fw"></i> Người quản lý</a>
+          <a href="${pageContext.request.contextPath}/staff/member"><i class="fa fa-key fa-fw"></i> Người quản lý</a>
         </li>
       </ul>
     </div>

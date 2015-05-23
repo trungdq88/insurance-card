@@ -5,6 +5,6 @@ package com.fpt.mic.micweb.utils;
  */
 public class StringUtils {
     public static String uppercaseFirstLetter(String str) {
-        return str.substring(0,1).toUpperCase() + str.substring(1).toLowerCase();
+        return str.substring(0,1).toUpperCase() + str.substring(1);
     }
 }

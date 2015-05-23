@@ -10,9 +10,12 @@ import javax.servlet.annotation.WebServlet;
 /**
  * Created by dinhquangtrung on 5/23/15.
  */
-@WebServlet(name = "CustomersController", urlPatterns = {"/staff/customers"})
-public class CustomersController extends BasicController {
+@WebServlet(name = "CompensationController", urlPatterns = {"/staff/compensation"})
+public class CompensationController extends BasicController {
     public ResponseObject getView(R r) {
-        return new JspPage("staff/customers.jsp");
+        return new JspPage("staff/compensations.jsp");
+    }
+    public ResponseObject getDetail(R r) {
+        return new JspPage("staff/detail-compensation.jsp");
     }
 }
