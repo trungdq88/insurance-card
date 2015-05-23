@@ -39,7 +39,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="index.html">MIC - Bảo hiểm trực tuyến</a>
+            <a class="navbar-brand" href="home.html">MIC - Bảo hiểm trực tuyến</a>
         </div>
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="top-navbar-1">
@@ -56,12 +56,13 @@
                         </div>
                         <button type="submit" class="btn btn-default">Sign in</button>
                         <br/>
+
                         <div class="checkbox">
                             <label>
                                 <input type="checkbox"> Ghi nhớ?
                             </label>
                         </div>
-                        <span><a href="index.html">Quên mật khẩu?</a></span>
+                        <span><a href="home.html">Quên mật khẩu?</a></span>
                     </form>
                 </li>
             </ul>
@@ -98,31 +99,36 @@
                         </div>
                     </div>
                     <div class="form-bottom">
-                        <form role="form" action="" method="post" class="registration-form">
+                        <form role="form" action="register.html" method="post" class="registration-form">
                             <div class="form-group">
                                 <label class="sr-only" for="form-full-name">Họ tên</label>
-                                <input type="text" name="form-full-name" placeholder="Họ tên..."
+                                <input type="text" name="form-full-name" placeholder="Họ tên *"
                                        class="form-first-name form-control" id="form-full-name">
                             </div>
                             <div class="form-group">
                                 <label class="sr-only" for="form-address">Địa chỉ</label>
-                                <input type="text" name="form-address" placeholder="Địa chỉ..."
+                                <input type="text" name="form-address" placeholder="Địa chỉ *"
                                        class="form-last-name form-control" id="form-address">
                             </div>
                             <div class="form-group">
                                 <label class="sr-only" for="form-email">Email</label>
-                                <input type="text" name="form-email" placeholder="Email..."
+                                <input type="text" name="form-email" placeholder="Email *"
                                        class="form-email form-control" id="form-email">
                             </div>
                             <div class="form-group">
                                 <label class="sr-only" for="form-phone">Số điện thoại</label>
-                                <input type="text" name="form-phone" placeholder="Số điện thoại..."
+                                <input type="text" name="form-phone" placeholder="Số điện thoại *"
                                        class="form-email form-control" id="form-phone">
                             </div>
                             <div class="form-group">
                                 <label class="sr-only" for="form-cmnd">Số CMND/Hộ chiếu</label>
-                                <input type="text" name="form-cmnd" placeholder="Số CMND/Hộ chiếu..."
+                                <input type="text" name="form-cmnd" placeholder="Số CMND/Hộ chiếu"
                                        class="form-email form-control" id="form-cmnd">
+                            </div>
+                            <div class="form-group">
+                                <label class="sr-only" for="form-startDate">Ngày bắt đầu</label>
+                                <input type="date" name="form-startDate" placeholder="Ngày bắt đầu *"
+                                       class="form-email form-control" id="form-startDate">
                             </div>
                             <div class="form-group">
                                 <select class="form-control">
@@ -134,14 +140,18 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label>Thời hạn</label>
-                                <p class="form-control-static">01 năm kể từ khi cấp GCNBH và/hoặc sau thời hạn thanh toán phí</p>
+                                <p class="form-control-static">
+                                    <label>Thời hạn: </label>
+                                    01 năm kể từ khi cấp GCNBH và/hoặc sau thời hạn thanh toán phí
+                                </p>
                             </div>
                             <div class="form-group">
-                                <label>Phí bảo hiểm</label>
-                                <p class="form-control-static">200.000 VND</p>
+                                <p class="form-control-static">
+                                    <label>Phí bảo hiểm: </label>
+                                    200.000 VND
+                                </p>
                             </div>
-                            <button type="submit" class="btn">Tiếp theo</button>
+                            <input type="submit" class="btn" value="Tiếp theo" />
                         </form>
                     </div>
                 </div>
