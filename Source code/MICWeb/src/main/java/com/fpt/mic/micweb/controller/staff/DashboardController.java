@@ -1,4 +1,4 @@
-package com.fpt.mic.micweb.controller.pub;
+package com.fpt.mic.micweb.controller.staff;
 
 import com.fpt.mic.micweb.framework.BasicController;
 import com.fpt.mic.micweb.framework.JspPage;
@@ -8,14 +8,12 @@ import com.fpt.mic.micweb.framework.ResponseObject;
 import javax.servlet.annotation.WebServlet;
 
 /**
- *
- * @author dinhquangtrung
+ * Created by dinhquangtrung on 5/23/15.
  */
+@WebServlet(name = "DashboardController", urlPatterns = {"/staff"})
+public class DashboardController extends BasicController {
 
-@WebServlet(name = "HomeController", urlPatterns = {"/home"})
-public class HomeServlet extends BasicController {
     public ResponseObject getView(R r) {
-        return new JspPage("home/index.jsp");
+        return new JspPage("staff/dashboard.jsp");
     }
-
 }
