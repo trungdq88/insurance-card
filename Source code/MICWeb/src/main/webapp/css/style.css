@@ -1,0 +1,70 @@
+#page-wrapper {
+    position: inherit;
+    margin: 0 0 0 200px;
+    padding: 0 30px;
+    border-left: 1px solid #e7e7e7;
+}
+.sidebar {
+    z-index: 1;
+    position: absolute;
+    width: 200px;
+    margin-top: 51px;
+}
+
+.dropdown-menu.left-grow {
+    right: 0;
+    left: auto;
+}
+
+.typeahead {
+    font-weight: normal;
+}
+
+.dropdown-menu label {
+    padding: 0 10px;
+}
+
+.tt-hint {
+    display: none;
+}
+
+.center-dropdown-button {
+    height: 34px;
+    line-height: 34px;
+    padding-left: 7px;
+}
+
+.center-dropdown-button .check-all {
+    margin-right: 23px;
+}
+
+.long-text-box {
+    width: 300px;
+    display: inline-block;
+}
+.no-wrap {
+    white-space: nowrap;
+}
+
+.text-value {
+    padding-top: 7px;
+}
+
+.short-input {
+    display: inline-block;
+    width: 160px;
+}
+.shorter-input {
+    display: inline-block;
+    width: 70px;
+}
+.label-gray {
+    background-color: #9B9B9B;
+}
+
+.label-dark {
+    background-color: #4C4C4C;
+}
+th {
+    background-color: rgb(223, 223, 223);
+}
