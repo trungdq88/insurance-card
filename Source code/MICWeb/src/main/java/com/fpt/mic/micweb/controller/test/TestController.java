@@ -59,4 +59,21 @@ public class TestController extends BasicController {
         return new JspPage("test/view.jsp");
     }
 
+    public ResponseObject getCreate(R r) {
+
+        return new JspPage("test/create.jsp");
+    }
+
+    public ResponseObject postCreate(R r) {
+        String username = r.equest.getParameter("username");
+        String password = r.equest.getParameter("password");
+
+        r.equest.setAttribute("username", username);
+        r.equest.setAttribute("password", password);
+
+        // Call to models here
+
+        return new JspPage("test/print-result.jsp");
+    }
+
 }
