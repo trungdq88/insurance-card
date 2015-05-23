@@ -1,0 +1,414 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>User Page</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="../bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- MetisMenu CSS -->
+    <link href="../bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
+
+    <!-- Timeline CSS -->
+    <link href="../dist/css/timeline.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="../dist/css/sb-admin-2.css" rel="stylesheet">
+
+    <!-- Morris Charts CSS -->
+    <link href="../bower_components/morrisjs/morris.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="../bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body>
+    <div id="wrapper">
+        <!-- Navigation -->
+        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+              <a class="navbar-brand" href="index.html"><label class="text-info">Insurance Card</label></a>
+            </div>
+            <!-- /.navbar-header -->
+
+            <ul class="nav navbar-top-links navbar-right">
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                    <i class="fa fa-user fa-fw"></i>
+                    Phúc Nguyễn
+                    <i class="fa fa-caret-down"></i>
+                </a>
+                <ul class="dropdown-menu dropdown-user">
+                    <li><a href="#"><i class="fa fa-user fa-fw"></i> Thông tin cá nhân</a>
+                    </li>
+                    <li class="divider"></li>
+                    <li><a href="#"><i class="fa fa-sign-out fa-fw"></i> Đăng xuất</a>
+                    </li>
+                </ul>
+                <!-- /.dropdown-user -->
+            </li>
+                <!-- /.dropdown -->
+            </ul>
+            <!-- /.navbar-top-links -->
+
+            <div class="navbar-default sidebar" role="navigation">
+
+                <div class="sidebar-nav navbar-collapse">
+                    <ul class="nav" id="side-menu">
+                      
+                         <li>
+                            <a href="ThongTinCaNhan.html">Thông Tin Cá Nhân</a>
+                        </li>
+                        <li>
+                            <a href="ThongTinBaoHiem.html">Thông Tin Bảo Hiểm</a>
+                        </li>
+                        <li>
+                            <a href="LichSuViPhamLuatATGT.html">Lịch Sử Vi Phạm Luật ATGT</a>
+                        </li>
+                        <li>
+                            <a href="LichSuBoiThuong.html">Lịch Sử Bồi Thường </a>
+                        </li>                        
+                        <li>
+                            <a href="YeuCauTheMoi.html">Yêu Cầu Thẻ Mới</a>
+                        </li>
+                        <li>
+                            <a href="LichSuGiaoDich.html">Lịch Sử Giao Dịch</a>
+
+                        </li>
+                        <li>
+                            <a href="ThongTinCard.html">Thông Tin Thẻ</a>
+
+                        </li>
+                    </ul>
+                </div>
+                <!-- /.sidebar-collapse -->
+            </div>
+            <!-- /.navbar-static-side -->
+        </nav>
+
+        <div id="page-wrapper">
+              <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">
+                    Yêu cầu bồi thường COM384
+                    <div class="pull-right">
+                        <span style="font-size: 40%" class="label label-warning">Đang giải quyết</span>
+                    </div>
+                </h1>
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+
+                <form class="form-horizontal">
+                    <fieldset>
+                        <legend>
+                            Thông tin hợp đồng
+                        </legend>
+
+                        <!-- Text input-->
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">Mã hợp đồng</label>
+
+                            <div class="col-sm-6">
+                                <div class="text-value text-primary">
+                                    <b><a href="detail-contract.html">BHBB374</a></b>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">Tên khách hàng</label>
+
+                            <div class="col-sm-6">
+                                <div class="text-value">
+                                    <b><a href="detail-customer.html">Đinh Quang Trung</a></b>
+                                </div>
+                            </div>
+                        </div>
+
+                    </fieldset>
+
+                    <br/>
+                    <br/>
+
+                    <fieldset>
+                        <legend>
+                            Thông tin yêu cầu bồi thường
+                        </legend>
+
+                        <!-- Text input-->
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">Họ tên lái xe</label>
+
+                            <div class="col-sm-6">
+                                <div class="text-value">
+                                    Đinh Quang Trung
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">Địa chỉ liên hệ</label>
+
+                            <div class="col-sm-6">
+                                <div class="text-value">
+                                    Phường Tân Chánh Hiệp, Q.12, TP HCM
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">Biển số xe gây tai nạn</label>
+
+                            <div class="col-sm-6">
+                                <div class="text-value">
+                                    93H3-8271
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">Giấy phép lái xe số</label>
+
+                            <div class="col-sm-3">
+                                <div class="text-value">
+                                    2831 9473 9472
+                                </div>
+                            </div>
+                            <label class="col-sm-2 control-label">Hạng</label>
+
+                            <div class="col-sm-3">
+                                <div class="text-value">
+                                    B2
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">Trọng tải / số chỗ ngồi</label>
+
+                            <div class="col-sm-3">
+                                <div class="text-value">
+                                    50kg
+                                </div>
+                            </div>
+                            <label class="col-sm-2 control-label">Điện thoại</label>
+
+                            <div class="col-sm-3">
+                                <div class="text-value">
+                                    0987010234
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">Thời gian</label>
+
+                            <div class="col-sm-6">
+                                <div class="text-value">
+                                    10/03/2015 lúc 10 giờ 25 phút
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">Địa điểm</label>
+
+                            <div class="col-sm-6">
+                                <div class="text-value">
+                                    Chân cầu vượt Quang Trung, Tô Ký, Q.12, TP HCM
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">Cơ quan CA giải quyết</label>
+
+                            <div class="col-sm-6">
+                                <div class="text-value">
+                                    Công an Phường Tân Chánh Hiệp
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">Diễn biến và nguyên nhân</label>
+
+                            <div class="col-sm-6">
+                                <div class="text-value">
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                                    incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+                                    exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute
+                                    irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+                                    pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
+                                    deserunt mollit anim id est laborum.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">Thiệt hại về người</label>
+
+                            <div class="col-sm-6">
+                                <div class="text-value">
+                                    <p>- Sed ut perspiciatis unde omnis iste natus error sit.</p>
+
+                                    <p>- Voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
+
+                                    <p>- Eaque ipsa quae ab illo inventore veritatis et quasi.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">Thiệt hại về tài sản</label>
+
+                            <div class="col-sm-6">
+                                <div class="text-value">
+                                    <p>- Sed ut perspiciatis unde omnis iste natus error sit.</p>
+
+                                    <p>- Voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
+
+                                    <p>- Eaque ipsa quae ab illo inventore veritatis et quasi.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">Người làm chứng</label>
+
+                            <div class="col-sm-6">
+                                <div class="text-value">
+                                    Nguyễn Chí Kha
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">Yêu cầu bồi thường</label>
+
+                            <div class="col-sm-6">
+                                <div class="text-value">
+                                    At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis
+                                    praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias
+                                    excepturi sint occaecati cupiditate non provident.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">Biên bản của cơ quan CA</label>
+
+                            <div class="col-sm-6">
+                                <div class="text-value">
+                                    <a href="#">BienbanCAPhuongTCH.jpg</a>
+                                </div>
+                            </div>
+                        </div>
+
+                    </fieldset>
+                    <br/>
+                    <br/>
+                    <fieldset>
+                        <legend>
+                            Giải quyết yêu cầu bồi thường
+                        </legend>
+
+                        <!-- Text input-->
+                        <div class="form-group">
+                            <div class="col-sm-1">&nbsp;</div>
+                            <div class="col-sm-10">
+                                <div class="text-value">
+                                    <label for="note">Ghi chú của công ty bảo hiểm</label>
+                                    <textarea id="note" class="form-control" rows="7"></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">Quyết định bồi thường</label>
+
+                            <div class="col-sm-6">
+                                <select class="form-control">
+                                    <option>Chưa quyết định</option>
+                                    <option>Chấp nhận bồi thường</option>
+                                    <option>Từ chối bồi thường</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">Trạng thái</label>
+
+                            <div class="col-sm-6">
+                                <label class="text-value" style="font-weight: normal;">
+                                    <input type="checkbox"/>
+                                    Đã giải quyết xong
+                                </label>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <br/>
+                    <br/>
+                    <p class="text-center">
+                        <a href="#" class="btn btn-primary">Lưu thay đổi</a>
+                    </p>
+                </form>
+           
+            </div>
+        </div>
+
+            
+
+        </div>
+    </div>
+    <!-- /#page-wrapper -->
+
+
+    <!-- /#wrapper -->
+
+    <!-- jQuery -->
+    <script src="../bower_components/jquery/dist/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+    <!-- Metis Menu Plugin JavaScript -->
+    <script src="../bower_components/metisMenu/dist/metisMenu.min.js"></script>
+
+    <!-- Morris Charts JavaScript -->
+    <script src="../bower_components/raphael/raphael-min.js"></script>
+    <script src="../bower_components/morrisjs/morris.min.js"></script>
+    <script src="../js/morris-data.js"></script>
+
+    <!-- Custom Theme JavaScript -->
+    <script src="../dist/js/sb-admin-2.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js">
+    </script>
+</body>
+
+</html>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+
+
+    });
+</script>

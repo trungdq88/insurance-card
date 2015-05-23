@@ -1,0 +1,314 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>User Page</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="../bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- MetisMenu CSS -->
+    <link href="../bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
+
+    <!-- Timeline CSS -->
+    <link href="../dist/css/timeline.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="../dist/css/sb-admin-2.css" rel="stylesheet">
+
+    <!-- Morris Charts CSS -->
+    <link href="../bower_components/morrisjs/morris.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="../bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body>
+    <div id="wrapper">
+        <!-- Navigation -->
+        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index.html">
+                    <label class="text-info">Insurance Card</label></a>
+            </div>
+            <!-- /.navbar-header -->
+
+            <ul class="nav navbar-top-links navbar-right">
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <i class="fa fa-user fa-fw"></i>
+                        Phúc Nguyễn
+                    <i class="fa fa-caret-down"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-user">
+                        <li><a href="#"><i class="fa fa-user fa-fw"></i>Thông tin cá nhân</a>
+                        </li>
+                        <li class="divider"></li>
+                        <li><a href="#"><i class="fa fa-sign-out fa-fw"></i>Đăng xuất</a>
+                        </li>
+                    </ul>
+                    <!-- /.dropdown-user -->
+                </li>
+                <!-- /.dropdown -->
+            </ul>
+            <!-- /.navbar-top-links -->
+
+            <div class="navbar-default sidebar" role="navigation">
+
+                <div class="sidebar-nav navbar-collapse">
+                    <ul class="nav" id="side-menu">
+
+                             <li>
+                            <a href="ThongTinCaNhan.html">Thông Tin Cá Nhân</a>
+                        </li>
+                        <li>
+                            <a href="ThongTinBaoHiem.html">Thông Tin Bảo Hiểm</a>
+                        </li>
+                        <li>
+                            <a href="LichSuViPhamLuatATGT.html">Lịch Sử Vi Phạm Luật ATGT</a>
+                        </li>
+                        <li>
+                            <a href="LichSuBoiThuong.html">Lịch Sử Bồi Thường </a>
+                        </li>                        
+                        <li>
+                            <a href="YeuCauTheMoi.html">Yêu Cầu Thẻ Mới</a>
+                        </li>
+                        <li>
+                            <a href="LichSuGiaoDich.html">Lịch Sử Giao Dịch</a>
+
+                        </li>
+                        <li>
+                            <a href="ThongTinCard.html">Thông Tin Thẻ</a>
+
+                        </li>
+                    </ul>
+                </div>
+                <!-- /.sidebar-collapse -->
+            </div>
+            <!-- /.navbar-static-side -->
+        </nav>
+
+        <div id="page-wrapper">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h2 class="page-header text-info">Lịch Sử Giao Dịch      
+                    </h2>
+                </div>
+            </div>
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <form class="form-inline">
+                        <div class="form-group">
+                            <input type="text" class="form-control " placeholder="Tìm kiếm">
+                            <button type="submit" class="btn btn-default ">Tìm Kiếm</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr class="success">
+                                    <th class="text-center">Thời Gian
+                                    </th>
+                                    <th class="text-center">Mã Giao Dịch
+                                    </th>
+                                    <th class="text-center">Hình Thức Thanh Toán
+                                    </th>
+                                    <th class="text-center">Dịch Vụ Thanh Toán
+                                    </th>
+                                    <th class="text-center">Số Tiền
+                                    </th>
+                                    <th class="text-center">Người Nhận 
+                                    </th>
+                                    <th class="text-center">Mã Giao Dịch Của PayPal
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="active">
+                                    <td class="text-center">10/5/2015</td>
+                                    <td class="text-center">TTTHUD679</td>
+                                    <td class="text-center">PayPal</td>
+                                    <td class="text-center">Đổi Thẻ</td>
+                                    <td class="text-center">50000 VND</td>
+                                    <td class="text-center">Nguyễn Hữu Phúc</td>
+                                    <td class="text-center">TTTY89</td>
+
+                                </tr>
+                                <tr class="">
+                                    <td class="text-center">10/5/2015</td>
+                                    <td class="text-center">TTTHUD679</td>
+                                    <td class="text-center">PayPal</td>
+                                    <td class="text-center">Đổi Thẻ</td>
+                                    <td class="text-center">50000 VND</td>
+                                    <td class="text-center">Nguyễn Hữu Phúc</td>
+                                    <td class="text-center">TTTY89</td>
+
+                                </tr>
+                                <tr class="active">
+                                    <td class="text-center">10/5/2015</td>
+                                    <td class="text-center">TTTHUD679</td>
+                                    <td class="text-center">PayPal</td>
+                                    <td class="text-center">Đổi Thẻ</td>
+                                    <td class="text-center">50000 VND</td>
+                                    <td class="text-center">Nguyễn Hữu Phúc</td>
+                                    <td class="text-center">TTTY89</td>
+
+                                </tr>
+                                <tr class="">
+                                    <td class="text-center">10/5/2015</td>
+                                    <td class="text-center">TTTHUD679</td>
+                                    <td class="text-center">PayPal</td>
+                                    <td class="text-center">Đổi Thẻ</td>
+                                    <td class="text-center">50000 VND</td>
+                                    <td class="text-center">Nguyễn Hữu Phúc</td>
+                                    <td class="text-center">TTTY89</td>
+
+                                </tr>
+                                <tr class="active">
+                                    <td class="text-center">10/5/2015</td>
+                                    <td class="text-center">TTTHUD679</td>
+                                    <td class="text-center">PayPal</td>
+                                    <td class="text-center">Đổi Thẻ</td>
+                                    <td class="text-center">50000 VND</td>
+                                    <td class="text-center">Nguyễn Hữu Phúc</td>
+                                    <td class="text-center">TTTY89</td>
+
+                                </tr>
+                                <tr class="">
+                                    <td class="text-center">10/5/2015</td>
+                                    <td class="text-center">TTTHUD679</td>
+                                    <td class="text-center">PayPal</td>
+                                    <td class="text-center">Đổi Thẻ</td>
+                                    <td class="text-center">50000 VND</td>
+                                    <td class="text-center">Nguyễn Hữu Phúc</td>
+                                    <td class="text-center">TTTY89</td>
+
+                                </tr>
+                                <tr class="active">
+                                    <td class="text-center">10/5/2015</td>
+                                    <td class="text-center">TTTHUD679</td>
+                                    <td class="text-center">PayPal</td>
+                                    <td class="text-center">Đổi Thẻ</td>
+                                    <td class="text-center">50000 VND</td>
+                                    <td class="text-center">Nguyễn Hữu Phúc</td>
+                                    <td class="text-center">TTTY89</td>
+
+                                </tr>
+                                <tr class="">
+                                    <td class="text-center">10/5/2015</td>
+                                    <td class="text-center">TTTHUD679</td>
+                                    <td class="text-center">PayPal</td>
+                                    <td class="text-center">Đổi Thẻ</td>
+                                    <td class="text-center">50000 VND</td>
+                                    <td class="text-center">Nguyễn Hữu Phúc</td>
+                                    <td class="text-center">TTTY89</td>
+
+                                </tr>
+                                <tr class="active">
+                                    <td class="text-center">10/5/2015</td>
+                                    <td class="text-center">TTTHUD679</td>
+                                    <td class="text-center">PayPal</td>
+                                    <td class="text-center">Đổi Thẻ</td>
+                                    <td class="text-center">50000 VND</td>
+                                    <td class="text-center">Nguyễn Hữu Phúc</td>
+                                    <td class="text-center">TTTY89</td>
+                                </tr>
+                                     <tr class="">
+                                    <td class="text-center">10/5/2015</td>
+                                    <td class="text-center">TTTHUD679</td>
+                                    <td class="text-center">PayPal</td>
+                                    <td class="text-center">Đổi Thẻ</td>
+                                    <td class="text-center">50000 VND</td>
+                                    <td class="text-center">Nguyễn Hữu Phúc</td>
+                                    <td class="text-center">TTTY89</td>
+
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <nav class="text-right">
+                        <ul class="pagination">
+                            <li>
+                                <a href="#" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+                            <li class="active"><a href="#">1</a></li>
+                            <li><a href="#">2</a></li>
+                            <li><a href="#">3</a></li>
+                            <li><a href="#">4</a></li>
+                            <li><a href="#">5</a></li>
+                            <li>
+                                <a href="#" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+    <!-- /#page-wrapper -->
+
+
+    <!-- /#wrapper -->
+
+    <!-- jQuery -->
+    <script src="../bower_components/jquery/dist/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+    <!-- Metis Menu Plugin JavaScript -->
+    <script src="../bower_components/metisMenu/dist/metisMenu.min.js"></script>
+
+    <!-- Morris Charts JavaScript -->
+    <script src="../bower_components/raphael/raphael-min.js"></script>
+    <script src="../bower_components/morrisjs/morris.min.js"></script>
+    <script src="../js/morris-data.js"></script>
+
+    <!-- Custom Theme JavaScript -->
+    <script src="../dist/js/sb-admin-2.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js">
+    </script>
+</body>
+
+</html>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+
+
+    });
+</script>
