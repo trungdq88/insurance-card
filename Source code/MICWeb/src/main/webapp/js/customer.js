@@ -10,6 +10,9 @@ $(document).ready(function () {
         $('#btn_Modify').removeClass('hide');
     });
 
+
+    $('#radio_CDO').attr('checked', true);
+    $('#total_Cost').val(parseFloat($('#newCard_Cost').val()) + ' VND');
     $('#radio_Paypal').change(function () {
         $('.tranformCost').removeClass('hide');
         $('.newCardCost').removeClass('hide');
@@ -21,4 +24,5 @@ $(document).ready(function () {
         $('#radio_Paypal').attr('checked', false);
         $('#total_Cost').val(parseFloat($('#newCard_Cost').val()) + ' VND');
     });
+
 });

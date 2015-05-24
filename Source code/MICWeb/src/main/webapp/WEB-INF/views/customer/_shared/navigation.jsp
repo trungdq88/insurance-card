@@ -15,7 +15,7 @@
       <span class="icon-bar"></span>
       <span class="icon-bar"></span>
     </button>
-    <a class="navbar-brand" href="index.html"><label class="text-info">Insurance Card</label></a>
+    <a class="navbar-brand" href="${pageContext.request.contextPath}/customer"><label class="text-info">Insurance Card</label></a>
   </div>
   <!-- /.navbar-header -->
 

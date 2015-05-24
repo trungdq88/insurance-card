@@ -8,6 +8,9 @@
         <div class="row">
             <div class="col-lg-12">
                 <h1 class="page-header">Thẻ AC7-37F-E8E-DDC
+                        <span class="pull-right">
+                            <a href="${pageContext.request.contextPath}/customer/card?action=newCard" class="btn btn-primary">Yêu Cầu Thẻ Mới</a>
+                        </span>
                 </h1>
             </div>
             <!-- /.col-lg-12 -->
@@ -17,8 +20,9 @@
                 <form class="form-horizontal">
                     <fieldset>
                         <legend>Thông tin
-                        </legend>
 
+                        </legend>
+                        <br />
                         <div class="form-group">
                             <label class="col-sm-4 control-label">Mã thẻ</label>
 
@@ -76,135 +80,136 @@
                     </fieldset>
                 </form>
 
-
-                <label>Lịch sử truy cập </label>
+                <legend>Lịch sử truy cập</legend>
 
                 <p>
                     Có tổng số <b>201 lượt truy cập</b>
                 </p>
 
-                <form class="form-inline pull-right">
-                    <div class="form-group">
-                        <label for="exampleInputName2">Lọc Kết Quả Từ</label>
-                        <input type="datetime" class="form-control">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <form class="form-inline">
+                            <div class="form-group">
+                                <label>Lọc Kết Quả Từ</label>
+                                <input type="datetime" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label>Đến</label>
+                                <input type="datetime" class="form-control">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Tìm Kiếm</button>
+                        </form>
                     </div>
-                    <div class="form-group">
-                        <label for="exampleInputEmail2">Đến</label>
-                        <input type="datetime" class="form-control">
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered ">
+                                <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Thời gian</th>
+                                    <th>Thiết bị</th>
+                                    <th>Dịch vụ</th>
+                                    <th>Kết quả trả về</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>3/4/2015 10:02:34</td>
+                                    <td>30579182353904</td>
+                                    <td>Xác thực thẻ bảo hiểm</td>
+                                    <td><span class="label label-success">Thẻ hợp lệ</span></td>
+                                </tr>
+                                <tr>
+                                    <td>1</td>
+                                    <td>3/4/2015 10:02:34</td>
+                                    <td>30579182353904</td>
+                                    <td>Xác thực thẻ bảo hiểm</td>
+                                    <td><span class="label label-warning">Thẻ sắp hết hạn</span></td>
+                                </tr>
+                                <tr>
+                                    <td>1</td>
+                                    <td>3/4/2015 10:02:34</td>
+                                    <td>30579182353904</td>
+                                    <td>Gửi thông tin vi phạm</td>
+                                    <td><span class="label label-success">Nhận dữ liệu thành công</span></td>
+                                </tr>
+
+                                <tr>
+                                    <td>1</td>
+                                    <td>3/4/2015 10:02:34</td>
+                                    <td>30579182353904</td>
+                                    <td>Xác thực thẻ bảo hiểm</td>
+                                    <td><span class="label label-success">Thẻ hợp lệ</span></td>
+                                </tr>
+                                <tr>
+                                    <td>1</td>
+                                    <td>3/4/2015 10:02:34</td>
+                                    <td>30579182353904</td>
+                                    <td>Xác thực thẻ bảo hiểm</td>
+                                    <td><span class="label label-success">Thẻ hợp lệ</span></td>
+                                </tr>
+                                <tr>
+                                    <td>1</td>
+                                    <td>3/4/2015 10:02:34</td>
+                                    <td>30579182353904</td>
+                                    <td>Xác thực thẻ bảo hiểm</td>
+                                    <td><span class="label label-success">Thẻ hợp lệ</span></td>
+                                </tr>
+                                <tr>
+                                    <td>1</td>
+                                    <td>3/4/2015 10:02:34</td>
+                                    <td>30579182353904</td>
+                                    <td>Xác thực thẻ bảo hiểm</td>
+                                    <td><span class="label label-success">Thẻ hợp lệ</span></td>
+                                </tr>
+                                <tr>
+                                    <td>1</td>
+                                    <td>3/4/2015 10:02:34</td>
+                                    <td>30579182353904</td>
+                                    <td>Xác thực thẻ bảo hiểm</td>
+                                    <td><span class="label label-success">Thẻ hợp lệ</span></td>
+                                </tr>
+                                <tr>
+                                    <td>1</td>
+                                    <td>3/4/2015 10:02:34</td>
+                                    <td>30579182353904</td>
+                                    <td>Xác thực thẻ bảo hiểm</td>
+                                    <td><span class="label label-success">Thẻ hợp lệ</span></td>
+                                </tr>
+                                <tr>
+                                    <td>1</td>
+                                    <td>3/4/2015 10:02:34</td>
+                                    <td>30579182353904</td>
+                                    <td>Xác thực thẻ bảo hiểm</td>
+                                    <td><span class="label label-success">Thẻ hợp lệ</span></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <!-- /.table-responsive -->
+                        </div>
+
+                        <nav class="text-right">
+                            <ul class="pagination">
+                                <li>
+                                    <a href="#" aria-label="Previous">
+                                        <span aria-hidden="true">&laquo;</span>
+                                    </a>
+                                </li>
+                                <li class="active"><a href="#">1</a></li>
+                                <li><a href="#">2</a></li>
+                                <li><a href="#">3</a></li>
+                                <li><a href="#">4</a></li>
+                                <li><a href="#">5</a></li>
+                                <li>
+                                    <a href="#" aria-label="Next">
+                                        <span aria-hidden="true">&raquo;</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
                     </div>
-                    <button type="submit" class="btn btn-primary">Tìm Kiếm</button>
-                </form>
-
-
-                <form>
-                    <table class="table table-bordered ">
-                        <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Thời gian</th>
-                            <th>Thiết bị</th>
-                            <th>Dịch vụ</th>
-                            <th>Kết quả trả về</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>3/4/2015 10:02:34</td>
-                            <td>30579182353904</td>
-                            <td>Xác thực thẻ bảo hiểm</td>
-                            <td><span class="label label-success">Thẻ hợp lệ</span></td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>3/4/2015 10:02:34</td>
-                            <td>30579182353904</td>
-                            <td>Xác thực thẻ bảo hiểm</td>
-                            <td><span class="label label-warning">Thẻ sắp hết hạn</span></td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>3/4/2015 10:02:34</td>
-                            <td>30579182353904</td>
-                            <td>Gửi thông tin vi phạm</td>
-                            <td><span class="label label-success">Nhận dữ liệu thành công</span></td>
-                        </tr>
-
-                        <tr>
-                            <td>1</td>
-                            <td>3/4/2015 10:02:34</td>
-                            <td>30579182353904</td>
-                            <td>Xác thực thẻ bảo hiểm</td>
-                            <td><span class="label label-success">Thẻ hợp lệ</span></td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>3/4/2015 10:02:34</td>
-                            <td>30579182353904</td>
-                            <td>Xác thực thẻ bảo hiểm</td>
-                            <td><span class="label label-success">Thẻ hợp lệ</span></td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>3/4/2015 10:02:34</td>
-                            <td>30579182353904</td>
-                            <td>Xác thực thẻ bảo hiểm</td>
-                            <td><span class="label label-success">Thẻ hợp lệ</span></td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>3/4/2015 10:02:34</td>
-                            <td>30579182353904</td>
-                            <td>Xác thực thẻ bảo hiểm</td>
-                            <td><span class="label label-success">Thẻ hợp lệ</span></td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>3/4/2015 10:02:34</td>
-                            <td>30579182353904</td>
-                            <td>Xác thực thẻ bảo hiểm</td>
-                            <td><span class="label label-success">Thẻ hợp lệ</span></td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>3/4/2015 10:02:34</td>
-                            <td>30579182353904</td>
-                            <td>Xác thực thẻ bảo hiểm</td>
-                            <td><span class="label label-success">Thẻ hợp lệ</span></td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>3/4/2015 10:02:34</td>
-                            <td>30579182353904</td>
-                            <td>Xác thực thẻ bảo hiểm</td>
-                            <td><span class="label label-success">Thẻ hợp lệ</span></td>
-                        </tr>
-                        </tbody>
-                    </table>
-
-                    <!-- /.table-responsive -->
-                    <nav class="text-right">
-                        <ul class="pagination">
-                            <li>
-                                <a href="#" aria-label="Previous">
-                                    <span aria-hidden="true">&laquo;</span>
-                                </a>
-                            </li>
-                            <li class="active"><a href="#">1</a></li>
-                            <li><a href="#">2</a></li>
-                            <li><a href="#">3</a></li>
-                            <li><a href="#">4</a></li>
-                            <li><a href="#">5</a></li>
-                            <li>
-                                <a href="#" aria-label="Next">
-                                    <span aria-hidden="true">&raquo;</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </nav>
-                </form>
-
-
+                </div>
             </div>
             <!-- col -->
         </div>

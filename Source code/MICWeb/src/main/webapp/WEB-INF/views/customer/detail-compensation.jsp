@@ -8,8 +8,7 @@
     <div id="page-wrapper">
         <div class="row">
             <div class="col-lg-12">
-                <h1 class="page-header">
-                    Yêu cầu bồi thường COM384
+                <h1 class="page-header">Yêu cầu bồi thường COM384
                     <div class="pull-right">
                         <span style="font-size: 40%" class="label label-warning">Đang giải quyết</span>
                     </div>
@@ -22,8 +21,7 @@
 
                 <form class="form-horizontal">
                     <fieldset>
-                        <legend>
-                            Thông tin hợp đồng
+                        <legend>Thông tin hợp đồng
                         </legend>
 
                         <!-- Text input-->
@@ -53,8 +51,7 @@
                     <br/>
 
                     <fieldset>
-                        <legend>
-                            Thông tin yêu cầu bồi thường
+                        <legend>Thông tin yêu cầu bồi thường
                         </legend>
 
                         <!-- Text input-->
@@ -224,49 +221,25 @@
                     <br/>
                     <br/>
                     <fieldset>
-                        <legend>
-                            Giải quyết yêu cầu bồi thường
+                        <legend>Giải quyết yêu cầu bồi thường
                         </legend>
 
                         <!-- Text input-->
                         <div class="form-group">
                             <div class="col-sm-1">&nbsp;</div>
                             <div class="col-sm-10">
-                                <div class="text-value">
-                                    <label for="note">Ghi chú của công ty bảo hiểm</label>
-                                    <textarea id="note" class="form-control" rows="7"></textarea>
-                                </div>
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                                incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+                                exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute
+                                irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+                                pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
+                                deserunt mollit anim id est laborum.
+
                             </div>
                         </div>
 
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label">Quyết định bồi thường</label>
-
-                            <div class="col-sm-6">
-                                <select class="form-control">
-                                    <option>Chưa quyết định</option>
-                                    <option>Chấp nhận bồi thường</option>
-                                    <option>Từ chối bồi thường</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label">Trạng thái</label>
-
-                            <div class="col-sm-6">
-                                <label class="text-value" style="font-weight: normal;">
-                                    <input type="checkbox"/>
-                                    Đã giải quyết xong
-                                </label>
-                            </div>
-                        </div>
                     </fieldset>
-                    <br/>
-                    <br/>
 
-                    <p class="text-center">
-                        <a href="#" class="btn btn-primary">Lưu thay đổi</a>
-                    </p>
                 </form>
 
             </div>
