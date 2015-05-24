@@ -13,7 +13,7 @@ import javax.servlet.annotation.WebServlet;
  */
 
 @WebServlet(name = "HomeController", urlPatterns = {"/home"})
-public class HomeServlet extends BasicController {
+public class HomeController extends BasicController {
     public ResponseObject getView(R r) {
         return new JspPage("home/index.jsp");
     }

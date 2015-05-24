@@ -14,14 +14,15 @@ import java.lang.reflect.Method;
 /**
  * Created by dinhquangtrung on 5/23/15.
  */
-@WebServlet(name = "BasicController")
-public class BasicController extends HttpServlet {
+public abstract class BasicController extends HttpServlet {
 
     protected String defaultAction = "view";
 
     protected String getDefaultAction() {
         return defaultAction;
     }
+
+    public abstract ResponseObject getView(R r);
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
