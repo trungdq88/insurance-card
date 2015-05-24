@@ -22,8 +22,6 @@ public abstract class BasicController extends HttpServlet {
         return defaultAction;
     }
 
-    public abstract ResponseObject getView(R r);
-
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         processRequests(request, response);

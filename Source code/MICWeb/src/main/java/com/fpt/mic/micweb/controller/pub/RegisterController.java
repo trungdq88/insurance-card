@@ -1,4 +1,4 @@
-package com.fpt.mic.micweb.controller.customer;
+package com.fpt.mic.micweb.controller.pub;
 
 import com.fpt.mic.micweb.framework.BasicController;
 import com.fpt.mic.micweb.framework.JspPage;
@@ -10,9 +10,11 @@ import javax.servlet.annotation.WebServlet;
 /**
  * Created by dinhquangtrung on 5/24/15.
  */
-@WebServlet(name = "PaymentController", urlPatterns = "/customer/payment")
-public class PaymentController extends BasicController {
-    public ResponseObject getView(R r) {
-        return new JspPage("customer/payment.jsp");
+@WebServlet(name = "RegisterController", urlPatterns = "/public/register")
+public class RegisterController extends BasicController {
+
+    public ResponseObject postRegister(R r) {
+        return new JspPage("public/register.jsp");
     }
+
 }

@@ -12,10 +12,10 @@ import javax.servlet.annotation.WebServlet;
  * @author dinhquangtrung
  */
 
-@WebServlet(name = "HomeController", urlPatterns = {"/home"})
+@WebServlet(name = "HomeController", urlPatterns = {"/public/home"})
 public class HomeController extends BasicController {
     public ResponseObject getView(R r) {
-        return new JspPage("home/index.jsp");
+        return new JspPage("public/home.jsp");
     }
 
 }
