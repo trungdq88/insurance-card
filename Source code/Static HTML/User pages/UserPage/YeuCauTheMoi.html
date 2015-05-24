@@ -131,22 +131,23 @@
                 <div class="form-group">
                     <label for="inputPassword3" class="col-sm-3 control-label">Thanh Toán: </label>
                 </div>
+               
                 <div class="form-group">
+                    <div class="col-sm-3 control-label">
+                        <input type="radio" id="radio_CDO" value="" checked="">
+                    </div>
+                    <div class="col-sm-5">
+                        <p class="form-control-static">Thanh toán trực tiếp (tại công ty)</p>
+                    </div>
+                </div>
+                 <div class="form-group">
                     <div class="col-sm-3 control-label">
                         <input type="radio" id="radio_Paypal" value="">
                     </div>
                     <div class="col-sm-5">
                         <p class="form-control-static">Paypal</p>
                     </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-sm-3 control-label">
-                        <input type="radio" id="radio_CDO" value="">
-                    </div>
-                    <div class="col-sm-5">
-                        <p class="form-control-static">Thanh toán trực tiếp (tại công ty)</p>
-                    </div>
-                </div>
+                </div>  
             </form>
             <form class="form-horizontal">
                 <div class="form-group newCardCost hide">
@@ -209,6 +210,8 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
+        $('#radio_CDO').attr('checked', true);
+        $('#total_Cost').val(parseFloat($('#newCard_Cost').val()) + ' VND');
         $('#radio_Paypal').change(function () {
             $('.tranformCost').removeClass('hide'); 
             $('.newCardCost').removeClass('hide');
