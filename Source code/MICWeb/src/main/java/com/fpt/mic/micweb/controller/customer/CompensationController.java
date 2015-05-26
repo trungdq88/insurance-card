@@ -10,7 +10,7 @@ import javax.servlet.annotation.WebServlet;
 /**
  * Created by dinhquangtrung on 5/24/15.
  */
-@WebServlet(name = "CompensationController", urlPatterns = "/customer/compensation")
+@WebServlet(name = "CustomerCompensationController", urlPatterns = "/customer/compensation")
 public class CompensationController extends BasicController {
     public ResponseObject getView(R r) {
         return new JspPage("/customer/compensation.jsp");
