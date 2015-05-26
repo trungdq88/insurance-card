@@ -1,224 +1,193 @@
-﻿<%@ include file="_shared/header.jsp" %>
+﻿<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ include file="_shared/header.jsp"%>
 
 <div id="wrapper">
 
     <%@ include file="_shared/navigation.jsp" %>
-
-
     <div id="page-wrapper">
         <div class="row">
-
             <div class="col-lg-12">
-                <h2 class="page-header text-info">Thông Tin Bảo Hiểm
-                     <span class="pull-right">
-                         <button type="submit" class="btn btn-default">Gia Hạn</button>
-                         <button type="button" class="btn btn-cancel" data-toggle="modal"
-                                 data-target=".bs-example-modal-lg">Hủy Hợp Đồng
-                         </button>
+                <h1 class="page-header">
+                    Hợp đồng
 
-                     </span>
-                </h2>
+                    <div class="pull-right">
+                        <a href="${pageContext.request.contextPath}/customer/contract?action=NewContract" class="btn btn-success">
+                            <i class="fa fa-plus"></i>
+                            Hợp đồng mới
+                        </a>
+                    </div></h1>
             </div>
-            <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
-                 aria-hidden="true">
-                <div class="modal-dialog modal-lg">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                                    aria-hidden="true">&times;</span></button>
-                            <h4 class="modal-title">
-                                <label class="text-danger">Hủy Hợp Đồng</label></h4>
-                        </div>
-                        <div class="modal-body">
-                            <div class="text-info">
-                                <label>
-                                    Quý khách vui lòng cung cấp lý do hoặc trường hợp hủy hợp đồng!
-                                </label>
-                            </div>
-                            <div class="checkbox">
-                                <label>
-                                    <input type="radio" value="">
-                                    Xe cơ giới bị thu hồi đăng ký
-                                </label>
-                            </div>
-                            <div class="checkbox">
-                                <label>
-                                    <input type="radio" value="">
-                                    Xe cơ giới hết niên hạn
-                                </label>
-                            </div>
-                            <div class="checkbox">
-                                <label>
-                                    <input type="radio" value="">
-                                    Lý do khác
-                                </label>
-                            </div>
-                            <div class="form-group">
-                                <label>Văn Bản Đính Kèm (Nếu có)</label>
-                                <input type="file"/>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-primary">Xác Nhận</button>
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Hủy Bỏ</button>
-                        </div>
-                    </div>
+            <!-- /.col-lg-12 -->
+        </div>
+        <!-- /.row -->
+
+        <div>
+
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <div class="pull-left center-dropdown-button">
+                    <!--<input type="checkbox" class="check-all"/>-->
+                    <b>Có 173 hợp đồng</b>
+                </div>
+                <div class="pull-right no-wrap">
+                    <input type="text" class="form-control long-text-box"
+                           placeholder="Tìm kiếm theo tên, mã hợp đồng"/>
+                    <input type="button" class="btn btn-default" value="Tìm kiếm"/>
 
                 </div>
+                <div class="clearfix"></div>
+            </div>
+            <!-- /.panel-heading -->
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table class="table table-hover table-striped">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Mã hợp đồng</th>
+                            <th>Ngày bắt đầu</th>
+                            <th>Thời hạn</th>
+                            <th>Trạng thái</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td><a href="${pageContext.request.contextPath}/customer/contract?action=ContractDetail">BHBB374</a></td>
+                            <td>04/05/2015</td>
+                            <td>1 năm</td>
+                            <td><span class="label label-success">Sẵn sàng</span> </td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td><a href="${pageContext.request.contextPath}/staff/contract?action=detail">BHBB374</a></td>
+                            <td>04/05/2015</td>
+                            <td>1 năm</td>
+                            <td><span class="label label-warning">Sắp hết hạn</span> </td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td><a href="${pageContext.request.contextPath}/staff/contract?action=detail">BHBB374</a></td>
+                            <td>04/05/2015</td>
+                            <td>1 năm</td>
+                            <td><span class="label label-danger">Hết hạn</span> </td>
+                        </tr>
+
+                        <tr>
+                            <td>1</td>
+                            <td><a href="${pageContext.request.contextPath}/staff/contract?action=detail">BHBB374</a></td>
+                            <td>04/05/2015</td>
+                            <td>1 năm</td>
+                            <td><span class="label label-gray">Chờ thanh toán</span> </td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td><a href="${pageContext.request.contextPath}/staff/contract?action=detail">BHBB374</a></td>
+                            <td>04/05/2015</td>
+                            <td>1 năm</td>
+                            <td><span class="label label-primary">Chưa có thẻ</span> </td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td><a href="${pageContext.request.contextPath}/staff/contract?action=detail">BHBB374</a></td>
+                            <td>04/05/2015</td>
+                            <td>1 năm</td>
+                            <td><span class="label label-dark">Đã huỷ hợp đồng</span> </td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td><a href="${pageContext.request.contextPath}/staff/contract?action=detail">BHBB374</a></td>
+                            <td>04/05/2015</td>
+                            <td>1 năm</td>
+                            <td><span class="label label-success">Sẵn sàng</span> </td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td><a href="${pageContext.request.contextPath}/staff/contract?action=detail">BHBB374</a></td>
+                            <td>04/05/2015</td>
+                            <td>1 năm</td>
+                            <td><span class="label label-success">Sẵn sàng</span> </td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td><a href="${pageContext.request.contextPath}/staff/contract?action=detail">BHBB374</a></td>
+                            <td>04/05/2015</td>
+                            <td>1 năm</td>
+                            <td><span class="label label-success">Sẵn sàng</span> </td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td><a href="${pageContext.request.contextPath}/staff/contract?action=detail">BHBB374</a></td>
+                            <td>04/05/2015</td>
+                            <td>1 năm</td>
+                            <td><span class="label label-success">Sẵn sàng</span> </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.table-responsive -->
+                <nav class="text-right">
+                    <ul class="pagination">
+                        <li>
+                            <a href="#" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        <li class="active"><a href="#">1</a></li>
+                        <li><a href="#">2</a></li>
+                        <li><a href="#">3</a></li>
+                        <li><a href="#">4</a></li>
+                        <li><a href="#">5</a></li>
+                        <li>
+                            <a href="#" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+            <!-- /.panel-body -->
+        </div>
+        <!-- /.panel -->
+
+
+        <div class="panel panel-success">
+            <div class="panel-heading">
+                Các trạng thái của hợp đồng:
+            </div>
+            <div class="panel-body">
+                <ul>
+                    <li>
+                        <span class="label label-gray">Chờ thanh toán</span>
+                        Khách hàng đăng ký online nhưng chưa thanh toán.
+                    </li>
+                    <li>
+                        <span class="label label-primary">Chưa có thẻ</span>
+                        Khách hàng đã thanh toán cho hợp đồng nhưng chưa được in thẻ để sử dụng.
+                    </li>
+                    <li>
+                        <span class="label label-success">Sẵn sàng</span>
+                        Khánh hàng đã hoàn thành hợp đồng và đã có thẻ để sẵn sàng sử dụng.
+                    </li>
+                    <li>
+                        <span class="label label-warning">Sắp hết hạn</span>
+                        Thời hạn của hợp đồng sắp hết, cần được gia hạn.
+                    </li>
+                    <li>
+                        <span class="label label-danger">Hết hạn</span>
+                        Hợp đồng đã hết hạn và không có giá trị. Khánh hàng phải gia hạn để tiếp tục sử dụng chương trình bảo hiểm.
+                    </li>
+                    <li>
+                        <span class="label label-dark">Đã huỷ hợp đồng</span>
+                        Hợp đồng bị huỷ. Khánh hàng muốn tiếp tục sử dụng cần phải đăng ký hợp đồng mới.
+                    </li>
+                </ul>
             </div>
         </div>
-        <form class="form-horizontal">
-            <div class="form-group">
-                <label class="col-sm-2 control-label">Tình Trạng Hợp Đồng:</label>
-
-                <div class="col-sm-10">
-                    <p class="form-control-static" style="color: orange">Sắp Hết Hạn (Còn 7 Ngày)</p>
-                </div>
-
-            </div>
-        </form>
-        <table class="table table-bordered">
-            <thead>
-            <tr class="active">
-                <th class="text-center">Sổ Hợp Đồng
-                </th>
-                <th class="text-center">Ngày Tham Gia
-                </th>
-                <th class="text-center">Ngày Hết Hạn
-                </th>
-                <th class="text-center">Quyền Lợi Bảo Hiểm
-                </th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td class="text-center">123456789
-                </td>
-                <td class="text-center">11/02/2011
-                </td>
-                <td class="text-center">11/02/2012
-                </td>
-                <td class="text-center">Trên 50 CC có bảo hiểm
-                </td>
-            </tr>
-            </tbody>
-        </table>
-        <form class="form-horizontal">
-            <div class="form-group">
-                <label class="col-sm-2 control-label">Ngày Cấp:</label>
-
-                <div class="col-sm-10">
-                    <p class="form-control-static">10/11/2011</p>
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-sm-2 control-label">Nơi Cấp: </label>
-
-                <div class="col-sm-10">
-                    <p class="form-control-static">24/02 Lê Quan Định, Bình Thạnh TPHCM</p>
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-sm-2 control-label">NGười Cấp: </label>
-
-                <div class="col-sm-10">
-                    <p class="form-control-static">Huỳnh Văn Thái</p>
-                </div>
-            </div>
-        </form>
-        <div class="row">
-
-            <div class="col-lg-12">
-                <h2 class="page-header text-info">Thông Tin Xe
-
-                </h2>
-            </div>
-        </div>
-        <form class="form-horizontal">
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label class="col-sm-4 control-label">Biển Số Đăng Ký: </label>
-
-                    <div class="col-sm-8">
-                        <p class="form-control-static">
-                            <label>59Y1-3979</label>
-                        </p>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-4 control-label">Loại Xe:</label>
-
-                    <div class="col-sm-8">
-                        <p class="form-control-static">
-                            <label>Nữ</label>
-                        </p>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-4 control-label">Màu Sơn:</label>
-
-                    <div class="col-sm-8">
-                        <p class="form-control-static">
-                            <label>Đen</label>
-                        </p>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-4 control-label">Số Máy:</label>
-
-                    <div class="col-sm-8">
-                        <p class="form-control-static">
-                            <label>241270</label>
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label class="col-sm-4 control-label">Nhãn Hiệu: </label>
-
-                    <div class="col-sm-8">
-                        <p class="form-control-static">
-                            <label>Air Blade</label>
-                        </p>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-4 control-label">Dung Tích:</label>
-
-                    <div class="col-sm-8">
-                        <p class="form-control-static">
-                            <label>108</label>
-                        </p>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-4 control-label">Năm Sản Xuất:</label>
-
-                    <div class="col-sm-8">
-                        <p class="form-control-static">
-                            <label>2011</label>
-                        </p>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-4 control-label">Số Khung:</label>
-
-                    <div class="col-sm-8">
-                        <p class="form-control-static">
-                            <label>241270222</label>
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </form>
-        <div class="clearfix"></div>
     </div>
-    <!-- /#page-wrapper -->
-
-
 </div>
 <!-- /#wrapper -->
 
 
-<%@ include file="_shared/footer.jsp" %>
+<%@ include file="_shared/footer.jsp"%>

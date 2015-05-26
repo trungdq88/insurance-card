@@ -15,4 +15,14 @@ public class ContractController extends BasicController {
     public ResponseObject getView(R r) {
         return new JspPage("customer/contract.jsp");
     }
+
+    public ResponseObject getContractDetail(R r) {
+        return new JspPage("customer/contract-detail.jsp");
+    }
+    public ResponseObject getNewContract(R r){
+        return new JspPage("customer/contract-new.jsp");
+    }
+
 }
+
+
