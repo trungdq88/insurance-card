@@ -1,4 +1,6 @@
 $(document).ready(function () {
+
+
     $('#btn_Modify').click(function () {
         $('.textInFormation').prop('disabled', false);
         $(this).addClass('hide');
@@ -25,4 +27,15 @@ $(document).ready(function () {
         $('#total_Cost').val(parseFloat($('#newCard_Cost').val()) + ' VND');
     });
 
+    //for punishment page
+    for (var i = 1; i <= 10; i++) {
+        $('#showPunishment_' + i).click(function () {
+            window.open('http://img.tintuc.vietgiaitri.com/2014/2/25/phu-phep-700-bien-ban-hang-loat-can-bo-so-gtvt-bi-bat-394b03.jpeg', "_blank", "toolbar=yes, scrollbars=yes, resizable=yes, top=500, left=500, width=400, height=400");
+
+        });
+    }
+
+
 });
+
+

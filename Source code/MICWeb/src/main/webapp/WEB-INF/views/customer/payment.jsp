@@ -14,13 +14,18 @@
         </div>
 
         <div class="panel panel-default">
-            <div class="panel-heading">
-                <form class="form-inline">
-                    <div class="form-group">
-                        <input type="text" class="form-control " placeholder="Tìm kiếm">
-                        <button type="submit" class="btn btn-default ">Tìm Kiếm</button>
-                    </div>
-                </form>
+            <div class="panel panel-heading">
+                <div class="pull-left">
+                    <!--<input type="checkbox" class="check-all"/>-->
+                    <b>Có 200 Giao Dịch</b>
+                </div>
+                <div class="pull-right ">
+                    <input type="text" class="form-control long-text-box"
+                           placeholder="Tìm kiếm theo tên, mã hợp đồng"/>
+                    <input type="button" class="btn btn-default" value="Tìm kiếm"/>
+
+                </div>
+                <div class="clearfix"></div>
             </div>
             <div class="panel-body">
                 <div class="table-responsive">

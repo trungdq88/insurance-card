@@ -44,134 +44,25 @@
                         </tr>
                         </tbody>
                         <tbody>
-                        <tr>
-                            <td class="text-center">
-                                12/02/2015
-                            </td>
-                            <td class="text-left">
-                                Điều khiển xe máy khi chưa đủ 16 tuổi. Không mang theo Giấy phép lái xe. Phạt tiền từ
-                                80.000
-                                đến 120.000
-                            </td>
-                            <td class="text-center">
-                                <a href="#" class="fa-lg"> <i class="fa fa-file-image-o"></i></a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="text-center">
-                                12/02/2015
-                            </td>
-                            <td class="text-left">
-                                Điều khiển xe không có Giấy đăng ký xe. Phạt tiền từ 300.000 đến 400.000.
-                            </td>
-                            <td class="text-center">
-                                <a href="#" class="fa-lg"> <i class="fa fa-file-image-o"></i></a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="text-center">
-                                12/02/2015
-                            </td>
-                            <td class="text-left">
-                                Sử dụng Giấy đăng ký xe bị tẩy xóa; Không đúng số khung, số máy hoặc không do cơ quan có
-                                thẩm quyền cấp.
-                                Phạt tiền từ 300.000 đến 400.000. Đồng thời tịch thu Giấy đăng ký không hợp lệ
-                            </td>
-                            <td class="text-center">
-                                <a href="#" class="fa-lg"><i class="fa fa-file-image-o"></i></a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="text-center">
-                                12/02/2015
-                            </td>
-                            <td class="text-left">
-                                Sử dụng Giấy đăng ký xe bị tẩy xóa; Không đúng số khung, số máy hoặc không do cơ quan có
-                                thẩm quyền cấp.
-                                Phạt tiền từ 300.000 đến 400.000. Đồng thời tịch thu Giấy đăng ký không hợp lệ
-                            </td>
-                            <td class="text-center">
-                                <a href="#" class="fa-lg"><i class="fa fa-file-image-o"></i></a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="text-center">
-                                12/02/2015
-                            </td>
-                            <td class="text-left">
-                                Sử dụng Giấy đăng ký xe bị tẩy xóa; Không đúng số khung, số máy hoặc không do cơ quan có
-                                thẩm quyền cấp.
-                                Phạt tiền từ 300.000 đến 400.000. Đồng thời tịch thu Giấy đăng ký không hợp lệ
-                            </td>
-                            <td class="text-center">
-                                <a href="#" class="fa-lg"><i class="fa fa-file-image-o"></i></a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="text-center">
-                                12/02/2015
-                            </td>
-                            <td class="text-left">
-                                Sử dụng Giấy đăng ký xe bị tẩy xóa; Không đúng số khung, số máy hoặc không do cơ quan có
-                                thẩm quyền cấp.
-                                Phạt tiền từ 300.000 đến 400.000. Đồng thời tịch thu Giấy đăng ký không hợp lệ
-                            </td>
-                            <td class="text-center">
-                                <a href="#" class="fa-lg"><i class="fa fa-file-image-o"></i></a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="text-center">
-                                12/02/2015
-                            </td>
-                            <td class="text-left">
-                                Sử dụng Giấy đăng ký xe bị tẩy xóa; Không đúng số khung, số máy hoặc không do cơ quan có
-                                thẩm quyền cấp.
-                                Phạt tiền từ 300.000 đến 400.000. Đồng thời tịch thu Giấy đăng ký không hợp lệ
-                            </td>
-                            <td class="text-center">
-                                <a href="#" class="fa-lg"><i class="fa fa-file-image-o"></i></a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="text-center">
-                                12/02/2015
-                            </td>
-                            <td class="text-left">
-                                Sử dụng Giấy đăng ký xe bị tẩy xóa; Không đúng số khung, số máy hoặc không do cơ quan có
-                                thẩm quyền cấp.
-                                Phạt tiền từ 300.000 đến 400.000. Đồng thời tịch thu Giấy đăng ký không hợp lệ
-                            </td>
-                            <td class="text-center">
-                                <a href="#" class="fa-lg"><i class="fa fa-file-image-o"></i></a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="text-center">
-                                12/02/2015
-                            </td>
-                            <td class="text-left">
-                                Sử dụng Giấy đăng ký xe bị tẩy xóa; Không đúng số khung, số máy hoặc không do cơ quan có
-                                thẩm quyền cấp.
-                                Phạt tiền từ 300.000 đến 400.000. Đồng thời tịch thu Giấy đăng ký không hợp lệ
-                            </td>
-                            <td class="text-center">
-                                <a href="#" class="fa-lg"><i class="fa fa-file-image-o"></i></a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="text-center">
-                                12/02/2015
-                            </td>
-                            <td class="text-left">
-                                Sử dụng Giấy đăng ký xe bị tẩy xóa; Không đúng số khung, số máy hoặc không do cơ quan có
-                                thẩm quyền cấp.
-                                Phạt tiền từ 300.000 đến 400.000. Đồng thời tịch thu Giấy đăng ký không hợp lệ
-                            </td>
-                            <td class="text-center">
-                                <a href="#" class="fa-lg"><i class="fa fa-file-image-o"></i></a>
-                            </td>
-                        </tr>
+                        <% for (int i = 1; i <= 10; i++) {
+                            out.print("   <tr>\n" +
+                                    "                            <td class=\"text-center\">\n" +
+                                    "                                12/02/2015\n" +
+                                    "                            </td>\n" +
+                                    "                            <td class=\"text-left\">\n" +
+                                    "                                Sử dụng Giấy đăng ký xe bị tẩy xóa; Không đúng số khung, số máy hoặc không do cơ quan có\n" +
+                                    "                                thẩm quyền cấp.\n" +
+                                    "                                Phạt tiền từ 300.000 đến 400.000. Đồng thời tịch thu Giấy đăng ký không hợp lệ\n" +
+                                    "                            </td>\n" +
+                                    "                            <td class=\"text-center\">\n" +
+                                    "                                <a href=\"#\" id=\"showPunishment_" + i + "\" class=\"fa-lg\"><i class=\"fa fa-file-image-o\"></i></a>\n" +
+                                    "                            </td>\n" +
+
+                                    "     </tr> ");
+                        }
+
+                        %>
+
                         </tbody>
                     </table>
 

@@ -42,7 +42,7 @@
                             <label class="sr-only" for="inputPassword">Mật khẩu</label>
                             <input type="password" class="form-control" id="inputPassword" placeholder="Mật khẩu">
                         </div>
-                        <button type="submit" class="btn btn-default">Sign in</button>
+                        <button type="submit" class="btn btn-primary">Sign in</button>
                         <br/>
 
                         <div class="checkbox">
@@ -61,92 +61,142 @@
 <!-- Top content -->
 <div class="top-content">
 
-    <div class="inner-bg">
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-7 text">
-                    <h1>Carousel</h1>
 
-                    <ul>
-                        <li>Thẻ NFC hiện đại</li>
-                        <li>Thao tác đơn giản</li>
-                        <li>Phục vụ 24/7</li>
-                        <li>Thanh toán online hoặc trực tiếp</li>
-                        <li>Dịch vụ nhanh chóng</li>
-                    </ul>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-7">
+                <h1>Carousel</h1>
+                <div id="carousel-example-captions" class="carousel slide" data-ride="carousel">
+                    <ol class="carousel-indicators">
+                        <li data-target="#carousel-example-captions" data-slide-to="0" class=""></li>
+                        <li data-target="#carousel-example-captions" data-slide-to="1" class="active"></li>
+                        <li data-target="#carousel-example-captions" data-slide-to="2" class=""></li>
+                    </ol>
+                    <div class="carousel-inner" role="listbox">
+                        <div class="item active">
+                            <img  alt="900x500"
+                                 src="http://tagbond.net/wp-content/uploads/2015/04/NFC-Logo-Image.jpg"
+                                 data-holder-rendered="true">
+
+                            <div class="carousel-caption">
+                                <h3 id="first-slide-label">First slide label<a class="anchorjs-link"
+                                                                               href="#first-slide-label"><span
+                                        class="anchorjs-icon"></span></a></h3>
+
+                            </div>
+                        </div>
+                        <div class="item">
+                            <img alt="900x500"
+                                 src="http://athietkewebsite.com/wp-content/uploads/2014/03/thiet-ke-website-cac-cong-thanh-toan-online.jpg"
+                                 data-holder-rendered="true">
+
+                            <div class="carousel-caption">
+                                <h3 id="second-slide-label">Second slide label<a class="anchorjs-link"
+                                                                                 href="#second-slide-label"><span
+                                        class="anchorjs-icon"></span></a></h3>
+
+
+                            </div>
+                        </div>
+                        <div class="item">
+                            <img alt="900x500"
+                                 src="http://lqop.com/wp-content/uploads/2014/07/fastservice.png"
+                                 data-holder-rendered="true">
+
+                            <div class="carousel-caption">
+                                <h3 id="third-slide-label">Third slide label<a class="anchorjs-link"
+                                                                               href="#third-slide-label"><span
+                                        class="anchorjs-icon"></span></a></h3>
+
+
+                            </div>
+                        </div>
+                    </div>
+                    <a class="left carousel-control" href="#carousel-example-captions" role="button"
+                       data-slide="prev">
+                        <i class="fa fa-arrow-left" aria-hidden="true"></i>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="right carousel-control" href="#carousel-example-captions" role="button"
+                       data-slide="next">
+                        <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                        <span class="sr-only">Next</span>
+                    </a>
                 </div>
-                <div class="col-sm-5 form-box">
-                    <div class="form-top">
-                        <div class="form-top-left">
-                            <h3>Đăng ký ngay</h3>
+            </div>
+            <div class="col-md-5 form-box">
+                <div class="form-top">
+                    <div class="form-top-left">
+                        <h3>Đăng ký ngay</h3>
 
-                            <p>Quý khách vui lòng điền những thông tin sau đây:</p>
-                        </div>
-                        <div class="form-top-right">
-                            <i class="fa fa-pencil"></i>
-                        </div>
+                        <p>Quý khách vui lòng điền những thông tin sau đây:</p>
                     </div>
-                    <div class="form-bottom">
-                        <form role="form" action="${pageContext.request.contextPath}/public/register" method="post" class="registration-form">
-                            <div class="form-group">
-                                <label class="sr-only" for="form-full-name">Họ tên</label>
-                                <input type="text" name="form-full-name" placeholder="Họ tên *"
-                                       class="form-first-name form-control" id="form-full-name">
-                            </div>
-                            <div class="form-group">
-                                <label class="sr-only" for="form-address">Địa chỉ</label>
-                                <input type="text" name="form-address" placeholder="Địa chỉ *"
-                                       class="form-last-name form-control" id="form-address">
-                            </div>
-                            <div class="form-group">
-                                <label class="sr-only" for="form-email">Email</label>
-                                <input type="text" name="form-email" placeholder="Email *"
-                                       class="form-email form-control" id="form-email">
-                            </div>
-                            <div class="form-group">
-                                <label class="sr-only" for="form-phone">Số điện thoại</label>
-                                <input type="text" name="form-phone" placeholder="Số điện thoại *"
-                                       class="form-email form-control" id="form-phone">
-                            </div>
-                            <div class="form-group">
-                                <label class="sr-only" for="form-cmnd">Số CMND/Hộ chiếu</label>
-                                <input type="text" name="form-cmnd" placeholder="Số CMND/Hộ chiếu"
-                                       class="form-email form-control" id="form-cmnd">
-                            </div>
-                            <div class="form-group">
-                                <label class="sr-only" for="form-startDate">Ngày bắt đầu</label>
-                                <input type="date" name="form-startDate" placeholder="Ngày bắt đầu *"
-                                       class="form-email form-control" id="form-startDate">
-                            </div>
-                            <div class="form-group">
-                                <select class="form-control">
-                                    <option>Xe trên 50cc có tham gia BH tai nạn người trên xe</option>
-                                    <option>Xe trên 50cc không tham gia BH tai nạn người trên xe</option>
-                                    <option>Xe từ 50cc trở xuống có tham gia BH tai nạn người trên xe</option>
-                                    <option>Xe từ 50cc trở xuống không tham gia BH tai nạn người trên xe</option>
-                                    <option>Xe mô tô 3 bánh, xe gắn máy và các loại xe cơ giới tương tự</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <p class="form-control-static">
-                                    <label>Thời hạn: </label>
-                                    01 năm kể từ khi cấp GCNBH và/hoặc sau thời hạn thanh toán phí
-                                </p>
-                            </div>
-                            <div class="form-group">
-                                <p class="form-control-static">
-                                    <label>Phí bảo hiểm: </label>
-                                    200.000 VND
-                                </p>
-                            </div>
-                            <input type="hidden" name="action" value="register"/>
-                            <input type="submit" class="btn" value="Tiếp theo" />
-                        </form>
+                    <div class="form-top-right">
+                        <i class="fa fa-pencil"></i>
                     </div>
+                </div>
+                <div class="form-bottom">
+                    <form role="form" action="${pageContext.request.contextPath}/public/register" method="post"
+                          class="registration-form">
+                        <div class="form-group">
+                            <label>Họ tên</label>
+                            <input type="text" name="form-full-name" placeholder="*"
+                                   class="form-first-name form-control" id="form-full-name">
+                        </div>
+                        <div class="form-group">
+                            <label>Địa chỉ</label>
+                            <input type="text" name="form-address" placeholder="*"
+                                   class="form-last-name form-control" id="form-address">
+                        </div>
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="text" name="form-email" placeholder="*"
+                                   class="form-email form-control" id="form-email">
+                        </div>
+                        <div class="form-group">
+                            <label>Số điện thoại</label>
+                            <input type="text" name="form-phone" placeholder="*"
+                                   class="form-email form-control" id="form-phone">
+                        </div>
+                        <div class="form-group">
+                            <label>Số CMND/Hộ chiếu</label>
+                            <input type="text" name="form-cmnd"
+                                   class="form-email form-control" id="form-cmnd">
+                        </div>
+                        <div class="form-group">
+                            <label>Ngày bắt đầu</label>
+                            <input type="date" name="form-startDate" placeholder="*"
+                                   class="form-email form-control" id="form-startDate">
+                        </div>
+                        <div class="form-group">
+                            <select class="form-control">
+                                <option>Xe trên 50cc có tham gia BH tai nạn người trên xe</option>
+                                <option>Xe trên 50cc không tham gia BH tai nạn người trên xe</option>
+                                <option>Xe từ 50cc trở xuống có tham gia BH tai nạn người trên xe</option>
+                                <option>Xe từ 50cc trở xuống không tham gia BH tai nạn người trên xe</option>
+                                <option>Xe mô tô 3 bánh, xe gắn máy và các loại xe cơ giới tương tự</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <p class="form-control-static">
+                                <label>Thời hạn: </label>
+                                01 năm kể từ khi cấp GCNBH và/hoặc sau thời hạn thanh toán phí
+                            </p>
+                        </div>
+                        <div class="form-group">
+                            <p class="form-control-static">
+                                <label>Phí bảo hiểm: </label>
+                                200.000 VND
+                            </p>
+                        </div>
+                        <input type="hidden" name="action" value="register"/>
+                        <input type="submit" class="btn" value="Tiếp theo"/>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
+
 
 </div>
 

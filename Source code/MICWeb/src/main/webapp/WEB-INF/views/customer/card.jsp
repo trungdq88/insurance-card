@@ -1,15 +1,16 @@
-﻿<%@ include file="_shared/header.jsp"%>
+﻿<%@ include file="_shared/header.jsp" %>
 
 <div id="wrapper">
 
-    <%@ include file="_shared/navigation.jsp"%>
+    <%@ include file="_shared/navigation.jsp" %>
 
     <div id="page-wrapper">
         <div class="row">
             <div class="col-lg-12">
                 <h1 class="page-header">Thẻ AC7-37F-E8E-DDC
                         <span class="pull-right">
-                            <a href="${pageContext.request.contextPath}/customer/card?action=newCard" class="btn btn-primary">Yêu Cầu Thẻ Mới</a>
+                            <a href="${pageContext.request.contextPath}/customer/card?action=newCard"
+                               class="btn btn-primary">Yêu Cầu Thẻ Mới</a>
                         </span>
                 </h1>
             </div>
@@ -22,7 +23,8 @@
                         <legend>Thông tin
 
                         </legend>
-                        <br />
+                        <br/>
+
                         <div class="form-group">
                             <label class="col-sm-4 control-label">Mã thẻ</label>
 
@@ -83,23 +85,32 @@
                 <legend>Lịch sử truy cập</legend>
 
                 <p>
-                    Có tổng số <b>201 lượt truy cập</b>
+                    Có tổng số <b>201 Thẻ</b>
                 </p>
 
                 <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <form class="form-inline">
-                            <div class="form-group">
-                                <label>Lọc Kết Quả Từ</label>
-                                <input type="datetime" class="form-control">
-                            </div>
-                            <div class="form-group">
-                                <label>Đến</label>
-                                <input type="datetime" class="form-control">
-                            </div>
-                            <button type="submit" class="btn btn-primary">Tìm Kiếm</button>
-                        </form>
+                    <div class="panel panel-heading">
+                        <div class="pull-left">
+                            <!--<input type="checkbox" class="check-all"/>-->
+                        </div>
+                        <div class="pull-right">
+                            <form class="form-inline">
+                                <div class="form-group">
+                                    <label>Từ</label>
+                                    <input type="datetime" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label>Đến</label>
+                                    <input type="datetime" class="form-control">
+                                </div>
+                                <button type="submit" class="btn btn-primary">Tìm Kiếm</button>
+                            </form>
+
+
+                        </div>
+                        <div class="clearfix"></div>
                     </div>
+
                     <div class="panel-body">
                         <div class="table-responsive">
                             <table class="table table-bordered ">
