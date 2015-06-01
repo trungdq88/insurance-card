@@ -90,54 +90,6 @@
                         android:id="@+id/textView5"
                         android:textStyle="bold" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="Biển số xe:"
-                        android:id="@+id/textView6"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="Số khung:"
-                        android:id="@+id/textView7"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="Số máy:"
-                        android:id="@+id/textView8"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="Loại xe:"
-                        android:id="@+id/textView9"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="Thời hạn từ:"
-                        android:id="@+id/textView10"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:id="@+id/textView11"
-                        android:textStyle="bold"
-                        android:text="đến:"
-                        android:gravity="right" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -173,33 +125,43 @@
                         android:maxLines="1"
                         android:ellipsize="end" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="93H3 - 7987"
-                        android:id="@+id/txtPlate"
-                        android:theme="@style/text_highlight"
-                        android:maxLines="1"
-                        android:ellipsize="end" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:id="@+id/lytInfo1_1">
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:paddingRight="30dp">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="09233815"
-                        android:id="@+id/txtChassis"
-                        android:maxLines="1"
-                        android:ellipsize="end" />
+                        android:text="Loại xe:"
+                        android:id="@+id/textView9"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="83729165"
-                        android:id="@+id/txtEngine"
-                        android:maxLines="1"
-                        android:ellipsize="end" />
+                        android:text="Số khung:"
+                        android:id="@+id/textView7"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:paddingRight="30dp">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -214,8 +176,105 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="09233815"
+                        android:id="@+id/txtChassis"
+                        android:maxLines="1"
+                        android:ellipsize="end" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:paddingRight="30dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="Biển số xe:"
+                        android:id="@+id/textView6"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="Số máy:"
+                        android:id="@+id/textView8"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:paddingRight="30dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="93H3 - 7987"
+                        android:id="@+id/txtPlate"
+                        android:theme="@style/text_highlight"
+                        android:maxLines="1"
+                        android:ellipsize="end" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="83729165"
+                        android:id="@+id/txtEngine"
+                        android:maxLines="1"
+                        android:ellipsize="end" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:orientation="horizontal"
+                android:id="@+id/lytInfo1_2"
+                android:layout_marginTop="10dp" >
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:paddingRight="20dp" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="Thời hạn từ:"
+                        android:id="@+id/textView22"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:id="@+id/textView23"
+                        android:textStyle="bold"
+                        android:text="đến:"
+                        android:gravity="right" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
                         android:text="00 giờ ngày 08/10/2014"
-                        android:id="@+id/txtStartDate"
+                        android:id="@+id/textView27"
                         android:theme="@style/text_highlight"
                         android:maxLines="1"
                         android:ellipsize="end" />
@@ -225,7 +284,7 @@
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceMedium"
                         android:text="00 giờ ngày 08/10/2014"
-                        android:id="@+id/txtExpiredDate"
+                        android:id="@+id/textView28"
                         android:theme="@style/text_highlight"
                         android:maxLines="1"
                         android:ellipsize="end" />
@@ -363,6 +422,7 @@
 
                 </LinearLayout>
             </LinearLayout>
+
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>
