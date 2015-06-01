@@ -21,10 +21,12 @@ USE `mic` ;
 -- Table `mic`.`accident`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mic`.`accident` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
   `title` VARCHAR(250) NOT NULL,
   `attachment` VARCHAR(255) NOT NULL,
-  `date` INT(10) UNSIGNED NOT NULL,
-  `contract_code` INT(11) NOT NULL)
+  `date` INT(11) NOT NULL,
+  `contract_code` INT(11) NOT NULL,
+  PRIMARY KEY (`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COMMENT = 'Accident information';
@@ -34,10 +36,11 @@ COMMENT = 'Accident information';
 -- Table `mic`.`card`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mic`.`card` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
   `card_id` VARCHAR(20) NOT NULL,
-  `activated_date` INT(10) UNSIGNED NOT NULL,
-  `deactivated_date` INT(11) UNSIGNED NULL DEFAULT NULL,
-  PRIMARY KEY (`card_id`))
+  `activated_date` INT(11) NOT NULL,
+  `deactivated_date` INT(11) NULL DEFAULT NULL,
+  PRIMARY KEY (`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COMMENT = 'Card information';
@@ -47,11 +50,13 @@ COMMENT = 'Card information';
 -- Table `mic`.`card_access_log`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mic`.`card_access_log` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
   `card_id` VARCHAR(20) NOT NULL,
   `date` INT(11) NOT NULL,
   `device` VARCHAR(50) NOT NULL,
   `request` VARCHAR(200) NOT NULL,
-  `response` VARCHAR(200) NOT NULL)
+  `response` VARCHAR(200) NOT NULL,
+  PRIMARY KEY (`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COMMENT = 'Card access log';
@@ -61,7 +66,7 @@ COMMENT = 'Card access log';
 -- Table `mic`.`compensation`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mic`.`compensation` (
-  `compensation_id` INT(11) NOT NULL AUTO_INCREMENT,
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
   `contract_code` INT(11) NOT NULL,
   `driver_name` VARCHAR(80) NOT NULL,
   `license_number` VARCHAR(15) NOT NULL,
@@ -83,7 +88,7 @@ CREATE TABLE IF NOT EXISTS `mic`.`compensation` (
   `resolve_date` INT(11) NULL DEFAULT NULL,
   `desicion` VARCHAR(250) NULL DEFAULT NULL,
   `resolve_note` VARCHAR(2000) NULL DEFAULT NULL,
-  PRIMARY KEY (`compensation_id`))
+  PRIMARY KEY (`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COMMENT = 'Compensation information';
@@ -93,7 +98,8 @@ COMMENT = 'Compensation information';
 -- Table `mic`.`contract`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mic`.`contract` (
-  `contract_code` INT(11) NOT NULL AUTO_INCREMENT,
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `contract_code` VARCHAR(20) NOT NULL,
   `customer_code` VARCHAR(20) NOT NULL,
   `start_date` INT(11) NOT NULL,
   `expired_date` INT(11) NOT NULL,
@@ -115,7 +121,7 @@ CREATE TABLE IF NOT EXISTS `mic`.`contract` (
   `cancel_reason` VARCHAR(250) NULL DEFAULT NULL,
   `cancel_note` VARCHAR(2000) NULL DEFAULT NULL,
   `card_id` VARCHAR(20) NULL DEFAULT NULL,
-  PRIMARY KEY (`contract_code`))
+  PRIMARY KEY (`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COMMENT = 'Contract information';
@@ -125,11 +131,11 @@ COMMENT = 'Contract information';
 -- Table `mic`.`contract_type`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mic`.`contract_type` (
-  `contract_type_id` INT(11) NOT NULL AUTO_INCREMENT,
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(250) NOT NULL,
   `description` VARCHAR(2000) NOT NULL,
   `price_per_year` FLOAT NOT NULL,
-  PRIMARY KEY (`contract_type_id`))
+  PRIMARY KEY (`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COMMENT = 'Contract type information';
@@ -139,6 +145,7 @@ COMMENT = 'Contract type information';
 -- Table `mic`.`customer`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mic`.`customer` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
   `customer_code` VARCHAR(20) NOT NULL,
   `name` VARCHAR(80) NOT NULL,
   `address` VARCHAR(250) NOT NULL,
@@ -146,7 +153,7 @@ CREATE TABLE IF NOT EXISTS `mic`.`customer` (
   `phone` VARCHAR(15) NOT NULL,
   `personal_id` VARCHAR(15) NULL DEFAULT NULL,
   `password` VARCHAR(32) NOT NULL,
-  PRIMARY KEY (`customer_code`))
+  PRIMARY KEY (`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COMMENT = 'Customer information';
@@ -156,10 +163,12 @@ COMMENT = 'Customer information';
 -- Table `mic`.`new_card_request`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mic`.`new_card_request` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
   `request_date` INT(11) NOT NULL,
   `resolve_date` INT(11) NOT NULL,
   `note` VARCHAR(2000) NULL DEFAULT NULL,
-  `card_id` VARCHAR(20) NOT NULL)
+  `card_id` VARCHAR(20) NOT NULL,
+  PRIMARY KEY (`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COMMENT = 'New card request information';
@@ -169,7 +178,7 @@ COMMENT = 'New card request information';
 -- Table `mic`.`payment`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mic`.`payment` (
-  `payment_id` INT(11) NOT NULL AUTO_INCREMENT,
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
   `contract_code` INT(11) NOT NULL,
   `date` INT(11) NOT NULL,
   `method` VARCHAR(20) NOT NULL,
@@ -177,7 +186,7 @@ CREATE TABLE IF NOT EXISTS `mic`.`payment` (
   `amount` FLOAT NOT NULL,
   `receiver` VARCHAR(80) NULL DEFAULT NULL,
   `paypal_trans_id` VARCHAR(50) NULL DEFAULT NULL,
-  PRIMARY KEY (`payment_id`))
+  PRIMARY KEY (`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COMMENT = 'Payment information';
@@ -187,10 +196,12 @@ COMMENT = 'Payment information';
 -- Table `mic`.`punishment`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mic`.`punishment` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
   `date` INT(11) NOT NULL,
   `title` VARCHAR(250) NOT NULL,
   `attachment` VARCHAR(255) NOT NULL,
-  `contract_code` INT(11) NOT NULL)
+  `contract_code` INT(11) NOT NULL,
+  PRIMARY KEY (`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COMMENT = 'Punishment information';
@@ -200,12 +211,13 @@ COMMENT = 'Punishment information';
 -- Table `mic`.`staff`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mic`.`staff` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
   `staff_code` VARCHAR(20) NOT NULL,
   `password` VARCHAR(32) NOT NULL,
   `name` VARCHAR(80) NOT NULL,
   `email` VARCHAR(250) NOT NULL,
   `phone` VARCHAR(15) NOT NULL,
-  PRIMARY KEY (`staff_code`))
+  PRIMARY KEY (`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COMMENT = 'Staff information';
