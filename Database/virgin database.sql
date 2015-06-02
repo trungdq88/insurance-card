@@ -8,19 +8,19 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 -- Schema mydb
 -- -----------------------------------------------------
 -- -----------------------------------------------------
--- Schema new_mic
+-- Schema mic_data
 -- -----------------------------------------------------
 
 -- -----------------------------------------------------
--- Schema new_mic
+-- Schema mic_data
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `new_mic` DEFAULT CHARACTER SET utf8 ;
-USE `new_mic` ;
+CREATE SCHEMA IF NOT EXISTS `mic_data` DEFAULT CHARACTER SET utf8 ;
+USE `mic_data` ;
 
 -- -----------------------------------------------------
--- Table `new_mic`.`mic_contract_type`
+-- Table `mic_data`.`mic_contract_type`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `new_mic`.`mic_contract_type` (
+CREATE TABLE IF NOT EXISTS `mic_data`.`mic_contract_type` (
   `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(250) NOT NULL,
   `description` VARCHAR(2000) NOT NULL,
@@ -32,9 +32,9 @@ COMMENT = 'Contract type information';
 
 
 -- -----------------------------------------------------
--- Table `new_mic`.`mic_customer`
+-- Table `mic_data`.`mic_customer`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `new_mic`.`mic_customer` (
+CREATE TABLE IF NOT EXISTS `mic_data`.`mic_customer` (
   `customer_code` VARCHAR(20) NOT NULL,
   `name` VARCHAR(80) NOT NULL,
   `address` VARCHAR(250) NOT NULL,
@@ -49,9 +49,9 @@ COMMENT = 'Customer information';
 
 
 -- -----------------------------------------------------
--- Table `new_mic`.`mic_staff`
+-- Table `mic_data`.`mic_staff`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `new_mic`.`mic_staff` (
+CREATE TABLE IF NOT EXISTS `mic_data`.`mic_staff` (
   `staff_code` VARCHAR(20) NOT NULL,
   `password` VARCHAR(32) NOT NULL,
   `name` VARCHAR(80) NOT NULL,
@@ -64,9 +64,9 @@ COMMENT = 'Staff information';
 
 
 -- -----------------------------------------------------
--- Table `new_mic`.`mic_contract`
+-- Table `mic_data`.`mic_contract`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `new_mic`.`mic_contract` (
+CREATE TABLE IF NOT EXISTS `mic_data`.`mic_contract` (
   `contract_code` VARCHAR(20) NOT NULL,
   `start_date` INT(11) UNSIGNED NOT NULL,
   `expired_date` INT(11) UNSIGNED NOT NULL,
@@ -95,17 +95,17 @@ CREATE TABLE IF NOT EXISTS `new_mic`.`mic_contract` (
   INDEX `fk_mic_contract_mic_customer1_idx` (`customer_code` ASC),
   CONSTRAINT `fk_mic_contract_mic_contract_type1`
     FOREIGN KEY (`contract_type_id`)
-    REFERENCES `new_mic`.`mic_contract_type` (`id`)
+    REFERENCES `mic_data`.`mic_contract_type` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_mic_contract_mic_customer1`
     FOREIGN KEY (`customer_code`)
-    REFERENCES `new_mic`.`mic_customer` (`customer_code`)
+    REFERENCES `mic_data`.`mic_customer` (`customer_code`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_mic_contract_mic_staff`
     FOREIGN KEY (`staff_code`)
-    REFERENCES `new_mic`.`mic_staff` (`staff_code`)
+    REFERENCES `mic_data`.`mic_staff` (`staff_code`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
@@ -114,9 +114,9 @@ COMMENT = 'Contract information';
 
 
 -- -----------------------------------------------------
--- Table `new_mic`.`mic_accident`
+-- Table `mic_data`.`mic_accident`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `new_mic`.`mic_accident` (
+CREATE TABLE IF NOT EXISTS `mic_data`.`mic_accident` (
   `title` VARCHAR(250) NOT NULL,
   `attachment` VARCHAR(255) NOT NULL,
   `date` INT(11) UNSIGNED NOT NULL,
@@ -124,7 +124,7 @@ CREATE TABLE IF NOT EXISTS `new_mic`.`mic_accident` (
   INDEX `fk_mic_accident_mic_contract1_idx` (`contract_code` ASC),
   CONSTRAINT `fk_mic_accident_mic_contract1`
     FOREIGN KEY (`contract_code`)
-    REFERENCES `new_mic`.`mic_contract` (`contract_code`)
+    REFERENCES `mic_data`.`mic_contract` (`contract_code`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
@@ -133,9 +133,9 @@ COMMENT = 'Accident information';
 
 
 -- -----------------------------------------------------
--- Table `new_mic`.`mic_new_card_request`
+-- Table `mic_data`.`mic_new_card_request`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `new_mic`.`mic_new_card_request` (
+CREATE TABLE IF NOT EXISTS `mic_data`.`mic_new_card_request` (
   `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `request_date` INT(11) UNSIGNED NOT NULL,
   `resolve_date` INT(11) UNSIGNED NOT NULL,
@@ -147,12 +147,12 @@ CREATE TABLE IF NOT EXISTS `new_mic`.`mic_new_card_request` (
   INDEX `fk_mic_new_card_request_mic_customer1_idx` (`customer_code` ASC),
   CONSTRAINT `fk_mic_new_card_request_mic_card1`
     FOREIGN KEY (`old_card_id`)
-    REFERENCES `new_mic`.`mic_card` (`card_id`)
+    REFERENCES `mic_data`.`mic_card` (`card_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_mic_new_card_request_mic_customer1`
     FOREIGN KEY (`customer_code`)
-    REFERENCES `new_mic`.`mic_customer` (`customer_code`)
+    REFERENCES `mic_data`.`mic_customer` (`customer_code`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
@@ -161,9 +161,9 @@ COMMENT = 'New card request information';
 
 
 -- -----------------------------------------------------
--- Table `new_mic`.`mic_card`
+-- Table `mic_data`.`mic_card`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `new_mic`.`mic_card` (
+CREATE TABLE IF NOT EXISTS `mic_data`.`mic_card` (
   `card_id` VARCHAR(20) NOT NULL,
   `activated_date` INT(11) UNSIGNED NOT NULL,
   `deactivated_date` INT(11) UNSIGNED NULL DEFAULT NULL,
@@ -174,12 +174,12 @@ CREATE TABLE IF NOT EXISTS `new_mic`.`mic_card` (
   INDEX `fk_mic_card_mic_new_card_request1_idx` (`new_card_request_id` ASC),
   CONSTRAINT `fk_mic_card_mic_contract1`
     FOREIGN KEY (`contract_code`)
-    REFERENCES `new_mic`.`mic_contract` (`contract_code`)
+    REFERENCES `mic_data`.`mic_contract` (`contract_code`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_mic_card_mic_new_card_request1`
     FOREIGN KEY (`new_card_request_id`)
-    REFERENCES `new_mic`.`mic_new_card_request` (`id`)
+    REFERENCES `mic_data`.`mic_new_card_request` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
@@ -188,9 +188,9 @@ COMMENT = 'Card information';
 
 
 -- -----------------------------------------------------
--- Table `new_mic`.`mic_card_access_log`
+-- Table `mic_data`.`mic_card_access_log`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `new_mic`.`mic_card_access_log` (
+CREATE TABLE IF NOT EXISTS `mic_data`.`mic_card_access_log` (
   `date` INT(11) UNSIGNED NOT NULL,
   `device` VARCHAR(50) NOT NULL,
   `request` VARCHAR(200) NOT NULL,
@@ -199,7 +199,7 @@ CREATE TABLE IF NOT EXISTS `new_mic`.`mic_card_access_log` (
   INDEX `fk_mic_card_access_log_mic_card1_idx` (`card_id` ASC),
   CONSTRAINT `fk_mic_card_access_log_mic_card1`
     FOREIGN KEY (`card_id`)
-    REFERENCES `new_mic`.`mic_card` (`card_id`)
+    REFERENCES `mic_data`.`mic_card` (`card_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
@@ -208,9 +208,9 @@ COMMENT = 'Card access log';
 
 
 -- -----------------------------------------------------
--- Table `new_mic`.`mic_compensation`
+-- Table `mic_data`.`mic_compensation`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `new_mic`.`mic_compensation` (
+CREATE TABLE IF NOT EXISTS `mic_data`.`mic_compensation` (
   `conpensation_code` VARCHAR(10) NOT NULL,
   `driver_name` VARCHAR(80) NOT NULL,
   `license_number` VARCHAR(15) NOT NULL,
@@ -237,7 +237,7 @@ CREATE TABLE IF NOT EXISTS `new_mic`.`mic_compensation` (
   INDEX `fk_mic_compensation_mic_contract1_idx` (`contract_code` ASC),
   CONSTRAINT `fk_mic_compensation_mic_contract1`
     FOREIGN KEY (`contract_code`)
-    REFERENCES `new_mic`.`mic_contract` (`contract_code`)
+    REFERENCES `mic_data`.`mic_contract` (`contract_code`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
@@ -246,9 +246,9 @@ COMMENT = 'Compensation information';
 
 
 -- -----------------------------------------------------
--- Table `new_mic`.`mic_payment`
+-- Table `mic_data`.`mic_payment`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `new_mic`.`mic_payment` (
+CREATE TABLE IF NOT EXISTS `mic_data`.`mic_payment` (
   `date` INT(11) UNSIGNED NOT NULL,
   `method` VARCHAR(20) NOT NULL,
   `service` VARCHAR(250) NOT NULL,
@@ -259,7 +259,7 @@ CREATE TABLE IF NOT EXISTS `new_mic`.`mic_payment` (
   INDEX `fk_mic_payment_mic_contract1_idx` (`contract_code` ASC),
   CONSTRAINT `fk_mic_payment_mic_contract1`
     FOREIGN KEY (`contract_code`)
-    REFERENCES `new_mic`.`mic_contract` (`contract_code`)
+    REFERENCES `mic_data`.`mic_contract` (`contract_code`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
@@ -268,9 +268,9 @@ COMMENT = 'Payment information';
 
 
 -- -----------------------------------------------------
--- Table `new_mic`.`mic_punishment`
+-- Table `mic_data`.`mic_punishment`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `new_mic`.`mic_punishment` (
+CREATE TABLE IF NOT EXISTS `mic_data`.`mic_punishment` (
   `date` INT(11) UNSIGNED NOT NULL,
   `title` VARCHAR(250) NOT NULL,
   `attachment` VARCHAR(255) NOT NULL,
@@ -278,7 +278,7 @@ CREATE TABLE IF NOT EXISTS `new_mic`.`mic_punishment` (
   INDEX `fk_mic_punishment_mic_contract1_idx` (`contract_code` ASC),
   CONSTRAINT `fk_mic_punishment_mic_contract1`
     FOREIGN KEY (`contract_code`)
-    REFERENCES `new_mic`.`mic_contract` (`contract_code`)
+    REFERENCES `mic_data`.`mic_contract` (`contract_code`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
