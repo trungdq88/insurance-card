@@ -7,4 +7,6 @@
     <string name="please_put_nfc_close_to_phone">Vui lòng áp thẻ vào gần điện thoại để kiểm tra thẻ</string>
     <string name="or_enter_card_id">Hoặc nhập mã thẻ</string>
     <string name="check">Kiểm tra</string>
+    <string name="close">Thoát</string>
+    <string name="add_punishment">Thêm vi phạm</string>
 </resources>

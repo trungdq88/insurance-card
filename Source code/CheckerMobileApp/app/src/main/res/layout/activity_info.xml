@@ -365,4 +365,12 @@
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnMenu"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:src="@android:drawable/ic_menu_add" />
 </RelativeLayout>
