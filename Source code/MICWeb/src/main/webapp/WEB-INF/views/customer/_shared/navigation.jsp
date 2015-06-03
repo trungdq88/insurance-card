@@ -49,12 +49,12 @@
         <li>
           <a href="${pageContext.request.contextPath}/customer/contract">Thông Tin Bảo Hiểm</a>
         </li>
-        <li>
-          <a href="${pageContext.request.contextPath}/customer/punishment">Lịch Sử Vi Phạm</a>
-        </li>
-        <li>
-          <a href="${pageContext.request.contextPath}/customer/compensation">Lịch Sử Bồi Thường </a>
-        </li>
+        <%--<li>--%>
+          <%--<a href="${pageContext.request.contextPath}/customer/punishment">Lịch Sử Vi Phạm</a>--%>
+        <%--</li>--%>
+        <%--<li>--%>
+          <%--<a href="${pageContext.request.contextPath}/customer/compensation">Lịch Sử Bồi Thường </a>--%>
+        <%--</li>--%>
         <li>
           <a href="${pageContext.request.contextPath}/customer/card">Thông Tin Thẻ</a>
         </li>

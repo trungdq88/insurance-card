@@ -61,14 +61,14 @@
                         </tr>
                         <tr>
                             <td>2</td>
-                            <td><a href="${pageContext.request.contextPath}/staff/contract?action=detail">BHBB374</a></td>
+                            <td><a href="${pageContext.request.contextPath}/customer/contract?action=ContractDetail">BHBB374</a></td>
                             <td>04/05/2015</td>
                             <td>1 năm</td>
                             <td><span class="label label-warning">Sắp hết hạn</span> </td>
                         </tr>
                         <tr>
                             <td>3</td>
-                            <td><a href="${pageContext.request.contextPath}/staff/contract?action=detail">BHBB374</a></td>
+                            <td><a href="${pageContext.request.contextPath}/customer/contract?action=ContractDetail">BHBB374</a></td>
                             <td>04/05/2015</td>
                             <td>1 năm</td>
                             <td><span class="label label-danger">Hết hạn</span> </td>
@@ -76,49 +76,49 @@
 
                         <tr>
                             <td>1</td>
-                            <td><a href="${pageContext.request.contextPath}/staff/contract?action=detail">BHBB374</a></td>
+                            <td><a href="${pageContext.request.contextPath}/customer/contract?action=ContractDetail">BHBB374</a></td>
                             <td>04/05/2015</td>
                             <td>1 năm</td>
                             <td><span class="label label-gray">Chờ thanh toán</span> </td>
                         </tr>
                         <tr>
                             <td>1</td>
-                            <td><a href="${pageContext.request.contextPath}/staff/contract?action=detail">BHBB374</a></td>
+                            <td><a href="${pageContext.request.contextPath}/customer/contract?action=ContractDetail">BHBB374</a></td>
                             <td>04/05/2015</td>
                             <td>1 năm</td>
                             <td><span class="label label-primary">Chưa có thẻ</span> </td>
                         </tr>
                         <tr>
                             <td>1</td>
-                            <td><a href="${pageContext.request.contextPath}/staff/contract?action=detail">BHBB374</a></td>
+                            <td><a href="${pageContext.request.contextPath}/customer/contract?action=ContractDetail">BHBB374</a></td>
                             <td>04/05/2015</td>
                             <td>1 năm</td>
                             <td><span class="label label-dark">Đã huỷ hợp đồng</span> </td>
                         </tr>
                         <tr>
                             <td>1</td>
-                            <td><a href="${pageContext.request.contextPath}/staff/contract?action=detail">BHBB374</a></td>
+                            <td><a href="${pageContext.request.contextPath}/customer/contract?action=ContractDetail">BHBB374</a></td>
                             <td>04/05/2015</td>
                             <td>1 năm</td>
                             <td><span class="label label-success">Sẵn sàng</span> </td>
                         </tr>
                         <tr>
                             <td>1</td>
-                            <td><a href="${pageContext.request.contextPath}/staff/contract?action=detail">BHBB374</a></td>
+                            <td><a href="${pageContext.request.contextPath}/customer/contract?action=ContractDetail">BHBB374</a></td>
                             <td>04/05/2015</td>
                             <td>1 năm</td>
                             <td><span class="label label-success">Sẵn sàng</span> </td>
                         </tr>
                         <tr>
                             <td>1</td>
-                            <td><a href="${pageContext.request.contextPath}/staff/contract?action=detail">BHBB374</a></td>
+                            <td><a href="${pageContext.request.contextPath}/customer/contract?action=ContractDetail">BHBB374</a></td>
                             <td>04/05/2015</td>
                             <td>1 năm</td>
                             <td><span class="label label-success">Sẵn sàng</span> </td>
                         </tr>
                         <tr>
                             <td>1</td>
-                            <td><a href="${pageContext.request.contextPath}/staff/contract?action=detail">BHBB374</a></td>
+                            <td><a href="${pageContext.request.contextPath}/customer/contract?action=ContractDetail">BHBB374</a></td>
                             <td>04/05/2015</td>
                             <td>1 năm</td>
                             <td><span class="label label-success">Sẵn sàng</span> </td>

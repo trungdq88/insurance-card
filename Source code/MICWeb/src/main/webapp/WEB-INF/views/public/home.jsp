@@ -77,7 +77,7 @@
 
     <div class="container">
         <div class="row">
-            <div class="col-md-7">
+            <div class="col-md-6">
                 <h1>Carousel</h1>
 
                 <div id="carousel-example-captions" class="carousel slide" data-ride="carousel">
@@ -140,7 +140,7 @@
                 </div>
 
             </div>
-            <div class="col-md-5">
+            <div class="col-md-6">
                 <div class="form-top-left col-md-12">
                     <h3>Đăng ký ngay</h3>
 
