@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence" version="2.0">
+
+    <persistence-unit name="MicPersistenceUnit">
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+        <class>com.fpt.mic.micweb.model.entity.AccidentEntity</class>
+        <class>com.fpt.mic.micweb.model.entity.CardEntity</class>
+        <class>com.fpt.mic.micweb.model.entity.CardAccessLogEntity</class>
+        <class>com.fpt.mic.micweb.model.entity.CompensationEntity</class>
+        <class>com.fpt.mic.micweb.model.entity.ContractEntity</class>
+        <class>com.fpt.mic.micweb.model.entity.ContractTypeEntity</class>
+        <class>com.fpt.mic.micweb.model.entity.CustomerEntity</class>
+        <class>com.fpt.mic.micweb.model.entity.NewCardRequestEntity</class>
+        <class>com.fpt.mic.micweb.model.entity.PaymentEntity</class>
+        <class>com.fpt.mic.micweb.model.entity.PunishmentEntity</class>
+        <class>com.fpt.mic.micweb.model.entity.StaffEntity</class>
+        <class>com.fpt.mic.micweb.model.entity.StaffEntity</class>
+
+        <properties>
+            <property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/mic_data" />
+            <property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver" />
+            <property name="hibernate.connection.username" value="root" />
+            <property name="hibernate.connection.password" value="" />
+            <property name="hibernate.archive.autodetection" value="class" />
+            <property name="hibernate.show_sql" value="true" />
+            <property name="hibernate.format_sql" value="true" />
+            <property name="hbm2ddl.auto" value="update" />
+        </properties>
+    </persistence-unit>
+</persistence>
