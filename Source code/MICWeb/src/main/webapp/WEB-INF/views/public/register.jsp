@@ -23,7 +23,7 @@
     <a href="home.html">
         <div class="logo-container">
             <div class="logo">
-                <img src="${pageContext.request.contextPath}/img/unnamed.png">
+                <img src="${pageContext.request.contextPath}/img/logoCompany.png" style="width: 60px;height: 60px">
             </div>
             <div class="brand">
                 MIC
@@ -50,13 +50,14 @@
                                     <small>Vui lòng điền đầy đủ những thông tin dưới đây.</small>
                                 </h3>
                             </div>
-                            <ul>
-                                <li><a href="#personal" data-toggle="tab"><strong>1. Thông tin cá nhân </strong></a>
+
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li><a href="#personal" data-toggle="tab">1. Thông tin cá nhân </a>
                                 </li>
-                                <li><a href="#vehicle" data-toggle="tab"><strong>2. Thông tin xe </strong></a></li>
-                                <li><a href="#contract" data-toggle="tab"><strong>3. Hợp đồng bảo hiểm </strong></a>
+                                <li><a href="#vehicle" data-toggle="tab">2. Thông tin xe </a></li>
+                                <li><a href="#contract" data-toggle="tab">3. Hợp đồng bảo hiểm </a>
                                 </li>
-                                <li><a href="#payment" data-toggle="tab"><strong>4. Thanh toán </strong></a></li>
+                                <li><a href="#payment" data-toggle="tab">4. Thanh toán </a></li>
                             </ul>
 
                             <div class="tab-content">
@@ -546,42 +547,7 @@
         </div>
     </footer>
 
-    <!--<div class="fixed-plugin">
-        <div class="dropdown open">
-            <a href="#" data-toggle="dropdown">
-                <i class="fa fa-cog fa-2x"> </i>
-            </a>
-            <ul class="dropdown-menu">
-                <li>
-                    <a href="http://ct-freebies.herokuapp.com/wizard-demo-register">
-                        <img src="images/thumb_register.png">
-                        Register user flow
-                    </a>
-                </li>
-                <li>
-                    <a href="http://ct-freebies.herokuapp.com/wizard-demo-list-boat">
-                        <img src="images/thumb_list_boat.png">
-                        List your boat
-                    </a>
-                </li>
-                <li class="active">
-                    <a href="http://ct-freebies.herokuapp.com/wizard-demo-list-place">
-                        <img src="images/thumb_list_place.png">
-                        List your place
-                    </a>
-                </li>
-                <li>
-                    <a href="http://ct-freebies.herokuapp.com/wizard-components" target="_blank"
-                       class="btn btn-default btn-fill">How to use</a>
-                </li>
-                <li>
-                    <a href="http://www.creative-tim.com/product/wizard" target="_blank" class="btn btn-info btn-fill">Download,
-                        it's free!</a>
-                </li>
-                <li><a></a></li>
-            </ul>
-        </div>
-    </div>-->
+
 </div>
 
 </body>

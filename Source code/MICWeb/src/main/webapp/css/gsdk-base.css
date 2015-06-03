@@ -901,7 +901,6 @@ label {
 
 .wizard-card > ul > li a {
     border: 0 !important;
-    text-transform: uppercase;
     background-color: #999999;
     color: #FFFFFF !important;
     font-size: 12px;
