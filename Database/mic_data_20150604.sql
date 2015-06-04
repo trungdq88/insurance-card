@@ -67,9 +67,10 @@ COMMENT = 'Staff information';
 -- Table `mic_data`.`mic_contract`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mic_data`.`mic_contract` (
-  `contract_code` VARCHAR(20) NOT NULL,
-  `start_date` INT(11) UNSIGNED NOT NULL,
-  `expired_date` INT(11) UNSIGNED NOT NULL,
+  `contract_code` VARCHAR(10) NOT NULL,
+  `start_date` DATETIME NOT NULL,
+  `expired_date` DATETIME NOT NULL,
+  `status` VARCHAR(50) NOT NULL,
   `contract_fee` FLOAT UNSIGNED NOT NULL,
   `plate` VARCHAR(15) NOT NULL,
   `brand` VARCHAR(20) NOT NULL,
@@ -83,7 +84,7 @@ CREATE TABLE IF NOT EXISTS `mic_data`.`mic_contract` (
   `weight` INT(11) UNSIGNED NOT NULL,
   `seat_capacity` INT(11) UNSIGNED NOT NULL,
   `cert_image` VARCHAR(255) NULL DEFAULT NULL,
-  `cancel_date` INT(11) UNSIGNED NULL DEFAULT NULL,
+  `cancel_date` DATETIME NULL DEFAULT NULL,
   `cancel_reason` VARCHAR(250) NULL DEFAULT NULL,
   `cancel_note` VARCHAR(2000) NULL DEFAULT NULL,
   `staff_code` VARCHAR(10) NOT NULL,
@@ -120,8 +121,8 @@ CREATE TABLE IF NOT EXISTS `mic_data`.`mic_accident` (
   `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `title` VARCHAR(250) NOT NULL,
   `attachment` VARCHAR(255) NOT NULL,
-  `created_date` INT(11) UNSIGNED NOT NULL,
-  `contract_code` VARCHAR(20) NOT NULL,
+  `created_date` DATETIME NOT NULL,
+  `contract_code` VARCHAR(10) NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_mic_accident_mic_contract1_idx` (`contract_code` ASC),
   CONSTRAINT `fk_mic_accident_mic_contract1`
@@ -139,8 +140,8 @@ COMMENT = 'Accident information';
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mic_data`.`mic_new_card_request` (
   `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `request_date` INT(11) UNSIGNED NOT NULL,
-  `resolve_date` INT(11) UNSIGNED NOT NULL,
+  `request_date` DATETIME NOT NULL,
+  `resolve_date` DATETIME NOT NULL,
   `note` VARCHAR(2000) NULL DEFAULT NULL,
   `old_card_id` VARCHAR(20) NOT NULL,
   `customer_code` VARCHAR(10) NOT NULL,
@@ -167,9 +168,9 @@ COMMENT = 'New card request information';
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mic_data`.`mic_card` (
   `card_id` VARCHAR(20) NOT NULL,
-  `activated_date` INT(11) UNSIGNED NOT NULL,
-  `deactivated_date` INT(11) UNSIGNED NULL DEFAULT NULL,
-  `contract_code` VARCHAR(20) NOT NULL,
+  `activated_date` DATETIME NOT NULL,
+  `deactivated_date` DATETIME NULL DEFAULT NULL,
+  `contract_code` VARCHAR(10) NOT NULL,
   `new_card_request_id` INT(11) UNSIGNED NULL DEFAULT NULL,
   PRIMARY KEY (`card_id`),
   INDEX `fk_mic_card_mic_contract1_idx` (`contract_code` ASC),
@@ -194,7 +195,7 @@ COMMENT = 'Card information';
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mic_data`.`mic_card_access_log` (
   `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `access_date` INT(11) UNSIGNED NOT NULL,
+  `access_date` DATETIME NOT NULL,
   `device` VARCHAR(50) NOT NULL,
   `request_service` VARCHAR(200) NOT NULL,
   `response_content` VARCHAR(200) NOT NULL,
@@ -223,7 +224,7 @@ CREATE TABLE IF NOT EXISTS `mic_data`.`mic_compensation` (
   `vehicle_capacity` VARCHAR(20) NOT NULL,
   `driver_address` VARCHAR(250) NOT NULL,
   `plate` VARCHAR(15) NOT NULL,
-  `accident_date` INT(11) UNSIGNED NOT NULL,
+  `accident_date` DATETIME NOT NULL,
   `accident_place` VARCHAR(20) NOT NULL,
   `control_department` VARCHAR(250) NOT NULL,
   `description` VARCHAR(2000) NOT NULL,
@@ -232,11 +233,11 @@ CREATE TABLE IF NOT EXISTS `mic_data`.`mic_compensation` (
   `observer` VARCHAR(80) NOT NULL,
   `compensation_note` VARCHAR(2000) NULL DEFAULT NULL,
   `attachment` VARCHAR(255) NULL DEFAULT NULL,
-  `created_date` INT(11) UNSIGNED NOT NULL,
-  `resolve_date` INT(11) UNSIGNED NULL DEFAULT NULL,
+  `created_date` DATETIME NOT NULL,
+  `resolve_date` DATETIME NULL DEFAULT NULL,
   `desicion` VARCHAR(250) NULL DEFAULT NULL,
   `resolve_note` VARCHAR(2000) NULL DEFAULT NULL,
-  `contract_code` VARCHAR(20) NOT NULL,
+  `contract_code` VARCHAR(10) NOT NULL,
   PRIMARY KEY (`conpensation_code`),
   INDEX `fk_mic_compensation_mic_contract1_idx` (`contract_code` ASC),
   CONSTRAINT `fk_mic_compensation_mic_contract1`
@@ -254,13 +255,13 @@ COMMENT = 'Compensation information';
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mic_data`.`mic_payment` (
   `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `paid_date` INT(11) UNSIGNED NOT NULL,
+  `paid_date` DATETIME NOT NULL,
   `payment_method` VARCHAR(20) NOT NULL,
   `content` VARCHAR(250) NOT NULL,
   `amount` FLOAT UNSIGNED NOT NULL,
   `receiver` VARCHAR(80) NULL DEFAULT NULL,
   `paypal_trans_id` VARCHAR(50) NULL DEFAULT NULL,
-  `contract_code` VARCHAR(20) NOT NULL,
+  `contract_code` VARCHAR(10) NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_mic_payment_mic_contract1_idx` (`contract_code` ASC),
   CONSTRAINT `fk_mic_payment_mic_contract1`
@@ -278,10 +279,10 @@ COMMENT = 'Payment information';
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mic_data`.`mic_punishment` (
   `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `created_date` INT(11) UNSIGNED NOT NULL,
+  `created_date` DATETIME NOT NULL,
   `title` VARCHAR(250) NOT NULL,
   `attachment` VARCHAR(255) NOT NULL,
-  `contract_code` VARCHAR(20) NOT NULL,
+  `contract_code` VARCHAR(10) NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_mic_punishment_mic_contract1_idx` (`contract_code` ASC),
   CONSTRAINT `fk_mic_punishment_mic_contract1`
