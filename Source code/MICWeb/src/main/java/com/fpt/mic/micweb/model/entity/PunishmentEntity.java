@@ -1,15 +1,17 @@
 package com.fpt.mic.micweb.model.entity;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 
 /**
- * Created by dinhquangtrung on 6/2/15.
+ * FPT University - Capstone Project - Summer 2015 - MICWeb
+ * Created by dinhquangtrung on 6/5/15.
  */
 @Entity
 @Table(name = "mic_punishment", schema = "", catalog = "mic_data")
 public class PunishmentEntity {
     private int id;
-    private int date;
+    private Timestamp createdDate;
     private String title;
     private String attachment;
     private String contractCode;
@@ -25,13 +27,13 @@ public class PunishmentEntity {
     }
 
     @Basic
-    @Column(name = "date")
-    public int getDate() {
-        return date;
+    @Column(name = "created_date")
+    public Timestamp getCreatedDate() {
+        return createdDate;
     }
 
-    public void setDate(int date) {
-        this.date = date;
+    public void setCreatedDate(Timestamp createdDate) {
+        this.createdDate = createdDate;
     }
 
     @Basic
@@ -72,7 +74,7 @@ public class PunishmentEntity {
         PunishmentEntity that = (PunishmentEntity) o;
 
         if (id != that.id) return false;
-        if (date != that.date) return false;
+        if (createdDate != null ? !createdDate.equals(that.createdDate) : that.createdDate != null) return false;
         if (title != null ? !title.equals(that.title) : that.title != null) return false;
         if (attachment != null ? !attachment.equals(that.attachment) : that.attachment != null) return false;
         if (contractCode != null ? !contractCode.equals(that.contractCode) : that.contractCode != null) return false;
@@ -83,7 +85,7 @@ public class PunishmentEntity {
     @Override
     public int hashCode() {
         int result = id;
-        result = 31 * result + date;
+        result = 31 * result + (createdDate != null ? createdDate.hashCode() : 0);
         result = 31 * result + (title != null ? title.hashCode() : 0);
         result = 31 * result + (attachment != null ? attachment.hashCode() : 0);
         result = 31 * result + (contractCode != null ? contractCode.hashCode() : 0);

@@ -14,7 +14,6 @@
         <class>com.fpt.mic.micweb.model.entity.PaymentEntity</class>
         <class>com.fpt.mic.micweb.model.entity.PunishmentEntity</class>
         <class>com.fpt.mic.micweb.model.entity.StaffEntity</class>
-        <class>com.fpt.mic.micweb.model.entity.StaffEntity</class>
 
         <properties>
             <property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/mic_data" />

@@ -3,23 +3,25 @@ package com.fpt.mic.micweb.model.entity;
 import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.sql.Timestamp;
 
 /**
- * Created by dinhquangtrung on 6/2/15.
+ * FPT University - Capstone Project - Summer 2015 - MICWeb
+ * Created by dinhquangtrung on 6/5/15.
  */
 @Entity
 @javax.persistence.Table(name = "mic_compensation", schema = "", catalog = "mic_data")
 public class CompensationEntity {
-    private String conpensationCode;
+    private String compensationCode;
 
     @Id
-    @javax.persistence.Column(name = "conpensation_code")
-    public String getConpensationCode() {
-        return conpensationCode;
+    @javax.persistence.Column(name = "compensation_code")
+    public String getCompensationCode() {
+        return compensationCode;
     }
 
-    public void setConpensationCode(String conpensationCode) {
-        this.conpensationCode = conpensationCode;
+    public void setCompensationCode(String compensationCode) {
+        this.compensationCode = compensationCode;
     }
 
     private String driverName;
@@ -106,28 +108,28 @@ public class CompensationEntity {
         this.plate = plate;
     }
 
-    private int date;
+    private Timestamp accidentDate;
 
     @Basic
-    @javax.persistence.Column(name = "date")
-    public int getDate() {
-        return date;
+    @javax.persistence.Column(name = "accident_date")
+    public Timestamp getAccidentDate() {
+        return accidentDate;
     }
 
-    public void setDate(int date) {
-        this.date = date;
+    public void setAccidentDate(Timestamp accidentDate) {
+        this.accidentDate = accidentDate;
     }
 
-    private String place;
+    private String accidentPlace;
 
     @Basic
-    @javax.persistence.Column(name = "place")
-    public String getPlace() {
-        return place;
+    @javax.persistence.Column(name = "accident_place")
+    public String getAccidentPlace() {
+        return accidentPlace;
     }
 
-    public void setPlace(String place) {
-        this.place = place;
+    public void setAccidentPlace(String accidentPlace) {
+        this.accidentPlace = accidentPlace;
     }
 
     private String controlDepartment;
@@ -214,27 +216,27 @@ public class CompensationEntity {
         this.attachment = attachment;
     }
 
-    private int createdDate;
+    private Timestamp createdDate;
 
     @Basic
     @javax.persistence.Column(name = "created_date")
-    public int getCreatedDate() {
+    public Timestamp getCreatedDate() {
         return createdDate;
     }
 
-    public void setCreatedDate(int createdDate) {
+    public void setCreatedDate(Timestamp createdDate) {
         this.createdDate = createdDate;
     }
 
-    private Integer resolveDate;
+    private Timestamp resolveDate;
 
     @Basic
     @javax.persistence.Column(name = "resolve_date")
-    public Integer getResolveDate() {
+    public Timestamp getResolveDate() {
         return resolveDate;
     }
 
-    public void setResolveDate(Integer resolveDate) {
+    public void setResolveDate(Timestamp resolveDate) {
         this.resolveDate = resolveDate;
     }
 
@@ -262,18 +264,6 @@ public class CompensationEntity {
         this.resolveNote = resolveNote;
     }
 
-    private String contractCode;
-
-    @Basic
-    @javax.persistence.Column(name = "contract_code")
-    public String getContractCode() {
-        return contractCode;
-    }
-
-    public void setContractCode(String contractCode) {
-        this.contractCode = contractCode;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -281,9 +271,7 @@ public class CompensationEntity {
 
         CompensationEntity that = (CompensationEntity) o;
 
-        if (date != that.date) return false;
-        if (createdDate != that.createdDate) return false;
-        if (conpensationCode != null ? !conpensationCode.equals(that.conpensationCode) : that.conpensationCode != null)
+        if (compensationCode != null ? !compensationCode.equals(that.compensationCode) : that.compensationCode != null)
             return false;
         if (driverName != null ? !driverName.equals(that.driverName) : that.driverName != null) return false;
         if (licenseNumber != null ? !licenseNumber.equals(that.licenseNumber) : that.licenseNumber != null)
@@ -295,7 +283,9 @@ public class CompensationEntity {
         if (driverAddress != null ? !driverAddress.equals(that.driverAddress) : that.driverAddress != null)
             return false;
         if (plate != null ? !plate.equals(that.plate) : that.plate != null) return false;
-        if (place != null ? !place.equals(that.place) : that.place != null) return false;
+        if (accidentDate != null ? !accidentDate.equals(that.accidentDate) : that.accidentDate != null) return false;
+        if (accidentPlace != null ? !accidentPlace.equals(that.accidentPlace) : that.accidentPlace != null)
+            return false;
         if (controlDepartment != null ? !controlDepartment.equals(that.controlDepartment) : that.controlDepartment != null)
             return false;
         if (description != null ? !description.equals(that.description) : that.description != null) return false;
@@ -305,17 +295,17 @@ public class CompensationEntity {
         if (compensationNote != null ? !compensationNote.equals(that.compensationNote) : that.compensationNote != null)
             return false;
         if (attachment != null ? !attachment.equals(that.attachment) : that.attachment != null) return false;
+        if (createdDate != null ? !createdDate.equals(that.createdDate) : that.createdDate != null) return false;
         if (resolveDate != null ? !resolveDate.equals(that.resolveDate) : that.resolveDate != null) return false;
         if (desicion != null ? !desicion.equals(that.desicion) : that.desicion != null) return false;
         if (resolveNote != null ? !resolveNote.equals(that.resolveNote) : that.resolveNote != null) return false;
-        if (contractCode != null ? !contractCode.equals(that.contractCode) : that.contractCode != null) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        int result = conpensationCode != null ? conpensationCode.hashCode() : 0;
+        int result = compensationCode != null ? compensationCode.hashCode() : 0;
         result = 31 * result + (driverName != null ? driverName.hashCode() : 0);
         result = 31 * result + (licenseNumber != null ? licenseNumber.hashCode() : 0);
         result = 31 * result + (licenseType != null ? licenseType.hashCode() : 0);
@@ -323,8 +313,8 @@ public class CompensationEntity {
         result = 31 * result + (vehicleCapacity != null ? vehicleCapacity.hashCode() : 0);
         result = 31 * result + (driverAddress != null ? driverAddress.hashCode() : 0);
         result = 31 * result + (plate != null ? plate.hashCode() : 0);
-        result = 31 * result + date;
-        result = 31 * result + (place != null ? place.hashCode() : 0);
+        result = 31 * result + (accidentDate != null ? accidentDate.hashCode() : 0);
+        result = 31 * result + (accidentPlace != null ? accidentPlace.hashCode() : 0);
         result = 31 * result + (controlDepartment != null ? controlDepartment.hashCode() : 0);
         result = 31 * result + (description != null ? description.hashCode() : 0);
         result = 31 * result + (humanDamage != null ? humanDamage.hashCode() : 0);
@@ -332,11 +322,10 @@ public class CompensationEntity {
         result = 31 * result + (observer != null ? observer.hashCode() : 0);
         result = 31 * result + (compensationNote != null ? compensationNote.hashCode() : 0);
         result = 31 * result + (attachment != null ? attachment.hashCode() : 0);
-        result = 31 * result + createdDate;
+        result = 31 * result + (createdDate != null ? createdDate.hashCode() : 0);
         result = 31 * result + (resolveDate != null ? resolveDate.hashCode() : 0);
         result = 31 * result + (desicion != null ? desicion.hashCode() : 0);
         result = 31 * result + (resolveNote != null ? resolveNote.hashCode() : 0);
-        result = 31 * result + (contractCode != null ? contractCode.hashCode() : 0);
         return result;
     }
 }

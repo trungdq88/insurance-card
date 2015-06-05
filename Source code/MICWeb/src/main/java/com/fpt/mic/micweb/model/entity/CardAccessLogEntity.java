@@ -1,18 +1,20 @@
 package com.fpt.mic.micweb.model.entity;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 
 /**
- * Created by dinhquangtrung on 6/2/15.
+ * FPT University - Capstone Project - Summer 2015 - MICWeb
+ * Created by dinhquangtrung on 6/5/15.
  */
 @Entity
 @Table(name = "mic_card_access_log", schema = "", catalog = "mic_data")
 public class CardAccessLogEntity {
     private int id;
-    private int date;
+    private Timestamp accessDate;
     private String device;
-    private String request;
-    private String response;
+    private String requestService;
+    private String responseContent;
     private String cardId;
 
     @Id
@@ -26,13 +28,13 @@ public class CardAccessLogEntity {
     }
 
     @Basic
-    @Column(name = "date")
-    public int getDate() {
-        return date;
+    @Column(name = "access_date")
+    public Timestamp getAccessDate() {
+        return accessDate;
     }
 
-    public void setDate(int date) {
-        this.date = date;
+    public void setAccessDate(Timestamp accessDate) {
+        this.accessDate = accessDate;
     }
 
     @Basic
@@ -46,23 +48,23 @@ public class CardAccessLogEntity {
     }
 
     @Basic
-    @Column(name = "request")
-    public String getRequest() {
-        return request;
+    @Column(name = "request_service")
+    public String getRequestService() {
+        return requestService;
     }
 
-    public void setRequest(String request) {
-        this.request = request;
+    public void setRequestService(String requestService) {
+        this.requestService = requestService;
     }
 
     @Basic
-    @Column(name = "response")
-    public String getResponse() {
-        return response;
+    @Column(name = "response_content")
+    public String getResponseContent() {
+        return responseContent;
     }
 
-    public void setResponse(String response) {
-        this.response = response;
+    public void setResponseContent(String responseContent) {
+        this.responseContent = responseContent;
     }
 
     @Basic
@@ -83,10 +85,12 @@ public class CardAccessLogEntity {
         CardAccessLogEntity that = (CardAccessLogEntity) o;
 
         if (id != that.id) return false;
-        if (date != that.date) return false;
+        if (accessDate != null ? !accessDate.equals(that.accessDate) : that.accessDate != null) return false;
         if (device != null ? !device.equals(that.device) : that.device != null) return false;
-        if (request != null ? !request.equals(that.request) : that.request != null) return false;
-        if (response != null ? !response.equals(that.response) : that.response != null) return false;
+        if (requestService != null ? !requestService.equals(that.requestService) : that.requestService != null)
+            return false;
+        if (responseContent != null ? !responseContent.equals(that.responseContent) : that.responseContent != null)
+            return false;
         if (cardId != null ? !cardId.equals(that.cardId) : that.cardId != null) return false;
 
         return true;
@@ -95,10 +99,10 @@ public class CardAccessLogEntity {
     @Override
     public int hashCode() {
         int result = id;
-        result = 31 * result + date;
+        result = 31 * result + (accessDate != null ? accessDate.hashCode() : 0);
         result = 31 * result + (device != null ? device.hashCode() : 0);
-        result = 31 * result + (request != null ? request.hashCode() : 0);
-        result = 31 * result + (response != null ? response.hashCode() : 0);
+        result = 31 * result + (requestService != null ? requestService.hashCode() : 0);
+        result = 31 * result + (responseContent != null ? responseContent.hashCode() : 0);
         result = 31 * result + (cardId != null ? cardId.hashCode() : 0);
         return result;
     }

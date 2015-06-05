@@ -3,9 +3,11 @@ package com.fpt.mic.micweb.model.entity;
 import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.sql.Timestamp;
 
 /**
- * Created by dinhquangtrung on 6/2/15.
+ * FPT University - Capstone Project - Summer 2015 - MICWeb
+ * Created by dinhquangtrung on 6/5/15.
  */
 @Entity
 @javax.persistence.Table(name = "mic_contract", schema = "", catalog = "mic_data")
@@ -22,28 +24,40 @@ public class ContractEntity {
         this.contractCode = contractCode;
     }
 
-    private int startDate;
+    private Timestamp startDate;
 
     @Basic
     @javax.persistence.Column(name = "start_date")
-    public int getStartDate() {
+    public Timestamp getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(int startDate) {
+    public void setStartDate(Timestamp startDate) {
         this.startDate = startDate;
     }
 
-    private int expiredDate;
+    private Timestamp expiredDate;
 
     @Basic
     @javax.persistence.Column(name = "expired_date")
-    public int getExpiredDate() {
+    public Timestamp getExpiredDate() {
         return expiredDate;
     }
 
-    public void setExpiredDate(int expiredDate) {
+    public void setExpiredDate(Timestamp expiredDate) {
         this.expiredDate = expiredDate;
+    }
+
+    private String status;
+
+    @Basic
+    @javax.persistence.Column(name = "status")
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     private float contractFee;
@@ -94,16 +108,16 @@ public class ContractEntity {
         this.modelCode = modelCode;
     }
 
-    private String type;
+    private String vehicleType;
 
     @Basic
-    @javax.persistence.Column(name = "type")
-    public String getType() {
-        return type;
+    @javax.persistence.Column(name = "vehicle_type")
+    public String getVehicleType() {
+        return vehicleType;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setVehicleType(String vehicleType) {
+        this.vehicleType = vehicleType;
     }
 
     private String color;
@@ -202,15 +216,15 @@ public class ContractEntity {
         this.certImage = certImage;
     }
 
-    private Integer cancelDate;
+    private Timestamp cancelDate;
 
     @Basic
     @javax.persistence.Column(name = "cancel_date")
-    public Integer getCancelDate() {
+    public Timestamp getCancelDate() {
         return cancelDate;
     }
 
-    public void setCancelDate(Integer cancelDate) {
+    public void setCancelDate(Timestamp cancelDate) {
         this.cancelDate = cancelDate;
     }
 
@@ -281,18 +295,19 @@ public class ContractEntity {
 
         ContractEntity that = (ContractEntity) o;
 
-        if (startDate != that.startDate) return false;
-        if (expiredDate != that.expiredDate) return false;
         if (Float.compare(that.contractFee, contractFee) != 0) return false;
         if (yearOfManufacture != that.yearOfManufacture) return false;
         if (weight != that.weight) return false;
         if (seatCapacity != that.seatCapacity) return false;
         if (contractTypeId != that.contractTypeId) return false;
         if (contractCode != null ? !contractCode.equals(that.contractCode) : that.contractCode != null) return false;
+        if (startDate != null ? !startDate.equals(that.startDate) : that.startDate != null) return false;
+        if (expiredDate != null ? !expiredDate.equals(that.expiredDate) : that.expiredDate != null) return false;
+        if (status != null ? !status.equals(that.status) : that.status != null) return false;
         if (plate != null ? !plate.equals(that.plate) : that.plate != null) return false;
         if (brand != null ? !brand.equals(that.brand) : that.brand != null) return false;
         if (modelCode != null ? !modelCode.equals(that.modelCode) : that.modelCode != null) return false;
-        if (type != null ? !type.equals(that.type) : that.type != null) return false;
+        if (vehicleType != null ? !vehicleType.equals(that.vehicleType) : that.vehicleType != null) return false;
         if (color != null ? !color.equals(that.color) : that.color != null) return false;
         if (engine != null ? !engine.equals(that.engine) : that.engine != null) return false;
         if (chassis != null ? !chassis.equals(that.chassis) : that.chassis != null) return false;
@@ -310,13 +325,14 @@ public class ContractEntity {
     @Override
     public int hashCode() {
         int result = contractCode != null ? contractCode.hashCode() : 0;
-        result = 31 * result + startDate;
-        result = 31 * result + expiredDate;
+        result = 31 * result + (startDate != null ? startDate.hashCode() : 0);
+        result = 31 * result + (expiredDate != null ? expiredDate.hashCode() : 0);
+        result = 31 * result + (status != null ? status.hashCode() : 0);
         result = 31 * result + (contractFee != +0.0f ? Float.floatToIntBits(contractFee) : 0);
         result = 31 * result + (plate != null ? plate.hashCode() : 0);
         result = 31 * result + (brand != null ? brand.hashCode() : 0);
         result = 31 * result + (modelCode != null ? modelCode.hashCode() : 0);
-        result = 31 * result + (type != null ? type.hashCode() : 0);
+        result = 31 * result + (vehicleType != null ? vehicleType.hashCode() : 0);
         result = 31 * result + (color != null ? color.hashCode() : 0);
         result = 31 * result + (engine != null ? engine.hashCode() : 0);
         result = 31 * result + (chassis != null ? chassis.hashCode() : 0);

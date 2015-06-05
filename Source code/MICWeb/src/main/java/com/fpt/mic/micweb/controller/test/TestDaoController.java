@@ -10,6 +10,7 @@ import com.fpt.mic.micweb.model.entity.CardEntity;
 import com.fpt.mic.micweb.model.entity.StaffEntity;
 
 import javax.servlet.annotation.WebServlet;
+import java.sql.Timestamp;
 import java.util.List;
 
 /**
@@ -91,7 +92,7 @@ public class TestDaoController extends BasicController {
         // Create card entity
         CardEntity cardEntity = new CardEntity();
         cardEntity.setCardId("123123");
-        cardEntity.setActivatedDate(1231231233);
+        cardEntity.setActivatedDate(new Timestamp(123123123));
         // cardEntity.setDeactivatedDate(); // Don't have this value yet
         // cardEntity.setNewCardRequestId(); // Don't have this value yet
         cardEntity.setContractCode("CON001"); // Contract CON001 must be exists or there will be errors

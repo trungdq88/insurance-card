@@ -1,17 +1,19 @@
 package com.fpt.mic.micweb.model.entity;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 
 /**
- * Created by dinhquangtrung on 6/2/15.
+ * FPT University - Capstone Project - Summer 2015 - MICWeb
+ * Created by dinhquangtrung on 6/5/15.
  */
 @Entity
 @Table(name = "mic_payment", schema = "", catalog = "mic_data")
 public class PaymentEntity {
     private int id;
-    private int date;
-    private String method;
-    private String service;
+    private Timestamp paidDate;
+    private String paymentMethod;
+    private String content;
     private float amount;
     private String receiver;
     private String paypalTransId;
@@ -28,33 +30,33 @@ public class PaymentEntity {
     }
 
     @Basic
-    @Column(name = "date")
-    public int getDate() {
-        return date;
+    @Column(name = "paid_date")
+    public Timestamp getPaidDate() {
+        return paidDate;
     }
 
-    public void setDate(int date) {
-        this.date = date;
-    }
-
-    @Basic
-    @Column(name = "method")
-    public String getMethod() {
-        return method;
-    }
-
-    public void setMethod(String method) {
-        this.method = method;
+    public void setPaidDate(Timestamp paidDate) {
+        this.paidDate = paidDate;
     }
 
     @Basic
-    @Column(name = "service")
-    public String getService() {
-        return service;
+    @Column(name = "payment_method")
+    public String getPaymentMethod() {
+        return paymentMethod;
     }
 
-    public void setService(String service) {
-        this.service = service;
+    public void setPaymentMethod(String paymentMethod) {
+        this.paymentMethod = paymentMethod;
+    }
+
+    @Basic
+    @Column(name = "content")
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
     }
 
     @Basic
@@ -105,10 +107,11 @@ public class PaymentEntity {
         PaymentEntity that = (PaymentEntity) o;
 
         if (id != that.id) return false;
-        if (date != that.date) return false;
         if (Float.compare(that.amount, amount) != 0) return false;
-        if (method != null ? !method.equals(that.method) : that.method != null) return false;
-        if (service != null ? !service.equals(that.service) : that.service != null) return false;
+        if (paidDate != null ? !paidDate.equals(that.paidDate) : that.paidDate != null) return false;
+        if (paymentMethod != null ? !paymentMethod.equals(that.paymentMethod) : that.paymentMethod != null)
+            return false;
+        if (content != null ? !content.equals(that.content) : that.content != null) return false;
         if (receiver != null ? !receiver.equals(that.receiver) : that.receiver != null) return false;
         if (paypalTransId != null ? !paypalTransId.equals(that.paypalTransId) : that.paypalTransId != null)
             return false;
@@ -120,9 +123,9 @@ public class PaymentEntity {
     @Override
     public int hashCode() {
         int result = id;
-        result = 31 * result + date;
-        result = 31 * result + (method != null ? method.hashCode() : 0);
-        result = 31 * result + (service != null ? service.hashCode() : 0);
+        result = 31 * result + (paidDate != null ? paidDate.hashCode() : 0);
+        result = 31 * result + (paymentMethod != null ? paymentMethod.hashCode() : 0);
+        result = 31 * result + (content != null ? content.hashCode() : 0);
         result = 31 * result + (amount != +0.0f ? Float.floatToIntBits(amount) : 0);
         result = 31 * result + (receiver != null ? receiver.hashCode() : 0);
         result = 31 * result + (paypalTransId != null ? paypalTransId.hashCode() : 0);

@@ -3,7 +3,8 @@ package com.fpt.mic.micweb.model.entity;
 import javax.persistence.*;
 
 /**
- * Created by dinhquangtrung on 6/2/15.
+ * FPT University - Capstone Project - Summer 2015 - MICWeb
+ * Created by dinhquangtrung on 6/5/15.
  */
 @Entity
 @Table(name = "mic_contract_type", schema = "", catalog = "mic_data")

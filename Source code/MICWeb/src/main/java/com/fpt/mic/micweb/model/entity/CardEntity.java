@@ -1,16 +1,18 @@
 package com.fpt.mic.micweb.model.entity;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 
 /**
- * Created by dinhquangtrung on 6/2/15.
+ * FPT University - Capstone Project - Summer 2015 - MICWeb
+ * Created by dinhquangtrung on 6/5/15.
  */
 @Entity
 @Table(name = "mic_card", schema = "", catalog = "mic_data")
 public class CardEntity {
     private String cardId;
-    private int activatedDate;
-    private Integer deactivatedDate;
+    private Timestamp activatedDate;
+    private Timestamp deactivatedDate;
     private String contractCode;
     private Integer newCardRequestId;
 
@@ -26,21 +28,21 @@ public class CardEntity {
 
     @Basic
     @Column(name = "activated_date")
-    public int getActivatedDate() {
+    public Timestamp getActivatedDate() {
         return activatedDate;
     }
 
-    public void setActivatedDate(int activatedDate) {
+    public void setActivatedDate(Timestamp activatedDate) {
         this.activatedDate = activatedDate;
     }
 
     @Basic
     @Column(name = "deactivated_date")
-    public Integer getDeactivatedDate() {
+    public Timestamp getDeactivatedDate() {
         return deactivatedDate;
     }
 
-    public void setDeactivatedDate(Integer deactivatedDate) {
+    public void setDeactivatedDate(Timestamp deactivatedDate) {
         this.deactivatedDate = deactivatedDate;
     }
 
@@ -71,8 +73,9 @@ public class CardEntity {
 
         CardEntity that = (CardEntity) o;
 
-        if (activatedDate != that.activatedDate) return false;
         if (cardId != null ? !cardId.equals(that.cardId) : that.cardId != null) return false;
+        if (activatedDate != null ? !activatedDate.equals(that.activatedDate) : that.activatedDate != null)
+            return false;
         if (deactivatedDate != null ? !deactivatedDate.equals(that.deactivatedDate) : that.deactivatedDate != null)
             return false;
         if (contractCode != null ? !contractCode.equals(that.contractCode) : that.contractCode != null) return false;
@@ -85,7 +88,7 @@ public class CardEntity {
     @Override
     public int hashCode() {
         int result = cardId != null ? cardId.hashCode() : 0;
-        result = 31 * result + activatedDate;
+        result = 31 * result + (activatedDate != null ? activatedDate.hashCode() : 0);
         result = 31 * result + (deactivatedDate != null ? deactivatedDate.hashCode() : 0);
         result = 31 * result + (contractCode != null ? contractCode.hashCode() : 0);
         result = 31 * result + (newCardRequestId != null ? newCardRequestId.hashCode() : 0);
