@@ -1,3 +1,8 @@
+-- 20150605 Change:
+-- - Change compensation.accident_place datatype VARCHAR(20) become VARCHAR(250)
+-- - Rename compensation.conpensation_code become compensation_code.
+-- - Change new_card_request.resolve_date allows NULL.
+-- - Change contract.staff_code allows NULL.
 -- MySQL Workbench Forward Engineering
 
 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
@@ -88,7 +93,7 @@ CREATE TABLE IF NOT EXISTS `mic_data`.`mic_contract` (
   `cancel_date` DATETIME NULL DEFAULT NULL,
   `cancel_reason` VARCHAR(250) NULL DEFAULT NULL,
   `cancel_note` VARCHAR(2000) NULL DEFAULT NULL,
-  `staff_code` VARCHAR(10) NOT NULL,
+  `staff_code` VARCHAR(10) NULL DEFAULT NULL,
   `contract_type_id` INT(11) UNSIGNED NOT NULL,
   `customer_code` VARCHAR(10) NOT NULL,
   PRIMARY KEY (`contract_code`),
