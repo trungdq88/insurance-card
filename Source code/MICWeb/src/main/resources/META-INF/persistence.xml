@@ -16,10 +16,10 @@
         <class>com.fpt.mic.micweb.model.entity.StaffEntity</class>
 
         <properties>
-            <property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/mic_data" />
+            <property name="hibernate.connection.url" value="${db.connectionURL}/mic_data" />
             <property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver" />
-            <property name="hibernate.connection.username" value="root" />
-            <property name="hibernate.connection.password" value="" />
+            <property name="hibernate.connection.username" value="${db.username}" />
+            <property name="hibernate.connection.password" value="${db.password}" />
             <property name="hibernate.archive.autodetection" value="class" />
             <property name="hibernate.show_sql" value="true" />
             <property name="hibernate.format_sql" value="true" />
