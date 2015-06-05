@@ -1,3 +1,7 @@
 <resources>
 
+    <style name="text_highlight">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">#ff3156ff</item>
+    </style>
 </resources>
