@@ -13,7 +13,7 @@ import javax.servlet.annotation.WebServlet;
 @WebServlet(name = "CustomerCardController", urlPatterns = "/customer/card")
 public class CardController extends BasicController {
     public ResponseObject getView(R r) {
-        return new JspPae("/customer/card.jsp");
+        return new JspPage("/customer/card.jsp");
     }
     public ResponseObject getNewCard(R r) {
         return new JspPage("/customer/new-card-request.jsp");
