@@ -1,8 +1,6 @@
 package com.fpt.mic.micweb.model.entity;
 
-import javax.persistence.Basic;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.sql.Timestamp;
 
 /**
@@ -10,12 +8,33 @@ import java.sql.Timestamp;
  * Created by dinhquangtrung on 6/5/15.
  */
 @Entity
-@javax.persistence.Table(name = "mic_compensation", schema = "", catalog = "mic_data")
+@Table(name = "mic_compensation", schema = "", catalog = "mic_data")
 public class CompensationEntity {
     private String compensationCode;
+    private String driverName;
+    private String licenseNumber;
+    private String licenseType;
+    private String driverPhone;
+    private String vehicleCapacity;
+    private String driverAddress;
+    private String plate;
+    private Timestamp accidentDate;
+    private String accidentPlace;
+    private String controlDepartment;
+    private String description;
+    private String humanDamage;
+    private String assetDamage;
+    private String observer;
+    private String compensationNote;
+    private String attachment;
+    private Timestamp createdDate;
+    private Timestamp resolveDate;
+    private String desicion;
+    private String resolveNote;
+    private String contractCode;
 
     @Id
-    @javax.persistence.Column(name = "compensation_code")
+    @Column(name = "compensation_code")
     public String getCompensationCode() {
         return compensationCode;
     }
@@ -24,10 +43,8 @@ public class CompensationEntity {
         this.compensationCode = compensationCode;
     }
 
-    private String driverName;
-
     @Basic
-    @javax.persistence.Column(name = "driver_name")
+    @Column(name = "driver_name")
     public String getDriverName() {
         return driverName;
     }
@@ -36,10 +53,8 @@ public class CompensationEntity {
         this.driverName = driverName;
     }
 
-    private String licenseNumber;
-
     @Basic
-    @javax.persistence.Column(name = "license_number")
+    @Column(name = "license_number")
     public String getLicenseNumber() {
         return licenseNumber;
     }
@@ -48,10 +63,8 @@ public class CompensationEntity {
         this.licenseNumber = licenseNumber;
     }
 
-    private String licenseType;
-
     @Basic
-    @javax.persistence.Column(name = "license_type")
+    @Column(name = "license_type")
     public String getLicenseType() {
         return licenseType;
     }
@@ -60,10 +73,8 @@ public class CompensationEntity {
         this.licenseType = licenseType;
     }
 
-    private String driverPhone;
-
     @Basic
-    @javax.persistence.Column(name = "driver_phone")
+    @Column(name = "driver_phone")
     public String getDriverPhone() {
         return driverPhone;
     }
@@ -72,10 +83,8 @@ public class CompensationEntity {
         this.driverPhone = driverPhone;
     }
 
-    private String vehicleCapacity;
-
     @Basic
-    @javax.persistence.Column(name = "vehicle_capacity")
+    @Column(name = "vehicle_capacity")
     public String getVehicleCapacity() {
         return vehicleCapacity;
     }
@@ -84,10 +93,8 @@ public class CompensationEntity {
         this.vehicleCapacity = vehicleCapacity;
     }
 
-    private String driverAddress;
-
     @Basic
-    @javax.persistence.Column(name = "driver_address")
+    @Column(name = "driver_address")
     public String getDriverAddress() {
         return driverAddress;
     }
@@ -96,10 +103,8 @@ public class CompensationEntity {
         this.driverAddress = driverAddress;
     }
 
-    private String plate;
-
     @Basic
-    @javax.persistence.Column(name = "plate")
+    @Column(name = "plate")
     public String getPlate() {
         return plate;
     }
@@ -108,10 +113,8 @@ public class CompensationEntity {
         this.plate = plate;
     }
 
-    private Timestamp accidentDate;
-
     @Basic
-    @javax.persistence.Column(name = "accident_date")
+    @Column(name = "accident_date")
     public Timestamp getAccidentDate() {
         return accidentDate;
     }
@@ -120,10 +123,8 @@ public class CompensationEntity {
         this.accidentDate = accidentDate;
     }
 
-    private String accidentPlace;
-
     @Basic
-    @javax.persistence.Column(name = "accident_place")
+    @Column(name = "accident_place")
     public String getAccidentPlace() {
         return accidentPlace;
     }
@@ -132,10 +133,8 @@ public class CompensationEntity {
         this.accidentPlace = accidentPlace;
     }
 
-    private String controlDepartment;
-
     @Basic
-    @javax.persistence.Column(name = "control_department")
+    @Column(name = "control_department")
     public String getControlDepartment() {
         return controlDepartment;
     }
@@ -144,10 +143,8 @@ public class CompensationEntity {
         this.controlDepartment = controlDepartment;
     }
 
-    private String description;
-
     @Basic
-    @javax.persistence.Column(name = "description")
+    @Column(name = "description")
     public String getDescription() {
         return description;
     }
@@ -156,10 +153,8 @@ public class CompensationEntity {
         this.description = description;
     }
 
-    private String humanDamage;
-
     @Basic
-    @javax.persistence.Column(name = "human_damage")
+    @Column(name = "human_damage")
     public String getHumanDamage() {
         return humanDamage;
     }
@@ -168,10 +163,8 @@ public class CompensationEntity {
         this.humanDamage = humanDamage;
     }
 
-    private String assetDamage;
-
     @Basic
-    @javax.persistence.Column(name = "asset_damage")
+    @Column(name = "asset_damage")
     public String getAssetDamage() {
         return assetDamage;
     }
@@ -180,10 +173,8 @@ public class CompensationEntity {
         this.assetDamage = assetDamage;
     }
 
-    private String observer;
-
     @Basic
-    @javax.persistence.Column(name = "observer")
+    @Column(name = "observer")
     public String getObserver() {
         return observer;
     }
@@ -192,10 +183,8 @@ public class CompensationEntity {
         this.observer = observer;
     }
 
-    private String compensationNote;
-
     @Basic
-    @javax.persistence.Column(name = "compensation_note")
+    @Column(name = "compensation_note")
     public String getCompensationNote() {
         return compensationNote;
     }
@@ -204,10 +193,8 @@ public class CompensationEntity {
         this.compensationNote = compensationNote;
     }
 
-    private String attachment;
-
     @Basic
-    @javax.persistence.Column(name = "attachment")
+    @Column(name = "attachment")
     public String getAttachment() {
         return attachment;
     }
@@ -216,10 +203,8 @@ public class CompensationEntity {
         this.attachment = attachment;
     }
 
-    private Timestamp createdDate;
-
     @Basic
-    @javax.persistence.Column(name = "created_date")
+    @Column(name = "created_date")
     public Timestamp getCreatedDate() {
         return createdDate;
     }
@@ -228,10 +213,8 @@ public class CompensationEntity {
         this.createdDate = createdDate;
     }
 
-    private Timestamp resolveDate;
-
     @Basic
-    @javax.persistence.Column(name = "resolve_date")
+    @Column(name = "resolve_date")
     public Timestamp getResolveDate() {
         return resolveDate;
     }
@@ -240,10 +223,8 @@ public class CompensationEntity {
         this.resolveDate = resolveDate;
     }
 
-    private String desicion;
-
     @Basic
-    @javax.persistence.Column(name = "desicion")
+    @Column(name = "desicion")
     public String getDesicion() {
         return desicion;
     }
@@ -252,10 +233,8 @@ public class CompensationEntity {
         this.desicion = desicion;
     }
 
-    private String resolveNote;
-
     @Basic
-    @javax.persistence.Column(name = "resolve_note")
+    @Column(name = "resolve_note")
     public String getResolveNote() {
         return resolveNote;
     }
@@ -327,5 +306,15 @@ public class CompensationEntity {
         result = 31 * result + (desicion != null ? desicion.hashCode() : 0);
         result = 31 * result + (resolveNote != null ? resolveNote.hashCode() : 0);
         return result;
+    }
+
+    @Basic
+    @Column(name = "contract_code")
+    public String getContractCode() {
+        return contractCode;
+    }
+
+    public void setContractCode(String contractCode) {
+        this.contractCode = contractCode;
     }
 }
