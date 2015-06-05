@@ -72,7 +72,6 @@ public class CheckerActivity extends Activity {
     }
 
 
-
     void resolveIntent(Intent intent) {
         Context context = getApplicationContext();
         int duration = Toast.LENGTH_LONG;
