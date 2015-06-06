@@ -1,9 +1,9 @@
 package com.fpt.mic.micweb.controller.staff;
 
 import com.fpt.mic.micweb.framework.BasicController;
-import com.fpt.mic.micweb.framework.JspPage;
+import com.fpt.mic.micweb.framework.responses.JspPage;
 import com.fpt.mic.micweb.framework.R;
-import com.fpt.mic.micweb.framework.ResponseObject;
+import com.fpt.mic.micweb.framework.responses.ResponseObject;
 
 import javax.servlet.annotation.WebServlet;
 

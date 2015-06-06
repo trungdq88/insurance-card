@@ -1,13 +1,16 @@
 package com.fpt.mic.micweb.framework;
 
+import com.fpt.mic.micweb.framework.responses.JsonString;
+import com.fpt.mic.micweb.framework.responses.JspPage;
+import com.fpt.mic.micweb.framework.responses.ResponseObject;
 import com.fpt.mic.micweb.utils.StringUtils;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
@@ -55,8 +58,15 @@ public abstract class BasicController extends HttpServlet {
 
             // Process response
             if (responseObject instanceof JspPage) {
+                // Dispatch the request to JSP page
                 request.getRequestDispatcher(((JspPage) responseObject).getPath())
                         .forward(request, response);
+            } else if (responseObject instanceof JsonString) {
+                // Write JSON string
+                response.setContentType("application/json;charset=UTF-8");
+                PrintWriter writer = response.getWriter();
+                writer.write(((JsonString) responseObject).getJsonString());
+                writer.close();
             } else {
                 // TODO: process other kind of response
                 // Do something else
