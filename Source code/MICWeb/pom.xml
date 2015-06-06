@@ -12,6 +12,11 @@
     <properties>
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <!-- Default development database configs -->
+        <db.username>root</db.username>
+        <db.password></db.password>
+        <db.connectionURL>jdbc:mysql://localhost:3306</db.connectionURL>
     </properties>
 
     <dependencies>
@@ -101,6 +106,22 @@
                 </executions>
             </plugin>
         </plugins>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
     </build>
+    <profiles>
+        <profile>
+            <id>production</id>
+            <properties>
+                <db.username>root</db.username>
+                <db.password>p@ssw0rd</db.password>
+                <db.connectionURL>jdbc:mysql://localhost:3306</db.connectionURL>
+            </properties>
+        </profile>
+    </profiles>
 
 </project>

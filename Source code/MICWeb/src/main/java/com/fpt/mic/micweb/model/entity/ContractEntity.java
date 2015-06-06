@@ -1,8 +1,6 @@
 package com.fpt.mic.micweb.model.entity;
 
-import javax.persistence.Basic;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.sql.Timestamp;
 
 /**
@@ -10,12 +8,34 @@ import java.sql.Timestamp;
  * Created by dinhquangtrung on 6/5/15.
  */
 @Entity
-@javax.persistence.Table(name = "mic_contract", schema = "", catalog = "mic_data")
+@Table(name = "mic_contract", schema = "", catalog = "mic_data")
 public class ContractEntity {
     private String contractCode;
+    private Timestamp startDate;
+    private Timestamp expiredDate;
+    private String status;
+    private float contractFee;
+    private String plate;
+    private String brand;
+    private String modelCode;
+    private String vehicleType;
+    private String color;
+    private String engine;
+    private String chassis;
+    private String capacity;
+    private int yearOfManufacture;
+    private int weight;
+    private int seatCapacity;
+    private String certImage;
+    private Timestamp cancelDate;
+    private String cancelReason;
+    private String cancelNote;
+    private String staffCode;
+    private int contractTypeId;
+    private String customerCode;
 
     @Id
-    @javax.persistence.Column(name = "contract_code")
+    @Column(name = "contract_code")
     public String getContractCode() {
         return contractCode;
     }
@@ -24,10 +44,8 @@ public class ContractEntity {
         this.contractCode = contractCode;
     }
 
-    private Timestamp startDate;
-
     @Basic
-    @javax.persistence.Column(name = "start_date")
+    @Column(name = "start_date")
     public Timestamp getStartDate() {
         return startDate;
     }
@@ -36,10 +54,8 @@ public class ContractEntity {
         this.startDate = startDate;
     }
 
-    private Timestamp expiredDate;
-
     @Basic
-    @javax.persistence.Column(name = "expired_date")
+    @Column(name = "expired_date")
     public Timestamp getExpiredDate() {
         return expiredDate;
     }
@@ -48,10 +64,8 @@ public class ContractEntity {
         this.expiredDate = expiredDate;
     }
 
-    private String status;
-
     @Basic
-    @javax.persistence.Column(name = "status")
+    @Column(name = "status")
     public String getStatus() {
         return status;
     }
@@ -60,10 +74,8 @@ public class ContractEntity {
         this.status = status;
     }
 
-    private float contractFee;
-
     @Basic
-    @javax.persistence.Column(name = "contract_fee")
+    @Column(name = "contract_fee")
     public float getContractFee() {
         return contractFee;
     }
@@ -72,10 +84,8 @@ public class ContractEntity {
         this.contractFee = contractFee;
     }
 
-    private String plate;
-
     @Basic
-    @javax.persistence.Column(name = "plate")
+    @Column(name = "plate")
     public String getPlate() {
         return plate;
     }
@@ -84,10 +94,8 @@ public class ContractEntity {
         this.plate = plate;
     }
 
-    private String brand;
-
     @Basic
-    @javax.persistence.Column(name = "brand")
+    @Column(name = "brand")
     public String getBrand() {
         return brand;
     }
@@ -96,10 +104,8 @@ public class ContractEntity {
         this.brand = brand;
     }
 
-    private String modelCode;
-
     @Basic
-    @javax.persistence.Column(name = "model_code")
+    @Column(name = "model_code")
     public String getModelCode() {
         return modelCode;
     }
@@ -108,10 +114,8 @@ public class ContractEntity {
         this.modelCode = modelCode;
     }
 
-    private String vehicleType;
-
     @Basic
-    @javax.persistence.Column(name = "vehicle_type")
+    @Column(name = "vehicle_type")
     public String getVehicleType() {
         return vehicleType;
     }
@@ -120,10 +124,8 @@ public class ContractEntity {
         this.vehicleType = vehicleType;
     }
 
-    private String color;
-
     @Basic
-    @javax.persistence.Column(name = "color")
+    @Column(name = "color")
     public String getColor() {
         return color;
     }
@@ -132,10 +134,8 @@ public class ContractEntity {
         this.color = color;
     }
 
-    private String engine;
-
     @Basic
-    @javax.persistence.Column(name = "engine")
+    @Column(name = "engine")
     public String getEngine() {
         return engine;
     }
@@ -144,10 +144,8 @@ public class ContractEntity {
         this.engine = engine;
     }
 
-    private String chassis;
-
     @Basic
-    @javax.persistence.Column(name = "chassis")
+    @Column(name = "chassis")
     public String getChassis() {
         return chassis;
     }
@@ -156,10 +154,8 @@ public class ContractEntity {
         this.chassis = chassis;
     }
 
-    private String capacity;
-
     @Basic
-    @javax.persistence.Column(name = "capacity")
+    @Column(name = "capacity")
     public String getCapacity() {
         return capacity;
     }
@@ -168,10 +164,8 @@ public class ContractEntity {
         this.capacity = capacity;
     }
 
-    private int yearOfManufacture;
-
     @Basic
-    @javax.persistence.Column(name = "year_of_manufacture")
+    @Column(name = "year_of_manufacture")
     public int getYearOfManufacture() {
         return yearOfManufacture;
     }
@@ -180,10 +174,8 @@ public class ContractEntity {
         this.yearOfManufacture = yearOfManufacture;
     }
 
-    private int weight;
-
     @Basic
-    @javax.persistence.Column(name = "weight")
+    @Column(name = "weight")
     public int getWeight() {
         return weight;
     }
@@ -192,10 +184,8 @@ public class ContractEntity {
         this.weight = weight;
     }
 
-    private int seatCapacity;
-
     @Basic
-    @javax.persistence.Column(name = "seat_capacity")
+    @Column(name = "seat_capacity")
     public int getSeatCapacity() {
         return seatCapacity;
     }
@@ -204,10 +194,8 @@ public class ContractEntity {
         this.seatCapacity = seatCapacity;
     }
 
-    private String certImage;
-
     @Basic
-    @javax.persistence.Column(name = "cert_image")
+    @Column(name = "cert_image")
     public String getCertImage() {
         return certImage;
     }
@@ -216,10 +204,8 @@ public class ContractEntity {
         this.certImage = certImage;
     }
 
-    private Timestamp cancelDate;
-
     @Basic
-    @javax.persistence.Column(name = "cancel_date")
+    @Column(name = "cancel_date")
     public Timestamp getCancelDate() {
         return cancelDate;
     }
@@ -228,10 +214,8 @@ public class ContractEntity {
         this.cancelDate = cancelDate;
     }
 
-    private String cancelReason;
-
     @Basic
-    @javax.persistence.Column(name = "cancel_reason")
+    @Column(name = "cancel_reason")
     public String getCancelReason() {
         return cancelReason;
     }
@@ -240,10 +224,8 @@ public class ContractEntity {
         this.cancelReason = cancelReason;
     }
 
-    private String cancelNote;
-
     @Basic
-    @javax.persistence.Column(name = "cancel_note")
+    @Column(name = "cancel_note")
     public String getCancelNote() {
         return cancelNote;
     }
@@ -252,10 +234,8 @@ public class ContractEntity {
         this.cancelNote = cancelNote;
     }
 
-    private String staffCode;
-
     @Basic
-    @javax.persistence.Column(name = "staff_code")
+    @Column(name = "staff_code")
     public String getStaffCode() {
         return staffCode;
     }
@@ -264,10 +244,8 @@ public class ContractEntity {
         this.staffCode = staffCode;
     }
 
-    private int contractTypeId;
-
     @Basic
-    @javax.persistence.Column(name = "contract_type_id")
+    @Column(name = "contract_type_id")
     public int getContractTypeId() {
         return contractTypeId;
     }
@@ -276,10 +254,8 @@ public class ContractEntity {
         this.contractTypeId = contractTypeId;
     }
 
-    private String customerCode;
-
     @Basic
-    @javax.persistence.Column(name = "customer_code")
+    @Column(name = "customer_code")
     public String getCustomerCode() {
         return customerCode;
     }

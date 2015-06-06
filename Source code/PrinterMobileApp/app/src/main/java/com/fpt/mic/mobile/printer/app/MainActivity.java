@@ -1,75 +1,92 @@
 package com.fpt.mic.mobile.printer.app;
 
 import android.app.Activity;
-import android.app.PendingIntent;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.nfc.*;
-import android.nfc.tech.Ndef;
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.Toast;
+import android.os.Handler;
+import android.view.View;
+import android.widget.*;
 
-import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
-
+/**
+ * FPT University - Capstone Project - Summer 2015 - PrinterMobileApp
+ * Created by dinhquangtrung on 6/5/15.
+ */
 public class MainActivity extends Activity {
+    private ListView lstContracts;
+    ArrayAdapter<String> adapter;
+    List<String> values = new ArrayList<String>();
+    TextView emptyView;
+    View prgLoading;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-    }
-    @Override
-    public void onResume(){
-        super.onResume();
-        enableNfcWrite();
+
+        // Find views
+        lstContracts = (ListView) findViewById(R.id.lstContract);
+        prgLoading = findViewById(R.id.prgLoading);
+        emptyView = (TextView) findViewById(R.id.emptyView);
+
+        // Setup list view
+        adapter = new ArrayAdapter<String>(
+                this, android.R.layout.simple_list_item_1, values);
+        lstContracts.setAdapter(adapter);
+        lstContracts.setEmptyView(emptyView);
+        lstContracts.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                // Toast.makeText(MainActivity.this, values.get(i), Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(MainActivity.this, InfoActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        // Search button handler
+        findViewById(R.id.btnSearch).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showLoadingEffect();
+                Handler handlerTimer = new Handler();
+                handlerTimer.postDelayed(new Runnable() {
+                    public void run() {
+                        searchContracts();
+                        updateListView();
+                    }
+                }, 2000);
+            }
+        });
     }
 
-    @Override
-    public void onPause(){
-        super.onPause();
-        disableNfcWrite();
+    private void showLoadingEffect() {
+        emptyView.setVisibility(View.GONE);
+        prgLoading.setVisibility(View.VISIBLE);
+        lstContracts.setVisibility(View.GONE);
     }
 
-    private PendingIntent getPendingIntent() {
-        return PendingIntent.getActivity(this, 0, new Intent(this, getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
+    private void searchContracts() {
+        values = Arrays.asList("Android", "iPhone", "WindowsMobile",
+                "Blackberry", "WebOS", "Ubuntu", "Windows7", "Max OS X",
+                "Linux", "OS/2");
     }
 
-    private void enableNfcWrite(){
-        NfcAdapter adapter = NfcAdapter.getDefaultAdapter(this);
-        IntentFilter tagDetected = new IntentFilter(NfcAdapter.ACTION_TAG_DISCOVERED);
-        IntentFilter[] writeTagFilters = new IntentFilter[] { tagDetected };
-        adapter.enableForegroundDispatch(this, getPendingIntent(), writeTagFilters, null);
-    }
+    private void updateListView() {
+        // Load items to list view
+        adapter = new ArrayAdapter<String>(
+                MainActivity.this, android.R.layout.simple_list_item_1, values);
+        lstContracts.setAdapter(adapter);
 
-    private void disableNfcWrite(){
-        NfcAdapter adapter = NfcAdapter.getDefaultAdapter(this);
-        adapter.disableForegroundDispatch(this);
-    }
+        // Handle visible
+        lstContracts.setVisibility(View.VISIBLE);
+        prgLoading.setVisibility(View.GONE);
 
-    public void onNewIntent(Intent intent) {
-        if(NfcAdapter.ACTION_TAG_DISCOVERED.equals(intent.getAction())) {
-            Tag discoveredTag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
-            writeTag(discoveredTag);
+        // Tricky handle no result
+        if (values.size() == 0) {
+            emptyView.setText("Không tìm thấy kết quả nào!");
         }
-    }
-
-    private void writeTag(Tag tag) {
-        Ndef ndefTag = Ndef.get(tag);
-        byte[] stringBytes = "Hello World".getBytes();
-        NdefRecord dataToWrite = NdefRecord.createMime("mic/nfc", stringBytes);
-        try {
-            ndefTag.connect();
-            ndefTag.writeNdefMessage(new NdefMessage(dataToWrite,
-                    NdefRecord.createApplicationRecord("com.fpt.mic.mobile.checker.app")));
-            ndefTag.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (FormatException e) {
-            e.printStackTrace();
-        }
-        Log.d("NFC", "Data written");
-        Toast.makeText(this, "Data written", Toast.LENGTH_LONG).show();
     }
 }
