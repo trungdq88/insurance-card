@@ -15,5 +15,10 @@ public class CustomerBusniess {
         List<ContractEntity> listContract = contractDa0.getListContract();
         return listContract;
     }
+    // get contract detail
+    public ContractEntity getContractDetail(String code){
+        ContractDao contractDa0 = new ContractDao();
+        return contractDa0.read(code);
+    }
 
 }
