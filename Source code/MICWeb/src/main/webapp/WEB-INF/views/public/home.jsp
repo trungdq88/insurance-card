@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>MIC - Bảo hiểm trực tuyến</title>
-    <!-- Test jenkins build -->
+
     <!-- CSS -->
     <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
@@ -82,9 +82,9 @@
 
                 <div id="carousel-example-captions" class="carousel slide" data-ride="carousel">
                     <%--<ol class="carousel-indicators">--%>
-                        <%--<li data-target="#carousel-example-captions" data-slide-to="0" class=""></li>--%>
-                        <%--<li data-target="#carousel-example-captions" data-slide-to="1" class="active"></li>--%>
-                        <%--<li data-target="#carousel-example-captions" data-slide-to="2" class=""></li>--%>
+                    <%--<li data-target="#carousel-example-captions" data-slide-to="0" class=""></li>--%>
+                    <%--<li data-target="#carousel-example-captions" data-slide-to="1" class="active"></li>--%>
+                    <%--<li data-target="#carousel-example-captions" data-slide-to="2" class=""></li>--%>
                     <%--</ol>--%>
                     <div class="carousel-inner" role="listbox">
                         <%--<div class="item active">--%>
@@ -106,9 +106,9 @@
                                  data-holder-rendered="true">
 
                             <%--<div class="carousel-caption">--%>
-                                <%--<h3 id="second-slide-label">Second slide label<a class="anchorjs-link"--%>
-                                                                                 <%--href="#second-slide-label"><span--%>
-                                        <%--class="anchorjs-icon"></span></a></h3>--%>
+                            <%--<h3 id="second-slide-label">Second slide label<a class="anchorjs-link"--%>
+                            <%--href="#second-slide-label"><span--%>
+                            <%--class="anchorjs-icon"></span></a></h3>--%>
 
 
                             <%--</div>--%>
@@ -154,12 +154,12 @@
                     <div class="form-group">
                         <div class="form-group col-md-6">
                             Họ tên
-                            <input type="text" name="form-full-name"
+                            <input type="text" name="txtName"
                                    class="form-control" id="form-full-name">
                         </div>
                         <div class="form-group col-md-6">
                             Email
-                            <input type="text" name="form-email"
+                            <input type="text" name="txtEmail"
                                    class="form-control" id="form-email">
                         </div>
                     </div>
@@ -167,33 +167,33 @@
                     <div class="form-group">
                         <div class="form-group col-md-6">
                             Số điện thoại
-                            <input type="text" name="form-phone"
+                            <input type="text" name="txtPhone"
                                    class="form-control" id="form-phone">
                         </div>
                         <div class="form-group col-md-6">
                             Số CMND/Hộ chiếu
-                            <input type="text" name="form-cmnd"
+                            <input type="text" name="txtPersonalId"
                                    class="form-control" id="form-cmnd">
                         </div>
                     </div>
                     <div class="form-group col-md-12">
                         Địa chỉ
-                        <input type="text" name="form-address"
+                        <input type="text" name="txtAddress"
                                class="form-control" id="form-address">
                     </div>
                     <div class="form-group  col-md-12">
                         Ngày bắt đầu
-                        <input type="date" name="form-startDate"
+                        <input type="date" name="txtStartDate"
                                class="form-control" id="form-startDate">
                     </div>
                     <div class="form-group  col-md-12">
                         Hình Thức Bảo Hiểm
-                        <select class="form-control">
-                            <option>Xe trên 50cc có tham gia BH tai nạn người trên xe</option>
-                            <option>Xe trên 50cc không tham gia BH tai nạn người trên xe</option>
-                            <option>Xe từ 50cc trở xuống có tham gia BH tai nạn người trên xe</option>
-                            <option>Xe từ 50cc trở xuống không tham gia BH tai nạn người trên xe</option>
-                            <option>Xe mô tô 3 bánh, xe gắn máy và các loại xe cơ giới tương tự</option>
+                        <select class="form-control" name="ddlContractType">
+                            <option value="1">Xe trên 50cc có tham gia BH tai nạn người trên xe</option>
+                            <option value="2">Xe trên 50cc không tham gia BH tai nạn người trên xe</option>
+                            <option value="3">Xe từ 50cc trở xuống có tham gia BH tai nạn người trên xe</option>
+                            <option value="4">Xe từ 50cc trở xuống không tham gia BH tai nạn người trên xe</option>
+                            <option value="5">Xe mô tô 3 bánh, xe gắn máy và các loại xe cơ giới tương tự</option>
                         </select>
                     </div>
                     <div class="form-group  col-md-12">
@@ -203,6 +203,7 @@
 
                         <p class="form-control-static">
                             Phí bảo hiểm: 200.000 VND
+                            <input type="hidden" name="txtFee" value="200000">
                         </p>
                         <input type="hidden" name="action" value="register"/>
                         <input type="submit" class="btn" value="Tiếp theo"/>
