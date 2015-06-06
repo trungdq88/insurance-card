@@ -1,5 +1,6 @@
-﻿<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ include file="_shared/header.jsp"%>
+﻿<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ include file="_shared/header.jsp" %>
 
 <div id="wrapper">
 
@@ -11,11 +12,13 @@
                     Hợp đồng
 
                     <div class="pull-right">
-                        <a href="${pageContext.request.contextPath}/customer/contract?action=NewContract" class="btn btn-success">
+                        <a href="${pageContext.request.contextPath}/customer/contract?action=NewContract"
+                           class="btn btn-success">
                             <i class="fa fa-plus"></i>
                             Hợp đồng mới
                         </a>
-                    </div></h1>
+                    </div>
+                </h1>
             </div>
             <!-- /.col-lg-12 -->
         </div>
@@ -52,77 +55,83 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td><a href="${pageContext.request.contextPath}/customer/contract?action=ContractDetail">BHBB374</a></td>
-                            <td>04/05/2015</td>
-                            <td>1 năm</td>
-                            <td><span class="label label-success">Sẵn sàng</span> </td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td><a href="${pageContext.request.contextPath}/customer/contract?action=ContractDetail">BHBB374</a></td>
-                            <td>04/05/2015</td>
-                            <td>1 năm</td>
-                            <td><span class="label label-warning">Sắp hết hạn</span> </td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td><a href="${pageContext.request.contextPath}/customer/contract?action=ContractDetail">BHBB374</a></td>
-                            <td>04/05/2015</td>
-                            <td>1 năm</td>
-                            <td><span class="label label-danger">Hết hạn</span> </td>
-                        </tr>
 
-                        <tr>
-                            <td>1</td>
-                            <td><a href="${pageContext.request.contextPath}/customer/contract?action=ContractDetail">BHBB374</a></td>
-                            <td>04/05/2015</td>
-                            <td>1 năm</td>
-                            <td><span class="label label-gray">Chờ thanh toán</span> </td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td><a href="${pageContext.request.contextPath}/customer/contract?action=ContractDetail">BHBB374</a></td>
-                            <td>04/05/2015</td>
-                            <td>1 năm</td>
-                            <td><span class="label label-primary">Chưa có thẻ</span> </td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td><a href="${pageContext.request.contextPath}/customer/contract?action=ContractDetail">BHBB374</a></td>
-                            <td>04/05/2015</td>
-                            <td>1 năm</td>
-                            <td><span class="label label-dark">Đã huỷ hợp đồng</span> </td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td><a href="${pageContext.request.contextPath}/customer/contract?action=ContractDetail">BHBB374</a></td>
-                            <td>04/05/2015</td>
-                            <td>1 năm</td>
-                            <td><span class="label label-success">Sẵn sàng</span> </td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td><a href="${pageContext.request.contextPath}/customer/contract?action=ContractDetail">BHBB374</a></td>
-                            <td>04/05/2015</td>
-                            <td>1 năm</td>
-                            <td><span class="label label-success">Sẵn sàng</span> </td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td><a href="${pageContext.request.contextPath}/customer/contract?action=ContractDetail">BHBB374</a></td>
-                            <td>04/05/2015</td>
-                            <td>1 năm</td>
-                            <td><span class="label label-success">Sẵn sàng</span> </td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td><a href="${pageContext.request.contextPath}/customer/contract?action=ContractDetail">BHBB374</a></td>
-                            <td>04/05/2015</td>
-                            <td>1 năm</td>
-                            <td><span class="label label-success">Sẵn sàng</span> </td>
-                        </tr>
+                        <c:forEach items="${listContract}" var="contract">
+
+                            <tr>
+                                <td>1</td>
+                                <td>
+                                    <a href="${pageContext.request.contextPath}/customer/contract?action=ContractDetail">${contract.contractCode}</a>
+                                </td>
+                                <td>${contract.startDate}</td>
+                                <td>${contract.expiredDate}</td>
+                                <td><span class="label label-success">${contract.status}</span></td>
+                            </tr>
+                        </c:forEach>
+                        <%--<tr>--%>
+                        <%--<td>2</td>--%>
+                        <%--<td><a href="${pageContext.request.contextPath}/customer/contract?action=ContractDetail">BHBB374</a></td>--%>
+                        <%--<td>04/05/2015</td>--%>
+                        <%--<td>1 năm</td>--%>
+                        <%--<td><span class="label label-warning">Sắp hết hạn</span> </td>--%>
+                        <%--</tr>--%>
+                        <%--<tr>--%>
+                        <%--<td>3</td>--%>
+                        <%--<td><a href="${pageContext.request.contextPath}/customer/contract?action=ContractDetail">BHBB374</a></td>--%>
+                        <%--<td>04/05/2015</td>--%>
+                        <%--<td>1 năm</td>--%>
+                        <%--<td><span class="label label-danger">Hết hạn</span> </td>--%>
+                        <%--</tr>--%>
+
+                        <%--<tr>--%>
+                        <%--<td>1</td>--%>
+                        <%--<td><a href="${pageContext.request.contextPath}/customer/contract?action=ContractDetail">BHBB374</a></td>--%>
+                        <%--<td>04/05/2015</td>--%>
+                        <%--<td>1 năm</td>--%>
+                        <%--<td><span class="label label-gray">Chờ thanh toán</span> </td>--%>
+                        <%--</tr>--%>
+                        <%--<tr>--%>
+                        <%--<td>1</td>--%>
+                        <%--<td><a href="${pageContext.request.contextPath}/customer/contract?action=ContractDetail">BHBB374</a></td>--%>
+                        <%--<td>04/05/2015</td>--%>
+                        <%--<td>1 năm</td>--%>
+                        <%--<td><span class="label label-primary">Chưa có thẻ</span> </td>--%>
+                        <%--</tr>--%>
+                        <%--<tr>--%>
+                        <%--<td>1</td>--%>
+                        <%--<td><a href="${pageContext.request.contextPath}/customer/contract?action=ContractDetail">BHBB374</a></td>--%>
+                        <%--<td>04/05/2015</td>--%>
+                        <%--<td>1 năm</td>--%>
+                        <%--<td><span class="label label-dark">Đã huỷ hợp đồng</span> </td>--%>
+                        <%--</tr>--%>
+                        <%--<tr>--%>
+                        <%--<td>1</td>--%>
+                        <%--<td><a href="${pageContext.request.contextPath}/customer/contract?action=ContractDetail">BHBB374</a></td>--%>
+                        <%--<td>04/05/2015</td>--%>
+                        <%--<td>1 năm</td>--%>
+                        <%--<td><span class="label label-success">Sẵn sàng</span> </td>--%>
+                        <%--</tr>--%>
+                        <%--<tr>--%>
+                        <%--<td>1</td>--%>
+                        <%--<td><a href="${pageContext.request.contextPath}/customer/contract?action=ContractDetail">BHBB374</a></td>--%>
+                        <%--<td>04/05/2015</td>--%>
+                        <%--<td>1 năm</td>--%>
+                        <%--<td><span class="label label-success">Sẵn sàng</span> </td>--%>
+                        <%--</tr>--%>
+                        <%--<tr>--%>
+                        <%--<td>1</td>--%>
+                        <%--<td><a href="${pageContext.request.contextPath}/customer/contract?action=ContractDetail">BHBB374</a></td>--%>
+                        <%--<td>04/05/2015</td>--%>
+                        <%--<td>1 năm</td>--%>
+                        <%--<td><span class="label label-success">Sẵn sàng</span> </td>--%>
+                        <%--</tr>--%>
+                        <%--<tr>--%>
+                        <%--<td>1</td>--%>
+                        <%--<td><a href="${pageContext.request.contextPath}/customer/contract?action=ContractDetail">BHBB374</a></td>--%>
+                        <%--<td>04/05/2015</td>--%>
+                        <%--<td>1 năm</td>--%>
+                        <%--<td><span class="label label-success">Sẵn sàng</span> </td>--%>
+                        <%--</tr>--%>
                         </tbody>
                     </table>
                 </div>
@@ -176,7 +185,8 @@
                     </li>
                     <li>
                         <span class="label label-danger">Hết hạn</span>
-                        Hợp đồng đã hết hạn và không có giá trị. Khánh hàng phải gia hạn để tiếp tục sử dụng chương trình bảo hiểm.
+                        Hợp đồng đã hết hạn và không có giá trị. Khánh hàng phải gia hạn để tiếp tục sử dụng chương
+                        trình bảo hiểm.
                     </li>
                     <li>
                         <span class="label label-dark">Đã huỷ hợp đồng</span>
@@ -190,4 +200,4 @@
 <!-- /#wrapper -->
 
 
-<%@ include file="_shared/footer.jsp"%>
+<%@ include file="_shared/footer.jsp" %>
