@@ -1,9 +1,9 @@
 package com.fpt.mic.micweb.controller.pub;
 
 import com.fpt.mic.micweb.framework.BasicController;
-import com.fpt.mic.micweb.framework.JspPage;
+import com.fpt.mic.micweb.framework.responses.JspPage;
 import com.fpt.mic.micweb.framework.R;
-import com.fpt.mic.micweb.framework.ResponseObject;
+import com.fpt.mic.micweb.framework.responses.ResponseObject;
 import com.fpt.mic.micweb.model.business.RegisterBusiness;
 import com.fpt.mic.micweb.model.entity.ContractEntity;
 import com.fpt.mic.micweb.model.entity.CustomerEntity;

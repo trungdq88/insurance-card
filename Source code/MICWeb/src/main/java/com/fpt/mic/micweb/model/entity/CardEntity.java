@@ -2,6 +2,7 @@ package com.fpt.mic.micweb.model.entity;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.Collection;
 
 /**
  * FPT University - Capstone Project - Summer 2015 - MICWeb
@@ -15,6 +16,10 @@ public class CardEntity {
     private Timestamp deactivatedDate;
     private String contractCode;
     private Integer newCardRequestId;
+    private ContractEntity micContractByContractCode;
+    private NewCardRequestEntity micNewCardRequestByNewCardRequestId;
+    private Collection<CardAccessLogEntity> micCardAccessLogsByCardId;
+    private Collection<NewCardRequestEntity> micNewCardRequestsByCardId;
 
     @Id
     @Column(name = "card_id")
@@ -93,5 +98,43 @@ public class CardEntity {
         result = 31 * result + (contractCode != null ? contractCode.hashCode() : 0);
         result = 31 * result + (newCardRequestId != null ? newCardRequestId.hashCode() : 0);
         return result;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "contract_code", referencedColumnName = "contract_code", nullable = false, insertable = false, updatable = false)
+    public ContractEntity getMicContractByContractCode() {
+        return micContractByContractCode;
+    }
+
+    public void setMicContractByContractCode(ContractEntity micContractByContractCode) {
+        this.micContractByContractCode = micContractByContractCode;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "new_card_request_id", referencedColumnName = "id", insertable = false, updatable = false)
+    public NewCardRequestEntity getMicNewCardRequestByNewCardRequestId() {
+        return micNewCardRequestByNewCardRequestId;
+    }
+
+    public void setMicNewCardRequestByNewCardRequestId(NewCardRequestEntity micNewCardRequestByNewCardRequestId) {
+        this.micNewCardRequestByNewCardRequestId = micNewCardRequestByNewCardRequestId;
+    }
+
+    @OneToMany(mappedBy = "micCardByCardId")
+    public Collection<CardAccessLogEntity> getMicCardAccessLogsByCardId() {
+        return micCardAccessLogsByCardId;
+    }
+
+    public void setMicCardAccessLogsByCardId(Collection<CardAccessLogEntity> micCardAccessLogsByCardId) {
+        this.micCardAccessLogsByCardId = micCardAccessLogsByCardId;
+    }
+
+    @OneToMany(mappedBy = "micCardByOldCardId")
+    public Collection<NewCardRequestEntity> getMicNewCardRequestsByCardId() {
+        return micNewCardRequestsByCardId;
+    }
+
+    public void setMicNewCardRequestsByCardId(Collection<NewCardRequestEntity> micNewCardRequestsByCardId) {
+        this.micNewCardRequestsByCardId = micNewCardRequestsByCardId;
     }
 }

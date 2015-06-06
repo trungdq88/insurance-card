@@ -2,6 +2,7 @@ package com.fpt.mic.micweb.model.entity;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.Collection;
 
 /**
  * FPT University - Capstone Project - Summer 2015 - MICWeb
@@ -16,6 +17,9 @@ public class NewCardRequestEntity {
     private String note;
     private String oldCardId;
     private String customerCode;
+    private Collection<CardEntity> micCardsById;
+    private CardEntity micCardByOldCardId;
+    private CustomerEntity micCustomerByCustomerCode;
 
     @Id
     @Column(name = "id")
@@ -103,5 +107,34 @@ public class NewCardRequestEntity {
         result = 31 * result + (oldCardId != null ? oldCardId.hashCode() : 0);
         result = 31 * result + (customerCode != null ? customerCode.hashCode() : 0);
         return result;
+    }
+
+    @OneToMany(mappedBy = "micNewCardRequestByNewCardRequestId")
+    public Collection<CardEntity> getMicCardsById() {
+        return micCardsById;
+    }
+
+    public void setMicCardsById(Collection<CardEntity> micCardsById) {
+        this.micCardsById = micCardsById;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "old_card_id", referencedColumnName = "card_id", nullable = false, insertable = false, updatable = false)
+    public CardEntity getMicCardByOldCardId() {
+        return micCardByOldCardId;
+    }
+
+    public void setMicCardByOldCardId(CardEntity micCardByOldCardId) {
+        this.micCardByOldCardId = micCardByOldCardId;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "customer_code", referencedColumnName = "customer_code", nullable = false, insertable = false, updatable = false)
+    public CustomerEntity getMicCustomerByCustomerCode() {
+        return micCustomerByCustomerCode;
+    }
+
+    public void setMicCustomerByCustomerCode(CustomerEntity micCustomerByCustomerCode) {
+        this.micCustomerByCustomerCode = micCustomerByCustomerCode;
     }
 }

@@ -2,6 +2,7 @@ package com.fpt.mic.micweb.model.entity;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.Collection;
 
 /**
  * FPT University - Capstone Project - Summer 2015 - MICWeb
@@ -33,6 +34,14 @@ public class ContractEntity {
     private String staffCode;
     private int contractTypeId;
     private String customerCode;
+    private Collection<AccidentEntity> micAccidentsByContractCode;
+    private Collection<CardEntity> micCardsByContractCode;
+    private Collection<CompensationEntity> micCompensationsByContractCode;
+    private ContractTypeEntity micContractTypeByContractTypeId;
+    private CustomerEntity micCustomerByCustomerCode;
+    private StaffEntity micStaffByStaffCode;
+    private Collection<PaymentEntity> micPaymentsByContractCode;
+    private Collection<PunishmentEntity> micPunishmentsByContractCode;
 
     @Id
     @Column(name = "contract_code")
@@ -324,5 +333,80 @@ public class ContractEntity {
         result = 31 * result + contractTypeId;
         result = 31 * result + (customerCode != null ? customerCode.hashCode() : 0);
         return result;
+    }
+
+    @OneToMany(mappedBy = "micContractByContractCode")
+    public Collection<AccidentEntity> getMicAccidentsByContractCode() {
+        return micAccidentsByContractCode;
+    }
+
+    public void setMicAccidentsByContractCode(Collection<AccidentEntity> micAccidentsByContractCode) {
+        this.micAccidentsByContractCode = micAccidentsByContractCode;
+    }
+
+    @OneToMany(mappedBy = "micContractByContractCode")
+    public Collection<CardEntity> getMicCardsByContractCode() {
+        return micCardsByContractCode;
+    }
+
+    public void setMicCardsByContractCode(Collection<CardEntity> micCardsByContractCode) {
+        this.micCardsByContractCode = micCardsByContractCode;
+    }
+
+    @OneToMany(mappedBy = "micContractByContractCode")
+    public Collection<CompensationEntity> getMicCompensationsByContractCode() {
+        return micCompensationsByContractCode;
+    }
+
+    public void setMicCompensationsByContractCode(Collection<CompensationEntity> micCompensationsByContractCode) {
+        this.micCompensationsByContractCode = micCompensationsByContractCode;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "contract_type_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
+    public ContractTypeEntity getMicContractTypeByContractTypeId() {
+        return micContractTypeByContractTypeId;
+    }
+
+    public void setMicContractTypeByContractTypeId(ContractTypeEntity micContractTypeByContractTypeId) {
+        this.micContractTypeByContractTypeId = micContractTypeByContractTypeId;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "customer_code", referencedColumnName = "customer_code", nullable = false, insertable = false, updatable = false)
+    public CustomerEntity getMicCustomerByCustomerCode() {
+        return micCustomerByCustomerCode;
+    }
+
+    public void setMicCustomerByCustomerCode(CustomerEntity micCustomerByCustomerCode) {
+        this.micCustomerByCustomerCode = micCustomerByCustomerCode;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "staff_code", referencedColumnName = "staff_code", nullable = false, insertable = false, updatable = false)
+    public StaffEntity getMicStaffByStaffCode() {
+        return micStaffByStaffCode;
+    }
+
+    public void setMicStaffByStaffCode(StaffEntity micStaffByStaffCode) {
+        this.micStaffByStaffCode = micStaffByStaffCode;
+    }
+
+    @OneToMany(mappedBy = "micContractByContractCode")
+    public Collection<PaymentEntity> getMicPaymentsByContractCode() {
+        return micPaymentsByContractCode;
+    }
+
+    public void setMicPaymentsByContractCode(Collection<PaymentEntity> micPaymentsByContractCode) {
+        this.micPaymentsByContractCode = micPaymentsByContractCode;
+    }
+
+    @OneToMany(mappedBy = "micContractByContractCode")
+    public Collection<PunishmentEntity> getMicPunishmentsByContractCode() {
+        return micPunishmentsByContractCode;
+    }
+
+    public void setMicPunishmentsByContractCode(Collection<PunishmentEntity> micPunishmentsByContractCode) {
+        this.micPunishmentsByContractCode = micPunishmentsByContractCode;
     }
 }

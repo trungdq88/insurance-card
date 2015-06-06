@@ -1,4 +1,4 @@
-package com.fpt.mic.micweb.framework;
+package com.fpt.mic.micweb.framework.responses;
 
 /**
  * Created by dinhquangtrung on 5/23/15.

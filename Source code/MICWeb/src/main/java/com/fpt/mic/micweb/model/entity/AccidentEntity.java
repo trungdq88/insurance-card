@@ -15,6 +15,7 @@ public class AccidentEntity {
     private String attachment;
     private Timestamp createdDate;
     private String contractCode;
+    private ContractEntity micContractByContractCode;
 
     @Id
     @Column(name = "id")
@@ -90,5 +91,15 @@ public class AccidentEntity {
         result = 31 * result + (createdDate != null ? createdDate.hashCode() : 0);
         result = 31 * result + (contractCode != null ? contractCode.hashCode() : 0);
         return result;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "contract_code", referencedColumnName = "contract_code", nullable = false, insertable = false, updatable = false)
+    public ContractEntity getMicContractByContractCode() {
+        return micContractByContractCode;
+    }
+
+    public void setMicContractByContractCode(ContractEntity micContractByContractCode) {
+        this.micContractByContractCode = micContractByContractCode;
     }
 }
