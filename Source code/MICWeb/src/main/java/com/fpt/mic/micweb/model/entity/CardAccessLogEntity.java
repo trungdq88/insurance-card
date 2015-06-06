@@ -16,6 +16,7 @@ public class CardAccessLogEntity {
     private String requestService;
     private String responseContent;
     private String cardId;
+    private CardEntity micCardByCardId;
 
     @Id
     @Column(name = "id")
@@ -105,5 +106,15 @@ public class CardAccessLogEntity {
         result = 31 * result + (responseContent != null ? responseContent.hashCode() : 0);
         result = 31 * result + (cardId != null ? cardId.hashCode() : 0);
         return result;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "card_id", referencedColumnName = "card_id", nullable = false, insertable = false, updatable = false)
+    public CardEntity getMicCardByCardId() {
+        return micCardByCardId;
+    }
+
+    public void setMicCardByCardId(CardEntity micCardByCardId) {
+        this.micCardByCardId = micCardByCardId;
     }
 }

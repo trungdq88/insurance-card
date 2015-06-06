@@ -1,6 +1,7 @@
 package com.fpt.mic.micweb.model.entity;
 
 import javax.persistence.*;
+import java.util.Collection;
 
 /**
  * FPT University - Capstone Project - Summer 2015 - MICWeb
@@ -13,6 +14,7 @@ public class ContractTypeEntity {
     private String name;
     private String description;
     private float pricePerYear;
+    private Collection<ContractEntity> micContractsById;
 
     @Id
     @Column(name = "id")
@@ -76,5 +78,14 @@ public class ContractTypeEntity {
         result = 31 * result + (description != null ? description.hashCode() : 0);
         result = 31 * result + (pricePerYear != +0.0f ? Float.floatToIntBits(pricePerYear) : 0);
         return result;
+    }
+
+    @OneToMany(mappedBy = "micContractTypeByContractTypeId")
+    public Collection<ContractEntity> getMicContractsById() {
+        return micContractsById;
+    }
+
+    public void setMicContractsById(Collection<ContractEntity> micContractsById) {
+        this.micContractsById = micContractsById;
     }
 }
