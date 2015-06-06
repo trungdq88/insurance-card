@@ -11,9 +11,9 @@
         android:src="@drawable/guide"
         android:scaleType="fitCenter"
         android:contentDescription="@string/guide"
-        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_above="@+id/editText" />
+        android:layout_above="@+id/editText"
+        android:layout_below="@+id/textView" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -21,10 +21,11 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="@string/please_put_nfc_close_to_phone"
         android:id="@+id/textView"
-        android:layout_above="@+id/imageView"
-        android:layout_centerHorizontal="true"
         android:gravity="center"
-        android:layout_margin="10dp" />
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp" />
 
     <EditText
         android:layout_width="wrap_content"

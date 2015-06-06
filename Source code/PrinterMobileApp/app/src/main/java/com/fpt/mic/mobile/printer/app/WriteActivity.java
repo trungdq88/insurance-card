@@ -40,7 +40,7 @@ public class WriteActivity extends Activity {
     private void enableNfcWrite() {
         NfcAdapter adapter = NfcAdapter.getDefaultAdapter(this);
 
-        if (adapter == null) {
+        if (adapter == null || !adapter.isEnabled()) {
             Toast.makeText(this, "Vui lòng bật chức năng NFC trên điện thoại!", Toast.LENGTH_SHORT).show();
             finish();
             return;
@@ -53,7 +53,7 @@ public class WriteActivity extends Activity {
 
     private void disableNfcWrite() {
         NfcAdapter adapter = NfcAdapter.getDefaultAdapter(this);
-        if (adapter != null) {
+        if (adapter != null && adapter.isEnabled()) {
             adapter.disableForegroundDispatch(this);
         }
     }
