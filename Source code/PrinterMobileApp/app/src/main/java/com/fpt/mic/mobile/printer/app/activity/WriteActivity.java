@@ -10,16 +10,23 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 import com.fpt.mic.mobile.printer.app.R;
+import com.fpt.mic.mobile.printer.app.business.ContractBusiness;
+import com.fpt.mic.mobile.printer.app.dto.ContractSearchResult;
+import com.fpt.mic.mobile.printer.app.utils.ApiRequest;
 
 import java.io.IOException;
 
 
 public class WriteActivity extends Activity {
 
+    ContractSearchResult contractSearchResult;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_write);
+
+        contractSearchResult = getIntent().getParcelableExtra("contract");
     }
 
     @Override
@@ -61,7 +68,7 @@ public class WriteActivity extends Activity {
 
     public void onNewIntent(Intent intent) {
         if (NfcAdapter.ACTION_TAG_DISCOVERED.equals(intent.getAction())) {
-            Tag discoveredTag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
+            final Tag discoveredTag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
 
             byte[] extraID = discoveredTag.getId();
 
@@ -73,9 +80,16 @@ public class WriteActivity extends Activity {
             String tagID = sb.toString();
 
             // Send tag ID to server
+            ContractBusiness contractBusiness = new ContractBusiness();
+            contractBusiness.updateCardForContract(
+                    contractSearchResult.contractEntity.contractCode, tagID, new ContractBusiness.IOnApiResult() {
+                        @Override
+                        public void onApiResult(boolean results) {
+                            // Write data to tag
+                            writeTag(discoveredTag);
+                        }
+                    });
 
-            // Write data to tag
-            writeTag(discoveredTag);
         }
     }
 
@@ -94,6 +108,6 @@ public class WriteActivity extends Activity {
             e.printStackTrace();
         }
         Log.d("NFC", "Data written");
-        Toast.makeText(this, "Data written", Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "Data written and saved to server", Toast.LENGTH_LONG).show();
     }
 }

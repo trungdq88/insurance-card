@@ -6,9 +6,11 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.widget.*;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fpt.mic.mobile.printer.app.R;
 import com.fpt.mic.mobile.printer.app.business.ContractBusiness;
 import com.fpt.mic.mobile.printer.app.dto.ContractSearchResult;
+import com.fpt.mic.mobile.printer.app.entity.ContractEntity;
 import com.fpt.mic.mobile.printer.app.utils.ApiRequest;
 import com.fpt.mic.mobile.printer.app.utils.Constants;
 
@@ -27,6 +29,7 @@ public class MainActivity extends Activity {
     TextView emptyView;
     View prgLoading;
     EditText txtKeyword;
+    private List<ContractSearchResult> searchContractResults;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +52,7 @@ public class MainActivity extends Activity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 // Toast.makeText(MainActivity.this, values.get(i), Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(MainActivity.this, InfoActivity.class);
+                intent.putExtra("contract", searchContractResults.get(i));
                 startActivity(intent);
             }
         });
@@ -78,6 +82,7 @@ public class MainActivity extends Activity {
             @Override
             public void onSearchResult(List<ContractSearchResult> results) {
                 values = new ArrayList<String>();
+                searchContractResults = results;
                 for (ContractSearchResult result : results) {
                     values.add(result.contractEntity.contractCode +
                             " - " + result.customerEntity.name);

@@ -38,7 +38,27 @@ public class ContractBusiness {
         });
     }
 
+    public void updateCardForContract(String contractCode, String cardID, final IOnApiResult cb) {
+        ApiRequest apiRequest = new ApiRequest(Constants.API_BASE);
+        apiRequest.setParam("action", "updateCardID");
+        apiRequest.setParam("contractCode", contractCode);
+        apiRequest.setParam("cardID", cardID);
+        apiRequest.get(new ApiRequest.IOnApiResponse() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    cb.onApiResult(mapper.readValue(response, Boolean.class));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
     public interface IOnSearchResult {
         void onSearchResult(List<ContractSearchResult> results);
+    }
+    public interface IOnApiResult {
+        void onApiResult(boolean results);
     }
 }
