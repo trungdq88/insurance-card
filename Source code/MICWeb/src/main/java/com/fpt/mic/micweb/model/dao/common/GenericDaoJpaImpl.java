@@ -18,7 +18,11 @@ public class GenericDaoJpaImpl<T, PK extends Serializable>
 
     protected Class<T> entityClass;
 
-    public EntityManagerFactory factory =
+    /**
+     * This variable HAVE TO be static or it will create new connection
+     * every time a derived class of this is created, which causes "too many connections" error.
+     */
+    public static EntityManagerFactory factory =
             Persistence.createEntityManagerFactory("MicPersistenceUnit");
 
     public GenericDaoJpaImpl() {
