@@ -22,8 +22,9 @@ public class GenericDaoJpaImpl<T, PK extends Serializable>
      * This variable HAVE TO be static or it will create new connection
      * every time a derived class of this is created, which causes "too many connections" error.
      */
-    public static EntityManagerFactory factory =
+    private static EntityManagerFactory factory =
             Persistence.createEntityManagerFactory("MicPersistenceUnit");
+    public static EntityManager entityManager = factory.createEntityManager();
 
     public GenericDaoJpaImpl() {
         ParameterizedType genericSuperclass = (ParameterizedType) getClass()
@@ -34,39 +35,30 @@ public class GenericDaoJpaImpl<T, PK extends Serializable>
 
     @Override
     public T create(T t) {
-        EntityManager manager = factory.createEntityManager();
-        manager.getTransaction().begin();
-        manager.persist(t);
-        manager.getTransaction().commit();
-        manager.close();
+        entityManager.getTransaction().begin();
+        entityManager.persist(t);
+        entityManager.getTransaction().commit();
         return t;
     }
 
     @Override
     public T read(PK id) {
-        EntityManager manager = factory.createEntityManager();
-        T t = manager.find(entityClass, id);
-        manager.close();
-        return t;
+        return entityManager.find(entityClass, id);
     }
 
     @Override
     public T update(T t) {
-        EntityManager manager = factory.createEntityManager();
-        manager.getTransaction().begin();
-        T result = manager.merge(t);
-        manager.getTransaction().commit();
-        manager.close();
+        entityManager.getTransaction().begin();
+        T result = entityManager.merge(t);
+        entityManager.getTransaction().commit();
         return result;
     }
 
     @Override
     public void delete(T t) {
-        EntityManager manager = factory.createEntityManager();
-        manager.getTransaction().begin();
-        t = manager.merge(t);
-        manager.remove(t);
-        manager.getTransaction().commit();
-        manager.close();
+        entityManager.getTransaction().begin();
+        t = entityManager.merge(t);
+        entityManager.remove(t);
+        entityManager.getTransaction().commit();
     }
 }

@@ -24,8 +24,7 @@ public class StaffDao extends IncrementDao<StaffEntity, String> {
      * @return List<StaffEntity>
      */
     public List getAllStaffs() {
-        EntityManager manager = factory.createEntityManager();
-        Query query = manager.createQuery("SELECT s FROM StaffEntity s");
+        Query query = entityManager.createQuery("SELECT s FROM StaffEntity s");
         return query.getResultList();
     }
 
@@ -35,8 +34,7 @@ public class StaffDao extends IncrementDao<StaffEntity, String> {
      * @return List<StaffEntity>
      */
     public List findStaffsByStaffCode(String keyword) {
-        EntityManager manager = factory.createEntityManager();
-        Query query = manager
+        Query query = entityManager
                 .createQuery("SELECT s FROM StaffEntity s WHERE s.staffCode LIKE :keyword");
         query.setParameter("keyword", "%" + keyword + "%");
         return query.getResultList();
