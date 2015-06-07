@@ -1,5 +1,6 @@
 package com.fpt.mic.micweb.model.dao;
 
+import com.fpt.mic.micweb.model.dao.common.GenericDaoJpaImpl;
 import com.fpt.mic.micweb.model.entity.PaymentEntity;
 
 /**

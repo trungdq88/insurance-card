@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.fpt.mic.micweb.model.dao;
+package com.fpt.mic.micweb.model.dao.common;
 
 import java.io.Serializable;
 import java.util.List;

@@ -1,5 +1,7 @@
 package com.fpt.mic.micweb.model.dao;
 
+import com.fpt.mic.micweb.model.dao.common.GenericDaoJpaImpl;
+import com.fpt.mic.micweb.model.dao.common.IncrementDao;
 import com.fpt.mic.micweb.model.entity.StaffEntity;
 
 import javax.persistence.EntityManager;
@@ -9,7 +11,12 @@ import java.util.List;
 /**
  * Created by dinhquangtrung on 6/2/15.
  */
-public class StaffDao extends GenericDaoJpaImpl<StaffEntity, String> {
+public class StaffDao extends IncrementDao<StaffEntity, String> {
+
+    @Override
+    protected String getCodePrefix() {
+        return "NV";
+    }
 
     /**
      * Return ALL staffs in database. Should not use this because listing all
@@ -34,4 +41,5 @@ public class StaffDao extends GenericDaoJpaImpl<StaffEntity, String> {
         query.setParameter("keyword", "%" + keyword + "%");
         return query.getResultList();
     }
+
 }

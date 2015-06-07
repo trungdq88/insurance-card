@@ -1,5 +1,6 @@
 package com.fpt.mic.micweb.model.dao;
 
+import com.fpt.mic.micweb.model.dao.common.IncrementDao;
 import com.fpt.mic.micweb.model.dto.ContractSearchResult;
 import com.fpt.mic.micweb.model.entity.ContractEntity;
 
@@ -10,7 +11,12 @@ import java.util.List;
 /**
  * Created by TriPQMSE60746 on 06/04/2015.
  */
-public class ContractDao extends GenericDaoJpaImpl<ContractEntity, String> {
+public class ContractDao extends IncrementDao<ContractEntity, String> {
+
+    @Override
+    protected String getCodePrefix() {
+        return "HD";
+    }
 
     /**
      * Search for contracts by contract code or customer name of the contract
@@ -31,4 +37,5 @@ public class ContractDao extends GenericDaoJpaImpl<ContractEntity, String> {
         query.setParameter("keyword", "%" + keyword + "%");
         return query.getResultList();
     }
+
 }

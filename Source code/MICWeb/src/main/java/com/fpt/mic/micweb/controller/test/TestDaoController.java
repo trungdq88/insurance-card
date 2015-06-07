@@ -1,10 +1,12 @@
 package com.fpt.mic.micweb.controller.test;
 
 import com.fpt.mic.micweb.framework.BasicController;
+import com.fpt.mic.micweb.framework.responses.JsonString;
 import com.fpt.mic.micweb.framework.responses.JspPage;
 import com.fpt.mic.micweb.framework.R;
 import com.fpt.mic.micweb.framework.responses.ResponseObject;
 import com.fpt.mic.micweb.model.dao.CardDao;
+import com.fpt.mic.micweb.model.dao.ContractDao;
 import com.fpt.mic.micweb.model.dao.StaffDao;
 import com.fpt.mic.micweb.model.entity.CardEntity;
 import com.fpt.mic.micweb.model.entity.StaffEntity;
@@ -102,4 +104,9 @@ public class TestDaoController extends BasicController {
 
     }
 
+    public ResponseObject getNewId(R r) {
+        StaffDao staffDao = new StaffDao();
+        String incrementId = staffDao.getIncrementId();
+        return new JsonString(incrementId);
+    }
 }

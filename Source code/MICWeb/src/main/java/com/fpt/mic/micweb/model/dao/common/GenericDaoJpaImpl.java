@@ -1,12 +1,10 @@
-package com.fpt.mic.micweb.model.dao;
+package com.fpt.mic.micweb.model.dao.common;
 
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
-import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import javax.persistence.Query;
 
 /**
  *
@@ -20,7 +18,7 @@ public class GenericDaoJpaImpl<T, PK extends Serializable>
 
     protected Class<T> entityClass;
 
-    EntityManagerFactory factory = 
+    public EntityManagerFactory factory =
             Persistence.createEntityManagerFactory("MicPersistenceUnit");
 
     public GenericDaoJpaImpl() {
@@ -43,7 +41,9 @@ public class GenericDaoJpaImpl<T, PK extends Serializable>
     @Override
     public T read(PK id) {
         EntityManager manager = factory.createEntityManager();
-        return manager.find(entityClass, id);
+        T t = manager.find(entityClass, id);
+        manager.close();
+        return t;
     }
 
     @Override
