@@ -58,8 +58,10 @@
                                 </label>
                             </div>
                             <div class="form-group">
-                                <label>Văn Bản Đính Kèm (Nếu có)</label>
-                                <input type="file"/>
+                                <label></label>
+                               <textarea name="txtAnotherReason" rows="3" cols="95">
+
+                               </textarea>
                             </div>
                         </div>
                         <div class="modal-footer">
