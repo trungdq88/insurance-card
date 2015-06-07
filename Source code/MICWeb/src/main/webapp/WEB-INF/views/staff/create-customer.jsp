@@ -1,5 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ include file="_shared/header.jsp"%>
+<%@ include file="_shared/header.jsp" %>
 
 <div id="wrapper">
 
@@ -15,67 +15,74 @@
             <div class="col-lg-12">
                 <p class="text-right"><b>Các ô có dấu * là bắt buộc</b></p>
                 <br/>
-                <form class="form-horizontal">
+
+                <!-- Form to create new customer -->
+                <form action="${pageContext.request.contextPath}/staff/customer" method="post" class="form-horizontal">
                     <fieldset>
-                        <!-- Text input-->
+                        <!-- Customer full name input-->
                         <div class="form-group">
-                            <label class="col-sm-4 control-label" for="name">Tên khách hàng *</label>
-                            <div class="col-sm-6">
-                                <input id="name" name="name" type="text" class="form-control input-md">
+                            <label class="col-sm-4 control-label" for="name">
+                                Tên khách hàng *
+                            </label>
+                            <div class="col-sm-4">
+                                <input id="name" name="txtName" type="text" class="form-control input-md">
                             </div>
                         </div>
 
-                        <!-- Text input-->
+                        <!-- Address input-->
                         <div class="form-group">
-                            <label class="col-sm-4 control-label" for="address">Địa chỉ *</label>
-                            <div class="col-sm-6">
-                                <input id="address" name="address" type="text" class="form-control input-md">
+                            <label class="col-sm-4 control-label" for="address">
+                                Địa chỉ *
+                            </label>
+                            <div class="col-sm-5">
+                                <input id="address" name="txtAddress" type="text" class="form-control input-md">
                             </div>
                         </div>
 
-                        <!-- Text input-->
+                        <!-- Email address input-->
                         <div class="form-group">
-                            <label class="col-sm-4 control-label" for="email">Email *</label>
-                            <div class="col-sm-6">
-                                <input id="email" name="email" type="text" class="form-control input-md">
+                            <label class="col-sm-4 control-label" for="email">
+                                Email *
+                            </label>
+                            <div class="col-sm-4">
+                                <input id="email" name="txtEmail" type="text" class="form-control input-md">
                             </div>
                         </div>
 
-                        <!-- Text input-->
+                        <!-- Phone number input-->
                         <div class="form-group">
-                            <label class="col-sm-4 control-label" for="phone">Số điện thoại</label>
-                            <div class="col-sm-6">
-                                <input id="phone" name="phone" type="text" class="form-control input-md">
+                            <label class="col-sm-4 control-label" for="phone">
+                                Số điện thoại *
+                            </label>
+                            <div class="col-sm-2">
+                                <input id="phone" name="txtPhone" type="text" class="form-control input-md">
                             </div>
                         </div>
 
-                        <!-- Text input-->
+                        <!-- Personal ID input-->
                         <div class="form-group">
-                            <label class="col-sm-4 control-label" for="personalid">Số CMND / Hộ chiếu</label>
-                            <div class="col-sm-6">
-                                <input id="personalid" name="personalid" type="text" class="form-control input-md">
+                            <label class="col-sm-4 control-label" for="personalid">
+                                Số CMND / Hộ chiếu
+                            </label>
+                            <div class="col-sm-2">
+                                <input id="personalid" name="txtPersonalID" type="text" class="form-control input-md">
                             </div>
                         </div>
-
                     </fieldset>
-                </form>
 
-                <div class="text-center">
-
-                    <form action="${pageContext.request.contextPath}/staff/customer" method="post">
+                    <!-- Create new customer button -->
+                    <div class="text-center">
                         <input type="hidden" name="action" value="create"/>
                         <button type="submit" class="btn btn-success">
                             <i class="fa fa-arrow-right"></i>
                             Thêm khách hàng
                         </button>
-                    </form>
-                </div>
-
+                    </div>
+                </form>
             </div>
         </div>
     </div>
 </div>
 <!-- /#wrapper -->
 
-
-<%@ include file="_shared/footer.jsp"%>
+<%@ include file="_shared/footer.jsp" %>
