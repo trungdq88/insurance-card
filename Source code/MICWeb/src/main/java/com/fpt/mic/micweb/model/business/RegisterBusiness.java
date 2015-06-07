@@ -29,6 +29,9 @@ public class RegisterBusiness {
         // get customer password - add later
         String customerPassword = "12345678";
         customerEntity.setPassword(customerPassword);
+        // get next Contract Code- add later
+        contractEntity.setContractCode("" + new Random().nextInt(8999) + 1000);
+        contractEntity.setCustomerCode(customerCode);
 
         if (customerDao.create(customerEntity) != null) {
             // Add contract
