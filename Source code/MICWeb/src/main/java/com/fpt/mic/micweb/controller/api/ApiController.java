@@ -8,6 +8,7 @@ import com.fpt.mic.micweb.model.business.ApiBusiness;
 import com.fpt.mic.micweb.model.dto.ContractSearchResult;
 
 import javax.servlet.annotation.WebServlet;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -27,7 +28,11 @@ public class ApiController extends BasicController {
     public ResponseObject getContracts(R r) {
         // Get keyword
         String keyword = r.equest.getParameter("keyword");
-        if (keyword == null || keyword.isEmpty()) keyword = "";
+
+        // If no keyword provided, return empty array
+        if (keyword == null || keyword.isEmpty()) {
+            return new JsonString(new ArrayList<ContractSearchResult>());
+        }
 
         // Call business for search
         ApiBusiness apiBusiness = new ApiBusiness();
