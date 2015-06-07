@@ -4,7 +4,7 @@
 <html lang="en">
 <script language="javascript">
     function update() {
-        alert("hello");
+
 
     }
 </script>
@@ -503,6 +503,15 @@
                                 <div class="clearfix"></div>
                             </div>
                         </div>
+                        <input type="hidden" name="L_PAYMENTREQUEST_0_NAME0" value="Bảo hiểm">
+                        <input type="hidden" name="L_PAYMENTREQUEST_0_DESC0" value="asdasd">
+                        <input type="hidden" name="L_PAYMENTREQUEST_0_QTY0" value="1">
+                        <input type="hidden" name="PAYMENTREQUEST_0_ITEMAMT" value="200.00">
+                        <input type="hidden" name="PAYMENTREQUEST_0_TAXAMT" value="1.00">
+                        <input type="hidden" name="PAYMENTREQUEST_0_AMT" value="201.00">
+                        <input type="hidden" name="currencyCodeType" value="USD">
+                        <input type="hidden" name="paymentType" value="Sale">
+                        <input type="hidden" name="checkout" value="check out">
                     </form>
                 </div>
                 <!-- wizard container -->
