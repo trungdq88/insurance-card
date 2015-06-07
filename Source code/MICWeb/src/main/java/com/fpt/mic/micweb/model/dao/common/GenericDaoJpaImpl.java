@@ -22,9 +22,8 @@ public class GenericDaoJpaImpl<T, PK extends Serializable>
      * This variable HAVE TO be static or it will create new connection
      * every time a derived class of this is created, which causes "too many connections" error.
      */
-    private static EntityManagerFactory factory =
+    protected static EntityManagerFactory factory =
             Persistence.createEntityManagerFactory("MicPersistenceUnit");
-    public static EntityManager entityManager = factory.createEntityManager();
 
     public GenericDaoJpaImpl() {
         ParameterizedType genericSuperclass = (ParameterizedType) getClass()
@@ -35,30 +34,39 @@ public class GenericDaoJpaImpl<T, PK extends Serializable>
 
     @Override
     public T create(T t) {
+        EntityManager entityManager = factory.createEntityManager();
         entityManager.getTransaction().begin();
         entityManager.persist(t);
         entityManager.getTransaction().commit();
+        entityManager.close();
         return t;
     }
 
     @Override
     public T read(PK id) {
-        return entityManager.find(entityClass, id);
+        EntityManager entityManager = factory.createEntityManager();
+        T t = entityManager.find(entityClass, id);
+        entityManager.close();
+        return t;
     }
 
     @Override
     public T update(T t) {
+        EntityManager entityManager = factory.createEntityManager();
         entityManager.getTransaction().begin();
         T result = entityManager.merge(t);
         entityManager.getTransaction().commit();
+        entityManager.close();
         return result;
     }
 
     @Override
     public void delete(T t) {
+        EntityManager entityManager = factory.createEntityManager();
         entityManager.getTransaction().begin();
         t = entityManager.merge(t);
         entityManager.remove(t);
         entityManager.getTransaction().commit();
+        entityManager.close();
     }
 }

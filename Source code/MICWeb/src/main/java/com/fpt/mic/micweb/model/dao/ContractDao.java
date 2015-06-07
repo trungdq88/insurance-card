@@ -25,6 +25,7 @@ public class ContractDao extends IncrementDao<ContractEntity, String> {
      */
     public List<ContractSearchResult> searchContracts(String keyword) {
 
+        EntityManager entityManager = factory.createEntityManager();
         TypedQuery<ContractSearchResult> query = entityManager.createQuery(
                 "SELECT NEW ContractSearchResult(co, cu) " +
                         "FROM ContractEntity co " +
@@ -35,6 +36,7 @@ public class ContractDao extends IncrementDao<ContractEntity, String> {
         );
         query.setParameter("keyword", "%" + keyword + "%");
         List<ContractSearchResult> resultList = query.getResultList();
+        entityManager.close();
         return resultList;
     }
 

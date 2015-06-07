@@ -17,6 +17,9 @@ import java.util.List;
  */
 @WebServlet(name = "ApiController", urlPatterns = "/api")
 public class ApiController extends BasicController {
+
+    ApiBusiness apiBusiness = new ApiBusiness();
+
     /**
      * Search contract API
      * /api?action=contracts&keyword=something
@@ -35,11 +38,34 @@ public class ApiController extends BasicController {
         }
 
         // Call business for search
-        ApiBusiness apiBusiness = new ApiBusiness();
         List<ContractSearchResult> contractSearchResults =
                 apiBusiness.searchContracts(keyword);
 
         // Return json result
         return new JsonString(contractSearchResults);
+    }
+
+    /**
+     * Update card ID to a contract.
+     * This API is called from Printer Mobile App
+     * @param r
+     * @return
+     */
+    public ResponseObject getUpdateCardID(R r) {
+        String contractCode = r.equest.getParameter("contractCode");
+        String cardID = r.equest.getParameter("cardID");
+
+        if (contractCode == null || contractCode.isEmpty()) {
+            return new JsonString(false);
+        }
+        if (cardID == null || cardID.isEmpty()) {
+            return new JsonString(false);
+        }
+
+        // Call to business
+        boolean result = apiBusiness.updateCardID(contractCode, cardID);
+
+        // Return json result
+        return new JsonString(result);
     }
 }
