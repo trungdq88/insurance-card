@@ -7,12 +7,8 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="_shared/header.jsp" %>
-
 <div id="wrapper">
-
     <%@ include file="_shared/navigation.jsp" %>
-
-
     <div id="page-wrapper">
         <div class="row">
 
@@ -45,19 +41,19 @@
                             </div>
                             <div class="checkbox">
                                 <label>
-                                    <input type="radio" value="">
+                                    <input type="radio" value="" name="rdbReason1">
                                     Xe cơ giới bị thu hồi đăng ký
                                 </label>
                             </div>
                             <div class="checkbox">
                                 <label>
-                                    <input type="radio" value="">
+                                    <input type="radio" value="" name="rdbReason2">
                                     Xe cơ giới hết niên hạn
                                 </label>
                             </div>
                             <div class="checkbox">
                                 <label>
-                                    <input type="radio" value="">
+                                    <input type="radio" value="" name="rdbAnother">
                                     Lý do khác
                                 </label>
                             </div>
@@ -79,16 +75,7 @@
         <table class="table table-bordered">
             <thead>
             <tr class="active">
-                <th class="text-center">Sổ Hợp Đồng
-                </th>
-                <th class="text-center">
-                    Nơi Cấp
-                </th>
-                <th class="text-center">
-                    Người Cấp
-                </th>
-                <th class="text-center">
-                    Ngày Cấp
+                <th class="text-center">Mã Hợp Đồng
                 </th>
                 <th class="text-center">Ngày Tham Gia
                 </th>
@@ -104,20 +91,11 @@
             </thead>
             <tbody>
             <tr>
-                <td class="text-center">123456789
+                <td class="text-center">${contract.contractCode}
                 </td>
-                <td class="text-center">
-                    24/02 Lê Quan Định, Bình Thạnh TPHCM
+                <td class="text-center">${contract.startDate}
                 </td>
-                <td class="text-center">
-                    Huỳnh Văn Thái
-                </td>
-                <td class="text-center">
-                    10/11/2011
-                </td>
-                <td class="text-center">11/02/2011
-                </td>
-                <td class="text-center">11/02/2012
+                <td class="text-center">${contract.expiredDate}
                 </td>
                 <td class="text-center">Trên 50 CC có bảo hiểm
                 </td>
