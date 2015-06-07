@@ -11,6 +11,7 @@ import java.util.Collection;
 @Entity
 @Table(name = "mic_contract", schema = "", catalog = "mic_data")
 public class ContractEntity {
+    public static final String STATUS_READY = "Ready";
     private String contractCode;
     private Timestamp startDate;
     private Timestamp expiredDate;

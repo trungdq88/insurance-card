@@ -28,6 +28,7 @@ public class ApiBusiness {
 
     public boolean updateCardID(String contractCode, String cardID) {
         CardDao cardDao = new CardDao();
+        ContractDao contractDao = new ContractDao();
 
         // Validate contract code, card ID
 
@@ -39,6 +40,13 @@ public class ApiBusiness {
         cardEntity.setActivatedDate(new Timestamp(new Date().getTime()));
 
         CardEntity result = cardDao.create(cardEntity);
+
+        if (result != null) {
+            // Change contract status
+            ContractEntity contract = contractDao.read(contractCode);
+            contract.setStatus(ContractEntity.STATUS_READY);
+            contractDao.update(contract);
+        }
 
         return result != null;
     }
