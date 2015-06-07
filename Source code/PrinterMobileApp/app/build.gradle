@@ -10,11 +10,20 @@ apply plugin: 'com.android.application'
 
 repositories {
     jcenter()
+    mavenCentral()
+    maven {
+        url "https://repository-achartengine.forge.cloudbees.com/snapshot/"
+    }
 }
 
 android {
     compileSdkVersion 21
     buildToolsVersion "21.1.1"
+
+    packagingOptions {
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/NOTICE'
+    }
 
     defaultConfig {
         applicationId "com.fpt.mic.mobile.printer.app"
@@ -38,4 +47,5 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-hibernate4', version: '2.4.0'
 }

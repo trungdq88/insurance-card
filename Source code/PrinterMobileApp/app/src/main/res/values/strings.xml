@@ -4,4 +4,5 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="write_guide">Vui lòng áp sát thẻ vào điện thoại để bắt đầu ghi dữ liệu lên thẻ</string>
+    <string name="enter_keyword">Vui lòng nhập tên hoặc mã hợp đồng để tìm kiếm</string>
 </resources>

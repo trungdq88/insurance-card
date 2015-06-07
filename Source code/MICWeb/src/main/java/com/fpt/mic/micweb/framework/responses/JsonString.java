@@ -4,8 +4,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.hibernate4.Hibernate4Module;
 
-import java.io.IOException;
-import java.io.StringWriter;
 
 /**
  * Created by dinhquangtrung on 5/23/15.

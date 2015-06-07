@@ -1,4 +1,4 @@
-package com.fpt.mic.mobile.printer.app;
+package com.fpt.mic.mobile.printer.app.activity;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -6,6 +6,11 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.widget.*;
+import com.fpt.mic.mobile.printer.app.R;
+import com.fpt.mic.mobile.printer.app.business.ContractBusiness;
+import com.fpt.mic.mobile.printer.app.dto.ContractSearchResult;
+import com.fpt.mic.mobile.printer.app.utils.ApiRequest;
+import com.fpt.mic.mobile.printer.app.utils.Constants;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -21,6 +26,7 @@ public class MainActivity extends Activity {
     List<String> values = new ArrayList<String>();
     TextView emptyView;
     View prgLoading;
+    EditText txtKeyword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +37,7 @@ public class MainActivity extends Activity {
         lstContracts = (ListView) findViewById(R.id.lstContract);
         prgLoading = findViewById(R.id.prgLoading);
         emptyView = (TextView) findViewById(R.id.emptyView);
+        txtKeyword = (EditText) findViewById(R.id.txtKeyword);
 
         // Setup list view
         adapter = new ArrayAdapter<String>(
@@ -51,13 +58,7 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View view) {
                 showLoadingEffect();
-                Handler handlerTimer = new Handler();
-                handlerTimer.postDelayed(new Runnable() {
-                    public void run() {
-                        searchContracts();
-                        updateListView();
-                    }
-                }, 2000);
+                searchContracts();
             }
         });
     }
@@ -69,9 +70,22 @@ public class MainActivity extends Activity {
     }
 
     private void searchContracts() {
-        values = Arrays.asList("Android", "iPhone", "WindowsMobile",
-                "Blackberry", "WebOS", "Ubuntu", "Windows7", "Max OS X",
-                "Linux", "OS/2");
+        String keyword = txtKeyword.getText().toString();
+
+        ContractBusiness contractBusiness = new ContractBusiness();
+
+        contractBusiness.searchContracts(keyword, new ContractBusiness.IOnSearchResult() {
+            @Override
+            public void onSearchResult(List<ContractSearchResult> results) {
+                values = new ArrayList<String>();
+                for (ContractSearchResult result : results) {
+                    values.add(result.contractEntity.contractCode +
+                            " - " + result.customerEntity.name);
+                }
+
+                updateListView();
+            }
+        });
     }
 
     private void updateListView() {
@@ -86,7 +100,11 @@ public class MainActivity extends Activity {
 
         // Tricky handle no result
         if (values.size() == 0) {
-            emptyView.setText("Không tìm thấy kết quả nào!");
+            if (txtKeyword.getText().toString().isEmpty()) {
+                emptyView.setText(getString(R.string.enter_keyword));
+            } else {
+                emptyView.setText("Không tìm thấy kết quả nào!");
+            }
         }
     }
 }

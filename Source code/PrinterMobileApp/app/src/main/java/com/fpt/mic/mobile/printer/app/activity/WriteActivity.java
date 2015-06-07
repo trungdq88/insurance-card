@@ -1,4 +1,4 @@
-package com.fpt.mic.mobile.printer.app;
+package com.fpt.mic.mobile.printer.app.activity;
 
 import android.app.Activity;
 import android.app.PendingIntent;
@@ -9,6 +9,7 @@ import android.nfc.tech.Ndef;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
+import com.fpt.mic.mobile.printer.app.R;
 
 import java.io.IOException;
 
