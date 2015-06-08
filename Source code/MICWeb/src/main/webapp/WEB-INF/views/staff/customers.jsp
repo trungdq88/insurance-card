@@ -1,5 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ include file="_shared/header.jsp"%>
+<%@ include file="_shared/header.jsp" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <div id="wrapper">
 
@@ -11,100 +13,101 @@
                     Khách hàng
 
                     <div class="pull-right">
-                        <a href="${pageContext.request.contextPath}/staff/customer?action=create" class="btn btn-success">
+                        <a href="${pageContext.request.contextPath}/staff/customer?action=create"
+                           class="btn btn-success">
                             <i class="fa fa-plus"></i>
                             Khách hàng mới
                         </a>
-                    </div></h1>
+                    </div>
+                </h1>
             </div>
             <!-- /.col-lg-12 -->
         </div>
         <!-- /.row -->
 
-        <div>
-
-        </div>
         <div class="panel panel-default">
+
+            <c:set var="info" value="${requestScope.INFO}"/>
+
             <div class="panel-heading">
                 <div class="pull-left center-dropdown-button">
-                    <!--<input type="checkbox" class="check-all"/>-->
-                    <b>Có 173 khách hàng</b>
+                    <b>Có ${fn:length(info)} khách hàng</b>
                 </div>
                 <div class="pull-right no-wrap">
                     <input type="text" class="form-control long-text-box"
                            placeholder="Tìm kiếm theo tên, mã hợp đồng, mã thẻ"/>
                     <input type="button" class="btn btn-default" value="Tìm kiếm"/>
                     <!--<div class="btn-group">-->
-                        <!--<button type="button" class="btn btn-default dropdown-toggle"-->
-                                <!--data-toggle="dropdown"-->
-                                <!--aria-expanded="false">-->
-                            <!--Tên <span class="caret"></span>-->
-                        <!--</button>-->
-                        <!--<ul class="dropdown-menu left-grow" role="menu">-->
-                            <!--<li>-->
-                                <!--<label>Tên:-->
-                                    <!--<input type="text" class="form-control typeahead"/>-->
-                                <!--</label>-->
-                            <!--</li>-->
-                            <!--<li class="divider"></li>-->
-                            <!--<li><a href="#">Action</a></li>-->
-                            <!--<li><a href="#">Another action</a></li>-->
-                            <!--<li><a href="#">Something else here</a></li>-->
-                        <!--</ul>-->
+                    <!--<button type="button" class="btn btn-default dropdown-toggle"-->
+                    <!--data-toggle="dropdown"-->
+                    <!--aria-expanded="false">-->
+                    <!--Tên <span class="caret"></span>-->
+                    <!--</button>-->
+                    <!--<ul class="dropdown-menu left-grow" role="menu">-->
+                    <!--<li>-->
+                    <!--<label>Tên:-->
+                    <!--<input type="text" class="form-control typeahead"/>-->
+                    <!--</label>-->
+                    <!--</li>-->
+                    <!--<li class="divider"></li>-->
+                    <!--<li><a href="#">Action</a></li>-->
+                    <!--<li><a href="#">Another action</a></li>-->
+                    <!--<li><a href="#">Something else here</a></li>-->
+                    <!--</ul>-->
                     <!--</div>-->
                     <!--<div class="btn-group">-->
-                        <!--<button type="button" class="btn btn-default dropdown-toggle"-->
-                                <!--data-toggle="dropdown"-->
-                                <!--aria-expanded="false">-->
-                            <!--Số điện thoại <span class="caret"></span>-->
-                        <!--</button>-->
-                        <!--<ul class="dropdown-menu left-grow" role="menu">-->
-                            <!--<li>-->
-                                <!--<label>Số điện thoại:-->
-                                    <!--<input type="text" class="form-control typeahead"/>-->
-                                <!--</label>-->
-                            <!--</li>-->
-                            <!--<li class="divider"></li>-->
-                            <!--<li><a href="#">Action</a></li>-->
-                            <!--<li><a href="#">Another action</a></li>-->
-                            <!--<li><a href="#">Something else here</a></li>-->
-                        <!--</ul>-->
+                    <!--<button type="button" class="btn btn-default dropdown-toggle"-->
+                    <!--data-toggle="dropdown"-->
+                    <!--aria-expanded="false">-->
+                    <!--Số điện thoại <span class="caret"></span>-->
+                    <!--</button>-->
+                    <!--<ul class="dropdown-menu left-grow" role="menu">-->
+                    <!--<li>-->
+                    <!--<label>Số điện thoại:-->
+                    <!--<input type="text" class="form-control typeahead"/>-->
+                    <!--</label>-->
+                    <!--</li>-->
+                    <!--<li class="divider"></li>-->
+                    <!--<li><a href="#">Action</a></li>-->
+                    <!--<li><a href="#">Another action</a></li>-->
+                    <!--<li><a href="#">Something else here</a></li>-->
+                    <!--</ul>-->
                     <!--</div>-->
                     <!--<div class="btn-group">-->
-                        <!--<button type="button" class="btn btn-default dropdown-toggle"-->
-                                <!--data-toggle="dropdown"-->
-                                <!--aria-expanded="false">-->
-                            <!--Mã hợp đồng <span class="caret"></span>-->
-                        <!--</button>-->
-                        <!--<ul class="dropdown-menu left-grow" role="menu">-->
-                            <!--<li>-->
-                                <!--<label>Mã hợp đồng:-->
-                                    <!--<input type="text" class="form-control typeahead"/>-->
-                                <!--</label>-->
-                            <!--</li>-->
-                            <!--<li class="divider"></li>-->
-                            <!--<li><a href="#">Action</a></li>-->
-                            <!--<li><a href="#">Another action</a></li>-->
-                            <!--<li><a href="#">Something else here</a></li>-->
-                        <!--</ul>-->
+                    <!--<button type="button" class="btn btn-default dropdown-toggle"-->
+                    <!--data-toggle="dropdown"-->
+                    <!--aria-expanded="false">-->
+                    <!--Mã hợp đồng <span class="caret"></span>-->
+                    <!--</button>-->
+                    <!--<ul class="dropdown-menu left-grow" role="menu">-->
+                    <!--<li>-->
+                    <!--<label>Mã hợp đồng:-->
+                    <!--<input type="text" class="form-control typeahead"/>-->
+                    <!--</label>-->
+                    <!--</li>-->
+                    <!--<li class="divider"></li>-->
+                    <!--<li><a href="#">Action</a></li>-->
+                    <!--<li><a href="#">Another action</a></li>-->
+                    <!--<li><a href="#">Something else here</a></li>-->
+                    <!--</ul>-->
                     <!--</div>-->
                     <!--<div class="btn-group">-->
-                        <!--<button type="button" class="btn btn-default dropdown-toggle"-->
-                                <!--data-toggle="dropdown"-->
-                                <!--aria-expanded="false">-->
-                            <!--Mã thẻ <span class="caret"></span>-->
-                        <!--</button>-->
-                        <!--<ul class="dropdown-menu left-grow" role="menu">-->
-                            <!--<li>-->
-                                <!--<label>Mã thẻ:-->
-                                    <!--<input type="text" class="form-control typeahead"/>-->
-                                <!--</label>-->
-                            <!--</li>-->
-                            <!--<li class="divider"></li>-->
-                            <!--<li><a href="#">Action</a></li>-->
-                            <!--<li><a href="#">Another action</a></li>-->
-                            <!--<li><a href="#">Something else here</a></li>-->
-                        <!--</ul>-->
+                    <!--<button type="button" class="btn btn-default dropdown-toggle"-->
+                    <!--data-toggle="dropdown"-->
+                    <!--aria-expanded="false">-->
+                    <!--Mã thẻ <span class="caret"></span>-->
+                    <!--</button>-->
+                    <!--<ul class="dropdown-menu left-grow" role="menu">-->
+                    <!--<li>-->
+                    <!--<label>Mã thẻ:-->
+                    <!--<input type="text" class="form-control typeahead"/>-->
+                    <!--</label>-->
+                    <!--</li>-->
+                    <!--<li class="divider"></li>-->
+                    <!--<li><a href="#">Action</a></li>-->
+                    <!--<li><a href="#">Another action</a></li>-->
+                    <!--<li><a href="#">Something else here</a></li>-->
+                    <!--</ul>-->
                     <!--</div>-->
                 </div>
                 <div class="clearfix"></div>
@@ -124,94 +127,20 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td><a href="${pageContext.request.contextPath}/staff/customer?action=detail">HDTRU839</a></td>
-                            <td>Đinh Quang Trung</td>
-                            <td>0987.654.321</td>
-                            <td><a href="#">0123654789</a></td>
-                            <td><a href="#">AC7-37F-E8E-DDC</a></td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td><a href="${pageContext.request.contextPath}/staff/customer?action=detail">HDTRU839</a></td>
-                            <td>Đinh Quang Trung</td>
-                            <td>0987.654.321</td>
-                            <td><a href="#">0123654789</a></td>
-                            <td><a href="#">AC7-37F-E8E-DDC</a></td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td><a href="${pageContext.request.contextPath}/staff/customer?action=detail">HDTRU839</a></td>
-                            <td>Đinh Quang Trung</td>
-                            <td>0987.654.321</td>
-                            <td><a href="#">0123654789</a></td>
-                            <td><a href="#">AC7-37F-E8E-DDC</a></td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td><a href="${pageContext.request.contextPath}/staff/customer?action=detail">HDTRU839</a></td>
-                            <td>Đinh Quang Trung</td>
-                            <td>0987.654.321</td>
-                            <td><a href="#">0123654789</a></td>
-                            <td><a href="#">AC7-37F-E8E-DDC</a></td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td><a href="${pageContext.request.contextPath}/staff/customer?action=detail">HDTRU839</a></td>
-                            <td>Đinh Quang Trung</td>
-                            <td>0987.654.321</td>
-                            <td><a href="#">0123654789</a></td>
-                            <td><a href="#">AC7-37F-E8E-DDC</a></td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td><a href="${pageContext.request.contextPath}/staff/customer?action=detail">HDTRU839</a></td>
-                            <td>Đinh Quang Trung</td>
-                            <td>0987.654.321</td>
-                            <td><a href="#">0123654789</a></td>
-                            <td><a href="#">AC7-37F-E8E-DDC</a></td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td><a href="${pageContext.request.contextPath}/staff/customer?action=detail">HDTRU839</a></td>
-                            <td>Đinh Quang Trung</td>
-                            <td>0987.654.321</td>
-                            <td><a href="#">0123654789</a></td>
-                            <td><a href="#">AC7-37F-E8E-DDC</a></td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td><a href="${pageContext.request.contextPath}/staff/customer?action=detail">HDTRU839</a></td>
-                            <td>Đinh Quang Trung</td>
-                            <td>0987.654.321</td>
-                            <td><a href="#">0123654789</a></td>
-                            <td><a href="#">AC7-37F-E8E-DDC</a></td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td><a href="${pageContext.request.contextPath}/staff/customer?action=detail">HDTRU839</a></td>
-                            <td>Đinh Quang Trung</td>
-                            <td>0987.654.321</td>
-                            <td><a href="#">0123654789</a></td>
-                            <td><a href="#">AC7-37F-E8E-DDC</a></td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td><a href="${pageContext.request.contextPath}/staff/customer?action=detail">HDTRU839</a></td>
-                            <td>Đinh Quang Trung</td>
-                            <td>0987.654.321</td>
-                            <td><a href="#">0123654789</a></td>
-                            <td><a href="#">AC7-37F-E8E-DDC</a></td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td><a href="${pageContext.request.contextPath}/staff/customer?action=detail">HDTRU839</a></td>
-                            <td>Đinh Quang Trung</td>
-                            <td>0987.654.321</td>
-                            <td><a href="#">0123654789</a></td>
-                            <td><a href="#">AC7-37F-E8E-DDC</a></td>
-                        </tr>
+                        <c:forEach var="customer" items="${info}" varStatus="counter">
+                            <tr>
+                                <td>${counter.count}</td>
+                                <td>
+                                    <a href="${pageContext.request.contextPath}/staff/customer?action=detail&code=${customer.customerCode}">
+                                        ${customer.customerCode}
+                                    </a>
+                                </td>
+                                <td>${customer.name}</td>
+                                <td>${customer.phone}</td>
+                                <td><a href="#"></a>Add later</td>
+                                <td><a href="#"></a>Add later</td>
+                            </tr>
+                        </c:forEach>
                         </tbody>
                     </table>
                 </div>
@@ -243,4 +172,4 @@
 </div>
 <!-- /#wrapper -->
 
-<%@ include file="_shared/footer.jsp"%>
+<%@ include file="_shared/footer.jsp" %>

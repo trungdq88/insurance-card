@@ -1,14 +1,19 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ include file="_shared/header.jsp"%>
+<%@ include file="_shared/header.jsp" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <div id="wrapper">
+
+    <c:set var="detail" value="${requestScope.DETAIL}"/>
+    <c:set var="contract" value="${requestScope.CONTRACT}"/>
 
     <%@ include file="_shared/navigation.jsp" %>
     <div id="page-wrapper">
         <div class="row">
             <div class="col-lg-12">
                 <h1 class="page-header">
-                    Đinh Quang Trung
+                    ${detail.name}
                 </h1>
             </div>
             <!-- /.col-lg-12 -->
@@ -26,73 +31,73 @@
                                 </a>
                             </div>
                         </legend>
-                        <!-- Text input-->
+
+                        <!-- Customer code -->
                         <div class="form-group">
                             <label class="col-sm-4 control-label">Mã khách hàng</label>
 
                             <div class="col-sm-6">
                                 <div class="text-value text-primary">
-                                    <b>HDTRU839</b>
+                                    <b>${detail.customerCode}</b>
                                 </div>
                             </div>
                         </div>
-                        <!-- Text input-->
+
+                        <!-- Customer name -->
                         <div class="form-group">
                             <label class="col-sm-4 control-label">Tên khách hàng</label>
 
                             <div class="col-sm-6">
                                 <div class="text-value">
-                                    Đinh Quang Trung
+                                    ${detail.name}
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Text input-->
+                        <!-- Address -->
                         <div class="form-group">
                             <label class="col-sm-4 control-label">Địa chỉ</label>
 
                             <div class="col-sm-6">
                                 <div class="text-value">
-                                    Phường Tân Chánh Hiệp, Q.12, TPHCM
+                                    ${detail.address}
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Text input-->
+                        <!-- Email -->
                         <div class="form-group">
                             <label class="col-sm-4 control-label">Email</label>
 
                             <div class="col-sm-6">
                                 <div class="text-value">
-                                    trungdq88@gmail.com
+                                    ${detail.email}
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Text input-->
+                        <!-- Phone -->
                         <div class="form-group">
                             <label class="col-sm-4 control-label">Số điện thoại</label>
 
                             <div class="col-sm-6">
                                 <div class="text-value">
-                                    0987.654.321
+                                    ${detail.phone}
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Text input-->
+                        <!-- Personal ID -->
                         <div class="form-group">
                             <label class="col-sm-4 control-label">Số CMND / Hộ chiếu</label>
 
                             <div class="col-sm-6">
                                 <div class="text-value">
-                                    191919911
+                                    ${detail.personalId}
                                 </div>
                             </div>
                         </div>
                     </fieldset>
-                    <br/>
-                    <br/>
                     <fieldset>
                         <legend>
                             Thẻ đang sở hữu
@@ -145,15 +150,13 @@
                                 </div>
                             </div>
                         </div>
-
                     </fieldset>
-                    <br/>
-                    <br/>
                     <fieldset>
                         <legend>
                             Hợp đồng bảo hiểm
                             <div class="pull-right" style="margin-top: -5px;">
-                                <a href="#" class="btn btn-xs btn-success">
+                                <a href="${pageContext.request.contextPath}/staff/contract?action=create"
+                                   class="btn btn-xs btn-success">
                                     <i class="fa fa-plus-square"></i>
                                     Hợp đồng mới
                                 </a>
@@ -173,49 +176,34 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td><a href="detail-contract.html">BHBB832</a></td>
-                                    <td>Bảo hiểm bắt buộc xe cơ giới</td>
-                                    <td>7/4/2015</td>
-                                    <td>7/4/2016</td>
-                                    <td><span class="label label-success">Sẵn sàng</span></td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td><a href="detail-contract.html">BHBB832</a></td>
-                                    <td>Bảo hiểm bắt buộc xe cơ giới</td>
-                                    <td>7/4/2015</td>
-                                    <td>7/4/2016</td>
-                                    <td><span class="label label-warning">Sắp hết hạn</span></td>
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td><a href="detail-contract.html">BHBB832</a></td>
-                                    <td>Bảo hiểm bắt buộc xe cơ giới</td>
-                                    <td>7/4/2015</td>
-                                    <td>7/4/2016</td>
-                                    <td><span class="label label-danger">Hết hạn</span></td>
-                                </tr>
+                                <c:forEach var="dto" items="${contract}" varStatus="counter">
+                                    <tr>
+                                        <td>${counter.count}</td>
+                                        <td>
+                                            <a href="${pageContext.request.contextPath}/staff/contract?action=detail&code=${dto.contractCode}">
+                                                ${dto.contractCode}
+                                            </a>
+                                        </td>
+                                        <td>${dto.contractTypeId}</td>
+                                        <td>
+                                            <fmt:formatDate value="${dto.startDate}" pattern="dd/MM/yyyy"/>
+                                        </td>
+                                        <td>
+                                            <fmt:formatDate value="${dto.expiredDate}" pattern="dd/MM/yyyy"/>
+                                        </td>
+                                        <td>${dto.status}</td>
+                                    </tr>
+                                </c:forEach>
                                 </tbody>
                             </table>
                         </div>
                         <!-- /.table-responsive -->
                     </fieldset>
                 </form>
-
                 <br/>
                 <br/>
-                <br/>
-                <br/>
-                <br/>
-                <br/> <!-- useless fancy space here -->
-                <br/>
-                <br/>
-                <br/>
-                <br/>
-                <br/>
-            </div> <!-- col -->
+            </div>
+            <!-- col -->
         </div>
     </div>
 </div>
@@ -227,13 +215,15 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title">Các thẻ đã được sử dụng bởi Đinh Quang Trung</h4>
             </div>
             <div class="modal-body">
                 <p>
                     <b>Tổng số: 2 thẻ</b>
                 </p>
+
                 <div class="table-responsive">
                     <table class="table table-striped table-bordered table-hover">
                         <thead>
@@ -265,10 +255,12 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" data-dismiss="modal">Đóng</button>
             </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
 
 
 <!-- model for change card -->
@@ -276,24 +268,33 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title">Quy trình đổi thẻ mới</h4>
             </div>
             <div class="modal-body">
                 <p>Để đổi thẻ mới cho khách hàng, cần thực hiện các bước sau đây:</p>
                 <ol>
                     <li>Nhận lại thẻ cũ từ khách hàng (nếu có).</li>
-                    <li>Sử dụng <b>Ứng dụng in thẻ</b> trên điện thoại, dùng chức năng <b>Đổi thẻ</b> để tìm và in thẻ mới cho khách hàng.</li>
-                    <li>Chuyển phát thẻ mới cho khách hàng, thẻ cũ sẽ tự động bị <b>vô hiệu hoá</b> và sẽ <b>không thể sử dụng lại được nữa</b>.</li>
+                    <li>Sử dụng <b>Ứng dụng in thẻ</b> trên điện thoại, dùng chức năng <b>Đổi thẻ</b> để tìm và in thẻ
+                        mới cho khách hàng.
+                    </li>
+                    <li>Chuyển phát thẻ mới cho khách hàng, thẻ cũ sẽ tự động bị <b>vô hiệu hoá</b> và sẽ <b>không thể
+                        sử dụng lại được nữa</b>.
+                    </li>
                 </ol>
 
-                <p>Trong trường hợp cần thiết, các thông tin lưu trên thẻ cũ vẫn có thể được tra cứu lại tại trang <a href="cards.html">Quản lý thẻ</a></p>
+                <p>Trong trường hợp cần thiết, các thông tin lưu trên thẻ cũ vẫn có thể được tra cứu lại tại trang <a
+                        href="cards.html">Quản lý thẻ</a></p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" data-dismiss="modal">Đóng</button>
             </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
 
-<%@ include file="_shared/footer.jsp"%>
+<%@ include file="_shared/footer.jsp" %>
