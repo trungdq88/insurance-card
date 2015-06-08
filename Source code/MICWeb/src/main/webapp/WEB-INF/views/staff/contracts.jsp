@@ -64,7 +64,7 @@
                                     </a>
                                 </td>
                                 <td>
-                                    <a href="detail-customer.html">Add later</a>
+                                    <a href="detail-customer.html">${cont.micCustomerByCustomerCode.name}</a>
                                 </td>
                                 <td>
                                     <fmt:formatDate value="${cont.startDate}" pattern="dd/MM/yyyy" />

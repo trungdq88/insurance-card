@@ -32,7 +32,7 @@ public class ContractDao extends IncrementDao<ContractEntity, String> {
      */
     public List<ContractEntity> getAllContract() {
         EntityManager entity = factory.createEntityManager();
-        String hql = "FROM ContractEntity";
+        String hql = "SELECT c FROM ContractEntity c ORDER BY c.startDate DESC";
         Query query = entity.createQuery(hql);
         return query.getResultList();
     }

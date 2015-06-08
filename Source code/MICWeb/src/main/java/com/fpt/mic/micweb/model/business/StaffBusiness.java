@@ -35,7 +35,7 @@ public class StaffBusiness {
 
         // Create customer
         // get next customer code - add later
-        String customerCode = "KH" + (new Random().nextInt(8999) + 1000);
+        String customerCode = customerDao.getIncrementId();
         customerEntity.setCustomerCode(customerCode);
         // get customer password - add later
         String customerPassword = "123456";
@@ -68,12 +68,12 @@ public class StaffBusiness {
 
         // Add contract
         // get next contract code - add later
-        String contractCode = "HD" + (new Random().nextInt(8999) + 1000);
+        String contractCode = contractDao.getIncrementId();
         contractEntity.setContractCode(contractCode);
         contractEntity.setStatus("No Card");
-
+        ContractEntity newContract = contractDao.create(contractEntity);
         // Add contract
-        if (contractDao.create(contractEntity) != null) {
+        if (newContract != null) {
             // Add payment info
             paymentEntity.setPaymentMethod("Direct");
             paymentEntity.setContent("Đăng ký hợp đồng mới");
