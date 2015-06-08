@@ -3,7 +3,6 @@ package com.fpt.mic.micweb.model.business;
 import com.fpt.mic.micweb.model.dao.ContractDao;
 import com.fpt.mic.micweb.model.dao.CustomerDao;
 import com.fpt.mic.micweb.model.dao.PaymentDao;
-import com.fpt.mic.micweb.model.dto.CustomerDTO;
 import com.fpt.mic.micweb.model.entity.ContractEntity;
 import com.fpt.mic.micweb.model.entity.CustomerEntity;
 import com.fpt.mic.micweb.model.entity.PaymentEntity;
@@ -73,17 +72,41 @@ public class StaffBusiness {
         contractEntity.setContractCode(contractCode);
         contractEntity.setStatus("No Card");
 
-        // Add payment
-        paymentEntity.setPaymentMethod("Direct");
-        paymentEntity.setContent("Đăng ký hợp đồng mới");
-        paymentEntity.setContractCode(contractCode);
-
         // Add contract
         if (contractDao.create(contractEntity) != null) {
             // Add payment info
-            // check if user choose direct payment, or payment process failed
+            paymentEntity.setPaymentMethod("Direct");
+            paymentEntity.setContent("Đăng ký hợp đồng mới");
+            paymentEntity.setContractCode(contractCode);
             if (paymentDao.create(paymentEntity) != null) {
                 return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean renewContract(String contractCode, Timestamp startDate, Timestamp expiredDate,
+                                 PaymentEntity paymentEntity) {
+        ContractDao contractDao = new ContractDao();
+        PaymentDao paymentDao = new PaymentDao();
+        ContractEntity contractEntity = contractDao.read(contractCode);
+
+        // Validate information
+
+        // Check contract
+        if (contractEntity != null) {
+            // Update contract information
+            contractEntity.setStartDate(startDate);
+            contractEntity.setExpiredDate(expiredDate);
+            contractEntity.setStatus("Ready");
+            if (contractDao.update(contractEntity) != null) {
+                // Add payment information
+                paymentEntity.setPaymentMethod("Direct");
+                paymentEntity.setContent("Gia hạn hợp đồng");
+                paymentEntity.setContractCode(contractCode);
+                if (paymentDao.create(paymentEntity) != null) {
+                    return true;
+                }
             }
         }
         return false;
@@ -105,7 +128,6 @@ public class StaffBusiness {
                 return true;
             }
         }
-
         return false;
     }
 }
