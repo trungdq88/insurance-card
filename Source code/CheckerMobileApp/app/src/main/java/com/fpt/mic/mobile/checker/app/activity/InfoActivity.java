@@ -74,8 +74,8 @@ public class InfoActivity extends Activity {
             return;
         }
 
-        if (card.deactivatedDate != null) {
-            // Card is deactivated!
+        if (card.deactivatedDate != null ||
+                card.micContractByContractCode.status.equalsIgnoreCase("Cancelled")) {
             txtStatus.setText("THẺ KHÔNG HỢP LỆ");
             txtStatus.setBackgroundColor(Color.RED);
             return;
