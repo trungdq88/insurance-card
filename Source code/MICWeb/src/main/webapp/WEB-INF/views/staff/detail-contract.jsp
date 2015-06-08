@@ -450,6 +450,7 @@
 
                             <div class="col-sm-4">
                                 <div class="text-value">
+                                    <input type="hidden" name="txtNewStartDate" value="${cont.expiredDate}"/>
                                     <fmt:formatDate value="${cont.expiredDate}" pattern="dd/MM/yyyy"/>
                                     lúc
                                     <fmt:formatDate value="${cont.expiredDate}" type="time"/>
@@ -504,6 +505,7 @@
                     </fieldset>
                 </div>
                 <div class="modal-footer">
+                    <input type="hidden" name="txtContractCode" value="${cont.contractCode}"/>
                     <input type="hidden" name="action" value="renew"/>
                     <button type="submit" class="btn btn-success">
                         <i class="fa fa-arrow-right"></i>
@@ -563,8 +565,8 @@
                     </fieldset>
                 </div>
                 <div class="modal-footer">
-                    <input type="hidden" name="txtContractCode" value="${cont.contractCode}" />
-                    <input type="hidden" name="action" value="cancel" />
+                    <input type="hidden" name="txtContractCode" value="${cont.contractCode}"/>
+                    <input type="hidden" name="action" value="cancel"/>
                     <button type="submit" class="btn btn-danger">
                         <i class="fa fa-arrow-right"></i>
                         Hủy hợp đồng
