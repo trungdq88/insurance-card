@@ -384,7 +384,7 @@ public class ContractEntity {
     }
 
     @ManyToOne
-    @JoinColumn(name = "staff_code", referencedColumnName = "staff_code", nullable = false, insertable = false, updatable = false)
+    @JoinColumn(name = "staff_code", referencedColumnName = "staff_code", nullable = true, insertable = false, updatable = false)
     public StaffEntity getMicStaffByStaffCode() {
         return micStaffByStaffCode;
     }
