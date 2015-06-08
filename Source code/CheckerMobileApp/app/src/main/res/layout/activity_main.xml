@@ -12,7 +12,7 @@
         android:scaleType="fitCenter"
         android:contentDescription="@string/guide"
         android:layout_centerHorizontal="true"
-        android:layout_above="@+id/editText"
+        android:layout_above="@+id/txtCardID"
         android:layout_below="@+id/textView" />
 
     <TextView
@@ -30,7 +30,7 @@
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/editText"
+        android:id="@+id/txtCardID"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:hint="@string/or_enter_card_id"
@@ -42,7 +42,7 @@
         android:layout_height="wrap_content"
         android:text="@string/check"
         android:id="@+id/btnCheck"
-        android:layout_alignBottom="@+id/editText"
+        android:layout_alignBottom="@+id/txtCardID"
         android:layout_alignParentRight="true" />
 
 </RelativeLayout>
