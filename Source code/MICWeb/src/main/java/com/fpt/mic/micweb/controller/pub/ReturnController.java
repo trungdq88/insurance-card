@@ -4,13 +4,18 @@ import com.fpt.mic.micweb.framework.BasicController;
 import com.fpt.mic.micweb.framework.R;
 import com.fpt.mic.micweb.framework.responses.JspPage;
 import com.fpt.mic.micweb.framework.responses.ResponseObject;
+import com.fpt.mic.micweb.model.business.RegisterBusiness;
+import com.fpt.mic.micweb.model.dao.ContractDao;
+import com.fpt.mic.micweb.model.dto.ContractSearchResult;
 import com.fpt.mic.micweb.model.dto.PayPal;
+import com.fpt.mic.micweb.model.entity.ContractEntity;
+import com.fpt.mic.micweb.model.entity.PaymentEntity;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.HashMap;
-import java.util.Map;
+import java.sql.Timestamp;
+import java.util.*;
 
 /**
  * Created by TriPQMSE60746 on 06/07/2015.
@@ -91,7 +96,7 @@ public class ReturnController  extends BasicController {
             /*
             * Calls the DoExpressCheckoutPayment API call
             */
-        String page="return.jsp";
+        String page="public/return.jsp";
         if (isSet(r.equest.getParameter("page")) && r.equest.getParameter("page").equals("return")){
             // FIXME - The method 'request.getServerName()' must be sanitized before being used.
             HashMap results = pp.confirmPayment (checkoutDetails,r.equest.getServerName() );
@@ -101,6 +106,44 @@ public class ReturnController  extends BasicController {
                 result.putAll(results);
                 result.putAll(checkoutDetails);
                 r.equest.setAttribute("ack", strAck);
+                r.equest.setAttribute("result", result);
+                Enumeration<String> temp = session.getAttributeNames();
+                HashMap<String,String> temp2 = new HashMap<String, String>();
+                temp2.putAll((Map<? extends String, ? extends String>) session.getAttribute("checkoutDetails"));
+                Object[] array;
+                array = temp2.keySet().toArray();
+                for (int i=0;i < array.length; i++) {
+                    System.out.println(array[i].toString() +" " + temp2.get(array[i].toString()).toString());
+                }
+                // Thanh toan thanh cong, cap nhat payment, cap nhat contract status, ngay het han
+                System.out.println("Da thanh toan cho hop dong ma: " + session.getAttribute("CONTRACT_CODE").toString());
+                ContractDao contractDao = new ContractDao();
+                ContractEntity contractEntity = new ContractEntity();
+                PaymentEntity paymentEntity = new PaymentEntity();
+
+                // get contract just added by contract_code
+                contractEntity = contractDao.read(session.getAttribute("CONTRACT_CODE").toString());
+
+                // set start date and expired date
+                Date dt = new Date();
+                contractEntity.setStartDate(new Timestamp(dt.getTime()));
+                Calendar c = Calendar.getInstance();
+                c.setTime(dt);
+                c.add(Calendar.YEAR, 1);
+                dt = c.getTime();
+                contractEntity.setExpiredDate(new Timestamp(dt.getTime()));
+                contractEntity.setStatus("Ready");
+                contractDao.update(contractEntity);
+
+                paymentEntity.setPaidDate(new Timestamp(new Date().getTime()));
+                paymentEntity.setPaymentMethod("PayPal payment");
+                paymentEntity.setContent("Gia Hạn Hợp Đồng");
+                paymentEntity.setAmount(Float.parseFloat(results.get("PAYMENTINFO_0_AMT").toString()));
+                paymentEntity.setPaypalTransId(results.get("PAYMENTINFO_0_TRANSACTIONID").toString());
+                paymentEntity.setContractCode(contractEntity.getContractCode());
+
+                RegisterBusiness registerBusiness = new RegisterBusiness();
+                registerBusiness.updateContractPayment(contractEntity,paymentEntity);
                 session.invalidate();
             }else{
                 //Display a user friendly Error on the page using any of the following error information returned by PayPal
@@ -115,16 +158,16 @@ public class ReturnController  extends BasicController {
                         "<br>Error Severity Code: " + errorSeverityCode;
                 r.equest.setAttribute("error", errorString);
 
-                return new JspPage("public/error.jsp");
-                // return;
+
+                page = "public/error.jsp";
             }
-            page="public/return.jsp";
-        }else{
-            page="public/review.jsp";
         }
-        r.equest.setAttribute("result", result);
 
         return new JspPage(page);
+    }
+
+    public ResponseObject getCancel(R r){
+        return new JspPage("public/cancel.jsp");
     }
     private Map<String,String> setRequestParams(HttpServletRequest request){
         Map<String,String> requestMap = new HashMap<String,String>();
