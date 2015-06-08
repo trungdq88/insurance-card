@@ -35,13 +35,13 @@ public class CustomerController extends BasicController {
 
         // Get customer detail
         CustomerEntity customerDetail = staffBus.getCustomerDetail(customerCode);
-        r.equest.setAttribute("DETAIL", customerDetail);
+        r.equest.setAttribute("CUSTOMER", customerDetail);
 
         // Get customer's contract
         List<ContractEntity> listCustomerContract = staffBus.getContractByCustomerCode(customerDetail.getCustomerCode());
         r.equest.setAttribute("CONTRACT", listCustomerContract);
 
-        // Return to JSP page
+        // Dispatch to JSP page
         return new JspPage("staff/detail-customer.jsp");
     }
 

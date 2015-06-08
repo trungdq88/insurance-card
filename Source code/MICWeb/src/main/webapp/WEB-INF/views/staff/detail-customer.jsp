@@ -5,7 +5,7 @@
 
 <div id="wrapper">
 
-    <c:set var="detail" value="${requestScope.DETAIL}"/>
+    <c:set var="customer" value="${requestScope.CUSTOMER}"/>
     <c:set var="contract" value="${requestScope.CONTRACT}"/>
 
     <%@ include file="_shared/navigation.jsp" %>
@@ -13,7 +13,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <h1 class="page-header">
-                    ${detail.name}
+                    ${customer.name}
                 </h1>
             </div>
             <!-- /.col-lg-12 -->
@@ -38,7 +38,7 @@
 
                             <div class="col-sm-6">
                                 <div class="text-value text-primary">
-                                    <b>${detail.customerCode}</b>
+                                    <b>${customer.customerCode}</b>
                                 </div>
                             </div>
                         </div>
@@ -49,7 +49,7 @@
 
                             <div class="col-sm-6">
                                 <div class="text-value">
-                                    ${detail.name}
+                                    ${customer.name}
                                 </div>
                             </div>
                         </div>
@@ -60,7 +60,7 @@
 
                             <div class="col-sm-6">
                                 <div class="text-value">
-                                    ${detail.address}
+                                    ${customer.address}
                                 </div>
                             </div>
                         </div>
@@ -71,7 +71,7 @@
 
                             <div class="col-sm-6">
                                 <div class="text-value">
-                                    ${detail.email}
+                                    ${customer.email}
                                 </div>
                             </div>
                         </div>
@@ -82,7 +82,7 @@
 
                             <div class="col-sm-6">
                                 <div class="text-value">
-                                    ${detail.phone}
+                                    ${customer.phone}
                                 </div>
                             </div>
                         </div>
@@ -93,7 +93,7 @@
 
                             <div class="col-sm-6">
                                 <div class="text-value">
-                                    ${detail.personalId}
+                                    ${customer.personalId}
                                 </div>
                             </div>
                         </div>
@@ -176,22 +176,22 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <c:forEach var="dto" items="${contract}" varStatus="counter">
+                                <c:forEach var="cont" items="${contract}" varStatus="counter">
                                     <tr>
                                         <td>${counter.count}</td>
                                         <td>
-                                            <a href="${pageContext.request.contextPath}/staff/contract?action=detail&code=${dto.contractCode}">
-                                                ${dto.contractCode}
+                                            <a href="${pageContext.request.contextPath}/staff/contract?action=detail&code=${cont.contractCode}">
+                                                    ${cont.contractCode}
                                             </a>
                                         </td>
-                                        <td>${dto.contractTypeId}</td>
+                                        <td>${cont.contractTypeId}</td>
                                         <td>
-                                            <fmt:formatDate value="${dto.startDate}" pattern="dd/MM/yyyy"/>
+                                            <fmt:formatDate value="${cont.startDate}" pattern="dd/MM/yyyy"/>
                                         </td>
                                         <td>
-                                            <fmt:formatDate value="${dto.expiredDate}" pattern="dd/MM/yyyy"/>
+                                            <fmt:formatDate value="${cont.expiredDate}" pattern="dd/MM/yyyy"/>
                                         </td>
-                                        <td>${dto.status}</td>
+                                        <td>${cont.status}</td>
                                     </tr>
                                 </c:forEach>
                                 </tbody>
