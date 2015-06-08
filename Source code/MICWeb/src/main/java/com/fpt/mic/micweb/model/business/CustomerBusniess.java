@@ -4,6 +4,7 @@ import com.fpt.mic.micweb.model.dao.CustomerDao;
 import com.fpt.mic.micweb.model.dao.ContractDao;
 import com.fpt.mic.micweb.model.entity.CustomerEntity;
 import com.fpt.mic.micweb.model.entity.ContractEntity;
+import sun.util.calendar.BaseCalendar;
 import sun.util.calendar.LocalGregorianCalendar;
 
 import java.sql.Date;
@@ -31,22 +32,31 @@ public class CustomerBusniess {
         return contractDa0.read(code);
     }
 
-    //cancel contract
-    public boolean CancelContract(String code, String cancelReason) {
+    //
+
+    /*cancel contract    */
+    public boolean CancelContract(String code, String cancelReason, int typeOfReason) {
         ContractDao contractDa0 = new ContractDao();
         ContractEntity contract = contractDa0.read(code);
         boolean result = false;
         //get date now
-        Calendar currentDate = Calendar.getInstance(); //Get the current date
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MMM/dd HH:mm:ss"); //format it as per your requirement
-        String dateNow = formatter.format(currentDate.getTime());
-
+        java.util.Date date = new java.util.Date();
         if (contract != null) {
-            //contract.setCancelDate(dateNow.toString());
-            contract.setCancelReason(cancelReason);
-            if (contractDa0.update(contract) != null) {
-                result = true;
+            if (typeOfReason == 1 ){
+                contract.setCancelDate(new Timestamp(date.getTime()));
+                contract.setCancelReason(cancelReason);
+                if (contractDa0.update(contract) != null) {
+                    result = true;
+                }
             }
+            else if(typeOfReason == 2){
+                contract.setCancelDate(new Timestamp(date.getTime()));
+                contract.setCancelNote(cancelReason);
+                if (contractDa0.update(contract) != null) {
+                    result = true;
+                }
+            }
+
         }
         return result;
     }
