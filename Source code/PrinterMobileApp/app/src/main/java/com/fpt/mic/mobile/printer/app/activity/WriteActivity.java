@@ -12,7 +12,7 @@ import android.widget.Toast;
 import com.fpt.mic.mobile.printer.app.R;
 import com.fpt.mic.mobile.printer.app.business.ContractBusiness;
 import com.fpt.mic.mobile.printer.app.dto.ContractSearchResult;
-import com.fpt.mic.mobile.printer.app.utils.ApiRequest;
+import com.fpt.mic.mobile.printer.app.entity.CardEntity;
 
 import java.io.IOException;
 
@@ -84,16 +84,27 @@ public class WriteActivity extends Activity {
             contractBusiness.updateCardForContract(
                     contractSearchResult.contractEntity.contractCode, tagID, new ContractBusiness.IOnApiResult() {
                         @Override
-                        public void onApiResult(boolean results) {
-                            // Write data to tag
-                            writeTag(discoveredTag);
+                        public void onApiResult(CardEntity result) {
+                            if (result != null) {
+                                // Write data to tag
+                                writeTag(discoveredTag, result);
+                            } else {
+                                // There was error when update card for contract
+                                // TODO: handle 2 cases:
+                                // 1. Contract already has card and the card is still activated
+                                //      => Ask user if they want to deactivate the old card
+                                // 2. This card ID is already exists in the system
+                                //      => Tell user that this card is no longer usable.
+                                Toast.makeText(WriteActivity.this,
+                                        "Không thể cập nhật thẻ vào hợp đồng!", Toast.LENGTH_SHORT).show();
+                            }
                         }
                     });
 
         }
     }
 
-    private void writeTag(Tag tag) {
+    private void writeTag(Tag tag, CardEntity card) {
         Ndef ndefTag = Ndef.get(tag);
         byte[] stringBytes = "Hello World".getBytes();
         NdefRecord dataToWrite = NdefRecord.createMime("mic/nfc", stringBytes);
@@ -102,12 +113,15 @@ public class WriteActivity extends Activity {
             ndefTag.writeNdefMessage(new NdefMessage(dataToWrite,
                     NdefRecord.createApplicationRecord("com.fpt.mic.mobile.checker.app")));
             ndefTag.close();
+            finish();
+            Intent intent = new Intent(this, SuccessActivity.class);
+            intent.putExtra("card", card);
+            Log.d("NFC", "Data written");
+            Toast.makeText(this, "Data written and saved to server", Toast.LENGTH_LONG).show();
         } catch (IOException e) {
             e.printStackTrace();
         } catch (FormatException e) {
             e.printStackTrace();
         }
-        Log.d("NFC", "Data written");
-        Toast.makeText(this, "Data written and saved to server", Toast.LENGTH_LONG).show();
     }
 }

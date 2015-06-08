@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fpt.mic.mobile.printer.app.dto.ContractSearchResult;
+import com.fpt.mic.mobile.printer.app.entity.CardEntity;
 import com.fpt.mic.mobile.printer.app.utils.ApiRequest;
 import com.fpt.mic.mobile.printer.app.utils.Constants;
 
@@ -47,7 +48,7 @@ public class ContractBusiness {
             @Override
             public void onResponse(String response) {
                 try {
-                    cb.onApiResult(mapper.readValue(response, Boolean.class));
+                    cb.onApiResult(mapper.readValue(response, CardEntity.class));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -59,6 +60,6 @@ public class ContractBusiness {
         void onSearchResult(List<ContractSearchResult> results);
     }
     public interface IOnApiResult {
-        void onApiResult(boolean results);
+        void onApiResult(CardEntity result);
     }
 }

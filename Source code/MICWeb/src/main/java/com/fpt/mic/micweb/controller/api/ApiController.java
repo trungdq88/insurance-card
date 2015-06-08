@@ -6,6 +6,7 @@ import com.fpt.mic.micweb.framework.responses.JsonString;
 import com.fpt.mic.micweb.framework.responses.ResponseObject;
 import com.fpt.mic.micweb.model.business.ApiBusiness;
 import com.fpt.mic.micweb.model.dto.ContractSearchResult;
+import com.fpt.mic.micweb.model.entity.CardEntity;
 
 import javax.servlet.annotation.WebServlet;
 import java.util.ArrayList;
@@ -56,14 +57,14 @@ public class ApiController extends BasicController {
         String cardID = r.equest.getParameter("cardID");
 
         if (contractCode == null || contractCode.isEmpty()) {
-            return new JsonString(false);
+            return new JsonString(null);
         }
         if (cardID == null || cardID.isEmpty()) {
-            return new JsonString(false);
+            return new JsonString(null);
         }
 
         // Call to business
-        boolean result = apiBusiness.updateCardID(contractCode, cardID);
+        CardEntity result = apiBusiness.updateCardID(contractCode, cardID);
 
         // Return json result
         return new JsonString(result);

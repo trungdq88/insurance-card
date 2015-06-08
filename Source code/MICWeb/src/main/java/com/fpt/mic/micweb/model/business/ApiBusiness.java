@@ -26,7 +26,7 @@ public class ApiBusiness {
         return contractDao.searchContracts(keyword);
     }
 
-    public boolean updateCardID(String contractCode, String cardID) {
+    public CardEntity updateCardID(String contractCode, String cardID) {
         CardDao cardDao = new CardDao();
         ContractDao contractDao = new ContractDao();
 
@@ -48,6 +48,6 @@ public class ApiBusiness {
             contractDao.update(contract);
         }
 
-        return result != null;
+        return result;
     }
 }
