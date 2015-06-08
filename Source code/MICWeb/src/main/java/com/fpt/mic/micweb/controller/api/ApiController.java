@@ -69,4 +69,17 @@ public class ApiController extends BasicController {
         // Return json result
         return new JsonString(result);
     }
+
+    public ResponseObject getCheckCard(R r) {
+        String cardID = r.equest.getParameter("cardID");
+        if (cardID == null || cardID.isEmpty()) {
+            return new JsonString(null);
+        }
+
+        // Call to business
+        CardEntity card = apiBusiness.checkCard(cardID);
+
+        // Return json result
+        return new JsonString(card);
+    }
 }

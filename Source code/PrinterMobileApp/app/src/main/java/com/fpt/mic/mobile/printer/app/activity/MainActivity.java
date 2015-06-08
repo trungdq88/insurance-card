@@ -3,19 +3,15 @@ package com.fpt.mic.mobile.printer.app.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.*;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fpt.mic.mobile.printer.app.R;
 import com.fpt.mic.mobile.printer.app.business.ContractBusiness;
 import com.fpt.mic.mobile.printer.app.dto.ContractSearchResult;
-import com.fpt.mic.mobile.printer.app.entity.ContractEntity;
-import com.fpt.mic.mobile.printer.app.utils.ApiRequest;
-import com.fpt.mic.mobile.printer.app.utils.Constants;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -63,6 +59,18 @@ public class MainActivity extends Activity {
             public void onClick(View view) {
                 showLoadingEffect();
                 searchContracts();
+            }
+        });
+
+        txtKeyword.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    showLoadingEffect();
+                    searchContracts();
+                    return true;
+                }
+                return false;
             }
         });
     }

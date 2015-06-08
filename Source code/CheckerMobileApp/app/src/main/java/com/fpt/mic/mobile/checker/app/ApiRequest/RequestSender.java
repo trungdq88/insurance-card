@@ -1,4 +1,4 @@
-package com.fpt.mic.mobile.printer.app.utils;
+package com.fpt.mic.mobile.checker.app.ApiRequest;
 
 import android.os.AsyncTask;
 

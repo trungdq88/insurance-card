@@ -1,4 +1,4 @@
-package com.fpt.mic.mobile.printer.app.utils;
+package com.fpt.mic.mobile.printer.app.ApiRequest;
 
 /**
  * FPT University - Capstone Project - Summer 2015 - PrinterMobileApp

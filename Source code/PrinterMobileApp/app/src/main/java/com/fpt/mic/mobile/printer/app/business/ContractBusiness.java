@@ -1,11 +1,10 @@
 package com.fpt.mic.mobile.printer.app.business;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fpt.mic.mobile.printer.app.dto.ContractSearchResult;
 import com.fpt.mic.mobile.printer.app.entity.CardEntity;
-import com.fpt.mic.mobile.printer.app.utils.ApiRequest;
+import com.fpt.mic.mobile.printer.app.ApiRequest.ApiRequest;
 import com.fpt.mic.mobile.printer.app.utils.Constants;
 
 import java.io.IOException;

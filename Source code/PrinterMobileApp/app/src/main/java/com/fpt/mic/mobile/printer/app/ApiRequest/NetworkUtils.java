@@ -1,4 +1,4 @@
-package com.fpt.mic.mobile.printer.app.utils;
+package com.fpt.mic.mobile.printer.app.ApiRequest;
 
 import android.util.Log;
 import org.apache.http.HttpResponse;

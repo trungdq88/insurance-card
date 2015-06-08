@@ -9,6 +9,7 @@ import com.fpt.mic.micweb.model.dao.CardDao;
 import com.fpt.mic.micweb.model.dao.ContractDao;
 import com.fpt.mic.micweb.model.dao.StaffDao;
 import com.fpt.mic.micweb.model.entity.CardEntity;
+import com.fpt.mic.micweb.model.entity.ContractEntity;
 import com.fpt.mic.micweb.model.entity.StaffEntity;
 
 import javax.servlet.annotation.WebServlet;
@@ -108,5 +109,12 @@ public class TestDaoController extends BasicController {
         StaffDao staffDao = new StaffDao();
         String incrementId = staffDao.getIncrementId();
         return new JsonString(incrementId);
+    }
+
+    public ResponseObject getContract(R r) {
+        ContractDao contractDao = new ContractDao();
+        ContractEntity contractEntity = contractDao.read("HD0ES6");
+        r.equest.setAttribute("contract", contractEntity);
+        return new JsonString(contractEntity);
     }
 }

@@ -22,6 +22,7 @@
         </activity>
         <activity android:name=".activity.WriteActivity"/>
         <activity android:name=".activity.InfoActivity"/>
+        <activity android:name=".activity.SuccessActivity"/>
     </application>
 
 </manifest>

@@ -1,4 +1,4 @@
-package com.fpt.mic.mobile.checker.app;
+package com.fpt.mic.mobile.checker.app.activity;
 
 import android.app.Activity;
 import android.app.PendingIntent;
@@ -11,6 +11,10 @@ import android.nfc.tech.NfcA;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
+import com.fpt.mic.mobile.checker.app.ApiRequest.ApiRequest;
+import com.fpt.mic.mobile.checker.app.R;
+import com.fpt.mic.mobile.checker.app.business.ApiBusiness;
+import com.fpt.mic.mobile.checker.app.utils.Constants;
 
 /**
  * FPT University - Capstone Project - Summer 2015 - CheckerMobileApp
@@ -91,6 +95,8 @@ public class CheckerActivity extends Activity {
 
             String tagID = sb.toString();
             Log.e("nfc ID", tagID);
+
+            ApiBusiness apiBusiness = new ApiBusiness();
 
 
             Toast toast = Toast.makeText(context, tagID, duration);

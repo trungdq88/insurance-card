@@ -2,6 +2,7 @@ package com.fpt.mic.micweb.model.business;
 
 import com.fpt.mic.micweb.model.dao.CardDao;
 import com.fpt.mic.micweb.model.dao.ContractDao;
+import com.fpt.mic.micweb.model.dto.CheckCardResult;
 import com.fpt.mic.micweb.model.dto.ContractSearchResult;
 import com.fpt.mic.micweb.model.entity.CardEntity;
 import com.fpt.mic.micweb.model.entity.ContractEntity;
@@ -31,7 +32,11 @@ public class ApiBusiness {
         ContractDao contractDao = new ContractDao();
 
         // Validate contract code, card ID
-
+        // Basic validate if the card is already in the system
+        CardEntity checkCard = cardDao.read(cardID);
+        if (checkCard != null) {
+            return null;
+        }
 
         // Insert to database
         CardEntity cardEntity = new CardEntity();
@@ -49,5 +54,11 @@ public class ApiBusiness {
         }
 
         return result;
+    }
+
+    public CardEntity checkCard(String cardID) {
+        CardDao cardDao = new CardDao();
+        return cardDao.read(cardID);
+
     }
 }

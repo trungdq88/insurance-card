@@ -1,10 +1,11 @@
-package com.fpt.mic.mobile.checker.app;
+package com.fpt.mic.mobile.checker.app.activity;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
+import com.fpt.mic.mobile.checker.app.R;
 
 /**
  * Created by dinhquangtrung on 5/29/15.
