@@ -4,6 +4,26 @@
 <html lang="en">
 <script language="javascript">
     function update() {
+        document.getElementById('txtName1').value = document.getElementById('txtName').value;
+        document.getElementById('txtAddress1').value = document.getElementById('txtAddress').value;
+        document.getElementById('txtEmail1').value = document.getElementById('txtEmail').value;
+        document.getElementById('txtPhone1').value = document.getElementById('txtPhone').value;
+        document.getElementById('txtPersonalId1').value = document.getElementById('txtPersonalId').value;
+        document.getElementById('txtStartDate1').value = document.getElementById('txtStartDate').value;
+        document.getElementById('ddlContractType').value = document.getElementById('ddlContractType').value;
+        document.getElementById('txtFee1').value = document.getElementById('txtFee').value;
+        document.getElementById('txtPlate1').value = document.getElementById('txtPlate').value;
+        document.getElementById('txtBrand1').value = document.getElementById('txtBrand').value;
+        document.getElementById('txtModel1').value = document.getElementById('txtModel').value;
+        document.getElementById('txtType1').value = document.getElementById('txtType').value;
+        document.getElementById('txtColor1').value = document.getElementById('txtColor').value;
+        document.getElementById('txtEngine1').value = document.getElementById('txtEngine').value;
+        document.getElementById('txtChassis1').value = document.getElementById('txtChassis').value;
+        document.getElementById('txtCapacity1').value = document.getElementById('txtCapacity').value;
+        document.getElementById('txtYearOfMan1').value = document.getElementById('txtYearOfMan').value;
+        document.getElementById('txtWeight1').value = document.getElementById('txtWeight').value;
+        document.getElementById('txtSeatCapacity1').value = document.getElementById('txtSeatCapacity').value;
+
 
 
     }
@@ -78,49 +98,49 @@
                                         <div class="col-sm-5 col-sm-offset-1">
                                             <div class="form-group">
                                                 <label><b>Họ tên *</b></label>
-                                                <input type="text" class="form-control" name="txtName"
+                                                <input type="text" class="form-control" name="txtName" id="txtName"
                                                        placeholder="Tên đầy đủ người mua bảo hiểm?" value="${customerEntity.name}">
                                             </div>
                                         </div>
                                         <div class="col-sm-5">
                                             <div class="form-group">
                                                 <label><b>Địa chỉ *</b></label><br>
-                                                <input type="text" class="form-control" name="txtAddress"
+                                                <input type="text" class="form-control" name="txtAddress" id="txtAddress"
                                                        placeholder="Địa chỉ của người mua bảo hiểm?" value="${customerEntity.address}">
                                             </div>
                                         </div>
                                         <div class="col-sm-5 col-sm-offset-1">
                                             <div class="form-group">
                                                 <label><b>Email *</b></label>
-                                                <input type="text" class="form-control" name="txtEmail"
+                                                <input type="text" class="form-control" name="txtEmail" id="txtEmail"
                                                        placeholder="Email của người mua bảo hiểm?" value="${customerEntity.email}">
                                             </div>
                                         </div>
                                         <div class="col-sm-5">
                                             <div class="form-group">
                                                 <label><b>Số điện thoại *</b></label>
-                                                <input type="text" class="form-control" name="txtPhone"
+                                                <input type="text" class="form-control" name="txtPhone" id="txtPhone"
                                                        placeholder="Số điện thoại của người mua bảo hiểm?" value="${customerEntity.phone}">
                                             </div>
                                         </div>
                                         <div class="col-sm-5 col-sm-offset-1">
                                             <div class="form-group">
                                                 <label><b>Số CMDN/Hộ chiếu</b></label>
-                                                <input type="text" class="form-control" name="txtPersonalId"
+                                                <input type="text" class="form-control" name="txtPersonalId" id="txtPersonalId"
                                                        placeholder="Số CMND hoặc hộ chiếu?" value="${customerEntity.personalId}">
                                             </div>
                                         </div>
                                         <div class="col-sm-5">
                                             <div class="form-group">
                                                 <label><b>Ngày bắt đầu *</b></label>
-                                                <input type="date" class="form-control" name="txtStartDate"
+                                                <input type="date" class="form-control" name="txtStartDate" id="txtStartDate"
                                                        placeholder="Ngày bắt đầu tham gia bảo hiểm?" value="${txtStartDate}">
                                             </div>
                                         </div>
                                         <div class="col-sm-10 col-sm-offset-1">
                                             <div class="form-group">
                                                 <label><b>Quyền lợi bảo hiểm *</b></label>
-                                                <select class="form-control" name="ddlContractType" >
+                                                <select class="form-control" name="ddlContractType" id="ddlContractType" >
                                                     <option <%=request.getParameter("ddlContractType").equals("1") ? "selected='selected'": "" %> value="1">Xe trên 50cc có tham gia BH tai nạn người trên xe</option>
                                                     <option <%=request.getParameter("ddlContractType").equals("2") ? "selected='selected'": "" %> value="2">Xe trên 50cc không tham gia BH tai nạn người trên xe
                                                     </option >
@@ -146,8 +166,8 @@
                                         <div class="col-sm-5 col-sm-offset-1">
                                             <div class="form-group">
                                                 <label><b>Phí bảo hiểm: </b></label>
-                                                <input type="hidden" name="txtFee" value="${txtFee}">
-                                                <p class="form-control-static">200.000 VND</p>
+                                                <input type="hidden" name="txtFee" value="${txtFee}" id="txtFee">
+                                                <p class="form-control-static">${txtFee} VND</p>
                                             </div>
                                         </div>
                                     </div>
@@ -164,84 +184,84 @@
                                         <div class="col-sm-5 col-sm-offset-1">
                                             <div class="form-group">
                                                 <label><b>Biển số đăng ký *</b></label>
-                                                <input type="text" class="form-control" name="txtPlate"
+                                                <input type="text" class="form-control" name="txtPlate" id="txtPlate"
                                                        placeholder="Biển số của xe đăng ký bảo hiểm?">
                                             </div>
                                         </div>
                                         <div class="col-sm-5">
                                             <div class="form-group">
                                                 <label><b>Nhãn hiệu *</b></label><br>
-                                                <input type="text" class="form-control" name="txtBrand"
+                                                <input type="text" class="form-control" name="txtBrand" id="txtBrand"
                                                        placeholder="Ví dụ: Honda, Yamaha, Suzuki...">
                                             </div>
                                         </div>
                                         <div class="col-sm-5 col-sm-offset-1">
                                             <div class="form-group">
                                                 <label><b>Số loại *</b></label>
-                                                <input type="text" class="form-control" name="txtModel"
+                                                <input type="text" class="form-control" name="txtModel" id="txtModel"
                                                        placeholder="Ví dụ: Air Blade, Future, Wave...">
                                             </div>
                                         </div>
                                         <div class="col-sm-5">
                                             <div class="form-group">
                                                 <label><b>Loại xe *</b></label>
-                                                <input type="text" class="form-control" name="txtType"
+                                                <input type="text" class="form-control" name="txtType" id="txtType"
                                                        placeholder="Ví dụ: hai bánh, ba bánh, khác...">
                                             </div>
                                         </div>
                                         <div class="col-sm-5 col-sm-offset-1">
                                             <div class="form-group">
                                                 <label><b>Màu sơn *</b></label>
-                                                <input type="text" class="form-control" name="txtColor"
+                                                <input type="text" class="form-control" name="txtColor" id="txtColor"
                                                        placeholder="Màu sơn của xe?">
                                             </div>
                                         </div>
                                         <div class="col-sm-5">
                                             <div class="form-group">
                                                 <label><b>Số máy *</b></label>
-                                                <input type="text" class="form-control" name="txtEngine"
+                                                <input type="text" class="form-control" name="txtEngine" id="txtEngine"
                                                        placeholder="Số máy của xe?">
                                             </div>
                                         </div>
                                         <div class="col-sm-5 col-sm-offset-1">
                                             <div class="form-group">
                                                 <label><b>Số khung *</b></label>
-                                                <input type="text" class="form-control" name="txtChassis"
+                                                <input type="text" class="form-control" name="txtChassis" id="txtChassis"
                                                        placeholder="Số khung của xe?">
                                             </div>
                                         </div>
                                         <div class="col-sm-5">
                                             <div class="form-group">
                                                 <label><b>Dung tích *</b></label>
-                                                <input type="text" class="form-control" name="txtCapacity"
+                                                <input type="text" class="form-control" name="txtCapacity" id="txtCapacity"
                                                        placeholder="Dung tích của xe?">
                                             </div>
                                         </div>
                                         <div class="col-sm-5 col-sm-offset-1">
                                             <div class="form-group">
                                                 <label><b>Năm sản xuất *</b></label>
-                                                <input type="text" class="form-control" name="txtYearOfMan"
+                                                <input type="text" class="form-control" name="txtYearOfMan" id="txtYearOfMan"
                                                        placeholder="Năm xe được sản xuất?">
                                             </div>
                                         </div>
                                         <div class="col-sm-5">
                                             <div class="form-group">
                                                 <label><b>Tự trọng (kg) *</b></label>
-                                                <input type="text" class="form-control" name="txtWeight"
+                                                <input type="text" class="form-control" name="txtWeight" id="txtWeight"
                                                        placeholder="Trọng lượng không tải của xe?">
                                             </div>
                                         </div>
                                         <div class="col-sm-5 col-sm-offset-1">
                                             <div class="form-group">
                                                 <label><b>Số người *</b></label>
-                                                <input type="text" class="form-control" name="txtSeatCapacity"
+                                                <input type="text" class="form-control" name="txtSeatCapacity" id="txtSeatCapacity"
                                                        placeholder="Số người xe được phép chở?">
                                             </div>
                                         </div>
                                         <div class="col-sm-10 col-sm-offset-1">
                                             <div class="form-group">
                                                 <label><b>Tải lên </b></label>
-                                                <input type="file" class="form-control" name="txtCertImage"
+                                                <input type="file" class="form-control" name="txtCertImage" id="txtCertImage"
                                                        placeholder="Ảnh chụp hình đăng ký xe?">
                                             </div>
                                         </div>
@@ -257,7 +277,8 @@
                                         <div class="col-sm-5 col-sm-offset-1">
                                             <div class="form-group">
                                                 <p class="form-control-static">
-                                                    <label><b>Họ tên: </b></label>
+                                                    <label><b>Name: </b></label>
+                                                    <input type="text" class="form-control" name="txtName1" value="" id="txtName1" readonly>
 
                                                 </p>
                                             </div>
@@ -265,8 +286,8 @@
                                         <div class="col-sm-5">
                                             <div class="form-group">
                                                 <p class="form-control-static">
-                                                    <label><b>Địa chỉ: </b></label>
-                                                    ${customerEntity.address}
+                                                    <label><b>Address: </b></label>
+                                                    <input type="text" class="form-control" name="txtAddress1" value="" id="txtAddress1" readonly>
                                                 </p>
                                             </div>
                                         </div>
@@ -274,7 +295,7 @@
                                             <div class="form-group">
                                                 <p class="form-control-static">
                                                     <label><b>Email: </b></label>
-                                                    hydrangea8604@gmail.com
+                                                    <input type="text" class="form-control" name="txtEmail1" value="" id="txtEmail1" readonly>
                                                 </p>
                                             </div>
                                         </div>
@@ -282,7 +303,7 @@
                                             <div class="form-group">
                                                 <p class="form-control-static">
                                                     <label><b>Số điện thoại: </b></label>
-                                                    0937337009
+                                                    <input type="text" class="form-control" name="txtPhone1" id="txtPhone1" readonly>
                                                 </p>
                                             </div>
                                         </div>
@@ -290,7 +311,7 @@
                                             <div class="form-group">
                                                 <p class="form-control-static">
                                                     <label><b>Số CMDN/Hộ chiếu: </b></label>
-                                                    123456789
+                                                    <input type="text" class="form-control" name="txtPersonalId1" id="txtPersonalId1" readonly>
                                                 </p>
                                             </div>
                                         </div>
@@ -298,7 +319,7 @@
                                             <div class="form-group">
                                                 <p class="form-control-static">
                                                     <label><b>Ngày bắt đầu: </b></label>
-                                                    23/05/2015
+                                                    <input type="date" class="form-control" name="txtStartDate1" id="txtStartDate1" readonly>
                                                 </p>
                                             </div>
                                         </div>
@@ -306,8 +327,19 @@
                                             <div class="form-group">
                                                 <p class="form-control-static">
                                                     <label><b>Quyền lợi bảo hiểm: </b></label>
-                                                    Xe trên 50cc có tham gia BH tai nạn người
-                                                    trên xe
+                                                    <select class="form-control" name="ddlContractType1"  id="ddlContractType1" readonly>
+                                                        <option <%=request.getParameter("ddlContractType").equals("1") ? "selected='selected'": "" %> value="1">Xe trên 50cc có tham gia BH tai nạn người trên xe</option>
+                                                        <option <%=request.getParameter("ddlContractType").equals("2") ? "selected='selected'": "" %> value="2">Xe trên 50cc không tham gia BH tai nạn người trên xe
+                                                        </option >
+                                                        <option <%=request.getParameter("ddlContractType").equals("3") ? "selected='selected'": "" %> value="3">Xe từ 50cc trở xuống có tham gia BH tai nạn người trên xe
+                                                        </option>
+                                                        <option <%=request.getParameter("ddlContractType").equals("4") ? "selected='selected'": "" %> value="4">Xe từ 50cc trở xuống không tham gia BH tai nạn người trên
+                                                            xe
+                                                        </option>
+                                                        <option <%=request.getParameter("ddlContractType").equals("5") ? "selected='selected'": "" %> value="5">Xe mô tô 3 bánh, xe gắn máy và các loại xe cơ giới tương
+                                                            tự
+                                                        </option>
+                                                    </select>
                                                 </p>
                                             </div>
                                         </div>
@@ -323,8 +355,8 @@
                                         <div class="col-sm-10 col-sm-offset-1">
                                             <div class="form-group">
                                                 <p class="form-control-static">
-                                                    <label><b>Phí bảo hiểm: </b></label>
-                                                    200.000 VND
+                                                    <label><b>Phí bảo hiểm (VND): </b></label>
+                                                <input type="text" class="form-control" name="txtFee1" value="" id="txtFee1" readonly>
                                                 </p>
                                             </div>
                                         </div>
@@ -332,7 +364,7 @@
                                             <div class="form-group">
                                                 <p class="form-control-static">
                                                     <label><b>Biển số đăng ký: </b></label>
-                                                    59Y1-48384
+                                                    <input type="text" class="form-control" name="txtPlate1" id="txtPlate1" readonly>
                                                 </p>
                                             </div>
                                         </div>
@@ -340,7 +372,7 @@
                                             <div class="form-group">
                                                 <p class="form-control-static">
                                                     <label><b>Nhãn hiệu: </b></label>
-                                                    Honda
+                                                    <input type="text" class="form-control" name="txtBrand1" id="txtBrand1" readonly>
                                                 </p>
                                             </div>
                                         </div>
@@ -348,7 +380,7 @@
                                             <div class="form-group">
                                                 <p class="form-control-static">
                                                     <label><b>Số loại: </b></label>
-                                                    Air Blade
+                                                    <input type="text" class="form-control" name="txtModel1" id="txtModel1" readonly>
                                                 </p>
                                             </div>
                                         </div>
@@ -356,7 +388,7 @@
                                             <div class="form-group">
                                                 <p class="form-control-static">
                                                     <label><b>Loại xe: </b></label>
-                                                    Hai bánh
+                                                    <input type="text" class="form-control" name="txtType1" id="txtType1" readonly>
                                                 </p>
                                             </div>
                                         </div>
@@ -364,7 +396,7 @@
                                             <div class="form-group">
                                                 <p class="form-control-static">
                                                     <label><b>Màu sơn: </b></label>
-                                                    Đen Bạc
+                                                    <input type="text" class="form-control" name="txtColor1" id="txtColor1" readonly>
                                                 </p>
                                             </div>
                                         </div>
@@ -372,7 +404,7 @@
                                             <div class="form-group">
                                                 <p class="form-control-static">
                                                     <label><b>Số máy: </b></label>
-                                                    48373834
+                                                    <input type="text" class="form-control" name="txtEngine1" id="txtEngine1" readonly>
                                                 </p>
                                             </div>
                                         </div>
@@ -380,7 +412,7 @@
                                             <div class="form-group">
                                                 <p class="form-control-static">
                                                     <label><b>Số khung: </b></label>
-                                                    5435323
+                                                    <input type="text" class="form-control" name="txtChassis1" id="txtChassis1" readonly>
                                                 </p>
                                             </div>
                                         </div>
@@ -388,7 +420,7 @@
                                             <div class="form-group">
                                                 <p class="form-control-static">
                                                     <label><b>Dung tích: </b></label>
-                                                    108
+                                                    <input type="text" class="form-control" name="txtCapacity1" id="txtCapacity1" readonly>
                                                 </p>
                                             </div>
                                         </div>
@@ -396,7 +428,7 @@
                                             <div class="form-group">
                                                 <p class="form-control-static">
                                                     <label><b>Năm sản xuất: </b></label>
-                                                    2011
+                                                    <input type="text" class="form-control" name="txtYearOfMan1" id="txtYearOfMan1" readonly>
                                                 </p>
                                             </div>
                                         </div>
@@ -404,14 +436,16 @@
                                             <div class="form-group">
                                                 <p class="form-control-static">
                                                     <label><b>Tự trọng (kg): </b></label>
-                                                    150</p>
+                                                    <input type="text" class="form-control" name="txtWeight1" id="txtWeight1" readonly>
+                                                </p>
                                             </div>
                                         </div>
                                         <div class="col-sm-5 col-sm-offset-1">
                                             <div class="form-group">
                                                 <p class="form-control-static">
                                                     <label><b>Số người: </b></label>
-                                                    2</p>
+                                                    <input type="text" class="form-control" name="txtSeatCapacity1" id="txtSeatCapacity1" readonly>
+                                                </p>
                                             </div>
                                         </div>
                                     </div>
@@ -438,12 +472,9 @@
                                                             </tr>
                                                             <tr>
                                                                 <td align="center">
-                                                                    <a href="https://www.paypal.com/webapps/mpp/paypal-popup"
-                                                                       title="How PayPal Works"
-                                                                       onclick="javascript:window.open('https://www.paypal.com/webapps/mpp/paypal-popup','WIPaypal','toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=yes, resizable=yes, width=1060, height=700'); return false;"><img
-                                                                            src="https://www.paypalobjects.com/webstatic/mktg/logo/pp_cc_mark_74x46.jpg"
-                                                                            border="0" alt="PayPal Logo"></a>
+                                                                    <input type="submit" value="" style="background-image: url(https://www.paypalobjects.com/webstatic/mktg/logo/pp_cc_mark_74x46.jpg); border: solid 0px #000000; width: 150px; height: 94px;" />
                                                                 </td>
+
                                                             </tr>
                                                         </table>
                                                         <!-- PayPal Logo -->
@@ -503,12 +534,12 @@
                                 <div class="clearfix"></div>
                             </div>
                         </div>
-                        <input type="hidden" name="L_PAYMENTREQUEST_0_NAME0" value="Bảo hiểm">
-                        <input type="hidden" name="L_PAYMENTREQUEST_0_DESC0" value="asdasd">
+                        <input type="hidden" name="L_PAYMENTREQUEST_0_NAME0" value="${ddlContractype}">
+                        <input type="hidden" name="L_PAYMENTREQUEST_0_DESC0" value="${ddlContractype}">
                         <input type="hidden" name="L_PAYMENTREQUEST_0_QTY0" value="1">
-                        <input type="hidden" name="PAYMENTREQUEST_0_ITEMAMT" value="200.00">
-                        <input type="hidden" name="PAYMENTREQUEST_0_TAXAMT" value="1.00">
-                        <input type="hidden" name="PAYMENTREQUEST_0_AMT" value="201.00">
+                        <input type="hidden" name="PAYMENTREQUEST_0_ITEMAMT" value="${txtFee/20000}">
+                        <input type="hidden" name="PAYMENTREQUEST_0_TAXAMT" value="0">
+                        <input type="hidden" name="PAYMENTREQUEST_0_AMT" value="${txtFee/20000}">
                         <input type="hidden" name="currencyCodeType" value="USD">
                         <input type="hidden" name="paymentType" value="Sale">
                         <input type="hidden" name="checkout" value="check out">

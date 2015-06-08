@@ -34,6 +34,28 @@ $(document).ready(function () {
 
         });
     }
+    /**
+     * contract detail
+     */
+    $('#rdbReason1').click(function(){
+        $('.check').attr('checked', false);
+        $('#reason').val('Xe cơ giới bị thu hồi đăng ký');
+        $(this).prop('checked', true);
+        $('#anotherReason').addClass('hide');
+
+    });
+    $('#rdbReason2').click(function(){
+        $('.check').attr('checked', false);
+        $('#reason').val('Xe cơ giới hết niên hạn');
+        $(this).prop('checked', true);
+        $('#anotherReason').addClass('hide');
+    });
+    $('#rdbAnother').click(function(){
+        $('.check').attr('checked', false);
+        $('#anotherReasonText').val($('#anotherReason').val());
+        $(this).prop('checked', true);
+        $('#anotherReason').removeClass('hide');
+    });
 
 
 });

@@ -98,6 +98,9 @@
                             </div>
                         </div>
                     </fieldset>
+                    <%--/Customer information--%>
+                    <br/>
+
                     <fieldset>
                         <legend>
                             Thẻ đang sở hữu
@@ -151,6 +154,9 @@
                             </div>
                         </div>
                     </fieldset>
+                    <%--/Card information--%>
+                    <br/>
+
                     <fieldset>
                         <legend>
                             Hợp đồng bảo hiểm
@@ -209,7 +215,6 @@
 </div>
 <!-- /#wrapper -->
 
-
 <!-- model for card history -->
 <div class="modal fade" id="card-history-modal">
     <div class="modal-dialog">
@@ -261,7 +266,6 @@
     <!-- /.modal-dialog -->
 </div>
 <!-- /.modal -->
-
 
 <!-- model for change card -->
 <div class="modal fade" id="change-card-modal">

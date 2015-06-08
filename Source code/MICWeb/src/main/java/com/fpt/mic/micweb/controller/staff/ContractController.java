@@ -8,13 +8,10 @@ import com.fpt.mic.micweb.model.business.StaffBusiness;
 import com.fpt.mic.micweb.model.entity.ContractEntity;
 import com.fpt.mic.micweb.model.entity.CustomerEntity;
 import com.fpt.mic.micweb.model.entity.PaymentEntity;
+import com.fpt.mic.micweb.utils.DateUtils;
 
 import javax.servlet.annotation.WebServlet;
 import java.sql.Timestamp;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -59,6 +56,28 @@ public class ContractController extends BasicController {
         return new JspPage("staff/create-contract-success.jsp");
     }
 
+    public ResponseObject postCancel(R r) {
+        // Get cancel contract information
+        String contractCode = r.equest.getParameter("txtContractCode");
+        System.out.println(contractCode);
+        String inputDate = r.equest.getParameter("txtCancelDate");
+        Timestamp cancelDate = DateUtils.stringToTime(inputDate);
+        String cancelReason = r.equest.getParameter("txtCancelReason");
+        String cancelNote = r.equest.getParameter("txtCancelNote");
+
+        // Call to business object
+        StaffBusiness staffBus = new StaffBusiness();
+        boolean result = staffBus.cancelContract(contractCode, cancelDate, cancelReason, cancelNote);
+        String msg = "";
+        if (result) {
+            msg = "Đã hủy hợp đồng thành công";
+        } else {
+            msg = "Hủy hợp đồng thất bại";
+        }
+        r.equest.setAttribute("MESSAGE", msg);
+        return new JspPage("staff/detail-contract.jsp");
+    }
+
     public ResponseObject postCreate(R r) {
         ContractEntity contractEntity = new ContractEntity();
         PaymentEntity paymentEntity = new PaymentEntity();
@@ -68,26 +87,11 @@ public class ContractController extends BasicController {
         contractEntity.setContractTypeId(Integer.parseInt(r.equest.getParameter("ddlContractType")));
 
         String startDate = r.equest.getParameter("txtStartDate");
-        System.out.println(startDate);
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        Date date = null;
-        try {
-            date = dateFormat.parse(startDate);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        long time = date.getTime();
-        contractEntity.setStartDate(new Timestamp(time));
+        contractEntity.setStartDate(DateUtils.stringToTime(startDate));
 
         String expiredDate = r.equest.getParameter("txtExpiredDate");
-        System.out.println(expiredDate);
-        try {
-            date = dateFormat.parse(expiredDate);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        time = date.getTime();
-        contractEntity.setExpiredDate(new Timestamp(time));
+        contractEntity.setExpiredDate(DateUtils.stringToTime(expiredDate));
+
         contractEntity.setContractFee(Float.parseFloat(r.equest.getParameter("txtContractFee")));
         contractEntity.setPlate(r.equest.getParameter("txtPlate"));
         contractEntity.setBrand(r.equest.getParameter("txtBrand"));
@@ -103,14 +107,8 @@ public class ContractController extends BasicController {
 
         // Get payment information
         String paidDate = r.equest.getParameter("txtPaidDate");
-        System.out.println(expiredDate);
-        try {
-            date = dateFormat.parse(expiredDate);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        time = date.getTime();
-        paymentEntity.setPaidDate(new Timestamp(time));
+        paymentEntity.setPaidDate(DateUtils.stringToTime(paidDate));
+
         paymentEntity.setAmount(Float.parseFloat(r.equest.getParameter("txtAmount")));
         paymentEntity.setReceiver(r.equest.getParameter("txtReceiver"));
 
