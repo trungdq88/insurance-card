@@ -8,6 +8,7 @@ import com.fpt.mic.micweb.model.entity.ContractEntity;
 import com.fpt.mic.micweb.model.entity.CustomerEntity;
 import com.fpt.mic.micweb.model.entity.PaymentEntity;
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Random;
 
@@ -70,7 +71,6 @@ public class StaffBusiness {
         // get next contract code - add later
         String contractCode = "HD" + (new Random().nextInt(8999) + 1000);
         contractEntity.setContractCode(contractCode);
-        System.out.println(contractEntity.getContractCode());
         contractEntity.setStatus("No Card");
 
         // Add payment
@@ -86,6 +86,26 @@ public class StaffBusiness {
                 return true;
             }
         }
+        return false;
+    }
+
+    public boolean cancelContract(String contractCode, Timestamp cancelDate, String cancelReason, String cancelNote) {
+        ContractDao contractDao = new ContractDao();
+        ContractEntity contractEntity = contractDao.read(contractCode);
+        // Validate information
+
+        // Check contract
+        if (contractEntity != null) {
+            // Update contract information
+            contractEntity.setCancelDate(cancelDate);
+            contractEntity.setCancelReason(cancelReason);
+            contractEntity.setCancelNote(cancelNote);
+            contractEntity.setStatus("Cancelled");
+            if (contractDao.update(contractEntity) != null) {
+                return true;
+            }
+        }
+
         return false;
     }
 }
