@@ -86,6 +86,9 @@
                             </div>
                         </div>
                     </fieldset>
+                    <%--/Customer information--%>
+                    <br/>
+
                     <fieldset>
                         <legend>Thông tin về dịch vụ bảo hiểm</legend>
 
@@ -93,7 +96,7 @@
                         <div class="form-group">
                             <label class="col-sm-4 control-label">Loại hình bảo hiểm</label>
 
-                            <div class="col-sm-6">
+                            <div class="col-sm-8">
                                 <!-- Load from database, add later -->
                                 <select class="form-control" name="ddlContractType">
                                     <option value="1">Xe trên 50cc có tham gia BH tai nạn người trên xe</option>
@@ -111,7 +114,7 @@
                         <div class="form-group">
                             <label class="col-sm-4 control-label" for="startdate">Thời điểm có hiệu lực *</label>
 
-                            <div class="col-sm-2">
+                            <div class="col-sm-3">
                                 <input id="startdate" name="txtStartDate" type="date" class="form-control input-md"/>
                             </div>
                         </div>
@@ -120,7 +123,7 @@
                         <div class="form-group">
                             <label class="col-sm-4 control-label" for="enddate">Thời điểm hết hiệu lực *</label>
 
-                            <div class="col-sm-2">
+                            <div class="col-sm-3">
                                 <div class="text-value">
                                     <input id="enddate" name="txtExpiredDate" type="date" class="form-control input-md"/>
                                 </div>
@@ -136,97 +139,85 @@
                             </div>
                         </div>
                     </fieldset>
+                    <%--/Contract information--%>
+                    <br/>
+
                     <fieldset>
                         <legend>Thông tin về xe cơ giới</legend>
 
-                        <!-- Plate -->
+                        <!-- Plate & Vehicle type -->
                         <div class="form-group">
-                            <label class="col-sm-4 control-label" for="plate">Biển số đăng ký *</label>
+                            <label class="col-sm-3 control-label" for="plate">Biển số đăng ký *</label>
 
-                            <div class="col-sm-2">
+                            <div class="col-sm-3">
                                 <input id="plate" name="txtPlate" type="text" class="form-control input-md"
                                        placeholder="Ví dụ: 78Y9-15383">
                             </div>
-                        </div>
 
-                        <!-- Brand -->
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label" for="brand">Nhãn hiệu *</label>
-
-                            <div class="col-sm-3">
-                                <input id="brand" name="txtBrand" type="text" class="form-control input-md"
-                                       placeholder="Ví dụ: Honda, Yamaha, Suzuki...">
-                            </div>
-                        </div>
-
-                        <!-- Model code -->
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label" for="modelCode">Số loại *</label>
-
-                            <div class="col-sm-3">
-                                <input id="modelCode" name="txtModel" type="text" class="form-control input-md"
-                                       placeholder="Ví dụ: Air Blade, Future, Wave...">
-                            </div>
-                        </div>
-
-                        <!-- Vehicle type -->
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label" for="vehicleType">Loại xe *</label>
+                            <label class="col-sm-2 control-label" for="vehicleType">Loại xe *</label>
 
                             <div class="col-sm-3">
                                 <input id="vehicleType" name="txtType" type="text" class="form-control input-md"
-                                       placeholder="Ví dụ: hai bánh, ba bánh, khác...">
+                                       placeholder="Ví dụ: Hai bánh">
                             </div>
                         </div>
 
-                        <!-- Color -->
+                        <!-- Brand & Model code -->
                         <div class="form-group">
-                            <label class="col-sm-4 control-label" for="color">Màu sơn *</label>
+                            <label class="col-sm-3 control-label" for="brand">Nhãn hiệu *</label>
 
-                            <div class="col-sm-2">
+                            <div class="col-sm-3">
+                                <input id="brand" name="txtBrand" type="text" class="form-control input-md"
+                                       placeholder="Ví dụ: Honda">
+                            </div>
+
+                            <label class="col-sm-2 control-label" for="modelCode">Số loại *</label>
+
+                            <div class="col-sm-3">
+                                <input id="modelCode" name="txtModel" type="text" class="form-control input-md"
+                                       placeholder="Ví dụ: Air Blade">
+                            </div>
+                        </div>
+
+                        <!-- Color & Capacity -->
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label" for="color">Màu sơn *</label>
+
+                            <div class="col-sm-3">
                                 <input id="color" name="txtColor" type="text" class="form-control input-md">
                             </div>
-                        </div>
 
-                        <!-- Engine -->
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label" for="engine">Số máy *</label>
-
-                            <div class="col-sm-2">
-                                <input id="engine" name="txtEngine" type="text" class="form-control input-md">
-                            </div>
-                        </div>
-
-                        <!-- Chassis -->
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label" for="chassis">Số khung *</label>
-
-                            <div class="col-sm-2">
-                                <input id="chassis" name="txtChassis" type="text" class="form-control input-md">
-                            </div>
-                        </div>
-
-                        <!-- Capacity -->
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label" for="capacity">Dung tích *</label>
+                            <label class="col-sm-2 control-label" for="capacity">Dung tích *</label>
 
                             <div class="col-sm-2">
                                 <input id="capacity" name="txtCapacity" type="text" class="form-control input-md">
                             </div>
                         </div>
 
-                        <!-- Year of manufacture -->
+                        <!-- Engine & Chassis -->
                         <div class="form-group">
-                            <label class="col-sm-4 control-label" for="yearOfMan">Năm sản xuất *</label>
+                            <label class="col-sm-3 control-label" for="engine">Số máy *</label>
+
+                            <div class="col-sm-3">
+                                <input id="engine" name="txtEngine" type="text" class="form-control input-md">
+                            </div>
+
+                            <label class="col-sm-2 control-label" for="chassis">Số khung *</label>
+
+                            <div class="col-sm-3">
+                                <input id="chassis" name="txtChassis" type="text" class="form-control input-md">
+                            </div>
+                        </div>
+
+                        <!-- Year of manufacture & Weight -->
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label" for="yearOfMan">Năm sản xuất *</label>
 
                             <div class="col-sm-2">
                                 <input id="yearOfMan" name="txtYearOfMan" type="text" class="form-control input-md">
                             </div>
-                        </div>
 
-                        <!-- Weight -->
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label" for="weight">Tự trọng *</label>
+                            <label class="col-sm-3 control-label" for="weight">Tự trọng *</label>
 
                             <div class="col-sm-2">
                                 <input id="weight" name="txtWeight" type="text" class="form-control input-md">
@@ -235,7 +226,7 @@
 
                         <!-- Seat capacity -->
                         <div class="form-group">
-                            <label class="col-sm-4 control-label" for="seatCapacity">Số người được phép chở *</label>
+                            <label class="col-sm-3 control-label" for="seatCapacity">Số người được chở *</label>
 
                             <div class="col-sm-2">
                                 <input id="seatCapacity" name="txtSeatCapacity" type="text" class="form-control input-md">
@@ -244,13 +235,15 @@
 
                         <!-- Image of vehicle registration certificate -->
                         <div class="form-group">
-                            <label class="col-sm-4 control-label" for="certImage">Ảnh chụp cà-vẹt xe</label>
+                            <label class="col-sm-3 control-label" for="certImage">Ảnh chụp cà-vẹt xe</label>
 
-                            <div class="col-sm-4">
+                            <div class="col-sm-6">
                                 <input id="certImage" name="txtCertImage" type="file" class="form-control input-md">
                             </div>
                         </div>
                     </fieldset>
+                    <%--/Vehicle information--%>
+                    <br/>
 
                     <fieldset>
                         <legend>Thông tin thanh toán</legend>
@@ -259,7 +252,7 @@
                         <div class="form-group">
                             <label class="col-sm-4 control-label" for="paidDate">Ngày nộp phí *</label>
 
-                            <div class="col-sm-2">
+                            <div class="col-sm-3">
                                 <input id="paidDate" name="txtPaidDate" type="date" class="form-control input-md">
                             </div>
                         </div>
@@ -277,7 +270,7 @@
                         <div class="form-group">
                             <label class="col-sm-4 control-label" for="receiver">Người nhận</label>
 
-                            <div class="col-sm-3">
+                            <div class="col-sm-4">
                                 <input id="receiver" name="txtReceiver" type="text" class="form-control input-md">
                             </div>
                         </div>

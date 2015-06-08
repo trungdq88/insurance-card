@@ -13,40 +13,41 @@ import java.util.Random;
  * Created by TriPQMSE60746 on 06/04/2015.
  */
 public class RegisterBusiness {
-    public boolean registerNewContract(CustomerEntity customerEntity,
-                                       ContractEntity contractEntity,
-                                       PaymentEntity paymentEntity) {
+    public String registerNewContract(CustomerEntity customerEntity,
+                                       ContractEntity contractEntity) {
 
         ContractDao contractDao = new ContractDao();
         CustomerDao customerDao = new CustomerDao();
-        PaymentDao paymentDao = new PaymentDao();
         // Validate information
 
         // Add customer
         // get next customer code - add later
-        String customerCode ="" + (new Random().nextInt(8999) + 1000);
+        String customerCode = customerDao.getIncrementId();
         customerEntity.setCustomerCode(customerCode);
         // get customer password - add later
         String customerPassword = "12345678";
         customerEntity.setPassword(customerPassword);
         // get next Contract Code- add later
-        contractEntity.setContractCode("" + new Random().nextInt(8999) + 1000);
+        contractEntity.setContractCode(contractDao.getIncrementId());
         contractEntity.setCustomerCode(customerCode);
 
         if (customerDao.create(customerEntity) != null) {
-            // Add contract
-            if (contractDao.create(contractEntity) != null) {
-                // Add payment info
-                // check if user choose direct payment, or payment process failed
-                if (paymentEntity!= null) {
-                    paymentDao.create(paymentEntity);
-                }
+            if ( contractDao.create(contractEntity) != null) {
+                return contractEntity.getContractCode();
+            }
+
+        }
+        return null;
+    }
+
+    public boolean updateContractPayment(ContractEntity contractEntity, PaymentEntity paymentEntity) {
+        ContractDao contractDao = new ContractDao();
+        PaymentDao paymentDao = new PaymentDao();
+        if (contractDao.update(contractEntity) != null) {
+            if (paymentDao.create(paymentEntity) != null){
+                return true;
             }
         }
-
-
-
-
-        return true;
+        return false;
     }
 }

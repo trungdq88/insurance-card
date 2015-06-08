@@ -6,6 +6,7 @@ import com.fpt.mic.micweb.framework.responses.JspPage;
 import com.fpt.mic.micweb.framework.responses.ResponseObject;
 import com.fpt.mic.micweb.model.business.StaffBusiness;
 import com.fpt.mic.micweb.model.entity.ContractEntity;
+import com.fpt.mic.micweb.model.entity.CustomerEntity;
 import com.fpt.mic.micweb.model.entity.PaymentEntity;
 
 import javax.servlet.annotation.WebServlet;
@@ -33,7 +34,16 @@ public class ContractController extends BasicController {
         StaffBusiness staffBus = new StaffBusiness();
         String contractCode = r.equest.getParameter("code");
         System.out.println(contractCode);
+
+        // Get contract detail
         ContractEntity contractDetail = staffBus.getContractDetail(contractCode);
+        r.equest.setAttribute("CONTRACT", contractDetail);
+
+        // Get customer detail
+        CustomerEntity customerDetail = staffBus.getCustomerDetail(contractDetail.getCustomerCode());
+        r.equest.setAttribute("CUSTOMER", customerDetail);
+
+        // Dispatch to JSP page
         return new JspPage("staff/detail-contract.jsp");
     }
 

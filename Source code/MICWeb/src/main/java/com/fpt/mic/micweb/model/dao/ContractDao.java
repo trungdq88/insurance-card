@@ -23,7 +23,13 @@ public class ContractDao extends IncrementDao<ContractEntity, String> {
         return query.getResultList();
     }
 
-    /* Get all contract created by Kha */
+    /**
+     * This is the method which get all contract.
+     * @return list of ContractEntity.
+     *
+     * @author KhaNC
+     * @version 1.0
+     */
     public List<ContractEntity> getAllContract() {
         EntityManager entity = factory.createEntityManager();
         String hql = "FROM ContractEntity";
@@ -31,11 +37,17 @@ public class ContractDao extends IncrementDao<ContractEntity, String> {
         return query.getResultList();
     }
 
-    /* Get customer's contract created by Kha */
+    /**
+     * This is the method which get all contract belongs to the customer.
+     * @param custCode This is stand for customer's code.
+     * @return list of ContractEntity.
+     *
+     * @author KhaNC
+     * @version 1.0
+     */
     public List<ContractEntity> getContractByCustomerCode(String custCode) {
         EntityManager entity = factory.createEntityManager();
-        String hql = "SELECT CO.contractCode, CO.contractTypeId, CO.startDate, CO.expiredDate, CO.status " +
-                "FROM ContractEntity AS CO " +
+        String hql = "FROM ContractEntity AS CO " +
                 "WHERE CO.customerCode = :code";
         Query query = entity.createQuery(hql);
         query.setParameter("code", custCode);

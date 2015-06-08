@@ -9,6 +9,7 @@ import com.fpt.mic.micweb.model.entity.ContractEntity;
 import com.fpt.mic.micweb.model.entity.CustomerEntity;
 import com.fpt.mic.micweb.model.entity.PaymentEntity;
 import com.fpt.mic.micweb.model.dto.PayPal;
+import com.fpt.mic.micweb.utils.DateUtils;
 import org.apache.commons.lang3.StringEscapeUtils;
 
 import javax.servlet.annotation.WebServlet;
@@ -45,7 +46,6 @@ public class RegisterController extends BasicController {
         // Get information...
         CustomerEntity customerEntity = new CustomerEntity();
         ContractEntity contractEntity = new ContractEntity();
-        PaymentEntity paymentEntity = null;
 
         customerEntity.setPhone(r.equest.getParameter("txtPhone"));
         customerEntity.setAddress(r.equest.getParameter("txtAddress"));
@@ -68,19 +68,23 @@ public class RegisterController extends BasicController {
 
         // kiem tra payment success?, neu thanh cong thi contract status la Ready, fail thi Pending
         contractEntity.setStatus("Pending");
-        contractEntity.setContractTypeId(1);
-        Timestamp time = new Timestamp(new Date().getTime());
-        contractEntity.setStartDate(time);
-        contractEntity.setExpiredDate(time);
+        int contractTypeId = Integer.parseInt(r.equest.getParameter("ddlContractType"));
+        contractEntity.setContractTypeId(contractTypeId);
+        // lay ngay nhap vao - add later
+        Timestamp startDate = DateUtils.stringToTime(r.equest.getParameter("txtStartDate"));
+        contractEntity.setStartDate(startDate);
+        contractEntity.setExpiredDate(startDate);
 
         // Call to business object
         RegisterBusiness registerBusiness = new RegisterBusiness();
-        boolean result = registerBusiness.registerNewContract(customerEntity, contractEntity, paymentEntity);
+        String result = registerBusiness.registerNewContract(customerEntity, contractEntity);
 
-        if (result) {
+        if (result != null) {
             // Return Success JSP Page
             // payment
             HttpSession session = r.equest.getSession();
+            session.setAttribute("CONTRACT_CODE",result);
+            System.out.println("Contract code:" + result);
             PayPal paypal = new PayPal();
         /*
         '------------------------------------
@@ -89,9 +93,7 @@ public class RegisterController extends BasicController {
         '------------------------------------
         */
 
-            String returnURL = r.equest.getScheme() + "://" + r.equest.getServerName() + ":" + r.equest.getServerPort() + r.equest.getContextPath() + "/public/return?action=return&page=review";
-            if (paypal.getUserActionFlag().equals("false"))
-                returnURL = r.equest.getScheme() + "://" + r.equest.getServerName() + ":" + r.equest.getServerPort() + r.equest.getContextPath() + "/public/return?action=return&page=return";
+            String returnURL = r.equest.getScheme() + "://" + r.equest.getServerName() + ":" + r.equest.getServerPort() + r.equest.getContextPath() + "/public/return?action=return&page=return";
 
     /*
     '------------------------------------
@@ -99,7 +101,7 @@ public class RegisterController extends BasicController {
     ' cancel button during authorization of payment during the PayPal flow
     '------------------------------------
     */
-            String cancelURL = r.equest.getScheme() + "://" + r.equest.getServerName() + ":" + r.equest.getServerPort() + r.equest.getContextPath() + "/cancel.jsp";
+            String cancelURL = r.equest.getScheme() + "://" + r.equest.getServerName() + ":" + r.equest.getServerPort() + r.equest.getContextPath() + "/public/return?action=cancel";
             Map<String, String> checkoutDetails = new HashMap<String, String>();
             checkoutDetails = setRequestParams(r);
             //Redirect to check out page for check out mark
@@ -116,7 +118,6 @@ public class RegisterController extends BasicController {
                 r.equest.setAttribute("PAYMENTREQUEST_0_AMT", StringEscapeUtils.escapeHtml4(r.equest.getParameter("PAYMENTREQUEST_0_AMT")));
                 //redirect to check out page
                 url = "public/checkout.jsp";
-                //return new JspPage("public/checkout.jsp");
             } else {
                 Map<String, String> nvp = null;
                 if (isSet(session.getAttribute("EXPRESS_MARK")) && session.getAttribute("EXPRESS_MARK").equals("ECMark")) {
@@ -172,9 +173,7 @@ public class RegisterController extends BasicController {
         '------------------------------------
         */
 
-        String returnURL = r.equest.getScheme() + "://" + r.equest.getServerName() + ":" + r.equest.getServerPort() + r.equest.getContextPath() + "/public/return?action=return&page=review";
-        if (paypal.getUserActionFlag().equals("false"))
-            returnURL = r.equest.getScheme() + "://" + r.equest.getServerName() + ":" + r.equest.getServerPort() + r.equest.getContextPath() + "/public/return?action=return&page=return";
+        String returnURL = r.equest.getScheme() + "://" + r.equest.getServerName() + ":" + r.equest.getServerPort() + r.equest.getContextPath() + "/public/return?action=return&page=return";
 
     /*
     '------------------------------------
@@ -182,7 +181,7 @@ public class RegisterController extends BasicController {
     ' cancel button during authorization of payment during the PayPal flow
     '------------------------------------
     */
-        String cancelURL = r.equest.getScheme() + "://" + r.equest.getServerName() + ":" + r.equest.getServerPort() + r.equest.getContextPath() + "/cancel.jsp";
+        String cancelURL = r.equest.getScheme() + "://" + r.equest.getServerName() + ":" + r.equest.getServerPort() + r.equest.getContextPath() + "/public/return?action=cancel";
         Map<String, String> checkoutDetails = new HashMap<String, String>();
         checkoutDetails = setRequestParams(r);
         //Redirect to check out page for check out mark
@@ -245,7 +244,6 @@ public class RegisterController extends BasicController {
         for (String key : r.equest.getParameterMap().keySet()) {
             requestMap.put(key, StringEscapeUtils.escapeHtml4(r.equest.getParameterMap().get(key)[0]));
         }
-
         return requestMap;
 
     }

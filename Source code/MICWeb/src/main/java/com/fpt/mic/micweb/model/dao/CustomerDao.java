@@ -19,7 +19,14 @@ public class CustomerDao extends IncrementDao<CustomerEntity, String> {
         return query.getResultList();
     }*/
 
-    /* New function created by Kha */
+    /**
+     * This is the method which get all customer.
+     * Expected return to CustomerDTO, implement later
+     * @return list This is result of the query.
+     *
+     * @author KhaNC
+     * @version 1.0
+     */
     public List<CustomerEntity> getAllCustomer() {
         EntityManager entity = factory.createEntityManager();
         /*String hql = "SELECT CU.customerCode, CU.name, CU.phone, CO.contractCode, CA.cardId " +

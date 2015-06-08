@@ -55,22 +55,22 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <c:forEach var="contract" items="${info}" varStatus="counter">
+                        <c:forEach var="cont" items="${info}" varStatus="counter">
                             <tr>
                                 <td>${counter.count}</td>
                                 <td>
-                                    <a href="${pageContext.request.contextPath}/staff/contract?action=detail&code=${contract.contractCode}">
-                                        ${contract.contractCode}
+                                    <a href="${pageContext.request.contextPath}/staff/contract?action=detail&code=${cont.contractCode}">
+                                        ${cont.contractCode}
                                     </a>
                                 </td>
                                 <td>
                                     <a href="detail-customer.html">Add later</a>
                                 </td>
                                 <td>
-                                    <fmt:formatDate value="${contract.startDate}" pattern="dd/MM/yyyy" />
+                                    <fmt:formatDate value="${cont.startDate}" pattern="dd/MM/yyyy" />
                                 </td>
                                 <td>1 năm</td>
-                                <td>${contract.status}</td>
+                                <td>${cont.status}</td>
                             </tr>
                         </c:forEach>
                         </tbody>
