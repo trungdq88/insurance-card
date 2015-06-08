@@ -3,16 +3,30 @@ package com.fpt.mic.micweb.model.business;
 import com.fpt.mic.micweb.model.dao.ContractDao;
 import com.fpt.mic.micweb.model.dao.CustomerDao;
 import com.fpt.mic.micweb.model.dao.PaymentDao;
+import com.fpt.mic.micweb.model.dto.CustomerDTO;
 import com.fpt.mic.micweb.model.entity.ContractEntity;
 import com.fpt.mic.micweb.model.entity.CustomerEntity;
 import com.fpt.mic.micweb.model.entity.PaymentEntity;
 
+import java.util.List;
 import java.util.Random;
 
 /**
  * Created by Kha on 07/06/2015.
  */
 public class StaffBusiness {
+
+    public List<CustomerEntity> getAllCustomer() {
+        CustomerDao customerDao = new CustomerDao();
+        //List<CustomerDTO> listCustomer = customerDao.getAllCustomer();
+        List<CustomerEntity> listCustomer = customerDao.getAllCustomer();
+        return listCustomer;
+    }
+
+    public CustomerEntity getCustomerDetail(String customerCode) {
+        CustomerDao customerDao = new CustomerDao();
+        return customerDao.read(customerCode);
+    }
 
     public boolean createCustomer(CustomerEntity customerEntity) {
         CustomerDao customerDao = new CustomerDao();
@@ -27,13 +41,24 @@ public class StaffBusiness {
         String customerPassword = "123456";
         customerEntity.setPassword(customerPassword);
 
-        if (customerDao.create(customerEntity) != null) return true;
-        return false;
+        return customerDao.create(customerEntity) != null;
     }
 
-    public CustomerEntity getCustomerDetail(String customerCode) {
-        CustomerDao customerDao = new CustomerDao();
-        return customerDao.read(customerCode);
+    public List<ContractEntity> getAllContract() {
+        ContractDao contractDao = new ContractDao();
+        List<ContractEntity> listContract = contractDao.getAllContract();
+        return listContract;
+    }
+
+    public List<ContractEntity> getContractByCustomerCode(String custCode) {
+        ContractDao contractDao = new ContractDao();
+        List<ContractEntity> listCustomerContract = contractDao.getContractByCustomerCode(custCode);
+        return listCustomerContract;
+    }
+
+    public ContractEntity getContractDetail(String contractCode) {
+        ContractDao contractDao = new ContractDao();
+        return contractDao.read(contractCode);
     }
 
     public boolean createContract(ContractEntity contractEntity, PaymentEntity paymentEntity) {

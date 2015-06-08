@@ -3,6 +3,7 @@ package com.fpt.mic.micweb.model.dao;
 import com.fpt.mic.micweb.model.dao.common.IncrementDao;
 import com.fpt.mic.micweb.model.dto.ContractSearchResult;
 import com.fpt.mic.micweb.model.entity.ContractEntity;
+import com.fpt.mic.micweb.model.entity.CustomerEntity;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -19,6 +20,25 @@ public class ContractDao extends IncrementDao<ContractEntity, String> {
     public List<ContractEntity> getListContract() {
         EntityManager manager = factory.createEntityManager();
         Query query = manager.createQuery("SELECT c FROM ContractEntity c");
+        return query.getResultList();
+    }
+
+    /* Get all contract created by Kha */
+    public List<ContractEntity> getAllContract() {
+        EntityManager entity = factory.createEntityManager();
+        String hql = "FROM ContractEntity";
+        Query query = entity.createQuery(hql);
+        return query.getResultList();
+    }
+
+    /* Get customer's contract created by Kha */
+    public List<ContractEntity> getContractByCustomerCode(String custCode) {
+        EntityManager entity = factory.createEntityManager();
+        String hql = "SELECT CO.contractCode, CO.contractTypeId, CO.startDate, CO.expiredDate, CO.status " +
+                "FROM ContractEntity AS CO " +
+                "WHERE CO.customerCode = :code";
+        Query query = entity.createQuery(hql);
+        query.setParameter("code", custCode);
         return query.getResultList();
     }
 

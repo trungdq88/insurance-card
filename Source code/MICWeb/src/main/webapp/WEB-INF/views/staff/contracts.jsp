@@ -1,5 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="_shared/header.jsp"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <div id="wrapper">
 
@@ -20,15 +23,14 @@
             <!-- /.col-lg-12 -->
         </div>
         <!-- /.row -->
-
-        <div>
-
-        </div>
         <div class="panel panel-default">
+
+            <c:set var="info" value="${requestScope.INFO}" />
+
             <div class="panel-heading">
                 <div class="pull-left center-dropdown-button">
                     <!--<input type="checkbox" class="check-all"/>-->
-                    <b>Có 173 hợp đồng</b>
+                    <b>Có ${fn:length(info)} hợp đồng</b>
                 </div>
                 <div class="pull-right no-wrap">
                     <input type="text" class="form-control long-text-box"
@@ -53,87 +55,24 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td><a href="${pageContext.request.contextPath}/staff/contract?action=detail">BHBB374</a></td>
-                            <td><a href="detail-customer.html">Đinh Quang Trung</a></td>
-                            <td>04/05/2015</td>
-                            <td>1 năm</td>
-                            <td><span class="label label-success">Sẵn sàng</span> </td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td><a href="${pageContext.request.contextPath}/staff/contract?action=detail">BHBB374</a></td>
-                            <td><a href="detail-customer.html">Đinh Quang Trung</a></td>
-                            <td>04/05/2015</td>
-                            <td>1 năm</td>
-                            <td><span class="label label-warning">Sắp hết hạn</span> </td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td><a href="${pageContext.request.contextPath}/staff/contract?action=detail">BHBB374</a></td>
-                            <td><a href="detail-customer.html">Đinh Quang Trung</a></td>
-                            <td>04/05/2015</td>
-                            <td>1 năm</td>
-                            <td><span class="label label-danger">Hết hạn</span> </td>
-                        </tr>
-
-                        <tr>
-                            <td>1</td>
-                            <td><a href="${pageContext.request.contextPath}/staff/contract?action=detail">BHBB374</a></td>
-                            <td><a href="detail-customer.html">Đinh Quang Trung</a></td>
-                            <td>04/05/2015</td>
-                            <td>1 năm</td>
-                            <td><span class="label label-gray">Chờ thanh toán</span> </td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td><a href="${pageContext.request.contextPath}/staff/contract?action=detail">BHBB374</a></td>
-                            <td><a href="detail-customer.html">Đinh Quang Trung</a></td>
-                            <td>04/05/2015</td>
-                            <td>1 năm</td>
-                            <td><span class="label label-primary">Chưa có thẻ</span> </td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td><a href="${pageContext.request.contextPath}/staff/contract?action=detail">BHBB374</a></td>
-                            <td><a href="detail-customer.html">Đinh Quang Trung</a></td>
-                            <td>04/05/2015</td>
-                            <td>1 năm</td>
-                            <td><span class="label label-dark">Đã huỷ hợp đồng</span> </td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td><a href="${pageContext.request.contextPath}/staff/contract?action=detail">BHBB374</a></td>
-                            <td><a href="detail-customer.html">Đinh Quang Trung</a></td>
-                            <td>04/05/2015</td>
-                            <td>1 năm</td>
-                            <td><span class="label label-success">Sẵn sàng</span> </td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td><a href="${pageContext.request.contextPath}/staff/contract?action=detail">BHBB374</a></td>
-                            <td><a href="detail-customer.html">Đinh Quang Trung</a></td>
-                            <td>04/05/2015</td>
-                            <td>1 năm</td>
-                            <td><span class="label label-success">Sẵn sàng</span> </td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td><a href="${pageContext.request.contextPath}/staff/contract?action=detail">BHBB374</a></td>
-                            <td><a href="detail-customer.html">Đinh Quang Trung</a></td>
-                            <td>04/05/2015</td>
-                            <td>1 năm</td>
-                            <td><span class="label label-success">Sẵn sàng</span> </td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td><a href="${pageContext.request.contextPath}/staff/contract?action=detail">BHBB374</a></td>
-                            <td><a href="detail-customer.html">Đinh Quang Trung</a></td>
-                            <td>04/05/2015</td>
-                            <td>1 năm</td>
-                            <td><span class="label label-success">Sẵn sàng</span> </td>
-                        </tr>
+                        <c:forEach var="contract" items="${info}" varStatus="counter">
+                            <tr>
+                                <td>${counter.count}</td>
+                                <td>
+                                    <a href="${pageContext.request.contextPath}/staff/contract?action=detail&code=${contract.contractCode}">
+                                        ${contract.contractCode}
+                                    </a>
+                                </td>
+                                <td>
+                                    <a href="detail-customer.html">Add later</a>
+                                </td>
+                                <td>
+                                    <fmt:formatDate value="${contract.startDate}" pattern="dd/MM/yyyy" />
+                                </td>
+                                <td>1 năm</td>
+                                <td>${contract.status}</td>
+                            </tr>
+                        </c:forEach>
                         </tbody>
                     </table>
                 </div>

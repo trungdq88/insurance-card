@@ -5,10 +5,13 @@ import com.fpt.mic.micweb.framework.responses.JspPage;
 import com.fpt.mic.micweb.framework.R;
 import com.fpt.mic.micweb.framework.responses.ResponseObject;
 import com.fpt.mic.micweb.model.business.StaffBusiness;
+import com.fpt.mic.micweb.model.dto.CustomerDTO;
+import com.fpt.mic.micweb.model.entity.ContractEntity;
 import com.fpt.mic.micweb.model.entity.CustomerEntity;
 
 import javax.servlet.annotation.WebServlet;
 import java.io.UnsupportedEncodingException;
+import java.util.List;
 
 /**
  * Created by dinhquangtrung on 5/23/15.
@@ -16,11 +19,29 @@ import java.io.UnsupportedEncodingException;
  */
 @WebServlet(name = "CustomerController", urlPatterns = {"/staff/customer"})
 public class CustomerController extends BasicController {
+
     public ResponseObject getView(R r) {
+        StaffBusiness staffBus = new StaffBusiness();
+        //List<CustomerDTO> listCustomer = staffBus.getAllCustomer();
+        List<CustomerEntity> listCustomer = staffBus.getAllCustomer();
+        r.equest.setAttribute("INFO", listCustomer);
         return new JspPage("staff/customers.jsp");
     }
 
     public ResponseObject getDetail(R r) {
+        StaffBusiness staffBus = new StaffBusiness();
+        String customerCode = r.equest.getParameter("code");
+        System.out.println(customerCode);
+
+        // Get customer detail
+        CustomerEntity customerDetail = staffBus.getCustomerDetail(customerCode);
+        r.equest.setAttribute("DETAIL", customerDetail);
+
+        // Get customer's contract
+        List<ContractEntity> listCustomerContract = staffBus.getContractByCustomerCode(customerDetail.getCustomerCode());
+        r.equest.setAttribute("CONTRACT", listCustomerContract);
+
+        // Return to JSP page
         return new JspPage("staff/detail-customer.jsp");
     }
 

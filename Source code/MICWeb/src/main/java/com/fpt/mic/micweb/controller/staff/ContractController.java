@@ -14,17 +14,26 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by dinhquangtrung on 5/23/15.
  */
 @WebServlet(name = "ContractController", urlPatterns = {"/staff/contract"})
 public class ContractController extends BasicController {
+
     public ResponseObject getView(R r) {
+        StaffBusiness staffBus = new StaffBusiness();
+        List<ContractEntity> listContract = staffBus.getAllContract();
+        r.equest.setAttribute("INFO", listContract);
         return new JspPage("staff/contracts.jsp");
     }
 
     public ResponseObject getDetail(R r) {
+        StaffBusiness staffBus = new StaffBusiness();
+        String contractCode = r.equest.getParameter("code");
+        System.out.println(contractCode);
+        ContractEntity contractDetail = staffBus.getContractDetail(contractCode);
         return new JspPage("staff/detail-contract.jsp");
     }
 
