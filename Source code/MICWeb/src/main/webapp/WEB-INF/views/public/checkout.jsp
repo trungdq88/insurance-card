@@ -34,7 +34,7 @@
             <table>
               <tr><td width="30%">Họ tên khách hàng:</td><td>${sessionScope.checkoutDetails.txtName}</td></tr>
               <tr><td>Địa chỉ: </td><td>${sessionScope.checkoutDetails.txtAddress}</td></tr>
-              <tr><td>Số tiền thanh toán:</td><td> ${sessionScope.checkoutDetails.txtFee} (USD) </td><>
+              <tr><td>Số tiền thanh toán:</td><td> ${sessionScope.checkoutDetails.txtFee/20000} (USD) </td><>
             </table>
             <input type="hidden" name="action" value="checkout">
             <input type="submit" id="placeOrderBtn" class="btn btn-primary btn-large" value="Thanh Toán" />

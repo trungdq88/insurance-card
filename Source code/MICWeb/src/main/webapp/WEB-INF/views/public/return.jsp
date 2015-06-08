@@ -33,7 +33,6 @@
 
 					<h4> Chúng tôi sẽ gửi thẻ bảo hiểm đến cho bạn sớm nhất. </h4>
 					<p>Transaction ID: <%=result.get("PAYMENTINFO_0_TRANSACTIONID")%> </p>
-					<p>Transaction Type: <%=result.get("PAYMENTINFO_0_TRANSACTIONTYPE")%> </p>
 					<p>Payment Total Amount: <%=result.get("PAYMENTINFO_0_AMT")%> </p>
 					<p>Currency : <%=result.get("PAYMENTINFO_0_CURRENCYCODE")%> </p>
 					<p>Payment Status: <%=result.get("PAYMENTINFO_0_PAYMENTSTATUS")%> </p>

@@ -60,8 +60,7 @@
                                 Duy Trì Đăng Nhập
                             </td>
                             <td class="text-left" style="padding-left: 16px">
-                                <input type="checkbox">
-                                Quên Mật Khẩu?
+                                <a href="#">Quên Mật Khẩu?</a>
                             </td>
                         </tr>
                     </table>
@@ -143,9 +142,9 @@
             </div>
             <div class="col-md-7">
                 <div class="form-top-left col-md-12">
-                    <h3>Đăng ký ngay</h3>
+                    <h3><b>Đăng ký ngay</b></h3>
 
-                    <p>Quý khách vui lòng điền những thông tin sau.</p>
+                    <label><b>Quý khách vui lòng điền những thông tin sau</b></label>
                 </div>
                 <div class="form-top-right">
                     <i class="fa fa-pencil"></i>
@@ -153,41 +152,40 @@
                 <form role="form" action="${pageContext.request.contextPath}/public/register" method="post">
                     <div class="form-group">
                         <div class="form-group col-md-6">
-                            Họ tên
+                            <label><b>Họ tên*</b></label>
                             <input type="text" name="txtName"
                                    class="form-control" id="form-full-name">
                         </div>
                         <div class="form-group col-md-6">
-                            Email
+                            <label><b>Email*</b></label>
                             <input type="text" name="txtEmail"
                                    class="form-control" id="form-email">
                         </div>
                     </div>
-
                     <div class="form-group">
                         <div class="form-group col-md-6">
-                            Số điện thoại
+                            <label><b>Số điện thoại*</b></label>
                             <input type="text" name="txtPhone"
                                    class="form-control" id="form-phone">
                         </div>
                         <div class="form-group col-md-6">
-                            Số CMND/Hộ chiếu
+                            <label><b>Số CMND/Hộ chiếu</b></label>
                             <input type="text" name="txtPersonalId"
                                    class="form-control" id="form-cmnd">
                         </div>
                     </div>
                     <div class="form-group col-md-12">
-                        Địa chỉ
+                        <label><b>Địa chỉ*</b></label>
                         <input type="text" name="txtAddress"
                                class="form-control" id="form-address">
                     </div>
                     <div class="form-group  col-md-12">
-                        Ngày bắt đầu
+                        <label><b>Ngày bắt đầu*</b></label>
                         <input type="date" name="txtStartDate"
                                class="form-control" id="form-startDate">
                     </div>
                     <div class="form-group  col-md-12">
-                        Hình Thức Bảo Hiểm
+                        <label><b>Hình Thức Bảo Hiểm*</b></label>
                         <select class="form-control" name="ddlContractType">
                             <option value="1">Xe trên 50cc có tham gia BH tai nạn người trên xe</option>
                             <option value="2">Xe trên 50cc không tham gia BH tai nạn người trên xe</option>
@@ -198,11 +196,10 @@
                     </div>
                     <div class="form-group  col-md-12">
                         <p class="form-control-static">
-                            Thời hạn: 01 năm kể từ khi cấp GCNBH và/hoặc sau thời hạn thanh toán phí
+                            <label><b>Thời hạn: 01 năm kể từ khi cấp GCNBH và/hoặc sau thời hạn thanh toán phí</b></label>
                         </p>
-
                         <p class="form-control-static">
-                            Phí bảo hiểm: 200.000 VND
+                            <label><b>Phí bảo hiểm: 200.000 VND</b></label>
                             <input type="hidden" name="txtFee" value="200000">
                         </p>
                         <input type="hidden" name="action" value="register"/>
