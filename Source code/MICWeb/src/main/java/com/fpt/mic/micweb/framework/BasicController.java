@@ -3,7 +3,6 @@ package com.fpt.mic.micweb.framework;
 import com.fpt.mic.micweb.framework.responses.JsonString;
 import com.fpt.mic.micweb.framework.responses.JspPage;
 import com.fpt.mic.micweb.framework.responses.ResponseObject;
-import com.fpt.mic.micweb.framework.responses.TerminateRequest;
 import com.fpt.mic.micweb.utils.StringUtils;
 
 import javax.servlet.ServletException;
@@ -68,9 +67,6 @@ public abstract class BasicController extends HttpServlet {
                 PrintWriter writer = response.getWriter();
                 writer.write(((JsonString) responseObject).getJsonString());
                 writer.close();
-            } else if (responseObject instanceof TerminateRequest) {
-                // Do nothing
-                System.out.println("Request terminated");
             } else {
                 // TODO: process other kind of response
                 // Do something else
