@@ -90,7 +90,6 @@
                                                     </div>
                                                 </a>
                                             </div>
-
                                             <div class="col-sm-10 col-sm-offset-1">
                                                 <div class="collapse" id="companyAddress">
                                                     <div class="form-group">
@@ -102,8 +101,7 @@
                                                         <p class="text-muted"><b>Số điện thoại:</b> 0937337009</p>
 
                                                         <p class="text-muted"><b>Email:</b> hydrangea8604@gmail.com</p>
-                                                        <img src="${pageContext.request.contextPath}/img/map.png"
-                                                             alt="Trường đại học FPT"/>
+                                                        <img src="${pageContext.request.contextPath}/img/map.png" alt="Trường đại học FPT"/>
                                                     </div>
                                                 </div>
                                             </div>

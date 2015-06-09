@@ -10,6 +10,7 @@ import com.fpt.mic.micweb.model.dao.ContractDao;
 import com.fpt.mic.micweb.model.dto.PayPal;
 import com.fpt.mic.micweb.model.entity.ContractEntity;
 import com.fpt.mic.micweb.model.entity.PaymentEntity;
+import com.fpt.mic.micweb.utils.DateUtils;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -19,6 +20,7 @@ import java.util.*;
 
 /**
  * Created by TriPQMSE60746 on 06/07/2015.
+ * Reference: Paypal Express Checkout API from https://demo.paypal.com/us/home.
  */
 @WebServlet(name = "ReturnController", urlPatterns = {"/public/return"})
 public class ReturnController  extends BasicController {
@@ -51,20 +53,6 @@ public class ReturnController  extends BasicController {
             {
                 session.setAttribute("payer_id", results.get("PAYERID"));
                 result.putAll(results);
-                    /*
-                    * The information that is returned by the GetExpressCheckoutDetails call should be integrated by the partner into his Order Review
-                    * page
-                    */
-                String email 				= results.get("EMAIL"); // ' Email address of payer.
-                String payerId 			= results.get("PAYERID"); // ' Unique PayPal customer account identification number.
-                String payerStatus		= results.get("PAYERSTATUS"); // ' Status of payer. Character length and limitations: 10 single-byte alphabetic characters.
-                String firstName			= results.get("FIRSTNAME"); // ' Payer's first name.
-                String lastName			= results.get("LASTNAME"); // ' Payer's last name.
-
-                String addressStatus 		= results.get("ADDRESSSTATUS"); // ' Status of street address on file with PayPal
-                String totalAmt   		= results.get("PAYMENTREQUEST_0_AMT"); // ' Total Amount to be paid by buyer
-                String currencyCode       = results.get("CURRENCYCODE"); // 'Currency being used
-
             }
             else
             {
@@ -92,13 +80,11 @@ public class ReturnController  extends BasicController {
         checkoutDetails.put("TOKEN", token);
         checkoutDetails.put("payer_id", (String) session.getAttribute("payer_id"));
 
-
             /*
             * Calls the DoExpressCheckoutPayment API call
             */
         String page="public/return.jsp";
         if (isSet(r.equest.getParameter("page")) && r.equest.getParameter("page").equals("return")){
-            // FIXME - The method 'request.getServerName()' must be sanitized before being used.
             HashMap results = pp.confirmPayment (checkoutDetails,r.equest.getServerName() );
             r.equest.setAttribute("payment_method","");
             String strAck = results.get("ACK").toString().toUpperCase();
@@ -107,36 +93,22 @@ public class ReturnController  extends BasicController {
                 result.putAll(checkoutDetails);
                 r.equest.setAttribute("ack", strAck);
                 r.equest.setAttribute("result", result);
-                Enumeration<String> temp = session.getAttributeNames();
-                HashMap<String,String> temp2 = new HashMap<String, String>();
-                temp2.putAll((Map<? extends String, ? extends String>) session.getAttribute("checkoutDetails"));
-                Object[] array;
-                array = temp2.keySet().toArray();
-                for (int i=0;i < array.length; i++) {
-                    System.out.println(array[i].toString() +" " + temp2.get(array[i].toString()).toString());
-                }
                 // Thanh toan thanh cong, cap nhat payment, cap nhat contract status, ngay het han
-                System.out.println("Da thanh toan cho hop dong ma: " + session.getAttribute("CONTRACT_CODE").toString());
                 ContractEntity contractEntity = new ContractEntity();
                 ContractDao contractDao = new ContractDao();
-
-                contractEntity = contractDao.read("HDUA79");
                 PaymentEntity paymentEntity = new PaymentEntity();
-                CustomerBusniess customerBusniess = new CustomerBusniess();
 
                 // get contract just added by contract_code
                 String code =(String) session.getAttribute("CONTRACT_CODE");
                 contractEntity = contractDao.read(code);
-                //contractEntity = contractDao.read("HDUA79");
+                DateUtils date = new DateUtils();
 
-                // set start date and expired date
-                Date dt = new Date();
-                contractEntity.setStartDate(new Timestamp(dt.getTime()));
-                Calendar c = Calendar.getInstance();
-                c.setTime(dt);
-                c.add(Calendar.YEAR, 1);
-                dt = c.getTime();
-                contractEntity.setExpiredDate(new Timestamp(dt.getTime()));
+                // set start date
+               // Timestamp startDate = DateUtils.stringToTime(checkoutDetails.get("txtStartDate"));
+                Timestamp currentDate = new Timestamp(new Date().getTime());
+                contractEntity.setStartDate(currentDate);
+                // set expired date = start_date + 1 year
+                contractEntity.setExpiredDate(DateUtils.addOneYear(contractEntity.getStartDate()));
                 contractEntity.setStatus("Ready");
                 contractDao.update(contractEntity);
 

@@ -16,6 +16,11 @@ import java.util.StringTokenizer;
 
 import javax.servlet.http.HttpServletResponse;
 
+
+/**
+ * Created by TriPQMSE60746 on 06/07/2015.
+ * Reference: Paypal Express Checkout API from https://demo.paypal.com/us/home.
+ */
 public class PayPal  {
 
     private String gvAPIUserName;

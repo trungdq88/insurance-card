@@ -90,6 +90,10 @@ public class RegisterController extends BasicController {
         return new JspPage(url);
     }
 
+    /**
+     * Created by TriPQMSE60746 on 06/07/2015.
+     * Reference: Paypal Express Checkout API from https://demo.paypal.com/us/home.
+     */
     public ResponseObject postCheckout(R r) {
         // payment
         HttpSession session = r.equest.getSession();

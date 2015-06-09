@@ -1,11 +1,10 @@
-<%@ page import="com.fpt.mic.micweb.model.entity.CustomerEntity" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="_shared/header.jsp" %>
 <body>
 <div class="image-container set-full-height"
      style="background-image: url('${pageContext.request.contextPath}/img/wizard-city.jpg')">
     <!--   MIC Branding   -->
-    <a href="home.html">
+    <a href="home">
         <div class="logo-container">
             <img src="${pageContext.request.contextPath}/img/logoCompany.png"
                  style="height: 70px;">
@@ -28,7 +27,6 @@
                             <div class="wizard-header">
                                 <h3>
                                     <b> ĐĂNG KÝ BẢO HIỂM NFC </b><br>
-                                    <small>Vui lòng điền đầy đủ những thông tin dưới đây.</small>
                                 </h3>
                             </div>
                             <ul>
@@ -149,8 +147,8 @@
                                     <div class="row">
                                         <div class="col-sm-12">
                                             <h3 class="info-text"> THÔNG TIN XE </h3>
-                                            <h5 class="info-text"> Quý khách có thể nhập thông tin dựa trên đăng ký xe
-                                                hoặc tải lên ảnh chụp </h5>
+                                            <h5 class="info-text"> Quý khách vui lòng nhập thông tin dựa trên đăng ký xe
+                                            </h5>
                                             <h5 class="info-text">Các ô có dấu * là bắt buộc</h5>
                                         </div>
                                         <div class="col-sm-5 col-sm-offset-1">
@@ -242,7 +240,7 @@
 
                                 <div class="tab-pane" id="contract">
                                     <h3 class="info-text"> THÔNG TIN HỢP ĐỒNG BẢO HIỂM </h3>
-                                    <h5 class="info-text"> Quý khách vui lòng kiểm tra lại thông tin hợp đồng bảo hiểm
+                                    <h5 class="info-text">Quý khách vui lòng kiểm tra lại thông tin hợp đồng bảo hiểm
                                         đã đăng ký </h5>
 
                                     <div class="row text-big">
