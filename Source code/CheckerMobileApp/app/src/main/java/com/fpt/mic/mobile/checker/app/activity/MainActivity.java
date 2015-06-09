@@ -110,9 +110,14 @@ public class MainActivity extends Activity {
         apiBusiness.checkCard(tagID, new ApiBusiness.IOnCheckContract() {
             @Override
             public void onCheckCardResult(CardEntity result) {
-                Intent intent = new Intent(MainActivity.this, InfoActivity.class);
-                intent.putExtra("card", result);
-                startActivity(intent);
+                if (result != null) {
+                    Intent intent = new Intent(MainActivity.this, InfoActivity.class);
+                    intent.putExtra("card", result);
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(MainActivity.this,
+                            "Không thể kết nối tới máy chủ", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 

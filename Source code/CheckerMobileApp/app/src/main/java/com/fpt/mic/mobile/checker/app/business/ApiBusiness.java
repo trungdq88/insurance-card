@@ -1,5 +1,6 @@
 package com.fpt.mic.mobile.checker.app.business;
 
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fpt.mic.mobile.checker.app.ApiRequest.ApiRequest;
 import com.fpt.mic.mobile.checker.app.entity.CardEntity;
@@ -27,6 +28,7 @@ public class ApiBusiness {
                     cb.onCheckCardResult(card);
                 } catch (IOException e) {
                     e.printStackTrace();
+                    cb.onCheckCardResult(null);
                 }
             }
         });
