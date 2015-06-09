@@ -6,13 +6,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="THẺ HỢP LỆ"
+        android:text=""
         android:id="@+id/txtStatus"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:padding="10dp"
-        android:background="#ff6dff6b"
         android:gravity="center" />
 
     <ScrollView
@@ -149,7 +148,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="Đinh Quang Trung"
+                        android:text=""
                         android:id="@+id/txtName"
                         android:theme="@style/text_highlight"
                         android:maxLines="1"
@@ -159,7 +158,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="Tân Chánh Hiệp, Q12, TPHCM"
                         android:id="@+id/txtAddress"
                         android:maxLines="1"
                         android:ellipsize="end" />
@@ -168,7 +166,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="0987 010 010"
                         android:id="@+id/txtPhone"
                         android:maxLines="1"
                         android:ellipsize="end" />
@@ -177,7 +174,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="93H3 - 7987"
                         android:id="@+id/txtPlate"
                         android:theme="@style/text_highlight"
                         android:maxLines="1"
@@ -187,7 +183,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="09233815"
                         android:id="@+id/txtChassis"
                         android:maxLines="1"
                         android:ellipsize="end" />
@@ -196,7 +191,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="83729165"
                         android:id="@+id/txtEngine"
                         android:maxLines="1"
                         android:ellipsize="end" />
@@ -205,7 +199,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="trên 50 cc"
                         android:id="@+id/txtType"
                         android:maxLines="1"
                         android:ellipsize="end" />
@@ -214,7 +207,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="00 giờ ngày 08/10/2014"
                         android:id="@+id/txtStartDate"
                         android:theme="@style/text_highlight"
                         android:maxLines="1"
@@ -224,7 +216,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="00 giờ ngày 08/10/2014"
                         android:id="@+id/txtExpiredDate"
                         android:theme="@style/text_highlight"
                         android:maxLines="1"

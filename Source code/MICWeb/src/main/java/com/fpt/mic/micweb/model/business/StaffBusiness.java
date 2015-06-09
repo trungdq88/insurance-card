@@ -3,11 +3,11 @@ package com.fpt.mic.micweb.model.business;
 import com.fpt.mic.micweb.model.dao.ContractDao;
 import com.fpt.mic.micweb.model.dao.CustomerDao;
 import com.fpt.mic.micweb.model.dao.PaymentDao;
-import com.fpt.mic.micweb.model.dto.CustomerDTO;
 import com.fpt.mic.micweb.model.entity.ContractEntity;
 import com.fpt.mic.micweb.model.entity.CustomerEntity;
 import com.fpt.mic.micweb.model.entity.PaymentEntity;
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Random;
 
@@ -35,7 +35,7 @@ public class StaffBusiness {
 
         // Create customer
         // get next customer code - add later
-        String customerCode = "KH" + (new Random().nextInt(8999) + 1000);
+        String customerCode = customerDao.getIncrementId();
         customerEntity.setCustomerCode(customerCode);
         // get customer password - add later
         String customerPassword = "123456";
@@ -68,21 +68,63 @@ public class StaffBusiness {
 
         // Add contract
         // get next contract code - add later
-        String contractCode = "HD" + (new Random().nextInt(8999) + 1000);
+        String contractCode = contractDao.getIncrementId();
         contractEntity.setContractCode(contractCode);
-        System.out.println(contractEntity.getContractCode());
         contractEntity.setStatus("No Card");
-
-        // Add payment
-        paymentEntity.setPaymentMethod("Direct");
-        paymentEntity.setContent("Đăng ký hợp đồng mới");
-        paymentEntity.setContractCode(contractCode);
-
+        ContractEntity newContract = contractDao.create(contractEntity);
         // Add contract
-        if (contractDao.create(contractEntity) != null) {
+        if (newContract != null) {
             // Add payment info
-            // check if user choose direct payment, or payment process failed
+            paymentEntity.setPaymentMethod("Direct");
+            paymentEntity.setContent("Đăng ký hợp đồng mới");
+            paymentEntity.setContractCode(contractCode);
             if (paymentDao.create(paymentEntity) != null) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean renewContract(String contractCode, Timestamp startDate, Timestamp expiredDate,
+                                 PaymentEntity paymentEntity) {
+        ContractDao contractDao = new ContractDao();
+        PaymentDao paymentDao = new PaymentDao();
+        ContractEntity contractEntity = contractDao.read(contractCode);
+
+        // Validate information
+
+        // Check contract
+        if (contractEntity != null) {
+            // Update contract information
+            contractEntity.setStartDate(startDate);
+            contractEntity.setExpiredDate(expiredDate);
+            contractEntity.setStatus("Ready");
+            if (contractDao.update(contractEntity) != null) {
+                // Add payment information
+                paymentEntity.setPaymentMethod("Direct");
+                paymentEntity.setContent("Gia hạn hợp đồng");
+                paymentEntity.setContractCode(contractCode);
+                if (paymentDao.create(paymentEntity) != null) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public boolean cancelContract(String contractCode, Timestamp cancelDate, String cancelReason, String cancelNote) {
+        ContractDao contractDao = new ContractDao();
+        ContractEntity contractEntity = contractDao.read(contractCode);
+        // Validate information
+
+        // Check contract
+        if (contractEntity != null) {
+            // Update contract information
+            contractEntity.setCancelDate(cancelDate);
+            contractEntity.setCancelReason(cancelReason);
+            contractEntity.setCancelNote(cancelNote);
+            contractEntity.setStatus("Cancelled");
+            if (contractDao.update(contractEntity) != null) {
                 return true;
             }
         }

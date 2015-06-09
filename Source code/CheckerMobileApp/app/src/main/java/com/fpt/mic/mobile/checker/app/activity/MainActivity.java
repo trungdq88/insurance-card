@@ -1,4 +1,4 @@
-package com.fpt.mic.mobile.checker.app;
+package com.fpt.mic.mobile.checker.app.activity;
 
 import android.app.Activity;
 import android.app.PendingIntent;
@@ -10,24 +10,33 @@ import android.nfc.Tag;
 import android.nfc.tech.NfcA;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
+import com.fpt.mic.mobile.checker.app.R;
+import com.fpt.mic.mobile.checker.app.business.ApiBusiness;
+import com.fpt.mic.mobile.checker.app.entity.CardEntity;
 
-/**
- * FPT University - Capstone Project - Summer 2015 - CheckerMobileApp
- * Created by dinhquangtrung on 6/5/15.
- */
-public class CheckerActivity extends Activity {
+
+public class MainActivity extends Activity {
+
     NfcAdapter mAdapter;
     IntentFilter[] mFilters;
     PendingIntent mPendingIntent;
-
     // Setup a tech list for all NfcF tags
     String[][] mTechLists = new String[][] { new String[] { NfcA.class.getName() } };
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_info);
+        setContentView(R.layout.activity_main);
+        findViewById(R.id.btnCheck).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                EditText txtCardID = (EditText) findViewById(R.id.txtCardID);
+                readCard(txtCardID.getText().toString());
+            }
+        });
+
 
         mPendingIntent = PendingIntent.getActivity(this, 0,
                 new Intent(this, getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
@@ -73,8 +82,6 @@ public class CheckerActivity extends Activity {
 
 
     void resolveIntent(Intent intent) {
-        Context context = getApplicationContext();
-        int duration = Toast.LENGTH_LONG;
 
         // 1) Parse the intent and get the action that triggered this intent
         String action = intent.getAction();
@@ -92,10 +99,24 @@ public class CheckerActivity extends Activity {
             String tagID = sb.toString();
             Log.e("nfc ID", tagID);
 
-
-            Toast toast = Toast.makeText(context, tagID, duration);
-            toast.show();
-
+            readCard(tagID);
         }
+    }
+
+    private void readCard(String tagID) {
+        Context context = getApplicationContext();
+        int duration = Toast.LENGTH_LONG;
+        ApiBusiness apiBusiness = new ApiBusiness();
+        apiBusiness.checkCard(tagID, new ApiBusiness.IOnCheckContract() {
+            @Override
+            public void onCheckCardResult(CardEntity result) {
+                Intent intent = new Intent(MainActivity.this, InfoActivity.class);
+                intent.putExtra("card", result);
+                startActivity(intent);
+            }
+        });
+
+        Toast toast = Toast.makeText(context, "Đang đọc thông tin thẻ...", duration);
+        toast.show();
     }
 }

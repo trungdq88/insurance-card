@@ -1,4 +1,4 @@
-package com.fpt.mic.mobile.printer.app.utils;
+package com.fpt.mic.mobile.checker.app.ApiRequest;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -122,7 +122,7 @@ public class DataSource implements Parcelable {
         }
     }
 
-    public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
+    public static final Creator CREATOR = new Creator() {
         public DataSource createFromParcel(Parcel in) {
             return new DataSource(in);
         }

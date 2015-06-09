@@ -7,6 +7,7 @@
 
     <c:set var="cont" value="${requestScope.CONTRACT}"/>
     <c:set var="cust" value="${requestScope.CUSTOMER}"/>
+    <c:set var="msg" value="${requestScope.MESSAGE}"/>
 
     <%@ include file="_shared/navigation.jsp" %>
     <div id="page-wrapper">
@@ -14,11 +15,16 @@
             <div class="col-lg-12">
                 <h1 class="page-header">
                     ${cont.contractCode}
+                    <c:if test="${not empty msg}">
+                        ${msg}
+                    </c:if>
                     <div class="pull-right">
-                        <a href="#" class="btn btn-info">
+                        <a href="#" class="btn btn-info"
+                           data-toggle="modal" data-target="#renew-contract-modal">
                             <i class="fa fa-refresh"></i> Gia hạn
                         </a>
-                        <a href="#" class="btn btn-danger">
+                        <a href="#" class="btn btn-danger"
+                           data-toggle="modal" data-target="#cancel-contract-modal">
                             <i class="fa fa-times"></i> Huỷ hợp đồng
                         </a>
                     </div>
@@ -318,9 +324,9 @@
 
                                     <div class="col-sm-4">
                                         <div class="text-value">
-                                            <fmt:formatDate value="${cont.startDate}" pattern="dd/MM/yyyy" />
-                                             lúc
-                                            <fmt:formatDate value="${cont.startDate}" type="time" />
+                                            <fmt:formatDate value="${cont.startDate}" pattern="dd/MM/yyyy"/>
+                                            lúc
+                                            <fmt:formatDate value="${cont.startDate}" type="time"/>
                                         </div>
                                     </div>
                                 </div>
@@ -342,9 +348,9 @@
 
                                     <div class="col-sm-4">
                                         <div class="text-value">
-                                            <fmt:formatDate value="${cont.expiredDate}" pattern="dd/MM/yyyy" />
+                                            <fmt:formatDate value="${cont.expiredDate}" pattern="dd/MM/yyyy"/>
                                             lúc
-                                            <fmt:formatDate value="${cont.expiredDate}" type="time" />
+                                            <fmt:formatDate value="${cont.expiredDate}" type="time"/>
                                         </div>
                                     </div>
                                 </div>
@@ -355,9 +361,9 @@
 
                                     <div class="col-sm-4">
                                         <div class="text-value">
-                                            <fmt:setLocale value="vi_VN" />
+                                            <fmt:setLocale value="vi_VN"/>
                                             <fmt:formatNumber value="${cont.contractFee}" type="currency"
-                                                              maxFractionDigits="0" />
+                                                              maxFractionDigits="0"/>
                                         </div>
                                     </div>
                                 </div>
@@ -423,5 +429,156 @@
     </div>
 </div>
 <!-- /#wrapper -->
+
+<!-- model for renew contract -->
+<div class="modal fade" id="renew-contract-modal">
+    <div class="modal-dialog">
+        <form action="${pageContext.request.contextPath}/staff/contract" method="post" class="form-horizontal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Gia hạn hợp đồng</h4>
+                </div>
+                <div class="modal-body">
+                    <fieldset>
+                        <legend>Thông tin hợp đồng bảo hiểm</legend>
+
+                        <!-- Start date -->
+                        <div class="form-group">
+                            <label class="col-sm-5 control-label">Thời điểm có hiệu lực</label>
+
+                            <div class="col-sm-4">
+                                <div class="text-value">
+                                    <input type="hidden" name="txtNewStartDate" value="${cont.expiredDate}"/>
+                                    <fmt:formatDate value="${cont.expiredDate}" pattern="dd/MM/yyyy"/>
+                                    lúc
+                                    <fmt:formatDate value="${cont.expiredDate}" type="time"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Expired date -->
+                        <div class="form-group">
+                            <label class="col-sm-5 control-label" for="expiredDate">Gia hạn đến *</label>
+
+                            <div class="col-sm-4">
+                                <div class="text-value">
+                                    <input id="expiredDate" name="txtExpiredDate" type="date"
+                                           class="form-control input-md"/>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <%--/Contract information--%>
+                    <br/>
+
+                    <fieldset>
+                        <legend>Thông tin thanh toán</legend>
+
+                        <!-- Paid date -->
+                        <div class="form-group">
+                            <label class="col-sm-5 control-label" for="paidDate">Ngày nộp phí *</label>
+
+                            <div class="col-sm-4">
+                                <input id="paidDate" name="txtPaidDate" type="date" class="form-control input-md">
+                            </div>
+                        </div>
+
+                        <!-- Paid amount -->
+                        <div class="form-group">
+                            <label class="col-sm-5 control-label" for="amount">Số tiền phí đã trả (VNĐ) *</label>
+
+                            <div class="col-sm-3">
+                                <input id="amount" name="txtAmount" type="text" class="form-control input-md">
+                            </div>
+                        </div>
+
+                        <!-- Receiver -->
+                        <div class="form-group">
+                            <label class="col-sm-5 control-label" for="receiver">Người nhận</label>
+
+                            <div class="col-sm-4">
+                                <input id="receiver" name="txtReceiver" type="text" class="form-control input-md">
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+                <div class="modal-footer">
+                    <input type="hidden" name="txtContractCode" value="${cont.contractCode}"/>
+                    <input type="hidden" name="action" value="renew"/>
+                    <button type="submit" class="btn btn-success">
+                        <i class="fa fa-arrow-right"></i>
+                        Gia hạn hợp đồng
+                    </button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Đóng</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </form>
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+<!-- model for cancel contract -->
+<div class="modal fade" id="cancel-contract-modal">
+    <div class="modal-dialog">
+        <form action="${pageContext.request.contextPath}/staff/contract" method="post" class="form-horizontal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Hủy hợp đồng</h4>
+                </div>
+                <div class="modal-body">
+                    <fieldset>
+                        <!-- Cancel date -->
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label" for="cancelDate">Ngày hủy hợp đồng *</label>
+
+                            <div class="col-sm-4">
+                                <input id="cancelDate" name="txtCancelDate" type="date" class="form-control input-md">
+                            </div>
+                        </div>
+
+                        <!-- Cancel reason -->
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label" for="cancelReason">Lý do hủy hợp đồng *</label>
+
+                            <div class="col-sm-7">
+                                <input id="cancelReason" name="txtCancelReason" type="text"
+                                       class="form-control input-md">
+                            </div>
+                        </div>
+
+                        <!-- Cancel note -->
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label" for="cancelNote">Ghi chú</label>
+
+                            <div class="col-sm-7">
+                                <textarea id="cancelNote" name="txtCancelNote" rows="4"
+                                          class="form-control input-lg">
+                                </textarea>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+                <div class="modal-footer">
+                    <input type="hidden" name="txtContractCode" value="${cont.contractCode}"/>
+                    <input type="hidden" name="action" value="cancel"/>
+                    <button type="submit" class="btn btn-danger">
+                        <i class="fa fa-arrow-right"></i>
+                        Hủy hợp đồng
+                    </button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Đóng</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </form>
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
 
 <%@ include file="_shared/footer.jsp" %>

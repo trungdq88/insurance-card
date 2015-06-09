@@ -8,13 +8,10 @@ import com.fpt.mic.micweb.model.business.StaffBusiness;
 import com.fpt.mic.micweb.model.entity.ContractEntity;
 import com.fpt.mic.micweb.model.entity.CustomerEntity;
 import com.fpt.mic.micweb.model.entity.PaymentEntity;
+import com.fpt.mic.micweb.utils.DateUtils;
 
 import javax.servlet.annotation.WebServlet;
 import java.sql.Timestamp;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -68,26 +65,11 @@ public class ContractController extends BasicController {
         contractEntity.setContractTypeId(Integer.parseInt(r.equest.getParameter("ddlContractType")));
 
         String startDate = r.equest.getParameter("txtStartDate");
-        System.out.println(startDate);
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        Date date = null;
-        try {
-            date = dateFormat.parse(startDate);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        long time = date.getTime();
-        contractEntity.setStartDate(new Timestamp(time));
+        contractEntity.setStartDate(DateUtils.stringToTime(startDate));
 
         String expiredDate = r.equest.getParameter("txtExpiredDate");
-        System.out.println(expiredDate);
-        try {
-            date = dateFormat.parse(expiredDate);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        time = date.getTime();
-        contractEntity.setExpiredDate(new Timestamp(time));
+        contractEntity.setExpiredDate(DateUtils.stringToTime(expiredDate));
+
         contractEntity.setContractFee(Float.parseFloat(r.equest.getParameter("txtContractFee")));
         contractEntity.setPlate(r.equest.getParameter("txtPlate"));
         contractEntity.setBrand(r.equest.getParameter("txtBrand"));
@@ -103,14 +85,8 @@ public class ContractController extends BasicController {
 
         // Get payment information
         String paidDate = r.equest.getParameter("txtPaidDate");
-        System.out.println(expiredDate);
-        try {
-            date = dateFormat.parse(expiredDate);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        time = date.getTime();
-        paymentEntity.setPaidDate(new Timestamp(time));
+        paymentEntity.setPaidDate(DateUtils.stringToTime(paidDate));
+
         paymentEntity.setAmount(Float.parseFloat(r.equest.getParameter("txtAmount")));
         paymentEntity.setReceiver(r.equest.getParameter("txtReceiver"));
 
@@ -125,5 +101,56 @@ public class ContractController extends BasicController {
             r.equest.setAttribute("error", "Something wrong");
             return new JspPage("error/msg.jsp");
         }
+    }
+
+    public ResponseObject postRenew(R r) {
+        // Get renew contract information
+        String contractCode = r.equest.getParameter("txtContractCode");
+        System.out.println(contractCode);
+        String newStartDate = r.equest.getParameter("txtNewStartDate");
+        Timestamp startDate = DateUtils.stringToTime(newStartDate);
+        String newExpiredDate = r.equest.getParameter("txtExpiredDate");
+        Timestamp expiredDate = DateUtils.stringToTime(newExpiredDate);
+
+        // Get renew payment information
+        PaymentEntity paymentEntity = new PaymentEntity();
+        String paidDate = r.equest.getParameter("txtPaidDate");
+        paymentEntity.setPaidDate(DateUtils.stringToTime(paidDate));
+        paymentEntity.setAmount(Float.parseFloat(r.equest.getParameter("txtAmount")));
+        paymentEntity.setReceiver(r.equest.getParameter("txtReceiver"));
+
+        // Call to business object
+        StaffBusiness staffBus = new StaffBusiness();
+        boolean result = staffBus.renewContract(contractCode, startDate, expiredDate, paymentEntity);
+        String msg = "";
+        if (result) {
+            msg = "Đã gia hạn hợp đồng thành công";
+        } else {
+            msg = "Gia hạn hợp đồng thất bại";
+        }
+        r.equest.setAttribute("MESSAGE", msg);
+        return new JspPage("staff/message.jsp");
+    }
+
+    public ResponseObject postCancel(R r) {
+        // Get cancel contract information
+        String contractCode = r.equest.getParameter("txtContractCode");
+        System.out.println(contractCode);
+        String inputDate = r.equest.getParameter("txtCancelDate");
+        Timestamp cancelDate = DateUtils.stringToTime(inputDate);
+        String cancelReason = r.equest.getParameter("txtCancelReason");
+        String cancelNote = r.equest.getParameter("txtCancelNote");
+
+        // Call to business object
+        StaffBusiness staffBus = new StaffBusiness();
+        boolean result = staffBus.cancelContract(contractCode, cancelDate, cancelReason, cancelNote);
+        String msg = "";
+        if (result) {
+            msg = "Đã hủy hợp đồng thành công";
+        } else {
+            msg = "Hủy hợp đồng thất bại";
+        }
+        r.equest.setAttribute("MESSAGE", msg);
+        return new JspPage("staff/message.jsp");
     }
 }

@@ -4,9 +4,9 @@ import com.fpt.mic.micweb.framework.BasicController;
 import com.fpt.mic.micweb.framework.R;
 import com.fpt.mic.micweb.framework.responses.JspPage;
 import com.fpt.mic.micweb.framework.responses.ResponseObject;
+import com.fpt.mic.micweb.model.business.CustomerBusniess;
 import com.fpt.mic.micweb.model.business.RegisterBusiness;
 import com.fpt.mic.micweb.model.dao.ContractDao;
-import com.fpt.mic.micweb.model.dto.ContractSearchResult;
 import com.fpt.mic.micweb.model.dto.PayPal;
 import com.fpt.mic.micweb.model.entity.ContractEntity;
 import com.fpt.mic.micweb.model.entity.PaymentEntity;
@@ -117,12 +117,17 @@ public class ReturnController  extends BasicController {
                 }
                 // Thanh toan thanh cong, cap nhat payment, cap nhat contract status, ngay het han
                 System.out.println("Da thanh toan cho hop dong ma: " + session.getAttribute("CONTRACT_CODE").toString());
-                ContractDao contractDao = new ContractDao();
                 ContractEntity contractEntity = new ContractEntity();
+                ContractDao contractDao = new ContractDao();
+
+                contractEntity = contractDao.read("HDUA79");
                 PaymentEntity paymentEntity = new PaymentEntity();
+                CustomerBusniess customerBusniess = new CustomerBusniess();
 
                 // get contract just added by contract_code
-                contractEntity = contractDao.read(session.getAttribute("CONTRACT_CODE").toString());
+                String code =(String) session.getAttribute("CONTRACT_CODE");
+                contractEntity = contractDao.read(code);
+                //contractEntity = contractDao.read("HDUA79");
 
                 // set start date and expired date
                 Date dt = new Date();
@@ -137,7 +142,7 @@ public class ReturnController  extends BasicController {
 
                 paymentEntity.setPaidDate(new Timestamp(new Date().getTime()));
                 paymentEntity.setPaymentMethod("PayPal payment");
-                paymentEntity.setContent("Gia Hạn Hợp Đồng");
+                paymentEntity.setContent("Create new contract");
                 paymentEntity.setAmount(Float.parseFloat(results.get("PAYMENTINFO_0_AMT").toString()));
                 paymentEntity.setPaypalTransId(results.get("PAYMENTINFO_0_TRANSACTIONID").toString());
                 paymentEntity.setContractCode(contractEntity.getContractCode());

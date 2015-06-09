@@ -5,6 +5,7 @@ import com.fpt.mic.micweb.framework.R;
 import com.fpt.mic.micweb.framework.responses.JspPage;
 import com.fpt.mic.micweb.framework.responses.ResponseObject;
 import com.fpt.mic.micweb.model.business.RegisterBusiness;
+import com.fpt.mic.micweb.model.dao.ContractDao;
 import com.fpt.mic.micweb.model.entity.ContractEntity;
 import com.fpt.mic.micweb.model.entity.CustomerEntity;
 import com.fpt.mic.micweb.model.entity.PaymentEntity;
@@ -35,8 +36,8 @@ public class RegisterController extends BasicController {
         r.equest.setAttribute("txtStartDate", r.equest.getParameter("txtStartDate"));
         r.equest.setAttribute("ddlContractType", r.equest.getParameter("ddlContractType"));
         r.equest.setAttribute("txtFee", r.equest.getParameter("txtFee"));
+
         // r.equest.getParameter()
-        System.out.println(customerEntity.getAddress() + " " + customerEntity.getEmail() + " " + customerEntity.getName());
         r.equest.setAttribute("customerEntity", customerEntity);
         return new JspPage("public/register.jsp");
     }

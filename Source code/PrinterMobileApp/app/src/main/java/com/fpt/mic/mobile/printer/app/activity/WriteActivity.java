@@ -79,6 +79,8 @@ public class WriteActivity extends Activity {
 
             String tagID = sb.toString();
 
+            // Write information to tag
+            writeTag(discoveredTag);
             // Send tag ID to server
             ContractBusiness contractBusiness = new ContractBusiness();
             contractBusiness.updateCardForContract(
@@ -86,8 +88,11 @@ public class WriteActivity extends Activity {
                         @Override
                         public void onApiResult(CardEntity result) {
                             if (result != null) {
-                                // Write data to tag
-                                writeTag(discoveredTag, result);
+                                // Show result
+                                finish();
+                                Intent intent = new Intent(WriteActivity.this, SuccessActivity.class);
+                                intent.putExtra("card", result);
+                                startActivity(intent);
                             } else {
                                 // There was error when update card for contract
                                 // TODO: handle 2 cases:
@@ -96,7 +101,7 @@ public class WriteActivity extends Activity {
                                 // 2. This card ID is already exists in the system
                                 //      => Tell user that this card is no longer usable.
                                 Toast.makeText(WriteActivity.this,
-                                        "Không thể cập nhật thẻ vào hợp đồng!", Toast.LENGTH_SHORT).show();
+                                        "Thẻ này đã tồn tại trong hệ thống!", Toast.LENGTH_SHORT).show();
                             }
                         }
                     });
@@ -104,7 +109,7 @@ public class WriteActivity extends Activity {
         }
     }
 
-    private void writeTag(Tag tag, CardEntity card) {
+    private void writeTag(Tag tag) {
         Ndef ndefTag = Ndef.get(tag);
         byte[] stringBytes = "Hello World".getBytes();
         NdefRecord dataToWrite = NdefRecord.createMime("mic/nfc", stringBytes);
@@ -113,11 +118,6 @@ public class WriteActivity extends Activity {
             ndefTag.writeNdefMessage(new NdefMessage(dataToWrite,
                     NdefRecord.createApplicationRecord("com.fpt.mic.mobile.checker.app")));
             ndefTag.close();
-            finish();
-            Intent intent = new Intent(this, SuccessActivity.class);
-            intent.putExtra("card", card);
-            Log.d("NFC", "Data written");
-            Toast.makeText(this, "Data written and saved to server", Toast.LENGTH_LONG).show();
         } catch (IOException e) {
             e.printStackTrace();
         } catch (FormatException e) {
