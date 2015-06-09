@@ -45,6 +45,7 @@ public class CustomerBusniess {
             if (typeOfReason == 1 ){
                 contract.setCancelDate(new Timestamp(date.getTime()));
                 contract.setCancelReason(cancelReason);
+                contract.setStatus("Request cancel");
                 if (contractDa0.update(contract) != null) {
                     result = true;
                 }

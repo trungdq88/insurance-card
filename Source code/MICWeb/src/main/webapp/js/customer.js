@@ -52,11 +52,11 @@ $(document).ready(function () {
     });
     $('#rdbAnother').click(function(){
         $('.check').attr('checked', false);
-        $('#anotherReasonText').val($('#anotherReason').val());
-        $(this).prop('checked', true);
         $('#anotherReason').removeClass('hide');
+        $('#reason').val($('#anotherReason').val());
+        $(this).prop('checked', true);
     });
-
+    $('#reason').val($('#anotherReason').val());
 
 });
 
