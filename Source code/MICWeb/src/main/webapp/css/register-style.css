@@ -1,6 +1,37 @@
 .text-big {
     font-size: 17px;
 }
-/*.text-big>div {*/
-    /*margin: 5px;*/
-/*}*/
+.text-big>div {
+    margin-bottom: 5px;
+}
+
+.form-control {
+    background-color: #FFFFFF;
+    border: 1px solid #bababa;
+    border-radius: 4px;
+    box-shadow: none;
+    color: #444444;
+    height: 38px;
+    padding: 6px 16px;
+}
+
+
+.form-control::-moz-placeholder {
+    color: #aaa;
+    opacity: 1;
+}
+
+.form-control:-moz-placeholder {
+    color: #aaa;
+    opacity: 1;
+}
+
+.form-control::-webkit-input-placeholder {
+    color: #aaa;
+    opacity: 1;
+}
+
+.form-control:-ms-input-placeholder {
+    color: #aaa;
+    opacity: 1;
+}
