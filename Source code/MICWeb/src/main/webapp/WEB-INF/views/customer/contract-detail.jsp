@@ -1,3 +1,6 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page import="java.util.Date" %>
+<%@ page import="java.text.DateFormat" %>
 <%--
   Created by IntelliJ IDEA.
   User: PhucNguyen
@@ -10,7 +13,7 @@
 <div id="wrapper">
     <%@ include file="_shared/navigation.jsp" %>
     <div id="page-wrapper">
-        <form class="row">
+        <div class="row">
 
             <div class="col-lg-12">
                 <h2 class="page-header ">Hợp Đồng ${contract.contractCode}
@@ -23,7 +26,7 @@
                      </span>
                 </h2>
             </div>
-            <form action="CustomerContractController" method="post">
+            <form action="/customer/contract" method="post">
                 <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog"
                      aria-labelledby="myLargeModalLabel"
                      aria-hidden="true">
@@ -67,9 +70,8 @@
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <input type="hidden" name="action" value="cancelcontract"/>
+                                <input type="hidden" name="action" value="CancelContract"/>
                                 <input class="hide" name="txtReason" id="reason">
-                                <input class="hide" name="txtAnotherReason" id="anotherReasonText">
                                 <input type="submit" class="btn btn-primary" name="Xác Nhận"/>
                                 <input type="hidden" name="contractcode" value="${contract.contractCode}"/>
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Hủy Bỏ</button>
@@ -79,9 +81,14 @@
                     </div>
                 </div>
             </form>
-        </form>
+        </div>
 
-        <form class="form-horizontal">
+        <div class="form-horizontal">
+            <c:if test="${contract.status.equalsIgnoreCase('Request cancel')}">
+                <div class="well well-lg text-center text-danger">
+                    Hợp đồng đã được yêu cầu hủy vui lòng chờ xác nhận của nhân viên
+                </div>
+            </c:if>
             <fieldset>
                 <legend>
                     Thông tin chung
@@ -93,6 +100,7 @@
                 <div class="col-sm-5">
                     <div class="text-value">
                         ${contract.contractCode}
+
                     </div>
                 </div>
             </div>
@@ -102,6 +110,7 @@
                 <div class="col-sm-5">
                     <div class="text-value ">
                         ${contract.startDate}
+
                     </div>
                 </div>
             </div>
@@ -128,13 +137,14 @@
 
                 <div class="col-sm-5">
                     <div class="text-value ">
-                        <lable class="form-control-static" style="color: orange">Sắp Hết Hạn (Còn 7 Ngày)</lable>
+                        ${contract.status}
+
                     </div>
                 </div>
             </div>
-        </form>
+        </div>
 
-        <form class="form-horizontal">
+        <div class="form-horizontal">
             <fieldset>
                 <legend>
                     Thông tin xe
@@ -143,6 +153,7 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label class="col-sm-4 control-label">Biển Số Đăng Ký: </label>
+
                     <div class="col-sm-8">
                         <div class="text-value ">
                             ${contract.plate}
@@ -215,7 +226,7 @@
                     </div>
                 </div>
             </div>
-        </form>
+        </div>
 
         <div class="col-lg-12">
             <h2 class="page-header ">Thông Tin Khác

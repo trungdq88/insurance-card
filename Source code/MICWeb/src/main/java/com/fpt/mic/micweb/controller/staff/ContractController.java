@@ -129,7 +129,7 @@ public class ContractController extends BasicController {
             msg = "Gia hạn hợp đồng thất bại";
         }
         r.equest.setAttribute("MESSAGE", msg);
-        return new JspPage("staff/detail-contract.jsp");
+        return new JspPage("staff/message.jsp");
     }
 
     public ResponseObject postCancel(R r) {
@@ -151,6 +151,6 @@ public class ContractController extends BasicController {
             msg = "Hủy hợp đồng thất bại";
         }
         r.equest.setAttribute("MESSAGE", msg);
-        return new JspPage("staff/detail-contract.jsp");
+        return new JspPage("staff/message.jsp");
     }
 }

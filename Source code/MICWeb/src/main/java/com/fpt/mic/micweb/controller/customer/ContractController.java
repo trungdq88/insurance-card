@@ -34,23 +34,17 @@ public class ContractController extends BasicController {
     /* Handle canncel contract */
     public ResponseObject postCancelContract(R r) {
         CustomerBusniess customerBusiness = new CustomerBusniess();
-        String result = "";
+        String result = "Yêu Cầu Hủy Thất Bại";
         String contractcode = r.equest.getParameter("contractcode");
         String reasoncancel = r.equest.getParameter("txtReason");
-        String anotherReason = r.equest.getParameter("txtAnotherReason");
         if (reasoncancel != null && reasoncancel != "") {
             if (customerBusiness.CancelContract(contractcode, reasoncancel, 1) == true) {
                 result = "Yêu Cầu Hủy Hợp Đồng Thành Công ";
-            } else result = "Yêu Cầu Hủy Thất Bại";
-            r.equest.setAttribute("result", result);
-        } else if (anotherReason != null && anotherReason != "") {
-            if (customerBusiness.CancelContract(contractcode, anotherReason , 2) == true) {
-                result = "Yêu Cầu Hủy Hợp Đồng Thành Công ";
-            } else result = "Yêu Cầu Hủy Thất Bại";
-            r.equest.setAttribute("result", result);
-        }
+            }
 
-        return new JspPage("customer/contract-detail.jsp");
+        }
+        r.equest.setAttribute("result", result);
+        return new JspPage("customer/message.jsp");
     }
 
     public ResponseObject getNewContract(R r) {

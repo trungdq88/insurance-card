@@ -33,7 +33,7 @@ public class CustomerDao extends IncrementDao<CustomerEntity, String> {
                 "FROM CustomerEntity AS CU, ContractEntity AS CO, CardEntity AS CA " +
                 "WHERE CU.customerCode = CO.customerCode " +
                 "AND CO.contractCode = CA.contractCode";*/
-        String hql = "FROM CustomerEntity";
+        String hql = "SELECT c FROM CustomerEntity c ORDER BY c.customerCode DESC";
         Query query = entity.createQuery(hql);
         return query.getResultList();
     }
