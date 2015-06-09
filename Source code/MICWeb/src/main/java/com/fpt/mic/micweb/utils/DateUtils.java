@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -27,5 +28,14 @@ public class DateUtils {
         System.out.println(timeStamp.toString());
 
         return timeStamp;
+    }
+    public static Timestamp addOneYear (Timestamp timestamp) {
+        Date dt = new Date(timestamp.getTime());
+        Calendar c = Calendar.getInstance();
+        c.setTime(dt);
+        c.add(Calendar.YEAR, 1);
+        dt = c.getTime();
+        timestamp = new Timestamp(dt.getTime());
+        return timestamp;
     }
 }
