@@ -27,16 +27,16 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <img src="${pageContext.request.contextPath}/img/logoCompany.png" style="width: 100px;height: 80px; background-color: white !important;">
+            <img src="${pageContext.request.contextPath}/img/logoCompany.png" style="height: 80px;">
         </div>
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="top-navbar-1">
             <ul class="nav navbar-nav navbar-right">
                 <li>
-                    <table>
+                    <table id="login-box">
                         <tr>
                             <td class="text-left" style="padding-left: 16px">
-                                Email Hoặc tên Đăng Nhập
+                                Mã khách hàng/email
                             </td>
                             <td class="text-left" style="padding-left: 16px">
                                 Mật Khẩu
@@ -45,22 +45,22 @@
                         <tr>
                             <td class="col-md-5">
                                 <input type="text" class="form-control"
-                                       placeholder="Tên Đăng Nhập">
+                                       placeholder="">
                             </td>
                             <td class="col-md-5 ">
                                 <input type="password" class="form-control">
                             </td>
                             <td>
-                                <a href="/customer" class="btn btn-primary">Sign In</a>
+                                <a href="/customer" class="btn btn-success">Đăng nhập</a>
                             </td>
                         </tr>
                         <tr>
                             <td class="text-left" style="padding-left: 16px">
                                 <input type="checkbox">
-                                Duy Trì Đăng Nhập
+                                Duy trì đăng nhập
                             </td>
-                            <td class="text-left" style="padding-left: 16px">
-                                <a href="#">Quên Mật Khẩu?</a>
+                            <td class="text-left" style="padding-left: 16px;">
+                                <a href="#" style="color: white">Quên Mật Khẩu?</a>
                             </td>
                         </tr>
                     </table>
@@ -77,74 +77,31 @@
     <div class="container">
         <div class="row">
             <div class="col-md-5">
-                <h1>Carousel</h1>
-
-                <div id="carousel-example-captions" class="carousel slide" data-ride="carousel">
-                    <%--<ol class="carousel-indicators">--%>
-                    <%--<li data-target="#carousel-example-captions" data-slide-to="0" class=""></li>--%>
-                    <%--<li data-target="#carousel-example-captions" data-slide-to="1" class="active"></li>--%>
-                    <%--<li data-target="#carousel-example-captions" data-slide-to="2" class=""></li>--%>
-                    <%--</ol>--%>
-                    <div class="carousel-inner" role="listbox">
-                        <%--<div class="item active">--%>
-                        <%--<img alt="900x500"--%>
-                        <%--src="http://tagbond.net/wp-content/uploads/2015/04/NFC-Logo-Image.jpg"--%>
-                        <%--data-holder-rendered="true">--%>
-
-                        <%--<div class="carousel-caption">--%>
-                        <%--<h3 id="first-slide-label">First slide label<a class="anchorjs-link"--%>
-                        <%--href="#first-slide-label"><span--%>
-                        <%--class="anchorjs-icon"></span></a></h3>--%>
-
-                        <%--</div>--%>
-                        <%--</div>--%>
-                        <div class="item active">
-                            <img style="width: 900px; height: 400px"
-                            <%--src="http://athietkewebsite.com/wp-content/uploads/2014/03/thiet-ke-website-cac-cong-thanh-toan-online.jpg"--%>
-                                 src="http://www.affairscloud.com/wp-content/uploads/2014/12/Insurance-32.jpg"
-                                 data-holder-rendered="true">
-
-                            <%--<div class="carousel-caption">--%>
-                            <%--<h3 id="second-slide-label">Second slide label<a class="anchorjs-link"--%>
-                            <%--href="#second-slide-label"><span--%>
-                            <%--class="anchorjs-icon"></span></a></h3>--%>
-
-
-                            <%--</div>--%>
-                        </div>
-                        <%--<div class="item">--%>
-                        <%--<img alt="900x500"--%>
-                        <%--src="http://lqop.com/wp-content/uploads/2014/07/fastservice.png"--%>
-                        <%--data-holder-rendered="true">--%>
-
-                        <%--<div class="carousel-caption">--%>
-                        <%--<h3 id="third-slide-label">Third slide label<a class="anchorjs-link"--%>
-                        <%--href="#third-slide-label"><span--%>
-                        <%--class="anchorjs-icon"></span></a></h3>--%>
-
-
-                        <%--</div>--%>
-                        <%--</div>--%>
-
-                        <%--<a class="left carousel-control" href="#carousel-example-captions" role="button"--%>
-                        <%--data-slide="prev">--%>
-                        <%--<i class="fa fa-arrow-left" aria-hidden="true"></i>--%>
-                        <%--<span class="sr-only">Previous</span>--%>
-                        <%--</a>--%>
-                        <%--<a class="right carousel-control" href="#carousel-example-captions" role="button"--%>
-                        <%--data-slide="next">--%>
-                        <%--<i class="fa fa-arrow-right" aria-hidden="true"></i>--%>
-                        <%--<span class="sr-only">Next</span>--%>
-                        <%--</a>--%>
-                    </div>
+                <h1>Bảo hiểm xe máy</h1>
+                <div id="tab1" class="tab-details" style="display: block;">
+                    <img src="${pageContext.request.contextPath}/img/home-img.png"
+                         style="width: 100%; margin: 15px 0; border-radius: 20px;" />
+                    <p style="text-align: justify;">
+                        Chiếc xe máy là người bạn đồng hành không thể thiếu trong mỗi gia đình người Việt.
+                        &nbsp;Tham gia <span style="color:#ff0000;"><strong>Gói bảo hiểm xe máy toàn diện
+                    </strong></span> của MIC (bao gồm bảo hiểm cháy nổ xe, bảo hiểm trách nhiệm dân sự
+                        chủ xe và bảo hiểm tai nạn người ngồi trên xe) với một khoản chi phí nhỏ
+                        <span style="color:#ff0000;"><strong>chỉ khoảng 200.000 đồng</strong></span>, bạn
+                        đã có thể bảo vệ toàn diện cho chiếc xe và người thân khi tham gia giao thông.</p>
+                    <p>
+                        &nbsp;</p>
+                    <p class="text-center">
+                    <a href="#" class="btn btn-success btn-lg">
+                        <i class="fa fa-arrow-right"></i>
+                        Xem thông tin các gói bảo hiểm
+                    </a>
+                    </p>
                 </div>
-
             </div>
             <div class="col-md-7">
                 <div class="form-top-left col-md-12">
-                    <h3><b>Đăng ký ngay</b></h3>
-
-                    <label><b>Quý khách vui lòng điền những thông tin sau</b></label>
+                    <h3>Đăng ký ngay</h3>
+                    <p>Tạo hợp đồng mới và thanh toán online</p>
                 </div>
                 <div class="form-top-right">
                     <i class="fa fa-pencil"></i>
@@ -152,58 +109,62 @@
                 <form role="form" action="${pageContext.request.contextPath}/public/register" method="post">
                     <div class="form-group">
                         <div class="form-group col-md-6">
-                            <label><b>Họ tên*</b></label>
+                            <label>Họ tên *</label>
                             <input type="text" name="txtName"
                                    class="form-control" id="form-full-name">
                         </div>
                         <div class="form-group col-md-6">
-                            <label><b>Email*</b></label>
+                            <label>Email *</label>
                             <input type="text" name="txtEmail"
                                    class="form-control" id="form-email">
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="form-group col-md-6">
-                            <label><b>Số điện thoại*</b></label>
+                            <label>Số điện thoại *</label>
                             <input type="text" name="txtPhone"
                                    class="form-control" id="form-phone">
                         </div>
                         <div class="form-group col-md-6">
-                            <label><b>Số CMND/Hộ chiếu</b></label>
+                            <label>Số CMND/Hộ chiếu</label>
                             <input type="text" name="txtPersonalId"
                                    class="form-control" id="form-cmnd">
                         </div>
                     </div>
                     <div class="form-group col-md-12">
-                        <label><b>Địa chỉ*</b></label>
+                        <label>Địa chỉ *</label>
                         <input type="text" name="txtAddress"
                                class="form-control" id="form-address">
                     </div>
-                    <div class="form-group  col-md-12">
-                        <label><b>Ngày bắt đầu*</b></label>
-                        <input type="date" name="txtStartDate"
-                               class="form-control" id="form-startDate">
-                    </div>
-                    <div class="form-group  col-md-12">
-                        <label><b>Hình Thức Bảo Hiểm*</b></label>
-                        <select class="form-control" name="ddlContractType">
-                            <option value="1">Xe trên 50cc có tham gia BH tai nạn người trên xe</option>
-                            <option value="2">Xe trên 50cc không tham gia BH tai nạn người trên xe</option>
-                            <option value="3">Xe từ 50cc trở xuống có tham gia BH tai nạn người trên xe</option>
-                            <option value="4">Xe từ 50cc trở xuống không tham gia BH tai nạn người trên xe</option>
-                            <option value="5">Xe mô tô 3 bánh, xe gắn máy và các loại xe cơ giới tương tự</option>
-                        </select>
+                    <div class="form-group">
+                        <div class="form-group  col-md-5">
+                            <label>Ngày bắt đầu *</label>
+                            <input type="date" name="txtStartDate"
+                                   class="form-control" id="form-startDate">
+                        </div>
+                        <div class="form-group  col-md-7">
+                            <label>Hình Thức Bảo Hiểm *</label>
+                            <select class="form-control" name="ddlContractType">
+                                <option value="1">Xe trên 50cc có tham gia BH tai nạn người trên xe</option>
+                                <option value="2">Xe trên 50cc không tham gia BH tai nạn người trên xe</option>
+                                <option value="3">Xe từ 50cc trở xuống có tham gia BH tai nạn người trên xe</option>
+                                <option value="4">Xe từ 50cc trở xuống không tham gia BH tai nạn người trên xe</option>
+                                <option value="5">Xe mô tô 3 bánh, xe gắn máy và các loại xe cơ giới tương tự</option>
+                            </select>
+                        </div>
                     </div>
                     <div class="form-group  col-md-12">
                         <p class="form-control-static">
-                            <label><b>Thời hạn: 01 năm kể từ khi cấp GCNBH và/hoặc sau thời hạn thanh toán phí</b></label>
+                            <label>Thời hạn:</label>
+                            01 năm kể từ khi cấp GCNBH và/hoặc sau thời hạn thanh toán phí
                         </p>
                         <p class="form-control-static">
-                            <label><b>Phí bảo hiểm: 200.000 VND</b></label>
+                            <label>Phí bảo hiểm:</label>
+                            <b style="color: red">200.000 VND</b>
                             <input type="hidden" name="txtFee" value="200000">
                         </p>
                         <input type="hidden" name="action" value="register"/>
-                        <input type="submit" class="btn" value="Tiếp theo"/>
+                        <input type="submit" class="btn btn-primary btn-lg" value="Tiếp theo"/>
                     </div>
 
                 </form>
