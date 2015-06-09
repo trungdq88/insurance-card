@@ -113,7 +113,7 @@ public class TestDaoController extends BasicController {
 
     public ResponseObject getContract(R r) {
         ContractDao contractDao = new ContractDao();
-        ContractEntity contractEntity = contractDao.read("HD0ES6");
+        ContractEntity contractEntity = contractDao.read("HD0ES7");
         r.equest.setAttribute("contract", contractEntity);
         return new JsonString(contractEntity);
     }
