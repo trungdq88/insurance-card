@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="_shared/header.jsp"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <div id="wrapper">
 
@@ -9,7 +10,6 @@
             <div class="col-lg-12">
                 <h1 class="page-header">Thêm khách hàng mới</h1>
             </div>
-            <!-- /.col-lg-12 -->
         </div>
         <div class="row">
             <div class="col-lg-12">
@@ -19,67 +19,67 @@
                 </div>
                 <form class="form-horizontal">
                     <fieldset>
-                        <!-- Text input-->
+                        <!-- Customer code -->
                         <div class="form-group">
                             <label class="col-sm-4 control-label">Mã khách hàng</label>
 
                             <div class="col-sm-6">
                                 <div class="text-value text-primary">
-                                    <a href="detail-customer.html"><b>HDTRU839</b></a>
+                                    <a href="detail-customer.html"><b></b></a>
                                 </div>
                             </div>
                         </div>
-                        <!-- Text input-->
+                        <!-- Customer name -->
                         <div class="form-group">
                             <label class="col-sm-4 control-label">Tên khách hàng</label>
 
                             <div class="col-sm-6">
                                 <div class="text-value">
-                                    Đinh Quang Trung
+
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Text input-->
+                        <!-- Address -->
                         <div class="form-group">
                             <label class="col-sm-4 control-label">Địa chỉ</label>
 
                             <div class="col-sm-6">
                                 <div class="text-value">
-                                    Phường Tân Chánh Hiệp, Q.12, TPHCM
+
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Text input-->
+                        <!-- Email -->
                         <div class="form-group">
                             <label class="col-sm-4 control-label">Email</label>
 
                             <div class="col-sm-6">
                                 <div class="text-value">
-                                    trungdq88@gmail.com
+
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Text input-->
+                        <!-- Phone -->
                         <div class="form-group">
                             <label class="col-sm-4 control-label">Số điện thoại</label>
 
                             <div class="col-sm-6">
                                 <div class="text-value">
-                                    0987.654.321
+
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Text input-->
+                        <!-- Personal ID -->
                         <div class="form-group">
                             <label class="col-sm-4 control-label">Số CMND / Hộ chiếu</label>
 
                             <div class="col-sm-6">
                                 <div class="text-value">
-                                    191919911
+
                                 </div>
                             </div>
                         </div>
