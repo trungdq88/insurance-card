@@ -15,7 +15,7 @@
 
         <!-- Default development database configs -->
         <db.username>root</db.username>
-        <db.password>031092</db.password>
+        <db.password></db.password>
         <db.connectionURL>jdbc:mysql://localhost:3306</db.connectionURL>
     </properties>
 
