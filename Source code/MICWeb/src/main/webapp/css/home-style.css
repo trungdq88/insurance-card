@@ -121,8 +121,13 @@ img {
     transition: all .3s;
 }
 
+#login-box {
+    font-size: 13px;
+}
+
 .navbar.navbar-no-bg {
-    background: #133783;
+    background: #4A7CE7;
+    border-radius: 0;
 }
 
 ul.navbar-nav {
@@ -272,8 +277,7 @@ ul.navbar-nav {
     }
 
     .navbar.navbar-no-bg {
-        background: #333;
-        background: rgba(51, 51, 51, 0.9);
+        background: #4A7CE7;
     }
 
     .navbar-brand {

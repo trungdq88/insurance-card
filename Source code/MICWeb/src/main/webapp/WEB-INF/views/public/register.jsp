@@ -51,19 +51,15 @@
     <!--   MIC Branding   -->
     <a href="home.html">
         <div class="logo-container">
-            <div class="logo">
-                <img src="${pageContext.request.contextPath}/img/unnamed.png">
-            </div>
-            <div class="brand">
-                MIC
-            </div>
+            <img src="${pageContext.request.contextPath}/img/logoCompany.png"
+                    style="height: 70px;">
         </div>
     </a>
 
     <!--   Big container   -->
     <div class="container">
         <div class="row">
-            <div class="col-sm-8 col-sm-offset-2">
+            <div>
 
                 <!--      Wizard container        -->
                 <div class="wizard-container">
