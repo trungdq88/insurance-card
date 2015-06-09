@@ -1,26 +1,6 @@
 <%@ page import="com.fpt.mic.micweb.model.entity.CustomerEntity" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<!doctype html>
-<html lang="en">
-
-<head>
-
-    <meta charset="utf-8"/>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-    <title>MIC - Bảo hiểm trực tuyến</title>
-
-    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport'/>
-    <meta name="viewport" content="width=device-width"/>
-
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/gsdk-base.css"/>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/footer-distributed-with-address-and-phones.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/register-style.css">
-
-    <link href="${pageContext.request.contextPath}/css/font-awesome.min.css" rel="stylesheet">
-
-</head>
-
+<%@ include file="_shared/header.jsp" %>
 <body>
 <div class="image-container set-full-height"
      style="background-image: url('${pageContext.request.contextPath}/img/wizard-city.jpg')">
@@ -464,98 +444,6 @@
         </div>
         <!-- row -->
     </div>
-    <!--  big container -->
-    <footer class="footer-distributed">
-        <div class="footer-left">
-            <h3>Company<span>logo</span></h3>
-
-            <p class="footer-links">
-                <a href="home.html">Trang chủ</a>
-                ·
-                <a href="#">Liên hệ</a>
-                ·
-                <a href="#">Hỗ trợ</a>
-            </p>
-
-            <p class="footer-company-name">MIC Group 2 &copy; 2015</p>
-        </div>
-
-        <div class="footer-center">
-            <div>
-                <i class="fa fa-map-marker"></i>
-
-                <p>
-                    <span>Tòa nhà Innovation, Công viên phần mềm Quang Trung</span>
-                    P. Tân Chánh Hiệp, Quận 12, TP. Hồ Chí Minh.
-                </p>
-            </div>
-            <div>
-                <i class="fa fa-phone"></i>
-
-                <p>+84 37337009</p>
-            </div>
-            <div>
-                <i class="fa fa-envelope"></i>
-
-                <p><a href="mailto:hydrangea8604@gmail.com">hydrangea8604@gmail.com</a></p>
-            </div>
-        </div>
-        <div class="footer-right">
-            <p class="footer-company-about">
-                <span>Sơ lược về đề tài</span>
-            </p>
-
-            <p class="footer-company-name">Bản quyền thuộc về Group 2</p>
-        </div>
-    </footer>
-
-    <!--<div class="fixed-plugin">
-        <div class="dropdown open">
-            <a href="#" data-toggle="dropdown">
-                <i class="fa fa-cog fa-2x"> </i>
-            </a>
-            <ul class="dropdown-menu">
-                <li>
-                    <a href="http://ct-freebies.herokuapp.com/wizard-demo-register">
-                        <img src="images/thumb_register.png">
-                        Register user flow
-                    </a>
-                </li>
-                <li>
-                    <a href="http://ct-freebies.herokuapp.com/wizard-demo-list-boat">
-                        <img src="images/thumb_list_boat.png">
-                        List your boat
-                    </a>
-                </li>
-                <li class="active">
-                    <a href="http://ct-freebies.herokuapp.com/wizard-demo-list-place">
-                        <img src="images/thumb_list_place.png">
-                        List your place
-                    </a>
-                </li>
-                <li>
-                    <a href="http://ct-freebies.herokuapp.com/wizard-components" target="_blank"
-                       class="btn btn-default btn-fill">How to use</a>
-                </li>
-                <li>
-                    <a href="http://www.creative-tim.com/product/wizard" target="_blank" class="btn btn-info btn-fill">Download,
-                        it's free!</a>
-                </li>
-                <li><a></a></li>
-            </ul>
-        </div>
-    </div>-->
-</div>
-
-</body>
-
-<script src="${pageContext.request.contextPath}/js/jquery.min.js" type="text/javascript"></script>
-<script src="${pageContext.request.contextPath}/js/bootstrap.min.js" type="text/javascript"></script>
-
-<!--   plugins 	 -->
-<script src="${pageContext.request.contextPath}/js/jquery.bootstrap.wizard.js" type="text/javascript"></script>
-<script src="${pageContext.request.contextPath}/js/wizard.js"></script>
-
 <script language="javascript">
     function update() {
         $('#txtName1').text($('#txtName').val());
@@ -581,4 +469,4 @@
 
     }
 </script>
-</html>
+<%@ include file="_shared/footer.jsp" %>
