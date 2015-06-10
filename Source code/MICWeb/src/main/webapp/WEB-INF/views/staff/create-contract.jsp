@@ -21,15 +21,14 @@
 
                         <!-- Customer input-->
                         <div class="form-group">
-                            <label class="col-sm-4 control-label" for="customerCode">Khách hàng</label>
+                            <label class="col-sm-4 control-label" for="customerCode">Khách hàng *</label>
 
                             <div class="col-sm-2">
-                                <input id="customerCode" name="txtCustomerCode" type="text" class="form-control input-md">
+                                <input id="customerCode" name="txtCustomerCode" type="text"
+                                       class="form-control input-md">
                             </div>
 
-                            <div class="col-sm-2"
-                                 data-toggle="modal"
-                                 data-target="#select-customer-modal">
+                            <div class="col-sm-2" data-toggle="modal" data-target="#select-customer-modal">
                                 <a href="#" class="btn btn-primary btn-block" data-toggle="tooltip"
                                    data-placement="bottom"
                                    title="Chọn khách hàng có sẵn trong hệ thống">
@@ -40,49 +39,50 @@
                         </div>
 
                         <!-- Load from database using JavaScript & AJAX -->
-                        <!-- Customer name -->
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label" for="name">Họ tên</label>
+                        <div class="collapse" id="customerInfo">
+                            <!-- Customer name -->
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">Họ tên</label>
 
-                            <div class="col-sm-4">
-                                <input id="name" name="txtName" type="text" class="form-control input-md" disabled>
+                                <div class="col-sm-4">
+
+                                </div>
                             </div>
-                        </div>
 
-                        <!-- Address -->
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label" for="address">Địa chỉ</label>
+                            <!-- Address -->
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">Địa chỉ</label>
 
-                            <div class="col-sm-5">
-                                <input id="address" name="txtAddress" type="text" class="form-control input-md" disabled>
+                                <div class="col-sm-5">
+
+                                </div>
                             </div>
-                        </div>
 
-                        <!-- Email -->
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label" for="email">Email</label>
+                            <!-- Email -->
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">Email</label>
 
-                            <div class="col-sm-4">
-                                <input id="email" name="txtEmail" type="text" class="form-control input-md" disabled>
+                                <div class="col-sm-4">
+
+                                </div>
                             </div>
-                        </div>
 
-                        <!-- Phone -->
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label" for="phone">Số điện thoại</label>
+                            <!-- Phone -->
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">Số điện thoại</label>
 
-                            <div class="col-sm-3">
-                                <input id="phone" name="txtPhone" type="text" class="form-control input-md" disabled>
+                                <div class="col-sm-3">
+
+                                </div>
                             </div>
-                        </div>
 
-                        <!-- Personal ID -->
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label" for="personalid">Số CMND / Hộ chiếu</label>
+                            <!-- Personal ID -->
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">Số CMND / Hộ chiếu</label>
 
-                            <div class="col-sm-3">
-                                <input id="personalid" name="txtPersonalID" type="text" class="form-control input-md"
-                                       disabled>
+                                <div class="col-sm-3">
+
+                                </div>
                             </div>
                         </div>
                     </fieldset>
@@ -94,7 +94,7 @@
 
                         <!-- Contract type -->
                         <div class="form-group">
-                            <label class="col-sm-4 control-label">Loại hình bảo hiểm</label>
+                            <label class="col-sm-4 control-label">Loại hình bảo hiểm *</label>
 
                             <div class="col-sm-8">
                                 <!-- Load from database, add later -->
@@ -112,20 +112,21 @@
 
                         <!-- Start date -->
                         <div class="form-group">
-                            <label class="col-sm-4 control-label" for="startdate">Thời điểm có hiệu lực *</label>
+                            <label class="col-sm-4 control-label" for="startDate">Thời điểm có hiệu lực *</label>
 
                             <div class="col-sm-3">
-                                <input id="startdate" name="txtStartDate" type="date" class="form-control input-md"/>
+                                <input id="startDate" name="txtStartDate" type="date" class="form-control input-md"/>
                             </div>
                         </div>
 
                         <!-- Expired date -->
                         <div class="form-group">
-                            <label class="col-sm-4 control-label" for="enddate">Thời điểm hết hiệu lực *</label>
+                            <label class="col-sm-4 control-label" for="expiredDate">Thời điểm hết hiệu lực *</label>
 
                             <div class="col-sm-3">
                                 <div class="text-value">
-                                    <input id="enddate" name="txtExpiredDate" type="date" class="form-control input-md"/>
+                                    <input id="expiredDate" name="txtExpiredDate" type="date"
+                                           class="form-control input-md"/>
                                 </div>
                             </div>
                         </div>
@@ -229,16 +230,8 @@
                             <label class="col-sm-3 control-label" for="seatCapacity">Số người được chở *</label>
 
                             <div class="col-sm-2">
-                                <input id="seatCapacity" name="txtSeatCapacity" type="text" class="form-control input-md">
-                            </div>
-                        </div>
-
-                        <!-- Image of vehicle registration certificate -->
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label" for="certImage">Ảnh chụp cà-vẹt xe</label>
-
-                            <div class="col-sm-6">
-                                <input id="certImage" name="txtCertImage" type="file" class="form-control input-md">
+                                <input id="seatCapacity" name="txtSeatCapacity" type="text"
+                                       class="form-control input-md">
                             </div>
                         </div>
                     </fieldset>
@@ -265,16 +258,10 @@
                                 <input id="amount" name="txtAmount" type="text" class="form-control input-md">
                             </div>
                         </div>
-
-                        <!-- Receiver -->
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label" for="receiver">Người nhận</label>
-
-                            <div class="col-sm-4">
-                                <input id="receiver" name="txtReceiver" type="text" class="form-control input-md">
-                            </div>
-                        </div>
                     </fieldset>
+                    <%--/Payment information--%>
+                    <br/>
+
                     <div class="text-center">
                         <input type="hidden" name="action" value="create"/>
                         <button type="submit" class="btn btn-success">
@@ -321,45 +308,15 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>DHTRU291</td>
-                            <td>Đinh Quang Trung</td>
-                            <td>
-                                <a href="#" class="btn btn-primary btn-xs btn-block" data-dismiss="modal">Chọn</a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>DHTRU291</td>
-                            <td>Đinh Quang Trung</td>
-                            <td>
-                                <a href="#" class="btn btn-primary btn-xs btn-block" data-dismiss="modal">Chọn</a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>DHTRU291</td>
-                            <td>Đinh Quang Trung</td>
-                            <td>
-                                <a href="#" class="btn btn-primary btn-xs btn-block" data-dismiss="modal">Chọn</a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>DHTRU291</td>
-                            <td>Đinh Quang Trung</td>
-                            <td>
-                                <a href="#" class="btn btn-primary btn-xs btn-block" data-dismiss="modal">Chọn</a>
-                            </td>
-                        </tr>
                         </tbody>
                     </table>
                 </div>
                 <!-- /.table-responsive -->
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal"
+                        data-toggle="collapse" data-target="#customerInfo">Đóng
+                </button>
             </div>
         </div>
         <!-- /.modal-content -->
@@ -367,5 +324,16 @@
     <!-- /.modal-dialog -->
 </div>
 <!-- /.modal -->
+
+<script>
+    $(document).ready(function () {
+        $('#startDate').val(getCurrentDate());
+        document.getElementById("startDate").min = getCurrentDateInLastWeek();
+        $('#expiredDate').val(getCurrentDateInNextYear());
+        document.getElementById("expiredDate").min = getCurrentDate();
+        document.getElementById("expiredDate").max = getCurrentDateInNextYear();
+        $('#paidDate').val(getCurrentDate());
+    });
+</script>
 
 <%@ include file="_shared/footer.jsp" %>

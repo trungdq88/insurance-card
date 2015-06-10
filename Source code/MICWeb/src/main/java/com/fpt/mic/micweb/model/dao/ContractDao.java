@@ -19,7 +19,7 @@ import java.util.List;
 public class ContractDao extends IncrementDao<ContractEntity, String> {
     public List<ContractEntity> getListContract() {
         EntityManager manager = factory.createEntityManager();
-        Query query = manager.createQuery("SELECT c FROM ContractEntity c");
+        Query query = manager.createQuery("SELECT co FROM ContractEntity co");
         return query.getResultList();
     }
 
@@ -28,29 +28,29 @@ public class ContractDao extends IncrementDao<ContractEntity, String> {
      * @return list of ContractEntity.
      *
      * @author KhaNC
-     * @version 1.0
+     * @version 1.1
      */
     public List<ContractEntity> getAllContract() {
         EntityManager entity = factory.createEntityManager();
-        String hql = "SELECT c FROM ContractEntity c ORDER BY c.startDate DESC";
+        String hql = "SELECT co FROM ContractEntity co ORDER BY co.startDate DESC";
         Query query = entity.createQuery(hql);
         return query.getResultList();
     }
 
     /**
      * This is the method which get all contract belongs to the customer.
-     * @param custCode This is stand for customer's code.
+     * @param customerCode
      * @return list of ContractEntity.
      *
      * @author KhaNC
-     * @version 1.0
+     * @version 1.1
      */
-    public List<ContractEntity> getContractByCustomerCode(String custCode) {
+    public List<ContractEntity> getContractByCustomerCode(String customerCode) {
         EntityManager entity = factory.createEntityManager();
-        String hql = "FROM ContractEntity AS CO " +
-                "WHERE CO.customerCode = :code";
+        String hql = "SELECT co FROM ContractEntity AS co " +
+                "WHERE co.customerCode = :code";
         Query query = entity.createQuery(hql);
-        query.setParameter("code", custCode);
+        query.setParameter("code", customerCode);
         return query.getResultList();
     }
 

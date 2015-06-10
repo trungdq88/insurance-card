@@ -37,12 +37,12 @@ public class CustomerController extends BasicController {
         CustomerEntity customerDetail = staffBus.getCustomerDetail(customerCode);
         r.equest.setAttribute("CUSTOMER", customerDetail);
 
-        // Get customer's contract
+        // Get customer's contracts
         List<ContractEntity> listCustomerContract = staffBus.getContractByCustomerCode(customerDetail.getCustomerCode());
-        r.equest.setAttribute("CONTRACT", listCustomerContract);
+        r.equest.setAttribute("CONTRACTS", listCustomerContract);
 
         // Dispatch to JSP page
-        return new JspPage("staff/detail-customer.jsp");
+        return new JspPage("staff/customer-detail.jsp");
     }
 
     public ResponseObject getCreate(R r) {
@@ -67,7 +67,7 @@ public class CustomerController extends BasicController {
             return new JspPage("staff/create-customer-success.jsp");
         } else {
             r.equest.setAttribute("error", "Something wrong");
-            return new JspPage("error/msg.jsp");
+            return new JspPage("staff/message.jsp");
         }
     }
 }
