@@ -7,7 +7,7 @@
         <div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header text-info">Thông Tin Cá Nhân
+                    <h1 class="page-header">Thông Tin Cá Nhân
                         <span class="pull-right">
                             <button type="submit" class="btn btn-primary" id="btn_Modify">Chỉnh Sửa Thông Tin</button>
                             <button type="submit" class="btn btn-primary hide" id="btn_Save">Lưu Thay Đổi</button>
