@@ -75,10 +75,12 @@ public class ContractDao extends IncrementDao<ContractEntity, String> {
                         "JOIN co.micCustomerByCustomerCode cu " +
                         "WHERE co.customerCode = cu.customerCode " +
                         "AND (co.contractCode LIKE :keyword OR cu.name LIKE :keyword) " +
-                        "ORDER BY FIELD(co.status, 'No card')",
+                        "ORDER BY FIELD(co.status, :fieldOrder) DESC, co.contractCode DESC",
                 ContractSearchResult.class
         );
         query.setParameter("keyword", "%" + keyword + "%");
+        query.setParameter("fieldOrder",
+                        Constrants.ContractStatus.NO_CARD);
         List<ContractSearchResult> resultList = query.getResultList();
         entityManager.close();
         return resultList;
