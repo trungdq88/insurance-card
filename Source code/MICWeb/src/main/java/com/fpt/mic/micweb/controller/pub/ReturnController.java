@@ -4,7 +4,6 @@ import com.fpt.mic.micweb.framework.BasicController;
 import com.fpt.mic.micweb.framework.R;
 import com.fpt.mic.micweb.framework.responses.JspPage;
 import com.fpt.mic.micweb.framework.responses.ResponseObject;
-import com.fpt.mic.micweb.model.business.CustomerBusniess;
 import com.fpt.mic.micweb.model.business.RegisterBusiness;
 import com.fpt.mic.micweb.model.dao.ContractDao;
 import com.fpt.mic.micweb.model.dto.PayPal;
@@ -26,6 +25,9 @@ import java.util.*;
 public class ReturnController  extends BasicController {
 
     public ResponseObject getReturn(R r){
+        return postReturn(r);
+    }
+    public ResponseObject postReturn(R r) {
         HttpSession session = r.equest.getSession(true);
 
         if (isSet(r.equest.getParameter("PayerID")))
@@ -104,7 +106,7 @@ public class ReturnController  extends BasicController {
                 DateUtils date = new DateUtils();
 
                 // set start date
-               // Timestamp startDate = DateUtils.stringToTime(checkoutDetails.get("txtStartDate"));
+                // Timestamp startDate = DateUtils.stringToTime(checkoutDetails.get("txtStartDate"));
                 Timestamp currentDate = new Timestamp(new Date().getTime());
                 contractEntity.setStartDate(currentDate);
                 // set expired date = start_date + 1 year
@@ -142,7 +144,6 @@ public class ReturnController  extends BasicController {
 
         return new JspPage(page);
     }
-
     public ResponseObject getCancel(R r){
         return new JspPage("public/cancel.jsp");
     }

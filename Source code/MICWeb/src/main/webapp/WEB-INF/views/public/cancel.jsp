@@ -1,42 +1,50 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<!DOCTYPE html>
-<html>
-<head>
-	<meta charset="utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>MIC - Bảo hiểm trực tuyến</title>
-	<!--Including Bootstrap style files-->
-	<link href="css/bootstrap.min.css" rel="stylesheet">
-	<link href="css/bootstrap-responsive.min.css" rel="stylesheet">
-	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-	<script src="https://code.jquery.com/jquery.js"></script>
-</head>
+<%@ include file="_shared/header.jsp" %>
 <body>
-<div class="container-fluid">
-	<div class="well">
-
-		<h2 class="text-center">MIC - Bảo hiểm trực tuyến</h2>
-	</div>
-	<div class="row-fluid">
-
-	<span class="span4">
-	</span>
-	<span class="span5">
-		<div class="hero-unit">
-			You cancelled the order.
+<div class="image-container set-full-height"
+	 style="background-image: url('${pageContext.request.contextPath}/img/wizard-city.jpg')">
+	<!--   MIC Branding   -->
+	<a href="home">
+		<div class="logo-container">
+			<img src="${pageContext.request.contextPath}/img/logoCompany.png"
+				 style="height: 70px;">
 		</div>
-	</span>
-	<span class="span3">
-	</span>
+	</a>
+	<div class="container">
+		<div class="row">
+			<div style="max-width: 800px;margin: 0 auto;">
 
-	</div> <!-- Row-Fluid ends here -->
-</div>  <!--Container-Fluid ends here -->
+				<!--      Wizard container        -->
+
+				<div class="wizard-container">
+					<div class="card wizard-card ct-wizard-azzure" id="wizard">
+
+						<!-- You can switch "ct-wizard-azzure"  with one of the next bright colors: "ct-wizard-blue",
+                        "ct-wizard-green", "ct-wizard-orange", "ct-wizard-red" -->
+
+						<div class="wizard-header">
+							<h3>
+								<p class="lead">Bạn đã hủy thanh toán.</p>
+							</h3>
+						</div>
+
+
+
+					</div>
+				</div>
+				<!-- wizard container -->
+			</div>
+		</div>
+		<!-- row -->
+	</div>
+	<!--  big container -->
+</div>
+</body>
 <% HttpSession nsession = request.getSession(false);
 	if(nsession!=null)
 		session.invalidate();
 %>
-<!-- Include all compiled plugins (below), or include individual files as needed -->
-<script src="js/bootstrap.min.js"></script>
-</body>
+<%@ include file="_shared/footer.jsp" %>
 </html>
 
