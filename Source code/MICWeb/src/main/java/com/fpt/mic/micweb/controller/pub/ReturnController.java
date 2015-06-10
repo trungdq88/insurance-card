@@ -92,12 +92,13 @@ public class ReturnController  extends BasicController {
             HashMap results = pp.confirmPayment (checkoutDetails,r.equest.getServerName() );
             r.equest.setAttribute("payment_method","");
             String strAck = results.get("ACK").toString().toUpperCase();
+            // Thanh toan thanh cong, cap nhat payment, cap nhat contract status, ngay het han
             if(strAck !=null && (strAck.equalsIgnoreCase("Success") || strAck.equalsIgnoreCase("SuccessWithWarning"))){
                 result.putAll(results);
                 result.putAll(checkoutDetails);
                 r.equest.setAttribute("ack", strAck);
                 r.equest.setAttribute("result", result);
-                // Thanh toan thanh cong, cap nhat payment, cap nhat contract status, ngay het han
+
                 ContractEntity contractEntity = new ContractEntity();
                 ContractDao contractDao = new ContractDao();
                 PaymentEntity paymentEntity = new PaymentEntity();

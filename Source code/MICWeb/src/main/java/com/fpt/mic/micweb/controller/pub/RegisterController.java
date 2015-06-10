@@ -92,19 +92,19 @@ public class RegisterController extends BasicController {
 
             // Create new checkout request
             CheckoutRequest checkoutRequest = new CheckoutRequest();
-            /*
-            checkoutRequest.setCurrencycodetype(r.equest.getParameter());
-            checkoutRequest.setCurrencycodetype(r.equest.getParameter());
-            checkoutRequest.setCurrencycodetype(r.equest.getParameter());
-            checkoutRequest.setCurrencycodetype(r.equest.getParameter());
-            checkoutRequest.setCurrencycodetype(r.equest.getParameter());
-            checkoutRequest.setCurrencycodetype(r.equest.getParameter());
-            checkoutRequest.setCurrencycodetype(r.equest.getParameter());
-            checkoutRequest.setCurrencycodetype(r.equest.getParameter());
-            checkoutRequest.setCurrencycodetype(r.equest.getParameter());
-            */
+            checkoutRequest.setPaymentrequest_name(r.equest.getParameter("L_PAYMENTREQUEST_0_NAME0"));
+            checkoutRequest.setPaymentrequest_desc(r.equest.getParameter("L_PAYMENTREQUEST_0_DESC0"));
+            checkoutRequest.setPaymentrequest_qty(r.equest.getParameter("L_PAYMENTREQUEST_0_QTY0"));
+            checkoutRequest.setPaymentrequest_itemamt(r.equest.getParameter("PAYMENTREQUEST_0_ITEMAMT"));
+            checkoutRequest.setPaymentrequest_taxamt(r.equest.getParameter("PAYMENTREQUEST_0_TAXAMT"));
+            checkoutRequest.setPaymentrequest_amt(r.equest.getParameter("PAYMENTREQUEST_0_AMT"));
+            checkoutRequest.setCurrencycodetype(r.equest.getParameter("currencyCodeType"));
+            checkoutRequest.setPaymenttype(r.equest.getParameter("paymentType"));
+            checkoutRequest.setPaymentrequest_amt_l(r.equest.getParameter("PAYMENTREQUEST_0_AMT"));
 
-            return null;
+
+
+            return new RedirectTo("/public/checkout?action=checkout&checkout=true&" + checkoutRequest.getQueryString());
         }
 
         r.equest.setAttribute("error", "Something wrong");
