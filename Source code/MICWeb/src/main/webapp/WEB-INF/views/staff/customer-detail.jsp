@@ -196,8 +196,7 @@
                                     <tr>
                                         <td>${counter.count}</td>
                                         <td>
-                                            <a href="${pageContext.request.contextPath}/staff/contract?action=detail
-                                            &code=${contract.contractCode}">
+                                            <a href="${pageContext.request.contextPath}/staff/contract?action=detail&code=${contract.contractCode}">
                                                 ${contract.contractCode}
                                             </a>
                                         </td>
@@ -217,6 +216,14 @@
                         <!-- /.table-responsive -->
                     </fieldset>
                 </form>
+                <br/>
+                <br/>
+                <div class="text-center">
+                    <a href="${pageContext.request.contextPath}/staff/customer" type="button" class="btn btn-success">
+                        <i class="fa fa-arrow-left"></i>
+                        Danh sách khách hàng
+                    </a>
+                </div>
                 <br/>
                 <br/>
             </div>

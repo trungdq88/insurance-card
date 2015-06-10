@@ -346,30 +346,35 @@
                                 <div class="table-responsive">
                                     <table class="table table-striped table-bordered table-hover">
                                         <thead>
-                                        <th>#</th>
-                                        <th>Mã giao dịch</th>
-                                        <th>Thời gian</th>
-                                        <th>Hình thức</th>
-                                        <th>Dịch vụ</th>
-                                        <th>Số tiền</th>
-                                        <th>Người nhận</th>
-                                        <th>Mã PayPal</th>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Mã GD</th>
+                                            <th>Thời gian</th>
+                                            <th>Hình thức</th>
+                                            <th>Dịch vụ</th>
+                                            <th>Số tiền</th>
+                                            <th>Người nhận</th>
+                                            <th>Mã PayPal</th>
+                                        </tr>
                                         </thead>
                                         <tbody>
                                         <c:forEach var="payment" items="${listPayment}" varStatus="counter">
-                                            <td>${counter.count}</td>
-                                            <td>${payment.id}</td>
-                                            <td>
-                                                <fmt:formatDate value="${payment.paidDate}" pattern="dd/MM/yyyy"/>
-                                            </td>
-                                            <td>${payment.paymentMethod}</td>
-                                            <td>${payment.content}</td>
-                                            <td>
-                                                <fmt:formatNumber value="${payment.amount}"
-                                                                  type="currency" maxFractionDigits="0"/>
-                                            </td>
-                                            <td>${payment.receiver}</td>
-                                            <td>${payment.paypalTransId}</td>
+                                            <tr>
+                                                <td>${counter.count}</td>
+                                                <td>${payment.id}</td>
+                                                <td>
+                                                    <fmt:formatDate value="${payment.paidDate}" pattern="dd/MM/yyyy"/>
+                                                </td>
+                                                <td>${payment.paymentMethod}</td>
+                                                <td>${payment.content}</td>
+                                                <td>
+                                                    <fmt:setLocale value="vi_VN"/>
+                                                    <fmt:formatNumber value="${payment.amount}"
+                                                                      type="currency" maxFractionDigits="0"/>
+                                                </td>
+                                                <td>${payment.receiver}</td>
+                                                <td>${payment.paypalTransId}</td>
+                                            </tr>
                                         </c:forEach>
                                         </tbody>
                                     </table>
@@ -445,6 +450,7 @@
 
                             <div class="col-sm-4">
                                 <div class="text-value">
+                                    <fmt:setLocale value="vi_VN"/>
                                     <fmt:formatNumber value="${cont.micContractTypeByContractTypeId.pricePerYear}"
                                                       type="currency" maxFractionDigits="0"/>
                                 </div>
@@ -548,8 +554,7 @@
 
 <script>
     $(document).ready(function () {
-        $('#expiredDate').val(getCurrentDateInNextYear());
-        document.getElementById("expiredDate").min = getCurrentDate();
+        document.getElementById("expiredDate").min = getCurrentDateInNextYear();
         $('#paidDate').val(getCurrentDate());
         document.getElementById("paidDate").min = getCurrentDateInLastWeek();
         $('#cancelDate').val(getCurrentDate());

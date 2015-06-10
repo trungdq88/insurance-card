@@ -35,9 +35,17 @@
                                 <!-- Display the Transaction Details-->
                                 <p class="lead"> Bạn đã thanh toán thành công! </p>
 
-                                <p class="lead"> Chúng tôi sẽ gửi thẻ bảo hiểm đến cho bạn sớm. </p>
+                                <p>Transaction ID: <%=result.get("PAYMENTINFO_0_TRANSACTIONID")%>
+                                </p>
 
-                                        <p><a href="#" class="btn btn-primary btn-lg">Đăng nhập vào hệ thống</a></p>
+                                <p>Payment Total Amount: <%=result.get("PAYMENTINFO_0_AMT")%>
+                                </p>
+
+                                <p>Currency Code: <%=result.get("PAYMENTINFO_0_CURRENCYCODE")%>
+                                </p>
+
+
+                                <h3><a href='home'>Trở về trang chủ</a></h3>
 
                                     <% } else {
 									HashMap<String,String> result = (HashMap<String,String>) request.getAttribute("result");

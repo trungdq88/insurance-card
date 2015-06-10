@@ -465,8 +465,6 @@
             $('#txtYearOfMan1').text($('#txtYearOfMan').val());
             $('#txtWeight1').text($('#txtWeight').val());
             $('#txtSeatCapacity1').text($('#txtSeatCapacity').val());
-
-
         }
     </script>
 </div>
