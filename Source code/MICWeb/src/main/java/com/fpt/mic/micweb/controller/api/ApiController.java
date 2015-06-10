@@ -21,6 +21,10 @@ public class ApiController extends BasicController {
 
     ApiBusiness apiBusiness = new ApiBusiness();
 
+    public ResponseObject getCheckConnection(R r) {
+        return new JsonString(true);
+    }
+
     /**
      * Search contract API
      * /api?action=contracts&keyword=something

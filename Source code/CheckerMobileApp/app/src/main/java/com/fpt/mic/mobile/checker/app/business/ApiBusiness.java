@@ -16,6 +16,26 @@ public class ApiBusiness {
 
     ObjectMapper mapper = new ObjectMapper();
 
+    /**
+     * Checking connection to API server
+     * @param cb
+     */
+    public void checkConnection(final IOnConnectionResult cb) {
+        ApiRequest apiRequest = new ApiRequest(Constants.API_BASE);
+        apiRequest.setParam("action", "checkConnection");
+        apiRequest.get(new ApiRequest.IOnApiResponse() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    cb.onConnectionResult(mapper.readValue(response, Boolean.class));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    cb.onConnectionResult(false);
+                }
+            }
+        });
+    }
+
     public void checkCard(String cardID, final IOnCheckContract cb) {
         ApiRequest apiRequest = new ApiRequest(Constants.API_BASE);
         apiRequest.setParam("action", "checkCard");
@@ -36,5 +56,9 @@ public class ApiBusiness {
 
     public interface IOnCheckContract {
         void onCheckCardResult(CardEntity result);
+    }
+
+    public interface IOnConnectionResult {
+        void onConnectionResult(boolean result);
     }
 }
