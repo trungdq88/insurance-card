@@ -201,9 +201,12 @@
                             <sql:query dataSource="${datasource}" var="result">
                                 SELECT * from mic_contract_type;
                             </sql:query>
-                            <select class="form-control" name="ddlContractType" id="ddlContractType" onchange="updateFee()">
+                            <select class="form-control" name="ddlContractType" id="ddlContractType" onchange="{
+                                var fee = this.options[this.selectedIndex].innerHTML;
+                                $('#txtFee1').text(fee);
+                            }">
                                 <c:forEach var="row" items="${result.rows}">
-                                    <option name="<c:out value="${row.price_per_year}"/>" value="<c:out value="${row.id}"/>"><c:out value="${row.name}"/></option>
+                                    <option label="<c:out value="${row.name}"/>" value="<c:out value="${row.id}"/>"><c:out value="${row.price_per_year}"/></option>
                                 </c:forEach>
                             </select>
                         </div>
@@ -215,7 +218,7 @@
                         </p>
 
                         <p class="form-control-static">
-                            <label>Phí bảo hiểm:</label>
+                            <label>Phí bảo hiểm: <span id="txtFee1"></span></label>
                             <b style="color: red">200.000 VND</b>
                             <input type="hidden" name="txtFee" value="200000">
                         </p>
@@ -240,6 +243,7 @@
     function updateFee() {
         var fee = $('#txtFee');
         var newFee = $('#ddlContractType').option[ $('#ddlContractType').selectedIndex].name;
+
         alert(" " +newFee.valueOf);
         fee.val($('#ddlContractType').option[ $('#ddlContractType').selectedIndex].name);
     }

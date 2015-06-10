@@ -24,8 +24,10 @@ import java.util.*;
 @WebServlet(name = "ReturnController", urlPatterns = {"/public/return"})
 public class ReturnController  extends BasicController {
 
-    public ResponseObject getReturn(R r){
-        return postReturn(r);
+
+
+    public ResponseObject getReturn(R r){return postReturn(r);
+
     }
     public ResponseObject postReturn(R r) {
         HttpSession session = r.equest.getSession(true);
@@ -136,14 +138,13 @@ public class ReturnController  extends BasicController {
                         "<br>Error Code: " + errorCode +
                         "<br>Error Severity Code: " + errorSeverityCode;
                 r.equest.setAttribute("error", errorString);
-
-
                 page = "public/error.jsp";
             }
         }
 
         return new JspPage(page);
     }
+
     public ResponseObject getCancel(R r){
         return new JspPage("public/cancel.jsp");
     }

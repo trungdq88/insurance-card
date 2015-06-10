@@ -29,9 +29,9 @@
                             <p class="lead">Xin lựa chọn phương thức thanh toán sau:</p>
 
                         </h3>
-                        <form class="form" action="${pageContext.request.contextPath}/public/register" method="POST">
+                        <form class="form" action="${pageContext.request.contextPath}/public/payment" method="POST">
                             <input type="hidden" name="L_PAYMENTREQUEST_0_AMT"
-                                   value="${fn:escapeXml(PAYMENTREQUEST_0_AMT)}"/>
+                                   value="${PAYMENTREQUEST_0_AMT}"/>
                             <div class="row">
                                 <div class="col-sm-9 col-sm-offset-3">
                                     <div class="col-sm-4">
@@ -48,7 +48,7 @@
                                                     </tr>
                                                     <tr>
                                                         <td align="center">
-                                                            <input type="submit" value=""
+                                                            <input type="submit" id="btnPlaceOrder" value=""
                                                                    style="background-image: url(https://www.paypalobjects.com/webstatic/mktg/logo/pp_cc_mark_74x46.jpg); border: solid 0px #000000; width: 150px; height: 94px;"/>
                                                         </td>
 
@@ -108,5 +108,16 @@
     <!--  big container -->
 </div>
 </body>
+<script type="text/javascript">
+    window.paypalCheckoutReady = function () {
+        paypal.checkout.setup('<%= new com.fpt.mic.micweb.model.dto.PayPal().getGvAPIUserName() %>', {
+            button: 'btnPlaceOrder',
+            environment: '<%= new com.fpt.mic.micweb.model.dto.PayPal().getEnvironment() %>',
+            condition: function () {
+                return !!document.getElementById('paypal_payment_option').checked;
+            }
+        });
+    };
+</script>
+<script src="//www.paypalobjects.com/api/checkout.js" async></script>
 <%@ include file="_shared/footer.jsp" %>
-</html>

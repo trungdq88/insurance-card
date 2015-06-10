@@ -1,5 +1,6 @@
 package com.fpt.mic.micweb.framework;
 
+import com.fpt.mic.micweb.framework.responses.ForwardTo;
 import com.fpt.mic.micweb.framework.responses.JsonString;
 import com.fpt.mic.micweb.framework.responses.JspPage;
 import com.fpt.mic.micweb.framework.responses.ResponseObject;
@@ -67,6 +68,9 @@ public abstract class BasicController extends HttpServlet {
                 PrintWriter writer = response.getWriter();
                 writer.write(((JsonString) responseObject).getJsonString());
                 writer.close();
+            } else if (responseObject instanceof ForwardTo) {
+                request.getRequestDispatcher(((ForwardTo) responseObject).getControllerUrl())
+                        .forward(request, response);
             } else {
                 // TODO: process other kind of response
                 // Do something else
