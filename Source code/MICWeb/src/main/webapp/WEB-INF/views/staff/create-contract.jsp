@@ -1,5 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="_shared/header.jsp" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <div id="wrapper">
 
@@ -14,6 +16,8 @@
         <div class="row">
             <div class="col-lg-12">
                 <p class="text-right"><b>Các ô có dấu * là bắt buộc</b></p>
+
+                <c:set var="listType" value="${requestScope.CONTRACTTYPE}"/>
 
                 <form action="${pageContext.request.contextPath}/staff/contract" method="post" class="form-horizontal">
                     <fieldset>
@@ -96,16 +100,23 @@
                         <div class="form-group">
                             <label class="col-sm-4 control-label">Loại hình bảo hiểm *</label>
 
-                            <div class="col-sm-8">
-                                <!-- Load from database, add later -->
-                                <select class="form-control" name="ddlContractType">
-                                    <option value="1">Xe trên 50cc có tham gia BH tai nạn người trên xe</option>
-                                    <option value="2">Xe trên 50cc không tham gia BH tai nạn người trên xe</option>
-                                    <option value="3">Xe từ 50cc trở xuống có tham gia BH tai nạn người trên xe</option>
-                                    <option value="4">Xe từ 50cc trở xuống không tham gia BH tai nạn người trên xe
-                                    </option>
-                                    <option value="5">Xe mô tô 3 bánh, xe gắn máy và các loại xe cơ giới tương tự
-                                    </option>
+                            <div class="col-sm-7">
+                                <select class="form-control" name="ddlContractType"
+                                        onchange="{
+                                        var fee = this.options[this.selectedIndex].innerHTML;
+                                        $('#displayFee').text(fee);
+                                        $('#contractFee').val(fee);
+                                        $('#amount').val(fee);
+                                        }">
+                                    <option value="" disabled selected style="display:none;">Vui lòng chọn loại hợp đồng</option>
+                                    <c:forEach var="type" items="${listType}">
+                                        <option label="${type.name}" value="${type.id}">
+                                            ${type.pricePerYear}
+                                            <%--<fmt:setLocale value="vi_VN"/>
+                                            <fmt:formatNumber value="${type.pricePerYear}"
+                                                              type="currency" maxFractionDigits="0"/>--%>
+                                        </option>
+                                    </c:forEach>
                                 </select>
                             </div>
                         </div>
@@ -133,10 +144,14 @@
 
                         <!-- Contract fee -->
                         <div class="form-group">
-                            <label class="col-sm-4 control-label" for="contractFee">Phí bảo hiểm (VNĐ) *</label>
+                            <label class="col-sm-4 control-label" for="displayFee">Phí bảo hiểm (VNĐ) *</label>
 
                             <div class="col-sm-2">
-                                <input id="contractFee" name="txtContractFee" type="text" class="form-control input-md">
+                                <div class="text-value text-success">
+                                    <span id="displayFee" style="font-weight: bolder; font-size: large"></span>
+                                </div>
+                                <input id="contractFee" name="txtContractFee" type="hidden">
+                                <input id="amount" name="txtAmount" type="hidden">
                             </div>
                         </div>
                     </fieldset>
@@ -247,15 +262,6 @@
 
                             <div class="col-sm-3">
                                 <input id="paidDate" name="txtPaidDate" type="date" class="form-control input-md">
-                            </div>
-                        </div>
-
-                        <!-- Paid amount -->
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label" for="amount">Số tiền phí đã trả (VNĐ) *</label>
-
-                            <div class="col-sm-2">
-                                <input id="amount" name="txtAmount" type="text" class="form-control input-md">
                             </div>
                         </div>
                     </fieldset>
