@@ -4,6 +4,7 @@
     padding: 0 30px;
     border-left: 1px solid #e7e7e7;
 }
+
 .sidebar {
     z-index: 1;
     position: absolute;
@@ -42,6 +43,7 @@
     width: 300px;
     display: inline-block;
 }
+
 .no-wrap {
     white-space: nowrap;
 }
@@ -54,10 +56,12 @@
     display: inline-block;
     width: 160px;
 }
+
 .shorter-input {
     display: inline-block;
     width: 70px;
 }
+
 .label-gray {
     background-color: #9B9B9B;
 }
@@ -65,6 +69,14 @@
 .label-dark {
     background-color: #4C4C4C;
 }
+
 th {
     background-color: rgb(223, 223, 223);
+}
+
+.bs-example {
+    margin: 20px;
+    padding: 5px;
+    font-size: x-large;
+    font-weight: bolder
 }
