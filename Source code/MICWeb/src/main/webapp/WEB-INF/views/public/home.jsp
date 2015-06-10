@@ -254,6 +254,7 @@
                             <select class="form-control" name="ddlContractType" id="ddlContractType" onchange="{
                                 var fee = this.options[this.selectedIndex].innerHTML;
                                 $('#txtFee1').text(fee);
+                                $('#txtFeeInput').val(fee);
                             }">
                                 <c:forEach var="row" items="${result.rows}">
                                     <option label="<c:out value="${row.name}"/>" value="<c:out value="${row.id}"/>"><c:out value="${row.price_per_year}"/></option>
@@ -268,9 +269,9 @@
                         </p>
 
                         <p class="form-control-static">
-                            <label>Phí bảo hiểm: <span id="txtFee1"></span></label>
-                            <b style="color: red">200.000 VND</b>
-                            <input type="hidden" name="txtFee" value="200000">
+                            <label>Phí bảo hiểm: </label>
+                            <b style="color: red"><span id="txtFee1"></span> VND</b>
+                            <input type="hidden" id="txtFeeInput" name="txtFee" value="200000">
                         </p>
                         <input type="hidden" name="action" value="register"/>
                         <input type="submit" class="btn btn-primary btn-lg" value="Tiếp theo"/>
@@ -307,6 +308,7 @@
         alert(" " +newFee.valueOf);
         fee.val($('#ddlContractType').option[ $('#ddlContractType').selectedIndex].name);
     }
+    $('#ddlContractType').change();
 </script>
 </body>
 
