@@ -71,6 +71,9 @@ public class MainActivity extends Activity {
                 return false;
             }
         });
+
+        // Show 'No card' contracts first
+        searchContracts();
     }
 
     private void showLoadingEffect() {
