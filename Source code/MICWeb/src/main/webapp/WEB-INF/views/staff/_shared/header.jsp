@@ -23,5 +23,8 @@
   <!-- Custom Fonts -->
   <link href="${pageContext.request.contextPath}/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
+  <!-- jQuery -->
+  <script src="${pageContext.request.contextPath}/js/jquery.min.js"></script>
+
 </head>
 <body>

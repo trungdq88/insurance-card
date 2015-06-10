@@ -12,9 +12,9 @@ import java.util.List;
  */
 public class CardDao extends GenericDaoJpaImpl<CardEntity, String> {
 
-    public List<CardEntity> getAllCard(String custCode) {
+    public List<CardEntity> getAllCard() {
         EntityManager entity = factory.createEntityManager();
-        String hql = "FROM CardEntity";
+        String hql = "SELECT ca FROM CardEntity ca";
         Query query = entity.createQuery(hql);
         return query.getResultList();
     }

@@ -6,7 +6,7 @@
 <div id="wrapper">
 
     <c:set var="customer" value="${requestScope.CUSTOMER}"/>
-    <c:set var="contract" value="${requestScope.CONTRACT}"/>
+    <c:set var="listContracts" value="${requestScope.CONTRACTS}"/>
 
     <%@ include file="_shared/navigation.jsp" %>
     <div id="page-wrapper">
@@ -32,22 +32,29 @@
                             </div>
                         </legend>
 
-                        <!-- Customer code -->
+                        <!-- Customer code & Phone -->
                         <div class="form-group">
-                            <label class="col-sm-4 control-label">Mã khách hàng</label>
+                            <label class="col-sm-3 control-label">Mã khách hàng</label>
 
-                            <div class="col-sm-6">
+                            <div class="col-sm-2">
                                 <div class="text-value text-primary">
                                     <b>${customer.customerCode}</b>
                                 </div>
                             </div>
+                            <label class="col-sm-2 control-label">Số điện thoại</label>
+
+                            <div class="col-sm-3">
+                                <div class="text-value">
+                                    ${customer.phone}
+                                </div>
+                            </div>
                         </div>
 
-                        <!-- Customer name -->
+                        <!-- Name -->
                         <div class="form-group">
-                            <label class="col-sm-4 control-label">Tên khách hàng</label>
+                            <label class="col-sm-3 control-label">Tên khách hàng</label>
 
-                            <div class="col-sm-6">
+                            <div class="col-sm-4">
                                 <div class="text-value">
                                     ${customer.name}
                                 </div>
@@ -56,42 +63,31 @@
 
                         <!-- Address -->
                         <div class="form-group">
-                            <label class="col-sm-4 control-label">Địa chỉ</label>
+                            <label class="col-sm-3 control-label">Địa chỉ</label>
 
-                            <div class="col-sm-6">
+                            <div class="col-sm-4">
                                 <div class="text-value">
                                     ${customer.address}
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Email -->
+                        <!-- Email & Personal ID -->
                         <div class="form-group">
-                            <label class="col-sm-4 control-label">Email</label>
+                            <label class="col-sm-3 control-label">Email</label>
 
-                            <div class="col-sm-6">
+                            <div class="col-sm-4">
                                 <div class="text-value">
                                     ${customer.email}
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Phone -->
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label">Số điện thoại</label>
-
-                            <div class="col-sm-6">
-                                <div class="text-value">
-                                    ${customer.phone}
-                                </div>
-                            </div>
-                        </div>
-
                         <!-- Personal ID -->
                         <div class="form-group">
-                            <label class="col-sm-4 control-label">Số CMND / Hộ chiếu</label>
+                            <label class="col-sm-3 control-label">Số CMND / Hộ chiếu</label>
 
-                            <div class="col-sm-6">
+                            <div class="col-sm-4">
                                 <div class="text-value">
                                     ${customer.personalId}
                                 </div>
@@ -101,9 +97,9 @@
                     <%--/Customer information--%>
                     <br/>
 
-                    <fieldset>
+                    <%--<fieldset>
                         <legend>
-                            Thẻ đang sở hữu
+                            Thẻ hiện hành
 
                             <div class="pull-right" style="margin-top: -5px;">
                                 <a href="#" class="btn btn-xs btn-primary"
@@ -120,42 +116,56 @@
                             </div>
                         </legend>
 
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label">Mã thẻ</label>
-
-                            <div class="col-sm-6">
-                                <div class="text-value text-primary">
-                                    <a href="detail-card.html"><b>AC7-37F-E8E-DDC</b></a>
-                                </div>
-                            </div>
+                        <div class="table-responsive">
+                            <table class="table table-striped table-bordered table-hover">
+                                <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Mã thẻ</th>
+                                    <th>Mã hợp đồng</th>
+                                    <th>Có hiệu lực từ</th>
+                                    <th>Lần cuối truy cập</th>
+                                    <th></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <c:forEach var="card" items="${listCards}" varStatus="counter">
+                                    <tr>
+                                        <td>${counter.count}</td>
+                                        <td>
+                                            <a href="${pageContext.request.contextPath}/staff/card?action=detail&
+                                            code=${card.cardId}">
+                                                ${card.cardId}
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <a href="${pageContext.request.contextPath}/staff/contract?action=detail&
+                                            code=${card.contractCode}">
+                                                ${card.contractCode}
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <fmt:formatDate value="${card.activatedDate}" pattern="dd/MM/yyyy"/>
+                                        </td>
+                                        <td>
+                                            Add later
+                                                &lt;%&ndash;<fmt:formatDate value="${card.expiredDate}" pattern="dd/MM/yyyy"/>&ndash;%&gt;
+                                        </td>
+                                        <td>
+                                            <i class="fa fa-question-circle"
+                                               data-toggle="tooltip" data-placement="bottom"
+                                               title="Ghi nhận lần cuối cùng thẻ được đọc bởi thiết bị từ CSGT."></i>
+                                            <a href="detail-card.html#card-access-history">(xem lịch sử)</a>
+                                        </td>
+                                    </tr>
+                                </c:forEach>
+                                </tbody>
+                            </table>
                         </div>
-
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label">Ngày bắt đầu có hiệu lực</label>
-
-                            <div class="col-sm-6">
-                                <div class="text-value">
-                                    Ngày 2 tháng 3 năm 2014, lúc 09:23:22
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label">Lần cuối truy cập</label>
-
-                            <div class="col-sm-8">
-                                <div class="text-value">
-                                    Ngày 7 tháng 4 năm 2015, lúc 17:20:21
-                                    <i class="fa fa-question-circle"
-                                       data-toggle="tooltip" data-placement="bottom"
-                                       title="Ghi nhận lần cuối cùng thẻ được đọc bởi thiết bị từ Cảnh Sát Giao Thông."></i>
-                                    <a href="detail-card.html#card-access-history">(xem lịch sử)</a>
-                                </div>
-                            </div>
-                        </div>
+                        <!-- /.table-responsive -->
                     </fieldset>
-                    <%--/Card information--%>
-                    <br/>
+                    &lt;%&ndash;/Card information&ndash;%&gt;
+                    <br/>--%>
 
                     <fieldset>
                         <legend>
@@ -176,28 +186,29 @@
                                     <th>#</th>
                                     <th>Mã hợp đồng</th>
                                     <th>Loại hợp đồng</th>
-                                    <th>Ngày bắt đầu</th>
-                                    <th>Ngày kết thúc</th>
+                                    <%--<th>Ngày bắt đầu</th>
+                                    <th>Ngày kết thúc</th>--%>
                                     <th>Trạng thái</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <c:forEach var="cont" items="${contract}" varStatus="counter">
+                                <c:forEach var="contract" items="${listContracts}" varStatus="counter">
                                     <tr>
                                         <td>${counter.count}</td>
                                         <td>
-                                            <a href="${pageContext.request.contextPath}/staff/contract?action=detail&code=${cont.contractCode}">
-                                                    ${cont.contractCode}
+                                            <a href="${pageContext.request.contextPath}/staff/contract?action=detail
+                                            &code=${contract.contractCode}">
+                                                ${contract.contractCode}
                                             </a>
                                         </td>
-                                        <td>${cont.contractTypeId}</td>
-                                        <td>
-                                            <fmt:formatDate value="${cont.startDate}" pattern="dd/MM/yyyy"/>
-                                        </td>
-                                        <td>
-                                            <fmt:formatDate value="${cont.expiredDate}" pattern="dd/MM/yyyy"/>
-                                        </td>
-                                        <td>${cont.status}</td>
+                                        <td>${contract.micContractTypeByContractTypeId.name}</td>
+                                            <%--<td>
+                                                <fmt:formatDate value="${contract.startDate}" pattern="dd/MM/yyyy"/>
+                                            </td>
+                                            <td>
+                                                <fmt:formatDate value="${contract.expiredDate}" pattern="dd/MM/yyyy"/>
+                                            </td>--%>
+                                        <td>${contract.status}</td>
                                     </tr>
                                 </c:forEach>
                                 </tbody>

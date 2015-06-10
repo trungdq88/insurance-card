@@ -1,6 +1,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="java.util.Date" %>
 <%@ page import="java.text.DateFormat" %>
+<%@ page import="java.sql.Timestamp" %>
+<%@ page import="java.util.Calendar" %>
+<%@ page import="com.fpt.mic.micweb.utils.DateUtils" %>
+<%@ page import="javax.rmi.CORBA.Util" %>
+
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <%--
   Created by IntelliJ IDEA.
   User: PhucNguyen
@@ -18,7 +25,10 @@
             <div class="col-lg-12">
                 <h2 class="page-header ">Hợp Đồng ${contract.contractCode}
                      <span class="pull-right">
-                         <button type="submit" class="btn btn-info"><i class="fa fa-refresh"></i> Gia Hạn</button>
+                         <button type="submit" class="btn btn-info" data-toggle="modal" id="renew"
+                                 data-target=".renew-contract-modal"><i class="fa fa-refresh"></i> Gia Hạn
+                         </button>
+
                          <button type="button" class="btn btn-danger" data-toggle="modal"
                                  data-target=".bs-example-modal-lg"><i class="fa fa-times"></i> Hủy Hợp Đồng
                          </button>
@@ -26,7 +36,8 @@
                      </span>
                 </h2>
             </div>
-            <form action="/customer/contract" method="post">
+
+            <form action="${pageContext.request.contextPath}/customer/contract" method="post">
                 <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog"
                      aria-labelledby="myLargeModalLabel"
                      aria-hidden="true">
@@ -72,7 +83,7 @@
                             <div class="modal-footer">
                                 <input type="hidden" name="action" value="CancelContract"/>
                                 <input class="hide" name="txtReason" id="reason">
-                                <input type="submit" class="btn btn-primary" name="Xác Nhận"/>
+                                <input type="submit" class="btn btn-primary" name="Xác Nhận" value="Xác Nhận"/>
                                 <input type="hidden" name="contractcode" value="${contract.contractCode}"/>
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Hủy Bỏ</button>
                             </div>
@@ -81,166 +92,102 @@
                     </div>
                 </div>
             </form>
+
+            <form action="${pageContext.request.contextPath}/customer/contract" method="post">
+
+                <div class="modal renew-contract-modal" tabindex="-1" role="dialog"
+                     aria-labelledby="myLargeModalLabel"
+                     aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                        aria-hidden="true">&times;</span></button>
+                                <h3 class="modal-title">Gia hạn hợp đồng</h3>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-horizontal">
+                                    <div class="form-group">
+                                        <label class="col-sm-5 text-right">Thời điểm bắt đầu</label>
+
+                                        <div class="col-sm-4">
+                                            <input type="hidden" name="txtNewStartDate" id="newStartDate"
+                                                   value="${contract.expiredDate}"/>
+                                            <fmt:formatDate value="${contract.expiredDate}" pattern="dd/MM/yyyy"/>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        <label class="col-sm-5 text-right">Gia hạn đến </label>
+
+                                        <div class="col-sm-4">
+                                            <input id="newExpiredDate" style="border:none;" type="datetime"
+                                                   name="txtNewExpiredDate"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-5 text-right">Phí thanh toán </label>
+
+                                        <div class="col-sm-4">
+                                            <input style="border:none;" type="datetime" id="payAmount"
+                                                   value="${contract.contractFee} VNĐ"/>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+
+                            </div>
+                            <div class="modal-footer">
+
+                                <input type="hidden" name="L_PAYMENTREQUEST_0_NAME0" value="">
+                                <input type="hidden" name="L_PAYMENTREQUEST_0_DESC0" value="">
+                                <input type="hidden" name="L_PAYMENTREQUEST_0_QTY0" value="1">
+                                <input type="hidden" name="PAYMENTREQUEST_0_ITEMAMT" id="payment">
+                                <input type="hidden" name="PAYMENTREQUEST_0_TAXAMT" value="0">
+                                <input type="hidden" name="PAYMENTREQUEST_0_AMT" id="paymentATM">
+                                <input type="hidden" name="currencyCodeType" value="USD">
+                                <input type="hidden" name="paymentType" value="Sale">
+                                <input type="hidden" name="successUrl" value="/customer/contract?action=ActiveRenewContract">
+
+
+                                <input type="hidden" name="txtContractCode" value="${contract.contractCode}"/>
+                                <input type="hidden" name="action" value="RenewContract"/>
+                                <input type="submit" class="btn btn-success" value="Gia hạn hợp đồng"/>
+
+                                <button type="button" class="btn btn-primary" data-dismiss="modal">Đóng</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- /.modal-content -->
+            </form>
         </div>
 
-        <div class="form-horizontal">
+        <!-- /.modal-dialog -->
+        <div class="col-lg-12">
             <c:if test="${contract.status.equalsIgnoreCase('Request cancel')}">
                 <div class="well well-lg text-center text-danger">
                     Hợp đồng đã được yêu cầu hủy vui lòng chờ xác nhận của nhân viên
                 </div>
             </c:if>
-            <fieldset>
-                <legend>
-                    Thông tin chung
-                </legend>
-            </fieldset>
-            <div class="form-group">
-                <label class="col-sm-5 text-right control-label">Mã hợp đồng</label>
-
-                <div class="col-sm-5">
-                    <div class="text-value">
-                        ${contract.contractCode}
-
-                    </div>
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-sm-5 text-right control-label">Ngày Tham Gia</label>
-
-                <div class="col-sm-5">
-                    <div class="text-value ">
-                        ${contract.startDate}
-
-                    </div>
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-sm-5 text-right control-label">Ngày Hết Hạn</label>
-
-                <div class="col-sm-5">
-                    <div class="text-value">
-                        ${contract.expiredDate}
-                    </div>
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-sm-5 text-right control-label">Quyền Lợi Bảo Hiểm</label>
-
-                <div class="col-sm-5">
-                    <div class="text-value ">
-                        Trên 50 CC có bảo hiểm
-                    </div>
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-sm-5 text-right control-label"> Tình Trạng Hợp Đồng</label>
-
-                <div class="col-sm-5">
-                    <div class="text-value ">
-                        ${contract.status}
-
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="form-horizontal">
-            <fieldset>
-                <legend>
-                    Thông tin xe
-                </legend>
-            </fieldset>
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label class="col-sm-4 control-label">Biển Số Đăng Ký: </label>
-
-                    <div class="col-sm-8">
-                        <div class="text-value ">
-                            ${contract.plate}
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-4 control-label">Loại Xe:</label>
-
-                    <div class="col-sm-8">
-                        <div class="text-value ">
-                            ${contract.vehicleType}
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-4 control-label">Màu Sơn:</label>
-
-                    <div class="col-sm-8">
-                        <div class="text-value ">
-                            ${contract.color}
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-4 control-label">Số Máy:</label>
-
-                    <div class="col-sm-8">
-                        <div class="text-value ">
-                            ${contract.engine}
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label class="col-sm-4 control-label">Nhãn Hiệu: </label>
-
-                    <div class="col-sm-8">
-                        <div class="text-value ">
-                            ${contract.modelCode}
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-4 control-label">Dung Tích:</label>
-
-                    <div class="col-sm-8">
-                        <div class="text-value ">
-                            ${contract.capacity}
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-4 control-label">Năm Sản Xuất:</label>
-
-                    <div class="col-sm-8">
-                        <div class="text-value ">
-                            ${contract.yearOfManufacture}
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-4 control-label">Số Khung:</label>
-
-                    <div class="col-sm-8">
-                        <div class="text-value ">
-                            ${contract.chassis}
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-lg-12">
-            <h2 class="page-header ">Thông Tin Khác
-
-            </h2>
         </div>
         <div role="tabpanel">
             <!-- Nav tabs -->
             <ul class="nav nav-tabs" role="tablist">
                 <li role="presentation" class="active">
-                    <a href="#compensations" aria-controls="profile" role="tab" data-toggle="tab">Lịch sử bồi thường</a>
+                    <a href="#commonInfo" aria-controls="profile" role="tab" data-toggle="tab">Thông Tin Chung</a>
                 </li>
                 <li role="presentation">
-                    <a href="#punishments" aria-controls="messages" role="tab" data-toggle="tab">Lịch sử vi phạm luật
+                    <a href="#compensations" aria-controls="profile" role="tab" data-toggle="tab">Lịch sử bồi
+                        thường</a>
+                </li>
+                <li role="presentation">
+                    <a href="#punishments" aria-controls="messages" role="tab" data-toggle="tab">Lịch sử vi phạm
+                        luật
                         GT</a>
                 </li>
             </ul>
@@ -248,7 +195,167 @@
         <br/>
 
         <div class="tab-content">
-            <div role="tabpanel" class="tab-pane active" id="compensations">
+            <div role="tabpanel" class="tab-pane active" id="commonInfo">
+
+                <%--<div class="col-md-5">--%>
+                <%--<img src="http://finefrugality.files.wordpress.com/2012/06/handshake.jpg" width="100%" height="100%">--%>
+                <%--</div>--%>
+                <div class="form-horizontal">
+                    <table class="table table-bordered">
+                        <tr>
+                            <td class="col-md-5">
+                                <table class="table table-bordered">
+                                    <tr>
+                                        <td>
+                                            <label class="text-center">Mã hợp đồng</label>
+                                        </td>
+                                        <td>
+                                            ${contract.contractCode}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <label class="text-center">Ngày tham gia</label>
+                                        </td>
+                                        <td>
+                                            <fmt:formatDate value="${contract.startDate}" pattern="dd/MM/yyyy"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <label class="text-center">Tình trạng hợp đồng</label>
+                                        </td>
+
+                                        <c:if test="${contract.status.equalsIgnoreCase('Request cancel')}">
+                                            <td class="alert-danger">
+                                                    ${contract.status}
+                                            </td>
+                                        </c:if>
+                                        <c:if test="${contract.status.equalsIgnoreCase('Ready')}">
+                                            <td class="alert-success">
+                                                    ${contract.status}
+                                            </td>
+                                        </c:if>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td class="col-md-5">
+                                <table class="table table-bordered">
+                                    <tr>
+                                        <td>
+                                            <label class="text-center">Ngày hết hạn</label>
+                                        </td>
+                                        <td>
+                                            <fmt:formatDate value="${contract.expiredDate}" pattern="dd/MM/yyyy"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <label class="text-center">Quyền lợi bảo hiểm</label>
+                                        </td>
+                                        <td>
+                                            Trên 50 CC có bảo hiểm
+                                        </td>
+                                    </tr>
+
+                                </table>
+                            </td>
+                        </tr>
+                        <tr class="active">
+                            <td colspan="2" class="text-center" style="font-size: 15px"><label class="text-center">Thông
+                                tin xe</label></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <table class="table table-bordered">
+                                    <tr>
+                                        <td class="col-md-5">
+                                            <label>Biển số đăng ký</label>
+                                        </td>
+                                        <td class="col-md-5">
+                                            ${contract.plate}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="col-md-5">
+                                            <label>Loại xe</label>
+                                        </td>
+                                        <td class="col-md-5">
+                                            ${contract.vehicleType}
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td>
+                                <table class="table table-bordered">
+                                    <tr>
+                                        <td class="col-md-5">
+                                            <label class="text-center">Màu sơn</label>
+                                        </td>
+                                        <td class="col-md-5">
+                                            ${contract.color}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="col-md-5">
+                                            <label>Số máy</label>
+                                        </td>
+                                        <td class="col-md-5">
+                                            ${contract.engine}
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <table class="table table-bordered">
+                                    <tr>
+                                        <td class="col-md-5">
+                                            <label>Nhãn hiệu</label>
+                                        </td>
+                                        <td class="col-md-5">
+                                            ${contract.modelCode}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="col-md-5">
+                                            <label>Dung tích</label>
+                                        </td>
+                                        <td class="col-md-5">
+                                            ${contract.capacity}
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td>
+                                <table class="table table-bordered">
+                                    <tr>
+                                        <td class="col-md-5">
+                                            <label>Năm sản xuất</label>
+                                        </td>
+                                        <td class="col-md-5">
+                                            ${contract.yearOfManufacture}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="col-md-5">
+                                            <label>Số khung</label>
+                                        </td>
+                                        <td class="col-md-5">
+                                            ${contract.chassis}
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+
+
+                    </table>
+                </div>
+            </div>
+
+            <div role="tabpanel" class="tab-pane" id="compensations">
                 <div class="row">
                     <div class="col-lg-12">
                           <span class="pull-right">
@@ -512,6 +619,7 @@
 
             </div>
         </div>
+
     </div>
 
 

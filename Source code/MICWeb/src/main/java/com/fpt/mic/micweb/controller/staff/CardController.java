@@ -16,7 +16,7 @@ public class CardController extends BasicController {
         return new JspPage("staff/cards.jsp");
     }
     public ResponseObject getDetail(R r) {
-        return new JspPage("staff/detail-card.jsp");
+        return new JspPage("staff/card-detail.jsp");
     }
     public ResponseObject getNewCardRequest(R r) {
         return new JspPage("staff/new-card-requests.jsp");
