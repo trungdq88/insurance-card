@@ -12,12 +12,14 @@ import com.fpt.mic.micweb.model.dto.CheckoutRequest;
 import com.fpt.mic.micweb.model.dto.PayPal;
 import com.fpt.mic.micweb.model.entity.ContractEntity;
 import com.fpt.mic.micweb.model.entity.CustomerEntity;
+import com.fpt.mic.micweb.model.entity.PaymentEntity;
 import com.fpt.mic.micweb.utils.DateUtils;
 import org.apache.commons.lang3.StringEscapeUtils;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpSession;
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -88,7 +90,7 @@ public class RegisterController extends BasicController {
         if (result != null) {
             HttpSession session = r.equest.getSession();
             session.setAttribute("CONTRACT_CODE",result);
-            //return new CheckoutController().postCheckout(r);
+            session.setAttribute("SUCCESS_URL",r.equest.getParameter("successUrl"));
 
             // Create new checkout request
             CheckoutRequest checkoutRequest = new CheckoutRequest();
@@ -102,12 +104,49 @@ public class RegisterController extends BasicController {
             checkoutRequest.setPaymenttype(r.equest.getParameter("paymentType"));
             checkoutRequest.setPaymentrequest_amt_l(r.equest.getParameter("PAYMENTREQUEST_0_AMT"));
 
-
-
             return new RedirectTo("/public/checkout?action=checkout&checkout=true&" + checkoutRequest.getQueryString());
         }
 
         r.equest.setAttribute("error", "Something wrong");
+        return new JspPage(url);
+    }
+
+    public ResponseObject getActiveContract(R r) {
+        String url = "public/return.jsp";
+        HttpSession session = r.equest.getSession(true);
+        Map<String, String> results = new HashMap<String, String>();
+        results.putAll((Map<String, String>) session.getAttribute("RESULT"));
+
+        r.equest.setAttribute("result",results);
+        r.equest.setAttribute("ack",(String) session.getAttribute("ACK"));
+        ContractEntity contractEntity = new ContractEntity();
+        ContractDao contractDao = new ContractDao();
+        PaymentEntity paymentEntity = new PaymentEntity();
+
+        // get contract just added by contract_code
+        String code =(String) session.getAttribute("CONTRACT_CODE");
+        contractEntity = contractDao.read(code);
+        DateUtils date = new DateUtils();
+
+        // set start date
+        // Timestamp startDate = DateUtils.stringToTime(checkoutDetails.get("txtStartDate"));
+        Timestamp currentDate = new Timestamp(new Date().getTime());
+        contractEntity.setStartDate(currentDate);
+        // set expired date = start_date + 1 year
+        contractEntity.setExpiredDate(DateUtils.addOneYear(contractEntity.getStartDate()));
+        contractEntity.setStatus("No Card");
+        contractDao.update(contractEntity);
+
+        paymentEntity.setPaidDate(new Timestamp(new Date().getTime()));
+        paymentEntity.setPaymentMethod("PayPal payment");
+        paymentEntity.setContent("Create new contract");
+        paymentEntity.setAmount(Float.parseFloat(results.get("PAYMENTINFO_0_AMT").toString()));
+        paymentEntity.setPaypalTransId(results.get("PAYMENTINFO_0_TRANSACTIONID").toString());
+        paymentEntity.setContractCode(contractEntity.getContractCode());
+
+        RegisterBusiness registerBusiness = new RegisterBusiness();
+        registerBusiness.updateContractPayment(contractEntity, paymentEntity);
+        session.invalidate();
         return new JspPage(url);
     }
 

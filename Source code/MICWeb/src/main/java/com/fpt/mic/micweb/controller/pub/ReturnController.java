@@ -2,19 +2,16 @@ package com.fpt.mic.micweb.controller.pub;
 
 import com.fpt.mic.micweb.framework.BasicController;
 import com.fpt.mic.micweb.framework.R;
+import com.fpt.mic.micweb.framework.responses.ForwardTo;
 import com.fpt.mic.micweb.framework.responses.JspPage;
 import com.fpt.mic.micweb.framework.responses.ResponseObject;
-import com.fpt.mic.micweb.model.business.RegisterBusiness;
-import com.fpt.mic.micweb.model.dao.ContractDao;
+
 import com.fpt.mic.micweb.model.dto.PayPal;
-import com.fpt.mic.micweb.model.entity.ContractEntity;
-import com.fpt.mic.micweb.model.entity.PaymentEntity;
-import com.fpt.mic.micweb.utils.DateUtils;
+
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.sql.Timestamp;
 import java.util.*;
 
 /**
@@ -87,7 +84,7 @@ public class ReturnController  extends BasicController {
             /*
             * Calls the DoExpressCheckoutPayment API call
             */
-        String page="public/return.jsp";
+        String page= (String) session.getAttribute("SUCCESS_URL");
         if (isSet(r.equest.getParameter("page")) && r.equest.getParameter("page").equals("return")){
             HashMap results = pp.confirmPayment (checkoutDetails,r.equest.getServerName() );
             r.equest.setAttribute("payment_method","");
@@ -96,37 +93,10 @@ public class ReturnController  extends BasicController {
             if(strAck !=null && (strAck.equalsIgnoreCase("Success") || strAck.equalsIgnoreCase("SuccessWithWarning"))){
                 result.putAll(results);
                 result.putAll(checkoutDetails);
-                r.equest.setAttribute("ack", strAck);
-                r.equest.setAttribute("result", result);
+                session.setAttribute("ACK",strAck);
+                session.setAttribute("RESULT", result);
 
-                ContractEntity contractEntity = new ContractEntity();
-                ContractDao contractDao = new ContractDao();
-                PaymentEntity paymentEntity = new PaymentEntity();
-
-                // get contract just added by contract_code
-                String code =(String) session.getAttribute("CONTRACT_CODE");
-                contractEntity = contractDao.read(code);
-                DateUtils date = new DateUtils();
-
-                // set start date
-                // Timestamp startDate = DateUtils.stringToTime(checkoutDetails.get("txtStartDate"));
-                Timestamp currentDate = new Timestamp(new Date().getTime());
-                contractEntity.setStartDate(currentDate);
-                // set expired date = start_date + 1 year
-                contractEntity.setExpiredDate(DateUtils.addOneYear(contractEntity.getStartDate()));
-                contractEntity.setStatus("Ready");
-                contractDao.update(contractEntity);
-
-                paymentEntity.setPaidDate(new Timestamp(new Date().getTime()));
-                paymentEntity.setPaymentMethod("PayPal payment");
-                paymentEntity.setContent("Create new contract");
-                paymentEntity.setAmount(Float.parseFloat(results.get("PAYMENTINFO_0_AMT").toString()));
-                paymentEntity.setPaypalTransId(results.get("PAYMENTINFO_0_TRANSACTIONID").toString());
-                paymentEntity.setContractCode(contractEntity.getContractCode());
-
-                RegisterBusiness registerBusiness = new RegisterBusiness();
-                registerBusiness.updateContractPayment(contractEntity,paymentEntity);
-                session.invalidate();
+                return new ForwardTo(page);
             }else{
                 //Display a user friendly Error on the page using any of the following error information returned by PayPal
                 String errorCode = results.get("L_ERRORCODE0").toString();
@@ -145,6 +115,7 @@ public class ReturnController  extends BasicController {
 
         return new JspPage(page);
     }
+
 
     public ResponseObject getCancel(R r){
         return new JspPage("public/cancel.jsp");

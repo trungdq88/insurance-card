@@ -436,6 +436,7 @@
                         <input type="hidden" name="currencyCodeType" value="USD">
                         <input type="hidden" name="paymentType" value="Sale">
                         <input type="hidden" name="checkout" value="check out">
+                        <input type="hidden" name="successUrl" value="/public/register?action=activeContract">
                     </form>
                 </div>
                 <!-- wizard container -->
