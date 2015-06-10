@@ -57,7 +57,6 @@ public class MainActivity extends Activity {
         findViewById(R.id.btnSearch).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showLoadingEffect();
                 searchContracts();
             }
         });
@@ -66,13 +65,15 @@ public class MainActivity extends Activity {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                    showLoadingEffect();
                     searchContracts();
                     return true;
                 }
                 return false;
             }
         });
+
+        // Show 'No card' contracts first
+        searchContracts();
     }
 
     private void showLoadingEffect() {
@@ -82,6 +83,8 @@ public class MainActivity extends Activity {
     }
 
     private void searchContracts() {
+        showLoadingEffect();
+
         String keyword = txtKeyword.getText().toString();
 
         ContractBusiness contractBusiness = new ContractBusiness();

@@ -4,6 +4,19 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     metadata-complete="false"
     xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
+    <filter>
+        <filter-name>CharsetFilter</filter-name>
+        <filter-class>com.fpt.mic.micweb.framework.CharsetFilter</filter-class>
+        <init-param>
+            <param-name>requestEncoding</param-name>
+            <param-value>UTF-8</param-value>
+        </init-param>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>CharsetFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
     <session-config>
         <session-timeout>
             30
@@ -12,4 +25,10 @@
     <welcome-file-list>
         <welcome-file>public/home</welcome-file>
     </welcome-file-list>
+    <jsp-config>
+        <jsp-property-group>
+            <url-pattern>*.jsp</url-pattern>
+            <page-encoding>UTF-8</page-encoding>
+        </jsp-property-group>
+    </jsp-config>
 </web-app>

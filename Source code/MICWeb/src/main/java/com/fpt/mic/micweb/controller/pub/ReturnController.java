@@ -22,21 +22,24 @@ import java.util.*;
  * Reference: Paypal Express Checkout API from https://demo.paypal.com/us/home.
  */
 @WebServlet(name = "ReturnController", urlPatterns = {"/public/return"})
-public class ReturnController  extends BasicController {
+public class ReturnController extends BasicController {
 
-    public ResponseObject getReturn(R r){
+
+    public ResponseObject getReturn(R r) {
         return postReturn(r);
+
     }
+
     public ResponseObject postReturn(R r) {
         HttpSession session = r.equest.getSession(true);
 
         if (isSet(r.equest.getParameter("PayerID")))
             session.setAttribute("payer_id", r.equest.getParameter("PayerID"));
         String token = "";
-        if (isSet(r.equest.getParameter("token"))){
+        if (isSet(r.equest.getParameter("token"))) {
             session.setAttribute("TOKEN", r.equest.getParameter("token"));
             token = r.equest.getParameter("token");
-        }else{
+        } else {
             token = (String) session.getAttribute("TOKEN");
         }
 
@@ -44,27 +47,23 @@ public class ReturnController  extends BasicController {
         PayPal pp = new PayPal();
         Map<String, String> result = new HashMap<String, String>();
         // If the Request object contains the variable 'token' then it means that the user is coming from PayPal site.
-        if (isSet(token))
-        {
+        if (isSet(token)) {
                 /*
                 * Calls the GetExpressCheckoutDetails API call
                 */
-            Map<String,String> results = pp.getDetails(token );
+            Map<String, String> results = pp.getDetails(token);
             String strAck = results.get("ACK").toString();
-            if(strAck !=null && (strAck.equalsIgnoreCase("SUCCESS") || strAck.equalsIgnoreCase("SUCCESSWITHWARNING") ))
-            {
+            if (strAck != null && (strAck.equalsIgnoreCase("SUCCESS") || strAck.equalsIgnoreCase("SUCCESSWITHWARNING"))) {
                 session.setAttribute("payer_id", results.get("PAYERID"));
                 result.putAll(results);
-            }
-            else
-            {
+            } else {
                 //Display a user friendly Error on the page using any of the following error information returned by PayPal
                 String errorCode = results.get("L_ERRORCODE0").toString();
                 String errorShortMsg = results.get("L_SHORTMESSAGE0").toString();
                 String errorLongMsg = results.get("L_LONGMESSAGE0").toString();
                 String errorSeverityCode = results.get("L_SEVERITYCODE0").toString();
 
-                String errorString = "SetExpressCheckout API call failed. "+
+                String errorString = "SetExpressCheckout API call failed. " +
 
                         "<br>Detailed Error Message: " + errorLongMsg +
                         "<br>Short Error Message: " + errorShortMsg +
@@ -85,70 +84,84 @@ public class ReturnController  extends BasicController {
             /*
             * Calls the DoExpressCheckoutPayment API call
             */
-        String page="public/return.jsp";
-        if (isSet(r.equest.getParameter("page")) && r.equest.getParameter("page").equals("return")){
-            HashMap results = pp.confirmPayment (checkoutDetails,r.equest.getServerName() );
-            r.equest.setAttribute("payment_method","");
+        String page = "public/return.jsp";
+        if (isSet(r.equest.getParameter("page")) && r.equest.getParameter("page").equals("return")) {
+            HashMap results = pp.confirmPayment(checkoutDetails, r.equest.getServerName());
+            r.equest.setAttribute("payment_method", "");
             String strAck = results.get("ACK").toString().toUpperCase();
-            if(strAck !=null && (strAck.equalsIgnoreCase("Success") || strAck.equalsIgnoreCase("SuccessWithWarning"))){
-                result.putAll(results);
-                result.putAll(checkoutDetails);
+            // Thanh toan thanh cong, cap nhat payment, cap nhat contract status, ngay het han
+            if (strAck != null && (strAck.equalsIgnoreCase("Success") || strAck.equalsIgnoreCase("SuccessWithWarning"))) {
+                //renew contract by customer
                 r.equest.setAttribute("ack", strAck);
                 r.equest.setAttribute("result", result);
-                // Thanh toan thanh cong, cap nhat payment, cap nhat contract status, ngay het han
-                ContractEntity contractEntity = new ContractEntity();
+                String contractCode = (String) session.getAttribute("contractCode");
+                Timestamp newStartDate = (Timestamp) session.getAttribute("newStartDate");
+                Timestamp newExpiredDate = (Timestamp) session.getAttribute("newExpiredDate");
                 ContractDao contractDao = new ContractDao();
-                PaymentEntity paymentEntity = new PaymentEntity();
-
-                // get contract just added by contract_code
-                String code =(String) session.getAttribute("CONTRACT_CODE");
-                contractEntity = contractDao.read(code);
-                DateUtils date = new DateUtils();
-
-                // set start date
-                // Timestamp startDate = DateUtils.stringToTime(checkoutDetails.get("txtStartDate"));
-                Timestamp currentDate = new Timestamp(new Date().getTime());
-                contractEntity.setStartDate(currentDate);
-                // set expired date = start_date + 1 year
-                contractEntity.setExpiredDate(DateUtils.addOneYear(contractEntity.getStartDate()));
-                contractEntity.setStatus("Ready");
-                contractDao.update(contractEntity);
-
-                paymentEntity.setPaidDate(new Timestamp(new Date().getTime()));
-                paymentEntity.setPaymentMethod("PayPal payment");
-                paymentEntity.setContent("Create new contract");
-                paymentEntity.setAmount(Float.parseFloat(results.get("PAYMENTINFO_0_AMT").toString()));
-                paymentEntity.setPaypalTransId(results.get("PAYMENTINFO_0_TRANSACTIONID").toString());
-                paymentEntity.setContractCode(contractEntity.getContractCode());
-
-                RegisterBusiness registerBusiness = new RegisterBusiness();
-                registerBusiness.updateContractPayment(contractEntity,paymentEntity);
+                ContractEntity contract = contractDao.read(contractCode);
+                contract.setStartDate(newStartDate);
+                contract.setExpiredDate(newExpiredDate);
+                contractDao.update(contract);
+                //
+//                result.putAll(results);
+//                result.putAll(checkoutDetails);
+//                r.equest.setAttribute("ack", strAck);
+//                r.equest.setAttribute("result", result);
+                // insert new time expired for contract
+//
+//                ContractEntity contractEntity = new ContractEntity();
+//                ContractDao contractDao = new ContractDao();
+//                PaymentEntity paymentEntity = new PaymentEntity();
+//
+//                // get contract just added by contract_code
+//                String code =(String) session.getAttribute("CONTRACT_CODE");
+//                contractEntity = contractDao.read(code);
+//                DateUtils date = new DateUtils();
+//
+//                // set start date
+//                // Timestamp startDate = DateUtils.stringToTime(checkoutDetails.get("txtStartDate"));
+//                Timestamp currentDate = new Timestamp(new Date().getTime());
+//                contractEntity.setStartDate(currentDate);
+//                // set expired date = start_date + 1 year
+//                contractEntity.setExpiredDate(DateUtils.addOneYear(contractEntity.getStartDate()));
+//                contractEntity.setStatus("Ready");
+//                contractDao.update(contractEntity);
+//
+//                paymentEntity.setPaidDate(new Timestamp(new Date().getTime()));
+//                paymentEntity.setPaymentMethod("PayPal payment");
+//                paymentEntity.setContent("Create new contract");
+//                paymentEntity.setAmount(Float.parseFloat(results.get("PAYMENTINFO_0_AMT").toString()));
+//                paymentEntity.setPaypalTransId(results.get("PAYMENTINFO_0_TRANSACTIONID").toString());
+//                paymentEntity.setContractCode(contractEntity.getContractCode());
+//
+//                RegisterBusiness registerBusiness = new RegisterBusiness();
+//                registerBusiness.updateContractPayment(contractEntity,paymentEntity);
                 session.invalidate();
-            }else{
+            } else {
                 //Display a user friendly Error on the page using any of the following error information returned by PayPal
                 String errorCode = results.get("L_ERRORCODE0").toString();
                 String errorShortMsg = results.get("L_SHORTMESSAGE0").toString();
                 String errorLongMsg = results.get("L_LONGMESSAGE0").toString();
                 String errorSeverityCode = results.get("L_SEVERITYCODE0").toString();
-                String errorString = "SetExpressCheckout API call failed. "+
+                String errorString = "SetExpressCheckout API call failed. " +
                         "<br>Detailed Error Message: " + errorLongMsg +
                         "<br>Short Error Message: " + errorShortMsg +
                         "<br>Error Code: " + errorCode +
                         "<br>Error Severity Code: " + errorSeverityCode;
                 r.equest.setAttribute("error", errorString);
-
-
                 page = "public/error.jsp";
             }
         }
 
         return new JspPage(page);
     }
-    public ResponseObject getCancel(R r){
+
+    public ResponseObject getCancel(R r) {
         return new JspPage("public/cancel.jsp");
     }
-    private Map<String,String> setRequestParams(HttpServletRequest request){
-        Map<String,String> requestMap = new HashMap<String,String>();
+
+    private Map<String, String> setRequestParams(HttpServletRequest request) {
+        Map<String, String> requestMap = new HashMap<String, String>();
         for (String key : request.getParameterMap().keySet()) {
 
             requestMap.put(key, request.getParameterMap().get(key)[0]);
@@ -157,7 +170,8 @@ public class ReturnController  extends BasicController {
         return requestMap;
 
     }
-    private boolean isSet(Object value){
-        return (value !=null && value.toString().length()!=0);
+
+    private boolean isSet(Object value) {
+        return (value != null && value.toString().length() != 0);
     }
 }

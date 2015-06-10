@@ -1,15 +1,12 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="java.io.*,java.util.*,java.sql.*"%>
+<%@ page import="java.io.*,java.util.*,java.sql.*" %>
 <%@ page import="javax.servlet.http.*,javax.servlet.*" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql" %>
 <!DOCTYPE html>
 <html lang="en">
 <script src="${pageContext.request.contextPath}/js/jquery.min.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/js/bootstrap.min.js" type="text/javascript"></script>
-
-<!--   plugins 	 -->
-<script src="${pageContext.request.contextPath}/js/wizard.js"></script>
 
 <head>
     <meta charset="utf-8">
@@ -18,11 +15,17 @@
     <title>MIC - Bảo hiểm trực tuyến</title>
 
     <!-- CSS -->
-    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/fonts.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/font-awesome.min.css">
     <%--<link rel="stylesheet" href="${pageContext.request.contextPath}/css/form-elements.css">--%>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/home-style.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/footer-distributed-with-address-and-phones.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/slider.css">
+
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/jssor.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/jssor.slider.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/slider.js"></script>
     <!-- Google API Autocomplete for address-->
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places"></script>
     <script>
@@ -115,10 +118,57 @@
     </div>
 </nav>
 
+
+<div id="slider2_container" style="position: relative; top: 0; left: 0; width: 600px;
+        height: 200px;">
+
+    <!-- Loading Screen -->
+    <div u="loading" style="position: absolute; top: 0; left: 0;">
+        <div style="filter: alpha(opacity=70); opacity:0.7; position: absolute; display: block;
+                background-color: #000; top: 0; left: 0;width: 100%;height:100%;">
+        </div>
+        <div style="position: absolute; display: block; background: url(${pageContext.request.contextPath}/img/loading.gif) no-repeat center center;
+                top: 0; left: 0;width: 100%;height:100%;">
+        </div>
+    </div>
+
+    <!-- Slides Container -->
+    <div u="slides" style="cursor: move; position: absolute; left: 0; top: 0; width: 600px; height: 200px;
+            overflow: hidden;">
+        <div>
+            <a u=image href="#"><img src="${pageContext.request.contextPath}/img/landscape/01.jpg" /></a>
+        </div>
+        <div>
+            <a u=image href="#"><img src="${pageContext.request.contextPath}/img/landscape/02.jpg" /></a>
+        </div>
+        <div>
+            <a u=image href="#"><img src="${pageContext.request.contextPath}/img/landscape/03.jpg" /></a>
+        </div>
+        <div>
+            <a u=image href="#"><img src="${pageContext.request.contextPath}/img/landscape/05.jpg" /></a>
+        </div>
+    </div>
+    <!--#region Bullet Navigator Skin Begin -->
+    <!-- Help: http://www.jssor.com/development/slider-with-bullet-navigator-jquery.html -->
+    <!-- bullet navigator container -->
+    <div u="navigator" class="jssorb01" style="bottom: 16px; right: 10px;">
+        <!-- bullet navigator item prototype -->
+        <div u="prototype"></div>
+    </div>
+    <!--#endregion Bullet Navigator Skin End -->
+
+    <!-- Arrow Left -->
+        <span u="arrowleft" class="jssora05l" style="top: 73px; left: 8px;">
+        </span>
+    <!-- Arrow Right -->
+        <span u="arrowright" class="jssora05r" style="top: 73px; right: 8px;">
+        </span>
+    <a style="display: none" href="http://www.jssor.com">Bootstrap Slider</a>
+</div>
+
+<div style="height: 50px"></div>
 <!-- Top content -->
 <div class="top-content">
-
-
     <div class="container">
         <div class="row">
             <div class="col-md-5">
@@ -148,8 +198,8 @@
                 </div>
             </div>
             <div class="col-md-7">
-                <div class="form-top-left col-md-12">
-                    <h3>Đăng ký ngay</h3>
+                <div class="form-top-left col-md-12" style="padding-top: 0;">
+                    <h1>Đăng ký ngay</h1>
 
                     <p>Tạo hợp đồng mới và thanh toán online</p>
                 </div>
@@ -201,9 +251,12 @@
                             <sql:query dataSource="${datasource}" var="result">
                                 SELECT * from mic_contract_type;
                             </sql:query>
-                            <select class="form-control" name="ddlContractType" id="ddlContractType" onchange="updateFee()">
+                            <select class="form-control" name="ddlContractType" id="ddlContractType" onchange="{
+                                var fee = this.options[this.selectedIndex].innerHTML;
+                                $('#txtFee1').text(fee);
+                            }">
                                 <c:forEach var="row" items="${result.rows}">
-                                    <option name="<c:out value="${row.price_per_year}"/>" value="<c:out value="${row.id}"/>"><c:out value="${row.name}"/></option>
+                                    <option label="<c:out value="${row.name}"/>" value="<c:out value="${row.id}"/>"><c:out value="${row.price_per_year}"/></option>
                                 </c:forEach>
                             </select>
                         </div>
@@ -211,11 +264,11 @@
                     <div class="form-group  col-md-12">
                         <p class="form-control-static">
                             <label>Thời hạn:</label>
-                            01 năm kể từ khi cấp GCNBH và/hoặc sau thời hạn thanh toán phí
+                            01 năm kể từ khi cấp
                         </p>
 
                         <p class="form-control-static">
-                            <label>Phí bảo hiểm:</label>
+                            <label>Phí bảo hiểm: <span id="txtFee1"></span></label>
                             <b style="color: red">200.000 VND</b>
                             <input type="hidden" name="txtFee" value="200000">
                         </p>
@@ -225,23 +278,36 @@
 
                 </form>
 
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                &nbsp;
+                &nbsp;
+                &nbsp;
+                <br/>
+                <br/>
+                <br/>
             </div>
         </div>
-
 
     </div>
 
 
 </div>
-</body>
-
 
 <script language="javascript">
     function updateFee() {
         var fee = $('#txtFee');
         var newFee = $('#ddlContractType').option[ $('#ddlContractType').selectedIndex].name;
+
         alert(" " +newFee.valueOf);
         fee.val($('#ddlContractType').option[ $('#ddlContractType').selectedIndex].name);
     }
 </script>
-</html>
+</body>
+
+<%@ include file="_shared/footer.jsp" %>
