@@ -1,3 +1,4 @@
+<%@ page import="java.util.HashMap" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="_shared/header.jsp" %>
@@ -30,10 +31,12 @@
 
                         </h3>
                         <form class="form" action="${pageContext.request.contextPath}/public/checkout" method="get">
-                            <%--<input type="hidden" name="L_PAYMENTREQUEST_0_AMT"--%>
-                                   <%--value="${PAYMENTREQUEST_0_AMT}"/>--%>
                             <div class="row">
                                 <div class="col-sm-9 col-sm-offset-3">
+                                    <% HashMap result = (HashMap) request.getAttribute("result");  %>
+                                    <p>Nội dung thanh toán: <%=result.get("L_PAYMENTREQUEST_0_DESC0")%></p>
+                                    <p>Tổng tiền phải trả: <%=result.get("PAYMENTREQUEST_0_AMT")%> (VND)
+                                    </p>
                                     <div class="col-sm-4">
                                         <div class="choice" data-toggle="wizard-radio" rel="tooltip"
                                              title="Chọn nếu quý khách thanh toán qua Paypal">

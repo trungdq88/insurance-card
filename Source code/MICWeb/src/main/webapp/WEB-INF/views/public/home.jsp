@@ -41,6 +41,7 @@
             autocomplete = new google.maps.places.Autocomplete(
                     /** @type {HTMLInputElement} */(document.getElementById('txtAddress')),
                     {types: ['geocode'], componentRestrictions: {country: 'vn'}});
+            document.getElementById('datePicker').value = new Date().toDateInputValue();
         }
 
         // [START region_geolocation]
@@ -240,7 +241,7 @@
                         <div class="form-group  col-md-5">
                             <label>Ngày bắt đầu *</label>
                             <input type="date" name="txtStartDate"
-                                   class="form-control" id="form-startDate">
+                                   class="form-control" id="datePicker">
                         </div>
                         <div class="form-group  col-md-7">
                             <label>Hình Thức Bảo Hiểm *</label>
@@ -307,6 +308,7 @@
         alert(" " +newFee.valueOf);
         fee.val($('#ddlContractType').option[ $('#ddlContractType').selectedIndex].name);
     }
+
 </script>
 </body>
 
