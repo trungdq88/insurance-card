@@ -37,8 +37,8 @@ public class ContractController extends BasicController {
         String code = r.equest.getParameter("code");
         ContractEntity contract = customerBusiness.getContractDetail(code);
         r.equest.setAttribute("contract", contract);
-    return new JspPage("customer/contract-detail.jsp");
-}
+        return new JspPage("customer/contract-detail.jsp");
+    }
 
     /* Handle canncel contract */
     public ResponseObject postCancelContract(R r) {
@@ -55,20 +55,21 @@ public class ContractController extends BasicController {
         r.equest.setAttribute("result", result);
         return new JspPage("customer/message.jsp");
     }
+
     /* Renew contract */
-    public ResponseObject postRenewContract(R r){
+    public ResponseObject postRenewContract(R r) {
         //get parameter
 
         String contractCode = r.equest.getParameter("txtContractCode");
         String newStartDate = r.equest.getParameter("txtNewStartDate");
         Timestamp startDate = DateUtils.stringToTime(newStartDate);
-        String newExpiredDate = r.equest.getParameter("txtNewExpiredDate");
-        Timestamp expiredDate = DateUtils.stringToTime(newExpiredDate);
+        Timestamp newExpiredDate = DateUtils.addOneYear(startDate);
+
 
         HttpSession session = r.equest.getSession();
         session.setAttribute("contractCode",contractCode);
         session.setAttribute("newStartDate",startDate);
-        session.setAttribute("newExpiredDate",expiredDate);
+        session.setAttribute("newExpiredDate",newExpiredDate);
         session.setAttribute("SUCCESS_URL",r.equest.getParameter("successUrl"));
 
         CheckoutRequest checkoutRequest = new CheckoutRequest();
@@ -86,18 +87,19 @@ public class ContractController extends BasicController {
 
         return new RedirectTo("/public/checkout?action=checkout&checkout=true&" + checkoutRequest.getQueryString());
     }
+
     public ResponseObject getNewContract(R r) {
         return new JspPage("customer/contract-new.jsp");
     }
 
-    public ResponseObject getActiveRenewContract (R r){
+    public ResponseObject getActiveRenewContract(R r) {
         String url = "public/return.jsp";
         HttpSession session = r.equest.getSession(true);
         Map<String, String> results = new HashMap<String, String>();
         results.putAll((Map<String, String>) session.getAttribute("RESULT"));
 
-        r.equest.setAttribute("result",results);
-        r.equest.setAttribute("ack",(String) session.getAttribute("ACK"));
+        r.equest.setAttribute("result", results);
+        r.equest.setAttribute("ack", (String) session.getAttribute("ACK"));
         //renew contract by customer
 
         String contractCode = (String) session.getAttribute("contractCode");
@@ -110,7 +112,7 @@ public class ContractController extends BasicController {
         contract.setStatus("Ready");
         contractDao.update(contract);
         session.invalidate();
-        r.equest.setAttribute("message","Gia han thanh cong.");
+        r.equest.setAttribute("message", "Gia han thanh cong.");
         return new JspPage(url);
     }
 
