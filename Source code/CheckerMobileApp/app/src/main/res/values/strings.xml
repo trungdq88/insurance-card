@@ -8,5 +8,9 @@
     <string name="or_enter_card_id">Hoặc nhập mã thẻ</string>
     <string name="check">Kiểm tra</string>
     <string name="close">Thoát</string>
-    <string name="add_punishment">Thêm vi phạm</string>
+    <string name="add_punishment">Thêm vi phạm</string>    <string name="tryAgain">Thử lại</string>
+    <string name="checking_connection">Đang kiểm tra kết nối...</string>
+    <string name="noConnection">Không thể kết nối đến máy chủ. Bạn có muốn thử lại?</string>
+    <string name="alert">Thông báo</string>
+    <string name="cancel">Huỷ</string>
 </resources>
