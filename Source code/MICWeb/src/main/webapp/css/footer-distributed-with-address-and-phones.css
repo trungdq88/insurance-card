@@ -7,7 +7,6 @@
 	font: bold 16px sans-serif;
 
 	padding: 55px 50px;
-	margin-top: 80px;
 }
 
 .footer-distributed .footer-left,
@@ -20,7 +19,7 @@
 /* Footer left */
 
 .footer-distributed .footer-left{
-	width: 40%;
+	width: 30%;
 }
 
 /* The company logo */
@@ -60,7 +59,7 @@
 /* Footer Center */
 
 .footer-distributed .footer-center{
-	width: 35%;
+	width: 40%;
 }
 
 .footer-distributed .footer-center i{
@@ -93,6 +92,7 @@
 	font-weight: normal;
 	font-size:14px;
 	line-height:2;
+	max-width: 250px;
 }
 
 .footer-distributed .footer-center p a{

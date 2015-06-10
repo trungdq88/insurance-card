@@ -332,3 +332,7 @@ ul.navbar-nav {
     }
 
 }
+
+.navbar.navbar-no-bg {
+    margin-bottom: 0;
+}

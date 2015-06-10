@@ -3,6 +3,7 @@ package com.fpt.mic.micweb.framework;
 import com.fpt.mic.micweb.framework.responses.ForwardTo;
 import com.fpt.mic.micweb.framework.responses.JsonString;
 import com.fpt.mic.micweb.framework.responses.JspPage;
+import com.fpt.mic.micweb.framework.responses.RedirectTo;
 import com.fpt.mic.micweb.framework.responses.ResponseObject;
 import com.fpt.mic.micweb.utils.StringUtils;
 
@@ -71,6 +72,8 @@ public abstract class BasicController extends HttpServlet {
             } else if (responseObject instanceof ForwardTo) {
                 request.getRequestDispatcher(((ForwardTo) responseObject).getControllerUrl())
                         .forward(request, response);
+            } else if (responseObject instanceof RedirectTo) {
+                response.sendRedirect(((RedirectTo) responseObject).getUrl());
             } else {
                 // TODO: process other kind of response
                 // Do something else

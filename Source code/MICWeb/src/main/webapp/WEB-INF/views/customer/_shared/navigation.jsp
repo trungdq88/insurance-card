@@ -15,7 +15,9 @@
       <span class="icon-bar"></span>
       <span class="icon-bar"></span>
     </button>
-    <a class="navbar-brand" href="${pageContext.request.contextPath}/customer"><label class="text-info">Insurance Card</label></a>
+    <a class="navbar-brand" href="${pageContext.request.contextPath}/customer">
+      Insurance Card
+    </a>
   </div>
   <!-- /.navbar-header -->
 
@@ -44,10 +46,12 @@
     <div class="sidebar-nav navbar-collapse">
       <ul class="nav" id="side-menu">
         <li>
-          <a href="${pageContext.request.contextPath}/customer">Thông Tin Cá Nhân</a>
+          <a href="${pageContext.request.contextPath}/customer">
+            <i class="fa fa-user fa-fw"></i> Thông tin cá nhân</a>
         </li>
         <li>
-          <a href="${pageContext.request.contextPath}/customer/contract">Thông Tin Bảo Hiểm</a>
+          <a href="${pageContext.request.contextPath}/customer/contract">
+            <i class="fa fa-file-text-o fa-fw"></i> Hợp đồng</a>
         </li>
         <%--<li>--%>
           <%--<a href="${pageContext.request.contextPath}/customer/punishment">Lịch Sử Vi Phạm</a>--%>
@@ -56,13 +60,16 @@
           <%--<a href="${pageContext.request.contextPath}/customer/compensation">Lịch Sử Bồi Thường </a>--%>
         <%--</li>--%>
         <li>
-          <a href="${pageContext.request.contextPath}/customer/card">Thông Tin Thẻ</a>
+          <a href="${pageContext.request.contextPath}/customer/card">
+            <i class="fa fa-credit-card fa-fw"></i> Thông tin thẻ</a>
         </li>
         <li>
-          <a href="${pageContext.request.contextPath}/customer/card?action=newCard">Yêu Cầu Thẻ Mới</a>
+          <a href="${pageContext.request.contextPath}/customer/card?action=newCard">
+            <i class="fa fa-exclamation fa-fw"></i> Yêu cầu thẻ mới</a>
         </li>
         <li>
-          <a href="${pageContext.request.contextPath}/customer/payment">Lịch Sử Giao Dịch</a>
+          <a href="${pageContext.request.contextPath}/customer/payment">
+            <i class="fa fa-dollar fa-fw"></i> Lịch sử giao dịch</a>
         </li>
       </ul>
     </div>

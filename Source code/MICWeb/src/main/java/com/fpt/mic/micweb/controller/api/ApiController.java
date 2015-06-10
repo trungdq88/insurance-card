@@ -26,17 +26,13 @@ public class ApiController extends BasicController {
      * /api?action=contracts&keyword=something
      *
      * keyword could be contract code or customer name
+     * if no keyword is provided, return list of contract order by Pending status first
      * @param r
      * @return
      */
     public ResponseObject getContracts(R r) {
         // Get keyword
         String keyword = r.equest.getParameter("keyword");
-
-        // If no keyword provided, return empty array
-        if (keyword == null || keyword.isEmpty()) {
-            return new JsonString(new ArrayList<ContractSearchResult>());
-        }
 
         // Call business for search
         List<ContractSearchResult> contractSearchResults =

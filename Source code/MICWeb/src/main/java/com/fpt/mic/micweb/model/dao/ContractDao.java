@@ -4,6 +4,7 @@ import com.fpt.mic.micweb.model.dao.common.IncrementDao;
 import com.fpt.mic.micweb.model.dto.ContractSearchResult;
 import com.fpt.mic.micweb.model.entity.ContractEntity;
 import com.fpt.mic.micweb.model.entity.CustomerEntity;
+import com.fpt.mic.micweb.utils.Constrants;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -25,8 +26,8 @@ public class ContractDao extends IncrementDao<ContractEntity, String> {
 
     /**
      * This is the method which get all contract.
-     * @return list of ContractEntity.
      *
+     * @return list of ContractEntity.
      * @author KhaNC
      * @version 1.0
      */
@@ -39,9 +40,9 @@ public class ContractDao extends IncrementDao<ContractEntity, String> {
 
     /**
      * This is the method which get all contract belongs to the customer.
+     *
      * @param custCode This is stand for customer's code.
      * @return list of ContractEntity.
-     *
      * @author KhaNC
      * @version 1.0
      */
@@ -61,6 +62,7 @@ public class ContractDao extends IncrementDao<ContractEntity, String> {
 
     /**
      * Search for contracts by contract code or customer name of the contract
+     *
      * @param keyword
      * @return
      */
@@ -72,7 +74,8 @@ public class ContractDao extends IncrementDao<ContractEntity, String> {
                         "FROM ContractEntity co " +
                         "JOIN co.micCustomerByCustomerCode cu " +
                         "WHERE co.customerCode = cu.customerCode " +
-                        "AND (co.contractCode LIKE :keyword OR cu.name LIKE :keyword)",
+                        "AND (co.contractCode LIKE :keyword OR cu.name LIKE :keyword) " +
+                        "ORDER BY FIELD(co.status, 'No card')",
                 ContractSearchResult.class
         );
         query.setParameter("keyword", "%" + keyword + "%");
