@@ -3,20 +3,18 @@ package com.fpt.mic.micweb.controller.pub;
 import com.fpt.mic.micweb.framework.BasicController;
 import com.fpt.mic.micweb.framework.R;
 import com.fpt.mic.micweb.framework.responses.JspPage;
+import com.fpt.mic.micweb.framework.responses.RedirectTo;
 import com.fpt.mic.micweb.framework.responses.ResponseObject;
 import com.fpt.mic.micweb.model.business.RegisterBusiness;
-import com.fpt.mic.micweb.model.dao.ContractDao;
+import com.fpt.mic.micweb.model.dto.PayPal;
 import com.fpt.mic.micweb.model.entity.ContractEntity;
 import com.fpt.mic.micweb.model.entity.CustomerEntity;
-import com.fpt.mic.micweb.model.entity.PaymentEntity;
-import com.fpt.mic.micweb.model.dto.PayPal;
 import com.fpt.mic.micweb.utils.DateUtils;
 import org.apache.commons.lang3.StringEscapeUtils;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpSession;
 import java.sql.Timestamp;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -25,6 +23,10 @@ import java.util.Map;
  */
 @WebServlet(name = "RegisterController", urlPatterns = "/public/register")
 public class RegisterController extends BasicController {
+
+    public ResponseObject getView(R r) {
+        return new RedirectTo("/"); // Go to homepage
+    }
 
     public ResponseObject postRegister(R r) {
         CustomerEntity customerEntity = new CustomerEntity();
