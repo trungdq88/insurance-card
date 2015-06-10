@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="java.io.*,java.util.*,java.sql.*" %>
 <%@ page import="javax.servlet.http.*,javax.servlet.*" %>
+<%@ page import="java.util.Date" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql" %>
 <!DOCTYPE html>
@@ -34,14 +35,14 @@
 
         var placeSearch, autocomplete;
 
-
+        }
         function initialize() {
             // Create the autocomplete object, restricting the search
             // to geographical location types.
             autocomplete = new google.maps.places.Autocomplete(
                     /** @type {HTMLInputElement} */(document.getElementById('txtAddress')),
                     {types: ['geocode'], componentRestrictions: {country: 'vn'}});
-            document.getElementById('datePicker').value = new Date().toDateInputValue();
+
         }
 
         // [START region_geolocation]
@@ -241,7 +242,7 @@
                         <div class="form-group  col-md-5">
                             <label>Ngày bắt đầu *</label>
                             <input type="date" name="txtStartDate"
-                                   class="form-control" id="datePicker">
+                                   class="form-control" id="dateDefault" value="<%=new Date()%> ">
                         </div>
                         <div class="form-group  col-md-7">
                             <label>Hình Thức Bảo Hiểm *</label>
@@ -308,6 +309,27 @@
         alert(" " +newFee.valueOf);
         fee.val($('#ddlContractType').option[ $('#ddlContractType').selectedIndex].name);
     }
+    function setInputDate(_id){
+        var _dat = document.querySelector(_id);
+        var hoy = new Date(),
+                d = hoy.getDate(),
+                m = hoy.getMonth()+1,
+                y = hoy.getFullYear(),
+                data;
+
+        if(d < 10){
+            d = "0"+d;
+        };
+        if(m < 10){
+            m = "0"+m;
+        };
+
+        data = y+"-"+m+"-"+d;
+        console.log(data);
+        _dat.value = data;
+    };
+
+    setInputDate("#dateDefault");
 
 </script>
 </body>
