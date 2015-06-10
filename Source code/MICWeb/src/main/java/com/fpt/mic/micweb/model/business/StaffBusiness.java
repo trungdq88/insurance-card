@@ -3,6 +3,7 @@ package com.fpt.mic.micweb.model.business;
 import com.fpt.mic.micweb.model.dao.ContractDao;
 import com.fpt.mic.micweb.model.dao.CustomerDao;
 import com.fpt.mic.micweb.model.dao.PaymentDao;
+import com.fpt.mic.micweb.model.entity.CardEntity;
 import com.fpt.mic.micweb.model.entity.ContractEntity;
 import com.fpt.mic.micweb.model.entity.CustomerEntity;
 import com.fpt.mic.micweb.model.entity.PaymentEntity;
@@ -34,10 +35,10 @@ public class StaffBusiness {
         // Validate data
 
         // Create customer
-        // get next customer code - add later
+        // get next customer code
         String customerCode = customerDao.getIncrementId();
         customerEntity.setCustomerCode(customerCode);
-        // get customer password - add later
+        // get customer password
         String customerPassword = "123456";
         customerEntity.setPassword(customerPassword);
 
@@ -50,9 +51,9 @@ public class StaffBusiness {
         return listContract;
     }
 
-    public List<ContractEntity> getContractByCustomerCode(String custCode) {
+    public List<ContractEntity> getContractByCustomerCode(String customerCode) {
         ContractDao contractDao = new ContractDao();
-        List<ContractEntity> listCustomerContract = contractDao.getContractByCustomerCode(custCode);
+        List<ContractEntity> listCustomerContract = contractDao.getContractByCustomerCode(customerCode);
         return listCustomerContract;
     }
 
@@ -67,7 +68,7 @@ public class StaffBusiness {
         // Validate information
 
         // Add contract
-        // get next contract code - add later
+        // get next contract code
         String contractCode = contractDao.getIncrementId();
         contractEntity.setContractCode(contractCode);
         contractEntity.setStatus("No Card");
@@ -77,6 +78,7 @@ public class StaffBusiness {
             // Add payment info
             paymentEntity.setPaymentMethod("Direct");
             paymentEntity.setContent("Đăng ký hợp đồng mới");
+            paymentEntity.setReceiver("KhaNC");
             paymentEntity.setContractCode(contractCode);
             if (paymentDao.create(paymentEntity) != null) {
                 return true;
@@ -103,6 +105,7 @@ public class StaffBusiness {
                 // Add payment information
                 paymentEntity.setPaymentMethod("Direct");
                 paymentEntity.setContent("Gia hạn hợp đồng");
+                paymentEntity.setReceiver("KhaNC");
                 paymentEntity.setContractCode(contractCode);
                 if (paymentDao.create(paymentEntity) != null) {
                     return true;
@@ -129,5 +132,11 @@ public class StaffBusiness {
             }
         }
         return false;
+    }
+
+    public List<PaymentEntity> getPaymentByContractCode(String contractCode) {
+        PaymentDao paymentDao = new PaymentDao();
+        List<PaymentEntity> listPayment = paymentDao.getPaymentByCustomerCode(contractCode);
+        return listPayment;
     }
 }

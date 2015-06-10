@@ -30,18 +30,27 @@ public class ContractController extends BasicController {
     public ResponseObject getDetail(R r) {
         StaffBusiness staffBus = new StaffBusiness();
         String contractCode = r.equest.getParameter("code");
-        System.out.println(contractCode);
 
         // Get contract detail
         ContractEntity contractDetail = staffBus.getContractDetail(contractCode);
+        long diff = contractDetail.getExpiredDate().getTime() - contractDetail.getStartDate().getTime();
+        long diffDays = 0;
+        if (diff > 0) {
+            diffDays = diff / (24 * 60 * 60 * 1000);
+        }
+        r.equest.setAttribute("REMAIN", diffDays);
         r.equest.setAttribute("CONTRACT", contractDetail);
 
         // Get customer detail
         CustomerEntity customerDetail = staffBus.getCustomerDetail(contractDetail.getCustomerCode());
         r.equest.setAttribute("CUSTOMER", customerDetail);
 
+        // Get payment detail
+        List<PaymentEntity> listPayment = staffBus.getPaymentByContractCode(contractCode);
+        r.equest.setAttribute("PAYMENT", listPayment);
+
         // Dispatch to JSP page
-        return new JspPage("staff/detail-contract.jsp");
+        return new JspPage("staff/contract-detail.jsp");
     }
 
     public ResponseObject getCreate(R r) {
@@ -63,13 +72,10 @@ public class ContractController extends BasicController {
         // Get contract information
         contractEntity.setCustomerCode(r.equest.getParameter("txtCustomerCode"));
         contractEntity.setContractTypeId(Integer.parseInt(r.equest.getParameter("ddlContractType")));
-
         String startDate = r.equest.getParameter("txtStartDate");
         contractEntity.setStartDate(DateUtils.stringToTime(startDate));
-
         String expiredDate = r.equest.getParameter("txtExpiredDate");
         contractEntity.setExpiredDate(DateUtils.stringToTime(expiredDate));
-
         contractEntity.setContractFee(Float.parseFloat(r.equest.getParameter("txtContractFee")));
         contractEntity.setPlate(r.equest.getParameter("txtPlate"));
         contractEntity.setBrand(r.equest.getParameter("txtBrand"));
@@ -88,7 +94,6 @@ public class ContractController extends BasicController {
         paymentEntity.setPaidDate(DateUtils.stringToTime(paidDate));
 
         paymentEntity.setAmount(Float.parseFloat(r.equest.getParameter("txtAmount")));
-        paymentEntity.setReceiver(r.equest.getParameter("txtReceiver"));
 
         // Call to business object
         StaffBusiness staffBus = new StaffBusiness();
@@ -99,14 +104,13 @@ public class ContractController extends BasicController {
             return new JspPage("staff/create-contract-success.jsp");
         } else {
             r.equest.setAttribute("error", "Something wrong");
-            return new JspPage("error/msg.jsp");
+            return new JspPage("staff/message.jsp");
         }
     }
 
     public ResponseObject postRenew(R r) {
         // Get renew contract information
         String contractCode = r.equest.getParameter("txtContractCode");
-        System.out.println(contractCode);
         String newStartDate = r.equest.getParameter("txtNewStartDate");
         Timestamp startDate = DateUtils.stringToTime(newStartDate);
         String newExpiredDate = r.equest.getParameter("txtExpiredDate");
@@ -117,7 +121,6 @@ public class ContractController extends BasicController {
         String paidDate = r.equest.getParameter("txtPaidDate");
         paymentEntity.setPaidDate(DateUtils.stringToTime(paidDate));
         paymentEntity.setAmount(Float.parseFloat(r.equest.getParameter("txtAmount")));
-        paymentEntity.setReceiver(r.equest.getParameter("txtReceiver"));
 
         // Call to business object
         StaffBusiness staffBus = new StaffBusiness();
@@ -135,7 +138,6 @@ public class ContractController extends BasicController {
     public ResponseObject postCancel(R r) {
         // Get cancel contract information
         String contractCode = r.equest.getParameter("txtContractCode");
-        System.out.println(contractCode);
         String inputDate = r.equest.getParameter("txtCancelDate");
         Timestamp cancelDate = DateUtils.stringToTime(inputDate);
         String cancelReason = r.equest.getParameter("txtCancelReason");
