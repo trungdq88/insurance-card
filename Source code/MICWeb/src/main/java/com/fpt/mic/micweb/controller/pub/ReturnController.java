@@ -2,6 +2,7 @@ package com.fpt.mic.micweb.controller.pub;
 
 import com.fpt.mic.micweb.framework.BasicController;
 import com.fpt.mic.micweb.framework.R;
+import com.fpt.mic.micweb.framework.responses.ForwardTo;
 import com.fpt.mic.micweb.framework.responses.JspPage;
 import com.fpt.mic.micweb.framework.responses.ResponseObject;
 import com.fpt.mic.micweb.model.business.RegisterBusiness;
@@ -84,24 +85,19 @@ public class ReturnController extends BasicController {
             /*
             * Calls the DoExpressCheckoutPayment API call
             */
-        String page = "public/return.jsp";
+        String page =(String) session.getAttribute("SUCCESS_URL");
         if (isSet(r.equest.getParameter("page")) && r.equest.getParameter("page").equals("return")) {
             HashMap results = pp.confirmPayment(checkoutDetails, r.equest.getServerName());
             r.equest.setAttribute("payment_method", "");
             String strAck = results.get("ACK").toString().toUpperCase();
             // Thanh toan thanh cong, cap nhat payment, cap nhat contract status, ngay het han
             if (strAck != null && (strAck.equalsIgnoreCase("Success") || strAck.equalsIgnoreCase("SuccessWithWarning"))) {
-                //renew contract by customer
-                r.equest.setAttribute("ack", strAck);
-                r.equest.setAttribute("result", result);
-                String contractCode = (String) session.getAttribute("contractCode");
-                Timestamp newStartDate = (Timestamp) session.getAttribute("newStartDate");
-                Timestamp newExpiredDate = (Timestamp) session.getAttribute("newExpiredDate");
-                ContractDao contractDao = new ContractDao();
-                ContractEntity contract = contractDao.read(contractCode);
-                contract.setStartDate(newStartDate);
-                contract.setExpiredDate(newExpiredDate);
-                contractDao.update(contract);
+                result.putAll(results);
+                result.putAll(checkoutDetails);
+                session.setAttribute("ACK",strAck);
+                session.setAttribute("RESULT", result);
+
+                return new ForwardTo(page);
                 //
 //                result.putAll(results);
 //                result.putAll(checkoutDetails);
@@ -136,7 +132,7 @@ public class ReturnController extends BasicController {
 //
 //                RegisterBusiness registerBusiness = new RegisterBusiness();
 //                registerBusiness.updateContractPayment(contractEntity,paymentEntity);
-                session.invalidate();
+
             } else {
                 //Display a user friendly Error on the page using any of the following error information returned by PayPal
                 String errorCode = results.get("L_ERRORCODE0").toString();

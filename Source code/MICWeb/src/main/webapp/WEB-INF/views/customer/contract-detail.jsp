@@ -149,6 +149,7 @@
                                 <input type="hidden" name="PAYMENTREQUEST_0_AMT" id="paymentATM">
                                 <input type="hidden" name="currencyCodeType" value="USD">
                                 <input type="hidden" name="paymentType" value="Sale">
+                                <input type="hidden" name="successUrl" value="/customer/contract?action=ActiveRenewContract">
 
 
                                 <input type="hidden" name="txtContractCode" value="${contract.contractCode}"/>

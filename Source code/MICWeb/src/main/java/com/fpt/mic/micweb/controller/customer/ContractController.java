@@ -1,7 +1,9 @@
 package com.fpt.mic.micweb.controller.customer;
 
+import com.fpt.mic.micweb.framework.responses.ForwardTo;
 import com.fpt.mic.micweb.framework.responses.RedirectTo;
 import com.fpt.mic.micweb.model.business.CustomerBusniess;
+import com.fpt.mic.micweb.model.dao.ContractDao;
 import com.fpt.mic.micweb.model.dto.CheckoutRequest;
 import com.fpt.mic.micweb.model.entity.ContractEntity;
 import com.fpt.mic.micweb.framework.BasicController;
@@ -13,7 +15,9 @@ import com.fpt.mic.micweb.utils.DateUtils;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpSession;
 import java.sql.Timestamp;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by PhucNguyen on 06/05/15.
@@ -65,6 +69,7 @@ public class ContractController extends BasicController {
         session.setAttribute("contractCode",contractCode);
         session.setAttribute("newStartDate",startDate);
         session.setAttribute("newExpiredDate",expiredDate);
+        session.setAttribute("SUCCESS_URL",r.equest.getParameter("successUrl"));
 
         CheckoutRequest checkoutRequest = new CheckoutRequest();
         checkoutRequest.setPaymentrequest_name(r.equest.getParameter("L_PAYMENTREQUEST_0_NAME0"));
@@ -83,6 +88,30 @@ public class ContractController extends BasicController {
     }
     public ResponseObject getNewContract(R r) {
         return new JspPage("customer/contract-new.jsp");
+    }
+
+    public ResponseObject getActiveRenewContract (R r){
+        String url = "public/return.jsp";
+        HttpSession session = r.equest.getSession(true);
+        Map<String, String> results = new HashMap<String, String>();
+        results.putAll((Map<String, String>) session.getAttribute("RESULT"));
+
+        r.equest.setAttribute("result",results);
+        r.equest.setAttribute("ack",(String) session.getAttribute("ACK"));
+        //renew contract by customer
+
+        String contractCode = (String) session.getAttribute("contractCode");
+        Timestamp newStartDate = (Timestamp) session.getAttribute("newStartDate");
+        Timestamp newExpiredDate = (Timestamp) session.getAttribute("newExpiredDate");
+        ContractDao contractDao = new ContractDao();
+        ContractEntity contract = contractDao.read(contractCode);
+        contract.setStartDate(newStartDate);
+        contract.setExpiredDate(newExpiredDate);
+        contract.setStatus("Ready");
+        contractDao.update(contract);
+        session.invalidate();
+        r.equest.setAttribute("message","Gia han thanh cong.");
+        return new JspPage(url);
     }
 
 }
