@@ -1,6 +1,15 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="java.io.*,java.util.*,java.sql.*"%>
+<%@ page import="javax.servlet.http.*,javax.servlet.*" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql"%>
 <!DOCTYPE html>
 <html lang="en">
+<script src="${pageContext.request.contextPath}/js/jquery.min.js" type="text/javascript"></script>
+<script src="${pageContext.request.contextPath}/js/bootstrap.min.js" type="text/javascript"></script>
+
+<!--   plugins 	 -->
+<script src="${pageContext.request.contextPath}/js/wizard.js"></script>
 
 <head>
     <meta charset="utf-8">
@@ -185,12 +194,17 @@
                         </div>
                         <div class="form-group  col-md-7">
                             <label>Hình Thức Bảo Hiểm *</label>
-                            <select class="form-control" name="ddlContractType">
-                                <option value="1">Xe trên 50cc có tham gia BH tai nạn người trên xe</option>
-                                <option value="2">Xe trên 50cc không tham gia BH tai nạn người trên xe</option>
-                                <option value="3">Xe từ 50cc trở xuống có tham gia BH tai nạn người trên xe</option>
-                                <option value="4">Xe từ 50cc trở xuống không tham gia BH tai nạn người trên xe</option>
-                                <option value="5">Xe mô tô 3 bánh, xe gắn máy và các loại xe cơ giới tương tự</option>
+
+                            <sql:setDataSource var="datasource" driver="com.mysql.jdbc.Driver"
+                                               url="jdbc:mysql://localhost/mic_data"
+                                               user="root"  password=""/>
+                            <sql:query dataSource="${datasource}" var="result">
+                                SELECT * from mic_contract_type;
+                            </sql:query>
+                            <select class="form-control" name="ddlContractType" id="ddlContractType" onchange="updateFee()">
+                                <c:forEach var="row" items="${result.rows}">
+                                    <option name="<c:out value="${row.price_per_year}"/>" value="<c:out value="${row.id}"/>"><c:out value="${row.name}"/></option>
+                                </c:forEach>
                             </select>
                         </div>
                     </div>
@@ -217,12 +231,17 @@
 
     </div>
 
-    <!-- Javascript -->
-    <script src="${pageContext.request.contextPath}/js/jquery.min.js"></script>
-    <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
-    <%--<script src="${pageContext.request.contextPath}/js/jquery.backstretch.min.js"></script>--%>
-    <script src="${pageContext.request.contextPath}/js/retina-1.1.0.min.js"></script>
-    <script src="${pageContext.request.contextPath}/js/scripts.js"></script>
+
 </div>
 </body>
+
+
+<script language="javascript">
+    function updateFee() {
+        var fee = $('#txtFee');
+        var newFee = $('#ddlContractType').option[ $('#ddlContractType').selectedIndex].name;
+        alert(" " +newFee.valueOf);
+        fee.val($('#ddlContractType').option[ $('#ddlContractType').selectedIndex].name);
+    }
+</script>
 </html>
