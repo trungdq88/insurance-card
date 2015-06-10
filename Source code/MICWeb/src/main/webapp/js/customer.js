@@ -37,27 +37,38 @@ $(document).ready(function () {
     /**
      * contract detail
      */
-    $('#rdbReason1').click(function(){
+    $('#rdbReason1').click(function () {
         $('.check').attr('checked', false);
         $('#reason').val('Xe cơ giới bị thu hồi đăng ký');
         $(this).prop('checked', true);
         $('#anotherReason').addClass('hide');
 
     });
-    $('#rdbReason2').click(function(){
+    $('#rdbReason2').click(function () {
         $('.check').attr('checked', false);
         $('#reason').val('Xe cơ giới hết niên hạn');
         $(this).prop('checked', true);
         $('#anotherReason').addClass('hide');
     });
-    $('#rdbAnother').click(function(){
+    $('#rdbAnother').click(function () {
         $('.check').attr('checked', false);
         $('#anotherReason').removeClass('hide');
         $('#reason').val($('#anotherReason').val());
         $(this).prop('checked', true);
     });
     $('#reason').val($('#anotherReason').val());
+    $('#renew').click(function () {
+        var myDate = new Date($('#newStartDate').val());
+        var year = myDate.getFullYear() + 1;
+        var month = (1 + myDate.getMonth()).toString();
+        month = month.length > 1 ? month : '0' + month;
+        var day = myDate.getDate().toString();
+        day = day.length > 1 ? day : '0' + day;
+        $('#newExpiredDate').val(day + '/' + month + '/' + year);
 
+        $('#payment').val((parseFloat($('#payAmount').val())) / 20000);
+        $('#paymentATM').val((parseFloat($('#payAmount').val())) / 20000);
+    });
 });
 
 
