@@ -3,7 +3,6 @@ package com.fpt.mic.micweb.model.dao;
 import com.fpt.mic.micweb.model.dao.common.IncrementDao;
 import com.fpt.mic.micweb.model.dto.ContractSearchResult;
 import com.fpt.mic.micweb.model.entity.ContractEntity;
-import com.fpt.mic.micweb.model.entity.CustomerEntity;
 import com.fpt.mic.micweb.utils.Constrants;
 
 import javax.persistence.EntityManager;
@@ -20,7 +19,7 @@ import java.util.List;
 public class ContractDao extends IncrementDao<ContractEntity, String> {
     public List<ContractEntity> getListContract() {
         EntityManager manager = factory.createEntityManager();
-        Query query = manager.createQuery("SELECT c FROM ContractEntity c");
+        Query query = manager.createQuery("SELECT co FROM ContractEntity co");
         return query.getResultList();
     }
 
@@ -33,7 +32,7 @@ public class ContractDao extends IncrementDao<ContractEntity, String> {
      */
     public List<ContractEntity> getAllContract() {
         EntityManager entity = factory.createEntityManager();
-        String hql = "SELECT c FROM ContractEntity c ORDER BY c.startDate DESC";
+        String hql = "SELECT co FROM ContractEntity co ORDER BY co.contractCode DESC";
         Query query = entity.createQuery(hql);
         return query.getResultList();
     }
@@ -48,8 +47,9 @@ public class ContractDao extends IncrementDao<ContractEntity, String> {
      */
     public List<ContractEntity> getContractByCustomerCode(String custCode) {
         EntityManager entity = factory.createEntityManager();
-        String hql = "FROM ContractEntity AS CO " +
-                "WHERE CO.customerCode = :code";
+        String hql = "SELECT co FROM ContractEntity AS co " +
+                "WHERE co.customerCode = :code " +
+                "ORDER BY co.contractCode DESC";
         Query query = entity.createQuery(hql);
         query.setParameter("code", custCode);
         return query.getResultList();
@@ -80,7 +80,7 @@ public class ContractDao extends IncrementDao<ContractEntity, String> {
         );
         query.setParameter("keyword", "%" + keyword + "%");
         query.setParameter("fieldOrder",
-                        Constrants.ContractStatus.NO_CARD);
+                Constrants.ContractStatus.NO_CARD);
         List<ContractSearchResult> resultList = query.getResultList();
         entityManager.close();
         return resultList;
