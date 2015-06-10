@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="java.io.*,java.util.*,java.sql.*" %>
 <%@ page import="javax.servlet.http.*,javax.servlet.*" %>
+<%@ page import="java.util.Date" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql" %>
 <!DOCTYPE html>
@@ -41,6 +42,7 @@
             autocomplete = new google.maps.places.Autocomplete(
                     /** @type {HTMLInputElement} */(document.getElementById('txtAddress')),
                     {types: ['geocode'], componentRestrictions: {country: 'vn'}});
+
         }
 
         // [START region_geolocation]
@@ -240,7 +242,7 @@
                         <div class="form-group  col-md-5">
                             <label>Ngày bắt đầu *</label>
                             <input type="date" name="txtStartDate"
-                                   class="form-control" id="form-startDate">
+                                   class="form-control" id="dateDefault" value="<%=new Date()%> ">
                         </div>
                         <div class="form-group  col-md-7">
                             <label>Hình Thức Bảo Hiểm *</label>
@@ -254,6 +256,7 @@
                             <select class="form-control" name="ddlContractType" id="ddlContractType" onchange="{
                                 var fee = this.options[this.selectedIndex].innerHTML;
                                 $('#txtFee1').text(fee);
+                                $('#txtFeeInput').val(fee);
                             }">
                                 <c:forEach var="row" items="${result.rows}">
                                     <option label="<c:out value="${row.name}"/>" value="<c:out value="${row.id}"/>"><c:out value="${row.price_per_year}"/></option>
@@ -268,9 +271,9 @@
                         </p>
 
                         <p class="form-control-static">
-                            <label>Phí bảo hiểm: <span id="txtFee1"></span></label>
-                            <b style="color: red">200.000 VND</b>
-                            <input type="hidden" name="txtFee" value="200000">
+                            <label>Phí bảo hiểm: </label>
+                            <b style="color: red"><span id="txtFee1"></span> VND</b>
+                            <input type="hidden" id="txtFeeInput" name="txtFee" value="200000">
                         </p>
                         <input type="hidden" name="action" value="register"/>
                         <input type="submit" class="btn btn-primary btn-lg" value="Tiếp theo"/>
@@ -307,6 +310,29 @@
         alert(" " +newFee.valueOf);
         fee.val($('#ddlContractType').option[ $('#ddlContractType').selectedIndex].name);
     }
+    $('#ddlContractType').change();
+    function setInputDate(_id){
+        var _dat = document.querySelector(_id);
+        var hoy = new Date(),
+                d = hoy.getDate(),
+                m = hoy.getMonth()+1,
+                y = hoy.getFullYear(),
+                data;
+
+        if(d < 10){
+            d = "0"+d;
+        };
+        if(m < 10){
+            m = "0"+m;
+        };
+
+        data = y+"-"+m+"-"+d;
+        console.log(data);
+        _dat.value = data;
+    };
+
+    setInputDate("#dateDefault");
+
 </script>
 </body>
 

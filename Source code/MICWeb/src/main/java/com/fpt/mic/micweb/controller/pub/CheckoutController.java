@@ -56,6 +56,7 @@ public class CheckoutController extends BasicController{
         String cancelURL = r.equest.getScheme() + "://" + r.equest.getServerName() + ":" + r.equest.getServerPort() + r.equest.getContextPath() + "/public/return?action=cancel";
         Map<String, String> checkoutDetails = new HashMap<String, String>();
         checkoutDetails = setRequestParams(r);
+        r.equest.setAttribute("result",checkoutDetails);
         //Redirect to check out page for check out mark
         if (isSet(r.equest.getParameter("checkout"))) {
             session.setAttribute("checkoutDetails", checkoutDetails);
@@ -75,6 +76,10 @@ public class CheckoutController extends BasicController{
             if (isSet(session.getAttribute("EXPRESS_MARK")) && session.getAttribute("EXPRESS_MARK").equals("ECMark")) {
                 checkoutDetails.putAll((Map<String, String>) session.getAttribute("checkoutDetails"));
                 checkoutDetails.putAll(setRequestParams(r));
+                Double paymentAmount =(Double.parseDouble(checkoutDetails.get("PAYMENTREQUEST_0_AMT")))/20000;
+                checkoutDetails.put("PAYMENTREQUEST_0_ITEMAMT", paymentAmount.toString());
+                checkoutDetails.put("PAYMENTREQUEST_0_AMT", paymentAmount.toString());
+                checkoutDetails.put("L_PAYMENTREQUEST_0_AMT", paymentAmount.toString());
                 returnURL = r.equest.getScheme() + "://" + r.equest.getServerName() + ":" + r.equest.getServerPort() + r.equest.getContextPath() + "/public/lightboxreturn?action=view";
                 nvp = paypal.callMarkExpressCheckout(checkoutDetails, returnURL, cancelURL);
                 session.setAttribute("checkoutDetails", checkoutDetails);

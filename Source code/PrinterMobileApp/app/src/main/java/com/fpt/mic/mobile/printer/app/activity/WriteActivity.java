@@ -13,6 +13,7 @@ import com.fpt.mic.mobile.printer.app.R;
 import com.fpt.mic.mobile.printer.app.business.ContractBusiness;
 import com.fpt.mic.mobile.printer.app.dto.ContractSearchResult;
 import com.fpt.mic.mobile.printer.app.entity.CardEntity;
+import com.fpt.mic.mobile.printer.app.utils.DialogUtils;
 
 import java.io.IOException;
 
@@ -81,6 +82,9 @@ public class WriteActivity extends Activity {
 
             // Write information to tag
             writeTag(discoveredTag);
+
+            Toast.makeText(this, "Đang in thẻ...", Toast.LENGTH_SHORT).show();
+
             // Send tag ID to server
             ContractBusiness contractBusiness = new ContractBusiness();
             contractBusiness.updateCardForContract(
@@ -100,8 +104,7 @@ public class WriteActivity extends Activity {
                                 //      => Ask user if they want to deactivate the old card
                                 // 2. This card ID is already exists in the system
                                 //      => Tell user that this card is no longer usable.
-                                Toast.makeText(WriteActivity.this,
-                                        "Thẻ này đã tồn tại trong hệ thống!", Toast.LENGTH_SHORT).show();
+                                DialogUtils.showAlert(WriteActivity.this, "Không thể in thẻ! Thẻ đang được sử dụng bởi một hợp đồng khác!");
                             }
                         }
                     });

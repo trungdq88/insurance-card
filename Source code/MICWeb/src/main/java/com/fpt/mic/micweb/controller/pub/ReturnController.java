@@ -4,6 +4,7 @@ import com.fpt.mic.micweb.framework.BasicController;
 import com.fpt.mic.micweb.framework.R;
 import com.fpt.mic.micweb.framework.responses.ForwardTo;
 import com.fpt.mic.micweb.framework.responses.JspPage;
+import com.fpt.mic.micweb.framework.responses.RedirectTo;
 import com.fpt.mic.micweb.framework.responses.ResponseObject;
 import com.fpt.mic.micweb.model.business.RegisterBusiness;
 import com.fpt.mic.micweb.model.dao.ContractDao;
@@ -97,7 +98,7 @@ public class ReturnController extends BasicController {
                 session.setAttribute("ACK",strAck);
                 session.setAttribute("RESULT", result);
 
-                return new ForwardTo(page);
+                return new RedirectTo(page);
                 //
 //                result.putAll(results);
 //                result.putAll(checkoutDetails);

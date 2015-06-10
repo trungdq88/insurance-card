@@ -427,16 +427,16 @@
                                 <div class="clearfix"></div>
                             </div>
                         </div>
-                        <input type="hidden" name="L_PAYMENTREQUEST_0_NAME0" value="${ddlContractype}">
-                        <input type="hidden" name="L_PAYMENTREQUEST_0_DESC0" value="${ddlContractype}">
-                        <input type="hidden" name="L_PAYMENTREQUEST_0_QTY0" value="1">
-                        <input type="hidden" name="PAYMENTREQUEST_0_ITEMAMT" value="${txtFee/20000}">
-                        <input type="hidden" name="PAYMENTREQUEST_0_TAXAMT" value="0">
-                        <input type="hidden" name="PAYMENTREQUEST_0_AMT" value="${txtFee/20000}">
-                        <input type="hidden" name="currencyCodeType" value="USD">
-                        <input type="hidden" name="paymentType" value="Sale">
+                        <%--<input type="hidden" name="L_PAYMENTREQUEST_0_NAME0" value="${ddlContractype}">--%>
+                        <%--<input type="hidden" name="L_PAYMENTREQUEST_0_DESC0" value="${ddlContractype}">--%>
+                        <%--<input type="hidden" name="L_PAYMENTREQUEST_0_QTY0" value="1">--%>
+                        <%--<input type="hidden" name="PAYMENTREQUEST_0_ITEMAMT" value="${txtFee/20000}">--%>
+                        <%--<input type="hidden" name="PAYMENTREQUEST_0_TAXAMT" value="0">--%>
+                        <%--<input type="hidden" name="PAYMENTREQUEST_0_AMT" value="${txtFee/20000}">--%>
+                        <%--<input type="hidden" name="currencyCodeType" value="USD">--%>
+                        <%--<input type="hidden" name="paymentType" value="Sale">--%>
                         <input type="hidden" name="checkout" value="check out">
-                        <input type="hidden" name="successUrl" value="/public/register?action=activeContract">
+                        <%--<input type="hidden" name="successUrl" value="/public/register?action=activeContract">--%>
                     </form>
                 </div>
                 <!-- wizard container -->
@@ -465,8 +465,6 @@
             $('#txtYearOfMan1').text($('#txtYearOfMan').val());
             $('#txtWeight1').text($('#txtWeight').val());
             $('#txtSeatCapacity1').text($('#txtSeatCapacity').val());
-
-
         }
     </script>
 </div>
