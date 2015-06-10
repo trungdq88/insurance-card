@@ -7,7 +7,8 @@
 
     <c:set var="cont" value="${requestScope.CONTRACT}"/>
     <c:set var="cust" value="${requestScope.CUSTOMER}"/>
-    <c:set var="msg" value="${requestScope.MESSAGE}"/>
+    <c:set var="remain" value="${requestScope.REMAIN}"/>
+    <c:set var="listPayment" value="${requestScope.PAYMENT}"/>
 
     <%@ include file="_shared/navigation.jsp" %>
     <div id="page-wrapper">
@@ -15,9 +16,6 @@
             <div class="col-lg-12">
                 <h1 class="page-header">
                     ${cont.contractCode}
-                    <c:if test="${not empty msg}">
-                        ${msg}
-                    </c:if>
                     <div class="pull-right">
                         <a href="#" class="btn btn-info"
                            data-toggle="modal" data-target="#renew-contract-modal">
@@ -34,53 +32,92 @@
         </div>
         <div class="row">
             <div class="col-lg-12">
-
                 <form class="form-horizontal">
                     <fieldset>
-                        <legend>
-                            Thông tin chung
+                        <legend>Thông tin về dịch vụ bảo hiểm
+                            <div class="pull-right" style="margin-top: -5px;">
+                                <a href="#" class="btn btn-xs btn-success"
+                                   data-toggle="modal" data-target="#card-history-modal">
+                                    <i class="fa fa-pencil"></i>
+                                    Chỉnh sửa
+                                </a>
+                            </div>
                         </legend>
 
-                        <!-- Contract code -->
+                        <!-- Contract code & Contract status -->
                         <div class="form-group">
-                            <label class="col-sm-4 control-label">Mã hợp đồng</label>
+                            <label class="col-sm-3 control-label">Mã hợp đồng</label>
 
-                            <div class="col-sm-6">
+                            <div class="col-sm-2">
                                 <div class="text-value text-primary">
                                     <b>${cont.contractCode}</b>
                                 </div>
+                            </div>
+
+                            <label class="col-sm-4 control-label">Trạng thái</label>
+
+                            <div class="col-sm-2">
+                                <div class="text-value">${cont.status}</div>
                             </div>
                         </div>
 
                         <!-- Contract type -->
                         <div class="form-group">
-                            <label class="col-sm-4 control-label">Loại hợp đồng</label>
+                            <label class="col-sm-3 control-label">Loại hợp đồng</label>
 
                             <div class="col-sm-6">
                                 <div class="text-value">
-                                    ${cont.contractTypeId}
+                                    ${cont.micContractTypeByContractTypeId.name}
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Contract status -->
+                        <!-- Start date -->
                         <div class="form-group">
-                            <label class="col-sm-4 control-label">Trạng thái</label>
+                            <label class="col-sm-3 control-label">Thời điểm có hiệu lực</label>
 
-                            <div class="col-sm-6">
+                            <div class="col-sm-4">
                                 <div class="text-value">
-                                    ${cont.status}
+                                    <fmt:formatDate value="${cont.startDate}" pattern="dd/MM/yyyy"/>
+                                    lúc
+                                    <fmt:formatDate value="${cont.startDate}" type="time"/>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Contract remaining days -->
+                        <!-- Remaining days -->
                         <div class="form-group">
-                            <label class="col-sm-4 control-label">Thời hạn hợp đồng còn</label>
+                            <label class="col-sm-3 control-label">Thời hạn hợp đồng còn</label>
 
-                            <div class="col-sm-6">
+                            <div class="col-sm-4">
                                 <div class="text-value">
-                                    <%--Contract remaining days--%>
+                                    ${remain} ngày
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Expired date -->
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Thời điểm hết hiệu lực</label>
+
+                            <div class="col-sm-4">
+                                <div class="text-value">
+                                    <fmt:formatDate value="${cont.expiredDate}" pattern="dd/MM/yyyy"/>
+                                    lúc
+                                    <fmt:formatDate value="${cont.expiredDate}" type="time"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Contract fee -->
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Phí bảo hiểm (VNĐ)</label>
+
+                            <div class="col-sm-3">
+                                <div class="text-value">
+                                    <fmt:setLocale value="vi_VN"/>
+                                    <fmt:formatNumber value="${cont.contractFee}" type="currency"
+                                                      maxFractionDigits="0"/>
                                 </div>
                             </div>
                         </div>
@@ -133,7 +170,11 @@
 
                                     <div class="col-sm-3">
                                         <div class="text-value">
-                                            <b><a href="detail-customer.html">${cust.name}</a></b>
+                                            <b>
+                                                <a href="${pageContext.request.contextPath}/staff/customer?action=detail&code=${cust.customerCode}">
+                                                    ${cust.name}
+                                                </a>
+                                            </b>
                                         </div>
                                     </div>
                                     <label class="col-sm-3 control-label">Số CMND / Hộ chiếu</label>
@@ -265,110 +306,30 @@
                                 <div class="form-group">
                                     <label class="col-sm-3 control-label">Năm sản xuất</label>
 
-                                    <div class="col-sm-2">
+                                    <div class="col-sm-1">
                                         <div class="text-value">
                                             ${cont.yearOfManufacture}
                                         </div>
                                     </div>
 
-                                    <label class="col-sm-3 control-label">Tự trọng</label>
+                                    <label class="col-sm-2 control-label">Tự trọng</label>
 
-                                    <div class="col-sm-2">
+                                    <div class="col-sm-1">
                                         <div class="text-value">
                                             ${cont.weight}
                                         </div>
                                     </div>
-                                </div>
 
-                                <!-- Seat capacity -->
-                                <div class="form-group">
                                     <label class="col-sm-3 control-label">Số người được chở</label>
 
-                                    <div class="col-sm-2">
+                                    <div class="col-sm-1">
                                         <div class="text-value">
                                             ${cont.seatCapacity}
                                         </div>
                                     </div>
                                 </div>
-
-                                <!-- Certification image -->
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label">Ảnh chụp cà-vẹt xe</label>
-
-                                    <div class="col-sm-6">
-                                        <div class="text-value">
-                                            <a href="${pageContext.request.contextPath}/">
-                                                ${cont.certImage}
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
                             </fieldset>
                             <%--/Vehicle information--%>
-                            <br/>
-
-                            <fieldset>
-                                <legend>Thông tin về dịch vụ bảo hiểm
-                                    <div class="pull-right" style="margin-top: -5px;">
-                                        <a href="#" class="btn btn-xs btn-success"
-                                           data-toggle="modal" data-target="#card-history-modal">
-                                            <i class="fa fa-pencil"></i>
-                                            Chỉnh sửa
-                                        </a>
-                                    </div>
-                                </legend>
-
-                                <!-- Start date -->
-                                <div class="form-group">
-                                    <label class="col-sm-5 control-label">Thời điểm có hiệu lực</label>
-
-                                    <div class="col-sm-4">
-                                        <div class="text-value">
-                                            <fmt:formatDate value="${cont.startDate}" pattern="dd/MM/yyyy"/>
-                                            lúc
-                                            <fmt:formatDate value="${cont.startDate}" type="time"/>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- Contract term -->
-                                <div class="form-group">
-                                    <label class="col-sm-5 control-label">Thời hạn hợp đồng</label>
-
-                                    <div class="col-sm-4">
-                                        <div class="text-value">
-                                            <%--Contract term--%>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- Expired date -->
-                                <div class="form-group">
-                                    <label class="col-sm-5 control-label">Thời điểm hết hiệu lực</label>
-
-                                    <div class="col-sm-4">
-                                        <div class="text-value">
-                                            <fmt:formatDate value="${cont.expiredDate}" pattern="dd/MM/yyyy"/>
-                                            lúc
-                                            <fmt:formatDate value="${cont.expiredDate}" type="time"/>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- Contract fee -->
-                                <div class="form-group">
-                                    <label class="col-sm-5 control-label">Phí bảo hiểm (VNĐ)</label>
-
-                                    <div class="col-sm-4">
-                                        <div class="text-value">
-                                            <fmt:setLocale value="vi_VN"/>
-                                            <fmt:formatNumber value="${cont.contractFee}" type="currency"
-                                                              maxFractionDigits="0"/>
-                                        </div>
-                                    </div>
-                                </div>
-                            </fieldset>
-                            <%--/Contract information--%>
                             <br/>
 
                             <fieldset>
@@ -382,38 +343,38 @@
                                     </div>
                                 </legend>
 
-                                <!-- Paid amount -->
-                                <div class="form-group">
-                                    <label class="col-sm-5 control-label">Số tiền phí đã trả</label>
-
-                                    <div class="col-sm-4">
-                                        <div class="text-value">
-                                            600.000
-                                        </div>
-                                    </div>
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-bordered table-hover">
+                                        <thead>
+                                        <th>#</th>
+                                        <th>Mã giao dịch</th>
+                                        <th>Thời gian</th>
+                                        <th>Hình thức</th>
+                                        <th>Dịch vụ</th>
+                                        <th>Số tiền</th>
+                                        <th>Người nhận</th>
+                                        <th>Mã PayPal</th>
+                                        </thead>
+                                        <tbody>
+                                        <c:forEach var="payment" items="${listPayment}" varStatus="counter">
+                                            <td>${counter.count}</td>
+                                            <td>${payment.id}</td>
+                                            <td>
+                                                <fmt:formatDate value="${payment.paidDate}" pattern="dd/MM/yyyy"/>
+                                            </td>
+                                            <td>${payment.paymentMethod}</td>
+                                            <td>${payment.content}</td>
+                                            <td>
+                                                <fmt:formatNumber value="${payment.amount}"
+                                                                  type="currency" maxFractionDigits="0"/>
+                                            </td>
+                                            <td>${payment.receiver}</td>
+                                            <td>${payment.paypalTransId}</td>
+                                        </c:forEach>
+                                        </tbody>
+                                    </table>
                                 </div>
 
-                                <!-- Paid date -->
-                                <div class="form-group">
-                                    <label class="col-sm-5 control-label">Ngày nộp phí</label>
-
-                                    <div class="col-sm-4">
-                                        <div class="text-value">
-                                            11/06/2015
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- Receiver -->
-                                <div class="form-group">
-                                    <label class="col-sm-5 control-label">Người nhận</label>
-
-                                    <div class="col-sm-4">
-                                        <div class="text-value">
-
-                                        </div>
-                                    </div>
-                                </div>
                             </fieldset>
                             <%--/Payment information--%>
                         </form>
@@ -421,6 +382,14 @@
                     <div role="tabpanel" class="tab-pane" id="compensations">...</div>
                     <div role="tabpanel" class="tab-pane" id="accidents">...</div>
                     <div role="tabpanel" class="tab-pane" id="punishments">...</div>
+                </div>
+                <br/>
+                <br/>
+                <div class="text-center">
+                    <a href="${pageContext.request.contextPath}/staff/contract" type="button" class="btn btn-success">
+                        <i class="fa fa-arrow-left"></i>
+                        Danh sách hợp đồng
+                    </a>
                 </div>
                 <br/>
                 <br/>
@@ -469,6 +438,18 @@
                                 </div>
                             </div>
                         </div>
+
+                        <!-- Renew fee -->
+                        <div class="form-group">
+                            <label class="col-sm-5 control-label">Phí gia hạn *</label>
+
+                            <div class="col-sm-4">
+                                <div class="text-value">
+                                    <fmt:formatNumber value="${cont.micContractTypeByContractTypeId.pricePerYear}"
+                                                      type="currency" maxFractionDigits="0"/>
+                                </div>
+                            </div>
+                        </div>
                     </fieldset>
                     <%--/Contract information--%>
                     <br/>
@@ -482,24 +463,8 @@
 
                             <div class="col-sm-4">
                                 <input id="paidDate" name="txtPaidDate" type="date" class="form-control input-md">
-                            </div>
-                        </div>
-
-                        <!-- Paid amount -->
-                        <div class="form-group">
-                            <label class="col-sm-5 control-label" for="amount">Số tiền phí đã trả (VNĐ) *</label>
-
-                            <div class="col-sm-3">
-                                <input id="amount" name="txtAmount" type="text" class="form-control input-md">
-                            </div>
-                        </div>
-
-                        <!-- Receiver -->
-                        <div class="form-group">
-                            <label class="col-sm-5 control-label" for="receiver">Người nhận</label>
-
-                            <div class="col-sm-4">
-                                <input id="receiver" name="txtReceiver" type="text" class="form-control input-md">
+                                <input value="${cont.micContractTypeByContractTypeId.pricePerYear}"
+                                       type="hidden" name="txtAmount"/>
                             </div>
                         </div>
                     </fieldset>
@@ -580,5 +545,16 @@
     <!-- /.modal-dialog -->
 </div>
 <!-- /.modal -->
+
+<script>
+    $(document).ready(function () {
+        $('#expiredDate').val(getCurrentDateInNextYear());
+        document.getElementById("expiredDate").min = getCurrentDate();
+        $('#paidDate').val(getCurrentDate());
+        document.getElementById("paidDate").min = getCurrentDateInLastWeek();
+        $('#cancelDate').val(getCurrentDate());
+        document.getElementById("cancelDate").min = getCurrentDateInLastWeek();
+    });
+</script>
 
 <%@ include file="_shared/footer.jsp" %>

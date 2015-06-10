@@ -50,7 +50,7 @@
                             <th>Mã hợp đồng</th>
                             <th>Tên khách hàng</th>
                             <th>Ngày bắt đầu</th>
-                            <th>Thời hạn</th>
+                            <th>Ngày kết thúc</th>
                             <th>Trạng thái</th>
                         </tr>
                         </thead>
@@ -64,12 +64,16 @@
                                     </a>
                                 </td>
                                 <td>
-                                    <a href="detail-customer.html">${cont.micCustomerByCustomerCode.name}</a>
+                                    <a href="${pageContext.request.contextPath}/staff/customer?action=detail&code=${cont.customerCode}">
+                                        ${cont.micCustomerByCustomerCode.name}
+                                    </a>
                                 </td>
                                 <td>
                                     <fmt:formatDate value="${cont.startDate}" pattern="dd/MM/yyyy" />
                                 </td>
-                                <td>1 năm</td>
+                                <td>
+                                    <fmt:formatDate value="${cont.expiredDate}" pattern="dd/MM/yyyy" />
+                                </td>
                                 <td>${cont.status}</td>
                             </tr>
                         </c:forEach>
@@ -129,7 +133,7 @@
                         Hợp đồng đã hết hạn và không có giá trị. Khánh hàng phải gia hạn để tiếp tục sử dụng chương trình bảo hiểm.
                     </li>
                     <li>
-                        <span class="label label-dark">Đã huỷ hợp đồng</span>
+                        <span class="label label-dark">Đã huỷ</span>
                         Hợp đồng bị huỷ. Khánh hàng muốn tiếp tục sử dụng cần phải đăng ký hợp đồng mới.
                     </li>
                 </ul>

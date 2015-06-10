@@ -16,6 +16,6 @@ public class CompensationController extends BasicController {
         return new JspPage("staff/compensations.jsp");
     }
     public ResponseObject getDetail(R r) {
-        return new JspPage("staff/detail-compensation.jsp");
+        return new JspPage("staff/compensation-detail.jsp");
     }
 }
