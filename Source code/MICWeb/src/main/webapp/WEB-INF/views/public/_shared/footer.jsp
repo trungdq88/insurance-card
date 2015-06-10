@@ -17,10 +17,9 @@
   <div class="footer-center">
     <div>
       <i class="fa fa-map-marker"></i>
-
       <p>
-        <span>Tòa nhà Innovation, Công viên phần mềm Quang Trung</span>
-        P. Tân Chánh Hiệp, Quận 12, TP. Hồ Chí Minh.
+        <span>Tòa nhà Innovation, Công viên phần mềm Quang Trung
+        P. Tân Chánh Hiệp, Quận 12, TP. Hồ Chí Minh.</span>
       </p>
     </div>
     <div>

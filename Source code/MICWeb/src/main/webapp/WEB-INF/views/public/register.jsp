@@ -33,7 +33,8 @@
                                 <li><a href="#personal" data-toggle="tab"><strong>1. Thông tin cá nhân </strong></a>
                                 </li>
                                 <li><a href="#vehicle" data-toggle="tab"><strong>2. Thông tin xe </strong></a></li>
-                                <li><a href="#contract" onclick="update()" data-toggle="tab"><strong>3. Tạo hợp đồng và thanh toán </strong></a>
+                                <li><a href="#contract" onclick="update()" data-toggle="tab"><strong>3. Tạo hợp đồng và
+                                    thanh toán </strong></a>
                                 </li>
                             </ul>
 
@@ -442,29 +443,31 @@
         </div>
         <!-- row -->
     </div>
-<script language="javascript">
-    function update() {
-        $('#txtName1').text($('#txtName').val());
-        $('#txtAddress1').text($('#txtAddress').val());
-        $('#txtEmail1').text($('#txtEmail').val());
-        $('#txtPhone1').text($('#txtPhone').val());
-        $('#txtPersonalId1').text($('#txtPersonalId').val());
-        $('#txtStartDate1').text($('#txtStartDate').val());
-        $('#ddlContractType1').text($('#ddlContractType option:selected').text());
-        $('#txtFee1').text($('#txtFee').val());
-        $('#txtPlate1').text($('#txtPlate').val());
-        $('#txtBrand1').text($('#txtBrand').val());
-        $('#txtModel1').text($('#txtModel').val());
-        $('#txtType1').text($('#txtType').val());
-        $('#txtColor1').text($('#txtColor').val());
-        $('#txtEngine1').text($('#txtEngine').val());
-        $('#txtChassis1').text($('#txtChassis').val());
-        $('#txtCapacity1').text($('#txtCapacity').val());
-        $('#txtYearOfMan1').text($('#txtYearOfMan').val());
-        $('#txtWeight1').text($('#txtWeight').val());
-        $('#txtSeatCapacity1').text($('#txtSeatCapacity').val());
+    <script language="javascript">
+        function update() {
+            $('#txtName1').text($('#txtName').val());
+            $('#txtAddress1').text($('#txtAddress').val());
+            $('#txtEmail1').text($('#txtEmail').val());
+            $('#txtPhone1').text($('#txtPhone').val());
+            $('#txtPersonalId1').text($('#txtPersonalId').val());
+            $('#txtStartDate1').text($('#txtStartDate').val());
+            $('#ddlContractType1').text($('#ddlContractType option:selected').text());
+            $('#txtFee1').text($('#txtFee').val());
+            $('#txtPlate1').text($('#txtPlate').val());
+            $('#txtBrand1').text($('#txtBrand').val());
+            $('#txtModel1').text($('#txtModel').val());
+            $('#txtType1').text($('#txtType').val());
+            $('#txtColor1').text($('#txtColor').val());
+            $('#txtEngine1').text($('#txtEngine').val());
+            $('#txtChassis1').text($('#txtChassis').val());
+            $('#txtCapacity1').text($('#txtCapacity').val());
+            $('#txtYearOfMan1').text($('#txtYearOfMan').val());
+            $('#txtWeight1').text($('#txtWeight').val());
+            $('#txtSeatCapacity1').text($('#txtSeatCapacity').val());
 
 
-    }
-</script>
+        }
+    </script>
+</div>
+</body>
 <%@ include file="_shared/footer.jsp" %>

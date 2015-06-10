@@ -1,8 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="java.io.*,java.util.*,java.sql.*"%>
+<%@ page import="java.io.*,java.util.*,java.sql.*" %>
 <%@ page import="javax.servlet.http.*,javax.servlet.*" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql" %>
 <!DOCTYPE html>
 <html lang="en">
 <script src="${pageContext.request.contextPath}/js/jquery.min.js" type="text/javascript"></script>
@@ -18,11 +18,12 @@
     <title>MIC - Bảo hiểm trực tuyến</title>
 
     <!-- CSS -->
-    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/fonts.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/font-awesome.min.css">
     <%--<link rel="stylesheet" href="${pageContext.request.contextPath}/css/form-elements.css">--%>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/home-style.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/footer-distributed-with-address-and-phones.css">
     <!-- Google API Autocomplete for address-->
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places"></script>
     <script>
@@ -197,13 +198,15 @@
 
                             <sql:setDataSource var="datasource" driver="com.mysql.jdbc.Driver"
                                                url="jdbc:mysql://localhost/mic_data"
-                                               user="root"  password=""/>
+                                               user="root" password=""/>
                             <sql:query dataSource="${datasource}" var="result">
                                 SELECT * from mic_contract_type;
                             </sql:query>
-                            <select class="form-control" name="ddlContractType" id="ddlContractType" onchange="updateFee()">
+                            <select class="form-control" name="ddlContractType" id="ddlContractType"
+                                    onchange="updateFee()">
                                 <c:forEach var="row" items="${result.rows}">
-                                    <option name="<c:out value="${row.price_per_year}"/>" value="<c:out value="${row.id}"/>"><c:out value="${row.name}"/></option>
+                                    <option name="<c:out value="${row.price_per_year}"/>"
+                                            value="<c:out value="${row.id}"/>"><c:out value="${row.name}"/></option>
                                 </c:forEach>
                             </select>
                         </div>
@@ -211,7 +214,7 @@
                     <div class="form-group  col-md-12">
                         <p class="form-control-static">
                             <label>Thời hạn:</label>
-                            01 năm kể từ khi cấp GCNBH và/hoặc sau thời hạn thanh toán phí
+                            01 năm kể từ khi cấp
                         </p>
 
                         <p class="form-control-static">
@@ -225,23 +228,35 @@
 
                 </form>
 
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                &nbsp;
+                &nbsp;
+                &nbsp;
+                <br/>
+                <br/>
+                <br/>
             </div>
         </div>
-
 
     </div>
 
 
 </div>
-</body>
-
 
 <script language="javascript">
     function updateFee() {
         var fee = $('#txtFee');
-        var newFee = $('#ddlContractType').option[ $('#ddlContractType').selectedIndex].name;
-        alert(" " +newFee.valueOf);
-        fee.val($('#ddlContractType').option[ $('#ddlContractType').selectedIndex].name);
+        var newFee = $('#ddlContractType').option[$('#ddlContractType').selectedIndex].name;
+        alert(" " + newFee.valueOf);
+        fee.val($('#ddlContractType').option[$('#ddlContractType').selectedIndex].name);
     }
 </script>
-</html>
+</body>
+
+<%@ include file="_shared/footer.jsp" %>
