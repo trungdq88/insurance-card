@@ -82,6 +82,9 @@ public class WriteActivity extends Activity {
 
             // Write information to tag
             writeTag(discoveredTag);
+
+            Toast.makeText(this, "Đang in thẻ...", Toast.LENGTH_SHORT).show();
+
             // Send tag ID to server
             ContractBusiness contractBusiness = new ContractBusiness();
             contractBusiness.updateCardForContract(
