@@ -10,6 +10,7 @@ import com.fpt.mic.micweb.model.business.RegisterBusiness;
 import com.fpt.mic.micweb.model.dao.ContractDao;
 import com.fpt.mic.micweb.model.dto.CheckoutRequest;
 import com.fpt.mic.micweb.model.dto.PayPal;
+import com.fpt.mic.micweb.model.dto.RegisterInformation;
 import com.fpt.mic.micweb.model.entity.ContractEntity;
 import com.fpt.mic.micweb.model.entity.CustomerEntity;
 import com.fpt.mic.micweb.model.entity.PaymentEntity;
@@ -85,26 +86,29 @@ public class RegisterController extends BasicController {
 
         // Call to business object
         RegisterBusiness registerBusiness = new RegisterBusiness();
-        String result = registerBusiness.registerNewContract(customerEntity, contractEntity);
+        RegisterInformation register = registerBusiness.registerNewContract(customerEntity, contractEntity);
 
-        if (result != null) {
+        if (register != null) {
             HttpSession session = r.equest.getSession();
-            session.setAttribute("CONTRACT_CODE",result);
-            session.setAttribute("SUCCESS_URL",r.equest.getParameter("successUrl"));
+            session.setAttribute("CONTRACT_CODE", register.getContractEntity().getContractCode());
+            session.setAttribute("SUCCESS_URL", "/public/register?action=activeContract");
+
+            r.equest.setAttribute("register", register);
+            return new JspPage("public/register-payment.jsp");
 
             // Create new checkout request
-            CheckoutRequest checkoutRequest = new CheckoutRequest();
-            checkoutRequest.setPaymentrequest_name(r.equest.getParameter("L_PAYMENTREQUEST_0_NAME0"));
-            checkoutRequest.setPaymentrequest_desc(r.equest.getParameter("L_PAYMENTREQUEST_0_DESC0"));
-            checkoutRequest.setPaymentrequest_qty(r.equest.getParameter("L_PAYMENTREQUEST_0_QTY0"));
-            checkoutRequest.setPaymentrequest_itemamt(r.equest.getParameter("PAYMENTREQUEST_0_ITEMAMT"));
-            checkoutRequest.setPaymentrequest_taxamt(r.equest.getParameter("PAYMENTREQUEST_0_TAXAMT"));
-            checkoutRequest.setPaymentrequest_amt(r.equest.getParameter("PAYMENTREQUEST_0_AMT"));
-            checkoutRequest.setCurrencycodetype(r.equest.getParameter("currencyCodeType"));
-            checkoutRequest.setPaymenttype(r.equest.getParameter("paymentType"));
-            checkoutRequest.setPaymentrequest_amt_l(r.equest.getParameter("PAYMENTREQUEST_0_AMT"));
-
-            return new RedirectTo("/public/checkout?action=checkout&checkout=true&" + checkoutRequest.getQueryString());
+//            CheckoutRequest checkoutRequest = new CheckoutRequest();
+//            checkoutRequest.setPaymentrequest_name(r.equest.getParameter("L_PAYMENTREQUEST_0_NAME0"));
+//            checkoutRequest.setPaymentrequest_desc(r.equest.getParameter("L_PAYMENTREQUEST_0_DESC0"));
+//            checkoutRequest.setPaymentrequest_qty(r.equest.getParameter("L_PAYMENTREQUEST_0_QTY0"));
+//            checkoutRequest.setPaymentrequest_itemamt(r.equest.getParameter("PAYMENTREQUEST_0_ITEMAMT"));
+//            checkoutRequest.setPaymentrequest_taxamt(r.equest.getParameter("PAYMENTREQUEST_0_TAXAMT"));
+//            checkoutRequest.setPaymentrequest_amt(r.equest.getParameter("PAYMENTREQUEST_0_AMT"));
+//            checkoutRequest.setCurrencycodetype(r.equest.getParameter("currencyCodeType"));
+//            checkoutRequest.setPaymenttype(r.equest.getParameter("paymentType"));
+//            checkoutRequest.setPaymentrequest_amt_l(r.equest.getParameter("PAYMENTREQUEST_0_AMT"));
+//
+//            return new RedirectTo("/public/checkout?action=checkout&checkout=true&" + checkoutRequest.getQueryString());
         }
 
         r.equest.setAttribute("error", "Something wrong");
@@ -117,8 +121,8 @@ public class RegisterController extends BasicController {
         Map<String, String> results = new HashMap<String, String>();
         results.putAll((Map<String, String>) session.getAttribute("RESULT"));
 
-        r.equest.setAttribute("result",results);
-        r.equest.setAttribute("ack",(String) session.getAttribute("ACK"));
+        r.equest.setAttribute("result", results);
+        r.equest.setAttribute("ack", (String) session.getAttribute("ACK"));
         ContractEntity contractEntity = new ContractEntity();
         ContractDao contractDao = new ContractDao();
         PaymentEntity paymentEntity = new PaymentEntity();
