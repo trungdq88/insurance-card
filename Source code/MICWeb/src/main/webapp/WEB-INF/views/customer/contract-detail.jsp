@@ -28,10 +28,12 @@
                          <button type="submit" class="btn btn-info" data-toggle="modal" id="renew"
                                  data-target=".renew-contract-modal"><i class="fa fa-refresh"></i> Gia Hạn
                          </button>
+                       <c:if test="${!contract.status.equalsIgnoreCase('Request cancel')}">
+                           <button type="button" class="btn btn-danger" data-toggle="modal"
+                                   data-target=".bs-example-modal-lg"><i class="fa fa-times"></i> Hủy Hợp Đồng
+                           </button>
+                       </c:if>
 
-                         <button type="button" class="btn btn-danger" data-toggle="modal"
-                                 data-target=".bs-example-modal-lg"><i class="fa fa-times"></i> Hủy Hợp Đồng
-                         </button>
 
                      </span>
                 </h2>
@@ -83,8 +85,10 @@
                             <div class="modal-footer">
                                 <input type="hidden" name="action" value="CancelContract"/>
                                 <input class="hide" name="txtReason" id="reason">
-                                <input type="submit" class="btn btn-primary" name="Xác Nhận" value="Xác Nhận"/>
-                                <input type="hidden" name="contractcode" value="${contract.contractCode}"/>
+                                <input id="deleteContract" type="submit" class="btn btn-primary" name="Xác Nhận"
+                                       value="Xác Nhận"/>
+                                <input type="hidden" id="contractId" name="contractcode"
+                                       value="${contract.contractCode}"/>
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Hủy Bỏ</button>
                             </div>
                         </div>
@@ -122,14 +126,16 @@
                                         <label class="col-sm-5 text-right">Gia hạn đến </label>
 
                                         <div class="col-sm-4">
-                                            <input id="newExpiredDate" style="border:none; background-color: white" type="datetime" disabled="disabled"/>
+                                            <input id="newExpiredDate" style="border:none; background-color: white"
+                                                   type="datetime" disabled="disabled"/>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-sm-5 text-right">Phí thanh toán </label>
 
                                         <div class="col-sm-4">
-                                            <input style="border:none; background-color: white" type="datetime" id="payAmount" disabled="disabled"
+                                            <input style="border:none; background-color: white" type="datetime"
+                                                   id="payAmount" disabled="disabled"
                                                    value="${contract.contractFee} VNĐ"/>
                                         </div>
 
@@ -148,7 +154,8 @@
                                 <input type="hidden" name="PAYMENTREQUEST_0_AMT" id="paymentATM">
                                 <input type="hidden" name="currencyCodeType" value="USD">
                                 <input type="hidden" name="paymentType" value="Sale">
-                                <input type="hidden" name="successUrl" value="/customer/contract?action=ActiveRenewContract">
+                                <input type="hidden" name="successUrl"
+                                       value="/customer/contract?action=ActiveRenewContract">
 
 
                                 <input type="hidden" name="txtContractCode" value="${contract.contractCode}"/>

@@ -57,6 +57,16 @@ $(document).ready(function () {
         $(this).prop('checked', true);
     });
     $('#reason').val($('#anotherReason').val());
+    $('#deleteContract').click(function () {
+        if ($('#rdbAnother').is(":checked")) {
+            if ($.trim($('#anotherReason').val()) == 0) {
+                alert('Vui lòng nhập lí do hủy hợp đồng trước khi xác nhận hủy');
+                return false;
+            }
+        }
+    });
+
+
     $('#renew').click(function () {
         var myDate = new Date($('#newStartDate').val());
         var year = myDate.getFullYear() + 1;
