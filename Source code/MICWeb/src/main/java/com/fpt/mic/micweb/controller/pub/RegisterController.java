@@ -70,9 +70,23 @@ public class RegisterController extends BasicController {
         contractEntity.setEngine(r.equest.getParameter("txtEngine"));
         contractEntity.setChassis(r.equest.getParameter("txtChassis"));
         contractEntity.setCapacity(r.equest.getParameter("txtCapacity"));
-        contractEntity.setYearOfManufacture(Integer.parseInt(r.equest.getParameter("txtYearOfMan")));
-        contractEntity.setWeight(Integer.parseInt(r.equest.getParameter("txtWeight")));
-        contractEntity.setSeatCapacity(Integer.parseInt(r.equest.getParameter("txtSeatCapacity")));
+
+        try {
+            contractEntity.setYearOfManufacture(Integer.parseInt(r.equest.getParameter("txtYearOfMan")));
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
+        try {
+            contractEntity.setWeight(Integer.parseInt(r.equest.getParameter("txtWeight")));
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
+        try {
+            contractEntity.setSeatCapacity(Integer.parseInt(r.equest.getParameter("txtSeatCapacity")));
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
+
         contractEntity.setContractFee(Float.parseFloat(r.equest.getParameter("txtFee")));
 
         // kiem tra payment success?, neu thanh cong thi contract status la Ready, fail thi Pending
@@ -128,7 +142,7 @@ public class RegisterController extends BasicController {
         PaymentEntity paymentEntity = new PaymentEntity();
 
         // get contract just added by contract_code
-        String code =(String) session.getAttribute("CONTRACT_CODE");
+        String code = (String) session.getAttribute("CONTRACT_CODE");
         contractEntity = contractDao.read(code);
         DateUtils date = new DateUtils();
 
