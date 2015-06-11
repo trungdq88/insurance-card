@@ -10,6 +10,7 @@ import com.fpt.mic.micweb.framework.BasicController;
 import com.fpt.mic.micweb.framework.responses.JspPage;
 import com.fpt.mic.micweb.framework.R;
 import com.fpt.mic.micweb.framework.responses.ResponseObject;
+import com.fpt.mic.micweb.model.entity.PaymentEntity;
 import com.fpt.mic.micweb.utils.DateUtils;
 
 import javax.servlet.annotation.WebServlet;
@@ -47,7 +48,7 @@ public class ContractController extends BasicController {
         String contractcode = r.equest.getParameter("contractcode");
         String reasoncancel = r.equest.getParameter("txtReason");
         if (reasoncancel != null && reasoncancel != "") {
-            if (customerBusiness.CancelContract(contractcode, reasoncancel, 1) == true) {
+            if (customerBusiness.CancelContract(contractcode, reasoncancel) == true) {
                 result = "Yêu Cầu Hủy Hợp Đồng Thành Công ";
             }
 
@@ -67,10 +68,10 @@ public class ContractController extends BasicController {
 
 
         HttpSession session = r.equest.getSession();
-        session.setAttribute("contractCode",contractCode);
-        session.setAttribute("newStartDate",startDate);
-        session.setAttribute("newExpiredDate",newExpiredDate);
-        session.setAttribute("SUCCESS_URL",r.equest.getParameter("successUrl"));
+        session.setAttribute("contractCode", contractCode);
+        session.setAttribute("newStartDate", startDate);
+        session.setAttribute("newExpiredDate", newExpiredDate);
+        session.setAttribute("SUCCESS_URL", r.equest.getParameter("successUrl"));
 
         CheckoutRequest checkoutRequest = new CheckoutRequest();
         checkoutRequest.setPaymentrequest_name(r.equest.getParameter("L_PAYMENTREQUEST_0_NAME0"));
@@ -82,7 +83,6 @@ public class ContractController extends BasicController {
         checkoutRequest.setCurrencycodetype(r.equest.getParameter("currencyCodeType"));
         checkoutRequest.setPaymenttype(r.equest.getParameter("paymentType"));
         checkoutRequest.setPaymentrequest_amt_l(r.equest.getParameter("PAYMENTREQUEST_0_AMT"));
-
 
 
         return new RedirectTo("/public/checkout?action=checkout&checkout=true&" + checkoutRequest.getQueryString());
@@ -102,17 +102,36 @@ public class ContractController extends BasicController {
         r.equest.setAttribute("ack", (String) session.getAttribute("ACK"));
         //renew contract by customer
 
+        java.util.Date date = new java.util.Date();
+
         String contractCode = (String) session.getAttribute("contractCode");
         Timestamp newStartDate = (Timestamp) session.getAttribute("newStartDate");
         Timestamp newExpiredDate = (Timestamp) session.getAttribute("newExpiredDate");
-        ContractDao contractDao = new ContractDao();
-        ContractEntity contract = contractDao.read(contractCode);
+
+        CustomerBusniess customerBusiness = new CustomerBusniess();
+
+        ContractEntity contract = customerBusiness.getContractDetail(contractCode);
         contract.setStartDate(newStartDate);
         contract.setExpiredDate(newExpiredDate);
         contract.setStatus("Ready");
-        contractDao.update(contract);
+
+        PaymentEntity payment = new PaymentEntity();
+        payment.setPaidDate(new Timestamp(date.getTime()));
+        payment.setPaymentMethod("PayPal payment");
+        payment.setContent("Gia Hạn Hợp Đồng");
+        payment.setAmount(Float.parseFloat(results.get("PAYMENTINFO_0_AMT").toString()));
+        payment.setPaypalTransId(results.get("PAYMENTINFO_0_TRANSACTIONID").toString());
+        payment.setContractCode(contract.getContractCode());
+        boolean result = customerBusiness.RenewContract(contract, payment);
+        if(result == true){
+            r.equest.setAttribute("message", "Gia hạn thành công.");
+        }
+        else {
+            r.equest.setAttribute("message", "Gia hạn thất bại.");
+        }
+        // insert information in payment table
         session.invalidate();
-        r.equest.setAttribute("message", "Gia han thanh cong.");
+
         return new JspPage(url);
     }
 
