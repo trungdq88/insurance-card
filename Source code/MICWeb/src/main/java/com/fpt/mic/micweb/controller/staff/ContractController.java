@@ -6,6 +6,7 @@ import com.fpt.mic.micweb.framework.responses.JspPage;
 import com.fpt.mic.micweb.framework.responses.ResponseObject;
 import com.fpt.mic.micweb.model.business.StaffBusiness;
 import com.fpt.mic.micweb.model.entity.ContractEntity;
+import com.fpt.mic.micweb.model.entity.ContractTypeEntity;
 import com.fpt.mic.micweb.model.entity.CustomerEntity;
 import com.fpt.mic.micweb.model.entity.PaymentEntity;
 import com.fpt.mic.micweb.utils.DateUtils;
@@ -54,6 +55,9 @@ public class ContractController extends BasicController {
     }
 
     public ResponseObject getCreate(R r) {
+        StaffBusiness staffBus = new StaffBusiness();
+        List<ContractTypeEntity> listContractType = staffBus.getAllContractType();
+        r.equest.setAttribute("CONTRACTTYPE", listContractType);
         return new JspPage("staff/create-contract.jsp");
     }
 

@@ -1,12 +1,10 @@
 package com.fpt.mic.micweb.model.business;
 
 import com.fpt.mic.micweb.model.dao.ContractDao;
+import com.fpt.mic.micweb.model.dao.ContractTypeDao;
 import com.fpt.mic.micweb.model.dao.CustomerDao;
 import com.fpt.mic.micweb.model.dao.PaymentDao;
-import com.fpt.mic.micweb.model.entity.CardEntity;
-import com.fpt.mic.micweb.model.entity.ContractEntity;
-import com.fpt.mic.micweb.model.entity.CustomerEntity;
-import com.fpt.mic.micweb.model.entity.PaymentEntity;
+import com.fpt.mic.micweb.model.entity.*;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -134,9 +132,20 @@ public class StaffBusiness {
         return false;
     }
 
+    public List<ContractTypeEntity> getAllContractType() {
+        ContractTypeDao contractTypeDao = new ContractTypeDao();
+        List<ContractTypeEntity> listContractType = contractTypeDao.getAllContractType();
+        return listContractType;
+    }
+
     public List<PaymentEntity> getPaymentByContractCode(String contractCode) {
         PaymentDao paymentDao = new PaymentDao();
         List<PaymentEntity> listPayment = paymentDao.getPaymentByCustomerCode(contractCode);
         return listPayment;
+    }
+
+    public PaymentEntity getPaymentDetail(Integer id) {
+        PaymentDao paymentDao = new PaymentDao();
+        return paymentDao.read(id);
     }
 }
