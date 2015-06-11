@@ -4,8 +4,12 @@ import com.fpt.mic.micweb.framework.BasicController;
 import com.fpt.mic.micweb.framework.responses.JspPage;
 import com.fpt.mic.micweb.framework.R;
 import com.fpt.mic.micweb.framework.responses.ResponseObject;
+import com.fpt.mic.micweb.model.business.ContractBusiness;
+import com.fpt.mic.micweb.model.entity.ContractTypeEntity;
 
 import javax.servlet.annotation.WebServlet;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -15,6 +19,11 @@ import javax.servlet.annotation.WebServlet;
 @WebServlet(name = "HomeController", urlPatterns = {"/public/home"})
 public class HomeController extends BasicController {
     public ResponseObject getView(R r) {
+        ContractTypeEntity contractTypeEntity = new ContractTypeEntity();
+        ContractBusiness contractBusiness = new ContractBusiness();
+        List<ContractTypeEntity> list = new ArrayList<ContractTypeEntity>();
+        list = contractBusiness.getAllContractType();
+        r.equest.setAttribute("listContractType",list);
         return new JspPage("public/home.jsp");
     }
 

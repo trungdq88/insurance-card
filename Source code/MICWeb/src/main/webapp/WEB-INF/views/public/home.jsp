@@ -1,6 +1,4 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="java.io.*,java.util.*,java.sql.*" %>
-<%@ page import="javax.servlet.http.*,javax.servlet.*" %>
 <%@ page import="java.util.Date" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql" %>
@@ -247,19 +245,13 @@
                         <div class="form-group  col-md-7">
                             <label>Hình Thức Bảo Hiểm *</label>
 
-                            <sql:setDataSource var="datasource" driver="com.mysql.jdbc.Driver"
-                                               url="jdbc:mysql://localhost/mic_data"
-                                               user="root"  password=""/>
-                            <sql:query dataSource="${datasource}" var="result">
-                                SELECT * from mic_contract_type;
-                            </sql:query>
                             <select class="form-control" name="ddlContractType" id="ddlContractType" onchange="{
                                 var fee = this.options[this.selectedIndex].innerHTML;
                                 $('#txtFee1').text(fee);
                                 $('#txtFeeInput').val(fee);
                             }">
-                                <c:forEach var="row" items="${result.rows}">
-                                    <option label="<c:out value="${row.name}"/>" value="<c:out value="${row.id}"/>"><c:out value="${row.price_per_year}"/></option>
+                                <c:forEach var="row" items="${listContractType}">
+                                    <option label="<c:out value="${row.name}"/>" value="<c:out value="${row.id}"/>"><c:out value="${row.pricePerYear}"/></option>
                                 </c:forEach>
                             </select>
                         </div>
