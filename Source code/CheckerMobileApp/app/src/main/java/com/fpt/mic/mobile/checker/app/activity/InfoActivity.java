@@ -9,6 +9,9 @@ import android.view.View;
 import android.widget.TextView;
 import com.fpt.mic.mobile.checker.app.R;
 import com.fpt.mic.mobile.checker.app.entity.CardEntity;
+import com.fpt.mic.mobile.checker.app.utils.Constants;
+
+import java.util.Date;
 
 /**
  * Created by dinhquangtrung on 5/29/15.
@@ -69,26 +72,35 @@ public class InfoActivity extends Activity {
     public void showInfo(CardEntity card) {
 
         if (card == null) {
-            txtStatus.setText("THẺ KHÔNG HỢP LỆ");
-            txtStatus.setBackgroundColor(Color.RED);
+            showInvalidCard();
             return;
         }
 
         if (card.deactivatedDate != null ||
-                card.micContractByContractCode.status.equalsIgnoreCase("Cancelled")) {
-            txtStatus.setText("THẺ KHÔNG HỢP LỆ");
-            txtStatus.setBackgroundColor(Color.RED);
+                card.micContractByContractCode.status
+                        .equalsIgnoreCase(Constants.ContractStatus.CANCELLED) ||
+                card.micContractByContractCode.status
+                        .equalsIgnoreCase(Constants.ContractStatus.PENDING) ||
+                card.micContractByContractCode.status
+                        .equalsIgnoreCase(Constants.ContractStatus.NO_CARD)) {
+            showInvalidCard();
             return;
         }
 
-        if (card.micContractByContractCode.status.equalsIgnoreCase("Expired")) {
-            txtStatus.setText("THẺ HẾT HẠN");
-            txtStatus.setBackgroundColor(Color.YELLOW);
+        if (card.micContractByContractCode.status
+                .equalsIgnoreCase(Constants.ContractStatus.EXPIRED)) {
+            showExpiredCard();
         }
 
-        if (card.micContractByContractCode.status.equalsIgnoreCase("Ready")) {
-            txtStatus.setText("THẺ HỢP LỆ");
-            txtStatus.setBackgroundColor(Color.GREEN);
+        if (card.micContractByContractCode.status
+                .equalsIgnoreCase(Constants.ContractStatus.READY)) {
+            // Check if nearly expired
+            if (card.micContractByContractCode.expiredDate.getTime() - (new Date()).getTime() <
+                    Constants.CONTRACT_NEARLY_EXPIRED_RANGE) {
+                showNearlyExpiredCard();
+            } else {
+                showValidCard();
+            }
         }
 
         txtName.setText(card.micContractByContractCode.micCustomerByCustomerCode.name);
@@ -103,5 +115,25 @@ public class InfoActivity extends Activity {
         txtContractFee.setText(card.micContractByContractCode.contractFee + " đồng");
 
         // TODO: more status
+    }
+
+    private void showExpiredCard() {
+        txtStatus.setText("THẺ HẾT HẠN");
+        txtStatus.setBackgroundColor(Color.RED);
+    }
+
+    private void showNearlyExpiredCard() {
+        txtStatus.setText("THẺ SẮP HẾT HẠN");
+        txtStatus.setBackgroundColor(Color.YELLOW);
+    }
+
+    private void showValidCard() {
+        txtStatus.setText("THẺ HỢP LỆ");
+        txtStatus.setBackgroundColor(Color.GREEN);
+    }
+
+    private void showInvalidCard() {
+        txtStatus.setText("THẺ KHÔNG HỢP LỆ");
+        txtStatus.setBackgroundColor(Color.RED);
     }
 }

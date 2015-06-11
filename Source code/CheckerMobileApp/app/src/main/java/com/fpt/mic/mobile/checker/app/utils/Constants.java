@@ -5,6 +5,8 @@ package com.fpt.mic.mobile.checker.app.utils;
  * Created by dinhquangtrung on 6/8/15.
  */
 public class Constants {
+    public static final long CONTRACT_NEARLY_EXPIRED_RANGE = 1000 * 86400 * 15; // 15 days
+
     public static class ContractStatus {
         public static final String PENDING = "Pending";
         public static final String NO_CARD = "No card";
