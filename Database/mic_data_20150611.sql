@@ -1,7 +1,6 @@
 -- 20150611 Changes:
--- mic_contract: allow model_code, vehicle_type, color, 
--- year_of_manufacture, weight, seat_capacity NULL.
-
+-- mic_contract: allow model_code, vehicle_type, color,  year_of_manufacture, weight, seat_capacity NULL.
+-- Delete mic_contract.cert_image
 
 -- MySQL Workbench Forward Engineering
 
@@ -101,7 +100,6 @@ CREATE TABLE IF NOT EXISTS `mic_data`.`mic_contract` (
   `year_of_manufacture` INT(11) UNSIGNED NULL DEFAULT NULL,
   `weight` INT(11) UNSIGNED NULL DEFAULT NULL,
   `seat_capacity` INT(11) UNSIGNED NULL DEFAULT NULL,
-  `cert_image` VARCHAR(255) NULL DEFAULT NULL,
   `cancel_date` DATETIME NULL DEFAULT NULL,
   `cancel_reason` VARCHAR(250) NULL DEFAULT NULL,
   `cancel_note` VARCHAR(2000) NULL DEFAULT NULL,
