@@ -17,32 +17,84 @@
                 <h1 class="page-header">
                     ${cont.contractCode}
                     <div class="pull-right">
-                        <a href="#" class="btn btn-info"
-                           data-toggle="modal" data-target="#renew-contract-modal">
+                        <button id="btnRenew" type="button" class="btn btn-info"
+                                data-toggle="modal" data-target="#renew-contract-modal">
                             <i class="fa fa-refresh"></i> Gia hạn
-                        </a>
-                        <a href="#" class="btn btn-danger"
-                           data-toggle="modal" data-target="#cancel-contract-modal">
-                            <i class="fa fa-times"></i> Huỷ hợp đồng
-                        </a>
+                        </button>
+                        <button id="btnCancel" type="button" class="btn btn-danger"
+                                data-toggle="modal" data-target="#cancel-contract-modal">
+                            <i class="fa fa-times"></i> Hủy hợp đồng
+                        </button>
                     </div>
                 </h1>
             </div>
             <!-- /.col-lg-12 -->
         </div>
+
         <div class="row">
             <div class="col-lg-12">
                 <form class="form-horizontal">
                     <fieldset>
                         <legend>Thông tin về dịch vụ bảo hiểm
                             <div class="pull-right" style="margin-top: -5px;">
-                                <a href="#" class="btn btn-xs btn-success"
-                                   data-toggle="modal" data-target="#card-history-modal">
+                                <button type="button" class="btn btn-xs btn-success"
+                                        data-toggle="modal" data-target="#edit-contract-modal">
                                     <i class="fa fa-pencil"></i>
                                     Chỉnh sửa
-                                </a>
+                                </button>
                             </div>
                         </legend>
+
+                        <c:if test="${cont.status == 'Request cancel'}">
+                            <div class="text-center">
+                                <p class="bs-example bg-primary text-uppercase">
+                                    Hợp đồng này đang có yêu cầu hủy từ khách hàng
+                                </p>
+                            </div>
+                        </c:if>
+
+                        <c:if test="${cont.status == 'Cancelled'}">
+                            <script>
+                                $('button[type=button]').attr('disabled',true);
+                            </script>
+
+                            <div class="text-center">
+                                <p class="bs-example bg-danger text-uppercase">
+                                    Hợp đồng này đã bị hủy
+                                </p>
+                            </div>
+
+                            <!-- Cancel date -->
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Thời điểm hủy</label>
+
+                                <div class="col-sm-4">
+                                    <div class="text-value">
+                                        <fmt:formatDate value="${cont.cancelDate}" pattern="dd/MM/yyyy"/>
+                                        lúc
+                                        <fmt:formatDate value="${cont.cancelDate}" type="time"/>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Cancel reason -->
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Lý do hủy</label>
+
+                                <div class="col-sm-7">
+                                    <div class="text-value">${cont.cancelReason}</div>
+                                </div>
+                            </div>
+
+                            <!-- Cancel note -->
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Ghi chú hủy</label>
+
+                                <div class="col-sm-7">
+                                    <div class="text-value">${cont.cancelNote}</div>
+                                </div>
+                            </div>
+                        </c:if>
 
                         <!-- Contract code & Contract status -->
                         <div class="form-group">
@@ -156,11 +208,11 @@
                             <fieldset>
                                 <legend>Thông tin khách hàng
                                     <div class="pull-right" style="margin-top: -5px;">
-                                        <a href="#" class="btn btn-xs btn-success"
-                                           data-toggle="modal" data-target="#card-history-modal">
+                                        <button type="button" class="btn btn-xs btn-success"
+                                                data-toggle="modal" data-target="#edit-contract-modal">
                                             <i class="fa fa-pencil"></i>
                                             Chỉnh sửa
-                                        </a>
+                                        </button>
                                     </div>
                                 </legend>
 
@@ -221,11 +273,11 @@
                             <fieldset>
                                 <legend>Thông tin về xe cơ giới
                                     <div class="pull-right" style="margin-top: -5px;">
-                                        <a href="#" class="btn btn-xs btn-success"
-                                           data-toggle="modal" data-target="#card-history-modal">
+                                        <button type="button" class="btn btn-xs btn-success"
+                                                data-toggle="modal" data-target="#edit-contract-modal">
                                             <i class="fa fa-pencil"></i>
                                             Chỉnh sửa
-                                        </a>
+                                        </button>
                                     </div>
                                 </legend>
 
@@ -335,11 +387,11 @@
                             <fieldset>
                                 <legend>Thông tin thanh toán
                                     <div class="pull-right" style="margin-top: -5px;">
-                                        <a href="#" class="btn btn-xs btn-success"
-                                           data-toggle="modal" data-target="#card-history-modal">
+                                        <button type="button" class="btn btn-xs btn-success"
+                                                data-toggle="modal" data-target="#edit-contract-modal">
                                             <i class="fa fa-pencil"></i>
                                             Chỉnh sửa
-                                        </a>
+                                        </button>
                                     </div>
                                 </legend>
 
@@ -390,6 +442,7 @@
                 </div>
                 <br/>
                 <br/>
+
                 <div class="text-center">
                     <a href="${pageContext.request.contextPath}/staff/contract" type="button" class="btn btn-success">
                         <i class="fa fa-arrow-left"></i>

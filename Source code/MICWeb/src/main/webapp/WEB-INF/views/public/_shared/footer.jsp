@@ -1,45 +1,46 @@
-<!--  big container -->
+<!-- big container -->
 <footer class="footer-distributed">
-  <div class="footer-left">
-    <h3>Company<span>logo</span></h3>
+    <div class="footer-left">
+        <img src="${pageContext.request.contextPath}/img/logoCompany.png"/>
 
-    <p class="footer-links">
-      <a href="home.html">Trang chủ</a>
-      ·
-      <a href="#">Liên hệ</a>
-      ·
-      <a href="#">Hỗ trợ</a>
-    </p>
+        <p class="footer-links">
+            <a href="home.html">Trang chủ</a>
+            ·
+            <a href="#">Liên hệ</a>
+            ·
+            <a href="#">Hỗ trợ</a>
+        </p>
 
-    <p class="footer-company-name">MIC Group 2 &copy; 2015</p>
-  </div>
+        <p class="footer-company-name">MIC Group 2 &copy; 2015</p>
+    </div>
 
-  <div class="footer-center">
-    <div>
-      <i class="fa fa-map-marker"></i>
-      <p>
+    <div class="footer-center">
+        <div>
+            <i class="fa fa-map-marker"></i>
+
+            <p>
         <span>Tòa nhà Innovation, Công viên phần mềm Quang Trung
         P. Tân Chánh Hiệp, Quận 12, TP. Hồ Chí Minh.</span>
-      </p>
-    </div>
-    <div>
-      <i class="fa fa-phone"></i>
+            </p>
+        </div>
+        <div>
+            <i class="fa fa-phone"></i>
 
-      <p>+84 37337009</p>
-    </div>
-    <div>
-      <i class="fa fa-envelope"></i>
+            <p>+84 37337009</p>
+        </div>
+        <div>
+            <i class="fa fa-envelope"></i>
 
-      <p><a href="mailto:hydrangea8604@gmail.com">hydrangea8604@gmail.com</a></p>
+            <p><a href="mailto:hydrangea8604@gmail.com">hydrangea8604@gmail.com</a></p>
+        </div>
     </div>
-  </div>
-  <div class="footer-right">
-    <p class="footer-company-about">
-      <span>Sơ lược về đề tài</span>
-    </p>
+    <div class="footer-right">
+        <p class="footer-company-about">
+            <span>Sơ lược về đề tài</span>
+        </p>
 
-    <p class="footer-company-name">Bản quyền thuộc về Group 2</p>
-  </div>
+        <p class="footer-company-name">Bản quyền thuộc về Group 2</p>
+    </div>
 </footer>
 
 <!--<div class="fixed-plugin">

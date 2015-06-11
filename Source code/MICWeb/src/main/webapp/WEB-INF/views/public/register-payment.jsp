@@ -34,6 +34,7 @@
                                     <p><b>Mã khách hàng:</b> ${register.customerEntity.customerCode}</p>
                                     <p><b>Mật khẩu đăng nhập hệ thống:</b> (kiểm tra email ${register.customerEntity.email})</p>
                                     <p><b>Mã hợp đồng:</b> ${register.contractEntity.contractCode}</p>
+                                    <p><b>Phí cần thanh toán:</b> ${register.contractEntity.contractFee} VND</p>
 
                                 </div>
                             </div>
@@ -46,8 +47,8 @@
                             </div>
 
                         </div>
-                        <input type="hidden" name="L_PAYMENTREQUEST_0_NAME0" value="${register.contractEntity.micContractTypeByContractTypeId.name}">
-                        <input type="hidden" name="L_PAYMENTREQUEST_0_DESC0" value="${register.contractEntity.micContractTypeByContractTypeId.description}">
+                        <input type="hidden" name="L_PAYMENTREQUEST_0_NAME0" value="Create new contract">
+                        <input type="hidden" name="L_PAYMENTREQUEST_0_DESC0" value="Create new contract">
                         <input type="hidden" name="L_PAYMENTREQUEST_0_QTY0" value="1">
                         <input type="hidden" name="PAYMENTREQUEST_0_ITEMAMT" value="${register.contractEntity.contractFee}">
                         <input type="hidden" name="PAYMENTREQUEST_0_TAXAMT" value="0">
