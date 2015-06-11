@@ -28,7 +28,6 @@ public class ContractEntity {
     private int yearOfManufacture;
     private int weight;
     private int seatCapacity;
-    private String certImage;
     private Timestamp cancelDate;
     private String cancelReason;
     private String cancelNote;
@@ -205,16 +204,6 @@ public class ContractEntity {
     }
 
     @Basic
-    @Column(name = "cert_image")
-    public String getCertImage() {
-        return certImage;
-    }
-
-    public void setCertImage(String certImage) {
-        this.certImage = certImage;
-    }
-
-    @Basic
     @Column(name = "cancel_date")
     public Timestamp getCancelDate() {
         return cancelDate;
@@ -298,7 +287,6 @@ public class ContractEntity {
         if (engine != null ? !engine.equals(that.engine) : that.engine != null) return false;
         if (chassis != null ? !chassis.equals(that.chassis) : that.chassis != null) return false;
         if (capacity != null ? !capacity.equals(that.capacity) : that.capacity != null) return false;
-        if (certImage != null ? !certImage.equals(that.certImage) : that.certImage != null) return false;
         if (cancelDate != null ? !cancelDate.equals(that.cancelDate) : that.cancelDate != null) return false;
         if (cancelReason != null ? !cancelReason.equals(that.cancelReason) : that.cancelReason != null) return false;
         if (cancelNote != null ? !cancelNote.equals(that.cancelNote) : that.cancelNote != null) return false;
@@ -326,7 +314,6 @@ public class ContractEntity {
         result = 31 * result + yearOfManufacture;
         result = 31 * result + weight;
         result = 31 * result + seatCapacity;
-        result = 31 * result + (certImage != null ? certImage.hashCode() : 0);
         result = 31 * result + (cancelDate != null ? cancelDate.hashCode() : 0);
         result = 31 * result + (cancelReason != null ? cancelReason.hashCode() : 0);
         result = 31 * result + (cancelNote != null ? cancelNote.hashCode() : 0);
