@@ -4,7 +4,7 @@ package com.fpt.mic.micweb.utils;
  * FPT University - Capstone Project - Summer 2015 - MICWeb
  * Created by dinhquangtrung on 6/10/15.
  */
-public class Constrants {
+public class Constants {
     public static class ContractStatus {
         public static final String PENDING = "Pending";
         public static final String NO_CARD = "No card";

@@ -98,13 +98,10 @@ public class WriteActivity extends Activity {
                                 intent.putExtra("card", result);
                                 startActivity(intent);
                             } else {
-                                // There was error when update card for contract
-                                // TODO: handle 2 cases:
-                                // 1. Contract already has card and the card is still activated
-                                //      => Ask user if they want to deactivate the old card
-                                // 2. This card ID is already exists in the system
+                                // This card ID is already exists in the system
                                 //      => Tell user that this card is no longer usable.
-                                DialogUtils.showAlert(WriteActivity.this, "Không thể in thẻ! Thẻ đang được sử dụng bởi một hợp đồng khác!");
+                                DialogUtils.showAlert(WriteActivity.this, "Không thể in thẻ!" +
+                                        " Thẻ này đã được sử dụng trong hệ thống!");
                             }
                         }
                     });

@@ -3,15 +3,13 @@ package com.fpt.mic.micweb.model.dao;
 import com.fpt.mic.micweb.model.dao.common.IncrementDao;
 import com.fpt.mic.micweb.model.dto.ContractSearchResult;
 import com.fpt.mic.micweb.model.entity.ContractEntity;
-import com.fpt.mic.micweb.utils.Constrants;
+import com.fpt.mic.micweb.utils.Constants;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import java.util.List;
 
-import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
-import java.util.List;
 
 /**
  * Created by TriPQMSE60746 on 06/04/2015.
@@ -80,7 +78,7 @@ public class ContractDao extends IncrementDao<ContractEntity, String> {
         );
         query.setParameter("keyword", "%" + keyword + "%");
         query.setParameter("fieldOrder",
-                Constrants.ContractStatus.NO_CARD);
+                Constants.ContractStatus.NO_CARD);
         List<ContractSearchResult> resultList = query.getResultList();
         entityManager.close();
         return resultList;

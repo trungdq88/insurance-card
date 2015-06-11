@@ -6,6 +6,7 @@ import com.fpt.mic.micweb.model.dto.CheckCardResult;
 import com.fpt.mic.micweb.model.dto.ContractSearchResult;
 import com.fpt.mic.micweb.model.entity.CardEntity;
 import com.fpt.mic.micweb.model.entity.ContractEntity;
+import com.fpt.mic.micweb.utils.Constants;
 
 import java.sql.Time;
 import java.sql.Timestamp;
@@ -35,10 +36,18 @@ public class ApiBusiness {
         // Basic validate if the card is already in the system
         CardEntity checkCard = cardDao.read(cardID);
         if (checkCard != null) {
-            return null;
+            return null; // TODO: return meaningful value here.
         }
 
-        // Insert to database
+
+        // If there is a card assigned to the contract before, deactivate it
+        CardEntity oldCard = cardDao.getCardByContract(contractCode);
+        if (oldCard != null) {
+            oldCard.setDeactivatedDate(new Timestamp((new Date()).getTime()));
+            cardDao.update(oldCard);
+        }
+
+        // Insert new card to database
         CardEntity cardEntity = new CardEntity();
         cardEntity.setContractCode(contractCode);
         cardEntity.setCardId(cardID);
@@ -49,7 +58,9 @@ public class ApiBusiness {
         if (result != null) {
             // Change contract status
             ContractEntity contract = contractDao.read(contractCode);
-            contract.setStatus(ContractEntity.STATUS_READY);
+            if (contract.getStatus().equals(Constants.ContractStatus.NO_CARD)) {
+                contract.setStatus(ContractEntity.STATUS_READY);
+            }
             contractDao.update(contract);
         }
 
@@ -58,7 +69,7 @@ public class ApiBusiness {
 
     public CardEntity checkCard(String cardID) {
         CardDao cardDao = new CardDao();
-        return cardDao.read(cardID);
+        return cardDao.checkCard(cardID);
 
     }
 }
