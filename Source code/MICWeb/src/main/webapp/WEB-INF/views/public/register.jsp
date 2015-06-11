@@ -172,6 +172,7 @@
                                                 <input type="text" class="form-control" name="txtChassis"
                                                        id="txtChassis"
                                                        placeholder="Số khung của xe?">
+
                                             </div>
                                         </div>
                                         <div class="col-sm-3">
@@ -191,21 +192,21 @@
                                         </div>
                                         <div class="col-sm-4 col-sm-offset-1">
                                             <div class="form-group">
-                                                <label><b>Số loại </b></label>
+                                                <label><b>Số loại</b></label>
                                                 <input type="text" class="form-control" name="txtModel" id="txtModel"
                                                        placeholder="Ví dụ: Air Blade, Future, Wave...">
                                             </div>
                                         </div>
                                         <div class="col-sm-3">
                                             <div class="form-group">
-                                                <label><b>Loại xe </b></label>
+                                                <label><b>Loại xe</b></label>
                                                 <input type="text" class="form-control" name="txtType" id="txtType"
                                                        placeholder="Ví dụ: hai bánh, ba bánh, khác...">
                                             </div>
                                         </div>
                                         <div class="col-sm-3">
                                             <div class="form-group">
-                                                <label><b>Màu sơn </b></label>
+                                                <label><b>Màu sơn</b></label>
                                                 <input type="text" class="form-control" name="txtColor" id="txtColor"
                                                        placeholder="Màu sơn của xe?">
                                             </div>
@@ -220,14 +221,14 @@
                                         </div>
                                         <div class="col-sm-3">
                                             <div class="form-group">
-                                                <label><b>Tự trọng (kg) </b></label>
+                                                <label><b>Tự trọng (kg)</b></label>
                                                 <input type="text" class="form-control" name="txtWeight" id="txtWeight"
                                                        placeholder="Trọng lượng không tải của xe?">
                                             </div>
                                         </div>
                                         <div class="col-sm-3">
                                             <div class="form-group">
-                                                <label><b>Số người </b></label>
+                                                <label><b>Số người</b></label>
                                                 <input type="text" class="form-control" name="txtSeatCapacity"
                                                        id="txtSeatCapacity"
                                                        placeholder="Số người xe được phép chở?">

@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by UDEWQ on 06/10/2015.
+ * Created by TriPQMSE60746 on 06/10/2015.
  */
 @WebServlet(name = "CheckoutController", urlPatterns = {"/public/checkout"})
 public class CheckoutController extends BasicController{
