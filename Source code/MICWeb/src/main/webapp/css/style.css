@@ -75,8 +75,6 @@ th {
 }
 
 .bs-example {
-    margin: 20px;
-    padding: 5px;
-    font-size: x-large;
-    font-weight: bolder
+    font-size: large;
+    font-weight: bolder;
 }

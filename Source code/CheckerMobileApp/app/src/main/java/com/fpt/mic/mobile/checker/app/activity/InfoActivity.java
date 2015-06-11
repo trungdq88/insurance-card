@@ -135,5 +135,9 @@ public class InfoActivity extends Activity {
     private void showInvalidCard() {
         txtStatus.setText("THẺ KHÔNG HỢP LỆ");
         txtStatus.setBackgroundColor(Color.RED);
+        findViewById(R.id.lytInfo1).setVisibility(View.GONE);
+        findViewById(R.id.lytInfo2).setVisibility(View.GONE);
+        findViewById(R.id.lytInfo3).setVisibility(View.GONE);
+        findViewById(R.id.lytInvalid).setVisibility(View.VISIBLE);
     }
 }

@@ -43,14 +43,14 @@ function getCurrentDateInNextYear() {
 }
 
 function getInputDateInNextYear(inputDate) {
-    var curYear = inputDate.getFullYear();
-    var curYearMonth = inputDate.getMonth() + 1;
-    var curYearDay = inputDate.getDate();
+    var curYear = inputDate.substring(0, 4);
+    var curYearMonth = inputDate.substring(5, 7);
+    var curYearDay = inputDate.substring(8, 10);
+    curYear = parseInt(curYear);
     var nextYear = curYear + 1;
-    if ((curYearMonth == 2) && (curYearDay == 29)) {
+    if ((curYearMonth == 02) && (curYearDay == 29)) {
         curYearDay = 28;
     }
-    var nextYearDisplay = ("0000" + nextYear.toString()).slice(-4) + "-"
-        + ("00" + curYearMonth.toString()).slice(-2) + "-" + ("00" + curYearDay.toString()).slice(-2);
+    var nextYearDisplay = (nextYear + "-" + curYearMonth + "-" + curYearDay);
     return nextYearDisplay;
 }
