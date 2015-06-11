@@ -122,7 +122,7 @@
 
 
 <div id="slider2_container" style="position: relative; top: 0; left: 0; width: 600px;
-        height: 200px;">
+        height: 150px;">
 
     <!-- Loading Screen -->
     <div u="loading" style="position: absolute; top: 0; left: 0;">
@@ -135,7 +135,7 @@
     </div>
 
     <!-- Slides Container -->
-    <div u="slides" style="cursor: move; position: absolute; left: 0; top: 0; width: 600px; height: 200px;
+    <div u="slides" style="cursor: move; position: absolute; left: 0; top: 0; width: 600px; height: 150px;
             overflow: hidden;">
         <div>
             <a u=image href="#"><img src="${pageContext.request.contextPath}/img/landscape/01.jpg" /></a>
@@ -160,10 +160,10 @@
     <!--#endregion Bullet Navigator Skin End -->
 
     <!-- Arrow Left -->
-        <span u="arrowleft" class="jssora05l" style="top: 73px; left: 8px;">
+        <span u="arrowleft" class="jssora05l" style="top: 50px; left: 8px;">
         </span>
     <!-- Arrow Right -->
-        <span u="arrowright" class="jssora05r" style="top: 73px; right: 8px;">
+        <span u="arrowright" class="jssora05r" style="top: 50px; right: 8px;">
         </span>
     <a style="display: none" href="http://www.jssor.com">Bootstrap Slider</a>
 </div>

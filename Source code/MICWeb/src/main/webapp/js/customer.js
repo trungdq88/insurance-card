@@ -76,8 +76,8 @@ $(document).ready(function () {
         day = day.length > 1 ? day : '0' + day;
         $('#newExpiredDate').val(day + '/' + month + '/' + year);
 
-        $('#payment').val((parseFloat($('#payAmount').val())) / 20000);
-        $('#paymentATM').val((parseFloat($('#payAmount').val())) / 20000);
+        $('#payment').val((parseFloat($('#payAmount').val())));
+        $('#paymentATM').val((parseFloat($('#payAmount').val())));
     });
 });
 
