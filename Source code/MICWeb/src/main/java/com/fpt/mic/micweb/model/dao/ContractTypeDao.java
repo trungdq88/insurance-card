@@ -8,7 +8,7 @@ import javax.persistence.Query;
 import java.util.List;
 
 /**
- * Created by UDEWQ on 06/08/2015.
+ * Created by TriPQMSE60746 on 06/08/2015.
  */
 public class ContractTypeDao extends GenericDaoJpaImpl<ContractTypeEntity, Integer> {
 

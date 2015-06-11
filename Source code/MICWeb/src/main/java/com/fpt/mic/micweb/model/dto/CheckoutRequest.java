@@ -1,7 +1,7 @@
 package com.fpt.mic.micweb.model.dto;
 
 /**
- * Created by UDEWQ on 06/10/2015.
+ * Created by TriPQMSE60746 on 06/10/2015.
  */
 public class CheckoutRequest {
 
