@@ -2,8 +2,10 @@ package com.fpt.mic.micweb.model.business;
 
 import com.fpt.mic.micweb.model.dao.CustomerDao;
 import com.fpt.mic.micweb.model.dao.ContractDao;
+import com.fpt.mic.micweb.model.dao.PaymentDao;
 import com.fpt.mic.micweb.model.entity.CustomerEntity;
 import com.fpt.mic.micweb.model.entity.ContractEntity;
+import com.fpt.mic.micweb.model.entity.PaymentEntity;
 import sun.util.calendar.BaseCalendar;
 import sun.util.calendar.LocalGregorianCalendar;
 
@@ -32,33 +34,35 @@ public class CustomerBusniess {
         return contractDa0.read(code);
     }
 
-    //
-
     /*cancel contract    */
-    public boolean CancelContract(String code, String cancelReason, int typeOfReason) {
+    public boolean CancelContract(String code, String cancelReason) {
         ContractDao contractDa0 = new ContractDao();
         ContractEntity contract = contractDa0.read(code);
         boolean result = false;
         //get date now
         java.util.Date date = new java.util.Date();
         if (contract != null) {
-            if (typeOfReason == 1 ){
-                contract.setCancelDate(new Timestamp(date.getTime()));
-                contract.setCancelReason(cancelReason);
-                contract.setStatus("Request cancel");
-                if (contractDa0.update(contract) != null) {
-                    result = true;
-                }
+            contract.setCancelDate(new Timestamp(date.getTime()));
+            contract.setCancelReason(cancelReason);
+            contract.setStatus("Request cancel");
+            if (contractDa0.update(contract) != null) {
+                result = true;
             }
-            else if(typeOfReason == 2){
-                contract.setCancelDate(new Timestamp(date.getTime()));
-                contract.setCancelNote(cancelReason);
-                if (contractDa0.update(contract) != null) {
-                    result = true;
-                }
-            }
-
         }
         return result;
+    }
+
+    /*
+    renew contract
+     */
+    public boolean RenewContract(ContractEntity contract, PaymentEntity payment) {
+        boolean result = false;
+        ContractDao contractDa0 = new ContractDao();
+        PaymentDao paymentDao = new PaymentDao();
+        if (contractDa0.update(contract) != null && paymentDao.update(payment) != null) {
+            result = true;
+        }
+        return result;
+
     }
 }
