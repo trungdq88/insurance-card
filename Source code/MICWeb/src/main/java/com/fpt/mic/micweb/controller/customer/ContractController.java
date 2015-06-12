@@ -2,6 +2,7 @@ package com.fpt.mic.micweb.controller.customer;
 
 import com.fpt.mic.micweb.framework.responses.ForwardTo;
 import com.fpt.mic.micweb.framework.responses.RedirectTo;
+import com.fpt.mic.micweb.model.business.ContractBusiness;
 import com.fpt.mic.micweb.model.business.CustomerBusniess;
 import com.fpt.mic.micweb.model.dao.ContractDao;
 import com.fpt.mic.micweb.model.dto.CheckoutRequest;
@@ -44,17 +45,18 @@ public class ContractController extends BasicController {
     /* Handle canncel contract */
     public ResponseObject postCancelContract(R r) {
         CustomerBusniess customerBusiness = new CustomerBusniess();
-        String result = "Yêu Cầu Hủy Thất Bại";
+        String mesg = "Yêu Cầu Hủy Thất Bại";
         String contractcode = r.equest.getParameter("contractcode");
         String reasoncancel = r.equest.getParameter("txtReason");
-        if (reasoncancel != null && reasoncancel != "") {
-            if (customerBusiness.CancelContract(contractcode, reasoncancel) == true) {
-                result = "Yêu Cầu Hủy Hợp Đồng Thành Công ";
-            }
-
+        ContractEntity contract = customerBusiness.CancelContract(contractcode, reasoncancel);
+        if (contract != null) {
+            r.equest.setAttribute("contract", contract);
+            return new JspPage("customer/contract-detail.jsp");
+        } else {
+            r.equest.setAttribute("result", mesg);
+            r.equest.setAttribute("contractCode", contractcode);
+            return new JspPage("customer/message.jsp");
         }
-        r.equest.setAttribute("result", result);
-        return new JspPage("customer/message.jsp");
     }
 
     /* Renew contract */
@@ -123,16 +125,31 @@ public class ContractController extends BasicController {
         payment.setPaypalTransId(results.get("PAYMENTINFO_0_TRANSACTIONID").toString());
         payment.setContractCode(contract.getContractCode());
         boolean result = customerBusiness.RenewContract(contract, payment);
-        if(result == true){
+        if (result == true) {
             r.equest.setAttribute("message", "Gia hạn thành công.");
-        }
-        else {
+        } else {
             r.equest.setAttribute("message", "Gia hạn thất bại.");
         }
         // insert information in payment table
         session.invalidate();
 
         return new JspPage(url);
+    }
+
+    public ResponseObject postRejectRequestCancel(R r) {
+        CustomerBusniess business = new CustomerBusniess();
+        String contractCode = r.equest.getParameter("contractcode");
+        ContractEntity contract = business.RejectCancelContract(contractCode);
+        String mesg = "Không thể gở bỏ yêu cầu hủy hợp đồng";
+        if (contract != null) {
+            r.equest.setAttribute("contract", contract);
+            return new JspPage("customer/contract-detail.jsp");
+        } else {
+            r.equest.setAttribute("result", mesg);
+            r.equest.setAttribute("contractCode", contractCode);
+            return new JspPage("customer/message.jsp");
+        }
+
     }
 
 }
