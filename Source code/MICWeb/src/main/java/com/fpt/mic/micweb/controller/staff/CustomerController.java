@@ -1,16 +1,14 @@
 package com.fpt.mic.micweb.controller.staff;
 
 import com.fpt.mic.micweb.framework.BasicController;
-import com.fpt.mic.micweb.framework.responses.JspPage;
 import com.fpt.mic.micweb.framework.R;
+import com.fpt.mic.micweb.framework.responses.JspPage;
 import com.fpt.mic.micweb.framework.responses.ResponseObject;
 import com.fpt.mic.micweb.model.business.StaffBusiness;
-import com.fpt.mic.micweb.model.dto.CustomerDTO;
 import com.fpt.mic.micweb.model.entity.ContractEntity;
 import com.fpt.mic.micweb.model.entity.CustomerEntity;
 
 import javax.servlet.annotation.WebServlet;
-import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 /**
@@ -22,7 +20,6 @@ public class CustomerController extends BasicController {
 
     public ResponseObject getView(R r) {
         StaffBusiness staffBus = new StaffBusiness();
-        //List<CustomerDTO> listCustomer = staffBus.getAllCustomer();
         List<CustomerEntity> listCustomer = staffBus.getAllCustomer();
         r.equest.setAttribute("INFO", listCustomer);
         return new JspPage("staff/customers.jsp");

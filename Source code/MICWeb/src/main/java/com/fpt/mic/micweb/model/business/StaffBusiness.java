@@ -4,11 +4,13 @@ import com.fpt.mic.micweb.model.dao.ContractDao;
 import com.fpt.mic.micweb.model.dao.ContractTypeDao;
 import com.fpt.mic.micweb.model.dao.CustomerDao;
 import com.fpt.mic.micweb.model.dao.PaymentDao;
-import com.fpt.mic.micweb.model.entity.*;
+import com.fpt.mic.micweb.model.entity.ContractEntity;
+import com.fpt.mic.micweb.model.entity.ContractTypeEntity;
+import com.fpt.mic.micweb.model.entity.CustomerEntity;
+import com.fpt.mic.micweb.model.entity.PaymentEntity;
 
 import java.sql.Timestamp;
 import java.util.List;
-import java.util.Random;
 
 /**
  * Created by Kha on 07/06/2015.
@@ -17,7 +19,6 @@ public class StaffBusiness {
 
     public List<CustomerEntity> getAllCustomer() {
         CustomerDao customerDao = new CustomerDao();
-        //List<CustomerDTO> listCustomer = customerDao.getAllCustomer();
         List<CustomerEntity> listCustomer = customerDao.getAllCustomer();
         return listCustomer;
     }
