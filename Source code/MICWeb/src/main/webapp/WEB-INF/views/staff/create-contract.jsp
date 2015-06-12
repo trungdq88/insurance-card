@@ -112,9 +112,6 @@
                                     <c:forEach var="type" items="${listType}">
                                         <option label="${type.name}" value="${type.id}">
                                             ${type.pricePerYear}
-                                            <%--<fmt:setLocale value="vi_VN"/>
-                                            <fmt:formatNumber value="${type.pricePerYear}"
-                                                              type="currency" maxFractionDigits="0"/>--%>
                                         </option>
                                     </c:forEach>
                                 </select>
@@ -126,7 +123,8 @@
                             <label class="col-sm-4 control-label" for="startDate">Thời điểm có hiệu lực *</label>
 
                             <div class="col-sm-3">
-                                <input id="startDate" name="txtStartDate" type="date" class="form-control input-md"/>
+                                <input id="startDate" name="txtStartDate" type="date"
+                                       class="form-control input-md"/>
                             </div>
                         </div>
 
@@ -161,7 +159,7 @@
                     <fieldset>
                         <legend>Thông tin về xe cơ giới</legend>
 
-                        <!-- Plate & Vehicle type -->
+                        <!-- Plate & Brand -->
                         <div class="form-group">
                             <label class="col-sm-3 control-label" for="plate">Biển số đăng ký *</label>
 
@@ -170,43 +168,11 @@
                                        placeholder="Ví dụ: 78Y9-15383">
                             </div>
 
-                            <label class="col-sm-2 control-label" for="vehicleType">Loại xe *</label>
-
-                            <div class="col-sm-3">
-                                <input id="vehicleType" name="txtType" type="text" class="form-control input-md"
-                                       placeholder="Ví dụ: Hai bánh">
-                            </div>
-                        </div>
-
-                        <!-- Brand & Model code -->
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label" for="brand">Nhãn hiệu *</label>
+                            <label class="col-sm-2 control-label" for="brand">Nhãn hiệu *</label>
 
                             <div class="col-sm-3">
                                 <input id="brand" name="txtBrand" type="text" class="form-control input-md"
                                        placeholder="Ví dụ: Honda">
-                            </div>
-
-                            <label class="col-sm-2 control-label" for="modelCode">Số loại *</label>
-
-                            <div class="col-sm-3">
-                                <input id="modelCode" name="txtModel" type="text" class="form-control input-md"
-                                       placeholder="Ví dụ: Air Blade">
-                            </div>
-                        </div>
-
-                        <!-- Color & Capacity -->
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label" for="color">Màu sơn *</label>
-
-                            <div class="col-sm-3">
-                                <input id="color" name="txtColor" type="text" class="form-control input-md">
-                            </div>
-
-                            <label class="col-sm-2 control-label" for="capacity">Dung tích *</label>
-
-                            <div class="col-sm-2">
-                                <input id="capacity" name="txtCapacity" type="text" class="form-control input-md">
                             </div>
                         </div>
 
@@ -225,15 +191,47 @@
                             </div>
                         </div>
 
+                        <!-- Color & Capacity -->
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label" for="capacity">Dung tích *</label>
+
+                            <div class="col-sm-2">
+                                <input id="capacity" name="txtCapacity" type="text" class="form-control input-md">
+                            </div>
+
+                            <label class="col-sm-3 control-label" for="color">Màu sơn</label>
+
+                            <div class="col-sm-3">
+                                <input id="color" name="txtColor" type="text" class="form-control input-md">
+                            </div>
+                        </div>
+
+                        <!-- Vehicle type & Model code -->
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label" for="vehicleType">Loại xe</label>
+
+                            <div class="col-sm-3">
+                                <input id="vehicleType" name="txtType" type="text" class="form-control input-md"
+                                       placeholder="Ví dụ: Hai bánh">
+                            </div>
+
+                            <label class="col-sm-2 control-label" for="modelCode">Số loại</label>
+
+                            <div class="col-sm-3">
+                                <input id="modelCode" name="txtModel" type="text" class="form-control input-md"
+                                       placeholder="Ví dụ: Air Blade">
+                            </div>
+                        </div>
+
                         <!-- Year of manufacture & Weight -->
                         <div class="form-group">
-                            <label class="col-sm-3 control-label" for="yearOfMan">Năm sản xuất *</label>
+                            <label class="col-sm-3 control-label" for="yearOfMan">Năm sản xuất</label>
 
                             <div class="col-sm-2">
                                 <input id="yearOfMan" name="txtYearOfMan" type="text" class="form-control input-md">
                             </div>
 
-                            <label class="col-sm-3 control-label" for="weight">Tự trọng *</label>
+                            <label class="col-sm-3 control-label" for="weight">Tự trọng</label>
 
                             <div class="col-sm-2">
                                 <input id="weight" name="txtWeight" type="text" class="form-control input-md">
@@ -242,7 +240,7 @@
 
                         <!-- Seat capacity -->
                         <div class="form-group">
-                            <label class="col-sm-3 control-label" for="seatCapacity">Số người được chở *</label>
+                            <label class="col-sm-3 control-label" for="seatCapacity">Số người được chở</label>
 
                             <div class="col-sm-2">
                                 <input id="seatCapacity" name="txtSeatCapacity" type="text"
