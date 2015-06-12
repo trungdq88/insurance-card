@@ -14,6 +14,7 @@ import com.fpt.mic.micweb.model.dto.RegisterInformation;
 import com.fpt.mic.micweb.model.entity.ContractEntity;
 import com.fpt.mic.micweb.model.entity.CustomerEntity;
 import com.fpt.mic.micweb.model.entity.PaymentEntity;
+import com.fpt.mic.micweb.utils.Constants;
 import com.fpt.mic.micweb.utils.DateUtils;
 import org.apache.commons.lang3.StringEscapeUtils;
 
@@ -90,7 +91,7 @@ public class RegisterController extends BasicController {
         contractEntity.setContractFee(Float.parseFloat(r.equest.getParameter("txtFee")));
 
         // kiem tra payment success?, neu thanh cong thi contract status la Ready, fail thi Pending
-        contractEntity.setStatus("Pending");
+        contractEntity.setStatus(Constants.ContractStatus.PENDING);
         int contractTypeId = Integer.parseInt(r.equest.getParameter("ddlContractType"));
         contractEntity.setContractTypeId(contractTypeId);
         // lay ngay nhap vao - add later
@@ -152,7 +153,7 @@ public class RegisterController extends BasicController {
         contractEntity.setStartDate(currentDate);
         // set expired date = start_date + 1 year
         contractEntity.setExpiredDate(DateUtils.addOneYear(contractEntity.getStartDate()));
-        contractEntity.setStatus("No Card");
+        contractEntity.setStatus(Constants.ContractStatus.NO_CARD);
         contractDao.update(contractEntity);
 
         paymentEntity.setPaidDate(new Timestamp(new Date().getTime()));

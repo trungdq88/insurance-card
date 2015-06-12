@@ -6,6 +6,7 @@ import com.fpt.mic.micweb.model.dao.PaymentDao;
 import com.fpt.mic.micweb.model.entity.CustomerEntity;
 import com.fpt.mic.micweb.model.entity.ContractEntity;
 import com.fpt.mic.micweb.model.entity.PaymentEntity;
+import com.fpt.mic.micweb.utils.Constants;
 import sun.util.calendar.BaseCalendar;
 import sun.util.calendar.LocalGregorianCalendar;
 
@@ -44,7 +45,7 @@ public class CustomerBusniess {
         if (contract != null) {
             contract.setCancelDate(new Timestamp(date.getTime()));
             contract.setCancelReason(cancelReason);
-            contract.setStatus("Request cancel");
+            contract.setStatus(Constants.ContractStatus.REQUEST_CANCEL);
             if (contractDa0.update(contract) != null) {
                 result = true;
             }

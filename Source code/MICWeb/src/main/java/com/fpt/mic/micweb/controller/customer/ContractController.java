@@ -11,6 +11,7 @@ import com.fpt.mic.micweb.framework.responses.JspPage;
 import com.fpt.mic.micweb.framework.R;
 import com.fpt.mic.micweb.framework.responses.ResponseObject;
 import com.fpt.mic.micweb.model.entity.PaymentEntity;
+import com.fpt.mic.micweb.utils.Constants;
 import com.fpt.mic.micweb.utils.DateUtils;
 
 import javax.servlet.annotation.WebServlet;
@@ -113,7 +114,7 @@ public class ContractController extends BasicController {
         ContractEntity contract = customerBusiness.getContractDetail(contractCode);
         contract.setStartDate(newStartDate);
         contract.setExpiredDate(newExpiredDate);
-        contract.setStatus("Ready");
+        contract.setStatus(Constants.ContractStatus.READY);
 
         PaymentEntity payment = new PaymentEntity();
         payment.setPaidDate(new Timestamp(date.getTime()));
