@@ -45,6 +45,26 @@
                             </div>
                         </legend>
 
+                        <c:if test="${cont.status eq 'Expired'}">
+                            <script type="text/javascript">
+                                $(document).ready(function () {
+                                    $('#expiredDate').val(getCurrentDateInNextYear());
+                                    document.getElementById("expiredDate").min = getCurrentDate();
+                                    document.getElementById("expiredDate").max = getCurrentDateInNextYear();
+                                });
+                            </script>
+                        </c:if>
+
+                        <c:if test="${cont.status ne 'Expired'}">
+                            <script type="text/javascript">
+                                $(document).ready(function () {
+                                    $('#expiredDate').val(getInputDateInNextYear('${cont.expiredDate}'));
+                                    document.getElementById("expiredDate").min = getCurrentDate();
+                                    document.getElementById("expiredDate").max = getInputDateInNextYear('${cont.expiredDate}');
+                                });
+                            </script>
+                        </c:if>
+
                         <c:if test="${cont.status eq 'Request cancel'}">
                             <div class="alert alert-info">
                                 <p class="bs-example text-center text-uppercase">
@@ -155,17 +175,15 @@
                             </div>
                         </div>
 
-                        <c:set var="expiredDate" value="${cont.expiredDate}"/>
-
                         <!-- Expired date -->
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Thời điểm hết hiệu lực</label>
 
                             <div class="col-sm-4">
                                 <div class="text-value">
-                                    <fmt:formatDate value="${expiredDate}" pattern="dd/MM/yyyy"/>
+                                    <fmt:formatDate value="${cont.expiredDate}" pattern="dd/MM/yyyy"/>
                                     lúc
-                                    <fmt:formatDate value="${expiredDate}" type="time"/>
+                                    <fmt:formatDate value="${cont.expiredDate}" type="time"/>
                                 </div>
                             </div>
                         </div>
@@ -486,10 +504,10 @@
 
                             <div class="col-sm-4">
                                 <div class="text-value">
-                                    <input type="hidden" name="txtNewStartDate" value="${expiredDate}"/>
-                                    <fmt:formatDate value="${expiredDate}" pattern="dd/MM/yyyy"/>
+                                    <input type="hidden" name="txtNewStartDate" value="${cont.expiredDate}"/>
+                                    <fmt:formatDate value="${cont.expiredDate}" pattern="dd/MM/yyyy"/>
                                     lúc
-                                    <fmt:formatDate value="${expiredDate}" type="time"/>
+                                    <fmt:formatDate value="${cont.expiredDate}" type="time"/>
                                 </div>
                             </div>
                         </div>
@@ -526,12 +544,14 @@
                         <legend>Thông tin thanh toán</legend>
 
                         <!-- Paid date -->
-                        <div class="form-group">
+                        <div class=" form-group">
                             <label class="col-sm-5 control-label" for="paidDate">Ngày nộp phí *</label>
 
                             <div class="col-sm-4">
-                                <input id="paidDate" name="txtPaidDate" type="date" class="form-control input-md">
-                                <input value="${cont.micContractTypeByContractTypeId.pricePerYear}"
+                                <input id="paidDate" name="txtPaidDate" type="date"
+                                       class="form-control input-md">
+                                <input value="
+${cont.micContractTypeByContractTypeId.pricePerYear}"
                                        type="hidden" name="txtAmount"/>
                             </div>
                         </div>
@@ -591,7 +611,8 @@
                             <label class="col-sm-4 control-label" for="cancelNote">Ghi chú</label>
 
                             <div class="col-sm-7">
-                                <textarea id="cancelNote" name="txtCancelNote" rows="4" class="form-control input-lg"></textarea>
+                                <textarea id="cancelNote" name="txtCancelNote" rows="4"
+                                          class="form-control input-lg"></textarea>
                             </div>
                         </div>
                     </fieldset>
@@ -613,10 +634,8 @@
 </div>
 <!-- /.modal -->
 
-<script>
+<script type="text/javascript">
     $(document).ready(function () {
-        $('#expiredDate').val(getInputDateInNextYear('${expiredDate}'));
-        document.getElementById("expiredDate").min = getCurrentDateInNextYear();
         $('#paidDate').val(getCurrentDate());
         document.getElementById("paidDate").min = getCurrentDateInLastWeek();
         $('#cancelDate').val(getCurrentDate());
