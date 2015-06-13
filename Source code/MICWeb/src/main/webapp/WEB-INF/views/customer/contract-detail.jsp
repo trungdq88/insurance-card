@@ -201,7 +201,7 @@
                         <input type="hidden" name="contractcode"
                                value="${contract.contractCode}"/>
                         <input type="hidden" name="action" value="RejectRequestCancel"/>
-                        <input type="submit" class="btn btn-danger small" value="Hủy Bỏ"/>
+                        <input type="submit" class="btn btn-danger small" value="Hủy Yêu Cầu"/>
                     </div>
                 </form>
 
