@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="_shared/header.jsp" %>
 <body>
@@ -99,29 +100,21 @@
                                         <div class="col-sm-10 col-sm-offset-1">
                                             <div class="form-group">
                                                 <label><b>Quyền lợi bảo hiểm *</b></label>
-                                                <select class="form-control" name="ddlContractType"
-                                                        id="ddlContractType">
-                                                    <option <%=request.getParameter("ddlContractType").equals("1") ? "selected='selected'" : "" %>
-                                                            value="1">Xe trên 50cc có tham gia BH tai nạn người trên xe
-                                                    </option>
-                                                    <option <%=request.getParameter("ddlContractType").equals("2") ? "selected='selected'" : "" %>
-                                                            value="2">Xe trên 50cc không tham gia BH tai nạn người trên
-                                                        xe
-                                                    </option>
-                                                    <option <%=request.getParameter("ddlContractType").equals("3") ? "selected='selected'" : "" %>
-                                                            value="3">Xe từ 50cc trở xuống có tham gia BH tai nạn người
-                                                        trên xe
-                                                    </option>
-                                                    <option <%=request.getParameter("ddlContractType").equals("4") ? "selected='selected'" : "" %>
-                                                            value="4">Xe từ 50cc trở xuống không tham gia BH tai nạn
-                                                        người trên
-                                                        xe
-                                                    </option>
-                                                    <option <%=request.getParameter("ddlContractType").equals("5") ? "selected='selected'" : "" %>
-                                                            value="5">Xe mô tô 3 bánh, xe gắn máy và các loại xe cơ giới
-                                                        tương
-                                                        tự
-                                                    </option>
+                                                <c:set var="selectedId" value="${requestScope.ddlContractType}" ></c:set>
+                                                <select class="form-control" name="ddlContractType" id="ddlContractType"
+                                                        onchange="{
+                                var fee = this.options[this.selectedIndex].innerHTML;
+                                $('#txtFee1').text(fee);
+                                $('#txtFeeInput').val(fee);
+                            }">
+                                                    <c:forEach var="row" items="${listContractType}">
+                                                        <option <c:if test="${row.id == selectedId}">
+                                                            selected="selected"
+                                                        </c:if> label="<c:out value="${row.name}"/>"
+                                                                value="<c:out value="${row.id}"/>">
+                                                            <c:out value="${row.pricePerYear}" />
+                                                        </option>
+                                                    </c:forEach>
                                                 </select>
                                             </div>
                                         </div>
@@ -136,9 +129,9 @@
                                         <div class="col-sm-5 col-sm-offset-1">
                                             <div class="form-group">
                                                 <label><b>Phí bảo hiểm: </b></label>
-                                                <input type="hidden" name="txtFee" value="${txtFee}" id="txtFee">
+                                                <b style="color: red"><span id="txtFee1">${txtFee}</span> VND</b>
+                                                <input type="hidden" id="txtFeeInput" name="txtFee" value="${txtFee}">
 
-                                                <p class="form-control-static" style="color: red">${txtFee} VND</p>
                                             </div>
                                         </div>
                                     </div>
@@ -272,19 +265,6 @@
                                         <div class="col-sm-10 col-sm-offset-1">
                                             <label><b>Quyền lợi bảo hiểm: </b></label>
                                             <label id="ddlContractType1"></label>
-                                            <%--<select class="form-control" name="ddlContractType1"  id="ddlContractType1">--%>
-                                            <%--<option <%=request.getParameter("ddlContractType").equals("1") ? "selected='selected'": "" %> value="1">Xe trên 50cc có tham gia BH tai nạn người trên xe</option>--%>
-                                            <%--<option <%=request.getParameter("ddlContractType").equals("2") ? "selected='selected'": "" %> value="2">Xe trên 50cc không tham gia BH tai nạn người trên xe--%>
-                                            <%--</option >--%>
-                                            <%--<option <%=request.getParameter("ddlContractType").equals("3") ? "selected='selected'": "" %> value="3">Xe từ 50cc trở xuống có tham gia BH tai nạn người trên xe--%>
-                                            <%--</option>--%>
-                                            <%--<option <%=request.getParameter("ddlContractType").equals("4") ? "selected='selected'": "" %> value="4">Xe từ 50cc trở xuống không tham gia BH tai nạn người trên--%>
-                                            <%--xe--%>
-                                            <%--</option>--%>
-                                            <%--<option <%=request.getParameter("ddlContractType").equals("5") ? "selected='selected'": "" %> value="5">Xe mô tô 3 bánh, xe gắn máy và các loại xe cơ giới tương--%>
-                                            <%--tự--%>
-                                            <%--</option>--%>
-                                            <%--</select>--%>
                                         </div>
                                         <div class="col-sm-10 col-sm-offset-1">
                                             <label><b>Thời hạn: </b></label>
@@ -293,7 +273,7 @@
                                         </div>
                                         <div class="col-sm-10 col-sm-offset-1">
                                             <label><b>Phí bảo hiểm (VND): </b></label>
-                                            <label id="txtFee1"></label>
+                                            <label id="txtFee2"></label>
                                         </div>
                                         <div class="col-sm-5 col-sm-offset-1">
                                             <label><b>Biển số đăng ký: </b></label>
@@ -454,7 +434,7 @@
             $('#txtPersonalId1').text($('#txtPersonalId').val());
             $('#txtStartDate1').text($('#txtStartDate').val());
             $('#ddlContractType1').text($('#ddlContractType option:selected').text());
-            $('#txtFee1').text($('#txtFee').val());
+            $('#txtFee2').text($('#txtFeeInput').val());
             $('#txtPlate1').text($('#txtPlate').val());
             $('#txtBrand1').text($('#txtBrand').val());
             $('#txtModel1').text($('#txtModel').val());

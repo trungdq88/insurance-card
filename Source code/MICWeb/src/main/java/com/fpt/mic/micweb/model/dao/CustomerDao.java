@@ -1,7 +1,6 @@
 package com.fpt.mic.micweb.model.dao;
 
 import com.fpt.mic.micweb.model.dao.common.IncrementDao;
-import com.fpt.mic.micweb.model.dto.CustomerDTO;
 import com.fpt.mic.micweb.model.entity.CustomerEntity;
 
 import javax.persistence.EntityManager;
@@ -22,17 +21,13 @@ public class CustomerDao extends IncrementDao<CustomerEntity, String> {
     /**
      * This is the method which get all customer.
      * Expected return to CustomerDTO, implement later
-     * @return list This is result of the query.
      *
+     * @return list This is result of the query.
      * @author KhaNC
      * @version 1.0
      */
     public List<CustomerEntity> getAllCustomer() {
         EntityManager entity = factory.createEntityManager();
-        /*String hql = "SELECT CU.customerCode, CU.name, CU.phone, CO.contractCode, CA.cardId " +
-                "FROM CustomerEntity AS CU, ContractEntity AS CO, CardEntity AS CA " +
-                "WHERE CU.customerCode = CO.customerCode " +
-                "AND CO.contractCode = CA.contractCode";*/
         String hql = "SELECT c FROM CustomerEntity c ORDER BY c.customerCode DESC";
         Query query = entity.createQuery(hql);
         return query.getResultList();

@@ -135,6 +135,7 @@ public class ContractController extends BasicController {
         } else {
             msg = "Gia hạn hợp đồng thất bại";
         }
+        r.equest.setAttribute("CODE", contractCode);
         r.equest.setAttribute("MESSAGE", msg);
         return new JspPage("staff/message.jsp");
     }
@@ -156,6 +157,7 @@ public class ContractController extends BasicController {
         } else {
             msg = "Hủy hợp đồng thất bại";
         }
+        r.equest.setAttribute("CODE", contractCode);
         r.equest.setAttribute("MESSAGE", msg);
         return new JspPage("staff/message.jsp");
     }

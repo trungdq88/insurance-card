@@ -36,21 +36,16 @@ public class CustomerBusniess {
     }
 
     /*cancel contract    */
-    public boolean CancelContract(String code, String cancelReason) {
+    public ContractEntity CancelContract(String code, String cancelReason) {
         ContractDao contractDa0 = new ContractDao();
         ContractEntity contract = contractDa0.read(code);
-        boolean result = false;
         //get date now
         java.util.Date date = new java.util.Date();
-        if (contract != null) {
-            contract.setCancelDate(new Timestamp(date.getTime()));
-            contract.setCancelReason(cancelReason);
-            contract.setStatus(Constants.ContractStatus.REQUEST_CANCEL);
-            if (contractDa0.update(contract) != null) {
-                result = true;
-            }
-        }
-        return result;
+        contract.setCancelDate(new Timestamp(date.getTime()));
+        contract.setCancelReason(cancelReason);
+        contract.setStatus("Request cancel");
+        contractDa0.update(contract);
+        return contract;
     }
 
     /*
@@ -66,4 +61,22 @@ public class CustomerBusniess {
         return result;
 
     }
+
+    /*
+    reject request cancel contract
+     */
+    public ContractEntity RejectCancelContract(String contractCode) {
+        ContractDao contractDa0 = new ContractDao();
+        ContractEntity contract = contractDa0.read(contractCode);
+        contract.setCancelReason(null);
+        contract.setCancelNote(null);
+        contract.setStatus("Ready");
+        if (contractDa0.update(contract) != null) {
+            return contract;
+        } else {
+            return null;
+        }
+
+    }
+
 }

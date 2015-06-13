@@ -45,25 +45,49 @@
                             </div>
                         </legend>
 
-                        <c:if test="${cont.status == 'Request cancel'}">
-                            <div class="text-center">
-                                <p class="bs-example bg-primary text-uppercase">
+                        <c:if test="${cont.status eq 'Expired'}">
+                            <script type="text/javascript">
+                                $(document).ready(function () {
+                                    $('#expiredDate').val(getCurrentDateInNextYear());
+                                    document.getElementById("expiredDate").min = getCurrentDate();
+                                    document.getElementById("expiredDate").max = getCurrentDateInNextYear();
+                                });
+                            </script>
+                        </c:if>
+
+                        <c:if test="${cont.status ne 'Expired'}">
+                            <script type="text/javascript">
+                                $(document).ready(function () {
+                                    $('#expiredDate').val(getInputDateInNextYear('${cont.expiredDate}'));
+                                    document.getElementById("expiredDate").min = getCurrentDate();
+                                    document.getElementById("expiredDate").max = getInputDateInNextYear('${cont.expiredDate}');
+                                });
+                            </script>
+                        </c:if>
+
+                        <c:if test="${cont.status eq 'Request cancel'}">
+                            <div class="alert alert-info">
+                                <p class="bs-example text-center text-uppercase">
                                     Hợp đồng này đang có yêu cầu hủy từ khách hàng
                                 </p>
                             </div>
                         </c:if>
 
-                        <c:if test="${cont.status == 'Cancelled'}">
-                            <script>
-                                $('button[type=button]').attr('disabled',true);
+                        <c:if test="${cont.status eq 'Cancelled'}">
+                            <script type="text/javascript">
+                                $(document).ready(function () {
+                                    $('button[type=button]').attr('disabled', true);
+                                });
                             </script>
 
-                            <div class="text-center">
-                                <p class="bs-example bg-danger text-uppercase">
-                                    Hợp đồng này đã bị hủy
+                            <div class="alert alert-warning">
+                                <p class="bs-example text-center text-uppercase">
+                                    <strong>Hợp đồng này đã bị hủy</strong>
                                 </p>
                             </div>
+                        </c:if>
 
+                        <c:if test="${cont.status eq 'Request cancel' or cont.status eq 'Cancelled'}">
                             <!-- Cancel date -->
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">Thời điểm hủy</label>
@@ -86,15 +110,18 @@
                                 </div>
                             </div>
 
-                            <!-- Cancel note -->
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">Ghi chú hủy</label>
+                            <c:if test="${cont.status eq 'Cancelled'}">
+                                <!-- Cancel note -->
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">Ghi chú hủy</label>
 
-                                <div class="col-sm-7">
-                                    <div class="text-value">${cont.cancelNote}</div>
+                                    <div class="col-sm-7">
+                                        <div class="text-value">${cont.cancelNote}</div>
+                                    </div>
                                 </div>
-                            </div>
+                            </c:if>
                         </c:if>
+                        <%--/Show cancel contract information--%>
 
                         <!-- Contract code & Contract status -->
                         <div class="form-group">
@@ -106,7 +133,7 @@
                                 </div>
                             </div>
 
-                            <label class="col-sm-4 control-label">Trạng thái</label>
+                            <label class="col-sm-3 control-label">Trạng thái</label>
 
                             <div class="col-sm-2">
                                 <div class="text-value">${cont.status}</div>
@@ -517,12 +544,14 @@
                         <legend>Thông tin thanh toán</legend>
 
                         <!-- Paid date -->
-                        <div class="form-group">
+                        <div class=" form-group">
                             <label class="col-sm-5 control-label" for="paidDate">Ngày nộp phí *</label>
 
                             <div class="col-sm-4">
-                                <input id="paidDate" name="txtPaidDate" type="date" class="form-control input-md">
-                                <input value="${cont.micContractTypeByContractTypeId.pricePerYear}"
+                                <input id="paidDate" name="txtPaidDate" type="date"
+                                       class="form-control input-md">
+                                <input value="
+${cont.micContractTypeByContractTypeId.pricePerYear}"
                                        type="hidden" name="txtAmount"/>
                             </div>
                         </div>
@@ -562,7 +591,8 @@
                             <label class="col-sm-4 control-label" for="cancelDate">Ngày hủy hợp đồng *</label>
 
                             <div class="col-sm-4">
-                                <input id="cancelDate" name="txtCancelDate" type="date" class="form-control input-md">
+                                <input id="cancelDate" name="txtCancelDate" type="date"
+                                       class="form-control input-md" value="${cont.cancelDate}">
                             </div>
                         </div>
 
@@ -572,7 +602,7 @@
 
                             <div class="col-sm-7">
                                 <input id="cancelReason" name="txtCancelReason" type="text"
-                                       class="form-control input-md">
+                                       class="form-control input-md" value="${cont.cancelReason}">
                             </div>
                         </div>
 
@@ -582,8 +612,7 @@
 
                             <div class="col-sm-7">
                                 <textarea id="cancelNote" name="txtCancelNote" rows="4"
-                                          class="form-control input-lg">
-                                </textarea>
+                                          class="form-control input-lg"></textarea>
                             </div>
                         </div>
                     </fieldset>
@@ -605,9 +634,8 @@
 </div>
 <!-- /.modal -->
 
-<script>
+<script type="text/javascript">
     $(document).ready(function () {
-        document.getElementById("expiredDate").min = getCurrentDateInNextYear();
         $('#paidDate').val(getCurrentDate());
         document.getElementById("paidDate").min = getCurrentDateInLastWeek();
         $('#cancelDate').val(getCurrentDate());

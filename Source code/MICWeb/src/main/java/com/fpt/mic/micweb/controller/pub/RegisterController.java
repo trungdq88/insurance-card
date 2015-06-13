@@ -6,12 +6,14 @@ import com.fpt.mic.micweb.framework.responses.ForwardTo;
 import com.fpt.mic.micweb.framework.responses.JspPage;
 import com.fpt.mic.micweb.framework.responses.RedirectTo;
 import com.fpt.mic.micweb.framework.responses.ResponseObject;
+import com.fpt.mic.micweb.model.business.ContractBusiness;
 import com.fpt.mic.micweb.model.business.RegisterBusiness;
 import com.fpt.mic.micweb.model.dao.ContractDao;
 import com.fpt.mic.micweb.model.dto.CheckoutRequest;
 import com.fpt.mic.micweb.model.dto.PayPal;
 import com.fpt.mic.micweb.model.dto.RegisterInformation;
 import com.fpt.mic.micweb.model.entity.ContractEntity;
+import com.fpt.mic.micweb.model.entity.ContractTypeEntity;
 import com.fpt.mic.micweb.model.entity.CustomerEntity;
 import com.fpt.mic.micweb.model.entity.PaymentEntity;
 import com.fpt.mic.micweb.utils.Constants;
@@ -21,9 +23,7 @@ import org.apache.commons.lang3.StringEscapeUtils;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpSession;
 import java.sql.Timestamp;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by dinhquangtrung on 5/24/15.
@@ -46,7 +46,11 @@ public class RegisterController extends BasicController {
         r.equest.setAttribute("ddlContractType", r.equest.getParameter("ddlContractType"));
         r.equest.setAttribute("txtFee", r.equest.getParameter("txtFee"));
 
-        // r.equest.getParameter()
+        ContractTypeEntity contractTypeEntity = new ContractTypeEntity();
+        ContractBusiness contractBusiness = new ContractBusiness();
+        List<ContractTypeEntity> list = new ArrayList<ContractTypeEntity>();
+        list = contractBusiness.getAllContractType();
+        r.equest.setAttribute("listContractType",list);
         r.equest.setAttribute("customerEntity", customerEntity);
         return new JspPage("public/register.jsp");
     }

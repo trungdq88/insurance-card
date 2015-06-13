@@ -254,6 +254,7 @@
                                     <option label="<c:out value="${row.name}"/>" value="<c:out value="${row.id}"/>"><c:out value="${row.pricePerYear}"/></option>
                                 </c:forEach>
                             </select>
+
                         </div>
                     </div>
                     <div class="form-group  col-md-12">
@@ -295,13 +296,6 @@
 </div>
 
 <script language="javascript">
-    function updateFee() {
-        var fee = $('#txtFee');
-        var newFee = $('#ddlContractType').option[ $('#ddlContractType').selectedIndex].name;
-
-        alert(" " +newFee.valueOf);
-        fee.val($('#ddlContractType').option[ $('#ddlContractType').selectedIndex].name);
-    }
     $('#ddlContractType').change();
     function setInputDate(_id){
         var _dat = document.querySelector(_id);
