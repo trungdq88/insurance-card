@@ -33,13 +33,16 @@
                         </h3>
                         <form class="form" action="${pageContext.request.contextPath}/public/checkout" method="get">
                             <div class="row">
-                                <div class="col-sm-9 col-sm-offset-3">
+                                <div class="col-sm-9 col-sm-offset-2">
                                     <% HashMap result = (HashMap) request.getAttribute("result");  %>
-                                    <p>Nội dung thanh toán: <%=result.get("L_PAYMENTREQUEST_0_DESC0")%> </p>
-                                    <input type="hidden" id="amount" value="${requestScope.result['PAYMENTREQUEST_0_AMT']}">
-                                    <p>Tổng tiền phải trả:<span id="amount1"></span> (VND)
-                                    </p>
-                                    <div class="col-sm-4">
+                                    <div class="col-sm-9 col-sm-offset-2">
+                                        <p><b>Nội dung thanh toán: </b> ${param.L_PAYMENTREQUEST_0_DESC0}</p>
+                                        <input type="hidden" id="amount" value="${requestScope.result['PAYMENTREQUEST_0_AMT']}">
+                                        <p><b>Tổng tiền phải trả: </b><span id="amount1"></span> (VND)
+                                        </p>
+                                    </div>
+
+                                    <div class="col-sm-6">
                                         <div class="choice" data-toggle="wizard-radio" rel="tooltip"
                                              title="Chọn nếu quý khách thanh toán qua Paypal">
                                             <input type="radio" name="type" value="Paypal">
@@ -65,7 +68,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-sm-4">
+                                    <div class="col-sm-5">
                                         <a href="#companyAddress" data-toggle="collapse"
                                            aria-expanded="false" aria-controls="companyAddress">
                                             <div class="choice" data-toggle="wizard-radio" rel="tooltip"
@@ -79,7 +82,7 @@
                                             </div>
                                         </a>
                                     </div>
-                                    <div class="col-sm-10 col-sm-offset-1">
+                                    <div class="col-sm-12">
                                         <div class="collapse" id="companyAddress">
                                             <div class="form-group">
                                                 <p class="text-muted"><b>Địa chỉ:</b> Lầu 2, tòa nhà Innovation,
@@ -90,7 +93,13 @@
                                                 <p class="text-muted"><b>Số điện thoại:</b> 0937337009</p>
 
                                                 <p class="text-muted"><b>Email:</b> hydrangea8604@gmail.com</p>
-                                                <img src="${pageContext.request.contextPath}/img/map.png" alt="Trường đại học FPT"/>
+                                                <%--<img src="${pageContext.request.contextPath}/img/map.png" alt="Trường đại học FPT"/>--%>
+                                                <iframe
+                                                        width="600"
+                                                        height="450"
+                                                        frameborder="0" style="border:0"
+                                                        src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBHWaWHbQJEFOvVmZw7tcR0qIGQQUoxsKM&q=Trường Đại Học FPT, tòa nhà Innovation, Công viên phần mềm Quang Trung, P.Tân Chánh Hiệp, Quận 12, TP. Hồ Chí Minh">
+                                                </iframe>
                                             </div>
                                         </div>
                                     </div>

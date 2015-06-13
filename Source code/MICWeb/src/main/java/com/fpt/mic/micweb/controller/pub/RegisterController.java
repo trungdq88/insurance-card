@@ -166,7 +166,7 @@ public class RegisterController extends BasicController {
 
         paymentEntity.setPaidDate(new Timestamp(new Date().getTime()));
         paymentEntity.setPaymentMethod("PayPal payment");
-        paymentEntity.setContent("Create new contract");
+        paymentEntity.setContent("Đăng ký hợp đồng mới");
         paymentEntity.setAmount(Float.parseFloat(results.get("PAYMENTINFO_0_AMT").toString()));
         paymentEntity.setPaypalTransId(results.get("PAYMENTINFO_0_TRANSACTIONID").toString());
         paymentEntity.setContractCode(contractEntity.getContractCode());
