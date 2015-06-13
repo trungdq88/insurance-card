@@ -45,72 +45,71 @@
                             </div>
                         </legend>
 
-                        <c:if test="${cont.status eq 'Expired'}">
-                            <script type="text/javascript">
-                                $(document).ready(function () {
-                                    $('#expiredDate').val(getCurrentDateInNextYear());
-                                    document.getElementById("expiredDate").min = getCurrentDate();
-                                    document.getElementById("expiredDate").max = getCurrentDateInNextYear();
-                                });
-                            </script>
-                        </c:if>
-
-                        <c:if test="${cont.status ne 'Expired'}">
-                            <script type="text/javascript">
-                                $(document).ready(function () {
-                                    $('#expiredDate').val(getInputDateInNextYear('${cont.expiredDate}'));
-                                    document.getElementById("expiredDate").min = getCurrentDate();
-                                    document.getElementById("expiredDate").max = getInputDateInNextYear('${cont.expiredDate}');
-                                });
-                            </script>
-                        </c:if>
-
                         <c:if test="${cont.status eq 'Request cancel'}">
                             <div class="alert alert-info">
                                 <p class="bs-example text-center text-uppercase">
                                     Hợp đồng này đang có yêu cầu hủy từ khách hàng
                                 </p>
-                            </div>
-                        </c:if>
+                                <br/>
+                                <!-- Cancel date -->
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">Thời điểm hủy</label>
 
-                        <c:if test="${cont.status eq 'Cancelled'}">
-                            <script type="text/javascript">
-                                $(document).ready(function () {
-                                    $('button[type=button]').attr('disabled', true);
-                                });
-                            </script>
+                                    <div class="col-sm-4">
+                                        <div class="text-value">
+                                            <fmt:formatDate value="${cont.cancelDate}" pattern="dd/MM/yyyy"/>
+                                            lúc
+                                            <fmt:formatDate value="${cont.cancelDate}" type="time"/>
+                                        </div>
+                                    </div>
+                                </div>
 
-                            <div class="alert alert-warning">
-                                <p class="bs-example text-center text-uppercase">
-                                    <strong>Hợp đồng này đã bị hủy</strong>
+                                <!-- Cancel reason -->
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">Lý do hủy</label>
+
+                                    <div class="col-sm-7">
+                                        <div class="text-value">${cont.cancelReason}</div>
+                                    </div>
+                                </div>
+
+                                <p class="text-center">
+                                    <button class="btn btn-primary" type="button" data-toggle="modal"
+                                            data-target="#cancel-contract-modal">
+                                        <i class="fa fa-check"></i> Giải quyết
+                                    </button>
                                 </p>
                             </div>
                         </c:if>
 
-                        <c:if test="${cont.status eq 'Request cancel' or cont.status eq 'Cancelled'}">
-                            <!-- Cancel date -->
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">Thời điểm hủy</label>
+                        <c:if test="${cont.status eq 'Cancelled'}">
+                            <div class="alert alert-warning">
+                                <p class="bs-example text-center text-uppercase">
+                                    <strong>Hợp đồng này đã bị hủy</strong>
+                                </p>
+                                <br/>
+                                <!-- Cancel date -->
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">Thời điểm hủy</label>
 
-                                <div class="col-sm-4">
-                                    <div class="text-value">
-                                        <fmt:formatDate value="${cont.cancelDate}" pattern="dd/MM/yyyy"/>
-                                        lúc
-                                        <fmt:formatDate value="${cont.cancelDate}" type="time"/>
+                                    <div class="col-sm-4">
+                                        <div class="text-value">
+                                            <fmt:formatDate value="${cont.cancelDate}" pattern="dd/MM/yyyy"/>
+                                            lúc
+                                            <fmt:formatDate value="${cont.cancelDate}" type="time"/>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
 
-                            <!-- Cancel reason -->
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">Lý do hủy</label>
+                                <!-- Cancel reason -->
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">Lý do hủy</label>
 
-                                <div class="col-sm-7">
-                                    <div class="text-value">${cont.cancelReason}</div>
+                                    <div class="col-sm-7">
+                                        <div class="text-value">${cont.cancelReason}</div>
+                                    </div>
                                 </div>
-                            </div>
 
-                            <c:if test="${cont.status eq 'Cancelled'}">
                                 <!-- Cancel note -->
                                 <div class="form-group">
                                     <label class="col-sm-3 control-label">Ghi chú hủy</label>
@@ -119,9 +118,9 @@
                                         <div class="text-value">${cont.cancelNote}</div>
                                     </div>
                                 </div>
-                            </c:if>
+                            </div>
                         </c:if>
-                        <%--/Show cancel contract information--%>
+                    <%--/Show cancel contract information--%>
 
                         <!-- Contract code & Contract status -->
                         <div class="form-group">
@@ -135,7 +134,7 @@
 
                             <label class="col-sm-3 control-label">Trạng thái</label>
 
-                            <div class="col-sm-2">
+                            <div class="col-sm-3">
                                 <div class="text-value">${cont.status}</div>
                             </div>
                         </div>
@@ -601,6 +600,9 @@ ${cont.micContractTypeByContractTypeId.pricePerYear}"
                             <label class="col-sm-4 control-label" for="cancelReason">Lý do hủy hợp đồng *</label>
 
                             <div class="col-sm-7">
+                                <c:if test="${cont.status eq 'Request cancel'}">
+                                    <input type="hidden" name="txtCancelReason" value="${cont.cancelReason}"/>
+                                </c:if>
                                 <input id="cancelReason" name="txtCancelReason" type="text"
                                        class="form-control input-md" value="${cont.cancelReason}">
                             </div>
@@ -621,8 +623,8 @@ ${cont.micContractTypeByContractTypeId.pricePerYear}"
                     <input type="hidden" name="txtContractCode" value="${cont.contractCode}"/>
                     <input type="hidden" name="action" value="cancel"/>
                     <button type="submit" class="btn btn-danger">
-                        <i class="fa fa-arrow-right"></i>
-                        Hủy hợp đồng
+                        <i class="fa fa-check"></i>
+                        Đồng ý hủy
                     </button>
                     <button type="button" class="btn btn-primary" data-dismiss="modal">Đóng</button>
                 </div>
@@ -636,10 +638,25 @@ ${cont.micContractTypeByContractTypeId.pricePerYear}"
 
 <script type="text/javascript">
     $(document).ready(function () {
+        var contractStatus = '${cont.status}';
         $('#paidDate').val(getCurrentDate());
         document.getElementById("paidDate").min = getCurrentDateInLastWeek();
         $('#cancelDate').val(getCurrentDate());
         document.getElementById("cancelDate").min = getCurrentDateInLastWeek();
+        $('#expiredDate').val(getCurrentDateInNextYear());
+        document.getElementById("expiredDate").min = getCurrentDate();
+        if (contractStatus == 'Expired') {
+            document.getElementById("expiredDate").max = getCurrentDateInNextYear();
+        } else {
+            $('#expiredDate').val(getInputDateInNextYear('${cont.expiredDate}'));
+            document.getElementById("expiredDate").max = getInputDateInNextYear('${cont.expiredDate}');
+        }
+        if (contractStatus == 'Cancelled') {
+            $('button[type=button]').attr('disabled', true);
+        }
+        if (contractStatus == 'Request cancel') {
+            document.getElementById("cancelReason").disabled = true;
+        }
     });
 </script>
 

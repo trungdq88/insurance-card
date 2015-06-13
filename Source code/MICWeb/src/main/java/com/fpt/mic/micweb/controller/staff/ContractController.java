@@ -89,9 +89,18 @@ public class ContractController extends BasicController {
         contractEntity.setEngine(r.equest.getParameter("txtEngine"));
         contractEntity.setChassis(r.equest.getParameter("txtChassis"));
         contractEntity.setCapacity(r.equest.getParameter("txtCapacity"));
-        contractEntity.setYearOfManufacture(Integer.parseInt(r.equest.getParameter("txtYearOfMan")));
-        contractEntity.setWeight(Integer.parseInt(r.equest.getParameter("txtWeight")));
-        contractEntity.setSeatCapacity(Integer.parseInt(r.equest.getParameter("txtSeatCapacity")));
+        String yearOfMan = r.equest.getParameter("txtYearOfMan");
+        if (!yearOfMan.equals("")) {
+            contractEntity.setYearOfManufacture(Integer.parseInt(yearOfMan));
+        }
+        String weight = r.equest.getParameter("txtWeight");
+        if (!weight.equals("")) {
+            contractEntity.setWeight(Integer.parseInt(weight));
+        }
+        String seatCapacity = r.equest.getParameter("txtSeatCapacity");
+        if (!seatCapacity.equals("")) {
+            contractEntity.setSeatCapacity(Integer.parseInt(seatCapacity));
+        }
 
         // Get payment information
         String paidDate = r.equest.getParameter("txtPaidDate");
@@ -115,8 +124,6 @@ public class ContractController extends BasicController {
     public ResponseObject postRenew(R r) {
         // Get renew contract information
         String contractCode = r.equest.getParameter("txtContractCode");
-        String newStartDate = r.equest.getParameter("txtNewStartDate");
-        Timestamp startDate = DateUtils.stringToTime(newStartDate);
         String newExpiredDate = r.equest.getParameter("txtExpiredDate");
         Timestamp expiredDate = DateUtils.stringToTime(newExpiredDate);
 
@@ -128,7 +135,7 @@ public class ContractController extends BasicController {
 
         // Call to business object
         StaffBusiness staffBus = new StaffBusiness();
-        boolean result = staffBus.renewContract(contractCode, startDate, expiredDate, paymentEntity);
+        boolean result = staffBus.renewContract(contractCode, expiredDate, paymentEntity);
         String msg = "";
         if (result) {
             msg = "Đã gia hạn hợp đồng thành công";
