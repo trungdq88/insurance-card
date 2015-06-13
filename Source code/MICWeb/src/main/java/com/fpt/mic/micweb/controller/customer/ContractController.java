@@ -14,10 +14,13 @@ import com.fpt.mic.micweb.framework.responses.ResponseObject;
 import com.fpt.mic.micweb.model.entity.PaymentEntity;
 import com.fpt.mic.micweb.utils.Constants;
 import com.fpt.mic.micweb.utils.DateUtils;
+import com.sun.xml.internal.ws.api.server.Container;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpSession;
+import java.sql.Time;
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -52,7 +55,7 @@ public class ContractController extends BasicController {
         ContractEntity contract = customerBusiness.CancelContract(contractcode, reasoncancel);
         if (contract != null) {
             r.equest.setAttribute("contract", contract);
-            return new JspPage("customer/contract-detail.jsp");
+            return new JspPage("customer/contract?action=ContractDetail&code=" + contractcode);
         } else {
             r.equest.setAttribute("result", mesg);
             r.equest.setAttribute("contractCode", contractcode);
@@ -63,22 +66,27 @@ public class ContractController extends BasicController {
     /* Renew contract */
     public ResponseObject postRenewContract(R r) {
         //get parameter
-
+        Date date = new Date();
         String contractCode = r.equest.getParameter("txtContractCode");
-        String newStartDate = r.equest.getParameter("txtNewStartDate");
-        Timestamp startDate = DateUtils.stringToTime(newStartDate);
-        Timestamp newExpiredDate = DateUtils.addOneYear(startDate);
-
-
+        CustomerBusniess busniess = new CustomerBusniess();
+        ContractEntity contract = busniess.getContractDetail(contractCode);
+        Timestamp expiredDate = contract.getExpiredDate();
+        if (contract.getStatus().equalsIgnoreCase(Constants.ContractStatus.READY)) {
+            expiredDate = DateUtils.addOneYear(expiredDate);
+        }
+        else if (contract.getStatus().equalsIgnoreCase(Constants.ContractStatus.EXPIRED) ) {
+            expiredDate = DateUtils.addOneYear(new Timestamp(date.getTime()));
+        }
         HttpSession session = r.equest.getSession();
+
         session.setAttribute("contractCode", contractCode);
-        session.setAttribute("newStartDate", startDate);
-        session.setAttribute("newExpiredDate", newExpiredDate);
+        session.setAttribute("newExpiredDate", expiredDate);
         session.setAttribute("SUCCESS_URL", r.equest.getParameter("successUrl"));
 
         CheckoutRequest checkoutRequest = new CheckoutRequest();
         checkoutRequest.setPaymentrequest_name(r.equest.getParameter("L_PAYMENTREQUEST_0_NAME0"));
         checkoutRequest.setPaymentrequest_desc(r.equest.getParameter("L_PAYMENTREQUEST_0_DESC0"));
+
         checkoutRequest.setPaymentrequest_qty(r.equest.getParameter("L_PAYMENTREQUEST_0_QTY0"));
         checkoutRequest.setPaymentrequest_itemamt(r.equest.getParameter("PAYMENTREQUEST_0_ITEMAMT"));
         checkoutRequest.setPaymentrequest_taxamt(r.equest.getParameter("PAYMENTREQUEST_0_TAXAMT"));
@@ -108,13 +116,11 @@ public class ContractController extends BasicController {
         java.util.Date date = new java.util.Date();
 
         String contractCode = (String) session.getAttribute("contractCode");
-        Timestamp newStartDate = (Timestamp) session.getAttribute("newStartDate");
         Timestamp newExpiredDate = (Timestamp) session.getAttribute("newExpiredDate");
 
         CustomerBusniess customerBusiness = new CustomerBusniess();
 
         ContractEntity contract = customerBusiness.getContractDetail(contractCode);
-        contract.setStartDate(newStartDate);
         contract.setExpiredDate(newExpiredDate);
         contract.setStatus(Constants.ContractStatus.READY);
 
@@ -122,7 +128,7 @@ public class ContractController extends BasicController {
         payment.setPaidDate(new Timestamp(date.getTime()));
         payment.setPaymentMethod("PayPal payment");
         payment.setContent("Gia Hạn Hợp Đồng");
-        payment.setAmount(Float.parseFloat(results.get("PAYMENTINFO_0_AMT").toString()));
+        payment.setAmount(contract.getContractFee());
         payment.setPaypalTransId(results.get("PAYMENTINFO_0_TRANSACTIONID").toString());
         payment.setContractCode(contract.getContractCode());
         boolean result = customerBusiness.RenewContract(contract, payment);
@@ -144,7 +150,7 @@ public class ContractController extends BasicController {
         String mesg = "Không thể gở bỏ yêu cầu hủy hợp đồng";
         if (contract != null) {
             r.equest.setAttribute("contract", contract);
-            return new JspPage("customer/contract-detail.jsp");
+            return new JspPage("customer/contract?action=ContractDetail&code=" + contractCode);
         } else {
             r.equest.setAttribute("result", mesg);
             r.equest.setAttribute("contractCode", contractCode);

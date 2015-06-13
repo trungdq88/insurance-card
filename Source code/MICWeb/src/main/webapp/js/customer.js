@@ -68,7 +68,14 @@ $(document).ready(function () {
 
 
     $('#renew').click(function () {
-        var myDate = new Date($('#newStartDate').val());
+        var status = $('#contractStatus').val();
+        var myDate = null;
+        if (status == 'Ready') {
+            myDate = new Date($('#newStartDate').val());
+        }
+        else if (status == 'Expired') {
+            myDate = new Date();
+        }
         var year = myDate.getFullYear() + 1;
         var month = (1 + myDate.getMonth()).toString();
         month = month.length > 1 ? month : '0' + month;
@@ -77,6 +84,13 @@ $(document).ready(function () {
         $('#newExpiredDate').val(day + '/' + month + '/' + year);
         $('#payment').val((parseFloat($('#payAmount').val())));
         $('#paymentATM').val((parseFloat($('#payAmount').val())));
+        /////
+        var startDate = new Date($('#newStartDate').val());
+        startDate = (startDate.getDate().toString().length > 1 ? startDate.getDate().toString() : '0' + startDate.getDate().toString()) + '/' +
+            ((1 + startDate.getMonth()).toString().length > 1 ? (1 + startDate.getMonth()).toString() : '0' + (1 + startDate.getMonth()).toString()) + '/' +
+            startDate.getFullYear();
+
+        $('#content').val("Renew contract from " + startDate + " to " + day + '/' + month + '/' + year);
     });
 });
 

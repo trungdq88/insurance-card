@@ -10,6 +10,7 @@ import com.fpt.mic.micweb.utils.Constants;
 import sun.util.calendar.BaseCalendar;
 import sun.util.calendar.LocalGregorianCalendar;
 
+import java.awt.*;
 import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
@@ -43,35 +44,40 @@ public class CustomerBusniess {
         java.util.Date date = new java.util.Date();
         contract.setCancelDate(new Timestamp(date.getTime()));
         contract.setCancelReason(cancelReason);
-        contract.setStatus("Request cancel");
+        contract.setStatus(Constants.ContractStatus.REQUEST_CANCEL);
         contractDa0.update(contract);
         return contract;
     }
 
-    /*
-    renew contract
+    /**
+     * renew contract
+     * @param contract
+     * @param payment
+     * @return contract
      */
     public boolean RenewContract(ContractEntity contract, PaymentEntity payment) {
         boolean result = false;
-        ContractDao contractDa0 = new ContractDao();
+        ContractDao contractDao = new ContractDao();
         PaymentDao paymentDao = new PaymentDao();
-        if (contractDa0.update(contract) != null && paymentDao.update(payment) != null) {
+        if (contractDao.update(contract) != null && paymentDao.update(payment) != null) {
             result = true;
         }
         return result;
 
     }
 
-    /*
-    reject request cancel contract
+    /**
+     * reject request cancel contract
+     * @param contractCode
+     * @return contract
      */
     public ContractEntity RejectCancelContract(String contractCode) {
-        ContractDao contractDa0 = new ContractDao();
-        ContractEntity contract = contractDa0.read(contractCode);
+        ContractDao contractDao = new ContractDao();
+        ContractEntity contract = contractDao.read(contractCode);
         contract.setCancelReason(null);
         contract.setCancelNote(null);
-        contract.setStatus("Ready");
-        if (contractDa0.update(contract) != null) {
+        contract.setStatus(Constants.ContractStatus.READY);
+        if (contractDao.update(contract) != null) {
             return contract;
         } else {
             return null;
