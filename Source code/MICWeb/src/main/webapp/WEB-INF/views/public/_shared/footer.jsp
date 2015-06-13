@@ -1,7 +1,7 @@
 <!-- big container -->
 <footer class="footer-distributed">
     <div class="footer-left">
-        <img src="${pageContext.request.contextPath}/img/logoCompany.png"/>
+        <img src="${pageContext.request.contextPath}/img/logoCompany.png" height="70px"/>
 
         <p class="footer-links">
             <a href="home.html">Trang chủ</a>
