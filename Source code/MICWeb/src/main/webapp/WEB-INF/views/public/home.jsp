@@ -2,6 +2,7 @@
 <%@ page import="java.util.Date" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="en">
 <script src="${pageContext.request.contextPath}/js/jquery.min.js" type="text/javascript"></script>
@@ -244,14 +245,17 @@
                         </div>
                         <div class="form-group  col-md-7">
                             <label>Hình Thức Bảo Hiểm *</label>
-
+                            <fmt:setLocale value="vi_VN"/>
                             <select class="form-control" name="ddlContractType" id="ddlContractType" onchange="{
-                                var fee = this.options[this.selectedIndex].innerHTML;
-                                $('#txtFee1').text(fee);
+                                var fee = parseFloat(this.options[this.selectedIndex].innerHTML);
                                 $('#txtFeeInput').val(fee);
-                            }">
+                                fee = fee.formatMoney(0,'.',',');
+                                $('#txtFee1').text(fee);
+
+                            }" >
                                 <c:forEach var="row" items="${listContractType}">
-                                    <option label="<c:out value="${row.name}"/>" value="<c:out value="${row.id}"/>"><c:out value="${row.pricePerYear}"/></option>
+                                    <option label="<c:out value="${row.name}"/>" value="<c:out value="${row.id}"/>">
+                                        <c:out value="${row.pricePerYear}" /> </option>
                                 </c:forEach>
                             </select>
 
@@ -265,8 +269,10 @@
 
                         <p class="form-control-static">
                             <label>Phí bảo hiểm: </label>
-                            <b style="color: red"><span id="txtFee1"></span> VND</b>
-                            <input type="hidden" id="txtFeeInput" name="txtFee" value="200000">
+                            <b style="color: red"><span id="txtFee1"></span> VND
+                            </b>
+
+                            <input type="hidden" id="txtFeeInput" name="txtFee" value="${listContractType[0].pricePerYear}">
                         </p>
                         <input type="hidden" name="action" value="register"/>
                         <input type="submit" class="btn btn-primary btn-lg" value="Tiếp theo"/>
@@ -296,7 +302,18 @@
 </div>
 
 <script language="javascript">
-    $('#ddlContractType').change();
+
+    Number.prototype.formatMoney = function(c, d, t){
+        var n = this,
+                c = isNaN(c = Math.abs(c)) ? 2 : c,
+                d = d == undefined ? "." : d,
+                t = t == undefined ? "," : t,
+                s = n < 0 ? "-" : "",
+                i = parseInt(n = Math.abs(+n || 0).toFixed(c)) + "",
+                j = (j = i.length) > 3 ? j % 3 : 0;
+        return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
+    };
+
     function setInputDate(_id){
         var _dat = document.querySelector(_id);
         var hoy = new Date(),
@@ -318,6 +335,7 @@
     };
 
     setInputDate("#dateDefault");
+    $('#txtFee1').text(parseFloat($('#txtFeeInput').val()).formatMoney(0,'.',','));
 
 </script>
 </body>

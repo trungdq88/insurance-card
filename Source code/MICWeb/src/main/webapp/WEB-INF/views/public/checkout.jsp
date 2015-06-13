@@ -1,5 +1,6 @@
 <%@ page import="java.util.HashMap" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="_shared/header.jsp" %>
 <body>
@@ -34,8 +35,9 @@
                             <div class="row">
                                 <div class="col-sm-9 col-sm-offset-3">
                                     <% HashMap result = (HashMap) request.getAttribute("result");  %>
-                                    <p>Nội dung thanh toán: <%=result.get("L_PAYMENTREQUEST_0_DESC0")%></p>
-                                    <p>Tổng tiền phải trả: <%=result.get("PAYMENTREQUEST_0_AMT")%> (VND)
+                                    <p>Nội dung thanh toán: <%=result.get("L_PAYMENTREQUEST_0_DESC0")%> </p>
+                                    <input type="hidden" id="amount" value="${requestScope.result['PAYMENTREQUEST_0_AMT']}">
+                                    <p>Tổng tiền phải trả:<span id="amount1"></span> (VND)
                                     </p>
                                     <div class="col-sm-4">
                                         <div class="choice" data-toggle="wizard-radio" rel="tooltip"
@@ -117,6 +119,17 @@
             button: 'checkout',
             environment: '<%= new com.fpt.mic.micweb.model.dto.PayPal().getEnvironment() %>'
         });
+        Number.prototype.formatMoney = function(c, d, t){
+            var n = this,
+                    c = isNaN(c = Math.abs(c)) ? 2 : c,
+                    d = d == undefined ? "." : d,
+                    t = t == undefined ? "," : t,
+                    s = n < 0 ? "-" : "",
+                    i = parseInt(n = Math.abs(+n || 0).toFixed(c)) + "",
+                    j = (j = i.length) > 3 ? j % 3 : 0;
+            return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
+        };
+        $('#amount1').text(parseFloat($('#amount').val()).formatMoney(0));
     };
 </script>
 <script src="//www.paypalobjects.com/api/checkout.js" async></script>
