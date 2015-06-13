@@ -148,6 +148,7 @@ public class RegisterController extends BasicController {
         r.equest.setAttribute("ack", (String) session.getAttribute("ACK"));
         HashMap<String,String> details = (HashMap<String,String> )session.getAttribute("checkoutDetails");
         r.equest.setAttribute("amountVND",(String) session.getAttribute("amountVND"));
+        r.equest.setAttribute("redirectLink","home");
         ContractEntity contractEntity = new ContractEntity();
         ContractDao contractDao = new ContractDao();
         PaymentEntity paymentEntity = new PaymentEntity();

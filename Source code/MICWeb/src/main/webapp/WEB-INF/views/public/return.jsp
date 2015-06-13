@@ -41,7 +41,7 @@
                                 <p>Số tiền đã thanh toán: <span id="amount1"></span> VND
                                 </p>
 
-                                <h3><a href='home'>Trở về trang chủ</a></h3>
+                                <h3><a id="link" href='${redirectLink}'>Tự động thoát trong 10s</a></h3>
 
                                     <% } else {
 									HashMap<String,String> result = (HashMap<String,String>) request.getAttribute("result");
@@ -69,6 +69,11 @@
 </div>
 </body>
 <script language="javascript">
+    function redirect(){
+        window.location = $('#link').attr('href');
+    }
+
+    setTimeout(redirect, 10000);
     Number.prototype.formatMoney = function(c, d, t){
         var n = this,
                 c = isNaN(c = Math.abs(c)) ? 2 : c,
