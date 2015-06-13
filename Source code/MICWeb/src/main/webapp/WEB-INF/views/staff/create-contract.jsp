@@ -103,10 +103,11 @@
                             <div class="col-sm-7">
                                 <select class="form-control" name="ddlContractType"
                                         onchange="{
-                                        var fee = this.options[this.selectedIndex].innerHTML;
-                                        $('#displayFee').text(fee);
+                                        var fee = parseFloat(this.options[this.selectedIndex].innerHTML);
                                         $('#contractFee').val(fee);
                                         $('#amount').val(fee);
+                                        fee = fee.formatMoney(0);
+                                        $('#displayFee').text(fee);
                                         }">
                                     <option value="" disabled selected style="display:none;">Vui lòng chọn loại hợp đồng</option>
                                     <c:forEach var="type" items="${listType}">
