@@ -15,5 +15,5 @@ public class Constants {
         public static final String REQUEST_CANCEL = "Request cancel";
         public static final String CANCELLED = "Cancelled";
     }
-    public static final String API_BASE = "http://192.168.1.18:8080/api";
+    public static final String API_BASE = "http://192.168.43.244:8080/api";
 }

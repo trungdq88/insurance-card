@@ -23,18 +23,31 @@
         <div class="row">
 
             <div class="col-lg-12">
-                <h2 class="page-header ">Hợp Đồng ${contract.contractCode}
+                <h2 class="page-header ">Hợp Đồng ${contract.contractCode} <c:if
+                        test="${contract.status.equalsIgnoreCase('Cancelled')}">đã bị hủy</c:if>
                      <span class="pull-right">
-                         <button type="submit" class="btn btn-info" data-toggle="modal" id="renew"
-                                 data-target=".renew-contract-modal"><i class="fa fa-refresh"></i> Gia Hạn
-                         </button>
-                       <c:if test="${!contract.status.equalsIgnoreCase('Request cancel')}">
-                           <button type="button" class="btn btn-danger" data-toggle="modal"
-                                   data-target=".bs-example-modal-lg"><i class="fa fa-times"></i> Hủy Hợp Đồng
-                           </button>
-                       </c:if>
+                           <c:if test="${contract.status.equalsIgnoreCase('Request cancel') || contract.status.equalsIgnoreCase('Cancelled')}">
 
+                               <button type="submit" class="btn btn-info" data-toggle="modal" id="renew"
+                                       data-target=".renew-contract-modal" disabled="disabled"><i
+                                       class="fa fa-refresh"></i> Gia Hạn
+                               </button>
 
+                               <button type="button" class="btn btn-danger" data-toggle="modal" disabled="disabled"
+                                       data-target=".bs-example-modal-lg"><i class="fa fa-times"></i> Hủy Hợp Đồng
+                               </button>
+                           </c:if>
+                          <c:if test="${!contract.status.equalsIgnoreCase('Request cancel') && !contract.status.equalsIgnoreCase('Cancelled')}">
+
+                              <button type="submit" class="btn btn-info" data-toggle="modal" id="renew"
+                                      data-target=".renew-contract-modal"><i
+                                      class="fa fa-refresh"></i> Gia Hạn
+                              </button>
+
+                              <button type="button" class="btn btn-danger" data-toggle="modal"
+                                      data-target=".bs-example-modal-lg"><i class="fa fa-times"></i> Hủy Hợp Đồng
+                              </button>
+                          </c:if>
                      </span>
                 </h2>
             </div>
@@ -176,9 +189,16 @@
         <!-- /.modal-dialog -->
         <div class="col-lg-12">
             <c:if test="${contract.status.equalsIgnoreCase('Request cancel')}">
-                <div class="well well-lg text-center text-danger">
-                    Hợp đồng đã được yêu cầu hủy vui lòng chờ xác nhận của nhân viên
-                </div>
+                <form action="${pageContext.request.contextPath}/customer/contract" method="post">
+                    <div class="well well-lg text-center text-danger form-inline">
+                        Hợp đồng đã được yêu cầu hủy vui lòng chờ xác nhận của nhân viên &nbsp;
+                        <input type="hidden" name="contractcode"
+                           value="${contract.contractCode}"/>
+                    <input type="hidden" name="action" value="RejectRequestCancel"/>
+                    <input type="submit" class="btn btn-danger small" value="Hủy Bỏ"/>
+                    </div>
+                </form>
+
             </c:if>
         </div>
         <div role="tabpanel">
@@ -253,13 +273,13 @@
                                             <label class="text-center">Tình trạng hợp đồng</label>
                                         </td>
 
-                                        <c:if test="${contract.status.equalsIgnoreCase('Request cancel')}">
+                                        <c:if test="${contract.status.equalsIgnoreCase('Request cancel') || contract.status.equalsIgnoreCase('Cancelled')}">
                                             <td class="alert-danger text-center ">
                                                     ${contract.status}
                                             </td>
                                         </c:if>
 
-                                        <c:if test="${!contract.status.equalsIgnoreCase('Request cancel') && !contract.status.equalsIgnoreCase('Ready')}">
+                                        <c:if test="${!contract.status.equalsIgnoreCase('Request cancel') && !contract.status.equalsIgnoreCase('Ready')&& !contract.status.equalsIgnoreCase('Cancelled')}">
                                             <td class="alert-info text-center">
                                                     ${contract.status}
                                             </td>

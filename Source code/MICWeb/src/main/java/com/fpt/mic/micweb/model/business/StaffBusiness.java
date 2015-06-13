@@ -4,6 +4,8 @@ import com.fpt.mic.micweb.model.dao.ContractDao;
 import com.fpt.mic.micweb.model.dao.ContractTypeDao;
 import com.fpt.mic.micweb.model.dao.CustomerDao;
 import com.fpt.mic.micweb.model.dao.PaymentDao;
+import com.fpt.mic.micweb.model.entity.*;
+import com.fpt.mic.micweb.utils.Constants;
 import com.fpt.mic.micweb.model.entity.ContractEntity;
 import com.fpt.mic.micweb.model.entity.ContractTypeEntity;
 import com.fpt.mic.micweb.model.entity.CustomerEntity;
@@ -70,7 +72,7 @@ public class StaffBusiness {
         // get next contract code
         String contractCode = contractDao.getIncrementId();
         contractEntity.setContractCode(contractCode);
-        contractEntity.setStatus("No Card");
+        contractEntity.setStatus(Constants.ContractStatus.NO_CARD);
         ContractEntity newContract = contractDao.create(contractEntity);
         // Add contract
         if (newContract != null) {
@@ -99,7 +101,7 @@ public class StaffBusiness {
             // Update contract information
             contractEntity.setStartDate(startDate);
             contractEntity.setExpiredDate(expiredDate);
-            contractEntity.setStatus("Ready");
+            contractEntity.setStatus(Constants.ContractStatus.READY);
             if (contractDao.update(contractEntity) != null) {
                 // Add payment information
                 paymentEntity.setPaymentMethod("Direct");
@@ -125,7 +127,7 @@ public class StaffBusiness {
             contractEntity.setCancelDate(cancelDate);
             contractEntity.setCancelReason(cancelReason);
             contractEntity.setCancelNote(cancelNote);
-            contractEntity.setStatus("Cancelled");
+            contractEntity.setStatus(Constants.ContractStatus.CANCELLED);
             if (contractDao.update(contractEntity) != null) {
                 return true;
             }
