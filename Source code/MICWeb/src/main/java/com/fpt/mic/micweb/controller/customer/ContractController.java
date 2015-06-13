@@ -55,7 +55,7 @@ public class ContractController extends BasicController {
         ContractEntity contract = customerBusiness.CancelContract(contractcode, reasoncancel);
         if (contract != null) {
             r.equest.setAttribute("contract", contract);
-            return new JspPage("customer/contract?action=ContractDetail&code=" + contractcode);
+            return new RedirectTo("customer/contract?action=ContractDetail&code=" + contractcode);
         } else {
             r.equest.setAttribute("result", mesg);
             r.equest.setAttribute("contractCode", contractcode);
@@ -113,6 +113,7 @@ public class ContractController extends BasicController {
         Timestamp newExpiredDate = (Timestamp) session.getAttribute("newExpiredDate");
 
         r.equest.setAttribute("amountVND", (String) session.getAttribute("amountVND"));
+        r.equest.setAttribute("redirectLink", "home");
         r.equest.setAttribute("redirectLink", "/customer/contract?action=ContractDetail&code=" + contractCode);
 
         r.equest.setAttribute("result", results);
@@ -154,7 +155,7 @@ public class ContractController extends BasicController {
         String mesg = "Không thể gở bỏ yêu cầu hủy hợp đồng";
         if (contract != null) {
             r.equest.setAttribute("contract", contract);
-            return new JspPage("customer/contract?action=ContractDetail&code=" + contractCode);
+            return new RedirectTo("customer/contract?action=ContractDetail&code=" + contractCode);
         } else {
             r.equest.setAttribute("result", mesg);
             r.equest.setAttribute("contractCode", contractCode);
