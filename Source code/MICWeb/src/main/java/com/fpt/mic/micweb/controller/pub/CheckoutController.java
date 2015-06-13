@@ -6,6 +6,7 @@ import com.fpt.mic.micweb.framework.responses.JspPage;
 import com.fpt.mic.micweb.framework.responses.ResponseObject;
 import com.fpt.mic.micweb.model.dto.PayPal;
 import com.fpt.mic.micweb.utils.CurrencyUtils;
+import com.fpt.mic.micweb.utils.NumberUtils;
 import org.apache.commons.lang3.StringEscapeUtils;
 
 import javax.servlet.annotation.WebServlet;
@@ -78,7 +79,12 @@ public class CheckoutController extends BasicController{
                 checkoutDetails.putAll((Map<String, String>) session.getAttribute("checkoutDetails"));
                 checkoutDetails.putAll(setRequestParams(r));
                 session.setAttribute("amountVND", checkoutDetails.get("PAYMENTREQUEST_0_AMT"));
-                Double paymentAmount =(Double.parseDouble(checkoutDetails.get("PAYMENTREQUEST_0_AMT")))/CurrencyUtils.getCurrentRate();
+                Double paymentAmount =(Double.parseDouble(checkoutDetails.get("PAYMENTREQUEST_0_AMT")));
+                paymentAmount = paymentAmount/CurrencyUtils.getCurrentRate();
+
+                System.out.println(CurrencyUtils.getCurrentRate());
+                System.out.println(paymentAmount);
+                paymentAmount = NumberUtils.round(paymentAmount,2);
                 checkoutDetails.put("PAYMENTREQUEST_0_ITEMAMT", paymentAmount.toString());
                 checkoutDetails.put("PAYMENTREQUEST_0_AMT", paymentAmount.toString());
                 checkoutDetails.put("L_PAYMENTREQUEST_0_AMT", paymentAmount.toString());
