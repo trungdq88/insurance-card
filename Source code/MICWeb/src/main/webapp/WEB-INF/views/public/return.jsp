@@ -35,15 +35,11 @@
                                 <!-- Display the Transaction Details-->
                                 <p class="lead"> Bạn đã thanh toán thành công! </p>
 
-                                <p>Transaction ID: <%=result.get("PAYMENTINFO_0_TRANSACTIONID")%>
+                                <p>Mã giao dịch PayPal: <%=result.get("PAYMENTINFO_0_TRANSACTIONID")%>
                                 </p>
-
-                                <p>Payment Total Amount: <%=result.get("PAYMENTINFO_0_AMT")%>
+                                <input type="hidden" id="amount" value="${amountVND}">
+                                <p>Số tiền đã thanh toán: <span id="amount1"></span> VND
                                 </p>
-
-                                <p>Currency Code: <%=result.get("PAYMENTINFO_0_CURRENCYCODE")%>
-                                </p>
-
 
                                 <h3><a href='home'>Trở về trang chủ</a></h3>
 
@@ -55,7 +51,7 @@
                                 <!-- Display the Transaction Details-->
                                 <p class="lead"> Thanh toán không thành công! </p>
 
-                                <p class="lead"> Payment Status: <%=result.get("PAYMENTINFO_0_PAYMENTSTATUS")%>
+                                <p class="lead"> Tình trạng giao dịch: <%=result.get("PAYMENTINFO_0_PAYMENTSTATUS")%>
                                 </p>
 
 
@@ -72,5 +68,18 @@
     <!--  big container -->
 </div>
 </body>
+<script language="javascript">
+    Number.prototype.formatMoney = function(c, d, t){
+        var n = this,
+                c = isNaN(c = Math.abs(c)) ? 2 : c,
+                d = d == undefined ? "." : d,
+                t = t == undefined ? "," : t,
+                s = n < 0 ? "-" : "",
+                i = parseInt(n = Math.abs(+n || 0).toFixed(c)) + "",
+                j = (j = i.length) > 3 ? j % 3 : 0;
+        return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
+    };
+    $('#amount1').text(parseFloat($('#amount').val()).formatMoney(0));
+</script>
 <%@ include file="_shared/footer.jsp" %>
 </html>

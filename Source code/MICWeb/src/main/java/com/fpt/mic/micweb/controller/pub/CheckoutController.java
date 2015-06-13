@@ -5,6 +5,7 @@ import com.fpt.mic.micweb.framework.R;
 import com.fpt.mic.micweb.framework.responses.JspPage;
 import com.fpt.mic.micweb.framework.responses.ResponseObject;
 import com.fpt.mic.micweb.model.dto.PayPal;
+import com.fpt.mic.micweb.utils.CurrencyUtils;
 import org.apache.commons.lang3.StringEscapeUtils;
 
 import javax.servlet.annotation.WebServlet;
@@ -76,7 +77,8 @@ public class CheckoutController extends BasicController{
             if (isSet(session.getAttribute("EXPRESS_MARK")) && session.getAttribute("EXPRESS_MARK").equals("ECMark")) {
                 checkoutDetails.putAll((Map<String, String>) session.getAttribute("checkoutDetails"));
                 checkoutDetails.putAll(setRequestParams(r));
-                Float paymentAmount =(Float.parseFloat(checkoutDetails.get("PAYMENTREQUEST_0_AMT")))/20000;
+                session.setAttribute("amountVND", checkoutDetails.get("PAYMENTREQUEST_0_AMT"));
+                Double paymentAmount =(Double.parseDouble(checkoutDetails.get("PAYMENTREQUEST_0_AMT")))/CurrencyUtils.getCurrentRate();
                 checkoutDetails.put("PAYMENTREQUEST_0_ITEMAMT", paymentAmount.toString());
                 checkoutDetails.put("PAYMENTREQUEST_0_AMT", paymentAmount.toString());
                 checkoutDetails.put("L_PAYMENTREQUEST_0_AMT", paymentAmount.toString());

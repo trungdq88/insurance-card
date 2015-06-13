@@ -48,8 +48,8 @@
                             </div>
 
                         </div>
-                        <input type="hidden" name="L_PAYMENTREQUEST_0_NAME0" value="Tạo hợp đồng mới">
-                        <input type="hidden" name="L_PAYMENTREQUEST_0_DESC0" value="Tạo hợp đồng mới">
+                        <input type="hidden" name="L_PAYMENTREQUEST_0_NAME0" value="Create new contract">
+                        <input type="hidden" name="L_PAYMENTREQUEST_0_DESC0" value="Create new contract">
                         <input type="hidden" name="L_PAYMENTREQUEST_0_QTY0" value="1">
                         <input type="hidden" name="PAYMENTREQUEST_0_ITEMAMT" value="${register.contractEntity.contractFee}">
                         <input type="hidden" name="PAYMENTREQUEST_0_TAXAMT" value="0">

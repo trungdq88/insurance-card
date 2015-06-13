@@ -146,6 +146,8 @@ public class RegisterController extends BasicController {
 
         r.equest.setAttribute("result", results);
         r.equest.setAttribute("ack", (String) session.getAttribute("ACK"));
+        HashMap<String,String> details = (HashMap<String,String> )session.getAttribute("checkoutDetails");
+        r.equest.setAttribute("amountVND",(String) session.getAttribute("amountVND"));
         ContractEntity contractEntity = new ContractEntity();
         ContractDao contractDao = new ContractDao();
         PaymentEntity paymentEntity = new PaymentEntity();
@@ -170,6 +172,7 @@ public class RegisterController extends BasicController {
         paymentEntity.setAmount(Float.parseFloat(results.get("PAYMENTINFO_0_AMT").toString()));
         paymentEntity.setPaypalTransId(results.get("PAYMENTINFO_0_TRANSACTIONID").toString());
         paymentEntity.setContractCode(contractEntity.getContractCode());
+
 
         RegisterBusiness registerBusiness = new RegisterBusiness();
         registerBusiness.updateContractPayment(contractEntity, paymentEntity);
