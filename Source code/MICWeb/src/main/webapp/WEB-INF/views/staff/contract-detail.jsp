@@ -45,41 +45,18 @@
                             </div>
                         </legend>
 
-                        <c:if test="${cont.status eq 'Expired'}">
-                            <script type="text/javascript">
-                                $(document).ready(function () {
-                                    $('#expiredDate').val(getCurrentDateInNextYear());
-                                    document.getElementById("expiredDate").min = getCurrentDate();
-                                    document.getElementById("expiredDate").max = getCurrentDateInNextYear();
-                                });
-                            </script>
-                        </c:if>
-
-                        <c:if test="${cont.status ne 'Expired'}">
-                            <script type="text/javascript">
-                                $(document).ready(function () {
-                                    $('#expiredDate').val(getInputDateInNextYear('${cont.expiredDate}'));
-                                    document.getElementById("expiredDate").min = getCurrentDate();
-                                    document.getElementById("expiredDate").max = getInputDateInNextYear('${cont.expiredDate}');
-                                });
-                            </script>
-                        </c:if>
-
                         <c:if test="${cont.status eq 'Request cancel'}">
-                            <div class="alert alert-info">
-                                <p class="bs-example text-center text-uppercase">
+                            <div class="alert alert-info text-center">
+                                <p class="bs-example text-uppercase">
                                     Hợp đồng này đang có yêu cầu hủy từ khách hàng
+                                    <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#cancel-contract-modal">
+                                        <i class="fa fa-check"></i> Giải quyết
+                                    </button>
                                 </p>
                             </div>
                         </c:if>
 
                         <c:if test="${cont.status eq 'Cancelled'}">
-                            <script type="text/javascript">
-                                $(document).ready(function () {
-                                    $('button[type=button]').attr('disabled', true);
-                                });
-                            </script>
-
                             <div class="alert alert-warning">
                                 <p class="bs-example text-center text-uppercase">
                                     <strong>Hợp đồng này đã bị hủy</strong>
@@ -135,7 +112,7 @@
 
                             <label class="col-sm-3 control-label">Trạng thái</label>
 
-                            <div class="col-sm-2">
+                            <div class="col-sm-3">
                                 <div class="text-value">${cont.status}</div>
                             </div>
                         </div>
@@ -621,8 +598,8 @@ ${cont.micContractTypeByContractTypeId.pricePerYear}"
                     <input type="hidden" name="txtContractCode" value="${cont.contractCode}"/>
                     <input type="hidden" name="action" value="cancel"/>
                     <button type="submit" class="btn btn-danger">
-                        <i class="fa fa-arrow-right"></i>
-                        Hủy hợp đồng
+                        <i class="fa fa-check"></i>
+                        Đồng ý hủy
                     </button>
                     <button type="button" class="btn btn-primary" data-dismiss="modal">Đóng</button>
                 </div>
@@ -636,10 +613,25 @@ ${cont.micContractTypeByContractTypeId.pricePerYear}"
 
 <script type="text/javascript">
     $(document).ready(function () {
+        var contractStatus = '${cont.status}';
         $('#paidDate').val(getCurrentDate());
         document.getElementById("paidDate").min = getCurrentDateInLastWeek();
         $('#cancelDate').val(getCurrentDate());
         document.getElementById("cancelDate").min = getCurrentDateInLastWeek();
+        $('#expiredDate').val(getCurrentDateInNextYear());
+        document.getElementById("expiredDate").min = getCurrentDate();
+        if (contractStatus == 'Expired') {
+            document.getElementById("expiredDate").max = getCurrentDateInNextYear();
+        } else {
+            $('#expiredDate').val(getInputDateInNextYear('${cont.expiredDate}'));
+            document.getElementById("expiredDate").max = getInputDateInNextYear('${cont.expiredDate}');
+        }
+        if (contractStatus == 'Cancelled') {
+            $('button[type=button]').attr('disabled', true);
+        }
+        if (contractStatus == 'Request cancel') {
+            document.getElementById("cancelReason").disabled = true;
+        }
     });
 </script>
 
