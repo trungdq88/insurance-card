@@ -150,9 +150,11 @@
                                         <label class="col-sm-5 text-right">Phí thanh toán </label>
 
                                         <div class="col-sm-4">
-                                            <input style="border:none; background-color: white" type="datetime"
+                                            <fmt:setLocale value="vi_VN"/>
+                                            <input style="border:none; background-color: white" type="hidden"
                                                    id="payAmount" disabled="disabled"
                                                    value="${contract.contractFee} VNĐ"/>
+                                            <fmt:formatNumber value="${contract.contractFee}" type="currency" maxFractionDigits="0"/>
                                         </div>
 
                                     </div>

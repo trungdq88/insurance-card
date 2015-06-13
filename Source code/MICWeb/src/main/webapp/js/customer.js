@@ -82,6 +82,8 @@ $(document).ready(function () {
         var day = myDate.getDate().toString();
         day = day.length > 1 ? day : '0' + day;
         $('#newExpiredDate').val(day + '/' + month + '/' + year);
+
+
         $('#payment').val((parseFloat($('#payAmount').val())));
         $('#paymentATM').val((parseFloat($('#payAmount').val())));
         /////
