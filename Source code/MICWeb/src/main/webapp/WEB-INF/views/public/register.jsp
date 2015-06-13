@@ -1,3 +1,5 @@
+<%@ page import="java.util.HashMap" %>
+<%@ page import="com.fpt.mic.micweb.model.entity.ContractTypeEntity" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="_shared/header.jsp" %>
@@ -100,19 +102,23 @@
                                         <div class="col-sm-10 col-sm-offset-1">
                                             <div class="form-group">
                                                 <label><b>Quyền lợi bảo hiểm *</b></label>
+                                                <c:set var="mapContract" value="${mapContractType}" ></c:set>
+
                                                 <c:set var="selectedId" value="${requestScope.ddlContractType}" ></c:set>
                                                 <select class="form-control" name="ddlContractType" id="ddlContractType"
                                                         onchange="{
-                                var fee = this.options[this.selectedIndex].innerHTML;
-                                $('#txtFee1').text(fee);
+                                var fee = parseFloat(this.options[this.selectedIndex].innerHTML);
                                 $('#txtFeeInput').val(fee);
+                                fee = fee.formatMoney(0);
+                                $('#txtFee1').text(fee);
+                                $('#txtFee2').text(fee);
                             }">
-                                                    <c:forEach var="row" items="${listContractType}">
-                                                        <option <c:if test="${row.id == selectedId}">
+                                                    <c:forEach var="row" items="${mapContractType}">
+                                                        <option <c:if test="${row.key == selectedId}">
                                                             selected="selected"
-                                                        </c:if> label="<c:out value="${row.name}"/>"
-                                                                value="<c:out value="${row.id}"/>">
-                                                            <c:out value="${row.pricePerYear}" />
+                                                        </c:if> label="<c:out value="${row.value.name}" />"
+                                                                value="<c:out value="${row.key}"/>">
+                                                            <c:out value="${row.value.pricePerYear}" />
                                                         </option>
                                                     </c:forEach>
                                                 </select>
@@ -129,8 +135,8 @@
                                         <div class="col-sm-5 col-sm-offset-1">
                                             <div class="form-group">
                                                 <label><b>Phí bảo hiểm: </b></label>
-                                                <b style="color: red"><span id="txtFee1">${txtFee}</span> VND</b>
-                                                <input type="hidden" id="txtFeeInput" name="txtFee" value="${txtFee}">
+                                                <b style="color: red"><span id="txtFee1"></span> VND</b>
+                                                <input type="hidden" id="txtFeeInput" name="txtFee" value="${requestScope.txtFee}">
 
                                             </div>
                                         </div>
@@ -425,7 +431,22 @@
         </div>
         <!-- row -->
     </div>
+    <%
+        HashMap<Integer,ContractTypeEntity> list =(HashMap<Integer,ContractTypeEntity>) request.getAttribute("mapContractType");
+    %>
     <script language="javascript">
+        Number.prototype.formatMoney = function(c, d, t){
+            var n = this,
+                    c = isNaN(c = Math.abs(c)) ? 2 : c,
+                    d = d == undefined ? "." : d,
+                    t = t == undefined ? "," : t,
+                    s = n < 0 ? "-" : "",
+                    i = parseInt(n = Math.abs(+n || 0).toFixed(c)) + "",
+                    j = (j = i.length) > 3 ? j % 3 : 0;
+            return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
+        };
+        $('#txtFee1').text(parseFloat($('#txtFeeInput').val()).formatMoney(0));
+        $('#txtFee2').text(parseFloat($('#txtFeeInput').val()).formatMoney(0));
         function update() {
             $('#txtName1').text($('#txtName').val());
             $('#txtAddress1').text($('#txtAddress').val());
@@ -433,8 +454,10 @@
             $('#txtPhone1').text($('#txtPhone').val());
             $('#txtPersonalId1').text($('#txtPersonalId').val());
             $('#txtStartDate1').text($('#txtStartDate').val());
-            $('#ddlContractType1').text($('#ddlContractType option:selected').text());
-            $('#txtFee2').text($('#txtFeeInput').val());
+            $('#ddlContractType1').text($('#ddlContractType option:selected').attr('label'));
+
+            <%--$('#ddlContractType1').text('<%=list.get().getName()%>');--%>
+
             $('#txtPlate1').text($('#txtPlate').val());
             $('#txtBrand1').text($('#txtBrand').val());
             $('#txtModel1').text($('#txtModel').val());

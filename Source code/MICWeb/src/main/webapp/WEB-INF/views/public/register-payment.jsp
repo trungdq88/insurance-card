@@ -34,7 +34,8 @@
                                     <p><b>Mã khách hàng:</b> ${register.customerEntity.customerCode}</p>
                                     <p><b>Mật khẩu đăng nhập hệ thống:</b> (kiểm tra email ${register.customerEntity.email})</p>
                                     <p><b>Mã hợp đồng:</b> ${register.contractEntity.contractCode}</p>
-                                    <p><b>Phí cần thanh toán:</b> ${register.contractEntity.contractFee} VND</p>
+                                    <input type="hidden" id="amount" value="${register.contractEntity.contractFee}">
+                                    <p><b>Phí cần thanh toán:  </b><span id="amount1"></span> VND</p>
 
                                 </div>
                             </div>
@@ -67,29 +68,17 @@
 
 
 <script language="javascript">
-    function update() {
-        $('#txtName1').text($('#txtName').val());
-        $('#txtAddress1').text($('#txtAddress').val());
-        $('#txtEmail1').text($('#txtEmail').val());
-        $('#txtPhone1').text($('#txtPhone').val());
-        $('#txtPersonalId1').text($('#txtPersonalId').val());
-        $('#txtStartDate1').text($('#txtStartDate').val());
-        $('#ddlContractType1').text($('#ddlContractType option:selected').text());
-        $('#txtFee1').text($('#txtFee').val());
-        $('#txtPlate1').text($('#txtPlate').val());
-        $('#txtBrand1').text($('#txtBrand').val());
-        $('#txtModel1').text($('#txtModel').val());
-        $('#txtType1').text($('#txtType').val());
-        $('#txtColor1').text($('#txtColor').val());
-        $('#txtEngine1').text($('#txtEngine').val());
-        $('#txtChassis1').text($('#txtChassis').val());
-        $('#txtCapacity1').text($('#txtCapacity').val());
-        $('#txtYearOfMan1').text($('#txtYearOfMan').val());
-        $('#txtWeight1').text($('#txtWeight').val());
-        $('#txtSeatCapacity1').text($('#txtSeatCapacity').val());
-
-
-    }
+    Number.prototype.formatMoney = function(c, d, t){
+        var n = this,
+                c = isNaN(c = Math.abs(c)) ? 2 : c,
+                d = d == undefined ? "." : d,
+                t = t == undefined ? "," : t,
+                s = n < 0 ? "-" : "",
+                i = parseInt(n = Math.abs(+n || 0).toFixed(c)) + "",
+                j = (j = i.length) > 3 ? j % 3 : 0;
+        return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
+    };
+    $('#amount1').text(parseFloat($('#amount').val()).formatMoney(0));
 </script>
 
 <%@ include file="_shared/footer.jsp" %>
