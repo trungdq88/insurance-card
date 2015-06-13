@@ -4,7 +4,7 @@
         <img src="${pageContext.request.contextPath}/img/logoCompany.png" height="70px"/>
 
         <p class="footer-links">
-            <a href="home.html">Trang chủ</a>
+            <a href="${pageContext.request.contextPath}/">Trang chủ</a>
             ·
             <a href="#">Liên hệ</a>
             ·
