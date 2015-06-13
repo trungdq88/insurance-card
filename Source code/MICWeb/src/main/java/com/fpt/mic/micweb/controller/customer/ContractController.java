@@ -108,6 +108,7 @@ public class ContractController extends BasicController {
         HttpSession session = r.equest.getSession(true);
         Map<String, String> results = new HashMap<String, String>();
         results.putAll((Map<String, String>) session.getAttribute("RESULT"));
+        r.equest.setAttribute("amountVND", (String) session.getAttribute("amountVND"));
 
         r.equest.setAttribute("result", results);
         r.equest.setAttribute("ack", (String) session.getAttribute("ACK"));
