@@ -46,10 +46,36 @@
                         </legend>
 
                         <c:if test="${cont.status eq 'Request cancel'}">
-                            <div class="alert alert-info text-center">
-                                <p class="bs-example text-uppercase">
+                            <div class="alert alert-info">
+                                <p class="bs-example text-center text-uppercase">
                                     Hợp đồng này đang có yêu cầu hủy từ khách hàng
-                                    <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#cancel-contract-modal">
+                                </p>
+                                <br/>
+                                <!-- Cancel date -->
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">Thời điểm hủy</label>
+
+                                    <div class="col-sm-4">
+                                        <div class="text-value">
+                                            <fmt:formatDate value="${cont.cancelDate}" pattern="dd/MM/yyyy"/>
+                                            lúc
+                                            <fmt:formatDate value="${cont.cancelDate}" type="time"/>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Cancel reason -->
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">Lý do hủy</label>
+
+                                    <div class="col-sm-7">
+                                        <div class="text-value">${cont.cancelReason}</div>
+                                    </div>
+                                </div>
+
+                                <p class="text-center">
+                                    <button class="btn btn-primary" type="button" data-toggle="modal"
+                                            data-target="#cancel-contract-modal">
                                         <i class="fa fa-check"></i> Giải quyết
                                     </button>
                                 </p>
@@ -61,33 +87,29 @@
                                 <p class="bs-example text-center text-uppercase">
                                     <strong>Hợp đồng này đã bị hủy</strong>
                                 </p>
-                            </div>
-                        </c:if>
+                                <br/>
+                                <!-- Cancel date -->
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">Thời điểm hủy</label>
 
-                        <c:if test="${cont.status eq 'Request cancel' or cont.status eq 'Cancelled'}">
-                            <!-- Cancel date -->
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">Thời điểm hủy</label>
-
-                                <div class="col-sm-4">
-                                    <div class="text-value">
-                                        <fmt:formatDate value="${cont.cancelDate}" pattern="dd/MM/yyyy"/>
-                                        lúc
-                                        <fmt:formatDate value="${cont.cancelDate}" type="time"/>
+                                    <div class="col-sm-4">
+                                        <div class="text-value">
+                                            <fmt:formatDate value="${cont.cancelDate}" pattern="dd/MM/yyyy"/>
+                                            lúc
+                                            <fmt:formatDate value="${cont.cancelDate}" type="time"/>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
 
-                            <!-- Cancel reason -->
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">Lý do hủy</label>
+                                <!-- Cancel reason -->
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">Lý do hủy</label>
 
-                                <div class="col-sm-7">
-                                    <div class="text-value">${cont.cancelReason}</div>
+                                    <div class="col-sm-7">
+                                        <div class="text-value">${cont.cancelReason}</div>
+                                    </div>
                                 </div>
-                            </div>
 
-                            <c:if test="${cont.status eq 'Cancelled'}">
                                 <!-- Cancel note -->
                                 <div class="form-group">
                                     <label class="col-sm-3 control-label">Ghi chú hủy</label>
@@ -96,9 +118,9 @@
                                         <div class="text-value">${cont.cancelNote}</div>
                                     </div>
                                 </div>
-                            </c:if>
+                            </div>
                         </c:if>
-                        <%--/Show cancel contract information--%>
+                    <%--/Show cancel contract information--%>
 
                         <!-- Contract code & Contract status -->
                         <div class="form-group">
@@ -578,6 +600,9 @@ ${cont.micContractTypeByContractTypeId.pricePerYear}"
                             <label class="col-sm-4 control-label" for="cancelReason">Lý do hủy hợp đồng *</label>
 
                             <div class="col-sm-7">
+                                <c:if test="${cont.status eq 'Request cancel'}">
+                                    <input type="hidden" name="txtCancelReason" value="${cont.cancelReason}"/>
+                                </c:if>
                                 <input id="cancelReason" name="txtCancelReason" type="text"
                                        class="form-control input-md" value="${cont.cancelReason}">
                             </div>
