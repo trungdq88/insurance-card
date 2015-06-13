@@ -1,6 +1,7 @@
 package com.fpt.mic.mobile.checker.app.ApiRequest;
 
 import android.os.AsyncTask;
+import org.json.JSONObject;
 
 import java.util.Map;
 
@@ -36,6 +37,7 @@ public class RequestSender extends AsyncTask<String, Integer, String> {
 
     public interface IRequestSenderComplete {
         void onRequestComplete(String result);
+        JSONObject
     }
 
 }

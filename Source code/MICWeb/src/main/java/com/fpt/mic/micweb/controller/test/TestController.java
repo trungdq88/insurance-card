@@ -1,9 +1,13 @@
 package com.fpt.mic.micweb.controller.test;
 
 import com.fpt.mic.micweb.framework.BasicController;
+import com.fpt.mic.micweb.framework.responses.JsonString;
 import com.fpt.mic.micweb.framework.responses.JspPage;
 import com.fpt.mic.micweb.framework.R;
 import com.fpt.mic.micweb.framework.responses.ResponseObject;
+import com.fpt.mic.micweb.utils.CurrencyUtils;
+import com.fpt.mic.micweb.utils.NetworkUtils;
+import org.json.JSONObject;
 
 import javax.servlet.annotation.WebServlet;
 
@@ -74,6 +78,10 @@ public class TestController extends BasicController {
         // Call to models here
 
         return new JspPage("test/print-result.jsp");
+    }
+
+    public ResponseObject getTestCurrency(R r) {
+        return new JsonString(CurrencyUtils.getCurrentRate());
     }
 
 }
