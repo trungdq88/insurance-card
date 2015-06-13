@@ -108,8 +108,12 @@ public class ContractController extends BasicController {
         HttpSession session = r.equest.getSession(true);
         Map<String, String> results = new HashMap<String, String>();
         results.putAll((Map<String, String>) session.getAttribute("RESULT"));
+
+        String contractCode = (String) session.getAttribute("contractCode");
+        Timestamp newExpiredDate = (Timestamp) session.getAttribute("newExpiredDate");
+
         r.equest.setAttribute("amountVND", (String) session.getAttribute("amountVND"));
-        r.equest.setAttribute("redirectLink","home");
+        r.equest.setAttribute("redirectLink", "/customer/contract?action=ContractDetail&code=" + contractCode);
 
         r.equest.setAttribute("result", results);
         r.equest.setAttribute("ack", (String) session.getAttribute("ACK"));
@@ -117,8 +121,6 @@ public class ContractController extends BasicController {
 
         java.util.Date date = new java.util.Date();
 
-        String contractCode = (String) session.getAttribute("contractCode");
-        Timestamp newExpiredDate = (Timestamp) session.getAttribute("newExpiredDate");
 
         CustomerBusniess customerBusiness = new CustomerBusniess();
 

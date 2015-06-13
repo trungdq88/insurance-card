@@ -6,7 +6,7 @@
 <div class="image-container set-full-height"
      style="background-image: url('${pageContext.request.contextPath}/img/wizard-city.jpg')">
     <!--   MIC Branding   -->
-    <a href="home">
+    <a href="${pageContext.request.contextPath}/">
         <div class="logo-container">
             <img src="${pageContext.request.contextPath}/img/logoCompany.png"
                  style="height: 70px;">
@@ -38,10 +38,13 @@
                                 <p>Mã giao dịch PayPal: <%=result.get("PAYMENTINFO_0_TRANSACTIONID")%>
                                 </p>
                                 <input type="hidden" id="amount" value="${amountVND}">
+
                                 <p>Số tiền đã thanh toán: <span id="amount1"></span> VND
                                 </p>
 
-                                <h3><a id="link" href='${redirectLink}'>Tự động thoát trong 10s</a></h3>
+                                <h3>
+                                    <a id="link" href='${redirectLink}'>Trở về trang trước đó</a>
+                                </h3>
 
                                     <% } else {
 									HashMap<String,String> result = (HashMap<String,String>) request.getAttribute("result");
@@ -69,12 +72,12 @@
 </div>
 </body>
 <script language="javascript">
-    function redirect(){
-        window.location = $('#link').attr('href');
-    }
-
-    setTimeout(redirect, 10000);
-    Number.prototype.formatMoney = function(c, d, t){
+    //    function redirect(){
+    //        window.location = $('#link').attr('href');
+    //    }
+    //
+    //    setTimeout(redirect, 5000);
+    Number.prototype.formatMoney = function (c, d, t) {
         var n = this,
                 c = isNaN(c = Math.abs(c)) ? 2 : c,
                 d = d == undefined ? "." : d,
