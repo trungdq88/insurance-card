@@ -9,6 +9,7 @@ import java.util.Date;
  * Created by dinhquangtrung on 6/13/15.
  */
 public class CurrencyUtils {
+    // API url for convert USD -> VND
     private static final String YAHOO_CURRENCY_API = "https://query.yahooapis.com/v1/public/yql?q=select+%2A+from+yahoo.finance.xchange+where+pair+in+%28%22USDVND%22%29&format=json&diagnostics=true&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback";
     private static final long CACHE_DURATION = 1000 * 86400; // 1 day
 
