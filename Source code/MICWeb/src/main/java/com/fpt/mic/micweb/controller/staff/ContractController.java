@@ -115,8 +115,6 @@ public class ContractController extends BasicController {
     public ResponseObject postRenew(R r) {
         // Get renew contract information
         String contractCode = r.equest.getParameter("txtContractCode");
-        String newStartDate = r.equest.getParameter("txtNewStartDate");
-        Timestamp startDate = DateUtils.stringToTime(newStartDate);
         String newExpiredDate = r.equest.getParameter("txtExpiredDate");
         Timestamp expiredDate = DateUtils.stringToTime(newExpiredDate);
 
@@ -128,7 +126,7 @@ public class ContractController extends BasicController {
 
         // Call to business object
         StaffBusiness staffBus = new StaffBusiness();
-        boolean result = staffBus.renewContract(contractCode, startDate, expiredDate, paymentEntity);
+        boolean result = staffBus.renewContract(contractCode, expiredDate, paymentEntity);
         String msg = "";
         if (result) {
             msg = "Đã gia hạn hợp đồng thành công";

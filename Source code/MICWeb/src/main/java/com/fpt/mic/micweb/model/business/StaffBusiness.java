@@ -88,7 +88,7 @@ public class StaffBusiness {
         return false;
     }
 
-    public boolean renewContract(String contractCode, Timestamp startDate, Timestamp expiredDate,
+    public boolean renewContract(String contractCode, Timestamp expiredDate,
                                  PaymentEntity paymentEntity) {
         ContractDao contractDao = new ContractDao();
         PaymentDao paymentDao = new PaymentDao();
@@ -99,7 +99,6 @@ public class StaffBusiness {
         // Check contract
         if (contractEntity != null) {
             // Update contract information
-            contractEntity.setStartDate(startDate);
             contractEntity.setExpiredDate(expiredDate);
             contractEntity.setStatus(Constants.ContractStatus.READY);
             if (contractDao.update(contractEntity) != null) {
