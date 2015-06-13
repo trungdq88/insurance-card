@@ -113,7 +113,6 @@ public class ContractController extends BasicController {
         Timestamp newExpiredDate = (Timestamp) session.getAttribute("newExpiredDate");
 
         r.equest.setAttribute("amountVND", (String) session.getAttribute("amountVND"));
-        r.equest.setAttribute("redirectLink", "home");
         r.equest.setAttribute("redirectLink", "/customer/contract?action=ContractDetail&code=" + contractCode);
 
         r.equest.setAttribute("result", results);
