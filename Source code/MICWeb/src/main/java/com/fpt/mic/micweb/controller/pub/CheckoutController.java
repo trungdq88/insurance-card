@@ -5,10 +5,6 @@ import com.fpt.mic.micweb.framework.R;
 import com.fpt.mic.micweb.framework.responses.JspPage;
 import com.fpt.mic.micweb.framework.responses.ResponseObject;
 import com.fpt.mic.micweb.model.dto.PayPal;
-import com.tunyk.currencyconverter.BankUaCom;
-import com.tunyk.currencyconverter.api.Currency;
-import com.tunyk.currencyconverter.api.CurrencyConverter;
-import com.tunyk.currencyconverter.api.CurrencyConverterException;
 import org.apache.commons.lang3.StringEscapeUtils;
 
 import javax.servlet.annotation.WebServlet;
@@ -80,14 +76,7 @@ public class CheckoutController extends BasicController{
             if (isSet(session.getAttribute("EXPRESS_MARK")) && session.getAttribute("EXPRESS_MARK").equals("ECMark")) {
                 checkoutDetails.putAll((Map<String, String>) session.getAttribute("checkoutDetails"));
                 checkoutDetails.putAll(setRequestParams(r));
-                Float paymentAmount = Float.parseFloat(checkoutDetails.get("PAYMENTREQUEST_0_AMT"));
-                try {
-                    CurrencyConverter currencyConverter = new BankUaCom(Currency.fromString("VND"),Currency.USD);
-                    paymentAmount = currencyConverter.convertCurrency(paymentAmount,Currency.fromString("VND"),Currency.USD);
-                } catch (CurrencyConverterException e) {
-                    e.printStackTrace();
-                }
-                //paymentAmount =(Double.parseDouble(checkoutDetails.get("PAYMENTREQUEST_0_AMT")))/20000;
+                Float paymentAmount =(Float.parseFloat(checkoutDetails.get("PAYMENTREQUEST_0_AMT")))/20000;
                 checkoutDetails.put("PAYMENTREQUEST_0_ITEMAMT", paymentAmount.toString());
                 checkoutDetails.put("PAYMENTREQUEST_0_AMT", paymentAmount.toString());
                 checkoutDetails.put("L_PAYMENTREQUEST_0_AMT", paymentAmount.toString());
