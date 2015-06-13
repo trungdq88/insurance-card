@@ -128,9 +128,12 @@
                                         <label class="col-sm-5 text-right">Thời điểm bắt đầu</label>
 
                                         <div class="col-sm-4">
+                                            <input type="hidden" id="startDate"
+                                                   value="${contract.startDate}"/>
                                             <input type="hidden" name="txtNewStartDate" id="newStartDate"
                                                    value="${contract.expiredDate}"/>
-                                            <fmt:formatDate value="${contract.expiredDate}" pattern="dd/MM/yyyy"/>
+
+                                            <fmt:formatDate value="${contract.startDate}" pattern="dd/MM/yyyy"/>
                                         </div>
                                     </div>
 
@@ -147,9 +150,11 @@
                                         <label class="col-sm-5 text-right">Phí thanh toán </label>
 
                                         <div class="col-sm-4">
-                                            <input style="border:none; background-color: white" type="datetime"
+                                            <fmt:setLocale value="vi_VN"/>
+                                            <input style="border:none; background-color: white" type="hidden"
                                                    id="payAmount" disabled="disabled"
                                                    value="${contract.contractFee} VNĐ"/>
+                                            <fmt:formatNumber value="${contract.contractFee}" type="currency" maxFractionDigits="0"/>
                                         </div>
 
                                     </div>
@@ -160,7 +165,7 @@
                             <div class="modal-footer">
 
                                 <input type="hidden" name="L_PAYMENTREQUEST_0_NAME0" value="">
-                                <input type="hidden" name="L_PAYMENTREQUEST_0_DESC0" value="">
+                                <input type="hidden" name="L_PAYMENTREQUEST_0_DESC0" id="content">
                                 <input type="hidden" name="L_PAYMENTREQUEST_0_QTY0" value="1">
                                 <input type="hidden" name="PAYMENTREQUEST_0_ITEMAMT" id="payment">
                                 <input type="hidden" name="PAYMENTREQUEST_0_TAXAMT" value="0">
@@ -173,6 +178,7 @@
 
                                 <input type="hidden" name="txtContractCode" value="${contract.contractCode}"/>
                                 <input type="hidden" name="action" value="RenewContract"/>
+                                <input type="hidden" id="contractStatus" value="${contract.status}"/>
                                 <input type="submit" class="btn btn-success" value="Gia hạn hợp đồng"/>
 
                                 <button type="button" class="btn btn-primary" data-dismiss="modal">Đóng</button>
@@ -193,9 +199,9 @@
                     <div class="well well-lg text-center text-danger form-inline">
                         Hợp đồng đã được yêu cầu hủy vui lòng chờ xác nhận của nhân viên &nbsp;
                         <input type="hidden" name="contractcode"
-                           value="${contract.contractCode}"/>
-                    <input type="hidden" name="action" value="RejectRequestCancel"/>
-                    <input type="submit" class="btn btn-danger small" value="Hủy Bỏ"/>
+                               value="${contract.contractCode}"/>
+                        <input type="hidden" name="action" value="RejectRequestCancel"/>
+                        <input type="submit" class="btn btn-danger small" value="Hủy Bỏ"/>
                     </div>
                 </form>
 
