@@ -14,5 +14,5 @@ public class Constants {
         public static final String CANCELLED = "Cancelled";
     }
     // Connect to localhost via simulator: 10.0.2.2
-    public static final String API_BASE = "http://192.168.43.244:8080/api";
+    public static final String API_BASE = "http://10.0.2.2:8080/api";
 }
