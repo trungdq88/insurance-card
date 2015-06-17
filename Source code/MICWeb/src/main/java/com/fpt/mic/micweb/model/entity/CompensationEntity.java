@@ -29,7 +29,7 @@ public class CompensationEntity {
     private String attachment;
     private Timestamp createdDate;
     private Timestamp resolveDate;
-    private String desicion;
+    private String decision;
     private String resolveNote;
     private String contractCode;
     private ContractEntity micContractByContractCode;
@@ -225,13 +225,13 @@ public class CompensationEntity {
     }
 
     @Basic
-    @Column(name = "desicion")
-    public String getDesicion() {
-        return desicion;
+    @Column(name = "decision")
+    public String getDecision() {
+        return decision;
     }
 
-    public void setDesicion(String desicion) {
-        this.desicion = desicion;
+    public void setDecision(String desicion) {
+        this.decision = desicion;
     }
 
     @Basic
@@ -277,7 +277,7 @@ public class CompensationEntity {
         if (attachment != null ? !attachment.equals(that.attachment) : that.attachment != null) return false;
         if (createdDate != null ? !createdDate.equals(that.createdDate) : that.createdDate != null) return false;
         if (resolveDate != null ? !resolveDate.equals(that.resolveDate) : that.resolveDate != null) return false;
-        if (desicion != null ? !desicion.equals(that.desicion) : that.desicion != null) return false;
+        if (decision != null ? !decision.equals(that.decision) : that.decision != null) return false;
         if (resolveNote != null ? !resolveNote.equals(that.resolveNote) : that.resolveNote != null) return false;
 
         return true;
@@ -304,7 +304,7 @@ public class CompensationEntity {
         result = 31 * result + (attachment != null ? attachment.hashCode() : 0);
         result = 31 * result + (createdDate != null ? createdDate.hashCode() : 0);
         result = 31 * result + (resolveDate != null ? resolveDate.hashCode() : 0);
-        result = 31 * result + (desicion != null ? desicion.hashCode() : 0);
+        result = 31 * result + (decision != null ? decision.hashCode() : 0);
         result = 31 * result + (resolveNote != null ? resolveNote.hashCode() : 0);
         return result;
     }
