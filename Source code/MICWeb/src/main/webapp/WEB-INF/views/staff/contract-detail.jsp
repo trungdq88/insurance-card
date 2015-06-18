@@ -120,7 +120,7 @@
                                 </div>
                             </div>
                         </c:if>
-                    <%--/Show cancel contract information--%>
+                        <%--/Show cancel contract information--%>
 
                         <!-- Contract code & Contract status -->
                         <div class="form-group">
@@ -503,10 +503,9 @@
 
                             <div class="col-sm-4">
                                 <div class="text-value">
-                                    <input type="hidden" name="txtNewStartDate" value="${cont.expiredDate}"/>
-                                    <fmt:formatDate value="${cont.expiredDate}" pattern="dd/MM/yyyy"/>
+                                    <fmt:formatDate value="${cont.startDate}" pattern="dd/MM/yyyy"/>
                                     lúc
-                                    <fmt:formatDate value="${cont.expiredDate}" type="time"/>
+                                    <fmt:formatDate value="${cont.startDate}" type="time"/>
                                 </div>
                             </div>
                         </div>
@@ -549,8 +548,7 @@
                             <div class="col-sm-4">
                                 <input id="paidDate" name="txtPaidDate" type="date"
                                        class="form-control input-md">
-                                <input value="
-${cont.micContractTypeByContractTypeId.pricePerYear}"
+                                <input value="${cont.micContractTypeByContractTypeId.pricePerYear}"
                                        type="hidden" name="txtAmount"/>
                             </div>
                         </div>
