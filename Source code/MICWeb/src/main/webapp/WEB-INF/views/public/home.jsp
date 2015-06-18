@@ -93,14 +93,14 @@
                         </tr>
                         <tr>
                             <td class="col-md-5">
-                                <input type="text" class="form-control"
+                                <input type="text" name="txtUsername" class="form-control"
                                        placeholder="">
                             </td>
                             <td class="col-md-5 ">
-                                <input type="password" class="form-control">
+                                <input type="password" name="txtPassword" class="form-control">
                             </td>
                             <td>
-                                <a href="/customer" class="btn btn-success">Đăng nhập</a>
+                                <a href="/customer" name="btnLogin" class="btn btn-success">Đăng nhập</a>
                             </td>
                         </tr>
                         <tr>
@@ -275,7 +275,7 @@
                             <input type="hidden" id="txtFeeInput" name="txtFee" value="${listContractType[0].pricePerYear}">
                         </p>
                         <input type="hidden" name="action" value="register"/>
-                        <input type="submit" class="btn btn-primary btn-lg" value="Tiếp theo"/>
+                        <input type="submit" name="btnNext" class="btn btn-primary btn-lg" value="Tiếp theo"/>
                     </div>
 
                 </form>

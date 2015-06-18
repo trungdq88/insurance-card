@@ -401,29 +401,20 @@
                                 <div class="pull-right">
                                     <input type='button' onclick="update()"
                                            class='btn btn-next btn-fill btn-success btn-wd btn-sm'
-                                           name='next' value='Tiếp theo'/>
+                                           name='btnNext' value='Tiếp theo'/>
                                     <input type="hidden" name="action" value="createContract"/>
                                     <input type='submit' class='btn btn-finish btn-fill btn-success btn-wd btn-sm'
-                                           name='finish' value='Tạo hợp đồng và thanh toán'/>
+                                           name='btnFinish' value='Tạo hợp đồng và thanh toán'/>
 
                                 </div>
                                 <div class="pull-left">
                                     <input type='button' class='btn btn-previous btn-fill btn-default btn-wd btn-sm'
-                                           name='previous' value='Quay lại'/>
+                                           name='btnBack' value='Quay lại'/>
                                 </div>
                                 <div class="clearfix"></div>
                             </div>
                         </div>
-                        <%--<input type="hidden" name="L_PAYMENTREQUEST_0_NAME0" value="${ddlContractype}">--%>
-                        <%--<input type="hidden" name="L_PAYMENTREQUEST_0_DESC0" value="${ddlContractype}">--%>
-                        <%--<input type="hidden" name="L_PAYMENTREQUEST_0_QTY0" value="1">--%>
-                        <%--<input type="hidden" name="PAYMENTREQUEST_0_ITEMAMT" value="${txtFee/20000}">--%>
-                        <%--<input type="hidden" name="PAYMENTREQUEST_0_TAXAMT" value="0">--%>
-                        <%--<input type="hidden" name="PAYMENTREQUEST_0_AMT" value="${txtFee/20000}">--%>
-                        <%--<input type="hidden" name="currencyCodeType" value="USD">--%>
-                        <%--<input type="hidden" name="paymentType" value="Sale">--%>
                         <input type="hidden" name="checkout" value="check out">
-                        <%--<input type="hidden" name="successUrl" value="/public/register?action=activeContract">--%>
                     </form>
                 </div>
                 <!-- wizard container -->

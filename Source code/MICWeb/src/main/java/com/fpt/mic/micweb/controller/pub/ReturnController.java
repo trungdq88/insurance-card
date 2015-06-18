@@ -99,40 +99,6 @@ public class ReturnController extends BasicController {
                 session.setAttribute("RESULT", result);
 
                 return new RedirectTo(page);
-                //
-//                result.putAll(results);
-//                result.putAll(checkoutDetails);
-//                r.equest.setAttribute("ack", strAck);
-//                r.equest.setAttribute("result", result);
-                // insert new time expired for contract
-//
-//                ContractEntity contractEntity = new ContractEntity();
-//                ContractDao contractDao = new ContractDao();
-//                PaymentEntity paymentEntity = new PaymentEntity();
-//
-//                // get contract just added by contract_code
-//                String code =(String) session.getAttribute("CONTRACT_CODE");
-//                contractEntity = contractDao.read(code);
-//                DateUtils date = new DateUtils();
-//
-//                // set start date
-//                // Timestamp startDate = DateUtils.stringToTime(checkoutDetails.get("txtStartDate"));
-//                Timestamp currentDate = new Timestamp(new Date().getTime());
-//                contractEntity.setStartDate(currentDate);
-//                // set expired date = start_date + 1 year
-//                contractEntity.setExpiredDate(DateUtils.addOneYear(contractEntity.getStartDate()));
-//                contractEntity.setStatus("Ready");
-//                contractDao.update(contractEntity);
-//
-//                paymentEntity.setPaidDate(new Timestamp(new Date().getTime()));
-//                paymentEntity.setPaymentMethod("PayPal payment");
-//                paymentEntity.setContent("Create new contract");
-//                paymentEntity.setAmount(Float.parseFloat(results.get("PAYMENTINFO_0_AMT").toString()));
-//                paymentEntity.setPaypalTransId(results.get("PAYMENTINFO_0_TRANSACTIONID").toString());
-//                paymentEntity.setContractCode(contractEntity.getContractCode());
-//
-//                RegisterBusiness registerBusiness = new RegisterBusiness();
-//                registerBusiness.updateContractPayment(contractEntity,paymentEntity);
 
             } else {
                 //Display a user friendly Error on the page using any of the following error information returned by PayPal
