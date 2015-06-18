@@ -4,12 +4,11 @@ import com.fpt.mic.micweb.model.dao.ContractDao;
 import com.fpt.mic.micweb.model.dao.ContractTypeDao;
 import com.fpt.mic.micweb.model.dao.CustomerDao;
 import com.fpt.mic.micweb.model.dao.PaymentDao;
-import com.fpt.mic.micweb.model.entity.*;
-import com.fpt.mic.micweb.utils.Constants;
 import com.fpt.mic.micweb.model.entity.ContractEntity;
 import com.fpt.mic.micweb.model.entity.ContractTypeEntity;
 import com.fpt.mic.micweb.model.entity.CustomerEntity;
 import com.fpt.mic.micweb.model.entity.PaymentEntity;
+import com.fpt.mic.micweb.utils.Constants;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -63,7 +62,7 @@ public class StaffBusiness {
         return contractDao.read(contractCode);
     }
 
-    public boolean createContract(ContractEntity contractEntity, PaymentEntity paymentEntity) {
+    public ContractEntity createContract(ContractEntity contractEntity, PaymentEntity paymentEntity) {
         ContractDao contractDao = new ContractDao();
         PaymentDao paymentDao = new PaymentDao();
         // Validate information
@@ -82,10 +81,10 @@ public class StaffBusiness {
             paymentEntity.setReceiver("KhaNC");
             paymentEntity.setContractCode(contractCode);
             if (paymentDao.create(paymentEntity) != null) {
-                return true;
+                return contractEntity;
             }
         }
-        return false;
+        return null;
     }
 
     public boolean renewContract(String contractCode, Timestamp expiredDate,

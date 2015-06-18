@@ -34,7 +34,7 @@ public class ContractController extends BasicController {
 
         // Get contract detail
         ContractEntity contractDetail = staffBus.getContractDetail(contractCode);
-        long diff = contractDetail.getExpiredDate().getTime() - contractDetail.getStartDate().getTime();
+        long diff = contractDetail.getExpiredDate().getTime() - System.currentTimeMillis();
         long diffDays = 0;
         if (diff > 0) {
             diffDays = diff / (24 * 60 * 60 * 1000);
@@ -110,13 +110,16 @@ public class ContractController extends BasicController {
 
         // Call to business object
         StaffBusiness staffBus = new StaffBusiness();
-        boolean result = staffBus.createContract(contractEntity, paymentEntity);
+        ContractEntity result = staffBus.createContract(contractEntity, paymentEntity);
+        String msg = "";
 
-        if (result) {
+        if (result != null) {
             // Return Success JSP Page
+            r.equest.setAttribute("CREATED", result);
             return new JspPage("staff/create-contract-success.jsp");
         } else {
-            r.equest.setAttribute("error", "Something wrong");
+            msg = "Tạo hợp đồng thất bại, vui lòng thử lại hoặc liên hệ IT";
+            r.equest.setAttribute("MESSAGE", msg);
             return new JspPage("staff/message.jsp");
         }
     }

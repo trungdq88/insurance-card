@@ -211,19 +211,22 @@
                     <div class="form-group">
                         <div class="form-group col-md-6">
                             <label>Họ tên *</label>
-                            <input type="text" name="txtName"
+                            <input required type="text" name="txtName"
+                                   title="Vui lòng nhập họ tên"
                                    class="form-control" id="form-full-name">
                         </div>
                         <div class="form-group col-md-6">
                             <label>Email *</label>
-                            <input type="text" name="txtEmail"
+                            <input required type="email" name="txtEmail"
+                                   title="Vui lòng nhập Email hợp lệ"
                                    class="form-control" id="form-email">
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="form-group col-md-6">
                             <label>Số điện thoại *</label>
-                            <input type="text" name="txtPhone"
+                            <input required type="text" name="txtPhone"
+                                   title="Vui lòng nhập số điện thoại"
                                    class="form-control" id="form-phone">
                         </div>
                         <div class="form-group col-md-6">
@@ -234,19 +237,21 @@
                     </div>
                     <div class="form-group col-md-12">
                         <label>Địa chỉ *</label>
-                        <input type="text" name="txtAddress" onFocus="geolocate()"
+                        <input required type="text" name="txtAddress" onFocus="geolocate()"
+                               title="Vui lòng nhập địa chỉ"
                                class="form-control" id="txtAddress">
                     </div>
                     <div class="form-group">
                         <div class="form-group  col-md-5">
                             <label>Ngày bắt đầu *</label>
-                            <input type="date" name="txtStartDate"
+                            <input required type="date" name="txtStartDate"
+                                   title="Vui lòng chọn ngày bắt đầu"
                                    class="form-control" id="dateDefault" value="<%=new Date()%> ">
                         </div>
                         <div class="form-group  col-md-7">
                             <label>Hình Thức Bảo Hiểm *</label>
                             <fmt:setLocale value="vi_VN"/>
-                            <select class="form-control" name="ddlContractType" id="ddlContractType" onchange="{
+                            <select required class="form-control" name="ddlContractType" id="ddlContractType" onchange="{
                                 var fee = parseFloat(this.options[this.selectedIndex].innerHTML);
                                 $('#txtFeeInput').val(fee);
                                 fee = fee.formatMoney(0,'.',',');

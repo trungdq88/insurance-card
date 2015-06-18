@@ -4,7 +4,8 @@
 <div id="wrapper">
 
     <%@ include file="_shared/navigation.jsp" %>
-    <meta http-equiv="refresh" content="5;url=${pageContext.request.contextPath}/staff/contract?action=detail&code=${requestScope.CODE}"/>
+    <meta http-equiv="refresh"
+          content="3;url=${pageContext.request.contextPath}/staff/contract?action=detail&code=${requestScope.CODE}"/>
 
     <div id="page-wrapper">
         <div class="row">
@@ -31,8 +32,6 @@
             <!-- /.col-lg-12 -->
         </div>
     </div>
-</div>
-</div>
 </div>
 <!-- /#wrapper -->
 
