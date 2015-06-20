@@ -35,38 +35,88 @@ $(document).ready(function () {
         });
     }
     /**
-     * contract detail
+     *********************************************contract detail **********************************************
+     */
+    /**
+     ------------------------------------------Handle Cancel contract------------------------------------------
      */
     $('#rdbReason1').click(function () {
         $('.check').attr('checked', false);
-        $('#reason').val('Xe cơ giới bị thu hồi đăng ký');
+        $('#reason').val('Xe cơ giới bị thu hồi đăng ký và biển số theo quy định của pháp luật');
         $(this).prop('checked', true);
         $('#anotherReason').addClass('hide');
 
     });
     $('#rdbReason2').click(function () {
         $('.check').attr('checked', false);
-        $('#reason').val('Xe cơ giới hết niên hạn');
+        $('#reason').val('Xe cơ giới hết niên hạn sử dụng theo quy định của pháp luật');
+        $(this).prop('checked', true);
+        $('#anotherReason').addClass('hide');
+    });
+    $('#rdbReason3').click(function () {
+        $('.check').attr('checked', false);
+        $('#reason').val('Xe cơ giới bị mất được cơ quan công an xác nhận');
+        $(this).prop('checked', true);
+        $('#anotherReason').addClass('hide');
+    });
+    $('#rdbReason4').click(function () {
+        $('.check').attr('checked', false);
+        $('#reason').val('Xe cơ giới hỏng không sử dụng được hoặc bị phá huỷ do tai nạn giao thông được cơ quan công an xác nhận');
         $(this).prop('checked', true);
         $('#anotherReason').addClass('hide');
     });
     $('#rdbAnother').click(function () {
         $('.check').attr('checked', false);
         $('#anotherReason').removeClass('hide');
-        $('#reason').val($('#anotherReason').val());
+        $('#reason').val($.trim($('#anotherReason').val()));
         $(this).prop('checked', true);
     });
     $('#reason').val($('#anotherReason').val());
+
     $('#deleteContract').click(function () {
-        if ($('#rdbAnother').is(":checked")) {
-            if ($.trim($('#anotherReason').val()) == 0) {
-                alert('Vui lòng nhập lí do hủy hợp đồng trước khi xác nhận hủy');
+        var result = false;
+        $('.check').each(function () {
+            if ($('#rdbAnother').is(":checked")) {
+                if ($.trim($('#anotherReason').val()) == 0) {
+                    return result;
+                } else {
+                    alert('Bạn đã chọn lí co hủy là: ' + $('#anotherReason').val());
+                    result = true;
+                    return false;
+                }
+            }
+            else if ($(this).is(":checked")) {
+                alert('Bạn đã chọn lí co hủy hợp đồng là: ' + $('#reason').val());
+                result = true;
+                return false;
+            }
+            else {
+                result = false;
+            }
+        });
+        if (result == false) {
+            alert('Vui lòng chọn lí do hủy hợp đồng trước khi xác nhận! Cảm ơn!');
+            return false;
+        }
+        if (result == true) {
+            var r = confirm("Bạn thực sự muốn hủy hợp đồng này?");
+            if (r == false) {
                 return false;
             }
         }
+
     });
-
-
+    $('#cancelAction').click(function () {
+        $('.check').attr('checked', false);
+        $('#anotherReason').val('');
+        $('#anotherReason').addClass('hide');
+    });
+    /**
+     ------------------------------------------------------------------------------------------------------------
+     */
+    /**
+     -----------------------------------------Handle Renew Contract----------------------------------------------
+     */
     $('#renew').click(function () {
         var status = $('#contractStatus').val();
         var myDate = null;
@@ -94,6 +144,9 @@ $(document).ready(function () {
 
         $('#content').val("Renew contract from " + startDate + " to " + day + '/' + month + '/' + year);
     });
+    /**
+     ------------------------------------------------------------------------------------------------------------------
+     */
 });
 
 

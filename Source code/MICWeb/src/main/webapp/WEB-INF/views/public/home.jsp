@@ -1,8 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="java.util.Date" %>
+<%@ page import="java.sql.Timestamp" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="en">
 <script src="${pageContext.request.contextPath}/js/jquery.min.js" type="text/javascript"></script>
@@ -207,17 +207,20 @@
                 <div class="form-top-right">
                     <i class="fa fa-pencil"></i>
                 </div>
-                <form role="form" action="${pageContext.request.contextPath}/public/register" method="post">
+                <form id="myForm" role="form" action="${pageContext.request.contextPath}/public/register" method="post">
                     <div class="form-group">
                         <div class="form-group col-md-6">
                             <label>Họ tên *</label>
                             <input required type="text" name="txtName"
+                                   pattern="\S[^0-9]+"
+                                   minlength="3" maxlength="80"
                                    title="Vui lòng nhập họ tên"
                                    class="form-control" id="form-full-name">
                         </div>
                         <div class="form-group col-md-6">
                             <label>Email *</label>
-                            <input required type="email" name="txtEmail"
+                            <input required type="text" name="txtEmail"
+                                   pattern="^[A-Za-z0-9._%-]+@[A-Za-z0-9.-]+.[A-Za-z]{2,4}"
                                    title="Vui lòng nhập Email hợp lệ"
                                    class="form-control" id="form-email">
                         </div>
@@ -226,18 +229,24 @@
                         <div class="form-group col-md-6">
                             <label>Số điện thoại *</label>
                             <input required type="text" name="txtPhone"
-                                   title="Vui lòng nhập số điện thoại"
-                                   class="form-control" id="form-phone">
+                                   class="form-control" id="form-phone"
+                                   pattern="[0-9]+"
+                                   minlength="8" maxlength="15"
+                                   title="Vui lòng nhập đúng số điện thoại">
                         </div>
                         <div class="form-group col-md-6">
                             <label>Số CMND/Hộ chiếu</label>
                             <input type="text" name="txtPersonalId"
-                                   class="form-control" id="form-cmnd">
+                                   class="form-control" id="form-cmnd"
+                                   pattern="[0-9]+"
+                                   minlength="8" maxlength="15"
+                                   title="Vui lòng chỉ nhập số">
                         </div>
                     </div>
                     <div class="form-group col-md-12">
                         <label>Địa chỉ *</label>
                         <input required type="text" name="txtAddress" onFocus="geolocate()"
+                               maxlength="250" minlength="3"
                                title="Vui lòng nhập địa chỉ"
                                class="form-control" id="txtAddress">
                     </div>
@@ -245,12 +254,12 @@
                         <div class="form-group  col-md-5">
                             <label>Ngày bắt đầu *</label>
                             <input required type="date" name="txtStartDate"
+                                   min="<%=new Date().getYear()+1900%>-<%=(new Date().getMonth()+1)<10?"0"+(new Date().getMonth()+1):(new Date().getMonth()+1)%>-<%=new Date().getDate()%>"
                                    title="Vui lòng chọn ngày bắt đầu"
                                    class="form-control" id="dateDefault" value="<%=new Date()%> ">
                         </div>
                         <div class="form-group  col-md-7">
                             <label>Hình Thức Bảo Hiểm *</label>
-                            <fmt:setLocale value="vi_VN"/>
                             <select required class="form-control" name="ddlContractType" id="ddlContractType" onchange="{
                                 var fee = parseFloat(this.options[this.selectedIndex].innerHTML);
                                 $('#txtFeeInput').val(fee);
@@ -280,7 +289,7 @@
                             <input type="hidden" id="txtFeeInput" name="txtFee" value="${listContractType[0].pricePerYear}">
                         </p>
                         <input type="hidden" name="action" value="register"/>
-                        <input type="submit" name="btnNext" class="btn btn-primary btn-lg" value="Tiếp theo"/>
+                        <input type="submit" id="btnNext" name="btnNext" class="btn btn-primary btn-lg" value="Tiếp theo"/>
                     </div>
 
                 </form>
