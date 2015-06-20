@@ -5,6 +5,7 @@ import com.fpt.mic.micweb.framework.R;
 import com.fpt.mic.micweb.framework.responses.JspPage;
 import com.fpt.mic.micweb.framework.responses.ResponseObject;
 import com.fpt.mic.micweb.model.business.StaffBusiness;
+import com.fpt.mic.micweb.model.dto.CreateContractDTO;
 import com.fpt.mic.micweb.model.entity.ContractEntity;
 import com.fpt.mic.micweb.model.entity.ContractTypeEntity;
 import com.fpt.mic.micweb.model.entity.CustomerEntity;
@@ -20,6 +21,8 @@ import java.util.List;
  */
 @WebServlet(name = "ContractController", urlPatterns = {"/staff/contract"})
 public class ContractController extends BasicController {
+
+    private static String msg = "";
 
     public ResponseObject getView(R r) {
         StaffBusiness staffBus = new StaffBusiness();
@@ -70,48 +73,48 @@ public class ContractController extends BasicController {
     }
 
     public ResponseObject postCreate(R r) {
-        ContractEntity contractEntity = new ContractEntity();
-        PaymentEntity paymentEntity = new PaymentEntity();
-
         // Get contract information
-        contractEntity.setCustomerCode(r.equest.getParameter("txtCustomerCode"));
-        contractEntity.setContractTypeId(Integer.parseInt(r.equest.getParameter("ddlContractType")));
-        String startDate = r.equest.getParameter("txtStartDate");
-        contractEntity.setStartDate(DateUtils.stringToTime(startDate));
-        String expiredDate = r.equest.getParameter("txtExpiredDate");
-        contractEntity.setExpiredDate(DateUtils.stringToTime(expiredDate));
-        contractEntity.setContractFee(Float.parseFloat(r.equest.getParameter("txtContractFee")));
-        contractEntity.setPlate(r.equest.getParameter("txtPlate"));
-        contractEntity.setBrand(r.equest.getParameter("txtBrand"));
-        contractEntity.setModelCode(r.equest.getParameter("txtModel"));
-        contractEntity.setVehicleType(r.equest.getParameter("txtType"));
-        contractEntity.setColor(r.equest.getParameter("txtColor"));
-        contractEntity.setEngine(r.equest.getParameter("txtEngine"));
-        contractEntity.setChassis(r.equest.getParameter("txtChassis"));
-        contractEntity.setCapacity(r.equest.getParameter("txtCapacity"));
+        String customerCode = r.equest.getParameter("txtCustomerCode");
+        Integer contractTypeId = Integer.parseInt(r.equest.getParameter("ddlContractType"));
+        Timestamp startDate = DateUtils.stringToTime(r.equest.getParameter("txtStartDate"));
+        Timestamp expiredDate = DateUtils.stringToTime(r.equest.getParameter("txtExpiredDate"));
+        Float contractFee = Float.parseFloat(r.equest.getParameter("txtContractFee"));
+        String plate = r.equest.getParameter("txtPlate");
+        String brand = r.equest.getParameter("txtBrand");
+        String modelCode = r.equest.getParameter("txtModel");
+        String vehicleType = r.equest.getParameter("txtType");
+        String color = r.equest.getParameter("txtColor");
+        String engine = r.equest.getParameter("txtEngine");
+        String chassis = r.equest.getParameter("txtChassis");
+        String capacity = r.equest.getParameter("txtCapacity");
         String yearOfMan = r.equest.getParameter("txtYearOfMan");
+        Integer yearOfManufacture = 0;
+        Integer weight = 0;
+        Integer seatCapacity = 0;
         if (!yearOfMan.equals("")) {
-            contractEntity.setYearOfManufacture(Integer.parseInt(yearOfMan));
+            yearOfManufacture = Integer.parseInt(yearOfMan);
         }
-        String weight = r.equest.getParameter("txtWeight");
-        if (!weight.equals("")) {
-            contractEntity.setWeight(Integer.parseInt(weight));
+        String emptyWeight = r.equest.getParameter("txtWeight");
+        if (!emptyWeight.equals("")) {
+            weight = Integer.parseInt(emptyWeight);
         }
-        String seatCapacity = r.equest.getParameter("txtSeatCapacity");
-        if (!seatCapacity.equals("")) {
-            contractEntity.setSeatCapacity(Integer.parseInt(seatCapacity));
+        String seatCapt = r.equest.getParameter("txtSeatCapacity");
+        if (!seatCapt.equals("")) {
+            seatCapacity = Integer.parseInt(seatCapt);
         }
 
         // Get payment information
-        String paidDate = r.equest.getParameter("txtPaidDate");
-        paymentEntity.setPaidDate(DateUtils.stringToTime(paidDate));
+        Timestamp paidDate = DateUtils.stringToTime(r.equest.getParameter("txtPaidDate"));
+        Float amount = Float.parseFloat(r.equest.getParameter("txtAmount"));
 
-        paymentEntity.setAmount(Float.parseFloat(r.equest.getParameter("txtAmount")));
+        // Call DTO constructor to initial object contain value
+        CreateContractDTO dto = new CreateContractDTO(customerCode, contractTypeId, startDate, expiredDate,
+                contractFee, plate, brand, modelCode, vehicleType, color, engine, chassis, capacity, yearOfManufacture,
+                weight, seatCapacity, paidDate, amount);
 
         // Call to business object
         StaffBusiness staffBus = new StaffBusiness();
-        ContractEntity result = staffBus.createContract(contractEntity, paymentEntity);
-        String msg = "";
+        ContractEntity result = staffBus.createContract(dto);
 
         if (result != null) {
             // Return Success JSP Page
@@ -127,19 +130,15 @@ public class ContractController extends BasicController {
     public ResponseObject postRenew(R r) {
         // Get renew contract information
         String contractCode = r.equest.getParameter("txtContractCode");
-        String newExpiredDate = r.equest.getParameter("txtExpiredDate");
-        Timestamp expiredDate = DateUtils.stringToTime(newExpiredDate);
+        Timestamp expiredDate = DateUtils.stringToTime(r.equest.getParameter("txtExpiredDate"));
 
         // Get renew payment information
-        PaymentEntity paymentEntity = new PaymentEntity();
-        String paidDate = r.equest.getParameter("txtPaidDate");
-        paymentEntity.setPaidDate(DateUtils.stringToTime(paidDate));
-        paymentEntity.setAmount(Float.parseFloat(r.equest.getParameter("txtAmount")));
+        Timestamp paidDate = DateUtils.stringToTime(r.equest.getParameter("txtPaidDate"));
+        Float amount = Float.parseFloat(r.equest.getParameter("txtAmount"));
 
         // Call to business object
         StaffBusiness staffBus = new StaffBusiness();
-        boolean result = staffBus.renewContract(contractCode, expiredDate, paymentEntity);
-        String msg = "";
+        boolean result = staffBus.renewContract(contractCode, expiredDate, paidDate, amount);
         if (result) {
             msg = "Đã gia hạn hợp đồng thành công";
         } else {
@@ -161,7 +160,6 @@ public class ContractController extends BasicController {
         // Call to business object
         StaffBusiness staffBus = new StaffBusiness();
         boolean result = staffBus.cancelContract(contractCode, cancelDate, cancelReason, cancelNote);
-        String msg = "";
         if (result) {
             msg = "Đã hủy hợp đồng thành công";
         } else {
