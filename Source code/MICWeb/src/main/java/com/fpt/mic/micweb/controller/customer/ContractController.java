@@ -33,7 +33,8 @@ public class ContractController extends BasicController {
 
     public ResponseObject getView(R r) {
         CustomerBusniess customerBusiness = new CustomerBusniess();
-        List<ContractEntity> listContract = customerBusiness.getAllContract();
+        String customerCode = "KH0001";
+        List<ContractEntity> listContract = customerBusiness.getAllContractByCustomer(customerCode);
         r.equest.setAttribute("listContract", listContract);
         return new JspPage("customer/contract.jsp");
     }
@@ -52,7 +53,7 @@ public class ContractController extends BasicController {
         String mesg = "Yêu Cầu Hủy Thất Bại";
         String contractcode = r.equest.getParameter("contractcode");
         String reasoncancel = r.equest.getParameter("txtReason");
-        ContractEntity contract = customerBusiness.CancelContract(contractcode, reasoncancel);
+        ContractEntity contract = customerBusiness.cancelContract(contractcode, reasoncancel);
         if (contract != null) {
             r.equest.setAttribute("contract", contract);
             return new RedirectTo("contract?action=ContractDetail&code=" + contractcode);
@@ -135,7 +136,7 @@ public class ContractController extends BasicController {
         payment.setAmount(contract.getContractFee());
         payment.setPaypalTransId(results.get("PAYMENTINFO_0_TRANSACTIONID").toString());
         payment.setContractCode(contract.getContractCode());
-        boolean result = customerBusiness.RenewContract(contract, payment);
+        boolean result = customerBusiness.renewContract(contract, payment);
         if (result == true) {
             r.equest.setAttribute("message", "Gia hạn thành công.");
         } else {
@@ -150,7 +151,7 @@ public class ContractController extends BasicController {
     public ResponseObject postRejectRequestCancel(R r) {
         CustomerBusniess business = new CustomerBusniess();
         String contractCode = r.equest.getParameter("contractcode");
-        ContractEntity contract = business.RejectCancelContract(contractCode);
+        ContractEntity contract = business.rejectCancelContract(contractCode);
         String mesg = "Không thể gở bỏ yêu cầu hủy hợp đồng";
         if (contract != null) {
             r.equest.setAttribute("contract", contract);
