@@ -10,7 +10,7 @@ import java.io.Serializable;
  * FPT University - Capstone Project - Summer 2015 - MICWeb
  * Created by dinhquangtrung on 6/19/15.
  */
-public class DuplicateValidator<T, PK extends Serializable> extends Validator {
+public class ExistsValidator<T, PK extends Serializable> extends Validator {
 
     /**
      * Method in entity class used to compare, for example: "getName"
@@ -18,7 +18,7 @@ public class DuplicateValidator<T, PK extends Serializable> extends Validator {
     String compareMethod;
     Class<T> type;
 
-    public DuplicateValidator(Class<T> compareEntity, String compareMethod) {
+    public ExistsValidator(Class<T> compareEntity, String compareMethod) {
         this.compareMethod = compareMethod;
         this.type = compareEntity;
     }
@@ -26,11 +26,11 @@ public class DuplicateValidator<T, PK extends Serializable> extends Validator {
     @Override
     public boolean isValid() {
         ValidatorDao<T, PK> dao = new ValidatorDao<T, PK>(type);
-        return !dao.isExists(compareMethod, subject);
+        return dao.isExists(compareMethod, subject);
     }
 
     @Override
     public String getMessage() {
-        return String.format(ValidateLang.DUPLICATE_VALIDATOR, fieldName, subject);
+        return String.format(ValidateLang.EXISTS_VALIDATOR, fieldName, subject);
     }
 }

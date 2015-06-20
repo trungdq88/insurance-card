@@ -25,7 +25,7 @@ public class ValidatorDao<T, PK extends Serializable> extends GenericDaoJpaImpl<
         super(type);
     }
 
-    public boolean isDuplicate(String fieldName, String fieldValue) {
+    public boolean isExists(String fieldName, String fieldValue) {
         EntityManager entityManager = factory.createEntityManager();
 
         // Get table name

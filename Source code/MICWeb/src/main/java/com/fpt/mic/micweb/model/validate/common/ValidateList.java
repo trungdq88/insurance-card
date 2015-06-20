@@ -18,6 +18,12 @@ public class ValidateList {
         this.validators = new ArrayList<Validator>();
     }
 
+    public ValidateList(String fieldName, Integer subject) {
+        this.fieldName = fieldName;
+        this.subject = subject + "";
+        this.validators = new ArrayList<Validator>();
+    }
+
     /**
      * Add validator to validate list
      * @param validator
