@@ -16,6 +16,8 @@ public class ValidateTest {
         validateList
                 .add(new RequireValidator())
                 .add(new LengthValidator(5, 10));
+                // Check Controller TestValidate to see the test for DuplicateValidator
+                //.add(new DuplicateValidator<CustomerEntity, String>(CustomerEntity.class, "name"));
 
 
         System.out.println(validateList.isValid());

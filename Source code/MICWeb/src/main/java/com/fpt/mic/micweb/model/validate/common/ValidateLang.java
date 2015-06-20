@@ -7,4 +7,5 @@ package com.fpt.mic.micweb.model.validate.common;
 public class ValidateLang {
     public static final String LENGTH_VALIDATOR = "%s phải có độ dài từ %s đến %s ký tự.";
     public static final String REQUIRE_VALIDATOR = "%s là bắt buộc.";
+    public static final String DUPLICATE_VALIDATOR = "%s \"%s\" đã được sử dụng!";
 }
