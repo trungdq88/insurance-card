@@ -127,7 +127,7 @@
 
             <form action="${pageContext.request.contextPath}/customer/contract" method="post">
 
-                <div class="modal renew-contract-modal" tabindex="-1" role="dialog"
+                <div class="modal fade renew-contract-modal" tabindex="-1" role="dialog"
                      aria-labelledby="myLargeModalLabel"
                      aria-hidden="true">
                     <div class="modal-dialog modal-lg">

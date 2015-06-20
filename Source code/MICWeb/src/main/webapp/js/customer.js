@@ -68,10 +68,8 @@ $(document).ready(function () {
     $('#rdbAnother').click(function () {
         $('.check').attr('checked', false);
         $('#anotherReason').removeClass('hide');
-        $('#reason').val($.trim($('#anotherReason').val()));
         $(this).prop('checked', true);
     });
-    $('#reason').val($('#anotherReason').val());
 
     $('#deleteContract').click(function () {
         var result = false;
@@ -80,6 +78,7 @@ $(document).ready(function () {
                 if ($.trim($('#anotherReason').val()) == 0) {
                     return result;
                 } else {
+                    $('#reason').val($.trim($('#anotherReason').val()));
                     alert('Bạn đã chọn lí co hủy là: ' + $('#anotherReason').val());
                     result = true;
                     return false;
@@ -120,7 +119,7 @@ $(document).ready(function () {
     $('#renew').click(function () {
         var status = $('#contractStatus').val();
         var myDate = null;
-        if (status == 'Ready') {
+        if (status == 'Ready' ||status == 'No Card' || status == 'Pending' ) {
             myDate = new Date($('#newStartDate').val());
         }
         else if (status == 'Expired') {
