@@ -25,9 +25,9 @@ public class ContractEntity {
     private String engine;
     private String chassis;
     private String capacity;
-    private int yearOfManufacture;
-    private int weight;
-    private int seatCapacity;
+    private Integer yearOfManufacture;
+    private Integer weight;
+    private Integer seatCapacity;
     private Timestamp cancelDate;
     private String cancelReason;
     private String cancelNote;
@@ -175,31 +175,31 @@ public class ContractEntity {
 
     @Basic
     @Column(name = "year_of_manufacture")
-    public int getYearOfManufacture() {
+    public Integer getYearOfManufacture() {
         return yearOfManufacture;
     }
 
-    public void setYearOfManufacture(int yearOfManufacture) {
+    public void setYearOfManufacture(Integer yearOfManufacture) {
         this.yearOfManufacture = yearOfManufacture;
     }
 
     @Basic
     @Column(name = "weight")
-    public int getWeight() {
+    public Integer getWeight() {
         return weight;
     }
 
-    public void setWeight(int weight) {
+    public void setWeight(Integer weight) {
         this.weight = weight;
     }
 
     @Basic
     @Column(name = "seat_capacity")
-    public int getSeatCapacity() {
+    public Integer getSeatCapacity() {
         return seatCapacity;
     }
 
-    public void setSeatCapacity(int seatCapacity) {
+    public void setSeatCapacity(Integer seatCapacity) {
         this.seatCapacity = seatCapacity;
     }
 
