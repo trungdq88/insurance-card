@@ -1,5 +1,4 @@
 package com.fpt.mic.micweb.model.business;
-
 import com.fpt.mic.micweb.model.dao.CustomerDao;
 import com.fpt.mic.micweb.model.dao.ContractDao;
 import com.fpt.mic.micweb.model.dao.PaymentDao;
@@ -9,7 +8,6 @@ import com.fpt.mic.micweb.model.entity.PaymentEntity;
 import com.fpt.mic.micweb.utils.Constants;
 import sun.util.calendar.BaseCalendar;
 import sun.util.calendar.LocalGregorianCalendar;
-
 import java.awt.*;
 import java.sql.Date;
 import java.sql.Time;
@@ -18,15 +16,16 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
+import java.lang.Thread;
 
 /**
  * Created by PhucNguyen on 05/06/2015.
  */
 public class CustomerBusniess {
     //get all contract belong to customer
-    public List<ContractEntity> getAllContract() {
+    public List<ContractEntity> getAllContractByCustomer(String customerCode) {
         ContractDao contractDa0 = new ContractDao();
-        List<ContractEntity> listContract = contractDa0.getListContract();
+        List<ContractEntity> listContract = contractDa0.getContractByCustomerCode(customerCode);
         return listContract;
     }
 
@@ -36,8 +35,14 @@ public class CustomerBusniess {
         return contractDa0.read(code);
     }
 
-    /*cancel contract    */
-    public ContractEntity CancelContract(String code, String cancelReason) {
+    /**
+     * cancel contract
+     *
+     * @param code
+     * @param cancelReason
+     * @return contract entity
+     */
+    public ContractEntity cancelContract(String code, String cancelReason) {
         ContractDao contractDa0 = new ContractDao();
         ContractEntity contract = contractDa0.read(code);
         //get date now
@@ -51,11 +56,12 @@ public class CustomerBusniess {
 
     /**
      * renew contract
+     *
      * @param contract
      * @param payment
      * @return contract
      */
-    public boolean RenewContract(ContractEntity contract, PaymentEntity payment) {
+    public boolean renewContract(ContractEntity contract, PaymentEntity payment) {
         boolean result = false;
         ContractDao contractDao = new ContractDao();
         PaymentDao paymentDao = new PaymentDao();
@@ -68,10 +74,11 @@ public class CustomerBusniess {
 
     /**
      * reject request cancel contract
+     *
      * @param contractCode
      * @return contract
      */
-    public ContractEntity RejectCancelContract(String contractCode) {
+    public ContractEntity rejectCancelContract(String contractCode) {
         ContractDao contractDao = new ContractDao();
         ContractEntity contract = contractDao.read(contractCode);
         contract.setCancelReason(null);
@@ -82,7 +89,6 @@ public class CustomerBusniess {
         } else {
             return null;
         }
-
     }
 
 }

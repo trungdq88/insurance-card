@@ -73,13 +73,25 @@
                                 <div class="checkbox">
                                     <label>
                                         <input type="radio" value="" name="rdbReason1" class="check" id="rdbReason1">
-                                        Xe cơ giới bị thu hồi đăng ký
+                                        Xe cơ giới bị thu hồi đăng ký và biển số theo quy định của pháp luật!
                                     </label>
                                 </div>
                                 <div class="checkbox">
                                     <label>
                                         <input type="radio" value="" name="rdbReason2" id="rdbReason2" class="check">
-                                        Xe cơ giới hết niên hạn
+                                        Xe cơ giới hết niên hạn sử dụng theo quy định của pháp luật!
+                                    </label>
+                                </div>
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="radio" value="" name="rdbReason3" id="rdbReason3" class="check">
+                                        Xe cơ giới bị mất được cơ quan công an xác nhận!
+                                    </label>
+                                </div>
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="radio" value="" name="rdbReason4" id="rdbReason4" class="check">
+                                        Xe cơ giới hỏng không sử dụng được hoặc bị phá huỷ do tai nạn giao thông được cơ quan công an xác nhận!
                                     </label>
                                 </div>
                                 <div class="checkbox">
@@ -88,21 +100,24 @@
                                         Lý do khác
                                     </label>
                                 </div>
-                                <div class="form-group">
-                                    <label></label>
-                               <textarea name="txtAnotherReason" rows="3" cols="95" id="anotherReason" class="hide">
-                               </textarea>
+                                <div class="checkbox">
+                                    <label>
+                                       <textarea  name="txtAnotherReason" rows="3" cols="95" id="anotherReason" class="hide"
+                                                 autofocus="autofocus" >
+                                       </textarea>
 
+                                    </label>
                                 </div>
                             </div>
                             <div class="modal-footer">
+                                <%--Post to server (ContractController)--%>
                                 <input type="hidden" name="action" value="CancelContract"/>
                                 <input class="hide" name="txtReason" id="reason">
                                 <input id="deleteContract" type="submit" class="btn btn-primary" name="Xác Nhận"
                                        value="Xác Nhận"/>
                                 <input type="hidden" id="contractId" name="contractcode"
                                        value="${contract.contractCode}"/>
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Hủy Bỏ</button>
+                                <input type="button" class="btn btn-danger" id="cancelAction" data-dismiss="modal" value="Hủy Bỏ"/>
                             </div>
                         </div>
 
@@ -112,7 +127,7 @@
 
             <form action="${pageContext.request.contextPath}/customer/contract" method="post">
 
-                <div class="modal renew-contract-modal" tabindex="-1" role="dialog"
+                <div class="modal fade renew-contract-modal" tabindex="-1" role="dialog"
                      aria-labelledby="myLargeModalLabel"
                      aria-hidden="true">
                     <div class="modal-dialog modal-lg">
@@ -154,7 +169,8 @@
                                             <input style="border:none; background-color: white" type="hidden"
                                                    id="payAmount" disabled="disabled"
                                                    value="${contract.contractFee} VNĐ"/>
-                                            <fmt:formatNumber value="${contract.contractFee}" type="currency" maxFractionDigits="0"/>
+                                            <fmt:formatNumber value="${contract.contractFee}" type="currency"
+                                                              maxFractionDigits="0"/>
                                         </div>
 
                                     </div>
