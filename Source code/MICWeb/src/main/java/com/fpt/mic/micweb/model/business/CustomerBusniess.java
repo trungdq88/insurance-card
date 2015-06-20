@@ -18,6 +18,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
+import java.lang.Thread;
 
 /**
  * Created by PhucNguyen on 05/06/2015.
@@ -36,7 +37,13 @@ public class CustomerBusniess {
         return contractDa0.read(code);
     }
 
-    /*cancel contract    */
+    /**
+     * cancel contract
+     *
+     * @param code
+     * @param cancelReason
+     * @return contract entity
+     */
     public ContractEntity CancelContract(String code, String cancelReason) {
         ContractDao contractDa0 = new ContractDao();
         ContractEntity contract = contractDa0.read(code);
@@ -51,6 +58,7 @@ public class CustomerBusniess {
 
     /**
      * renew contract
+     *
      * @param contract
      * @param payment
      * @return contract
@@ -68,6 +76,7 @@ public class CustomerBusniess {
 
     /**
      * reject request cancel contract
+     *
      * @param contractCode
      * @return contract
      */
@@ -82,7 +91,6 @@ public class CustomerBusniess {
         } else {
             return null;
         }
-
     }
 
 }
