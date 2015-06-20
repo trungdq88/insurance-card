@@ -229,14 +229,16 @@
                         <div class="form-group col-md-6">
                             <label>Số điện thoại *</label>
                             <input required type="text" name="txtPhone"
-                                   class="form-control" id="form-phone" pattern="[0-9]+"
+                                   class="form-control" id="form-phone"
+                                   pattern="[0-9]+"
                                    minlength="8" maxlength="15"
                                    title="Vui lòng nhập đúng số điện thoại">
                         </div>
                         <div class="form-group col-md-6">
                             <label>Số CMND/Hộ chiếu</label>
                             <input type="text" name="txtPersonalId"
-                                   class="form-control" id="form-cmnd" pattern="[0-9]+"
+                                   class="form-control" id="form-cmnd"
+                                   pattern="[0-9]+"
                                    minlength="8" maxlength="15"
                                    title="Vui lòng chỉ nhập số">
                         </div>
@@ -252,8 +254,6 @@
                         <div class="form-group  col-md-5">
                             <label>Ngày bắt đầu *</label>
                             <input required type="date" name="txtStartDate"
-
-                                   <%--min="<%=new Timestamp(new Date().getTime()).toString()%>"--%>
                                    min="<%=new Date().getYear()+1900%>-<%=(new Date().getMonth()+1)<10?"0"+(new Date().getMonth()+1):(new Date().getMonth()+1)%>-<%=new Date().getDate()%>"
                                    title="Vui lòng chọn ngày bắt đầu"
                                    class="form-control" id="dateDefault" value="<%=new Date()%> ">
