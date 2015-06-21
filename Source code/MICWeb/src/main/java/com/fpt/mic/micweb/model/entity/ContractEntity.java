@@ -1,6 +1,8 @@
 package com.fpt.mic.micweb.model.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.sql.Timestamp;
 import java.util.Collection;
 
@@ -17,6 +19,8 @@ public class ContractEntity {
     private Timestamp expiredDate;
     private String status;
     private float contractFee;
+    @NotNull(message = "Biển số xe không được bỏ trống.")
+    @Size(min = 4, max = 15, message = "Biển số xe phải có độ dài từ 4 đến 15 ký tự.")
     private String plate;
     private String brand;
     private String modelCode;
@@ -311,9 +315,9 @@ public class ContractEntity {
         result = 31 * result + (engine != null ? engine.hashCode() : 0);
         result = 31 * result + (chassis != null ? chassis.hashCode() : 0);
         result = 31 * result + (capacity != null ? capacity.hashCode() : 0);
-        result = 31 * result + yearOfManufacture;
-        result = 31 * result + weight;
-        result = 31 * result + seatCapacity;
+        result = 31 * result + (yearOfManufacture != null ? yearOfManufacture.hashCode() : 0);
+        result = 31 * result + (weight != null ? weight.hashCode() : 0);;
+        result = 31 * result + (seatCapacity != null ? seatCapacity.hashCode() : 0);;
         result = 31 * result + (cancelDate != null ? cancelDate.hashCode() : 0);
         result = 31 * result + (cancelReason != null ? cancelReason.hashCode() : 0);
         result = 31 * result + (cancelNote != null ? cancelNote.hashCode() : 0);
