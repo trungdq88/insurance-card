@@ -7,6 +7,8 @@
 <html lang="en">
 <script src="${pageContext.request.contextPath}/js/jquery.min.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/js/bootstrap.min.js" type="text/javascript"></script>
+<!-- Google API Autocomplete for address-->
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places"></script>
 
 <head>
     <meta charset="utf-8">
@@ -26,43 +28,7 @@
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/jssor.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/jssor.slider.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/slider.js"></script>
-    <!-- Google API Autocomplete for address-->
-    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places"></script>
-    <script>
-        // This example displays an address form, using the autocomplete feature
-        // of the Google Places API to help users fill in the information.
 
-        var placeSearch, autocomplete;
-
-
-        function initialize() {
-            // Create the autocomplete object, restricting the search
-            // to geographical location types.
-            autocomplete = new google.maps.places.Autocomplete(
-                    /** @type {HTMLInputElement} */(document.getElementById('txtAddress')),
-                    {types: ['geocode'], componentRestrictions: {country: 'vn'}});
-
-        }
-
-        // [START region_geolocation]
-        // Bias the autocomplete object to the user's geographical location,
-        // as supplied by the browser's 'navigator.geolocation' object.
-        function geolocate() {
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(function (position) {
-                    var geolocation = new google.maps.LatLng(
-                            position.coords.latitude, position.coords.longitude);
-                    var circle = new google.maps.Circle({
-                        center: geolocation,
-                        radius: position.coords.accuracy
-                    });
-                    autocomplete.setBounds(circle.getBounds());
-                });
-            }
-        }
-        // [END region_geolocation]
-
-    </script>
 </head>
 
 <body onload="initialize()">
@@ -212,16 +178,18 @@
                         <div class="form-group col-md-6">
                             <label>Họ tên *</label>
                             <input required type="text" name="txtName"
-                                   pattern="\S[^0-9]+"
+                                   pattern="\S[^0-9!@#$%^&*()+=~`]+"
                                    minlength="3" maxlength="80"
                                    title="Vui lòng nhập họ tên"
+                                   placeholder="Ví dụ: Nguyễn Văn A"
                                    class="form-control" id="form-full-name">
                         </div>
                         <div class="form-group col-md-6">
                             <label>Email *</label>
                             <input required type="text" name="txtEmail"
-                                   pattern="^[A-Za-z0-9._%-]+@[A-Za-z0-9.-]+.[A-Za-z]{2,4}"
+                                   pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$"
                                    title="Vui lòng nhập Email hợp lệ"
+                                   placeholder="Ví dụ: baohiem@micinsurance.vn"
                                    class="form-control" id="form-email">
                         </div>
                     </div>
@@ -232,6 +200,7 @@
                                    class="form-control" id="form-phone"
                                    pattern="[0-9]+"
                                    minlength="8" maxlength="15"
+                                   placeholder="Ví dụ: 0909000999"
                                    title="Vui lòng nhập đúng số điện thoại">
                         </div>
                         <div class="form-group col-md-6">
@@ -240,6 +209,7 @@
                                    class="form-control" id="form-cmnd"
                                    pattern="[0-9]+"
                                    minlength="8" maxlength="15"
+                                   placeholder="Ví dụ: 272185738"
                                    title="Vui lòng chỉ nhập số">
                         </div>
                     </div>
@@ -316,6 +286,38 @@
 </div>
 
 <script language="javascript">
+    // This example displays an address form, using the autocomplete feature
+    // of the Google Places API to help users fill in the information.
+
+    var placeSearch, autocomplete;
+
+
+    function initialize() {
+        // Create the autocomplete object, restricting the search
+        // to geographical location types.
+        autocomplete = new google.maps.places.Autocomplete(
+                /** @type {HTMLInputElement} */(document.getElementById('txtAddress')),
+                {types: ['geocode'], componentRestrictions: {country: 'vn'}});
+
+    }
+
+    // [START region_geolocation]
+    // Bias the autocomplete object to the user's geographical location,
+    // as supplied by the browser's 'navigator.geolocation' object.
+    function geolocate() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function (position) {
+                var geolocation = new google.maps.LatLng(
+                        position.coords.latitude, position.coords.longitude);
+                var circle = new google.maps.Circle({
+                    center: geolocation,
+                    radius: position.coords.accuracy
+                });
+                autocomplete.setBounds(circle.getBounds());
+            });
+        }
+    }
+    // [END region_geolocation]
 
     Number.prototype.formatMoney = function(c, d, t){
         var n = this,
