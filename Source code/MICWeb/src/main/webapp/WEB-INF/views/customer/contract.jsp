@@ -1,7 +1,7 @@
 ﻿<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="_shared/header.jsp" %>
-
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <div id="wrapper">
 
     <%@ include file="_shared/navigation.jsp" %>
@@ -31,7 +31,7 @@
             <div class="panel-heading">
                 <div class="pull-left center-dropdown-button">
                     <!--<input type="checkbox" class="check-all"/>-->
-                    <b>Có 173 hợp đồng</b>
+                    <b>Có ${listContract.size()} hợp đồng</b>
                 </div>
                 <div class="pull-right no-wrap">
                     <input type="text" class="form-control long-text-box"
@@ -50,7 +50,7 @@
                             <th>#</th>
                             <th>Mã hợp đồng</th>
                             <th>Ngày bắt đầu</th>
-                            <th>Thời hạn</th>
+                            <th>Ngày kết thúc</th>
                             <th>Trạng thái</th>
                         </tr>
                         </thead>
@@ -64,8 +64,8 @@
                                     <a href="${pageContext.request.contextPath}/customer/contract?action=ContractDetail&code=${contract.contractCode}">
                                             ${contract.contractCode}</a>
                                 </td>
-                                <td>${contract.startDate}</td>
-                                <td>${contract.expiredDate}</td>
+                                <td><fmt:formatDate value="${contract.startDate}" pattern="dd/MM/yyyy"/></td>
+                                <td><fmt:formatDate value="${contract.expiredDate}" pattern="dd/MM/yyyy"/></td>
                                 <td><span class="label label-success">${contract.status}</span></td>
                             </tr>
                         </c:forEach>

@@ -5,7 +5,7 @@ import java.sql.Timestamp;
 /**
  * Created by Kha on 18/06/2015.
  */
-public class CreateContractDto {
+public class CreateContractDTO {
     private String customerCode;
     private Integer contractTypeId;
     private Timestamp startDate;
@@ -25,10 +25,10 @@ public class CreateContractDto {
     private Timestamp paidDate;
     private Float amount;
 
-    public CreateContractDto() {
+    public CreateContractDTO() {
     }
 
-    public CreateContractDto(String customerCode, Integer contractTypeId, Timestamp startDate, Timestamp expiredDate,
+    public CreateContractDTO(String customerCode, Integer contractTypeId, Timestamp startDate, Timestamp expiredDate,
                              Float contractFee, String plate, String brand, String modelCode, String vehicleType,
                              String color, String engine, String chassis, String capacity, Integer yearOfManufacture,
                              Integer weight, Integer seatCapacity, Timestamp paidDate, Float amount) {

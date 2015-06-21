@@ -4,7 +4,7 @@ import com.fpt.mic.micweb.model.dao.ContractDao;
 import com.fpt.mic.micweb.model.dao.ContractTypeDao;
 import com.fpt.mic.micweb.model.dao.CustomerDao;
 import com.fpt.mic.micweb.model.dao.PaymentDao;
-import com.fpt.mic.micweb.model.dto.CreateContractDto;
+import com.fpt.mic.micweb.model.dto.CreateContractDTO;
 import com.fpt.mic.micweb.model.entity.ContractEntity;
 import com.fpt.mic.micweb.model.entity.ContractTypeEntity;
 import com.fpt.mic.micweb.model.entity.CustomerEntity;
@@ -63,7 +63,7 @@ public class StaffBusiness {
         return contractDao.read(contractCode);
     }
 
-    public ContractEntity createContract(CreateContractDto dto) {
+    public ContractEntity createContract(CreateContractDTO dto) {
         ContractEntity contractEntity = new ContractEntity();
         PaymentEntity paymentEntity = new PaymentEntity();
         ContractDao contractDao = new ContractDao();
