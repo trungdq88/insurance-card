@@ -196,7 +196,7 @@
                     <div class="form-group">
                         <div class="form-group col-md-6">
                             <label>Số điện thoại *</label>
-                            <input required type="text" name="txtPhone"
+                            <input required type="tel" name="txtPhone"
                                    class="form-control" id="form-phone"
                                    pattern="[0-9]+"
                                    minlength="8" maxlength="15"
