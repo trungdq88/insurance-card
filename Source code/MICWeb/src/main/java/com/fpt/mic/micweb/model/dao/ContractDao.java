@@ -1,7 +1,7 @@
 package com.fpt.mic.micweb.model.dao;
 
 import com.fpt.mic.micweb.model.dao.common.IncrementDao;
-import com.fpt.mic.micweb.model.dto.ContractSearchResult;
+import com.fpt.mic.micweb.model.dto.ContractSearchResultDto;
 import com.fpt.mic.micweb.model.entity.ContractEntity;
 import com.fpt.mic.micweb.utils.Constants;
 
@@ -64,22 +64,22 @@ public class ContractDao extends IncrementDao<ContractEntity, String> {
      * @param keyword
      * @return
      */
-    public List<ContractSearchResult> searchContracts(String keyword) {
+    public List<ContractSearchResultDto> searchContracts(String keyword) {
 
         EntityManager entityManager = factory.createEntityManager();
-        TypedQuery<ContractSearchResult> query = entityManager.createQuery(
-                "SELECT NEW ContractSearchResult(co, cu) " +
+        TypedQuery<ContractSearchResultDto> query = entityManager.createQuery(
+                "SELECT NEW ContractSearchResultDto(co, cu) " +
                         "FROM ContractEntity co " +
                         "JOIN co.micCustomerByCustomerCode cu " +
                         "WHERE co.customerCode = cu.customerCode " +
                         "AND (co.contractCode LIKE :keyword OR cu.name LIKE :keyword) " +
                         "ORDER BY FIELD(co.status, :fieldOrder) DESC, co.contractCode DESC",
-                ContractSearchResult.class
+                ContractSearchResultDto.class
         );
         query.setParameter("keyword", "%" + keyword + "%");
         query.setParameter("fieldOrder",
                 Constants.ContractStatus.NO_CARD);
-        List<ContractSearchResult> resultList = query.getResultList();
+        List<ContractSearchResultDto> resultList = query.getResultList();
         entityManager.close();
         return resultList;
     }

@@ -169,7 +169,6 @@
                             <div class="col-sm-3">
                                 <input id="plate" name="txtPlate" class="form-control input-md"
                                        type="text" required minlength="4" maxlength="15"
-                                       pattern="^([A-Z0-9-]+)$"
                                        title="Vui lòng nhập biển số xe!" placeholder="Ví dụ: 78Y9-15383">
                             </div>
 
@@ -178,7 +177,6 @@
                             <div class="col-sm-3">
                                 <input id="brand" name="txtBrand" class="form-control input-md"
                                        type="text" required minlength="2" maxlength="20"
-                                       pattern="^[^!@#$%^&*`~,.<>;':&quot;/[\]|{}()=_+-]+$"
                                        title="Vui lòng nhập nhãn hiệu xe!" placeholder="Ví dụ: Honda">
                             </div>
                         </div>
@@ -190,8 +188,7 @@
                             <div class="col-sm-3">
                                 <input id="engine" name="txtEngine" class="form-control input-md"
                                        type="text" required minlength="2" maxlength="20"
-                                       pattern="^([A-Z0-9]+)$"
-                                       title="Vui lòng nhập số máy xe!" placeholder="Ví dụ: 0293834">
+                                       title="Vui lòng nhập số máy xe!">
                             </div>
 
                             <label class="col-sm-2 control-label" for="chassis">Số khung *</label>
@@ -199,8 +196,7 @@
                             <div class="col-sm-3">
                                 <input id="chassis" name="txtChassis" class="form-control input-md"
                                        type="text" required minlength="2" maxlength="20"
-                                       pattern="^([A-Z0-9]+)$"
-                                       title="Vui lòng nhập số khung xe!" placeholder="Ví dụ: Y023838">
+                                       title="Vui lòng nhập số khung xe!">
                             </div>
                         </div>
 
@@ -211,8 +207,7 @@
                             <div class="col-sm-2">
                                 <input id="capacity" name="txtCapacity" class="form-control input-md"
                                        type="text" required minlength="2" maxlength="20"
-                                       pattern="^(\d{2,}+\s?(cc)?)$"
-                                       title="Vui lòng nhập dung tích xe!" placeholder="Ví dụ: 105">
+                                       title="Vui lòng nhập dung tích xe!">
                             </div>
 
                             <label class="col-sm-3 control-label" for="color">Màu sơn</label>
@@ -220,8 +215,7 @@
                             <div class="col-sm-3">
                                 <input id="color" name="txtColor" class="form-control input-md"
                                        type="text" minlength="2" maxlength="20"
-                                       pattern="^[^0-9!@#$%^&*`~,.<>;':&quot;/[\]|{}()=_+]+$"
-                                       title="Vui lòng nhập màu sơn xe!" placeholder="Ví dụ: Đen-Bạc">
+                                       title="Vui lòng nhập màu sơn xe!">
                             </div>
                         </div>
 
@@ -232,7 +226,6 @@
                             <div class="col-sm-3">
                                 <input id="vehicleType" name="txtType" class="form-control input-md"
                                        type="text" minlength="2" maxlength="20"
-                                       pattern="^[^!@#$%^&*`~,.<>;':&quot;/[\]|{}()=_+-]+$"
                                        title="Vui lòng nhập loại xe!" placeholder="Ví dụ: Hai bánh">
                             </div>
 
@@ -241,7 +234,6 @@
                             <div class="col-sm-3">
                                 <input id="modelCode" name="txtModel" class="form-control input-md"
                                        type="text" minlength="2" maxlength="20"
-                                       pattern="^[^!@#$%^&*`~,.<>;':&quot;/[\]|{}()=_+-]+$"
                                        title="Vui lòng nhập số loại xe!" placeholder="Ví dụ: Air Blade">
                             </div>
                         </div>
@@ -252,7 +244,7 @@
 
                             <div class="col-sm-2">
                                 <input id="yearOfMan" name="txtYearOfMan" class="form-control input-md"
-                                       type="number" min="1900" max="2015"
+                                       type="number" min="1900" max="2200"
                                        title="Vui lòng nhập năm sản xuất xe!">
                             </div>
 
@@ -364,7 +356,7 @@
         document.getElementById("startDate").min = getCurrentDateInLastWeek();
         document.getElementById("startDate").max = getCurrentDateInNextYear();
         $('#expiredDate').val(getCurrentDateInNextYear());
-        document.getElementById("expiredDate").min = getCurrentDateInNextQuater();
+        document.getElementById("expiredDate").min = getCurrentDate();
         document.getElementById("expiredDate").max = getCurrentDateInNextYear();
         $('#paidDate').val(getCurrentDate());
         document.getElementById("paidDate").min = getCurrentDateInLastWeek();

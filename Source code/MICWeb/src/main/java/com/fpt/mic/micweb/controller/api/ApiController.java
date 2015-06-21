@@ -5,11 +5,10 @@ import com.fpt.mic.micweb.framework.R;
 import com.fpt.mic.micweb.framework.responses.JsonString;
 import com.fpt.mic.micweb.framework.responses.ResponseObject;
 import com.fpt.mic.micweb.model.business.ApiBusiness;
-import com.fpt.mic.micweb.model.dto.ContractSearchResult;
+import com.fpt.mic.micweb.model.dto.ContractSearchResultDto;
 import com.fpt.mic.micweb.model.entity.CardEntity;
 
 import javax.servlet.annotation.WebServlet;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -39,11 +38,11 @@ public class ApiController extends BasicController {
         String keyword = r.equest.getParameter("keyword");
 
         // Call business for search
-        List<ContractSearchResult> contractSearchResults =
+        List<ContractSearchResultDto> contractSearchResultDtos =
                 apiBusiness.searchContracts(keyword);
 
         // Return json result
-        return new JsonString(contractSearchResults);
+        return new JsonString(contractSearchResultDtos);
     }
 
     /**

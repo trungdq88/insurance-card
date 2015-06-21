@@ -28,17 +28,6 @@ function getCurrentDateInLastWeek() {
     return lastWeek;
 }
 
-function getCurrentDateInNextQuater() {
-    var now = new Date();
-    var curYear = now.getFullYear();
-    var curYearMonth = now.getMonth() + 1;
-    var curYearDay = now.getDate();
-    var nextQuater = curYearMonth + 3;
-    var lastWeek = ("0000" + curYear.toString()).slice(-4) + "-"
-        + ("00" + nextQuater.toString()).slice(-2) + "-" + ("00" + curYearDay.toString()).slice(-2);
-    return lastWeek;
-}
-
 function getCurrentDateInNextYear() {
     var now = new Date();
     var curYear = now.getFullYear();

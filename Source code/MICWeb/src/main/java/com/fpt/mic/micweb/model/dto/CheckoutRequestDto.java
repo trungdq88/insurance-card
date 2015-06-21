@@ -3,7 +3,7 @@ package com.fpt.mic.micweb.model.dto;
 /**
  * Created by TriPQMSE60746 on 06/10/2015.
  */
-public class CheckoutRequest {
+public class CheckoutRequestDto {
 
     private String paymentrequest_name;
     private String paymentrequest_desc;
@@ -15,10 +15,10 @@ public class CheckoutRequest {
     private String paymenttype;
     private String paymentrequest_amt_l;
 
-    public CheckoutRequest() {
+    public CheckoutRequestDto() {
     }
 
-    public CheckoutRequest(String paymentrequest_name, String paymentrequest_desc, String paymentrequest_qty, String paymentrequest_itemamt, String paymentrequest_taxamt, String paymentrequest_amt, String currencycodetype, String paymenttype, String paymentrequest_amt_l) {
+    public CheckoutRequestDto(String paymentrequest_name, String paymentrequest_desc, String paymentrequest_qty, String paymentrequest_itemamt, String paymentrequest_taxamt, String paymentrequest_amt, String currencycodetype, String paymenttype, String paymentrequest_amt_l) {
         this.paymentrequest_name = paymentrequest_name;
         this.paymentrequest_desc = paymentrequest_desc;
         this.paymentrequest_qty = paymentrequest_qty;

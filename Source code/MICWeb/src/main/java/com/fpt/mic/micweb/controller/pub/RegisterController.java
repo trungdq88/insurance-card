@@ -2,23 +2,19 @@ package com.fpt.mic.micweb.controller.pub;
 
 import com.fpt.mic.micweb.framework.BasicController;
 import com.fpt.mic.micweb.framework.R;
-import com.fpt.mic.micweb.framework.responses.ForwardTo;
 import com.fpt.mic.micweb.framework.responses.JspPage;
 import com.fpt.mic.micweb.framework.responses.RedirectTo;
 import com.fpt.mic.micweb.framework.responses.ResponseObject;
 import com.fpt.mic.micweb.model.business.ContractBusiness;
 import com.fpt.mic.micweb.model.business.RegisterBusiness;
 import com.fpt.mic.micweb.model.dao.ContractDao;
-import com.fpt.mic.micweb.model.dto.CheckoutRequest;
-import com.fpt.mic.micweb.model.dto.PayPal;
-import com.fpt.mic.micweb.model.dto.RegisterInformation;
+import com.fpt.mic.micweb.model.dto.RegisterInformationDto;
 import com.fpt.mic.micweb.model.entity.ContractEntity;
 import com.fpt.mic.micweb.model.entity.ContractTypeEntity;
 import com.fpt.mic.micweb.model.entity.CustomerEntity;
 import com.fpt.mic.micweb.model.entity.PaymentEntity;
 import com.fpt.mic.micweb.utils.Constants;
 import com.fpt.mic.micweb.utils.DateUtils;
-import org.apache.commons.lang3.StringEscapeUtils;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpSession;
@@ -108,7 +104,7 @@ public class RegisterController extends BasicController {
 
         // Call to business object
         RegisterBusiness registerBusiness = new RegisterBusiness();
-        RegisterInformation register = registerBusiness.registerNewContract(customerEntity, contractEntity);
+        RegisterInformationDto register = registerBusiness.registerNewContract(customerEntity, contractEntity);
 
         if (register != null) {
             HttpSession session = r.equest.getSession();

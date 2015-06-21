@@ -81,9 +81,9 @@ $(document).ready(function () {
     //    }
     //});
     $( "#anotherReason" ).keydown(function( event ) {
-            if ($.trim($('#anotherReason').val()) == 0) {
-                $('#notify').addClass('hide');
-            }
+        if ($.trim($('#anotherReason').val()) == 0) {
+            $('#notify').addClass('hide');
+        }
     });
     $('#deleteContract').click(function () {
         var result = false;

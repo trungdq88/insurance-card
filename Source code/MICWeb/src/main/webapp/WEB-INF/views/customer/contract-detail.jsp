@@ -108,7 +108,7 @@
                                 <div class="checkbox">
                                     <label>
                                        <textarea  name="txtAnotherReason" rows="3" cols="95" id="anotherReason" class="hide"
-                                                 autofocus="autofocus" >
+                                                  autofocus="autofocus" >
                                        </textarea>
 
 
@@ -692,4 +692,3 @@
 
 
 <%@ include file="_shared/footer.jsp" %>
-
