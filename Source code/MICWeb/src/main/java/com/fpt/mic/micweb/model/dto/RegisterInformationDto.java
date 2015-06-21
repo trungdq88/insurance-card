@@ -7,14 +7,14 @@ import com.fpt.mic.micweb.model.entity.CustomerEntity;
  * FPT University - Capstone Project - Summer 2015 - MICWeb
  * Created by dinhquangtrung on 6/11/15.
  */
-public class RegisterInformation {
+public class RegisterInformationDto {
     private ContractEntity contractEntity;
     private CustomerEntity customerEntity;
 
-    public RegisterInformation() {
+    public RegisterInformationDto() {
     }
 
-    public RegisterInformation(ContractEntity contractEntity, CustomerEntity customerEntity) {
+    public RegisterInformationDto(ContractEntity contractEntity, CustomerEntity customerEntity) {
         this.contractEntity = contractEntity;
         this.customerEntity = customerEntity;
     }

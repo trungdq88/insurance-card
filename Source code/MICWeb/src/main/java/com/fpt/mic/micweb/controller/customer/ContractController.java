@@ -1,11 +1,8 @@
 package com.fpt.mic.micweb.controller.customer;
 
-import com.fpt.mic.micweb.framework.responses.ForwardTo;
 import com.fpt.mic.micweb.framework.responses.RedirectTo;
-import com.fpt.mic.micweb.model.business.ContractBusiness;
 import com.fpt.mic.micweb.model.business.CustomerBusniess;
-import com.fpt.mic.micweb.model.dao.ContractDao;
-import com.fpt.mic.micweb.model.dto.CheckoutRequest;
+import com.fpt.mic.micweb.model.dto.CheckoutRequestDto;
 import com.fpt.mic.micweb.model.entity.ContractEntity;
 import com.fpt.mic.micweb.framework.BasicController;
 import com.fpt.mic.micweb.framework.responses.JspPage;
@@ -14,11 +11,9 @@ import com.fpt.mic.micweb.framework.responses.ResponseObject;
 import com.fpt.mic.micweb.model.entity.PaymentEntity;
 import com.fpt.mic.micweb.utils.Constants;
 import com.fpt.mic.micweb.utils.DateUtils;
-import com.sun.xml.internal.ws.api.server.Container;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpSession;
-import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.HashMap;
@@ -84,7 +79,7 @@ public class ContractController extends BasicController {
         session.setAttribute("newExpiredDate", expiredDate);
         session.setAttribute("SUCCESS_URL", r.equest.getParameter("successUrl"));
 
-        CheckoutRequest checkoutRequest = new CheckoutRequest();
+        CheckoutRequestDto checkoutRequest = new CheckoutRequestDto();
         checkoutRequest.setPaymentrequest_name(r.equest.getParameter("L_PAYMENTREQUEST_0_NAME0"));
         checkoutRequest.setPaymentrequest_desc(r.equest.getParameter("L_PAYMENTREQUEST_0_DESC0"));
 

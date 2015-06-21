@@ -13,14 +13,11 @@ import java.util.Collection;
 @Entity
 @Table(name = "mic_contract", schema = "", catalog = "mic_data")
 public class ContractEntity {
-    public static final String STATUS_READY = "Ready";
     private String contractCode;
     private Timestamp startDate;
     private Timestamp expiredDate;
     private String status;
     private float contractFee;
-    @NotNull(message = "Biển số xe không được bỏ trống.")
-    @Size(min = 4, max = 15, message = "Biển số xe phải có độ dài từ 4 đến 15 ký tự.")
     private String plate;
     private String brand;
     private String modelCode;

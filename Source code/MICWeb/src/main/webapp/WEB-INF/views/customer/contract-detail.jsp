@@ -63,13 +63,8 @@
                                         aria-hidden="true">&times;</span></button>
                                 <h4 class="modal-title">
                                     <label class="text-danger">Hủy Hợp Đồng</label></h4>
-
                             </div>
                             <div class="modal-body">
-                                <div class="alert alert-danger alert-dismissible hide" id="notify" role="alert">
-                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                    <strong>Cảnh báo!</strong> Vui lòng chọn lí do hủy hợp đồng trước khi xác nhận! Cảm ơn!
-                                </div>
                                 <div class="text-info">
                                     <label>
                                         Quý khách vui lòng cung cấp lý do hoặc trường hợp hủy hợp đồng!
@@ -110,7 +105,6 @@
                                        <textarea  name="txtAnotherReason" rows="3" cols="95" id="anotherReason" class="hide"
                                                  autofocus="autofocus" >
                                        </textarea>
-
 
                                     </label>
                                 </div>

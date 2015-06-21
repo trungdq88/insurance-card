@@ -1,5 +1,6 @@
 package com.fpt.mic.micweb.framework;
 
+import javax.persistence.metamodel.Metamodel;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -11,8 +12,10 @@ import javax.servlet.http.HttpServletResponse;
 public class R {
     public HttpServletRequest equest;
     public HttpServletResponse esponse;
+    public FormReader ead = new FormReader();
 
     public R(HttpServletRequest equest, HttpServletResponse esponse) {
+        this.ead.request = equest;
         this.equest = equest;
         this.esponse = esponse;
     }
