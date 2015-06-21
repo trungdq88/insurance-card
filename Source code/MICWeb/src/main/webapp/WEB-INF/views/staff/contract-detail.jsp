@@ -636,11 +636,11 @@
     $(document).ready(function () {
         var contractStatus = '${cont.status}';
         $('#paidDate').val(getCurrentDate());
-        document.getElementById("paidDate").min = getCurrentDateInLastWeek();
-        document.getElementById("paidDate").max = getCurrentDateInNextYear();
+        /*document.getElementById("paidDate").min = getCurrentDateInLastWeek();
+        document.getElementById("paidDate").max = getCurrentDateInNextYear();*/
         $('#cancelDate').val(getCurrentDate());
-        document.getElementById("cancelDate").min = getCurrentDateInLastWeek();
-        document.getElementById("cancelDate").max = getCurrentDateInNextYear();
+        /*document.getElementById("cancelDate").min = getCurrentDateInLastWeek();
+        document.getElementById("cancelDate").max = getCurrentDateInNextYear();*/
         $('#expiredDate').val(getCurrentDateInNextYear());
         document.getElementById("expiredDate").min = getCurrentDate();
         if (contractStatus == 'Expired') {
