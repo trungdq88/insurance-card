@@ -63,8 +63,13 @@
                                         aria-hidden="true">&times;</span></button>
                                 <h4 class="modal-title">
                                     <label class="text-danger">Hủy Hợp Đồng</label></h4>
+
                             </div>
                             <div class="modal-body">
+                                <div class="alert alert-danger alert-dismissible hide" id="notify" role="alert">
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <strong>Cảnh báo!</strong> Vui lòng chọn lí do hủy hợp đồng trước khi xác nhận! Cảm ơn!
+                                </div>
                                 <div class="text-info">
                                     <label>
                                         Quý khách vui lòng cung cấp lý do hoặc trường hợp hủy hợp đồng!
@@ -103,8 +108,9 @@
                                 <div class="checkbox">
                                     <label>
                                        <textarea  name="txtAnotherReason" rows="3" cols="95" id="anotherReason" class="hide"
-                                                 autofocus="autofocus" >
+                                                  autofocus="autofocus" >
                                        </textarea>
+
 
                                     </label>
                                 </div>
@@ -127,7 +133,7 @@
 
             <form action="${pageContext.request.contextPath}/customer/contract" method="post">
 
-                <div class="modal renew-contract-modal" tabindex="-1" role="dialog"
+                <div class="modal fade renew-contract-modal" tabindex="-1" role="dialog"
                      aria-labelledby="myLargeModalLabel"
                      aria-hidden="true">
                     <div class="modal-dialog modal-lg">
@@ -686,4 +692,3 @@
 
 
 <%@ include file="_shared/footer.jsp" %>
-

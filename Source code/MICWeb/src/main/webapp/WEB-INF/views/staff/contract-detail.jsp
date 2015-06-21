@@ -515,10 +515,8 @@
                             <label class="col-sm-5 control-label" for="expiredDate">Gia hạn đến *</label>
 
                             <div class="col-sm-4">
-                                <div class="text-value">
-                                    <input id="expiredDate" name="txtExpiredDate" type="date"
-                                           class="form-control input-md"/>
-                                </div>
+                                <input id="expiredDate" name="txtExpiredDate" class="form-control input-md"
+                                       type="date" required/>
                             </div>
                         </div>
 
@@ -546,8 +544,8 @@
                             <label class="col-sm-5 control-label" for="paidDate">Ngày nộp phí *</label>
 
                             <div class="col-sm-4">
-                                <input id="paidDate" name="txtPaidDate" type="date"
-                                       class="form-control input-md">
+                                <input id="paidDate" name="txtPaidDate" class="form-control input-md"
+                                       type="date" required>
                                 <input value="${cont.micContractTypeByContractTypeId.pricePerYear}"
                                        type="hidden" name="txtAmount"/>
                             </div>
@@ -588,7 +586,7 @@
                             <label class="col-sm-4 control-label" for="cancelDate">Ngày hủy hợp đồng *</label>
 
                             <div class="col-sm-4">
-                                <input id="cancelDate" name="txtCancelDate" type="date"
+                                <input id="cancelDate" name="txtCancelDate" type="date" required
                                        class="form-control input-md" value="${cont.cancelDate}">
                             </div>
                         </div>
@@ -601,7 +599,7 @@
                                 <c:if test="${cont.status eq 'Request cancel'}">
                                     <input type="hidden" name="txtCancelReason" value="${cont.cancelReason}"/>
                                 </c:if>
-                                <input id="cancelReason" name="txtCancelReason" type="text"
+                                <input id="cancelReason" name="txtCancelReason" type="text" required maxlength="255"
                                        class="form-control input-md" value="${cont.cancelReason}">
                             </div>
                         </div>
@@ -611,7 +609,7 @@
                             <label class="col-sm-4 control-label" for="cancelNote">Ghi chú</label>
 
                             <div class="col-sm-7">
-                                <textarea id="cancelNote" name="txtCancelNote" rows="4"
+                                <textarea id="cancelNote" name="txtCancelNote" rows="4" maxlength="2000"
                                           class="form-control input-lg"></textarea>
                             </div>
                         </div>
@@ -638,12 +636,15 @@
     $(document).ready(function () {
         var contractStatus = '${cont.status}';
         $('#paidDate').val(getCurrentDate());
-        document.getElementById("paidDate").min = getCurrentDateInLastWeek();
+        /*document.getElementById("paidDate").min = getCurrentDateInLastWeek();
+        document.getElementById("paidDate").max = getCurrentDateInNextYear();*/
         $('#cancelDate').val(getCurrentDate());
-        document.getElementById("cancelDate").min = getCurrentDateInLastWeek();
+        /*document.getElementById("cancelDate").min = getCurrentDateInLastWeek();
+        document.getElementById("cancelDate").max = getCurrentDateInNextYear();*/
         $('#expiredDate').val(getCurrentDateInNextYear());
         document.getElementById("expiredDate").min = getCurrentDate();
         if (contractStatus == 'Expired') {
+            document.getElementById("btnCancel").disabled = true;
             document.getElementById("expiredDate").max = getCurrentDateInNextYear();
         } else {
             $('#expiredDate').val(getInputDateInNextYear('${cont.expiredDate}'));

@@ -43,6 +43,7 @@ $(document).ready(function () {
     $('#rdbReason1').click(function () {
         $('.check').attr('checked', false);
         $('#reason').val('Xe cơ giới bị thu hồi đăng ký và biển số theo quy định của pháp luật');
+        $('#notify').addClass('hide');
         $(this).prop('checked', true);
         $('#anotherReason').addClass('hide');
 
@@ -50,29 +51,40 @@ $(document).ready(function () {
     $('#rdbReason2').click(function () {
         $('.check').attr('checked', false);
         $('#reason').val('Xe cơ giới hết niên hạn sử dụng theo quy định của pháp luật');
+        $('#notify').addClass('hide');
         $(this).prop('checked', true);
         $('#anotherReason').addClass('hide');
     });
     $('#rdbReason3').click(function () {
         $('.check').attr('checked', false);
         $('#reason').val('Xe cơ giới bị mất được cơ quan công an xác nhận');
+        $('#notify').addClass('hide');
         $(this).prop('checked', true);
         $('#anotherReason').addClass('hide');
     });
     $('#rdbReason4').click(function () {
         $('.check').attr('checked', false);
         $('#reason').val('Xe cơ giới hỏng không sử dụng được hoặc bị phá huỷ do tai nạn giao thông được cơ quan công an xác nhận');
+        $('#notify').addClass('hide');
         $(this).prop('checked', true);
         $('#anotherReason').addClass('hide');
     });
     $('#rdbAnother').click(function () {
         $('.check').attr('checked', false);
         $('#anotherReason').removeClass('hide');
-        $('#reason').val($.trim($('#anotherReason').val()));
+        $('#notify').addClass('hide');
         $(this).prop('checked', true);
     });
-    $('#reason').val($('#anotherReason').val());
-
+    //$('#anotherReason').onkeydown(function(){
+    //    if ($.trim($('#anotherReason').val()) == 0) {
+    //        $('#notify').addClass('hide');
+    //    }
+    //});
+    $( "#anotherReason" ).keydown(function( event ) {
+        if ($.trim($('#anotherReason').val()) == 0) {
+            $('#notify').addClass('hide');
+        }
+    });
     $('#deleteContract').click(function () {
         var result = false;
         $('.check').each(function () {
@@ -80,13 +92,16 @@ $(document).ready(function () {
                 if ($.trim($('#anotherReason').val()) == 0) {
                     return result;
                 } else {
-                    alert('Bạn đã chọn lí co hủy là: ' + $('#anotherReason').val());
+                    $('#reason').val($.trim($('#anotherReason').val()));
+                    //alert('Bạn đã chọn lí co hủy là: ' + $('#anotherReason').val());
+                    $('#notify').removeClass('hide');
                     result = true;
                     return false;
                 }
             }
             else if ($(this).is(":checked")) {
-                alert('Bạn đã chọn lí co hủy hợp đồng là: ' + $('#reason').val());
+                //alert('Bạn đã chọn lí co hủy hợp đồng là: ' + $('#reason').val());
+                $('#notify').addClass('hide');
                 result = true;
                 return false;
             }
@@ -95,14 +110,9 @@ $(document).ready(function () {
             }
         });
         if (result == false) {
-            alert('Vui lòng chọn lí do hủy hợp đồng trước khi xác nhận! Cảm ơn!');
+            //alert('Vui lòng chọn lí do hủy hợp đồng trước khi xác nhận! Cảm ơn!');
+            $('#notify').removeClass('hide');
             return false;
-        }
-        if (result == true) {
-            var r = confirm("Bạn thực sự muốn hủy hợp đồng này?");
-            if (r == false) {
-                return false;
-            }
         }
 
     });
@@ -120,7 +130,7 @@ $(document).ready(function () {
     $('#renew').click(function () {
         var status = $('#contractStatus').val();
         var myDate = null;
-        if (status == 'Ready') {
+        if (status == 'Ready' ||status == 'No Card' || status == 'Pending' ) {
             myDate = new Date($('#newStartDate').val());
         }
         else if (status == 'Expired') {
@@ -148,5 +158,3 @@ $(document).ready(function () {
      ------------------------------------------------------------------------------------------------------------------
      */
 });
-
-

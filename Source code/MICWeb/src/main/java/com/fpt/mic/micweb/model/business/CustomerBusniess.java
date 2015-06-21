@@ -1,5 +1,4 @@
 package com.fpt.mic.micweb.model.business;
-
 import com.fpt.mic.micweb.model.dao.CustomerDao;
 import com.fpt.mic.micweb.model.dao.ContractDao;
 import com.fpt.mic.micweb.model.dao.PaymentDao;
@@ -9,7 +8,6 @@ import com.fpt.mic.micweb.model.entity.PaymentEntity;
 import com.fpt.mic.micweb.utils.Constants;
 import sun.util.calendar.BaseCalendar;
 import sun.util.calendar.LocalGregorianCalendar;
-
 import java.awt.*;
 import java.sql.Date;
 import java.sql.Time;
@@ -25,9 +23,9 @@ import java.lang.Thread;
  */
 public class CustomerBusniess {
     //get all contract belong to customer
-    public List<ContractEntity> getAllContract() {
+    public List<ContractEntity> getAllContractByCustomer(String customerCode) {
         ContractDao contractDa0 = new ContractDao();
-        List<ContractEntity> listContract = contractDa0.getListContract();
+        List<ContractEntity> listContract = contractDa0.getContractByCustomerCode(customerCode);
         return listContract;
     }
 
@@ -44,7 +42,7 @@ public class CustomerBusniess {
      * @param cancelReason
      * @return contract entity
      */
-    public ContractEntity CancelContract(String code, String cancelReason) {
+    public ContractEntity cancelContract(String code, String cancelReason) {
         ContractDao contractDa0 = new ContractDao();
         ContractEntity contract = contractDa0.read(code);
         //get date now
@@ -63,7 +61,7 @@ public class CustomerBusniess {
      * @param payment
      * @return contract
      */
-    public boolean RenewContract(ContractEntity contract, PaymentEntity payment) {
+    public boolean renewContract(ContractEntity contract, PaymentEntity payment) {
         boolean result = false;
         ContractDao contractDao = new ContractDao();
         PaymentDao paymentDao = new PaymentDao();
@@ -80,7 +78,7 @@ public class CustomerBusniess {
      * @param contractCode
      * @return contract
      */
-    public ContractEntity RejectCancelContract(String contractCode) {
+    public ContractEntity rejectCancelContract(String contractCode) {
         ContractDao contractDao = new ContractDao();
         ContractEntity contract = contractDao.read(contractCode);
         contract.setCancelReason(null);

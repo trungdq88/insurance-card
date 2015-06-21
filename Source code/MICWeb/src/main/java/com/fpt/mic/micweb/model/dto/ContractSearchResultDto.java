@@ -12,13 +12,13 @@ import javax.persistence.OneToOne;
  * Created by dinhquangtrung on 6/6/15.
  */
 @Entity
-public class ContractSearchResult {
+public class ContractSearchResultDto {
     @OneToOne
     private ContractEntity contractEntity;
     @OneToOne
     private CustomerEntity customerEntity;
 
-    public ContractSearchResult(ContractEntity contractEntity, CustomerEntity customerEntity) {
+    public ContractSearchResultDto(ContractEntity contractEntity, CustomerEntity customerEntity) {
         this.contractEntity = contractEntity;
         this.customerEntity = customerEntity;
     }
@@ -26,7 +26,7 @@ public class ContractSearchResult {
     @Id
     private Integer id;
 
-    public ContractSearchResult() {
+    public ContractSearchResultDto() {
     }
 
     public Integer getId() {

@@ -1,11 +1,8 @@
 package com.fpt.mic.micweb.controller.customer;
 
-import com.fpt.mic.micweb.framework.responses.ForwardTo;
 import com.fpt.mic.micweb.framework.responses.RedirectTo;
-import com.fpt.mic.micweb.model.business.ContractBusiness;
 import com.fpt.mic.micweb.model.business.CustomerBusniess;
-import com.fpt.mic.micweb.model.dao.ContractDao;
-import com.fpt.mic.micweb.model.dto.CheckoutRequest;
+import com.fpt.mic.micweb.model.dto.CheckoutRequestDto;
 import com.fpt.mic.micweb.model.entity.ContractEntity;
 import com.fpt.mic.micweb.framework.BasicController;
 import com.fpt.mic.micweb.framework.responses.JspPage;
@@ -14,11 +11,9 @@ import com.fpt.mic.micweb.framework.responses.ResponseObject;
 import com.fpt.mic.micweb.model.entity.PaymentEntity;
 import com.fpt.mic.micweb.utils.Constants;
 import com.fpt.mic.micweb.utils.DateUtils;
-import com.sun.xml.internal.ws.api.server.Container;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpSession;
-import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.HashMap;
@@ -33,7 +28,8 @@ public class ContractController extends BasicController {
 
     public ResponseObject getView(R r) {
         CustomerBusniess customerBusiness = new CustomerBusniess();
-        List<ContractEntity> listContract = customerBusiness.getAllContract();
+        String customerCode = "KH0001";
+        List<ContractEntity> listContract = customerBusiness.getAllContractByCustomer(customerCode);
         r.equest.setAttribute("listContract", listContract);
         return new JspPage("customer/contract.jsp");
     }
@@ -52,7 +48,7 @@ public class ContractController extends BasicController {
         String mesg = "Yêu Cầu Hủy Thất Bại";
         String contractcode = r.equest.getParameter("contractcode");
         String reasoncancel = r.equest.getParameter("txtReason");
-        ContractEntity contract = customerBusiness.CancelContract(contractcode, reasoncancel);
+        ContractEntity contract = customerBusiness.cancelContract(contractcode, reasoncancel);
         if (contract != null) {
             r.equest.setAttribute("contract", contract);
             return new RedirectTo("contract?action=ContractDetail&code=" + contractcode);
@@ -83,7 +79,7 @@ public class ContractController extends BasicController {
         session.setAttribute("newExpiredDate", expiredDate);
         session.setAttribute("SUCCESS_URL", r.equest.getParameter("successUrl"));
 
-        CheckoutRequest checkoutRequest = new CheckoutRequest();
+        CheckoutRequestDto checkoutRequest = new CheckoutRequestDto();
         checkoutRequest.setPaymentrequest_name(r.equest.getParameter("L_PAYMENTREQUEST_0_NAME0"));
         checkoutRequest.setPaymentrequest_desc(r.equest.getParameter("L_PAYMENTREQUEST_0_DESC0"));
 
@@ -135,7 +131,7 @@ public class ContractController extends BasicController {
         payment.setAmount(contract.getContractFee());
         payment.setPaypalTransId(results.get("PAYMENTINFO_0_TRANSACTIONID").toString());
         payment.setContractCode(contract.getContractCode());
-        boolean result = customerBusiness.RenewContract(contract, payment);
+        boolean result = customerBusiness.renewContract(contract, payment);
         if (result == true) {
             r.equest.setAttribute("message", "Gia hạn thành công.");
         } else {
@@ -150,7 +146,7 @@ public class ContractController extends BasicController {
     public ResponseObject postRejectRequestCancel(R r) {
         CustomerBusniess business = new CustomerBusniess();
         String contractCode = r.equest.getParameter("contractcode");
-        ContractEntity contract = business.RejectCancelContract(contractCode);
+        ContractEntity contract = business.rejectCancelContract(contractCode);
         String mesg = "Không thể gở bỏ yêu cầu hủy hợp đồng";
         if (contract != null) {
             r.equest.setAttribute("contract", contract);

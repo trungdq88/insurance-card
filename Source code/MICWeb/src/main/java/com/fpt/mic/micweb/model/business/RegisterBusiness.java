@@ -3,18 +3,16 @@ package com.fpt.mic.micweb.model.business;
 import com.fpt.mic.micweb.model.dao.ContractDao;
 import com.fpt.mic.micweb.model.dao.CustomerDao;
 import com.fpt.mic.micweb.model.dao.PaymentDao;
-import com.fpt.mic.micweb.model.dto.RegisterInformation;
+import com.fpt.mic.micweb.model.dto.RegisterInformationDto;
 import com.fpt.mic.micweb.model.entity.ContractEntity;
 import com.fpt.mic.micweb.model.entity.CustomerEntity;
 import com.fpt.mic.micweb.model.entity.PaymentEntity;
-
-import java.util.Random;
 
 /**
  * Created by TriPQMSE60746 on 06/04/2015.
  */
 public class RegisterBusiness {
-    public RegisterInformation registerNewContract(CustomerEntity customerEntity,
+    public RegisterInformationDto registerNewContract(CustomerEntity customerEntity,
                                        ContractEntity contractEntity) {
 
         ContractDao contractDao = new ContractDao();
@@ -36,7 +34,7 @@ public class RegisterBusiness {
         if (customer != null) {
             ContractEntity contract = contractDao.create(contractEntity);
             if ( contract != null) {
-                return new RegisterInformation(contract, customer);
+                return new RegisterInformationDto(contract, customer);
             }
 
         }

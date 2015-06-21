@@ -2,13 +2,11 @@ package com.fpt.mic.micweb.model.business;
 
 import com.fpt.mic.micweb.model.dao.CardDao;
 import com.fpt.mic.micweb.model.dao.ContractDao;
-import com.fpt.mic.micweb.model.dto.CheckCardResult;
-import com.fpt.mic.micweb.model.dto.ContractSearchResult;
+import com.fpt.mic.micweb.model.dto.ContractSearchResultDto;
 import com.fpt.mic.micweb.model.entity.CardEntity;
 import com.fpt.mic.micweb.model.entity.ContractEntity;
 import com.fpt.mic.micweb.utils.Constants;
 
-import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
@@ -23,7 +21,7 @@ public class ApiBusiness {
      * @param keyword could be contract_code or customer name
      * @return List {@link List<ContractEntity>}
      */
-    public List<ContractSearchResult> searchContracts(String keyword) {
+    public List<ContractSearchResultDto> searchContracts(String keyword) {
         ContractDao contractDao = new ContractDao();
         return contractDao.searchContracts(keyword);
     }
@@ -59,7 +57,7 @@ public class ApiBusiness {
             // Change contract status
             ContractEntity contract = contractDao.read(contractCode);
             if (contract.getStatus().equals(Constants.ContractStatus.NO_CARD)) {
-                contract.setStatus(ContractEntity.STATUS_READY);
+                contract.setStatus(Constants.ContractStatus.READY);
             }
             contractDao.update(contract);
         }

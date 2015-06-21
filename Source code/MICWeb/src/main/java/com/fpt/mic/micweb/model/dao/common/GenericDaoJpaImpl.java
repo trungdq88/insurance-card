@@ -2,6 +2,7 @@ package com.fpt.mic.micweb.model.dao.common;
 
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -22,7 +23,7 @@ public class GenericDaoJpaImpl<T, PK extends Serializable>
      * This variable HAVE TO be static or it will create new connection
      * every time a derived class of this is created, which causes "too many connections" error.
      */
-    protected static EntityManagerFactory factory =
+    public static EntityManagerFactory factory =
             Persistence.createEntityManagerFactory("MicPersistenceUnit");
 
     public GenericDaoJpaImpl() {
@@ -30,6 +31,10 @@ public class GenericDaoJpaImpl<T, PK extends Serializable>
                 .getGenericSuperclass();
         this.entityClass = (Class<T>) genericSuperclass
                 .getActualTypeArguments()[0];
+    }
+
+    public GenericDaoJpaImpl(Class<T> type) {
+        this.entityClass = type;
     }
 
     @Override

@@ -25,11 +25,12 @@
 
                         <!-- Customer input-->
                         <div class="form-group">
-                            <label class="col-sm-4 control-label" for="customerCode">Khách hàng *</label>
+                            <label class="col-sm-4 control-label" for="customerCode">Mã khách hàng *</label>
 
                             <div class="col-sm-2">
-                                <input id="customerCode" name="txtCustomerCode" type="text"
-                                       class="form-control input-md">
+                                <input id="customerCode" name="txtCustomerCode" class="form-control input-md"
+                                       type="text" required pattern="^KH([0-9A-Z]{4})$"
+                                       title="Ví dụ: KH49S4">
                             </div>
 
                             <div class="col-sm-2" data-toggle="modal" data-target="#select-customer-modal">
@@ -101,7 +102,7 @@
                             <label class="col-sm-4 control-label">Loại hình bảo hiểm *</label>
 
                             <div class="col-sm-7">
-                                <select class="form-control" name="ddlContractType"
+                                <select required class="form-control" name="ddlContractType" id="contractType"
                                         onchange="{
                                         var fee = parseFloat(this.options[this.selectedIndex].innerHTML);
                                         $('#contractFee').val(fee);
@@ -109,10 +110,12 @@
                                         fee = fee.formatMoney(0);
                                         $('#displayFee').text(fee);
                                         }">
-                                    <option value="" disabled selected style="display:none;">Vui lòng chọn loại hợp đồng</option>
+                                    <option value="" disabled selected style="display:none;">
+                                        Vui lòng chọn loại hợp đồng
+                                    </option>
                                     <c:forEach var="type" items="${listType}">
                                         <option label="${type.name}" value="${type.id}">
-                                            ${type.pricePerYear}
+                                                ${type.pricePerYear}
                                         </option>
                                     </c:forEach>
                                 </select>
@@ -124,8 +127,8 @@
                             <label class="col-sm-4 control-label" for="startDate">Thời điểm có hiệu lực *</label>
 
                             <div class="col-sm-3">
-                                <input id="startDate" name="txtStartDate" type="date"
-                                       class="form-control input-md"/>
+                                <input id="startDate" name="txtStartDate" class="form-control input-md"
+                                       type="date" required/>
                             </div>
                         </div>
 
@@ -134,10 +137,8 @@
                             <label class="col-sm-4 control-label" for="expiredDate">Thời điểm hết hiệu lực *</label>
 
                             <div class="col-sm-3">
-                                <div class="text-value">
-                                    <input id="expiredDate" name="txtExpiredDate" type="date"
-                                           class="form-control input-md"/>
-                                </div>
+                                <input id="expiredDate" name="txtExpiredDate" class="form-control input-md"
+                                       type="date" required/>
                             </div>
                         </div>
 
@@ -146,11 +147,12 @@
                             <label class="col-sm-4 control-label" for="displayFee">Phí bảo hiểm (VNĐ) *</label>
 
                             <div class="col-sm-2">
-                                <div class="text-value text-success">
-                                    <span id="displayFee" style="font-weight: bolder; font-size: large"></span>
+                                <div class="text-value">
+                                    <span id="displayFee"
+                                          style="color:red; font-weight: bolder; font-size: large"></span>
                                 </div>
-                                <input id="contractFee" name="txtContractFee" type="hidden">
-                                <input id="amount" name="txtAmount" type="hidden">
+                                <input type="hidden" id="contractFee" name="txtContractFee">
+                                <input type="hidden" id="amount" name="txtAmount">
                             </div>
                         </div>
                     </fieldset>
@@ -165,15 +167,17 @@
                             <label class="col-sm-3 control-label" for="plate">Biển số đăng ký *</label>
 
                             <div class="col-sm-3">
-                                <input id="plate" name="txtPlate" type="text" class="form-control input-md"
-                                       placeholder="Ví dụ: 78Y9-15383">
+                                <input id="plate" name="txtPlate" class="form-control input-md"
+                                       type="text" required minlength="4" maxlength="15"
+                                       title="Vui lòng nhập biển số xe!" placeholder="Ví dụ: 78Y9-15383">
                             </div>
 
                             <label class="col-sm-2 control-label" for="brand">Nhãn hiệu *</label>
 
                             <div class="col-sm-3">
-                                <input id="brand" name="txtBrand" type="text" class="form-control input-md"
-                                       placeholder="Ví dụ: Honda">
+                                <input id="brand" name="txtBrand" class="form-control input-md"
+                                       type="text" required minlength="2" maxlength="20"
+                                       title="Vui lòng nhập nhãn hiệu xe!" placeholder="Ví dụ: Honda">
                             </div>
                         </div>
 
@@ -182,13 +186,17 @@
                             <label class="col-sm-3 control-label" for="engine">Số máy *</label>
 
                             <div class="col-sm-3">
-                                <input id="engine" name="txtEngine" type="text" class="form-control input-md">
+                                <input id="engine" name="txtEngine" class="form-control input-md"
+                                       type="text" required minlength="2" maxlength="20"
+                                       title="Vui lòng nhập số máy xe!">
                             </div>
 
                             <label class="col-sm-2 control-label" for="chassis">Số khung *</label>
 
                             <div class="col-sm-3">
-                                <input id="chassis" name="txtChassis" type="text" class="form-control input-md">
+                                <input id="chassis" name="txtChassis" class="form-control input-md"
+                                       type="text" required minlength="2" maxlength="20"
+                                       title="Vui lòng nhập số khung xe!">
                             </div>
                         </div>
 
@@ -197,13 +205,17 @@
                             <label class="col-sm-3 control-label" for="capacity">Dung tích *</label>
 
                             <div class="col-sm-2">
-                                <input id="capacity" name="txtCapacity" type="text" class="form-control input-md">
+                                <input id="capacity" name="txtCapacity" class="form-control input-md"
+                                       type="text" required minlength="2" maxlength="20"
+                                       title="Vui lòng nhập dung tích xe!">
                             </div>
 
                             <label class="col-sm-3 control-label" for="color">Màu sơn</label>
 
                             <div class="col-sm-3">
-                                <input id="color" name="txtColor" type="text" class="form-control input-md">
+                                <input id="color" name="txtColor" class="form-control input-md"
+                                       type="text" minlength="2" maxlength="20"
+                                       title="Vui lòng nhập màu sơn xe!">
                             </div>
                         </div>
 
@@ -212,15 +224,17 @@
                             <label class="col-sm-3 control-label" for="vehicleType">Loại xe</label>
 
                             <div class="col-sm-3">
-                                <input id="vehicleType" name="txtType" type="text" class="form-control input-md"
-                                       placeholder="Ví dụ: Hai bánh">
+                                <input id="vehicleType" name="txtType" class="form-control input-md"
+                                       type="text" minlength="2" maxlength="20"
+                                       title="Vui lòng nhập loại xe!" placeholder="Ví dụ: Hai bánh">
                             </div>
 
                             <label class="col-sm-2 control-label" for="modelCode">Số loại</label>
 
                             <div class="col-sm-3">
-                                <input id="modelCode" name="txtModel" type="text" class="form-control input-md"
-                                       placeholder="Ví dụ: Air Blade">
+                                <input id="modelCode" name="txtModel" class="form-control input-md"
+                                       type="text" minlength="2" maxlength="20"
+                                       title="Vui lòng nhập số loại xe!" placeholder="Ví dụ: Air Blade">
                             </div>
                         </div>
 
@@ -229,13 +243,17 @@
                             <label class="col-sm-3 control-label" for="yearOfMan">Năm sản xuất</label>
 
                             <div class="col-sm-2">
-                                <input id="yearOfMan" name="txtYearOfMan" type="text" class="form-control input-md">
+                                <input id="yearOfMan" name="txtYearOfMan" class="form-control input-md"
+                                       type="number" min="1900" max="2200"
+                                       title="Vui lòng nhập năm sản xuất xe!">
                             </div>
 
-                            <label class="col-sm-3 control-label" for="weight">Tự trọng</label>
+                            <label class="col-sm-3 control-label" for="weight">Tự trọng (kg)</label>
 
                             <div class="col-sm-2">
-                                <input id="weight" name="txtWeight" type="text" class="form-control input-md">
+                                <input id="weight" name="txtWeight" class="form-control input-md"
+                                       type="number" min="1" max="1000"
+                                       title="Vui lòng nhập tự trọng của xe!">
                             </div>
                         </div>
 
@@ -244,8 +262,9 @@
                             <label class="col-sm-3 control-label" for="seatCapacity">Số người được chở</label>
 
                             <div class="col-sm-2">
-                                <input id="seatCapacity" name="txtSeatCapacity" type="text"
-                                       class="form-control input-md">
+                                <input id="seatCapacity" name="txtSeatCapacity" class="form-control input-md"
+                                       type="number" min="1" max="1000"
+                                       title="Vui lòng nhập số người cho phép chở!">
                             </div>
                         </div>
                     </fieldset>
@@ -260,7 +279,8 @@
                             <label class="col-sm-4 control-label" for="paidDate">Ngày nộp phí *</label>
 
                             <div class="col-sm-3">
-                                <input id="paidDate" name="txtPaidDate" type="date" class="form-control input-md">
+                                <input id="paidDate" name="txtPaidDate" class="form-control input-md"
+                                       type="date" required>
                             </div>
                         </div>
                     </fieldset>
@@ -334,10 +354,13 @@
     $(document).ready(function () {
         $('#startDate').val(getCurrentDate());
         document.getElementById("startDate").min = getCurrentDateInLastWeek();
+        document.getElementById("startDate").max = getCurrentDateInNextYear();
         $('#expiredDate').val(getCurrentDateInNextYear());
         document.getElementById("expiredDate").min = getCurrentDate();
         document.getElementById("expiredDate").max = getCurrentDateInNextYear();
         $('#paidDate').val(getCurrentDate());
+        document.getElementById("paidDate").min = getCurrentDateInLastWeek();
+        document.getElementById("paidDate").max = getCurrentDateInNextYear();
     });
 </script>
 
