@@ -667,8 +667,9 @@
         var expDate = new Date("${cont.expiredDate}");
         var pricePerYear = '${cont.micContractTypeByContractTypeId.pricePerYear}';
         var contractTerm = 365;
-        var defaultRenewFee = parseFloat(pricePerYear).formatMoney(0);
-        $('#renewFee').text(defaultRenewFee);
+        $('#contractFee').val(pricePerYear);
+        $('#amount').val(pricePerYear);
+        $('#renewFee').text(parseFloat(pricePerYear).formatMoney(0));
 
         var remainDays = daysBetween(new Date(), expDate);
         $('#remain').text(remainDays);
@@ -677,7 +678,7 @@
             $("#renewMsg").hide();
         }
 
-        $('input[type="date"]').blur(function () {
+        $('input[type="date"]').not('#paidDate').blur(function () {
             var inputDate = new Date(this.value);
             if (contractStatus != 'Expired') {
                 contractTerm = daysBetween(expDate, inputDate);
@@ -689,17 +690,17 @@
             console.log(renewFee);
             $('#contractFee').val(renewFee);
             $('#amount').val(renewFee);
-            renewFee = parseFloat(renewFee).formatMoney(0);
-            $('#renewFee').text(renewFee);
+            $('#renewFee').text(parseFloat(renewFee).formatMoney(0));
         });
 
         $('#expiredDate').val(getCurrentDateInNextYear());
-        document.getElementById("expiredDate").min = getCurrentDate();
         if (contractStatus == 'Expired') {
             document.getElementById("btnCancel").disabled = true;
+            document.getElementById("expiredDate").min = getCurrentDate();
             document.getElementById("expiredDate").max = getCurrentDateInNextYear();
         } else {
             $('#expiredDate').val(getInputDateInNextYear(expDate));
+            document.getElementById("expiredDate").min = nextWeek(expDate);
             document.getElementById("expiredDate").max = getInputDateInNextYear(expDate);
         }
         if (contractStatus == 'Cancelled') {

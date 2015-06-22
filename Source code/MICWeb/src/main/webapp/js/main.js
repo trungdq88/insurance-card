@@ -17,15 +17,15 @@ function getCurrentDate() {
     return today;
 }
 
-function getCurrentDateInLastWeek() {
+function getCurrentDateInNextWeek() {
     var now = new Date();
     var curYear = now.getFullYear();
     var curYearMonth = now.getMonth() + 1;
     var curYearDay = now.getDate();
-    var lastWeekDay = curYearDay - 7;
-    var lastWeek = ("0000" + curYear.toString()).slice(-4) + "-"
-        + ("00" + curYearMonth.toString()).slice(-2) + "-" + ("00" + lastWeekDay.toString()).slice(-2);
-    return lastWeek;
+    var nextWeekDay = curYearDay + 7;
+    var nextWeek = ("0000" + curYear.toString()).slice(-4) + "-"
+        + ("00" + curYearMonth.toString()).slice(-2) + "-" + ("00" + nextWeekDay.toString()).slice(-2);
+    return nextWeek;
 }
 
 function getCurrentDateInNextYear() {
@@ -40,6 +40,14 @@ function getCurrentDateInNextYear() {
     var nextYearDisplay = ("0000" + nextYear.toString()).slice(-4) + "-"
         + ("00" + curYearMonth.toString()).slice(-2) + "-" + ("00" + curYearDay.toString()).slice(-2);
     return nextYearDisplay;
+}
+
+function nextWeek(inputDate){
+    var today = inputDate;
+    var nextweek = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 7);
+    var nextWeekDisplay = ("0000" + nextweek.getFullYear().toString()).slice(-4) + "-"
+        + ("00" + (nextweek.getMonth() + 1).toString()).slice(-2) + "-" + ("00" + nextweek.getDate().toString()).slice(-2);
+    return nextWeekDisplay;
 }
 
 function getInputDateInNextYear(inputDate) {
@@ -98,7 +106,7 @@ function calculateContractFee(contractTerm, pricePerYear) {
  * @param integer d: length of sections
  * @param integer t:
  */
-Number.prototype.formatMoney = function(c, d, t){
+Number.prototype.formatMoney = function (c, d, t) {
     var n = this,
         c = isNaN(c = Math.abs(c)) ? 2 : c,
         d = d == undefined ? "." : d,
