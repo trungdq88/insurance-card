@@ -700,7 +700,7 @@
             document.getElementById("expiredDate").max = getCurrentDateInNextYear();
         } else {
             $('#expiredDate').val(getInputDateInNextYear(expDate));
-            document.getElementById("expiredDate").min = nextWeek(expDate);
+            document.getElementById("expiredDate").min = getInputDateNextDate(expDate);
             document.getElementById("expiredDate").max = getInputDateInNextYear(expDate);
         }
         if (contractStatus == 'Cancelled') {

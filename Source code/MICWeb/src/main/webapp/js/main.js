@@ -42,12 +42,12 @@ function getCurrentDateInNextYear() {
     return nextYearDisplay;
 }
 
-function nextWeek(inputDate){
+function getInputDateNextDate(inputDate){
     var today = inputDate;
-    var nextweek = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 7);
-    var nextWeekDisplay = ("0000" + nextweek.getFullYear().toString()).slice(-4) + "-"
-        + ("00" + (nextweek.getMonth() + 1).toString()).slice(-2) + "-" + ("00" + nextweek.getDate().toString()).slice(-2);
-    return nextWeekDisplay;
+    var nextDate = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 1);
+    var nextDateDisplay = ("0000" + nextDate.getFullYear().toString()).slice(-4) + "-"
+        + ("00" + (nextDate.getMonth() + 1).toString()).slice(-2) + "-" + ("00" + nextDate.getDate().toString()).slice(-2);
+    return nextDateDisplay;
 }
 
 function getInputDateInNextYear(inputDate) {

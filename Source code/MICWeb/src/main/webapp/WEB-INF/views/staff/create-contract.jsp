@@ -30,7 +30,7 @@
 
                             <div class="col-sm-2">
                                 <input id="customerCode" name="txtCustomerCode" class="form-control input-md"
-                                       type="text" required pattern="^KH([0-9A-Z]{4})$"
+                                       type="text" required pattern="^KH([0-9A-Z]{4,8})$"
                                        title="Ví dụ: KH49S4">
                             </div>
 
@@ -346,6 +346,16 @@
 
 <script>
     $(document).ready(function () {
+        $('#startDate').val(getCurrentDate());
+        /*document.getElementById("startDate").min = getCurrentDateInLastWeek();
+         document.getElementById("startDate").max = getCurrentDateInNextYear();*/
+        $('#expiredDate').val(getCurrentDateInNextYear());
+        document.getElementById("expiredDate").min = getCurrentDateInNextWeek();
+        document.getElementById("expiredDate").max = getCurrentDateInNextYear();
+        $('#paidDate').val(getCurrentDate());
+        /*document.getElementById("paidDate").min = getCurrentDateInLastWeek();
+         document.getElementById("paidDate").max = getCurrentDateInNextYear();*/
+
         var stDate = new Date($("#startDate").val());
         var expDate = new Date($("#expiredDate").val());
         var contractTerm = daysBetween(stDate, expDate);
@@ -359,6 +369,8 @@
             $('input[type="date"]').not('#paidDate').blur(function () {
                 stDate = new Date($("#startDate").val());
                 expDate = new Date($("#expiredDate").val());
+                document.getElementById("expiredDate").min = getInputDateNextDate(stDate);
+                document.getElementById("expiredDate").max = getInputDateInNextYear(stDate);
                 contractTerm = daysBetween(stDate, expDate);
                 contractFee = calculateContractFee(contractTerm, pricePerYear);
                 $('#contractFee').val(contractFee);
@@ -370,16 +382,6 @@
             $('#amount').val(contractFee);
             $('#displayFee').text(contractFee.formatMoney(0));
         });
-
-        $('#startDate').val(getCurrentDate());
-        /*document.getElementById("startDate").min = getCurrentDateInLastWeek();
-        document.getElementById("startDate").max = getCurrentDateInNextYear();*/
-        $('#expiredDate').val(getCurrentDateInNextYear());
-        document.getElementById("expiredDate").min = getCurrentDateInNextWeek();
-        document.getElementById("expiredDate").max = getCurrentDateInNextYear();
-        $('#paidDate').val(getCurrentDate());
-        /*document.getElementById("paidDate").min = getCurrentDateInLastWeek();
-        document.getElementById("paidDate").max = getCurrentDateInNextYear();*/
     });
 </script>
 
