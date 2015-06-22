@@ -37,12 +37,6 @@ public class ContractController extends BasicController {
 
         // Get contract detail
         ContractEntity contractDetail = staffBus.getContractDetail(contractCode);
-        long diff = contractDetail.getExpiredDate().getTime() - System.currentTimeMillis();
-        long diffDays = 0;
-        if (diff > 0) {
-            diffDays = diff / (24 * 60 * 60 * 1000);
-        }
-        r.equest.setAttribute("REMAIN", diffDays);
         r.equest.setAttribute("CONTRACT", contractDetail);
 
         // Get customer detail

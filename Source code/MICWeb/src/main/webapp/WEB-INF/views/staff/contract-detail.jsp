@@ -7,7 +7,6 @@
 
     <c:set var="cont" value="${requestScope.CONTRACT}"/>
     <c:set var="cust" value="${requestScope.CUSTOMER}"/>
-    <c:set var="remain" value="${requestScope.REMAIN}"/>
     <c:set var="listPayment" value="${requestScope.PAYMENT}"/>
 
     <%@ include file="_shared/navigation.jsp" %>
@@ -169,7 +168,8 @@
 
                             <div class="col-sm-4">
                                 <div class="text-value">
-                                    ${remain} ngày
+                                    <span id="remain"
+                                          style="color:deepskyblue; font-weight: bolder; font-size: large"></span> ngày
                                 </div>
                             </div>
                         </div>
@@ -497,6 +497,23 @@
                     <fieldset>
                         <legend>Thông tin hợp đồng bảo hiểm</legend>
 
+                        <div id="renewMsg" class="alert alert-info">
+                            <p class="bs-example text-center text-uppercase">
+                                Hợp đồng này còn thời hạn <span id="remain2"></span> ngày
+                            </p>
+                        </div>
+
+                        <!-- Contract type -->
+                        <div id="renewFirst" class="form-group">
+                            <label class="col-sm-5 control-label">Loại hợp đồng</label>
+
+                            <div class="col-sm-6">
+                                <div class="text-value">
+                                    ${cont.micContractTypeByContractTypeId.name}
+                                </div>
+                            </div>
+                        </div>
+
                         <!-- Start date -->
                         <div class="form-group">
                             <label class="col-sm-5 control-label">Thời điểm có hiệu lực</label>
@@ -512,6 +529,19 @@
 
                         <!-- Expired date -->
                         <div class="form-group">
+                            <label class="col-sm-5 control-label">Thời điểm hết hiệu lực</label>
+
+                            <div class="col-sm-4">
+                                <div class="text-value">
+                                    <fmt:formatDate value="${cont.expiredDate}" pattern="dd/MM/yyyy"/>
+                                    lúc
+                                    <fmt:formatDate value="${cont.expiredDate}" type="time"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- New expired date -->
+                        <div class="form-group">
                             <label class="col-sm-5 control-label" for="expiredDate">Gia hạn đến *</label>
 
                             <div class="col-sm-4">
@@ -522,13 +552,13 @@
 
                         <!-- Renew fee -->
                         <div class="form-group">
-                            <label class="col-sm-5 control-label">Phí gia hạn *</label>
+                            <label class="col-sm-5 control-label">Phí gia hạn (VNĐ) *</label>
 
                             <div class="col-sm-4">
                                 <div class="text-value">
-                                    <fmt:setLocale value="vi_VN"/>
-                                    <fmt:formatNumber value="${cont.micContractTypeByContractTypeId.pricePerYear}"
-                                                      type="currency" maxFractionDigits="0"/>
+                                    <span id="renewFee"
+                                          style="color:deepskyblue; font-weight: bolder; font-size: large"></span>
+                                    <input type="hidden" id="contractFee" name="txtContractFee"/>
                                 </div>
                             </div>
                         </div>
@@ -546,8 +576,7 @@
                             <div class="col-sm-4">
                                 <input id="paidDate" name="txtPaidDate" class="form-control input-md"
                                        type="date" required>
-                                <input value="${cont.micContractTypeByContractTypeId.pricePerYear}"
-                                       type="hidden" name="txtAmount"/>
+                                <input type="hidden" id="amount" name="txtAmount"/>
                             </div>
                         </div>
                     </fieldset>
@@ -635,27 +664,58 @@
 <script type="text/javascript">
     $(document).ready(function () {
         var contractStatus = '${cont.status}';
-        $('#paidDate').val(getCurrentDate());
-        /*document.getElementById("paidDate").min = getCurrentDateInLastWeek();
-        document.getElementById("paidDate").max = getCurrentDateInNextYear();*/
-        $('#cancelDate').val(getCurrentDate());
-        /*document.getElementById("cancelDate").min = getCurrentDateInLastWeek();
-        document.getElementById("cancelDate").max = getCurrentDateInNextYear();*/
+        var expDate = new Date("${cont.expiredDate}");
+        var pricePerYear = '${cont.micContractTypeByContractTypeId.pricePerYear}';
+        var contractTerm = 365;
+        var defaultRenewFee = parseFloat(pricePerYear).formatMoney(0);
+        $('#renewFee').text(defaultRenewFee);
+
+        var remainDays = daysBetween(new Date(), expDate);
+        $('#remain').text(remainDays);
+        $('#remain2').text(remainDays);
+        if (remainDays < 60) {
+            $("#renewMsg").hide();
+        }
+
+        $('input[type="date"]').blur(function () {
+            var inputDate = new Date(this.value);
+            if (contractStatus != 'Expired') {
+                contractTerm = daysBetween(expDate, inputDate);
+            } else {
+                contractTerm = daysBetween(new Date(getCurrentDate()), inputDate);
+            }
+            console.log(contractTerm);
+            var renewFee = calculateContractFee(contractTerm, pricePerYear);
+            console.log(renewFee);
+            $('#contractFee').val(renewFee);
+            $('#amount').val(renewFee);
+            renewFee = parseFloat(renewFee).formatMoney(0);
+            $('#renewFee').text(renewFee);
+        });
+
         $('#expiredDate').val(getCurrentDateInNextYear());
         document.getElementById("expiredDate").min = getCurrentDate();
         if (contractStatus == 'Expired') {
             document.getElementById("btnCancel").disabled = true;
             document.getElementById("expiredDate").max = getCurrentDateInNextYear();
         } else {
-            $('#expiredDate').val(getInputDateInNextYear('${cont.expiredDate}'));
-            document.getElementById("expiredDate").max = getInputDateInNextYear('${cont.expiredDate}');
+            $('#expiredDate').val(getInputDateInNextYear(expDate));
+            document.getElementById("expiredDate").max = getInputDateInNextYear(expDate);
         }
         if (contractStatus == 'Cancelled') {
             $('button[type=button]').attr('disabled', true);
+            $('#remain').text(0);
         }
         if (contractStatus == 'Request cancel') {
             document.getElementById("cancelReason").disabled = true;
         }
+
+        $('#paidDate').val(getCurrentDate());
+        /*document.getElementById("paidDate").min = getCurrentDateInLastWeek();
+         document.getElementById("paidDate").max = getCurrentDateInNextYear();*/
+        $('#cancelDate').val(getCurrentDate());
+        /*document.getElementById("cancelDate").min = getCurrentDateInLastWeek();
+         document.getElementById("cancelDate").max = getCurrentDateInNextYear();*/
     });
 </script>
 
