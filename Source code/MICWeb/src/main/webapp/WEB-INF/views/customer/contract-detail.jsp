@@ -192,8 +192,8 @@
                                             <fmt:setLocale value="vi_VN"/>
                                             <input style="border:none; background-color: white" type="hidden"
                                                    id="payAmount" disabled="disabled"
-                                                   value="${contract.contractFee} VNĐ"/>
-                                            <fmt:formatNumber value="${contract.contractFee}" type="currency"
+                                                   value="${contract.getMicContractTypeByContractTypeId().getPricePerYear()} VNĐ"/>
+                                            <fmt:formatNumber value="${contract.getMicContractTypeByContractTypeId().getPricePerYear()}" type="currency"
                                                               maxFractionDigits="0"/>
                                         </div>
 
