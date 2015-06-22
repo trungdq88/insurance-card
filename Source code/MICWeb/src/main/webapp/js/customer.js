@@ -94,7 +94,6 @@ $(document).ready(function () {
                 } else {
                     $('#reason').val($.trim($('#anotherReason').val()));
                     //alert('Bạn đã chọn lí co hủy là: ' + $('#anotherReason').val());
-                    $('#notify').removeClass('hide');
                     result = true;
                     return false;
                 }
