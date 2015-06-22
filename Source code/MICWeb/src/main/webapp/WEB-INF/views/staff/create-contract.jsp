@@ -29,7 +29,7 @@
                             <label class="col-sm-4 control-label" for="customerCode">Mã khách hàng *</label>
 
                             <div class="col-sm-2">
-                                <input id="customerCode" name="txtCustomerCode" class="form-control input-md"
+                                <input id="customerCode" name="contract:customerCode" class="form-control input-md"
                                        type="text" required pattern="^KH([0-9A-Z]{4,8})$"
                                        title="Ví dụ: KH49S4">
                             </div>
@@ -103,7 +103,7 @@
                             <label class="col-sm-4 control-label">Loại hình bảo hiểm *</label>
 
                             <div class="col-sm-7">
-                                <select required class="form-control" name="ddlContractType" id="contractType">
+                                <select required class="form-control" name="contract:contractTypeId" id="contractType">
                                     <option value="" disabled selected style="display:none;">
                                         Vui lòng chọn loại hợp đồng
                                     </option>
@@ -121,7 +121,7 @@
                             <label class="col-sm-4 control-label" for="startDate">Thời điểm có hiệu lực *</label>
 
                             <div class="col-sm-3">
-                                <input id="startDate" name="txtStartDate" class="form-control input-md"
+                                <input id="startDate" name="contract:startDate" class="form-control input-md"
                                        type="date" required/>
                             </div>
                         </div>
@@ -131,7 +131,7 @@
                             <label class="col-sm-4 control-label" for="expiredDate">Thời điểm hết hiệu lực *</label>
 
                             <div class="col-sm-3">
-                                <input id="expiredDate" name="txtExpiredDate" class="form-control input-md"
+                                <input id="expiredDate" name="contract:expiredDate" class="form-control input-md"
                                        type="date" required/>
                             </div>
                         </div>
@@ -145,8 +145,8 @@
                                     <span id="displayFee"
                                           style="color:red; font-weight: bolder; font-size: large"></span>
                                 </div>
-                                <input type="hidden" id="contractFee" name="txtContractFee">
-                                <input type="hidden" id="amount" name="txtAmount">
+                                <input type="hidden" id="contractFee" name="contract:contractFee">
+                                <input type="hidden" id="amount" name="contract:amount">
                             </div>
                         </div>
                     </fieldset>
@@ -161,7 +161,7 @@
                             <label class="col-sm-3 control-label" for="plate">Biển số đăng ký *</label>
 
                             <div class="col-sm-3">
-                                <input id="plate" name="txtPlate" class="form-control input-md"
+                                <input id="plate" name="contract:plate" class="form-control input-md"
                                        type="text" required minlength="4" maxlength="15"
                                        title="Vui lòng nhập biển số xe!" placeholder="Ví dụ: 78Y9-15383">
                             </div>
@@ -169,7 +169,7 @@
                             <label class="col-sm-2 control-label" for="brand">Nhãn hiệu *</label>
 
                             <div class="col-sm-3">
-                                <input id="brand" name="txtBrand" class="form-control input-md"
+                                <input id="brand" name="contract:brand" class="form-control input-md"
                                        type="text" required minlength="2" maxlength="20"
                                        title="Vui lòng nhập nhãn hiệu xe!" placeholder="Ví dụ: Honda">
                             </div>
@@ -180,7 +180,7 @@
                             <label class="col-sm-3 control-label" for="engine">Số máy *</label>
 
                             <div class="col-sm-3">
-                                <input id="engine" name="txtEngine" class="form-control input-md"
+                                <input id="engine" name="contract:engine" class="form-control input-md"
                                        type="text" required minlength="2" maxlength="20"
                                        title="Vui lòng nhập số máy xe!">
                             </div>
@@ -188,7 +188,7 @@
                             <label class="col-sm-2 control-label" for="chassis">Số khung *</label>
 
                             <div class="col-sm-3">
-                                <input id="chassis" name="txtChassis" class="form-control input-md"
+                                <input id="chassis" name="contract:chassis" class="form-control input-md"
                                        type="text" required minlength="2" maxlength="20"
                                        title="Vui lòng nhập số khung xe!">
                             </div>
@@ -199,7 +199,7 @@
                             <label class="col-sm-3 control-label" for="capacity">Dung tích *</label>
 
                             <div class="col-sm-2">
-                                <input id="capacity" name="txtCapacity" class="form-control input-md"
+                                <input id="capacity" name="contract:capacity" class="form-control input-md"
                                        type="text" required minlength="2" maxlength="20"
                                        title="Vui lòng nhập dung tích xe!">
                             </div>
@@ -207,7 +207,7 @@
                             <label class="col-sm-3 control-label" for="color">Màu sơn</label>
 
                             <div class="col-sm-3">
-                                <input id="color" name="txtColor" class="form-control input-md"
+                                <input id="color" name="contract:color" class="form-control input-md"
                                        type="text" minlength="2" maxlength="20"
                                        title="Vui lòng nhập màu sơn xe!">
                             </div>
@@ -218,7 +218,7 @@
                             <label class="col-sm-3 control-label" for="vehicleType">Loại xe</label>
 
                             <div class="col-sm-3">
-                                <input id="vehicleType" name="txtType" class="form-control input-md"
+                                <input id="vehicleType" name="contract:vehicleType" class="form-control input-md"
                                        type="text" minlength="2" maxlength="20"
                                        title="Vui lòng nhập loại xe!" placeholder="Ví dụ: Hai bánh">
                             </div>
@@ -226,7 +226,7 @@
                             <label class="col-sm-2 control-label" for="modelCode">Số loại</label>
 
                             <div class="col-sm-3">
-                                <input id="modelCode" name="txtModel" class="form-control input-md"
+                                <input id="modelCode" name="contract:modelCode" class="form-control input-md"
                                        type="text" minlength="2" maxlength="20"
                                        title="Vui lòng nhập số loại xe!" placeholder="Ví dụ: Air Blade">
                             </div>
@@ -237,7 +237,7 @@
                             <label class="col-sm-3 control-label" for="yearOfMan">Năm sản xuất</label>
 
                             <div class="col-sm-2">
-                                <input id="yearOfMan" name="txtYearOfMan" class="form-control input-md"
+                                <input id="yearOfMan" name="contract:yearOfManufacture" class="form-control input-md"
                                        type="number" min="1900" max="2200"
                                        title="Vui lòng nhập năm sản xuất xe!">
                             </div>
@@ -245,7 +245,7 @@
                             <label class="col-sm-3 control-label" for="weight">Tự trọng (kg)</label>
 
                             <div class="col-sm-2">
-                                <input id="weight" name="txtWeight" class="form-control input-md"
+                                <input id="weight" name="contract:weight" class="form-control input-md"
                                        type="number" min="1" max="1000"
                                        title="Vui lòng nhập tự trọng của xe!">
                             </div>
@@ -256,7 +256,7 @@
                             <label class="col-sm-3 control-label" for="seatCapacity">Số người được chở</label>
 
                             <div class="col-sm-2">
-                                <input id="seatCapacity" name="txtSeatCapacity" class="form-control input-md"
+                                <input id="seatCapacity" name="contract:seatCapacity" class="form-control input-md"
                                        type="number" min="1" max="1000"
                                        title="Vui lòng nhập số người cho phép chở!">
                             </div>
@@ -273,7 +273,7 @@
                             <label class="col-sm-4 control-label" for="paidDate">Ngày nộp phí *</label>
 
                             <div class="col-sm-3">
-                                <input id="paidDate" name="txtPaidDate" class="form-control input-md"
+                                <input id="paidDate" name="contract:paidDate" class="form-control input-md"
                                        type="date" required>
                             </div>
                         </div>

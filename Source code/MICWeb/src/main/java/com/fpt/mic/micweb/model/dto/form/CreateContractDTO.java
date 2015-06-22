@@ -1,4 +1,4 @@
-package com.fpt.mic.micweb.model.dto;
+package com.fpt.mic.micweb.model.dto.form;
 
 import java.sql.Timestamp;
 

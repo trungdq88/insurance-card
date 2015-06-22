@@ -5,7 +5,7 @@ import com.fpt.mic.micweb.framework.R;
 import com.fpt.mic.micweb.framework.responses.JspPage;
 import com.fpt.mic.micweb.framework.responses.ResponseObject;
 import com.fpt.mic.micweb.model.business.StaffBusiness;
-import com.fpt.mic.micweb.model.dto.CreateContractDTO;
+import com.fpt.mic.micweb.model.dto.form.CreateContractDTO;
 import com.fpt.mic.micweb.model.entity.ContractEntity;
 import com.fpt.mic.micweb.model.entity.ContractTypeEntity;
 import com.fpt.mic.micweb.model.entity.CustomerEntity;
@@ -68,43 +68,8 @@ public class ContractController extends BasicController {
 
     public ResponseObject postCreate(R r) {
         // Get contract information
-        String customerCode = r.equest.getParameter("txtCustomerCode");
-        Integer contractTypeId = Integer.parseInt(r.equest.getParameter("ddlContractType"));
-        Timestamp startDate = DateUtils.stringToTime(r.equest.getParameter("txtStartDate"));
-        Timestamp expiredDate = DateUtils.stringToTime(r.equest.getParameter("txtExpiredDate"));
-        Float contractFee = Float.parseFloat(r.equest.getParameter("txtContractFee"));
-        String plate = r.equest.getParameter("txtPlate");
-        String brand = r.equest.getParameter("txtBrand");
-        String modelCode = r.equest.getParameter("txtModel");
-        String vehicleType = r.equest.getParameter("txtType");
-        String color = r.equest.getParameter("txtColor");
-        String engine = r.equest.getParameter("txtEngine");
-        String chassis = r.equest.getParameter("txtChassis");
-        String capacity = r.equest.getParameter("txtCapacity");
-        String yearOfMan = r.equest.getParameter("txtYearOfMan");
-        Integer yearOfManufacture = 0;
-        Integer weight = 0;
-        Integer seatCapacity = 0;
-        if (!yearOfMan.equals("")) {
-            yearOfManufacture = Integer.parseInt(yearOfMan);
-        }
-        String emptyWeight = r.equest.getParameter("txtWeight");
-        if (!emptyWeight.equals("")) {
-            weight = Integer.parseInt(emptyWeight);
-        }
-        String seatCapt = r.equest.getParameter("txtSeatCapacity");
-        if (!seatCapt.equals("")) {
-            seatCapacity = Integer.parseInt(seatCapt);
-        }
-
-        // Get payment information
-        Timestamp paidDate = DateUtils.stringToTime(r.equest.getParameter("txtPaidDate"));
-        Float amount = Float.parseFloat(r.equest.getParameter("txtAmount"));
-
-        // Call DTO constructor to initial object contain value
-        CreateContractDTO dto = new CreateContractDTO(customerCode, contractTypeId, startDate, expiredDate,
-                contractFee, plate, brand, modelCode, vehicleType, color, engine, chassis, capacity, yearOfManufacture,
-                weight, seatCapacity, paidDate, amount);
+        CreateContractDTO dto = (CreateContractDTO)
+                r.ead.entity(CreateContractDTO.class, "contract");
 
         // Call to business object
         StaffBusiness staffBus = new StaffBusiness();
