@@ -192,8 +192,8 @@
                                             <fmt:setLocale value="vi_VN"/>
                                             <input style="border:none; background-color: white" type="hidden"
                                                    id="payAmount" disabled="disabled"
-                                                   value="${contract.contractFee} VNĐ"/>
-                                            <fmt:formatNumber value="${contract.contractFee}" type="currency"
+                                                   value="${contract.getMicContractTypeByContractTypeId().getPricePerYear()} VNĐ"/>
+                                            <fmt:formatNumber value="${contract.getMicContractTypeByContractTypeId().getPricePerYear()}" type="currency"
                                                               maxFractionDigits="0"/>
                                         </div>
 
@@ -236,12 +236,27 @@
         <div class="col-lg-12">
             <c:if test="${contract.status.equalsIgnoreCase('Request cancel')}">
                 <form action="${pageContext.request.contextPath}/customer/contract" method="post">
-                    <div class="well well-lg text-center text-danger form-inline">
+                    <div class="well well-lg text-center text-danger " style="height:122px !important;">
                         Hợp đồng đã được yêu cầu hủy vui lòng chờ xác nhận của nhân viên &nbsp;
                         <input type="hidden" name="contractcode"
                                value="${contract.contractCode}"/>
                         <input type="hidden" name="action" value="RejectRequestCancel"/>
-                        <input type="submit" class="btn btn-danger small" value="Hủy Yêu Cầu"/>
+                        <input type="submit" class="btn btn-danger small" value="Hủy Yêu Cầu"/><br/>
+                        <div class="form-group"style="margin-bottom:5px">
+                            <label class="col-md-4 text-right">Đã cầu hủy lúc: </label>
+                            <div class="col-md-8 text-left">
+                                    <fmt:formatDate value="${contract.cancelDate}" pattern="dd/MM/yyyy"/>
+                                    lúc
+                                    <fmt:formatDate value="${contract.cancelDate}" type="time"/>
+                            </div>
+                        </div><br/>
+                        <div class="form-group" style="margin-bottom:5px">
+                            <label class="col-md-4 text-right">Lý do hủy: </label>
+                            <div class="col-md-8 text-left">
+                                    ${contract.cancelReason}
+                            </div>
+                        </div>
+
                     </div>
                 </form>
 
@@ -314,12 +329,23 @@
                                             ${contract.getMicContractTypeByContractTypeId().getDescription()}
                                         </td>
                                     </tr>
+                                    <c:if test="${contract.status.equalsIgnoreCase('Cancelled')}">
+                                        <tr>
+                                            <td>
+                                                <label class="text-center">Lý do hủy hợp đồng</label>
+                                            </td>
+                                            <td class="text-center">
+                                                    ${contract.cancelReason}
+                                            </td>
+                                        </tr>
+                                    </c:if>
                                     <tr>
                                         <td>
                                             <label class="text-center">Tình trạng hợp đồng</label>
                                         </td>
 
                                         <c:if test="${contract.status.equalsIgnoreCase('Request cancel') || contract.status.equalsIgnoreCase('Cancelled')}">
+
                                             <td class="alert-danger text-center ">
                                                     ${contract.status}
                                             </td>

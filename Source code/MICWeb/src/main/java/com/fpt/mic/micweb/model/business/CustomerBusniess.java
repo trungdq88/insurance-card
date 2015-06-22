@@ -96,10 +96,6 @@ public class CustomerBusniess {
         else if ((new Timestamp(date.getTime()).after(contract.getExpiredDate()))){
             contract.setStatus(Constants.ContractStatus.EXPIRED);
         }
-        else {
-            contract.setStatus(Constants.ContractStatus.PENDING);
-        }
-
         contract.setCancelReason(null);
         contract.setCancelNote(null);
 
