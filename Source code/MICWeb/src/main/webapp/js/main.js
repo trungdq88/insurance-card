@@ -78,7 +78,7 @@ function daysBetween(date1, date2) {
     // Convert back to days and return
     var diffDays = 0;
     if (diff_ms > 0) {
-        diffDays = Math.round(diff_ms / one_day);
+        diffDays = Math.ceil(diff_ms / one_day);
     }
     return diffDays;
 }

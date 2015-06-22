@@ -123,7 +123,7 @@
 
                         <!-- Contract code & Contract status -->
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">Mã hợp đồng</label>
+                            <label class="col-sm-4 control-label">Mã hợp đồng</label>
 
                             <div class="col-sm-2">
                                 <div class="text-value text-primary">
@@ -140,7 +140,7 @@
 
                         <!-- Contract type -->
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">Loại hợp đồng</label>
+                            <label class="col-sm-4 control-label">Loại hợp đồng</label>
 
                             <div class="col-sm-6">
                                 <div class="text-value">
@@ -151,7 +151,7 @@
 
                         <!-- Start date -->
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">Thời điểm có hiệu lực</label>
+                            <label class="col-sm-4 control-label">Bắt đầu có hiệu lực từ</label>
 
                             <div class="col-sm-4">
                                 <div class="text-value">
@@ -162,21 +162,9 @@
                             </div>
                         </div>
 
-                        <!-- Remaining days -->
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">Thời hạn hợp đồng còn</label>
-
-                            <div class="col-sm-4">
-                                <div class="text-value">
-                                    <span id="remain"
-                                          style="color:deepskyblue; font-weight: bolder; font-size: large"></span> ngày
-                                </div>
-                            </div>
-                        </div>
-
                         <!-- Expired date -->
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">Thời điểm hết hiệu lực</label>
+                            <label class="col-sm-4 control-label">Thời điểm hết hiệu lực</label>
 
                             <div class="col-sm-4">
                                 <div class="text-value">
@@ -187,9 +175,21 @@
                             </div>
                         </div>
 
+                        <!-- Remaining days -->
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">Thời gian đến ngày hết hạn</label>
+
+                            <div class="col-sm-4">
+                                <div class="text-value">
+                                    <span id="remain"
+                                          style="color:deepskyblue; font-weight: bolder; font-size: large"></span> ngày
+                                </div>
+                            </div>
+                        </div>
+
                         <!-- Contract fee -->
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">Phí bảo hiểm (VNĐ)</label>
+                            <label class="col-sm-4 control-label">Phí bảo hiểm (VNĐ)</label>
 
                             <div class="col-sm-3">
                                 <div class="text-value">
