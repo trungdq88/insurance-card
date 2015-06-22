@@ -49,9 +49,6 @@ public class ContractController extends BasicController {
         String contractcode = r.equest.getParameter("contractcode");
         String reasoncancel = r.equest.getParameter("txtReason");
         ContractEntity contractOld = customerBusiness.getContractDetail(contractcode);
-        String oldStatus = contractOld.getStatus();
-        HttpSession session = r.equest.getSession();
-        session.setAttribute("oldStatus", oldStatus);
         ContractEntity contract = customerBusiness.cancelContract(contractcode, reasoncancel);
         if (contract != null) {
             r.equest.setAttribute("contract", contract);
@@ -151,8 +148,7 @@ public class ContractController extends BasicController {
         CustomerBusniess business = new CustomerBusniess();
         String contractCode = r.equest.getParameter("contractcode");
         HttpSession session = r.equest.getSession(true);
-        String oldStatus = (String)session.getAttribute("oldStatus");
-        ContractEntity contract = business.rejectCancelContract(contractCode , oldStatus);
+        ContractEntity contract = business.rejectCancelContract(contractCode);
         String mesg = "Không thể gở bỏ yêu cầu hủy hợp đồng";
         if (contract != null) {
             r.equest.setAttribute("contract", contract);

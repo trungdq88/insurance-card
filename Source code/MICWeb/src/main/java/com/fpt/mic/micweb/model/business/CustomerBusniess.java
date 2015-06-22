@@ -1,7 +1,9 @@
 package com.fpt.mic.micweb.model.business;
+import com.fpt.mic.micweb.model.dao.CardDao;
 import com.fpt.mic.micweb.model.dao.CustomerDao;
 import com.fpt.mic.micweb.model.dao.ContractDao;
 import com.fpt.mic.micweb.model.dao.PaymentDao;
+import com.fpt.mic.micweb.model.entity.CardEntity;
 import com.fpt.mic.micweb.model.entity.CustomerEntity;
 import com.fpt.mic.micweb.model.entity.ContractEntity;
 import com.fpt.mic.micweb.model.entity.PaymentEntity;
@@ -78,12 +80,31 @@ public class CustomerBusniess {
      * @param contractCode
      * @return contract
      */
-    public ContractEntity rejectCancelContract(String contractCode, String oldStatus) {
+    public ContractEntity rejectCancelContract(String contractCode) {
+        CardDao cardDao = new CardDao();
         ContractDao contractDao = new ContractDao();
+        CardEntity card = cardDao.getCardByContract(contractCode);
         ContractEntity contract = contractDao.read(contractCode);
+        java.util.Date date = new java.util.Date();
+        // no card
+        if(card == null){
+            contract.setStatus(Constants.ContractStatus.NO_CARD);
+        }
+        else if ((new Timestamp(date.getTime()).before(contract.getExpiredDate()))){
+            contract.setStatus(Constants.ContractStatus.READY);
+        }
+        else if ((new Timestamp(date.getTime()).after(contract.getExpiredDate()))){
+            contract.setStatus(Constants.ContractStatus.EXPIRED);
+        }
+        else {
+            contract.setStatus(Constants.ContractStatus.PENDING);
+        }
+
         contract.setCancelReason(null);
         contract.setCancelNote(null);
-        contract.setStatus(oldStatus);
+
+
+
         if (contractDao.update(contract) != null) {
             return contract;
         } else {
