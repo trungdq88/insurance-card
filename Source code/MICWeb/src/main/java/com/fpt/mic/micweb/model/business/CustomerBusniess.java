@@ -78,12 +78,12 @@ public class CustomerBusniess {
      * @param contractCode
      * @return contract
      */
-    public ContractEntity rejectCancelContract(String contractCode) {
+    public ContractEntity rejectCancelContract(String contractCode, String oldStatus) {
         ContractDao contractDao = new ContractDao();
         ContractEntity contract = contractDao.read(contractCode);
         contract.setCancelReason(null);
         contract.setCancelNote(null);
-        contract.setStatus(Constants.ContractStatus.READY);
+        contract.setStatus(oldStatus);
         if (contractDao.update(contract) != null) {
             return contract;
         } else {

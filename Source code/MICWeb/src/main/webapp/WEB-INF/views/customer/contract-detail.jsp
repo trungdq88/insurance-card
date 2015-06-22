@@ -150,6 +150,15 @@
                             <div class="modal-body">
                                 <div class="form-horizontal">
                                     <div class="form-group">
+                                        <label class="col-sm-5 text-right">Loại hợp đồng </label>
+
+                                        <div class="col-sm-7">
+                                            <input style="border:none ; background-color: white;width: 100% "
+                                                   value="${contract.getMicContractTypeByContractTypeId().getName()}"
+                                                   type="text" disabled="disabled"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
                                         <label class="col-sm-5 text-right">Thời điểm bắt đầu</label>
 
                                         <div class="col-sm-4">
@@ -188,15 +197,6 @@
                                                               maxFractionDigits="0"/>
                                         </div>
 
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-sm-5 text-right">Loại hợp đồng </label>
-
-                                        <div class="col-sm-7">
-                                            <input style="border:none ; background-color: white;width: 100% "
-                                                   value="${contract.getMicContractTypeByContractTypeId().getName()}"
-                                                   type="text" disabled="disabled"/>
-                                        </div>
                                     </div>
                                 </div>
 

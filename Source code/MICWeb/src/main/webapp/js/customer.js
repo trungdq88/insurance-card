@@ -130,7 +130,7 @@ $(document).ready(function () {
     $('#renew').click(function () {
         var status = $('#contractStatus').val();
         var myDate = null;
-        if (status == 'Ready' ||status == 'No Card' || status == 'Pending' ) {
+        if (status == 'Ready' ||status == 'No card' || status == 'Pending' ) {
             myDate = new Date($('#newStartDate').val());
         }
         else if (status == 'Expired') {
