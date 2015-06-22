@@ -218,6 +218,7 @@
                         <input required type="text" name="txtAddress" onFocus="geolocate()"
                                maxlength="250" minlength="3"
                                title="Vui lòng nhập địa chỉ"
+                               placeholder="Ví dụ: 123A, Điện Biên Phủ, Quận 1, TP.HCM"
                                class="form-control" id="txtAddress">
                     </div>
                     <div class="form-group">

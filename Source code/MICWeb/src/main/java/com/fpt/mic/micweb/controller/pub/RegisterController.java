@@ -44,8 +44,7 @@ public class RegisterController extends BasicController {
 
         ContractTypeEntity contractTypeEntity = new ContractTypeEntity();
         ContractBusiness contractBusiness = new ContractBusiness();
-        List<ContractTypeEntity> list = new ArrayList<ContractTypeEntity>();
-        list = contractBusiness.getAllContractType();
+        List<ContractTypeEntity> list = contractBusiness.getAllContractType();
         HashMap<Integer,ContractTypeEntity> mapContractType = new HashMap<Integer, ContractTypeEntity>();
         for (int i = 0; i< list.size();i++) {
             mapContractType.put(list.get(i).getId(),list.get(i));

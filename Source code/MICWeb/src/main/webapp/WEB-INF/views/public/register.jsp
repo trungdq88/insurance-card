@@ -4,7 +4,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="_shared/header.jsp" %>
-<body>
+<body onload="initialize()">
 <div class="image-container set-full-height"
      style="background-image: url('${pageContext.request.contextPath}/img/wizard-city.jpg')">
     <!--   MIC Branding   -->
@@ -50,63 +50,51 @@
                                                 <h3 class="info-text"> THÔNG TIN CHỦ SỞ HỮU XE </h3>
                                                 <h5 class="info-text"> Các ô có dấu * là bắt buộc </h5>
                                             </div>
-                                            <div class="col-sm-5 col-sm-offset-1">
+                                            <div class="col-sm-4 col-sm-offset-1">
                                                 <div class="form-group">
                                                     <label><b>Họ tên *</b></label>
                                                     <input required type="text" class="form-control" name="txtName" id="txtName"
                                                            pattern="\S[^0-9]+"
                                                            minlength="3" maxlength="80"
-                                                           placeholder="Tên đầy đủ người mua bảo hiểm?"
+                                                           placeholder="Ví dụ: Nguyễn Văn A"
                                                            title="Vui lòng nhập họ tên!"
                                                            value="${customerEntity.name}">
                                                 </div>
                                             </div>
-                                            <div class="col-sm-5">
-                                                <div class="form-group">
-                                                    <label><b>Địa chỉ *</b></label><br>
-                                                    <input required type="text" class="form-control" name="txtAddress"
-                                                           id="txtAddress"
-                                                           placeholder="Địa chỉ của người mua bảo hiểm?"
-                                                           maxlength="250" minlength="3"
-                                                           title="Vui lòng nhập địa chỉ!"
-                                                           value="${customerEntity.address}">
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-5 col-sm-offset-1">
+                                            <div class="col-sm-6">
                                                 <div class="form-group">
                                                     <label><b>Email *</b></label>
                                                     <input required type="text" class="form-control" name="txtEmail" id="txtEmail"
-                                                           placeholder="Email của người mua bảo hiểm?"
+                                                           placeholder="Ví dụ: baohiem@micinsurance.vn"
                                                            pattern="^[A-Za-z0-9._%-]+@[A-Za-z0-9.-]+.[A-Za-z]{2,4}"
                                                            title="Vui lòng nhập email!"
                                                            value="${customerEntity.email}">
                                                 </div>
                                             </div>
-                                            <div class="col-sm-5">
+                                            <div class="col-sm-7 col-sm-offset-1">
+                                                <div class="form-group">
+                                                    <label><b>Địa chỉ *</b></label><br>
+                                                    <input required type="text" class="form-control" name="txtAddress"
+                                                           id="txtAddress" onFocus="geolocate()"
+                                                           placeholder="Ví dụ: 123A, Điện Biên Phủ, Quận 1, TP.HCM"
+                                                           maxlength="250" minlength="3"
+                                                           title="Vui lòng nhập địa chỉ!"
+                                                           value="${customerEntity.address}">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-3">
                                                 <div class="form-group">
                                                     <label><b>Số điện thoại *</b></label>
                                                     <input required type="text" class="form-control" name="txtPhone" id="txtPhone"
-                                                           placeholder="Số điện thoại của người mua bảo hiểm?"
+                                                           placeholder="Ví dụ: 0909000999"
                                                            pattern="[0-9]+"
                                                            minlength="8" maxlength="15"
                                                            title="Vui lòng nhập đúng số điện thoại!"
                                                            value="${customerEntity.phone}">
                                                 </div>
                                             </div>
-                                            <div class="col-sm-5 col-sm-offset-1">
-                                                <div class="form-group">
-                                                    <label><b>Số CMDN/Hộ chiếu</b></label>
-                                                    <input type="text" class="form-control" name="txtPersonalId"
-                                                           id="txtPersonalId"
-                                                           placeholder="Số CMND hoặc hộ chiếu?"
-                                                           pattern="[0-9]+"
-                                                           minlength="8" maxlength="15"
-                                                           title="Vui lòng chỉ nhập số!"
-
-                                                           value="${customerEntity.personalId}">
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-5">
+                                            <div class="col-sm-4 col-sm-offset-1">
                                                 <div class="form-group">
                                                     <label><b>Ngày bắt đầu *</b></label>
                                                     <input required type="date" class="form-control" name="txtStartDate"
@@ -114,6 +102,19 @@
                                                            min="<%=new Date().getYear()+1900%>-<%=(new Date().getMonth()+1)<10?"0"+(new Date().getMonth()+1):(new Date().getMonth()+1)%>-<%=new Date().getDate()%>"
                                                            placeholder="Ngày bắt đầu tham gia bảo hiểm?"
                                                            value="${txtStartDate}">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label><b>Số CMDN/Hộ chiếu</b></label>
+                                                    <input type="text" class="form-control" name="txtPersonalId"
+                                                           id="txtPersonalId"
+                                                           placeholder="Ví dụ: 272185738"
+                                                           pattern="[0-9]+"
+                                                           minlength="8" maxlength="15"
+                                                           title="Vui lòng chỉ nhập số!"
+
+                                                           value="${customerEntity.personalId}">
                                                 </div>
                                             </div>
                                             <div class="col-sm-10 col-sm-offset-1">
@@ -143,9 +144,7 @@
                                             </div>
                                             <div class="col-sm-5 col-sm-offset-1">
                                                 <div class="form-group">
-                                                    <label><b>Thời hạn bảo hiểm: </b></label>
-
-                                                    <p class="form-control-static">01 năm
+                                                    <label><b>Thời hạn bảo hiểm: </b>01 năm</label>
                                                 </div>
                                             </div>
                                             <div class="col-sm-5 col-sm-offset-1">
@@ -176,7 +175,7 @@
                                                 <label><b>Biển số đăng ký *</b></label>
                                                 <input required type="text" class="form-control" name="txtPlate" id="txtPlate"
                                                        minlength="4" maxlength="15"
-                                                       placeholder="Biển số của xe đăng ký bảo hiểm?"
+                                                       placeholder="Ví dụ: 54-Z6 6666"
                                                         title="Vui lòng nhập biển số xe!">
                                             </div>
                                         </div>
@@ -195,8 +194,8 @@
                                                 <input required type="text" class="form-control" name="txtChassis"
                                                        id="txtChassis"
                                                        minlength="2" maxlength="20"
-                                                       placeholder="Số khung của xe?"
-                                                        title="Vui lòng nhập số khung!">
+                                                       placeholder="Ví dụ: 1033612"
+                                                       title="Vui lòng nhập số khung!">
 
                                             </div>
                                         </div>
@@ -205,7 +204,7 @@
                                                 <label><b>Số máy *</b></label>
                                                 <input required type="text" class="form-control" name="txtEngine" id="txtEngine"
                                                        minlength="2" maxlength="20"
-                                                       placeholder="Số máy của xe?"
+                                                       placeholder="Ví dụ: 1033612"
                                                         title="Vui lòng nhập số máy!">
                                             </div>
                                         </div>
@@ -215,8 +214,8 @@
                                                 <input required type="text" class="form-control" name="txtCapacity"
                                                        id="txtCapacity"
                                                        minlength="2" maxlength="20"
-                                                       placeholder="Dung tích của xe?"
-                                                        title="Vui lòng nhập dung tích xe!">
+                                                       placeholder="Ví dụ: 110cc"
+                                                       title="Vui lòng nhập dung tích xe!">
                                             </div>
                                         </div>
                                         <div class="col-sm-4 col-sm-offset-1">
@@ -243,7 +242,7 @@
                                                 <input type="text" class="form-control" name="txtColor" id="txtColor"
                                                        minlength="2" maxlength="20"
                                                        title="Vui lòng nhập đúng màu sơn!"
-                                                       placeholder="Màu sơn của xe?">
+                                                       placeholder="Ví dụ: Đỏ">
                                             </div>
                                         </div>
                                         <div class="col-sm-4 col-sm-offset-1">
@@ -251,7 +250,7 @@
                                                 <label><b>Năm sản xuất </b></label>
                                                 <input type="number" class="form-control" name="txtYearOfMan"
                                                        id="txtYearOfMan"
-                                                       placeholder="Năm xe được sản xuất?"
+                                                       placeholder="Ví dụ: 2000"
                                                        min="1900"
                                                        max="<%=new Date().getYear() + 1900%>"
                                                        pattern="[0-9]+"
@@ -264,7 +263,7 @@
                                                 <input type="number" class="form-control" name="txtWeight" id="txtWeight"
                                                        min="1" max="1000"
                                                        title="Tự trọng xe từ 1-1000 kg!"
-                                                       placeholder="Trọng lượng không tải của xe?">
+                                                       placeholder="Ví dụ: 100">
                                             </div>
                                         </div>
                                         <div class="col-sm-3">
@@ -274,7 +273,7 @@
                                                        id="txtSeatCapacity"
                                                        min="1" max="100"
                                                        title="Số người từ 1-100!"
-                                                       placeholder="Số người xe được phép chở?">
+                                                       placeholder="Ví dụ: 2">
                                             </div>
                                         </div>
                                     </div>
@@ -294,28 +293,29 @@
                                         đã đăng ký </h5>
 
                                     <div class="row text-big">
-                                        <div class="col-sm-11 col-sm-offset-1">
+                                        <div class="col-sm-4 col-sm-offset-1">
                                             <label><b>Tên: </b><span id="txtName1"></span></label>
                                         </div>
-                                        <div class="col-sm-11 col-sm-offset-1">
-                                            <label><b>Địa chỉ: </b> <span id="txtAddress1"></span></label>
-
-                                        </div>
-                                        <div class="col-sm-5 col-sm-offset-1">
+                                        <div class="col-sm-6">
                                             <label><b>Email: </b></label>
                                             <label id="txtEmail1"></label>
                                         </div>
-                                        <div class="col-sm-5">
+                                        <div class="col-sm-6 col-sm-offset-1">
+                                            <label><b>Địa chỉ: </b> <span id="txtAddress1"></span></label>
+
+                                        </div>
+
+                                        <div class="col-sm-4">
                                             <label><b>Số điện thoại: </b></label>
                                             <label id="txtPhone1"></label>
                                         </div>
                                         <div class="col-sm-5 col-sm-offset-1">
-                                            <label><b>Số CMDN/Hộ chiếu: </b></label>
-                                            <label id="txtPersonalId1"></label>
-                                        </div>
-                                        <div class="col-sm-5">
                                             <label><b>Ngày bắt đầu: </b></label>
                                             <label id="txtStartDate1"></label>
+                                        </div>
+                                        <div class="col-sm-5">
+                                            <label><b>Số CMDN/Hộ chiếu: </b></label>
+                                            <label id="txtPersonalId1"></label>
                                         </div>
                                         <div class="col-sm-10 col-sm-offset-1">
                                             <label><b>Quyền lợi bảo hiểm: </b></label>
@@ -482,7 +482,40 @@
     <%
         HashMap<Integer,ContractTypeEntity> list =(HashMap<Integer,ContractTypeEntity>) request.getAttribute("mapContractType");
     %>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places"></script>
     <script language="javascript">
+        // This example displays an address form, using the autocomplete feature
+        // of the Google Places API to help users fill in the information.
+
+        var placeSearch, autocomplete;
+
+
+        function initialize() {
+            // Create the autocomplete object, restricting the search
+            // to geographical location types.
+            autocomplete = new google.maps.places.Autocomplete(
+                    /** @type {HTMLInputElement} */(document.getElementById('txtAddress')),
+                    {types: ['geocode'], componentRestrictions: {country: 'vn'}});
+
+        }
+
+        // [START region_geolocation]
+        // Bias the autocomplete object to the user's geographical location,
+        // as supplied by the browser's 'navigator.geolocation' object.
+        function geolocate() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function (position) {
+                    var geolocation = new google.maps.LatLng(
+                            position.coords.latitude, position.coords.longitude);
+                    var circle = new google.maps.Circle({
+                        center: geolocation,
+                        radius: position.coords.accuracy
+                    });
+                    autocomplete.setBounds(circle.getBounds());
+                });
+            }
+        }
+        // [END region_geolocation]
 
         Number.prototype.formatMoney = function(c, d, t){
             var n = this,
