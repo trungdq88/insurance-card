@@ -329,16 +329,6 @@
                                             ${contract.getMicContractTypeByContractTypeId().getDescription()}
                                         </td>
                                     </tr>
-                                    <c:if test="${contract.status.equalsIgnoreCase('Cancelled')}">
-                                        <tr>
-                                            <td>
-                                                <label class="text-center">Lý do hủy hợp đồng</label>
-                                            </td>
-                                            <td class="text-center">
-                                                    ${contract.cancelReason}
-                                            </td>
-                                        </tr>
-                                    </c:if>
                                     <tr>
                                         <td>
                                             <label class="text-center">Tình trạng hợp đồng</label>
