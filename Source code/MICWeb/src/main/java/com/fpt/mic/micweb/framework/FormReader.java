@@ -60,9 +60,24 @@ public class FormReader<T> {
     private Object readFieldValue(String formPrefix, String fieldName, Class<?> parameterType) {
         String className = parameterType.getName();
         String valueString = request.getParameter(formPrefix + ":" + fieldName);
+
+        if (valueString == null) {
+            try {
+                throw new Exception(formPrefix + ":" + fieldName + " not found!");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
         if (className.equals(String.class.getName())) {
             return valueString;
         }
+
+        if (valueString.isEmpty()) {
+            return null;
+        }
+
         if (className.equals(Integer.class.getName())
                 || className.equals(int.class.getName())) {
             return Integer.parseInt(valueString);
