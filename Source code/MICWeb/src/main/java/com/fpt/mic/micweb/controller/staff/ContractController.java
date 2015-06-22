@@ -5,7 +5,7 @@ import com.fpt.mic.micweb.framework.R;
 import com.fpt.mic.micweb.framework.responses.JspPage;
 import com.fpt.mic.micweb.framework.responses.ResponseObject;
 import com.fpt.mic.micweb.model.business.StaffBusiness;
-import com.fpt.mic.micweb.model.dto.form.CreateContractDTO;
+import com.fpt.mic.micweb.model.dto.form.CreateContractDto;
 import com.fpt.mic.micweb.model.entity.ContractEntity;
 import com.fpt.mic.micweb.model.entity.ContractTypeEntity;
 import com.fpt.mic.micweb.model.entity.CustomerEntity;
@@ -68,8 +68,8 @@ public class ContractController extends BasicController {
 
     public ResponseObject postCreate(R r) {
         // Get contract information
-        CreateContractDTO dto = (CreateContractDTO)
-                r.ead.entity(CreateContractDTO.class, "contract");
+        CreateContractDto dto = (CreateContractDto)
+                r.ead.entity(CreateContractDto.class, "contract");
 
         // Call to business object
         StaffBusiness staffBus = new StaffBusiness();
