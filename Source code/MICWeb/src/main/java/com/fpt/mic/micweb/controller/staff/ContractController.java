@@ -112,7 +112,8 @@ public class ContractController extends BasicController {
 
         if (result != null) {
             // Return Success JSP Page
-            r.equest.setAttribute("CREATED", result);
+            ContractEntity createdContract = staffBus.getContractDetail(result.getContractCode());
+            r.equest.setAttribute("CREATED", createdContract);
             return new JspPage("staff/create-contract-success.jsp");
         } else {
             msg = "Tạo hợp đồng thất bại, vui lòng thử lại hoặc liên hệ IT";

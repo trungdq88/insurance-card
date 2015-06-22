@@ -1,13 +1,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ include file="_shared/header.jsp"%>
+<%@ include file="_shared/header.jsp" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <div id="wrapper">
 
     <%@ include file="_shared/navigation.jsp" %>
-
-    <c:set var="cont" value="${requestScope.CREATED}"/>
 
     <div id="page-wrapper">
         <div class="row">
@@ -22,44 +20,48 @@
                     <i class="fa fa-check"></i> Hợp đồng đã được khởi tạo thành công!
                 </div>
 
-                <div class="table-responsive">
-                    <table class="table table-hover table-bordered table-striped">
-                        <thead>
-                        <tr>
-                            <th>Mã hợp đồng</th>
-                            <th>Tên khách hàng</th>
-                            <th>Ngày bắt đầu</th>
-                            <th>Ngày kết thúc</th>
-                            <th>Trạng thái</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td>
-                                <a href="${pageContext.request.contextPath}/staff/contract?action=detail&code=${cont.contractCode}">
-                                    ${cont.contractCode}
-                                </a>
-                            </td>
-                            <td>
-                                <a href="${pageContext.request.contextPath}/staff/customer?action=detail&code=${cont.customerCode}">
-                                    ${cont.micCustomerByCustomerCode.name}
-                                </a>
-                            </td>
-                            <td>
-                                <fmt:formatDate value="${cont.startDate}" pattern="dd/MM/yyyy"/>
-                            </td>
-                            <td>
-                                <fmt:formatDate value="${cont.expiredDate}" pattern="dd/MM/yyyy"/>
-                            </td>
-                            <td>
+                <c:set var="info" value="${requestScope.CREATED}"/>
+
+                <c:if test="${not empty info}">
+                    <div class="table-responsive">
+                        <table class="table table-hover table-bordered table-striped">
+                            <thead>
+                            <tr>
+                                <th>Mã hợp đồng</th>
+                                <th>Tên khách hàng</th>
+                                <th>Ngày bắt đầu</th>
+                                <th>Ngày kết thúc</th>
+                                <th>Trạng thái</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>
+                                    <a href="${pageContext.request.contextPath}/staff/contract?action=detail&code=${info.contractCode}">
+                                            ${info.contractCode}
+                                    </a>
+                                </td>
+                                <td>
+                                    <a href="${pageContext.request.contextPath}/staff/customer?action=detail&code=${info.customerCode}">
+                                    ${info.micCustomerByCustomerCode.name}
+                                    </a>
+                                </td>
+                                <td>
+                                    <fmt:formatDate value="${info.startDate}" pattern="dd/MM/yyyy"/>
+                                </td>
+                                <td>
+                                    <fmt:formatDate value="${info.expiredDate}" pattern="dd/MM/yyyy"/>
+                                </td>
+                                <td>
                                 <span class="label label-info">
-                                    ${cont.status}
+                                        ${info.status}
                                 </span>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </c:if>
                 <br/>
 
                 <div class="text-center">
@@ -74,4 +76,4 @@
 </div>
 <!-- /#wrapper -->
 
-<%@ include file="_shared/footer.jsp"%>
+<%@ include file="_shared/footer.jsp" %>
