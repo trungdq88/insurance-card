@@ -67,36 +67,38 @@
                             </div>
                             <div class="modal-body">
                                 <div class="alert alert-danger alert-dismissible hide" id="notify" role="alert">
-                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                    <strong>Cảnh báo!</strong> Vui lòng chọn lí do hủy hợp đồng trước khi xác nhận! Cảm ơn!
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                                            aria-hidden="true">&times;</span></button>
+                                    Vui lòng chọn lí do hủy hợp đồng trước khi xác nhận. Cảm ơn!
                                 </div>
                                 <div class="text-info">
                                     <label>
-                                        Quý khách vui lòng cung cấp lý do hoặc trường hợp hủy hợp đồng!
+                                        Quý khách vui lòng cung cấp lý do hoặc trường hợp hủy hợp đồng
                                     </label>
                                 </div>
                                 <div class="checkbox">
                                     <label>
                                         <input type="radio" value="" name="rdbReason1" class="check" id="rdbReason1">
-                                        Xe cơ giới bị thu hồi đăng ký và biển số theo quy định của pháp luật!
+                                        Xe cơ giới bị thu hồi đăng ký và biển số theo quy định của pháp luật
                                     </label>
                                 </div>
                                 <div class="checkbox">
                                     <label>
                                         <input type="radio" value="" name="rdbReason2" id="rdbReason2" class="check">
-                                        Xe cơ giới hết niên hạn sử dụng theo quy định của pháp luật!
+                                        Xe cơ giới hết niên hạn sử dụng theo quy định của pháp luật
                                     </label>
                                 </div>
                                 <div class="checkbox">
                                     <label>
                                         <input type="radio" value="" name="rdbReason3" id="rdbReason3" class="check">
-                                        Xe cơ giới bị mất được cơ quan công an xác nhận!
+                                        Xe cơ giới bị mất được cơ quan công an xác nhận
                                     </label>
                                 </div>
                                 <div class="checkbox">
                                     <label>
                                         <input type="radio" value="" name="rdbReason4" id="rdbReason4" class="check">
-                                        Xe cơ giới hỏng không sử dụng được hoặc bị phá huỷ do tai nạn giao thông được cơ quan công an xác nhận!
+                                        Xe cơ giới hỏng không sử dụng được hoặc bị phá huỷ do tai nạn giao thông được cơ
+                                        quan công an xác nhận
                                     </label>
                                 </div>
                                 <div class="checkbox">
@@ -107,8 +109,9 @@
                                 </div>
                                 <div class="checkbox">
                                     <label>
-                                       <textarea  name="txtAnotherReason" rows="3" cols="95" id="anotherReason" class="hide"
-                                                  autofocus="autofocus" >
+                                       <textarea name="txtAnotherReason" rows="3" cols="95" id="anotherReason"
+                                                 class="hide"
+                                                 autofocus="autofocus">
                                        </textarea>
 
 
@@ -123,7 +126,8 @@
                                        value="Xác Nhận"/>
                                 <input type="hidden" id="contractId" name="contractcode"
                                        value="${contract.contractCode}"/>
-                                <input type="button" class="btn btn-danger" id="cancelAction" data-dismiss="modal" value="Hủy Bỏ"/>
+                                <input type="button" class="btn btn-danger" id="cancelAction" data-dismiss="modal"
+                                       value="Hủy Bỏ"/>
                             </div>
                         </div>
 
@@ -157,8 +161,13 @@
                                             <fmt:formatDate value="${contract.startDate}" pattern="dd/MM/yyyy"/>
                                         </div>
                                     </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-5 text-right">Thời điểm kết thúc </label>
 
-
+                                        <div class="col-sm-4">
+                                            <fmt:formatDate value="${contract.expiredDate}" pattern="dd/MM/yyyy"/>
+                                        </div>
+                                    </div>
                                     <div class="form-group">
                                         <label class="col-sm-5 text-right">Gia hạn đến </label>
 
@@ -179,6 +188,15 @@
                                                               maxFractionDigits="0"/>
                                         </div>
 
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-5 text-right">Loại hợp đồng </label>
+
+                                        <div class="col-sm-7">
+                                            <input style="border:none ; background-color: white;width: 100% "
+                                                   value="${contract.getMicContractTypeByContractTypeId().getName()}"
+                                                   type="text" disabled="disabled"/>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -293,7 +311,7 @@
                                             <label class="text-center">Quyền lợi bảo hiểm</label>
                                         </td>
                                         <td>
-                                            Trên 50 CC có bảo hiểm
+                                            ${contract.getMicContractTypeByContractTypeId().getDescription()}
                                         </td>
                                     </tr>
                                     <tr>

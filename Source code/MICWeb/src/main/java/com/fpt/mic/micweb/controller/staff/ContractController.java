@@ -5,7 +5,7 @@ import com.fpt.mic.micweb.framework.R;
 import com.fpt.mic.micweb.framework.responses.JspPage;
 import com.fpt.mic.micweb.framework.responses.ResponseObject;
 import com.fpt.mic.micweb.model.business.StaffBusiness;
-import com.fpt.mic.micweb.model.dto.CreateContractDto;
+import com.fpt.mic.micweb.model.dto.CreateContractDTO;
 import com.fpt.mic.micweb.model.entity.ContractEntity;
 import com.fpt.mic.micweb.model.entity.ContractTypeEntity;
 import com.fpt.mic.micweb.model.entity.CustomerEntity;
@@ -108,7 +108,7 @@ public class ContractController extends BasicController {
         Float amount = Float.parseFloat(r.equest.getParameter("txtAmount"));
 
         // Call DTO constructor to initial object contain value
-        CreateContractDto dto = new CreateContractDto(customerCode, contractTypeId, startDate, expiredDate,
+        CreateContractDTO dto = new CreateContractDTO(customerCode, contractTypeId, startDate, expiredDate,
                 contractFee, plate, brand, modelCode, vehicleType, color, engine, chassis, capacity, yearOfManufacture,
                 weight, seatCapacity, paidDate, amount);
 
