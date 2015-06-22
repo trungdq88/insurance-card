@@ -19,7 +19,8 @@
 
                 <c:set var="listType" value="${requestScope.CONTRACTTYPE}"/>
 
-                <form action="${pageContext.request.contextPath}/staff/contract" method="post" class="form-horizontal">
+                <form action="${pageContext.request.contextPath}/staff/contract"
+                      method="post" class="form-horizontal">
                     <fieldset>
                         <legend>Thông tin khách hàng</legend>
 
@@ -102,14 +103,7 @@
                             <label class="col-sm-4 control-label">Loại hình bảo hiểm *</label>
 
                             <div class="col-sm-7">
-                                <select required class="form-control" name="ddlContractType" id="contractType"
-                                        onchange="{
-                                        var fee = parseFloat(this.options[this.selectedIndex].innerHTML);
-                                        $('#contractFee').val(fee);
-                                        $('#amount').val(fee);
-                                        fee = fee.formatMoney(0);
-                                        $('#displayFee').text(fee);
-                                        }">
+                                <select required class="form-control" name="ddlContractType" id="contractType">
                                     <option value="" disabled selected style="display:none;">
                                         Vui lòng chọn loại hợp đồng
                                     </option>
@@ -352,15 +346,40 @@
 
 <script>
     $(document).ready(function () {
+        var stDate = new Date($("#startDate").val());
+        var expDate = new Date($("#expiredDate").val());
+        var contractTerm = daysBetween(stDate, expDate);
+        $('#contractType').change(function () {
+            var pricePerYear = parseFloat(this.options[this.selectedIndex].innerHTML);
+            stDate = new Date($("#startDate").val());
+            expDate = new Date($("#expiredDate").val());
+            contractTerm = daysBetween(stDate, expDate);
+            var contractFee = calculateContractFee(contractTerm, pricePerYear);
+
+            $('input[type="date"]').not('#paidDate').blur(function () {
+                stDate = new Date($("#startDate").val());
+                expDate = new Date($("#expiredDate").val());
+                contractTerm = daysBetween(stDate, expDate);
+                contractFee = calculateContractFee(contractTerm, pricePerYear);
+                $('#contractFee').val(contractFee);
+                $('#amount').val(contractFee);
+                $('#displayFee').text(contractFee.formatMoney(0));
+            });
+
+            $('#contractFee').val(contractFee);
+            $('#amount').val(contractFee);
+            $('#displayFee').text(contractFee.formatMoney(0));
+        });
+
         $('#startDate').val(getCurrentDate());
-        document.getElementById("startDate").min = getCurrentDateInLastWeek();
-        document.getElementById("startDate").max = getCurrentDateInNextYear();
+        /*document.getElementById("startDate").min = getCurrentDateInLastWeek();
+        document.getElementById("startDate").max = getCurrentDateInNextYear();*/
         $('#expiredDate').val(getCurrentDateInNextYear());
-        document.getElementById("expiredDate").min = getCurrentDate();
+        document.getElementById("expiredDate").min = getCurrentDateInNextWeek();
         document.getElementById("expiredDate").max = getCurrentDateInNextYear();
         $('#paidDate').val(getCurrentDate());
-        document.getElementById("paidDate").min = getCurrentDateInLastWeek();
-        document.getElementById("paidDate").max = getCurrentDateInNextYear();
+        /*document.getElementById("paidDate").min = getCurrentDateInLastWeek();
+        document.getElementById("paidDate").max = getCurrentDateInNextYear();*/
     });
 </script>
 
