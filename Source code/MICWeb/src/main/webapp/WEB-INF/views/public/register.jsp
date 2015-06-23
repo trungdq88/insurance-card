@@ -53,68 +53,68 @@
                                             <div class="col-sm-4 col-sm-offset-1">
                                                 <div class="form-group">
                                                     <label><b>Họ tên *</b></label>
-                                                    <input required type="text" class="form-control" name="txtName" id="txtName"
+                                                    <input required type="text" class="form-control" name="register:name" id="txtName"
                                                            pattern="\S[^0-9]+"
                                                            minlength="3" maxlength="80"
                                                            placeholder="Ví dụ: Nguyễn Văn A"
                                                            title="Vui lòng nhập họ tên!"
-                                                           value="${customerEntity.name}">
+                                                           value="${publicHomeFormDto.name}">
                                                 </div>
                                             </div>
                                             <div class="col-sm-6">
                                                 <div class="form-group">
                                                     <label><b>Email *</b></label>
-                                                    <input required type="text" class="form-control" name="txtEmail" id="txtEmail"
+                                                    <input required type="text" class="form-control" name="register:email" id="txtEmail"
                                                            placeholder="Ví dụ: baohiem@micinsurance.vn"
                                                            pattern="^[A-Za-z0-9._%-]+@[A-Za-z0-9.-]+.[A-Za-z]{2,4}"
                                                            title="Vui lòng nhập email!"
-                                                           value="${customerEntity.email}">
+                                                           value="${publicHomeFormDto.email}">
                                                 </div>
                                             </div>
                                             <div class="col-sm-7 col-sm-offset-1">
                                                 <div class="form-group">
                                                     <label><b>Địa chỉ *</b></label><br>
-                                                    <input required type="text" class="form-control" name="txtAddress"
+                                                    <input required type="text" class="form-control" name="register:address"
                                                            id="txtAddress" onFocus="geolocate()"
                                                            placeholder="Ví dụ: 123A, Điện Biên Phủ, Quận 1, TP.HCM"
                                                            maxlength="250" minlength="3"
                                                            title="Vui lòng nhập địa chỉ!"
-                                                           value="${customerEntity.address}">
+                                                           value="${publicHomeFormDto.address}">
                                                 </div>
                                             </div>
 
                                             <div class="col-sm-3">
                                                 <div class="form-group">
                                                     <label><b>Số điện thoại *</b></label>
-                                                    <input required type="text" class="form-control" name="txtPhone" id="txtPhone"
+                                                    <input required type="text" class="form-control" name="register:phone" id="txtPhone"
                                                            placeholder="Ví dụ: 0909000999"
                                                            pattern="[0-9]+"
                                                            minlength="8" maxlength="15"
                                                            title="Vui lòng nhập đúng số điện thoại!"
-                                                           value="${customerEntity.phone}">
+                                                           value="${publicHomeFormDto.phone}">
                                                 </div>
                                             </div>
                                             <div class="col-sm-4 col-sm-offset-1">
                                                 <div class="form-group">
                                                     <label><b>Ngày bắt đầu *</b></label>
-                                                    <input required type="date" class="form-control" name="txtStartDate"
+                                                    <input required type="date" class="form-control" name="register:startDate"
                                                            id="txtStartDate"
                                                            min="<%=new Date().getYear()+1900%>-<%=(new Date().getMonth()+1)<10?"0"+(new Date().getMonth()+1):(new Date().getMonth()+1)%>-<%=new Date().getDate()%>"
                                                            placeholder="Ngày bắt đầu tham gia bảo hiểm?"
-                                                           value="${txtStartDate}">
+                                                           value="${startDate}">
                                                 </div>
                                             </div>
                                             <div class="col-sm-6">
                                                 <div class="form-group">
                                                     <label><b>Số CMDN/Hộ chiếu</b></label>
-                                                    <input type="text" class="form-control" name="txtPersonalId"
+                                                    <input type="text" class="form-control" name="register:personalId"
                                                            id="txtPersonalId"
                                                            placeholder="Ví dụ: 272185738"
                                                            pattern="[0-9]+"
                                                            minlength="8" maxlength="15"
                                                            title="Vui lòng chỉ nhập số!"
 
-                                                           value="${customerEntity.personalId}">
+                                                           value="${publicHomeFormDto.personalId}">
                                                 </div>
                                             </div>
                                             <div class="col-sm-10 col-sm-offset-1">
@@ -122,8 +122,8 @@
                                                     <label><b>Quyền lợi bảo hiểm *</b></label>
                                                     <c:set var="mapContract" value="${mapContractType}" ></c:set>
 
-                                                    <c:set var="selectedId" value="${requestScope.ddlContractType}" ></c:set>
-                                                    <select class="form-control" name="ddlContractType" id="ddlContractType"
+                                                    <c:set var="selectedId" value="${publicHomeFormDto.contractType}" ></c:set>
+                                                    <select class="form-control" name="register:contractType" id="ddlContractType"
                                                             onchange="{
                                 var fee = parseFloat(this.options[this.selectedIndex].innerHTML);
                                 $('#txtFeeInput').val(fee);
@@ -151,7 +151,7 @@
                                                 <div class="form-group">
                                                     <label><b>Phí bảo hiểm: </b></label>
                                                     <b style="color: red"><span id="txtFee1"></span> VND</b>
-                                                    <input type="hidden" id="txtFeeInput" name="txtFee" value="${requestScope.txtFee}">
+                                                    <input type="hidden" id="txtFeeInput" name="register:contractFee" value="${publicHomeFormDto.contractFee}">
 
                                                 </div>
                                             </div>
@@ -173,7 +173,7 @@
                                         <div class="col-sm-5 col-sm-offset-1">
                                             <div class="form-group">
                                                 <label><b>Biển số đăng ký *</b></label>
-                                                <input required type="text" class="form-control" name="txtPlate" id="txtPlate"
+                                                <input required type="text" class="form-control" name="register:plate" id="txtPlate"
                                                        minlength="4" maxlength="15"
                                                        placeholder="Ví dụ: 54-Z6 6666"
                                                         title="Vui lòng nhập biển số xe!">
@@ -182,7 +182,7 @@
                                         <div class="col-sm-5">
                                             <div class="form-group">
                                                 <label><b>Nhãn hiệu *</b></label><br>
-                                                <input required type="text" class="form-control" name="txtBrand" id="txtBrand"
+                                                <input required type="text" class="form-control" name="register:brand" id="txtBrand"
                                                        minlength="2" maxlength="20"
                                                        placeholder="Ví dụ: Honda, Yamaha, Suzuki..."
                                                         title="Vui lòng nhập nhãn hiệu xe!">
@@ -191,7 +191,7 @@
                                         <div class="col-sm-4 col-sm-offset-1">
                                             <div class="form-group">
                                                 <label><b>Số khung *</b></label>
-                                                <input required type="text" class="form-control" name="txtChassis"
+                                                <input required type="text" class="form-control" name="register:chassis"
                                                        id="txtChassis"
                                                        minlength="2" maxlength="20"
                                                        placeholder="Ví dụ: 1033612"
@@ -202,7 +202,7 @@
                                         <div class="col-sm-3">
                                             <div class="form-group">
                                                 <label><b>Số máy *</b></label>
-                                                <input required type="text" class="form-control" name="txtEngine" id="txtEngine"
+                                                <input required type="text" class="form-control" name="register:engine" id="txtEngine"
                                                        minlength="2" maxlength="20"
                                                        placeholder="Ví dụ: 1033612"
                                                         title="Vui lòng nhập số máy!">
@@ -211,7 +211,7 @@
                                         <div class="col-sm-3">
                                             <div class="form-group">
                                                 <label><b>Dung tích *</b></label>
-                                                <input required type="text" class="form-control" name="txtCapacity"
+                                                <input required type="text" class="form-control" name="register:capacity"
                                                        id="txtCapacity"
                                                        minlength="2" maxlength="20"
                                                        placeholder="Ví dụ: 110cc"
@@ -221,7 +221,7 @@
                                         <div class="col-sm-4 col-sm-offset-1">
                                             <div class="form-group">
                                                 <label><b>Số loại</b></label>
-                                                <input type="text" class="form-control" name="txtModel" id="txtModel"
+                                                <input type="text" class="form-control" name="register:model" id="txtModel"
                                                        minlength="2" maxlength="20"
                                                        title="Vui lòng nhập đúng số loại!"
                                                        placeholder="Ví dụ: Air Blade, Future, Wave...">
@@ -230,7 +230,7 @@
                                         <div class="col-sm-3">
                                             <div class="form-group">
                                                 <label><b>Loại xe</b></label>
-                                                <input type="text" class="form-control" name="txtType" id="txtType"
+                                                <input type="text" class="form-control" name="register:type" id="txtType"
                                                        minlength="2" maxlength="20"
                                                        title="Vui lòng nhập đúng loại xe!"
                                                        placeholder="Ví dụ: hai bánh, ba bánh, khác...">
@@ -239,7 +239,7 @@
                                         <div class="col-sm-3">
                                             <div class="form-group">
                                                 <label><b>Màu sơn</b></label>
-                                                <input type="text" class="form-control" name="txtColor" id="txtColor"
+                                                <input type="text" class="form-control" name="register:color" id="txtColor"
                                                        minlength="2" maxlength="20"
                                                        title="Vui lòng nhập đúng màu sơn!"
                                                        placeholder="Ví dụ: Đỏ">
@@ -248,7 +248,7 @@
                                         <div class="col-sm-4 col-sm-offset-1">
                                             <div class="form-group">
                                                 <label><b>Năm sản xuất </b></label>
-                                                <input type="number" class="form-control" name="txtYearOfMan"
+                                                <input type="number" class="form-control" name="register:yearOfMan"
                                                        id="txtYearOfMan"
                                                        placeholder="Ví dụ: 2000"
                                                        min="1900"
@@ -260,7 +260,7 @@
                                         <div class="col-sm-3">
                                             <div class="form-group">
                                                 <label><b>Tự trọng (kg)</b></label>
-                                                <input type="number" class="form-control" name="txtWeight" id="txtWeight"
+                                                <input type="number" class="form-control" name="register:weight" id="txtWeight"
                                                        min="1" max="1000"
                                                        title="Tự trọng xe từ 1-1000 kg!"
                                                        placeholder="Ví dụ: 100">
@@ -269,7 +269,7 @@
                                         <div class="col-sm-3">
                                             <div class="form-group">
                                                 <label><b>Số người</b></label>
-                                                <input type="number" class="form-control" name="txtSeatCapacity"
+                                                <input type="number" class="form-control" name="register:seatCapacity"
                                                        id="txtSeatCapacity"
                                                        min="1" max="100"
                                                        title="Số người từ 1-100!"
@@ -479,9 +479,6 @@
         </div>
         <!-- row -->
     </div>
-    <%
-        HashMap<Integer,ContractTypeEntity> list =(HashMap<Integer,ContractTypeEntity>) request.getAttribute("mapContractType");
-    %>
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places"></script>
     <script language="javascript">
         // This example displays an address form, using the autocomplete feature
@@ -559,9 +556,6 @@
             $('#txtPersonalId1').text($('#txtPersonalId').val());
             $('#txtStartDate1').text($('#txtStartDate').val());
             $('#ddlContractType1').text($('#ddlContractType option:selected').attr('label'));
-
-            <%--$('#ddlContractType1').text('<%=list.get().getName()%>');--%>
-
             $('#txtPlate1').text($('#txtPlate').val());
             $('#txtBrand1').text($('#txtBrand').val());
             $('#txtModel1').text($('#txtModel').val());

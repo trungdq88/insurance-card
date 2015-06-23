@@ -177,7 +177,7 @@
                     <div class="form-group">
                         <div class="form-group col-md-6">
                             <label>Họ tên *</label>
-                            <input required type="text" name="txtName"
+                            <input required type="text" name="register:name"
                                    pattern="\S[^0-9!@#$%^&*()+=~`]+"
                                    minlength="3" maxlength="80"
                                    title="Vui lòng nhập họ tên"
@@ -186,7 +186,7 @@
                         </div>
                         <div class="form-group col-md-6">
                             <label>Email *</label>
-                            <input required type="text" name="txtEmail"
+                            <input required type="text" name="register:email"
                                    pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$"
                                    title="Vui lòng nhập Email hợp lệ"
                                    placeholder="Ví dụ: baohiem@micinsurance.vn"
@@ -196,7 +196,7 @@
                     <div class="form-group">
                         <div class="form-group col-md-6">
                             <label>Số điện thoại *</label>
-                            <input required type="tel" name="txtPhone"
+                            <input required type="tel" name="register:phone"
                                    class="form-control" id="form-phone"
                                    pattern="[0-9]+"
                                    minlength="8" maxlength="15"
@@ -205,7 +205,7 @@
                         </div>
                         <div class="form-group col-md-6">
                             <label>Số CMND/Hộ chiếu</label>
-                            <input type="text" name="txtPersonalId"
+                            <input type="text" name="register:personalId"
                                    class="form-control" id="form-cmnd"
                                    pattern="[0-9]+"
                                    minlength="8" maxlength="15"
@@ -215,7 +215,7 @@
                     </div>
                     <div class="form-group col-md-12">
                         <label>Địa chỉ *</label>
-                        <input required type="text" name="txtAddress" onFocus="geolocate()"
+                        <input required type="text" name="register:address" onFocus="geolocate()"
                                maxlength="250" minlength="3"
                                title="Vui lòng nhập địa chỉ"
                                placeholder="Ví dụ: 123A, Điện Biên Phủ, Quận 1, TP.HCM"
@@ -224,14 +224,14 @@
                     <div class="form-group">
                         <div class="form-group  col-md-5">
                             <label>Ngày bắt đầu *</label>
-                            <input required type="date" name="txtStartDate"
+                            <input required type="date" name="register:startDate"
                                    min="<%=new Date().getYear()+1900%>-<%=(new Date().getMonth()+1)<10?"0"+(new Date().getMonth()+1):(new Date().getMonth()+1)%>-<%=new Date().getDate()%>"
                                    title="Vui lòng chọn ngày bắt đầu"
                                    class="form-control" id="dateDefault" value="<%=new Date()%> ">
                         </div>
                         <div class="form-group  col-md-7">
                             <label>Hình Thức Bảo Hiểm *</label>
-                            <select required class="form-control" name="ddlContractType" id="ddlContractType" onchange="{
+                            <select required class="form-control" name="register:contractType" id="ddlContractType" onchange="{
                                 var fee = parseFloat(this.options[this.selectedIndex].innerHTML);
                                 $('#txtFeeInput').val(fee);
                                 fee = fee.formatMoney(0,'.',',');
@@ -257,7 +257,7 @@
                             <b style="color: red"><span id="txtFee1"></span> VND
                             </b>
 
-                            <input type="hidden" id="txtFeeInput" name="txtFee" value="${listContractType[0].pricePerYear}">
+                            <input type="hidden" id="txtFeeInput" name="register:contractFee" value="${listContractType[0].pricePerYear}">
                         </p>
                         <input type="hidden" name="action" value="register"/>
                         <input type="submit" id="btnNext" name="btnNext" class="btn btn-primary btn-lg" value="Tiếp theo"/>
