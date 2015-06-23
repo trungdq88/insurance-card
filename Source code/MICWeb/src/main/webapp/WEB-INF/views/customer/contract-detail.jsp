@@ -269,7 +269,7 @@
             </c:if>
             <c:if test="${contract.status.equalsIgnoreCase('Cancelled')}">
                 <form action="${pageContext.request.contextPath}/customer/contract" method="post">
-                    <div class="well well-lg text-center text-danger " style="height:122px !important;">
+                    <div class="well well-lg text-center text-danger " style="height:135px !important;">
                         <div class="form-group">
                             <label class="col-md-6 text-right fa-lg"> Hợp đồng đã bị hủy </label>
 
@@ -296,8 +296,14 @@
                             <div class="col-md-8 text-left">
                                     ${contract.cancelReason}
                             </div>
-                        </div>
+                        </div>   <br/>
+                        <div class="form-group" style="margin-bottom:5px">
+                            <label class="col-md-4 text-right">Ghi chú hủy: </label>
 
+                            <div class="col-md-8 text-left">
+                                    ${contract.cancelNote}
+                            </div>
+                        </div>
                     </div>
                 </form>
 
