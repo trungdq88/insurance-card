@@ -215,8 +215,6 @@
                                 <input type="hidden" name="paymentType" value="Sale">
                                 <input type="hidden" name="successUrl"
                                        value="/customer/contract?action=ActiveRenewContract">
-
-
                                 <input type="hidden" name="txtContractCode" value="${contract.contractCode}"/>
                                 <input type="hidden" name="action" value="RenewContract"/>
                                 <input type="hidden" id="contractStatus" value="${contract.status}"/>
@@ -269,7 +267,7 @@
             </c:if>
             <c:if test="${contract.status.equalsIgnoreCase('Cancelled')}">
                 <form action="${pageContext.request.contextPath}/customer/contract" method="post">
-                    <div class="well well-lg text-center text-danger " style="height:135px !important;">
+                    <div class="well well-lg text-center text-danger " style="height:132px !important;">
                         <div class="form-group">
                             <label class="col-md-6 text-right fa-lg"> Hợp đồng đã bị hủy </label>
 
@@ -280,9 +278,9 @@
                         <br/>
 
                         <div class="form-group" style="margin-bottom:5px">
-                            <label class="col-md-4 text-right">Đã cầu hủy lúc: </label>
+                            <label class="col-md-3 text-right">Đã cầu hủy lúc: </label>
 
-                            <div class="col-md-8 text-left">
+                            <div class="col-md-9 text-left">
                                 <fmt:formatDate value="${contract.cancelDate}" pattern="dd/MM/yyyy"/>
                                 lúc
                                 <fmt:formatDate value="${contract.cancelDate}" type="time"/>
@@ -291,16 +289,16 @@
                         <br/>
 
                         <div class="form-group" style="margin-bottom:5px">
-                            <label class="col-md-4 text-right">Lý do hủy: </label>
+                            <label class="col-md-3 text-right">Lý do hủy: </label>
 
-                            <div class="col-md-8 text-left">
+                            <div class="col-md-9 text-left">
                                     ${contract.cancelReason}
                             </div>
                         </div>   <br/>
                         <div class="form-group" style="margin-bottom:5px">
-                            <label class="col-md-4 text-right">Ghi chú hủy: </label>
+                            <label class="col-md-3 text-right">Ghi chú hủy: </label>
 
-                            <div class="col-md-8 text-left">
+                            <div class="col-md-9 text-left">
                                     ${contract.cancelNote}
                             </div>
                         </div>
@@ -309,6 +307,7 @@
 
             </c:if>
         </div>
+
         <div role="tabpanel">
             <!-- Nav tabs -->
             <ul class="nav nav-tabs" role="tablist">
@@ -327,7 +326,6 @@
             </ul>
         </div>
         <br/>
-
         <div class="tab-content">
             <div role="tabpanel" class="tab-pane active" id="commonInfo">
 

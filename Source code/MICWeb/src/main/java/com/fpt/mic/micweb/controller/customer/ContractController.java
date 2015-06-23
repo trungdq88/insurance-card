@@ -108,37 +108,20 @@ public class ContractController extends BasicController {
 
         String contractCode = (String) session.getAttribute("contractCode");
         Timestamp newExpiredDate = (Timestamp) session.getAttribute("newExpiredDate");
-
         r.equest.setAttribute("amountVND", (String) session.getAttribute("amountVND"));
         r.equest.setAttribute("redirectLink", "/customer/contract?action=ContractDetail&code=" + contractCode);
-
         r.equest.setAttribute("result", results);
         r.equest.setAttribute("ack", (String) session.getAttribute("ACK"));
         //renew contract by customer
-
-        java.util.Date date = new java.util.Date();
-
-
         CustomerBusniess customerBusiness = new CustomerBusniess();
+        boolean result = customerBusiness.renewContract(contractCode, newExpiredDate,
+                results.get("PAYMENTINFO_0_TRANSACTIONID").toString());
 
-        ContractEntity contract = customerBusiness.getContractDetail(contractCode);
-        contract.setExpiredDate(newExpiredDate);
-        contract.setStatus(Constants.ContractStatus.READY);
-
-        PaymentEntity payment = new PaymentEntity();
-        payment.setPaidDate(new Timestamp(date.getTime()));
-        payment.setPaymentMethod("PayPal payment");
-        payment.setContent("Gia Hạn Hợp Đồng");
-        payment.setAmount(contract.getContractFee());
-        payment.setPaypalTransId(results.get("PAYMENTINFO_0_TRANSACTIONID").toString());
-        payment.setContractCode(contract.getContractCode());
-        boolean result = customerBusiness.renewContract(contract, payment);
         if (result == true) {
             r.equest.setAttribute("message", "Gia hạn thành công.");
         } else {
             r.equest.setAttribute("message", "Gia hạn thất bại.");
         }
-        // insert information in payment table
         session.invalidate();
 
         return new JspPage(url);

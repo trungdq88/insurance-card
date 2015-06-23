@@ -1,4 +1,5 @@
 package com.fpt.mic.micweb.model.business;
+
 import com.fpt.mic.micweb.model.dao.CardDao;
 import com.fpt.mic.micweb.model.dao.CustomerDao;
 import com.fpt.mic.micweb.model.dao.ContractDao;
@@ -10,6 +11,7 @@ import com.fpt.mic.micweb.model.entity.PaymentEntity;
 import com.fpt.mic.micweb.utils.Constants;
 import sun.util.calendar.BaseCalendar;
 import sun.util.calendar.LocalGregorianCalendar;
+
 import java.awt.*;
 import java.sql.Date;
 import java.sql.Time;
@@ -59,17 +61,35 @@ public class CustomerBusniess {
     /**
      * renew contract
      *
-     * @param contract
-     * @param payment
+     * @param contractCode,        nexExpried
+     * @param paymentTracsactionId
      * @return contract
      */
-    public boolean renewContract(ContractEntity contract, PaymentEntity payment) {
+    public boolean renewContract(String contractCode, Timestamp newExprired, String paymentTracsactionId) {
+        //init
         boolean result = false;
         ContractDao contractDao = new ContractDao();
         PaymentDao paymentDao = new PaymentDao();
-        if (contractDao.update(contract) != null && paymentDao.update(payment) != null) {
-            result = true;
+        ContractEntity contract = contractDao.read(contractCode);
+        PaymentEntity payment = new PaymentEntity();
+        java.util.Date date = new java.util.Date();
+        /////////////////////////
+        if (contract != null) {
+            //update contract
+            contract.setExpiredDate(newExprired);
+            contract.setStatus(Constants.ContractStatus.READY);
+            //update payment
+            payment.setPaidDate(new Timestamp(date.getTime()));
+            payment.setPaymentMethod("PayPal payment");
+            payment.setContent("Gia Hạn Hợp Đồng");
+            payment.setAmount(contract.getMicContractTypeByContractTypeId().getPricePerYear());
+            payment.setPaypalTransId(paymentTracsactionId);
+            payment.setContractCode(contract.getContractCode());
+            if (contractDao.update(contract) != null && paymentDao.create(payment) != null) {
+                result = true;
+            }
         }
+
         return result;
 
     }
@@ -87,18 +107,15 @@ public class CustomerBusniess {
         ContractEntity contract = contractDao.read(contractCode);
         java.util.Date date = new java.util.Date();
         // no card
-        if(card == null){
+        if (card == null) {
             contract.setStatus(Constants.ContractStatus.NO_CARD);
-        }
-        else if ((new Timestamp(date.getTime()).before(contract.getExpiredDate()))){
+        } else if ((new Timestamp(date.getTime()).before(contract.getExpiredDate()))) {
             contract.setStatus(Constants.ContractStatus.READY);
-        }
-        else if ((new Timestamp(date.getTime()).after(contract.getExpiredDate()))){
+        } else if ((new Timestamp(date.getTime()).after(contract.getExpiredDate()))) {
             contract.setStatus(Constants.ContractStatus.EXPIRED);
         }
         contract.setCancelReason(null);
         contract.setCancelNote(null);
-
 
 
         if (contractDao.update(contract) != null) {
