@@ -14,7 +14,7 @@
                     <br/>
                     <br/>
                     <div class="text-center alert alert-info">
-                        <p class="bs-example text-capitalize">
+                        <p class="bs-example">
                             ${requestScope.MESSAGE}
                         </p>
                     </div>

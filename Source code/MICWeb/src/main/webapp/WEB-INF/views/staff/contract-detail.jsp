@@ -503,6 +503,9 @@
                             </p>
                         </div>
 
+                        <!-- Contract code -->
+                        <input type="hidden" name="renew:contractCode" value="${cont.contractCode}"/>
+
                         <!-- Contract type -->
                         <div id="renewFirst" class="form-group">
                             <label class="col-sm-5 control-label">Loại hợp đồng</label>
@@ -545,7 +548,7 @@
                             <label class="col-sm-5 control-label" for="expiredDate">Gia hạn đến *</label>
 
                             <div class="col-sm-4">
-                                <input id="expiredDate" name="txtExpiredDate" class="form-control input-md"
+                                <input id="expiredDate" name="renew:expiredDate" class="form-control input-md"
                                        type="date" required/>
                             </div>
                         </div>
@@ -558,7 +561,7 @@
                                 <div class="text-value">
                                     <span id="renewFee"
                                           style="color:deepskyblue; font-weight: bolder; font-size: large"></span>
-                                    <input type="hidden" id="contractFee" name="txtContractFee"/>
+                                    <input type="hidden" id="contractFee" name="renew:contractFee"/>
                                 </div>
                             </div>
                         </div>
@@ -574,15 +577,15 @@
                             <label class="col-sm-5 control-label" for="paidDate">Ngày nộp phí *</label>
 
                             <div class="col-sm-4">
-                                <input id="paidDate" name="txtPaidDate" class="form-control input-md"
+                                <input id="paidDate" name="renew:paidDate" class="form-control input-md"
                                        type="date" required>
-                                <input type="hidden" id="amount" name="txtAmount"/>
+                                <input type="hidden" id="amount" name="renew:amount"/>
                             </div>
                         </div>
                     </fieldset>
+                    <%--/Payment information--%>
                 </div>
                 <div class="modal-footer">
-                    <input type="hidden" name="txtContractCode" value="${cont.contractCode}"/>
                     <input type="hidden" name="action" value="renew"/>
                     <button type="submit" class="btn btn-success">
                         <i class="fa fa-arrow-right"></i>
@@ -610,12 +613,16 @@
                 </div>
                 <div class="modal-body">
                     <fieldset>
+
+                        <!-- Contract code -->
+                        <input type="hidden" name="cancel:contractCode" value="${cont.contractCode}"/>
+
                         <!-- Cancel date -->
                         <div class="form-group">
                             <label class="col-sm-4 control-label" for="cancelDate">Ngày hủy hợp đồng *</label>
 
                             <div class="col-sm-4">
-                                <input id="cancelDate" name="txtCancelDate" type="date" required
+                                <input id="cancelDate" name="cancel:cancelDate" type="date" required
                                        class="form-control input-md" value="${cont.cancelDate}">
                             </div>
                         </div>
@@ -626,9 +633,9 @@
 
                             <div class="col-sm-7">
                                 <c:if test="${cont.status eq 'Request cancel'}">
-                                    <input type="hidden" name="txtCancelReason" value="${cont.cancelReason}"/>
+                                    <input type="hidden" name="cancel:cancelReason" value="${cont.cancelReason}"/>
                                 </c:if>
-                                <input id="cancelReason" name="txtCancelReason" type="text" required maxlength="255"
+                                <input id="cancelReason" name="cancel:cancelReason" type="text" required maxlength="255"
                                        class="form-control input-md" value="${cont.cancelReason}">
                             </div>
                         </div>
@@ -638,14 +645,13 @@
                             <label class="col-sm-4 control-label" for="cancelNote">Ghi chú</label>
 
                             <div class="col-sm-7">
-                                <textarea id="cancelNote" name="txtCancelNote" rows="4" maxlength="2000"
+                                <textarea id="cancelNote" name="cancel:cancelNote" rows="4" maxlength="2000"
                                           class="form-control input-lg"></textarea>
                             </div>
                         </div>
                     </fieldset>
                 </div>
                 <div class="modal-footer">
-                    <input type="hidden" name="txtContractCode" value="${cont.contractCode}"/>
                     <input type="hidden" name="action" value="cancel"/>
                     <button type="submit" class="btn btn-danger">
                         <i class="fa fa-check"></i>

@@ -5,15 +5,15 @@ import com.fpt.mic.micweb.framework.R;
 import com.fpt.mic.micweb.framework.responses.JspPage;
 import com.fpt.mic.micweb.framework.responses.ResponseObject;
 import com.fpt.mic.micweb.model.business.StaffBusiness;
+import com.fpt.mic.micweb.model.dto.form.CancelContractDto;
 import com.fpt.mic.micweb.model.dto.form.CreateContractDto;
+import com.fpt.mic.micweb.model.dto.form.RenewContractDto;
 import com.fpt.mic.micweb.model.entity.ContractEntity;
 import com.fpt.mic.micweb.model.entity.ContractTypeEntity;
 import com.fpt.mic.micweb.model.entity.CustomerEntity;
 import com.fpt.mic.micweb.model.entity.PaymentEntity;
-import com.fpt.mic.micweb.utils.DateUtils;
 
 import javax.servlet.annotation.WebServlet;
-import java.sql.Timestamp;
 import java.util.List;
 
 /**
@@ -68,8 +68,7 @@ public class ContractController extends BasicController {
 
     public ResponseObject postCreate(R r) {
         // Get contract information
-        CreateContractDto dto = (CreateContractDto)
-                r.ead.entity(CreateContractDto.class, "contract");
+        CreateContractDto dto = (CreateContractDto) r.ead.entity(CreateContractDto.class, "contract");
 
         // Call to business object
         StaffBusiness staffBus = new StaffBusiness();
@@ -89,43 +88,38 @@ public class ContractController extends BasicController {
 
     public ResponseObject postRenew(R r) {
         // Get renew contract information
-        String contractCode = r.equest.getParameter("txtContractCode");
-        Timestamp expiredDate = DateUtils.stringToTime(r.equest.getParameter("txtExpiredDate"));
-
-        // Get renew payment information
-        Timestamp paidDate = DateUtils.stringToTime(r.equest.getParameter("txtPaidDate"));
-        Float amount = Float.parseFloat(r.equest.getParameter("txtAmount"));
+        RenewContractDto dto = (RenewContractDto) r.ead.entity(RenewContractDto.class, "renew");
 
         // Call to business object
         StaffBusiness staffBus = new StaffBusiness();
-        boolean result = staffBus.renewContract(contractCode, expiredDate, paidDate, amount);
+        boolean result = staffBus.renewContract(dto);
+
         if (result) {
             msg = "Đã gia hạn hợp đồng thành công";
         } else {
             msg = "Gia hạn hợp đồng thất bại";
         }
-        r.equest.setAttribute("CODE", contractCode);
+        // Set contract code to request scope. Use it in message page.
+        r.equest.setAttribute("CODE", dto.getContractCode());
         r.equest.setAttribute("MESSAGE", msg);
         return new JspPage("staff/message.jsp");
     }
 
     public ResponseObject postCancel(R r) {
         // Get cancel contract information
-        String contractCode = r.equest.getParameter("txtContractCode");
-        String inputDate = r.equest.getParameter("txtCancelDate");
-        Timestamp cancelDate = DateUtils.stringToTime(inputDate);
-        String cancelReason = r.equest.getParameter("txtCancelReason");
-        String cancelNote = r.equest.getParameter("txtCancelNote");
+        CancelContractDto dto = (CancelContractDto) r.ead.entity(CancelContractDto.class, "cancel");
 
         // Call to business object
         StaffBusiness staffBus = new StaffBusiness();
-        boolean result = staffBus.cancelContract(contractCode, cancelDate, cancelReason, cancelNote);
+        boolean result = staffBus.cancelContract(dto);
+
         if (result) {
             msg = "Đã hủy hợp đồng thành công";
         } else {
             msg = "Hủy hợp đồng thất bại";
         }
-        r.equest.setAttribute("CODE", contractCode);
+        // Set contract code to request scope. Use it in message page.
+        r.equest.setAttribute("CODE", dto.getContractCode());
         r.equest.setAttribute("MESSAGE", msg);
         return new JspPage("staff/message.jsp");
     }
