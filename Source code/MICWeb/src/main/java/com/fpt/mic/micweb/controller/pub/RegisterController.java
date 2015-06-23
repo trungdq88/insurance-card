@@ -9,6 +9,8 @@ import com.fpt.mic.micweb.model.business.ContractBusiness;
 import com.fpt.mic.micweb.model.business.RegisterBusiness;
 import com.fpt.mic.micweb.model.dao.ContractDao;
 import com.fpt.mic.micweb.model.dto.RegisterInformationDto;
+import com.fpt.mic.micweb.model.dto.form.PublicHomeFormDto;
+import com.fpt.mic.micweb.model.dto.form.PublicRegisterFormDto;
 import com.fpt.mic.micweb.model.entity.ContractEntity;
 import com.fpt.mic.micweb.model.entity.ContractTypeEntity;
 import com.fpt.mic.micweb.model.entity.CustomerEntity;
@@ -32,17 +34,8 @@ public class RegisterController extends BasicController {
     }
 
     public ResponseObject postRegister(R r) {
-        CustomerEntity customerEntity = new CustomerEntity();
-        customerEntity.setName(r.equest.getParameter("txtName"));
-        customerEntity.setEmail(r.equest.getParameter("txtEmail"));
-        customerEntity.setAddress(r.equest.getParameter("txtAddress"));
-        customerEntity.setPersonalId(r.equest.getParameter("txtPersonalId"));
-        customerEntity.setPhone(r.equest.getParameter("txtPhone"));
-        r.equest.setAttribute("txtStartDate", r.equest.getParameter("txtStartDate"));
-        r.equest.setAttribute("ddlContractType", r.equest.getParameter("ddlContractType"));
-        r.equest.setAttribute("txtFee", r.equest.getParameter("txtFee"));
-
-        ContractTypeEntity contractTypeEntity = new ContractTypeEntity();
+        PublicHomeFormDto publicHomeFormDto = (PublicHomeFormDto) r.ead.entity(PublicHomeFormDto.class,"register");
+        r.equest.setAttribute("startDate", r.equest.getParameter("register:startDate"));
         ContractBusiness contractBusiness = new ContractBusiness();
         List<ContractTypeEntity> list = contractBusiness.getAllContractType();
         HashMap<Integer,ContractTypeEntity> mapContractType = new HashMap<Integer, ContractTypeEntity>();
@@ -50,60 +43,17 @@ public class RegisterController extends BasicController {
             mapContractType.put(list.get(i).getId(),list.get(i));
         }
         r.equest.setAttribute("mapContractType",mapContractType);
-        r.equest.setAttribute("customerEntity", customerEntity);
+        r.equest.setAttribute("publicHomeFormDto", publicHomeFormDto);
         return new JspPage("public/register.jsp");
     }
 
     public ResponseObject postCreateContract(R r) {
         String url = "public/error.jsp";
         // Get information...
-        CustomerEntity customerEntity = new CustomerEntity();
-        ContractEntity contractEntity = new ContractEntity();
-
-        customerEntity.setPhone(r.equest.getParameter("txtPhone"));
-        customerEntity.setAddress(r.equest.getParameter("txtAddress"));
-        customerEntity.setEmail(r.equest.getParameter("txtEmail"));
-        customerEntity.setName(r.equest.getParameter("txtName"));
-        customerEntity.setPersonalId(r.equest.getParameter("txtPersonalId"));
-
-        contractEntity.setPlate(r.equest.getParameter("txtPlate"));
-        contractEntity.setBrand(r.equest.getParameter("txtBrand"));
-        contractEntity.setModelCode(r.equest.getParameter("txtModel"));
-        contractEntity.setVehicleType(r.equest.getParameter("txtType"));
-        contractEntity.setColor(r.equest.getParameter("txtColor"));
-        contractEntity.setEngine(r.equest.getParameter("txtEngine"));
-        contractEntity.setChassis(r.equest.getParameter("txtChassis"));
-        contractEntity.setCapacity(r.equest.getParameter("txtCapacity"));
-
-        try {
-            contractEntity.setYearOfManufacture(Integer.parseInt(r.equest.getParameter("txtYearOfMan")));
-        } catch (NumberFormatException e) {
-            e.printStackTrace();
-        }
-        try {
-            contractEntity.setWeight(Integer.parseInt(r.equest.getParameter("txtWeight")));
-        } catch (NumberFormatException e) {
-            e.printStackTrace();
-        }
-        try {
-            contractEntity.setSeatCapacity(Integer.parseInt(r.equest.getParameter("txtSeatCapacity")));
-        } catch (NumberFormatException e) {
-            e.printStackTrace();
-        }
-
-        contractEntity.setContractFee(Float.parseFloat(r.equest.getParameter("txtFee")));
-
-        contractEntity.setStatus(Constants.ContractStatus.PENDING);
-        int contractTypeId = Integer.parseInt(r.equest.getParameter("ddlContractType"));
-        contractEntity.setContractTypeId(contractTypeId);
-        // lay ngay nhap vao - add later
-        Timestamp startDate = DateUtils.stringToTime(r.equest.getParameter("txtStartDate"));
-        contractEntity.setStartDate(startDate);
-        contractEntity.setExpiredDate(startDate);
-
+        PublicRegisterFormDto publicRegisterFormDto= (PublicRegisterFormDto) r.ead.entity(PublicRegisterFormDto.class,"register");
         // Call to business object
         RegisterBusiness registerBusiness = new RegisterBusiness();
-        RegisterInformationDto register = registerBusiness.registerNewContract(customerEntity, contractEntity);
+        RegisterInformationDto register = registerBusiness.registerNewContract(publicRegisterFormDto);
 
         if (register != null) {
             HttpSession session = r.equest.getSession();
@@ -126,36 +76,16 @@ public class RegisterController extends BasicController {
 
         r.equest.setAttribute("result", results);
         r.equest.setAttribute("ack", (String) session.getAttribute("ACK"));
-        HashMap<String,String> details = (HashMap<String,String> )session.getAttribute("checkoutDetails");
         r.equest.setAttribute("amountVND",(String) session.getAttribute("amountVND"));
         r.equest.setAttribute("redirectLink","home");
-        ContractEntity contractEntity = new ContractEntity();
-        ContractDao contractDao = new ContractDao();
-        PaymentEntity paymentEntity = new PaymentEntity();
 
-        // get contract just added by contract_code
-        String code = (String) session.getAttribute("CONTRACT_CODE");
-        contractEntity = contractDao.read(code);
-        DateUtils date = new DateUtils();
-
-        // set start date
-        Timestamp currentDate = new Timestamp(new Date().getTime());
-        contractEntity.setStartDate(currentDate);
-        // set expired date = start_date + 1 year
-        contractEntity.setExpiredDate(DateUtils.addOneYear(contractEntity.getStartDate()));
-        contractEntity.setStatus(Constants.ContractStatus.NO_CARD);
-        contractDao.update(contractEntity);
-
-        paymentEntity.setPaidDate(new Timestamp(new Date().getTime()));
-        paymentEntity.setPaymentMethod("PayPal payment");
-        paymentEntity.setContent("Đăng ký hợp đồng mới");
-        paymentEntity.setAmount(Float.parseFloat((String) session.getAttribute("amountVND")));
-        paymentEntity.setPaypalTransId(results.get("PAYMENTINFO_0_TRANSACTIONID").toString());
-        paymentEntity.setContractCode(contractEntity.getContractCode());
-
-
+        String contractCode = (String) session.getAttribute("CONTRACT_CODE");
+        String paypalTransId = results.get("PAYMENTINFO_0_TRANSACTIONID").toString();
+        String paymentMethod = "PayPal payment";
+        String paymentContent = "Đăng ký hợp đồng mới";
+        Float amount = Float.parseFloat((String) session.getAttribute("amountVND"));
         RegisterBusiness registerBusiness = new RegisterBusiness();
-        registerBusiness.updateContractPayment(contractEntity, paymentEntity);
+        registerBusiness.updateContractPayment(contractCode,paymentMethod, paymentContent,amount, paypalTransId);
         session.invalidate();
         return new JspPage(url);
     }

@@ -81,9 +81,6 @@ public class CheckoutController extends BasicController{
                 session.setAttribute("amountVND", checkoutDetails.get("PAYMENTREQUEST_0_AMT"));
                 Double paymentAmount =(Double.parseDouble(checkoutDetails.get("PAYMENTREQUEST_0_AMT")));
                 paymentAmount = paymentAmount/CurrencyUtils.getCurrentRate();
-
-                System.out.println(CurrencyUtils.getCurrentRate());
-                System.out.println(paymentAmount);
                 paymentAmount = NumberUtils.round(paymentAmount,2);
                 checkoutDetails.put("PAYMENTREQUEST_0_ITEMAMT", paymentAmount.toString());
                 checkoutDetails.put("PAYMENTREQUEST_0_AMT", paymentAmount.toString());
