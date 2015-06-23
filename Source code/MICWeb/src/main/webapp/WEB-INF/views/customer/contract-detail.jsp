@@ -23,8 +23,7 @@
         <div class="row">
 
             <div class="col-lg-12">
-                <h2 class="page-header ">Hợp Đồng ${contract.contractCode} <c:if
-                        test="${contract.status.equalsIgnoreCase('Cancelled')}">đã bị hủy</c:if>
+                <h2 class="page-header ">Hợp Đồng ${contract.contractCode}
                      <span class="pull-right">
                            <c:if test="${contract.status.equalsIgnoreCase('Request cancel') || contract.status.equalsIgnoreCase('Cancelled')}">
 
@@ -193,8 +192,10 @@
                                             <input style="border:none; background-color: white" type="hidden"
                                                    id="payAmount" disabled="disabled"
                                                    value="${contract.getMicContractTypeByContractTypeId().getPricePerYear()} VNĐ"/>
-                                            <fmt:formatNumber value="${contract.getMicContractTypeByContractTypeId().getPricePerYear()}" type="currency"
-                                                              maxFractionDigits="0"/>
+                                            <fmt:formatNumber
+                                                    value="${contract.getMicContractTypeByContractTypeId().getPricePerYear()}"
+                                                    type="currency"
+                                                    maxFractionDigits="0"/>
                                         </div>
 
                                     </div>
@@ -237,21 +238,61 @@
             <c:if test="${contract.status.equalsIgnoreCase('Request cancel')}">
                 <form action="${pageContext.request.contextPath}/customer/contract" method="post">
                     <div class="well well-lg text-center text-danger " style="height:122px !important;">
-                        Hợp đồng đã được yêu cầu hủy vui lòng chờ xác nhận của nhân viên &nbsp;
+                        <label>Hợp đồng đã được yêu cầu hủy vui lòng chờ xác nhận của nhân viên</label> &nbsp;
                         <input type="hidden" name="contractcode"
                                value="${contract.contractCode}"/>
                         <input type="hidden" name="action" value="RejectRequestCancel"/>
                         <input type="submit" class="btn btn-danger small" value="Hủy Yêu Cầu"/><br/>
-                        <div class="form-group"style="margin-bottom:5px">
+
+                        <div class="form-group" style="margin-bottom:5px">
                             <label class="col-md-4 text-right">Đã cầu hủy lúc: </label>
+
                             <div class="col-md-8 text-left">
-                                    <fmt:formatDate value="${contract.cancelDate}" pattern="dd/MM/yyyy"/>
-                                    lúc
-                                    <fmt:formatDate value="${contract.cancelDate}" type="time"/>
+                                <fmt:formatDate value="${contract.cancelDate}" pattern="dd/MM/yyyy"/>
+                                lúc
+                                <fmt:formatDate value="${contract.cancelDate}" type="time"/>
                             </div>
-                        </div><br/>
+                        </div>
+                        <br/>
+
                         <div class="form-group" style="margin-bottom:5px">
                             <label class="col-md-4 text-right">Lý do hủy: </label>
+
+                            <div class="col-md-8 text-left">
+                                    ${contract.cancelReason}
+                            </div>
+                        </div>
+
+                    </div>
+                </form>
+
+            </c:if>
+            <c:if test="${contract.status.equalsIgnoreCase('Cancelled')}">
+                <form action="${pageContext.request.contextPath}/customer/contract" method="post">
+                    <div class="well well-lg text-center text-danger " style="height:122px !important;">
+                        <div class="form-group">
+                            <label class="col-md-6 text-right fa-lg"> Hợp đồng đã bị hủy </label>
+
+                            <div class="col-md-6">
+
+                            </div>
+                        </div>
+                        <br/>
+
+                        <div class="form-group" style="margin-bottom:5px">
+                            <label class="col-md-4 text-right">Đã cầu hủy lúc: </label>
+
+                            <div class="col-md-8 text-left">
+                                <fmt:formatDate value="${contract.cancelDate}" pattern="dd/MM/yyyy"/>
+                                lúc
+                                <fmt:formatDate value="${contract.cancelDate}" type="time"/>
+                            </div>
+                        </div>
+                        <br/>
+
+                        <div class="form-group" style="margin-bottom:5px">
+                            <label class="col-md-4 text-right">Lý do hủy: </label>
+
                             <div class="col-md-8 text-left">
                                     ${contract.cancelReason}
                             </div>
