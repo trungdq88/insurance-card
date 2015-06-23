@@ -1,29 +1,61 @@
 package com.fpt.mic.micweb.model.dto.form;
 
+import com.fpt.mic.micweb.model.business.CustomerBusniess;
+import com.fpt.mic.micweb.model.dao.CustomerDao;
+import org.hibernate.validator.constraints.NotEmpty;
+
+import javax.validation.constraints.AssertTrue;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.sql.Timestamp;
 
 /**
  * Created by Kha on 18/06/2015.
  */
 public class CreateContractDto {
+    @NotEmpty(message = "Mã khách khàng không được để trống")
+    // Mã khách hàng không tồn tại: @see {@link isValid}
     private String customerCode;
+    @NotNull(message = "Loại hợp đồng không được để trống")
     private Integer contractTypeId;
+    @NotNull(message = "Thời điểm có hiệu lực không được để trống")
     private Timestamp startDate;
+    @NotNull(message = "Thời điểm hết hiệu lực không được để trống")
     private Timestamp expiredDate;
+    @NotNull(message = "Phí bảo hiểm không được để trống")
     private Float contractFee;
+    @NotEmpty(message = "Biển số xe không được để trống")
+    @Size(min = 4, max = 15, message = "Biển số xe phải có từ {min} đến {max} ký tự")
     private String plate;
+    @NotEmpty(message = "Nhãn hiệu xe không được để trống")
+    @Size(min = 2, max = 20, message = "Nhãn hiệu xe phải có từ {min} đến {max} ký tự")
     private String brand;
     private String modelCode;
     private String vehicleType;
     private String color;
+    @NotEmpty(message = "Số máy không được để trống")
+    @Size(min = 2, max = 20, message = "Số máy phải có từ {min} đến {max} ký tự")
     private String engine;
+    @NotEmpty(message = "Số khung không được để trống")
+    @Size(min = 2, max = 20, message = "Số khung phải có từ {min} đến {max} ký tự")
     private String chassis;
+    @NotEmpty(message = "Dung tích không được để trống")
+    @Size(min = 2, max = 20, message = "Dung tích phải có từ {min} đến {max} ký tự")
     private String capacity;
     private Integer yearOfManufacture;
     private Integer weight;
     private Integer seatCapacity;
+    @NotNull(message = "Ngày nộp phí không được để trống")
     private Timestamp paidDate;
+    @NotNull(message = "Phí bảo hiểm không được để trống")
     private Float amount;
+
+    @AssertTrue(message="Mã khách hàng không tồn tại")
+    private boolean isValid() {
+        CustomerDao customerDao = new CustomerDao();
+        return customerCode != null && customerDao.read(customerCode) != null;
+    }
 
     public CreateContractDto() {
     }

@@ -1,20 +1,45 @@
 package com.fpt.mic.micweb.framework;
 
 
+import com.fpt.mic.micweb.model.entity.ContractEntity;
 import com.fpt.mic.micweb.utils.DateUtils;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
 import java.beans.Introspector;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 /**
  * FPT University - Capstone Project - Summer 2015 - MICWeb
  * Created by dinhquangtrung on 6/21/15.
  */
 public class FormReader<T> {
+    /**
+     * Request received from R
+     */
     public HttpServletRequest request;
+
+    /**
+     * Validator factory and validator instance
+     * This should be static to improve performance
+     */
+    private static ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+    private static Validator validator = factory.getValidator();
+
+    /**
+     * Read entity from request
+     * @param dtoClass
+     * @param formPrefix
+     * @return
+     */
     public T entity(Class<T> dtoClass, String formPrefix) {
         try {
             T dto = dtoClass.newInstance();
@@ -95,5 +120,19 @@ public class FormReader<T> {
         }
 
         return null;
+    }
+
+    /**
+     * Validate object, returns a list of error messages
+     * @param object
+     * @return
+     */
+    public List<String> validate(T object) {
+        Set<ConstraintViolation<T>> validate = validator.validate(object);
+        List<String> errors = new ArrayList<String>();
+        for (ConstraintViolation<T> violator : validate) {
+            errors.add(violator.getMessage());
+        }
+        return errors;
     }
 }

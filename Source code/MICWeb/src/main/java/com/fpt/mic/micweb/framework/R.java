@@ -1,6 +1,5 @@
 package com.fpt.mic.micweb.framework;
 
-import javax.persistence.metamodel.Metamodel;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 

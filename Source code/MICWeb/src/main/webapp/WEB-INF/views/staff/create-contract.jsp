@@ -15,6 +15,15 @@
         </div>
         <div class="row">
             <div class="col-lg-12">
+                <c:if test="${not empty validateErrors}">
+                    <div class="text-danger">
+                        <ul>
+                            <c:forEach var="error" items="${validateErrors}">
+                                <li>${error}</li>
+                            </c:forEach>
+                        </ul>
+                    </div>
+                </c:if>
                 <p class="text-right"><b>Các ô có dấu * là bắt buộc</b></p>
 
                 <c:set var="listType" value="${requestScope.CONTRACTTYPE}"/>

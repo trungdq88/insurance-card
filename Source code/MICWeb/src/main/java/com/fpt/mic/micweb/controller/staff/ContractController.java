@@ -69,6 +69,17 @@ public class ContractController extends BasicController {
     public ResponseObject postCreate(R r) {
         // Get contract information
         CreateContractDto dto = (CreateContractDto) r.ead.entity(CreateContractDto.class, "contract");
+        List errors = r.ead.validate(dto);
+
+        // If there is validation errors
+        if (errors.size() > 0) {
+            // Send error messages to JSP page
+            r.equest.setAttribute("validateErrors", errors);
+            // Re-call the create page
+            return getCreate(r);
+        }
+
+        // If the code reached this line that means there is no validation errors
 
         // Call to business object
         StaffBusiness staffBus = new StaffBusiness();
