@@ -75,6 +75,8 @@ public class ContractController extends BasicController {
         if (errors.size() > 0) {
             // Send error messages to JSP page
             r.equest.setAttribute("validateErrors", errors);
+            // Send submitted data to JSP page
+            r.equest.setAttribute("submitted", dto);
             // Re-call the create page
             return getCreate(r);
         }

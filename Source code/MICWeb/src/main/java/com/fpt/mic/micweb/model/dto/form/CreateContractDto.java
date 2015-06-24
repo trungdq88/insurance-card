@@ -3,6 +3,7 @@ package com.fpt.mic.micweb.model.dto.form;
 import com.fpt.mic.micweb.model.business.CustomerBusniess;
 import com.fpt.mic.micweb.model.dao.CustomerDao;
 import org.hibernate.validator.constraints.NotEmpty;
+import org.hibernate.validator.constraints.Range;
 
 import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.NotNull;
@@ -15,7 +16,7 @@ import java.sql.Timestamp;
  */
 public class CreateContractDto {
     @NotEmpty(message = "Mã khách khàng không được để trống")
-    // Mã khách hàng không tồn tại: @see {@link isValid}
+    // Mã khách hàng không tồn tại: @see {@link isNotExisted}
     private String customerCode;
     @NotNull(message = "Loại hợp đồng không được để trống")
     private Integer contractTypeId;
@@ -43,6 +44,7 @@ public class CreateContractDto {
     @NotEmpty(message = "Dung tích không được để trống")
     @Size(min = 2, max = 20, message = "Dung tích phải có từ {min} đến {max} ký tự")
     private String capacity;
+    @Range(min = 1900, max = 2200, message = "Năm sản xuất phải có giá trị từ {min} đến {max}")
     private Integer yearOfManufacture;
     private Integer weight;
     private Integer seatCapacity;
@@ -51,11 +53,17 @@ public class CreateContractDto {
     @NotNull(message = "Phí bảo hiểm không được để trống")
     private Float amount;
 
-    @AssertTrue(message="Mã khách hàng không tồn tại")
-    private boolean isValid() {
+    @AssertTrue(message = "Mã khách hàng không tồn tại")
+    private boolean isNotExisted() {
         CustomerDao customerDao = new CustomerDao();
         return customerCode != null && customerDao.read(customerCode) != null;
     }
+
+    @AssertTrue(message = "Thời điểm có hiệu lực phải sau thời điểm hết hiệu lực")
+    private boolean isValidDate() {
+        return expiredDate.after(startDate);
+    }
+
 
     public CreateContractDto() {
     }

@@ -29,7 +29,7 @@
                 <c:set var="listType" value="${requestScope.CONTRACTTYPE}"/>
 
                 <form action="${pageContext.request.contextPath}/staff/contract"
-                      method="post" class="form-horizontal">
+                      method="post" class="form-horizontal" novalidate>
                     <fieldset>
                         <legend>Thông tin khách hàng</legend>
 
@@ -40,7 +40,7 @@
                             <div class="col-sm-2">
                                 <input id="customerCode" name="contract:customerCode" class="form-control input-md"
                                        type="text" required pattern="^KH([0-9A-Z]{4,8})$"
-                                       title="Ví dụ: KH49S4">
+                                       title="Ví dụ: KH49S4" value="${submitted.customerCode}">
                             </div>
 
                             <div class="col-sm-2" data-toggle="modal" data-target="#select-customer-modal">
@@ -117,7 +117,8 @@
                                         Vui lòng chọn loại hợp đồng
                                     </option>
                                     <c:forEach var="type" items="${listType}">
-                                        <option label="${type.name}" value="${type.id}">
+                                        <option label="${type.name}" value="${type.id}"
+                                        ${type.id == submitted.contractTypeId ? "selected" : ""}>
                                                 ${type.pricePerYear}
                                         </option>
                                     </c:forEach>
@@ -131,7 +132,8 @@
 
                             <div class="col-sm-3">
                                 <input id="startDate" name="contract:startDate" class="form-control input-md"
-                                       type="date" required/>
+                                       type="date" required
+                                       value="<fmt:formatDate value="${submitted.startDate}" pattern="yyyy-MM-dd" />"/>
                             </div>
                         </div>
 
@@ -141,7 +143,8 @@
 
                             <div class="col-sm-3">
                                 <input id="expiredDate" name="contract:expiredDate" class="form-control input-md"
-                                       type="date" required/>
+                                       type="date" required
+                                       value="<fmt:formatDate value="${submitted.expiredDate}" pattern="yyyy-MM-dd" />"/>
                             </div>
                         </div>
 
@@ -154,8 +157,8 @@
                                     <span id="displayFee"
                                           style="color:red; font-weight: bolder; font-size: large"></span>
                                 </div>
-                                <input type="hidden" id="contractFee" name="contract:contractFee">
-                                <input type="hidden" id="amount" name="contract:amount">
+                                <input type="hidden" id="contractFee" name="contract:contractFee" value="${submitted.contractFee}">
+                                <input type="hidden" id="amount" name="contract:amount" value="${submitted.amount}" >
                             </div>
                         </div>
                     </fieldset>
@@ -172,7 +175,8 @@
                             <div class="col-sm-3">
                                 <input id="plate" name="contract:plate" class="form-control input-md"
                                        type="text" required minlength="4" maxlength="15"
-                                       title="Vui lòng nhập biển số xe!" placeholder="Ví dụ: 78Y9-15383">
+                                       title="Vui lòng nhập biển số xe!" placeholder="Ví dụ: 78Y9-15383"
+                                       value="${submitted.plate}">
                             </div>
 
                             <label class="col-sm-2 control-label" for="brand">Nhãn hiệu *</label>
@@ -180,7 +184,8 @@
                             <div class="col-sm-3">
                                 <input id="brand" name="contract:brand" class="form-control input-md"
                                        type="text" required minlength="2" maxlength="20"
-                                       title="Vui lòng nhập nhãn hiệu xe!" placeholder="Ví dụ: Honda">
+                                       title="Vui lòng nhập nhãn hiệu xe!" placeholder="Ví dụ: Honda"
+                                       value="${submitted.brand}">
                             </div>
                         </div>
 
@@ -191,7 +196,8 @@
                             <div class="col-sm-3">
                                 <input id="engine" name="contract:engine" class="form-control input-md"
                                        type="text" required minlength="2" maxlength="20"
-                                       title="Vui lòng nhập số máy xe!">
+                                       title="Vui lòng nhập số máy xe!"
+                                       value="${submitted.engine}">
                             </div>
 
                             <label class="col-sm-2 control-label" for="chassis">Số khung *</label>
@@ -199,7 +205,8 @@
                             <div class="col-sm-3">
                                 <input id="chassis" name="contract:chassis" class="form-control input-md"
                                        type="text" required minlength="2" maxlength="20"
-                                       title="Vui lòng nhập số khung xe!">
+                                       title="Vui lòng nhập số khung xe!"
+                                       value="${submitted.chassis}">
                             </div>
                         </div>
 
@@ -210,7 +217,8 @@
                             <div class="col-sm-2">
                                 <input id="capacity" name="contract:capacity" class="form-control input-md"
                                        type="text" required minlength="2" maxlength="20"
-                                       title="Vui lòng nhập dung tích xe!">
+                                       title="Vui lòng nhập dung tích xe!"
+                                       value="${submitted.capacity}">
                             </div>
 
                             <label class="col-sm-3 control-label" for="color">Màu sơn</label>
@@ -218,7 +226,8 @@
                             <div class="col-sm-3">
                                 <input id="color" name="contract:color" class="form-control input-md"
                                        type="text" minlength="2" maxlength="20"
-                                       title="Vui lòng nhập màu sơn xe!">
+                                       title="Vui lòng nhập màu sơn xe!"
+                                       value="${submitted.color}">
                             </div>
                         </div>
 
@@ -229,7 +238,8 @@
                             <div class="col-sm-3">
                                 <input id="vehicleType" name="contract:vehicleType" class="form-control input-md"
                                        type="text" minlength="2" maxlength="20"
-                                       title="Vui lòng nhập loại xe!" placeholder="Ví dụ: Hai bánh">
+                                       title="Vui lòng nhập loại xe!" placeholder="Ví dụ: Hai bánh"
+                                       value="${submitted.vehicleType}">
                             </div>
 
                             <label class="col-sm-2 control-label" for="modelCode">Số loại</label>
@@ -237,7 +247,8 @@
                             <div class="col-sm-3">
                                 <input id="modelCode" name="contract:modelCode" class="form-control input-md"
                                        type="text" minlength="2" maxlength="20"
-                                       title="Vui lòng nhập số loại xe!" placeholder="Ví dụ: Air Blade">
+                                       title="Vui lòng nhập số loại xe!" placeholder="Ví dụ: Air Blade"
+                                       value="${submitted.modelCode}">
                             </div>
                         </div>
 
@@ -248,7 +259,8 @@
                             <div class="col-sm-2">
                                 <input id="yearOfMan" name="contract:yearOfManufacture" class="form-control input-md"
                                        type="number" min="1900" max="2200"
-                                       title="Vui lòng nhập năm sản xuất xe!">
+                                       title="Vui lòng nhập năm sản xuất xe!"
+                                       value="${submitted.yearOfManufacture}">
                             </div>
 
                             <label class="col-sm-3 control-label" for="weight">Tự trọng (kg)</label>
@@ -256,7 +268,8 @@
                             <div class="col-sm-2">
                                 <input id="weight" name="contract:weight" class="form-control input-md"
                                        type="number" min="1" max="1000"
-                                       title="Vui lòng nhập tự trọng của xe!">
+                                       title="Vui lòng nhập tự trọng của xe!"
+                                       value="${submitted.weight}">
                             </div>
                         </div>
 
@@ -267,7 +280,8 @@
                             <div class="col-sm-2">
                                 <input id="seatCapacity" name="contract:seatCapacity" class="form-control input-md"
                                        type="number" min="1" max="1000"
-                                       title="Vui lòng nhập số người cho phép chở!">
+                                       title="Vui lòng nhập số người cho phép chở!"
+                                       value="${submitted.seatCapacity}">
                             </div>
                         </div>
                     </fieldset>
@@ -283,7 +297,8 @@
 
                             <div class="col-sm-3">
                                 <input id="paidDate" name="contract:paidDate" class="form-control input-md"
-                                       type="date" required>
+                                       type="date" required
+                                       value="<fmt:formatDate value="${submitted.paidDate}" pattern="yyyy-MM-dd" />">
                             </div>
                         </div>
                     </fieldset>
@@ -355,13 +370,19 @@
 
 <script>
     $(document).ready(function () {
-        $('#startDate').val(getCurrentDate());
+        if ($('#startDate').val() == "") {
+            $('#startDate').val(getCurrentDate());
+        }
         /*document.getElementById("startDate").min = getCurrentDateInLastWeek();
          document.getElementById("startDate").max = getCurrentDateInNextYear();*/
-        $('#expiredDate').val(getCurrentDateInNextYear());
+        if ($('#expiredDate').val() == "") {
+            $('#expiredDate').val(getCurrentDateInNextYear());
+        }
         document.getElementById("expiredDate").min = getCurrentDateInNextWeek();
         document.getElementById("expiredDate").max = getCurrentDateInNextYear();
-        $('#paidDate').val(getCurrentDate());
+        if ($('#paidDate').val() == "") {
+            $('#paidDate').val(getCurrentDate());
+        }
         /*document.getElementById("paidDate").min = getCurrentDateInLastWeek();
          document.getElementById("paidDate").max = getCurrentDateInNextYear();*/
 
@@ -390,7 +411,7 @@
             $('#contractFee').val(contractFee);
             $('#amount').val(contractFee);
             $('#displayFee').text(contractFee.formatMoney(0));
-        });
+        }).change();
     });
 </script>
 
