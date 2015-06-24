@@ -29,7 +29,7 @@
                 <c:set var="listType" value="${requestScope.CONTRACTTYPE}"/>
 
                 <form action="${pageContext.request.contextPath}/staff/contract"
-                      method="post" class="form-horizontal" novalidate>
+                      method="post" class="form-horizontal">
                     <fieldset>
                         <legend>Thông tin khách hàng</legend>
 
