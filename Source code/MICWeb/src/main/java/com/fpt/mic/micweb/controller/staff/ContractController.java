@@ -3,6 +3,7 @@ package com.fpt.mic.micweb.controller.staff;
 import com.fpt.mic.micweb.framework.BasicController;
 import com.fpt.mic.micweb.framework.R;
 import com.fpt.mic.micweb.framework.responses.JspPage;
+import com.fpt.mic.micweb.framework.responses.RedirectTo;
 import com.fpt.mic.micweb.framework.responses.ResponseObject;
 import com.fpt.mic.micweb.model.business.StaffBusiness;
 import com.fpt.mic.micweb.model.dto.form.CancelContractDto;
@@ -37,14 +38,19 @@ public class ContractController extends BasicController {
 
         // Get contract detail
         ContractEntity contractDetail = staffBus.getContractDetail(contractCode);
-        r.equest.setAttribute("CONTRACT", contractDetail);
+
+        // If contract is not exists, show 404 page
+        if (contractDetail == null) {
+            return new RedirectTo("/error/404");
+        }
 
         // Get customer detail
         CustomerEntity customerDetail = staffBus.getCustomerDetail(contractDetail.getCustomerCode());
-        r.equest.setAttribute("CUSTOMER", customerDetail);
-
         // Get payment detail
         List<PaymentEntity> listPayment = staffBus.getPaymentByContractCode(contractCode);
+
+        r.equest.setAttribute("CUSTOMER", customerDetail);
+        r.equest.setAttribute("CONTRACT", contractDetail);
         r.equest.setAttribute("PAYMENT", listPayment);
 
         // Dispatch to JSP page
