@@ -175,6 +175,18 @@
                 </div>
                 <form id="myForm" role="form" action="${pageContext.request.contextPath}/public/register" method="post">
                     <div class="form-group">
+
+                        <div class="form-group col-md-12">
+                            <c:if test="${not empty validateErrors}">
+                                <div class="text-danger">
+                                    <ul>
+                                        <c:forEach var="error" items="${validateErrors}">
+                                            <li>${error}</li>
+                                        </c:forEach>
+                                    </ul>
+                                </div>
+                            </c:if>
+                        </div>
                         <div class="form-group col-md-6">
                             <label>Họ tên *</label>
                             <input required type="text" name="register:name"
@@ -182,7 +194,8 @@
                                    minlength="3" maxlength="80"
                                    title="Vui lòng nhập họ tên"
                                    placeholder="Ví dụ: Nguyễn Văn A"
-                                   class="form-control" id="form-full-name">
+                                   class="form-control"
+                                   value="${submitted.name}">
                         </div>
                         <div class="form-group col-md-6">
                             <label>Email *</label>
@@ -190,27 +203,29 @@
                                    pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$"
                                    title="Vui lòng nhập Email hợp lệ"
                                    placeholder="Ví dụ: baohiem@micinsurance.vn"
-                                   class="form-control" id="form-email">
+                                   class="form-control" value="${submitted.email}">
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="form-group col-md-6">
                             <label>Số điện thoại *</label>
                             <input required type="tel" name="register:phone"
-                                   class="form-control" id="form-phone"
+                                   class="form-control"
                                    pattern="[0-9]+"
                                    minlength="8" maxlength="15"
                                    placeholder="Ví dụ: 0909000999"
-                                   title="Vui lòng nhập đúng số điện thoại">
+                                   title="Vui lòng nhập đúng số điện thoại"
+                                   value="${submitted.phone}">
                         </div>
                         <div class="form-group col-md-6">
                             <label>Số CMND/Hộ chiếu</label>
                             <input type="text" name="register:personalId"
-                                   class="form-control" id="form-cmnd"
+                                   class="form-control"
                                    pattern="[0-9]+"
                                    minlength="8" maxlength="15"
                                    placeholder="Ví dụ: 272185738"
-                                   title="Vui lòng chỉ nhập số">
+                                   title="Vui lòng chỉ nhập số"
+                                   value="${submitted.personalId}">
                         </div>
                     </div>
                     <div class="form-group col-md-12">
@@ -219,7 +234,8 @@
                                maxlength="250" minlength="3"
                                title="Vui lòng nhập địa chỉ"
                                placeholder="Ví dụ: 123A, Điện Biên Phủ, Quận 1, TP.HCM"
-                               class="form-control" id="txtAddress">
+                               class="form-control" id="txtAddress"
+                               value="${submitted.address}">
                     </div>
                     <div class="form-group">
                         <div class="form-group  col-md-5">
@@ -227,10 +243,13 @@
                             <input required type="date" name="register:startDate"
                                    min="<%=new Date().getYear()+1900%>-<%=(new Date().getMonth()+1)<10?"0"+(new Date().getMonth()+1):(new Date().getMonth()+1)%>-<%=new Date().getDate()%>"
                                    title="Vui lòng chọn ngày bắt đầu"
-                                   class="form-control" id="dateDefault" value="<%=new Date()%> ">
+                                   value="${startDate}"
+                                   class="form-control" id="dateDefault"
+                                    />
                         </div>
                         <div class="form-group  col-md-7">
                             <label>Hình Thức Bảo Hiểm *</label>
+                            <c:set var="selectedId" value="${submitted.contractType}" ></c:set>
                             <select required class="form-control" name="register:contractType" id="ddlContractType" onchange="{
                                 var fee = parseFloat(this.options[this.selectedIndex].innerHTML);
                                 $('#txtFeeInput').val(fee);
@@ -239,7 +258,9 @@
 
                             }" >
                                 <c:forEach var="row" items="${listContractType}">
-                                    <option label="<c:out value="${row.name}"/>" value="<c:out value="${row.id}"/>">
+                                    <option <c:if test="${row.id == selectedId}">
+                                        selected="selected" </c:if>
+                                            label="<c:out value="${row.name}"/>" value="<c:out value="${row.id}"/>">
                                         <c:out value="${row.pricePerYear}" /> </option>
                                 </c:forEach>
                             </select>
@@ -257,12 +278,22 @@
                             <b style="color: red"><span id="txtFee1"></span> VND
                             </b>
 
-                            <input type="hidden" id="txtFeeInput" name="register:contractFee" value="${listContractType[0].pricePerYear}">
+                            <input type="hidden" id="txtFeeInput" name="register:contractFee" value="${submitted.contractFee}" />
                         </p>
                         <input type="hidden" name="action" value="register"/>
                         <input type="submit" id="btnNext" name="btnNext" class="btn btn-primary btn-lg" value="Tiếp theo"/>
                     </div>
-
+                    <input type="hidden" name="register:plate">
+                    <input type="hidden" name="register:brand">
+                    <input type="hidden" name="register:chassis">
+                    <input type="hidden" name="register:engine">
+                    <input type="hidden" name="register:capacity">
+                    <input type="hidden" name="register:type">
+                    <input type="hidden" name="register:model">
+                    <input type="hidden" name="register:color">
+                    <input type="hidden" name="register:yearOfMan">
+                    <input type="hidden" name="register:weight">
+                    <input type="hidden" name="register:seatCapacity">
                 </form>
 
                 <br/>
@@ -350,8 +381,14 @@
         console.log(data);
         _dat.value = data;
     };
+    if($('#dateDefault').val() == "") {
+        setInputDate("#dateDefault");
+    }
 
-    setInputDate("#dateDefault");
+    if ($('#txtFeeInput').val() == "") {
+        var fee = parseFloat('${listContractType[0].pricePerYear}');
+        $('#txtFeeInput').val(fee);
+    }
     $('#txtFee1').text(parseFloat($('#txtFeeInput').val()).formatMoney(0,'.',','));
 
 </script>

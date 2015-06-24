@@ -2,21 +2,15 @@ package com.fpt.mic.micweb.controller.pub;
 
 import com.fpt.mic.micweb.framework.BasicController;
 import com.fpt.mic.micweb.framework.R;
-import com.fpt.mic.micweb.framework.responses.ForwardTo;
 import com.fpt.mic.micweb.framework.responses.JspPage;
 import com.fpt.mic.micweb.framework.responses.RedirectTo;
 import com.fpt.mic.micweb.framework.responses.ResponseObject;
-import com.fpt.mic.micweb.model.business.RegisterBusiness;
-import com.fpt.mic.micweb.model.dao.ContractDao;
+
 import com.fpt.mic.micweb.model.dto.PayPal;
-import com.fpt.mic.micweb.model.entity.ContractEntity;
-import com.fpt.mic.micweb.model.entity.PaymentEntity;
-import com.fpt.mic.micweb.utils.DateUtils;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.sql.Timestamp;
 import java.util.*;
 
 /**
@@ -86,7 +80,7 @@ public class ReturnController extends BasicController {
             /*
             * Calls the DoExpressCheckoutPayment API call
             */
-        String page =(String) session.getAttribute("SUCCESS_URL");
+        String page = (String) session.getAttribute("SUCCESS_URL");
         if (isSet(r.equest.getParameter("page")) && r.equest.getParameter("page").equals("return")) {
             HashMap results = pp.confirmPayment(checkoutDetails, r.equest.getServerName());
             r.equest.setAttribute("payment_method", "");
@@ -95,7 +89,7 @@ public class ReturnController extends BasicController {
             if (strAck != null && (strAck.equalsIgnoreCase("Success") || strAck.equalsIgnoreCase("SuccessWithWarning"))) {
                 result.putAll(results);
                 result.putAll(checkoutDetails);
-                session.setAttribute("ACK",strAck);
+                session.setAttribute("ACK", strAck);
                 session.setAttribute("RESULT", result);
 
                 return new RedirectTo(page);

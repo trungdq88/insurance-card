@@ -1,30 +1,87 @@
 package com.fpt.mic.micweb.model.dto.form;
 
+import com.fpt.mic.micweb.model.dao.ContractDao;
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
+import org.hibernate.validator.constraints.Range;
+
+import javax.validation.constraints.*;
 import java.sql.Timestamp;
+import java.util.Date;
 
 /**
  * Created by TriPQM on 06/23/2015.
  */
 public class PublicRegisterFormDto {
+    @NotEmpty(message = "Họ tên không được để trống")
+    @Pattern(regexp = "\\S[^0-9!@#$%^&*()+=~`]+",message = "Họ tên không hợp lệ")
+    @Size(min = 3, max = 80, message = "Họ tên phải từ {min} đến {max} ký tự")
     private String name;
+    @NotEmpty(message = "Email không được để trống")
+    @Email(message = "Email không hợp lệ")
     private String email;
+    @NotEmpty(message = "Địa chỉ không được để trống")
+    @Size(min = 3, max = 250, message = "Địa chỉ phải từ {min} đến {max} ký tự")
     private String address;
+    @NotEmpty(message = "Số điện thoại không được để trống")
+    @Pattern(regexp = "[0-9]+",message = "Số điện thoại không hợp lệ")
+    @Size(min = 8, max = 15, message = "Số điện thoại phải từ {min} đến {max} ký tự")
     private String phone;
+    @NotNull(message = "Ngày bắt đầu không được để trống")
     private Timestamp startDate;
     private String personalId;
+    @NotNull(message = "Quyền lợi bảo hiểm không được để trống")
     private Integer contractType;
+    @NotNull(message = "Phí bảo hiểm không được để trống")
+    @Range(min = 0, message = "Phí bảo hiểm phải lớn hơn 0")
     private Float contractFee;
+    @NotEmpty(message = "Biển số xe không được để trống")
+    @Size(min = 4, max = 15, message = "Biển số xe phải có từ {min} đến {max} ký tự")
     private String plate;
+    @NotEmpty(message = "Nhãn hiệu xe không được để trống")
+    @Size(min = 2, max = 20, message = "Nhãn hiệu xe phải có từ {min} đến {max} ký tự")
     private String brand;
+    @NotEmpty(message = "Số khung không được để trống")
+    @Size(min = 2, max = 20, message = "Số khung phải có từ {min} đến {max} ký tự")
     private String chassis;
+    @NotEmpty(message = "Số máy không được để trống")
+    @Size(min = 2, max = 20, message = "Số máy phải có từ {min} đến {max} ký tự")
     private String engine;
+    @NotEmpty(message = "Dung tích không được để trống")
+    @Size(min = 2, max = 20, message = "Dung tích phải có từ {min} đến {max} ký tự")
     private String capacity;
     private String type;
     private String model;
     private String color;
+    @Range(min = 1900, max = 2200, message = "Năm sản xuất phải có giá trị từ {min} đến {max}")
     private Integer yearOfMan;
     private Integer weight;
     private Integer seatCapacity;
+
+    @AssertTrue(message = "Ngày bắt đầu phải kể từ ngày hôm nay trở đi")
+    private boolean isValidStartDate() {
+        Timestamp currentDate = new Timestamp(new Date().getTime());
+        currentDate.setHours(0);
+        currentDate.setMinutes(0);
+        currentDate.setSeconds(0);
+        currentDate.setNanos(0);
+        return !startDate.before(currentDate);
+    }
+    @AssertTrue(message = "Đang có hợp đồng hiệu lực với xe có biển số này")
+    private boolean isValidPlate() {
+        ContractDao contractDao = new ContractDao();
+        return !contractDao.isExistByPlate(plate);
+    }
+    @AssertTrue(message = "Đang có hợp đồng hiệu lực với xe có số khung này")
+    private boolean isValidChassis() {
+        ContractDao contractDao = new ContractDao();
+        return !contractDao.isExistByChassis(chassis);
+    }
+    @AssertTrue(message = "Đang có hợp đồng hiệu lực với xe có số máy này")
+    private boolean isValidEngine() {
+        ContractDao contractDao = new ContractDao();
+        return !contractDao.isExistByEngine(engine);
+    }
 
     public PublicRegisterFormDto() {
     }

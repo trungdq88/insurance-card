@@ -12,19 +12,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
  * @author dinhquangtrung
  */
 
 @WebServlet(name = "HomeController", urlPatterns = {"/public/home"})
 public class HomeController extends BasicController {
     public ResponseObject getView(R r) {
-        ContractTypeEntity contractTypeEntity = new ContractTypeEntity();
         ContractBusiness contractBusiness = new ContractBusiness();
-        List<ContractTypeEntity> list = new ArrayList<ContractTypeEntity>();
-        list = contractBusiness.getAllContractType();
-        r.equest.setAttribute("listContractType",list);
+        List<ContractTypeEntity> list = contractBusiness.getAllContractType();
+        r.equest.setAttribute("listContractType", list);
         return new JspPage("public/home.jsp");
+    }
+
+    public ResponseObject postRegister(R r) {
+        return getView(r);
     }
 
 }
