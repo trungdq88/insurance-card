@@ -121,7 +121,7 @@ public class ContractController extends BasicController {
 
     public ResponseObject getActiveRenewContract(R r) {
         String url = "public/return.jsp";
-        HttpSession session = r.equest.getSession(true);
+        HttpSession session = r.equest.getSession(false);
         if(session == null){
             return new RedirectTo("/error/404");
         }
