@@ -83,5 +83,44 @@ public class ContractDao extends IncrementDao<ContractEntity, String> {
         entityManager.close();
         return resultList;
     }
+    public boolean isExistByPlate(String plate) {
+        EntityManager entity = factory.createEntityManager();
+        String hql = "SELECT co FROM ContractEntity AS co " +
+                "WHERE co.plate = :plate AND co.status <> :cancelled AND co.status <> :expired";
+        Query query = entity.createQuery(hql);
+        query.setParameter("plate", plate);
+        query.setParameter("cancelled", Constants.ContractStatus.CANCELLED);
+        query.setParameter("expired", Constants.ContractStatus.EXPIRED);
+        if (query.getResultList().size() == 0) {
+            return false;
+        }
+        return true;
+    }
+    public boolean isExistByChassis(String chassis) {
+        EntityManager entity = factory.createEntityManager();
+        String hql = "SELECT co FROM ContractEntity AS co " +
+                "WHERE co.chassis = :chassis AND co.status <> :cancelled AND co.status <> :expired";
+        Query query = entity.createQuery(hql);
+        query.setParameter("chassis", chassis);
+        query.setParameter("cancelled", Constants.ContractStatus.CANCELLED);
+        query.setParameter("expired", Constants.ContractStatus.EXPIRED);
+        if (query.getResultList().size() == 0) {
+            return false;
+        }
+        return true;
+    }
+    public boolean isExistByEngine(String engine) {
+        EntityManager entity = factory.createEntityManager();
+        String hql = "SELECT co FROM ContractEntity AS co " +
+                "WHERE co.engine = :engine AND co.status <> :cancelled AND co.status <> :expired";
+        Query query = entity.createQuery(hql);
+        query.setParameter("engine", engine);
+        query.setParameter("cancelled", Constants.ContractStatus.CANCELLED);
+        query.setParameter("expired", Constants.ContractStatus.EXPIRED);
+        if (query.getResultList().size() == 0) {
+            return false;
+        }
+        return true;
+    }
 
 }

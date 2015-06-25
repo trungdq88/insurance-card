@@ -32,6 +32,7 @@
                                 <h3>
                                     <b> ĐĂNG KÝ BẢO HIỂM NFC </b><br>
                                 </h3>
+
                             </div>
                             <ul>
                                 <li><a id="hrefPersonal" href="#personal" data-toggle="tab"><strong>1. Thông tin cá nhân </strong></a>
@@ -46,6 +47,18 @@
 
                                     <div class="tab-pane" id="personal">
                                         <div class="row">
+                                            <c:if test="${not empty validateErrors}">
+
+                                                <div class="col-sm-12">
+                                                    <div class="text-danger">
+                                                        <ul>
+                                                            <c:forEach var="error" items="${validateErrors}">
+                                                                <li>${error}</li>
+                                                            </c:forEach>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </c:if>
                                             <div class="col-sm-12">
                                                 <h3 class="info-text"> THÔNG TIN CHỦ SỞ HỮU XE </h3>
                                                 <h5 class="info-text"> Các ô có dấu * là bắt buộc </h5>
@@ -133,8 +146,8 @@
                             }">
                                                         <c:forEach var="row" items="${mapContractType}">
                                                             <option <c:if test="${row.key == selectedId}">
-                                                                selected="selected"
-                                                            </c:if> label="<c:out value="${row.value.name}" />"
+                                                                selected="selected" </c:if>
+                                                                    label="<c:out value="${row.value.name}" />"
                                                                     value="<c:out value="${row.key}"/>">
                                                                 <c:out value="${row.value.pricePerYear}" />
                                                             </option>
@@ -176,7 +189,8 @@
                                                 <input required type="text" class="form-control" name="register:plate" id="txtPlate"
                                                        minlength="4" maxlength="15"
                                                        placeholder="Ví dụ: 54-Z6 6666"
-                                                        title="Vui lòng nhập biển số xe!">
+                                                       title="Vui lòng nhập biển số xe!"
+                                                       value="${publicHomeFormDto.plate}">
                                             </div>
                                         </div>
                                         <div class="col-sm-5">
@@ -185,7 +199,8 @@
                                                 <input required type="text" class="form-control" name="register:brand" id="txtBrand"
                                                        minlength="2" maxlength="20"
                                                        placeholder="Ví dụ: Honda, Yamaha, Suzuki..."
-                                                        title="Vui lòng nhập nhãn hiệu xe!">
+                                                       title="Vui lòng nhập nhãn hiệu xe!"
+                                                       value="${publicHomeFormDto.brand}">
                                             </div>
                                         </div>
                                         <div class="col-sm-4 col-sm-offset-1">
@@ -195,7 +210,8 @@
                                                        id="txtChassis"
                                                        minlength="2" maxlength="20"
                                                        placeholder="Ví dụ: 1033612"
-                                                       title="Vui lòng nhập số khung!">
+                                                       title="Vui lòng nhập số khung!"
+                                                       value="${publicHomeFormDto.chassis}">
 
                                             </div>
                                         </div>
@@ -205,7 +221,8 @@
                                                 <input required type="text" class="form-control" name="register:engine" id="txtEngine"
                                                        minlength="2" maxlength="20"
                                                        placeholder="Ví dụ: 1033612"
-                                                        title="Vui lòng nhập số máy!">
+                                                        title="Vui lòng nhập số máy!"
+                                                       value="${publicHomeFormDto.engine}">
                                             </div>
                                         </div>
                                         <div class="col-sm-3">
@@ -215,7 +232,8 @@
                                                        id="txtCapacity"
                                                        minlength="2" maxlength="20"
                                                        placeholder="Ví dụ: 110cc"
-                                                       title="Vui lòng nhập dung tích xe!">
+                                                       title="Vui lòng nhập dung tích xe!"
+                                                       value="${publicHomeFormDto.capacity}">
                                             </div>
                                         </div>
                                         <div class="col-sm-4 col-sm-offset-1">
@@ -224,7 +242,8 @@
                                                 <input type="text" class="form-control" name="register:model" id="txtModel"
                                                        minlength="2" maxlength="20"
                                                        title="Vui lòng nhập đúng số loại!"
-                                                       placeholder="Ví dụ: Air Blade, Future, Wave...">
+                                                       placeholder="Ví dụ: Air Blade, Future, Wave..."
+                                                       value="${publicHomeFormDto.model}">
                                             </div>
                                         </div>
                                         <div class="col-sm-3">
@@ -233,7 +252,8 @@
                                                 <input type="text" class="form-control" name="register:type" id="txtType"
                                                        minlength="2" maxlength="20"
                                                        title="Vui lòng nhập đúng loại xe!"
-                                                       placeholder="Ví dụ: hai bánh, ba bánh, khác...">
+                                                       placeholder="Ví dụ: hai bánh, ba bánh, khác..."
+                                                       value="${publicHomeFormDto.type}">
                                             </div>
                                         </div>
                                         <div class="col-sm-3">
@@ -242,7 +262,8 @@
                                                 <input type="text" class="form-control" name="register:color" id="txtColor"
                                                        minlength="2" maxlength="20"
                                                        title="Vui lòng nhập đúng màu sơn!"
-                                                       placeholder="Ví dụ: Đỏ">
+                                                       placeholder="Ví dụ: Đỏ"
+                                                       value="${publicHomeFormDto.color}">
                                             </div>
                                         </div>
                                         <div class="col-sm-4 col-sm-offset-1">
@@ -254,7 +275,8 @@
                                                        min="1900"
                                                        max="<%=new Date().getYear() + 1900%>"
                                                        pattern="[0-9]+"
-                                                        title="Vui lòng nhập đúng năm từ 1900-<%=new Date().getYear() + 1900%>">
+                                                        title="Vui lòng nhập đúng năm từ 1900-<%=new Date().getYear() + 1900%>"
+                                                       value="${publicHomeFormDto.yearOfMan}">
                                             </div>
                                         </div>
                                         <div class="col-sm-3">
@@ -263,7 +285,8 @@
                                                 <input type="number" class="form-control" name="register:weight" id="txtWeight"
                                                        min="1" max="1000"
                                                        title="Tự trọng xe từ 1-1000 kg!"
-                                                       placeholder="Ví dụ: 100">
+                                                       placeholder="Ví dụ: 100"
+                                                       value="${publicHomeFormDto.weight}">
                                             </div>
                                         </div>
                                         <div class="col-sm-3">
@@ -273,7 +296,8 @@
                                                        id="txtSeatCapacity"
                                                        min="1" max="100"
                                                        title="Số người từ 1-100!"
-                                                       placeholder="Ví dụ: 2">
+                                                       placeholder="Ví dụ: 2"
+                                                       value="${publicHomeFormDto.seatCapacity}">
                                             </div>
                                         </div>
                                     </div>

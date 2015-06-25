@@ -18,28 +18,16 @@ import java.util.Map;
  * Created by TriPQMSE60746 on 06/10/2015.
  */
 @WebServlet(name = "CheckoutController", urlPatterns = {"/public/checkout"})
-public class CheckoutController extends BasicController{
+public class CheckoutController extends BasicController {
     /**
-     * Created by TriPQMSE60746 on 06/07/2015.
+     * Created by TriPQM on 06/07/2015.
      * Reference: Paypal Express Checkout API from https://demo.paypal.com/us/home.
-     *
-     * Input: request must have these parameters:
-     * <input type="hidden" name="L_PAYMENTREQUEST_0_NAME0" value="${ddlContractype}">
-     <input type="hidden" name="L_PAYMENTREQUEST_0_DESC0" value="${ddlContractype}">
-     <input type="hidden" name="L_PAYMENTREQUEST_0_QTY0" value="1">
-     <input type="hidden" name="PAYMENTREQUEST_0_ITEMAMT" value="${txtFee/20000}">
-     <input type="hidden" name="PAYMENTREQUEST_0_TAXAMT" value="0">
-     <input type="hidden" name="PAYMENTREQUEST_0_AMT" value="${txtFee/20000}">
-     <input type="hidden" name="currencyCodeType" value="USD">
-     <input type="hidden" name="paymentType" value="Sale">
-     <input type="hidden" name="L_PAYMENTREQUEST_0_AMT"
-     value="${PAYMENTREQUEST_0_AMT}"/>
      */
     public ResponseObject getCheckout(R r) {
         // payment
         HttpSession session = r.equest.getSession();
         PayPal paypal = new PayPal();
-        String url =  "public/error.jsp";
+        String url = "public/error.jsp";
         /*
         '------------------------------------
         ' The returnURL is the location where buyers return to when a
@@ -58,7 +46,7 @@ public class CheckoutController extends BasicController{
         String cancelURL = r.equest.getScheme() + "://" + r.equest.getServerName() + ":" + r.equest.getServerPort() + r.equest.getContextPath() + "/public/return?action=cancel";
         Map<String, String> checkoutDetails = new HashMap<String, String>();
         checkoutDetails = setRequestParams(r);
-        r.equest.setAttribute("result",checkoutDetails);
+        r.equest.setAttribute("result", checkoutDetails);
         //Redirect to check out page for check out mark
         if (isSet(r.equest.getParameter("checkout"))) {
             session.setAttribute("checkoutDetails", checkoutDetails);
@@ -79,9 +67,9 @@ public class CheckoutController extends BasicController{
                 checkoutDetails.putAll((Map<String, String>) session.getAttribute("checkoutDetails"));
                 checkoutDetails.putAll(setRequestParams(r));
                 session.setAttribute("amountVND", checkoutDetails.get("PAYMENTREQUEST_0_AMT"));
-                Double paymentAmount =(Double.parseDouble(checkoutDetails.get("PAYMENTREQUEST_0_AMT")));
-                paymentAmount = paymentAmount/CurrencyUtils.getCurrentRate();
-                paymentAmount = NumberUtils.round(paymentAmount,2);
+                Double paymentAmount = (Double.parseDouble(checkoutDetails.get("PAYMENTREQUEST_0_AMT")));
+                paymentAmount = paymentAmount / CurrencyUtils.getCurrentRate();
+                paymentAmount = NumberUtils.round(paymentAmount, 2);
                 checkoutDetails.put("PAYMENTREQUEST_0_ITEMAMT", paymentAmount.toString());
                 checkoutDetails.put("PAYMENTREQUEST_0_AMT", paymentAmount.toString());
                 checkoutDetails.put("L_PAYMENTREQUEST_0_AMT", paymentAmount.toString());
@@ -119,15 +107,16 @@ public class CheckoutController extends BasicController{
         return new JspPage(url);
     }
 
-    private Map<String,String> setRequestParams(R r){
-        Map<String,String> requestMap = new HashMap<String,String>();
+    private Map<String, String> setRequestParams(R r) {
+        Map<String, String> requestMap = new HashMap<String, String>();
         for (String key : r.equest.getParameterMap().keySet()) {
             requestMap.put(key, StringEscapeUtils.escapeHtml4(r.equest.getParameterMap().get(key)[0]));
         }
         return requestMap;
 
     }
-    private boolean isSet(Object value){
-        return (value !=null && value.toString().length()!=0);
+
+    private boolean isSet(Object value) {
+        return (value != null && value.toString().length() != 0);
     }
 }
