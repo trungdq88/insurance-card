@@ -51,7 +51,7 @@ public class RenewContractDto {
             final int HOURS_IN_DAY = 24;
             final int DAYS_IN_YEAR = 366;
             final long MILLISECONDS_IN_YEAR =
-                    (long)MILLIS_IN_SECOND * SECONDS_IN_MINUTE * MINUTES_IN_HOUR
+                    (long) MILLIS_IN_SECOND * SECONDS_IN_MINUTE * MINUTES_IN_HOUR
                             * HOURS_IN_DAY * DAYS_IN_YEAR;
             if (contractTerm <= MILLISECONDS_IN_YEAR) {
                 return true;
@@ -62,7 +62,6 @@ public class RenewContractDto {
             return false;
         }
     }
-
 
     public RenewContractDto() {
     }

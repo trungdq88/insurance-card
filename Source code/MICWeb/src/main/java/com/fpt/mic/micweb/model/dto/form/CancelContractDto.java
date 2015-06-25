@@ -28,6 +28,16 @@ public class CancelContractDto {
         return contractCode != null && contractDao.read(contractCode) != null;
     }
 
+    @AssertTrue(message = "Ghi chú hủy phải có độ dài từ 1 đến 2000 ký tự")
+    private boolean isCancelNoteValid() {
+        if (cancelNote == null || cancelNote.isEmpty()) {
+            return true; // Vẫn chấp nhận null hoặc rỗng
+        } else {
+            // Nếu có giá trị thì phải có độ dài đúng requirement
+            return cancelNote.length() >= 1 && cancelNote.length() <= 2000;
+        }
+    }
+
     public CancelContractDto() {
     }
 
