@@ -60,7 +60,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label>Email hoặc mã khách hàng
+                                <label>Email hoặc mã số
                                     <input class="form-control" name="login:emailorcode"
                                            required autofocus title="Vui lòng nhập email hoặc mã khách hàng"
                                             value="${submitted.emailorcode}">
@@ -75,7 +75,7 @@
                             </div>
                             <div class="form-group">
                                 <label>Đăng nhập với tư cách:
-                                    <select name="login:role" class="form-control">
+                                    <select id="selectRole" name="login:role" class="form-control">
                                         <option value="customer"
                                          ${submitted.role == "customer" ? "selected" : ""}>Khách hàng</option>
                                         <option value="staff"
@@ -127,6 +127,11 @@
             $('#authorize-failed').show();
         }
 
+        // Auto select staff if possible
+        var refrole = getQueryVariable("refrole");
+        if (refrole) {
+            $('#selectRole').val(refrole);
+        }
     });
 </script>
 
