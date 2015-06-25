@@ -18,7 +18,7 @@ public class PublicRegisterFormDto {
     @Size(min = 3, max = 80, message = "Họ tên phải từ {min} đến {max} ký tự")
     private String name;
     @NotEmpty(message = "Email không được để trống")
-    @Email(message = "Email không hợp lệ")
+    @Pattern(regexp = "[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,3}$",message = "Email không hợp lệ")
     private String email;
     @NotEmpty(message = "Địa chỉ không được để trống")
     @Size(min = 3, max = 250, message = "Địa chỉ phải từ {min} đến {max} ký tự")
@@ -55,7 +55,9 @@ public class PublicRegisterFormDto {
     private String color;
     @Range(min = 1900, max = 2200, message = "Năm sản xuất phải có giá trị từ {min} đến {max}")
     private Integer yearOfMan;
+    @Range(min = 1, max = 1000, message = "Tự trọng phải có giá trị từ {min} đến {max}")
     private Integer weight;
+    @Range(min = 1, max = 100, message = "Số chỗ ngồi phải có giá trị từ {min} đến {max}")
     private Integer seatCapacity;
 
     @AssertTrue(message = "Ngày bắt đầu phải kể từ ngày hôm nay trở đi")
