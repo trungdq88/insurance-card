@@ -121,7 +121,7 @@
                             <div class="modal-footer">
                                 <%--Post to server (ContractController)--%>
                                 <input type="hidden" name="action" value="CancelContract"/>
-                                <%--<input type="hidden" name="cancel:cancelReason" id="reason">--%>
+                                <input type="hidden" name="cancel:cancelReason" id="reason">
                                 <input type="hidden" name="cancel:contractCode" id="contractId"
                                        value="${contract.contractCode}"/>
                                 <%---------------------------------------%>

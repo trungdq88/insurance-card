@@ -75,14 +75,20 @@ public class CustomerBusniess {
         boolean result = false;
         ContractDao contractDao = new ContractDao();
         PaymentDao paymentDao = new PaymentDao();
+        CardDao cardDao = new CardDao();
         ContractEntity contract = contractDao.read(contractCode);
         PaymentEntity payment = new PaymentEntity();
+        CardEntity card = cardDao.getCardByContract(contractCode);
         java.util.Date date = new java.util.Date();
         /////////////////////////
         if (contract != null) {
             //update contract
             contract.setExpiredDate(newExprired);
-            contract.setStatus(Constants.ContractStatus.READY);
+            if(card == null){
+                contract.setStatus(Constants.ContractStatus.NO_CARD);
+            }else {
+                contract.setStatus(Constants.ContractStatus.READY);
+            }
             //update payment
             payment.setPaidDate(new Timestamp(date.getTime()));
             payment.setPaymentMethod("PayPal payment");
