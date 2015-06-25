@@ -177,6 +177,18 @@
                                     </div>
                                 <div class="tab-pane" id="vehicle">
                                     <div class="row">
+                                        <c:if test="${not empty validateErrors}">
+
+                                            <div class="col-sm-12">
+                                                <div class="text-danger">
+                                                    <ul>
+                                                        <c:forEach var="error" items="${validateErrors}">
+                                                            <li>${error}</li>
+                                                        </c:forEach>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </c:if>
                                         <div class="col-sm-12">
                                             <h3 class="info-text"> THÔNG TIN XE </h3>
                                             <h5 class="info-text"> Quý khách vui lòng nhập thông tin dựa trên đăng ký xe
