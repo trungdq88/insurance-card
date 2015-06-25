@@ -17,7 +17,7 @@ public class PublicHomeFormDto {
     @Size(min = 3, max = 80, message = "Họ tên phải từ {min} đến {max} ký tự")
     private String name;
     @NotEmpty(message = "Email không được để trống")
-    @Email(message = "Email không hợp lệ")
+    @Pattern(regexp = "[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,3}$",message = "Email không hợp lệ")
     private String email;
     @NotEmpty(message = "Số điện thoại không được để trống")
     @Pattern(regexp = "[0-9]+",message = "Số điện thoại không hợp lệ")

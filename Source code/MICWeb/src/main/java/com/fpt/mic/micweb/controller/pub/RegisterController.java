@@ -101,7 +101,7 @@ public class RegisterController extends BasicController {
     }
 
     public ResponseObject getActiveContract(R r) {
-        String url = "public/error.jsp";
+        String url = "/error/404";
         HttpSession session = r.equest.getSession(false);
         if (session != null) {
             url = "public/return.jsp";
@@ -123,9 +123,8 @@ public class RegisterController extends BasicController {
             session.invalidate();
             return new JspPage(url);
         }
-        r.equest.setAttribute("error","Phiên giao dịch đã hết thời gian");
-        return new JspPage(url);
-
+        //r.equest.setAttribute("error","Phiên giao dịch đã hết thời gian");
+        return new RedirectTo(url);
     }
 
 }
