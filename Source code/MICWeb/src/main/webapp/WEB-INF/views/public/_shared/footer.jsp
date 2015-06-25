@@ -12,7 +12,7 @@
         </p>
 
         <p>
-            <a href="${pageContext.request.contextPath}/user?action=login&refrole=staff">Nhân viên đăng nhập</a>
+            <a href="${pageContext.request.contextPath}/user?action=login&refrole=staff&redirect=/staff">Nhân viên đăng nhập</a>
         </p>
 
         <p class="footer-company-name">MIC Group 2 &copy; 2015</p>
