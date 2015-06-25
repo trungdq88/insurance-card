@@ -7,6 +7,8 @@
 <html lang="en">
 <script src="${pageContext.request.contextPath}/js/jquery.min.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/js/bootstrap.min.js" type="text/javascript"></script>
+
+<script src="${pageContext.request.contextPath}/js/geolocation.js" type="text/javascript"></script>
 <!-- Google API Autocomplete for address-->
 <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places"></script>
 
@@ -20,7 +22,6 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/fonts.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/font-awesome.min.css">
-    <%--<link rel="stylesheet" href="${pageContext.request.contextPath}/css/form-elements.css">--%>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/home-style.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/footer-distributed-with-address-and-phones.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/slider.css">
@@ -325,39 +326,6 @@
 </div>
 
 <script language="javascript">
-    // This example displays an address form, using the autocomplete feature
-    // of the Google Places API to help users fill in the information.
-
-    var placeSearch, autocomplete;
-
-
-    function initialize() {
-        // Create the autocomplete object, restricting the search
-        // to geographical location types.
-        autocomplete = new google.maps.places.Autocomplete(
-                /** @type {HTMLInputElement} */(document.getElementById('txtAddress')),
-                {types: ['geocode'], componentRestrictions: {country: 'vn'}});
-
-    }
-
-    // [START region_geolocation]
-    // Bias the autocomplete object to the user's geographical location,
-    // as supplied by the browser's 'navigator.geolocation' object.
-    function geolocate() {
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(function (position) {
-                var geolocation = new google.maps.LatLng(
-                        position.coords.latitude, position.coords.longitude);
-                var circle = new google.maps.Circle({
-                    center: geolocation,
-                    radius: position.coords.accuracy
-                });
-                autocomplete.setBounds(circle.getBounds());
-            });
-        }
-    }
-    // [END region_geolocation]
-
     Number.prototype.formatMoney = function(c, d, t){
         var n = this,
                 c = isNaN(c = Math.abs(c)) ? 2 : c,
