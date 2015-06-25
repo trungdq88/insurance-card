@@ -1,24 +1,32 @@
 package com.fpt.mic.micweb.model.dto.form;
 
-import java.sql.Timestamp;
+import com.fpt.mic.micweb.model.dao.ContractDao;
 import org.hibernate.validator.constraints.NotEmpty;
-import org.hibernate.validator.constraints.Range;
 
 import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+import java.sql.Timestamp;
+
 /**
  * Created by Kha on 23/06/2015.
  */
 public class CancelContractDto {
-    @NotEmpty(message = "Mã khách khàng không được để trống")
+    @NotEmpty(message = "Mã hợp đồng không được để trống")
+    // Mã hợp đồng không tồn tại: @see {@link isNotExisted}
     private String contractCode;
     @NotNull(message = "Ngày hủy hợp đồng không được trống")
     private Timestamp cancelDate;
     @NotEmpty(message = "Lý do hủy hợp đồng không được để trống")
+    @Size(min = 1, max = 255, message = "Lý do hủy hợp đồng phải có từ {min} đến {max} ký tự")
     private String cancelReason;
     private String cancelNote;
+
+    @AssertTrue(message = "Mã hợp đồng không tồn tại")
+    private boolean isNotExisted() {
+        ContractDao contractDao = new ContractDao();
+        return contractCode != null && contractDao.read(contractCode) != null;
+    }
 
     public CancelContractDto() {
     }

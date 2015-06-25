@@ -32,6 +32,17 @@
 
         <div class="row">
             <div class="col-lg-12">
+
+                <c:if test="${not empty validateErrors}">
+                    <div class="text-danger">
+                        <ul>
+                            <c:forEach var="error" items="${validateErrors}">
+                                <li>${error}</li>
+                            </c:forEach>
+                        </ul>
+                    </div>
+                </c:if>
+
                 <form class="form-horizontal">
                     <fieldset>
                         <legend>Thông tin về dịch vụ bảo hiểm
@@ -507,7 +518,7 @@
                         <input type="hidden" name="renew:contractCode" value="${cont.contractCode}"/>
 
                         <!-- Contract type -->
-                        <div id="renewFirst" class="form-group">
+                        <div class="form-group">
                             <label class="col-sm-5 control-label">Loại hợp đồng</label>
 
                             <div class="col-sm-6">
@@ -543,13 +554,16 @@
                             </div>
                         </div>
 
+                        <!-- New start date -->
+                        <input type="hidden" id="startDate" name="renew:startDate"/>
+
                         <!-- New expired date -->
                         <div class="form-group">
                             <label class="col-sm-5 control-label" for="expiredDate">Gia hạn đến *</label>
 
                             <div class="col-sm-4">
                                 <input id="expiredDate" name="renew:expiredDate" class="form-control input-md"
-                                       type="date" required/>
+                                       type="date" required>
                             </div>
                         </div>
 
@@ -623,7 +637,8 @@
 
                             <div class="col-sm-4">
                                 <input id="cancelDate" name="cancel:cancelDate" type="date" required
-                                       class="form-control input-md" value="${cont.cancelDate}">
+                                       class="form-control input-md"
+                                       value="<fmt:formatDate value="${cont.cancelDate}" pattern="yyyy-MM-dd"/>">
                             </div>
                         </div>
 
@@ -635,7 +650,8 @@
                                 <c:if test="${cont.status eq 'Request cancel'}">
                                     <input type="hidden" name="cancel:cancelReason" value="${cont.cancelReason}"/>
                                 </c:if>
-                                <input id="cancelReason" name="cancel:cancelReason" type="text" required maxlength="255"
+                                <input id="cancelReason" name="cancel:cancelReason" type="text"
+                                       required maxlength="255"
                                        class="form-control input-md" value="${cont.cancelReason}">
                             </div>
                         </div>
@@ -669,6 +685,13 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
+        $('#paidDate').val(getCurrentDate());
+        /*document.getElementById("paidDate").min = getCurrentDateInLastWeek();
+         document.getElementById("paidDate").max = getCurrentDateInNextYear();*/
+        $('#cancelDate').val(getCurrentDate());
+        /*document.getElementById("cancelDate").min = getCurrentDateInLastWeek();
+         document.getElementById("cancelDate").max = getCurrentDateInNextYear();*/
+
         var contractStatus = '${cont.status}';
         var expDate = new Date("${cont.expiredDate}");
         var pricePerYear = '${cont.micContractTypeByContractTypeId.pricePerYear}';
@@ -691,24 +714,25 @@
             } else {
                 contractTerm = daysBetween(new Date(getCurrentDate()), inputDate);
             }
-            console.log(contractTerm);
             var renewFee = calculateContractFee(contractTerm, pricePerYear);
-            console.log(renewFee);
-            $('#contractFee').val(renewFee);
-            $('#amount').val(renewFee);
+            $('#contractFee').val(pricePerYear);
+            $('#amount').val(pricePerYear);
             $('#renewFee').text(parseFloat(renewFee).formatMoney(0));
         });
 
         $('#expiredDate').val(getCurrentDateInNextYear());
         if (contractStatus == 'Expired') {
             document.getElementById("btnCancel").disabled = true;
+            $('#startDate').val(getCurrentDate());
             document.getElementById("expiredDate").min = getCurrentDate();
             document.getElementById("expiredDate").max = getCurrentDateInNextYear();
         } else {
+            $('#startDate').val('${cont.expiredDate}');
             $('#expiredDate').val(getInputDateInNextYear(expDate));
             document.getElementById("expiredDate").min = getInputDateNextDate(expDate);
             document.getElementById("expiredDate").max = getInputDateInNextYear(expDate);
         }
+
         if (contractStatus == 'Cancelled') {
             $('button[type=button]').attr('disabled', true);
             $('#remain').text(0);
@@ -716,13 +740,6 @@
         if (contractStatus == 'Request cancel') {
             document.getElementById("cancelReason").disabled = true;
         }
-
-        $('#paidDate').val(getCurrentDate());
-        /*document.getElementById("paidDate").min = getCurrentDateInLastWeek();
-         document.getElementById("paidDate").max = getCurrentDateInNextYear();*/
-        $('#cancelDate').val(getCurrentDate());
-        /*document.getElementById("cancelDate").min = getCurrentDateInLastWeek();
-         document.getElementById("cancelDate").max = getCurrentDateInNextYear();*/
     });
 </script>
 
