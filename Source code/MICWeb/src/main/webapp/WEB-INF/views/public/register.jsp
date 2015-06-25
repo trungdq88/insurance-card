@@ -331,26 +331,24 @@
                                         đã đăng ký </h5>
 
                                     <div class="row text-big">
-                                        <div class="col-sm-4 col-sm-offset-1">
+                                        <div class="col-sm-5 col-sm-offset-1">
                                             <label><b>Tên: </b><span id="txtName1"></span></label>
                                         </div>
-                                        <div class="col-sm-6">
-                                            <label><b>Email: </b></label>
-                                            <label id="txtEmail1"></label>
+                                        <div class="col-sm-5">
+                                            <label><b>Số điện thoại: </b></label>
+                                            <label id="txtPhone1"></label>
+
                                         </div>
-                                        <div class="col-sm-6 col-sm-offset-1">
+                                        <div class="col-sm-10 col-sm-offset-1">
                                             <label><b>Địa chỉ: </b> <span id="txtAddress1"></span></label>
 
                                         </div>
 
-                                        <div class="col-sm-4">
-                                            <label><b>Số điện thoại: </b></label>
-                                            <label id="txtPhone1"></label>
-                                        </div>
                                         <div class="col-sm-5 col-sm-offset-1">
-                                            <label><b>Ngày bắt đầu: </b></label>
-                                            <label id="txtStartDate1"></label>
+                                            <label><b>Email: </b></label>
+                                            <label id="txtEmail1"></label>
                                         </div>
+
                                         <div class="col-sm-5">
                                             <label><b>Số CMDN/Hộ chiếu: </b></label>
                                             <label id="txtPersonalId1"></label>
@@ -361,12 +359,15 @@
                                         </div>
                                         <div class="col-sm-10 col-sm-offset-1">
                                             <label><b>Thời hạn: </b></label>
-                                            01 năm kể từ khi cấp GCNBH và/hoặc sau
-                                            thời hạn thanh toán phí
+                                            01 năm kể từ ngày bảo hiểm có hiệu lực
                                         </div>
-                                        <div class="col-sm-10 col-sm-offset-1">
+                                        <div class="col-sm-5 col-sm-offset-1">
                                             <label><b>Phí bảo hiểm (VND): </b></label>
                                             <label id="txtFee2"></label>
+                                        </div>
+                                        <div class="col-sm-5">
+                                            <label><b>Ngày bắt đầu: </b></label>
+                                            <label id="txtStartDate1"></label>
                                         </div>
                                         <div class="col-sm-5 col-sm-offset-1">
                                             <label><b>Biển số đăng ký: </b></label>
@@ -377,38 +378,41 @@
                                             <label id="txtBrand1"></label>
                                         </div>
                                         <div class="col-sm-5 col-sm-offset-1">
+                                            <label><b>Số máy: </b></label>
+                                            <label id="txtEngine1"></label>
+                                        </div>
+                                        <div class="col-sm-5">
+                                            <label><b>Số khung: </b></label>
+                                            <label id="txtChassis1"></label>
+                                        </div>
+                                        <div class="col-sm-5 col-sm-offset-1">
+                                            <label><b>Dung tích: </b></label>
+                                            <label id="txtCapacity1"></label>
+                                        </div>
+                                        <div class="col-sm-5">
+                                            <label><b>Màu sơn: </b></label>
+                                            <label id="txtColor1"></label>
+
+                                        </div>
+                                        <div class="col-sm-5 col-sm-offset-1">
                                             <label><b>Số loại: </b></label>
                                             <label id="txtModel1"></label>
+
                                         </div>
                                         <div class="col-sm-5">
                                             <label><b>Loại xe: </b></label>
                                             <label id="txtType1"></label>
                                         </div>
-                                        <div class="col-sm-5 col-sm-offset-1">
-                                            <label><b>Màu sơn: </b></label>
-                                            <label id="txtColor1"></label>
-                                        </div>
-                                        <div class="col-sm-5">
-                                            <label><b>Số máy: </b></label>
-                                            <label id="txtEngine1"></label>
-                                        </div>
-                                        <div class="col-sm-5 col-sm-offset-1">
-                                            <label><b>Số khung: </b></label>
-                                            <label id="txtChassis1"></label>
-                                        </div>
-                                        <div class="col-sm-5">
-                                            <label><b>Dung tích: </b></label>
-                                            <label id="txtCapacity1"></label>
-                                        </div>
-                                        <div class="col-sm-5 col-sm-offset-1">
+
+                                        <div class="col-sm-4 col-sm-offset-1">
                                             <label><b>Năm sản xuất: </b></label>
                                             <label id="txtYearOfMan1"></label>
                                         </div>
-                                        <div class="col-sm-5">
+                                        <div class="col-sm-3">
                                             <label><b>Tự trọng (kg): </b></label>
                                             <label id="txtWeight1"></label>
                                         </div>
-                                        <div class="col-sm-5 col-sm-offset-1">
+                                        <div class="col-sm-3">
                                             <label><b>Số người: </b></label>
                                             <label id="txtSeatCapacity1"></label>
                                         </div>
