@@ -73,7 +73,7 @@ public class StaffBusiness {
         return contractDao.read(contractCode);
     }
 
-    public ContractEntity createContract(CreateContractDto dto) {
+    public ContractEntity createContract(CreateContractDto dto, StaffEntity receiver) {
         ContractEntity contractEntity = new ContractEntity();
         PaymentEntity paymentEntity = new PaymentEntity();
         ContractDao contractDao = new ContractDao();
@@ -112,7 +112,7 @@ public class StaffBusiness {
             paymentEntity.setPaymentMethod("Direct");
             paymentEntity.setContent("Đăng ký hợp đồng mới");
             paymentEntity.setAmount(dto.getAmount());
-            paymentEntity.setReceiver("KhaNC");
+            paymentEntity.setReceiver(receiver.getName() + " (" + receiver.getStaffCode() + ")");
             paymentEntity.setContractCode(contractCode);
             if (paymentDao.create(paymentEntity) != null) {
                 return newContract;
