@@ -6,6 +6,7 @@ import com.fpt.mic.micweb.model.dao.CustomerDao;
 import com.fpt.mic.micweb.model.dao.PaymentDao;
 import com.fpt.mic.micweb.model.dto.form.CancelContractDto;
 import com.fpt.mic.micweb.model.dto.form.CreateContractDto;
+import com.fpt.mic.micweb.model.dto.form.CreateCustomerDto;
 import com.fpt.mic.micweb.model.dto.form.RenewContractDto;
 import com.fpt.mic.micweb.model.entity.ContractEntity;
 import com.fpt.mic.micweb.model.entity.ContractTypeEntity;
@@ -32,12 +33,17 @@ public class StaffBusiness {
         return customerDao.read(customerCode);
     }
 
-    public boolean createCustomer(CustomerEntity customerEntity) {
+    public CustomerEntity createCustomer(CreateCustomerDto dto) {
         CustomerDao customerDao = new CustomerDao();
+        CustomerEntity customerEntity = new CustomerEntity();
 
-        // Validate data
+        // Set customer information to entity
+        customerEntity.setName(dto.getName());
+        customerEntity.setAddress(dto.getAddress());
+        customerEntity.setEmail(dto.getEmail());
+        customerEntity.setPhone(dto.getPhone());
+        customerEntity.setPersonalId(dto.getPersonalID());
 
-        // Create customer
         // get next customer code
         String customerCode = customerDao.getIncrementId();
         customerEntity.setCustomerCode(customerCode);
@@ -45,7 +51,12 @@ public class StaffBusiness {
         String customerPassword = "123456";
         customerEntity.setPassword(customerPassword);
 
-        return customerDao.create(customerEntity) != null;
+        CustomerEntity newCustomer = customerDao.create(customerEntity);
+        if (newCustomer != null) {
+            return newCustomer;
+        } else {
+            return null;
+        }
     }
 
     public List<ContractEntity> getAllContract() {
@@ -70,7 +81,6 @@ public class StaffBusiness {
         PaymentEntity paymentEntity = new PaymentEntity();
         ContractDao contractDao = new ContractDao();
         PaymentDao paymentDao = new PaymentDao();
-        // Validate information
 
         // Get next contract code
         String contractCode = contractDao.getIncrementId();
@@ -108,7 +118,7 @@ public class StaffBusiness {
             paymentEntity.setReceiver("KhaNC");
             paymentEntity.setContractCode(contractCode);
             if (paymentDao.create(paymentEntity) != null) {
-                return contractEntity;
+                return newContract;
             }
         }
         return null;

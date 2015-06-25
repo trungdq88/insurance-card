@@ -13,89 +13,91 @@
         </div>
         <div class="row">
             <div class="col-lg-12">
-                <div class="well text-success text-center">
+                <div class="well text-success text-center bs-example">
                     <i class="fa fa-check"></i>
                     Đã thêm khách hàng mới thành công!
                 </div>
-                <form class="form-horizontal">
-                    <fieldset>
-                        <!-- Customer code -->
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label">Mã khách hàng</label>
 
-                            <div class="col-sm-6">
-                                <div class="text-value text-primary">
-                                    <a href="detail-customer.html"><b></b></a>
+                <c:set var="info" value="${requestScope.CUSTOMER}"/>
+
+                <c:if test="${not empty info}">
+                    <form class="form-horizontal">
+                        <fieldset>
+                            <!-- Customer code & Customer name -->
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Mã khách hàng</label>
+
+                                <div class="col-sm-2">
+                                    <div class="text-value text-primary">
+                                        <a href="${pageContext.request.contextPath}/staff/customer?action=detail&code=${info.customerCode}">
+                                                <strong>${info.customerCode}</strong>
+                                        </a>
+                                    </div>
+                                </div>
+
+                                <label class="col-sm-3 control-label">Tên khách hàng</label>
+
+                                <div class="col-sm-4">
+                                    <div class="text-value">
+                                            ${info.name}
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <!-- Customer name -->
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label">Tên khách hàng</label>
 
-                            <div class="col-sm-6">
-                                <div class="text-value">
+                            <!-- Address -->
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Địa chỉ</label>
 
+                                <div class="col-sm-8">
+                                    <div class="text-value">
+                                        ${info.address}
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <!-- Address -->
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label">Địa chỉ</label>
+                            <!-- Email -->
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Email</label>
 
-                            <div class="col-sm-6">
-                                <div class="text-value">
-
+                                <div class="col-sm-8">
+                                    <div class="text-value">
+                                        ${info.email}
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <!-- Email -->
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label">Email</label>
+                            <!-- Phone & Personal ID -->
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Số điện thoại</label>
 
-                            <div class="col-sm-6">
-                                <div class="text-value">
+                                <div class="col-sm-2">
+                                    <div class="text-value">
+                                        ${info.phone}
+                                    </div>
+                                </div>
 
+                                <label class="col-sm-3 control-label">Số CMND / Hộ chiếu</label>
+
+                                <div class="col-sm-2">
+                                    <div class="text-value">
+                                            ${info.personalId}
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-
-                        <!-- Phone -->
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label">Số điện thoại</label>
-
-                            <div class="col-sm-6">
-                                <div class="text-value">
-
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Personal ID -->
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label">Số CMND / Hộ chiếu</label>
-
-                            <div class="col-sm-6">
-                                <div class="text-value">
-
-                                </div>
-                            </div>
-                        </div>
-
-                    </fieldset>
-                </form>
+                        </fieldset>
+                    </form>
+                </c:if>
 
                 <div class="text-center">
-                    <button type="button" class="btn btn-primary">
+                    <a href="${pageContext.request.contextPath}/staff/contract?action=create&code=${info.customerCode}"
+                       type="button" class="btn btn-primary">
                         <i class="fa fa-arrow-right"></i>
                         Thêm hợp đồng cho khách hàng này
-                    </button>
+                    </a>
                     <br/><br/>
                     <a href="${pageContext.request.contextPath}/staff/customer" type="button" class="btn btn-success">
                         <i class="fa fa-arrow-left"></i>
-                        Quay lại trang khách hàng
+                        Danh sách khách hàng
                     </a>
                 </div>
 
