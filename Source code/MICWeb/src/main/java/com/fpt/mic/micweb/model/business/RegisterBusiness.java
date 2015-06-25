@@ -1,5 +1,6 @@
 package com.fpt.mic.micweb.model.business;
 
+import com.fpt.mic.micweb.framework.R;
 import com.fpt.mic.micweb.model.dao.ContractDao;
 import com.fpt.mic.micweb.model.dao.CustomerDao;
 import com.fpt.mic.micweb.model.dao.PaymentDao;
@@ -10,7 +11,11 @@ import com.fpt.mic.micweb.model.entity.CustomerEntity;
 import com.fpt.mic.micweb.model.entity.PaymentEntity;
 import com.fpt.mic.micweb.utils.Constants;
 import com.fpt.mic.micweb.utils.DateUtils;
+import com.fpt.mic.micweb.utils.EmailUtils;
+import com.fpt.mic.micweb.utils.StringUtils;
 
+import javax.servlet.ServletContext;
+import java.io.InputStream;
 import java.sql.Timestamp;
 import java.util.Date;
 
@@ -18,7 +23,8 @@ import java.util.Date;
  * Created by TriPQM on 06/04/2015.
  */
 public class RegisterBusiness {
-    public RegisterInformationDto registerNewContract(PublicRegisterFormDto publicRegisterFormDto) {
+    public RegisterInformationDto registerNewContract(
+            PublicRegisterFormDto publicRegisterFormDto, ServletContext context, String loginUrl) {
         CustomerEntity customerEntity = new CustomerEntity();
         ContractEntity contractEntity = new ContractEntity();
 
@@ -55,8 +61,9 @@ public class RegisterBusiness {
         // get next customer code
         String customerCode = customerDao.getIncrementId();
         customerEntity.setCustomerCode(customerCode);
-        // get customer password - add later
-        String customerPassword = "12345678";
+        // get customer password
+        String customerPassword = StringUtils.randomString();
+        // TODO: encrypt password
         customerEntity.setPassword(customerPassword);
         // get next Contract Code
         contractEntity.setContractCode(contractDao.getIncrementId());
@@ -65,13 +72,26 @@ public class RegisterBusiness {
         CustomerEntity customer = customerDao.create(customerEntity);
         if (customer != null) {
             ContractEntity contract = contractDao.create(contractEntity);
-            if ( contract != null) {
-                return new RegisterInformationDto(contract, customer);
+            if (contract != null) {
+                // Send password email
+                InputStream resourceAsStream =
+                        context.getResourceAsStream("/WEB-INF/templates/password-email.html");
+                String content = StringUtils.getString(resourceAsStream);
+                boolean emailSuccess = false;
+                if (content != null) {
+                    content = content.replaceAll("\\{\\{password\\}\\}", customerPassword)
+                            .replaceAll("\\{\\{loginUrl\\}\\}", loginUrl);
+                    emailSuccess = EmailUtils.sendMail(customer.getEmail(), content);
+                }
+
+                return new RegisterInformationDto(contract, customer, emailSuccess);
             }
 
         }
+
         return null;
     }
+
     public boolean updateContractPayment(String contractCode, String paymentMethod, String paymentContent, Float amount, String paypalTransId) {
         ContractEntity contractEntity = new ContractEntity();
         ContractDao contractDao = new ContractDao();
@@ -96,7 +116,7 @@ public class RegisterBusiness {
 
         PaymentDao paymentDao = new PaymentDao();
         if (contractDao.update(contractEntity) != null) {
-            if (paymentDao.create(paymentEntity) != null){
+            if (paymentDao.create(paymentEntity) != null) {
                 return true;
             }
         }

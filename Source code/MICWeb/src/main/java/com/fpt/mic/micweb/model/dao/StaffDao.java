@@ -2,9 +2,12 @@ package com.fpt.mic.micweb.model.dao;
 
 import com.fpt.mic.micweb.model.dao.common.GenericDaoJpaImpl;
 import com.fpt.mic.micweb.model.dao.common.IncrementDao;
+import com.fpt.mic.micweb.model.entity.CustomerEntity;
 import com.fpt.mic.micweb.model.entity.StaffEntity;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import javax.persistence.NonUniqueResultException;
 import javax.persistence.Query;
 import java.util.List;
 
@@ -46,4 +49,17 @@ public class StaffDao extends IncrementDao<StaffEntity, String> {
         return resultList;
     }
 
+    public StaffEntity getStaffByEmail(String email) {
+        EntityManager entity = factory.createEntityManager();
+        String hql = "SELECT s FROM StaffEntity s WHERE s.email = :email";
+        Query query = entity.createQuery(hql);
+        query.setParameter("email", email);
+        try {
+            return (StaffEntity) query.getSingleResult();
+        } catch (NonUniqueResultException e) {
+            return null;
+        } catch (NoResultException e) {
+            return null;
+        }
+    }
 }

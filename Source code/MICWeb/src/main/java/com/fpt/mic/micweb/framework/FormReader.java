@@ -1,7 +1,6 @@
 package com.fpt.mic.micweb.framework;
 
 
-import com.fpt.mic.micweb.model.entity.ContractEntity;
 import com.fpt.mic.micweb.utils.DateUtils;
 
 import javax.servlet.http.HttpServletRequest;

@@ -10,13 +10,15 @@ import com.fpt.mic.micweb.model.entity.CustomerEntity;
 public class RegisterInformationDto {
     private ContractEntity contractEntity;
     private CustomerEntity customerEntity;
+    private boolean emailSuccess;
 
     public RegisterInformationDto() {
     }
 
-    public RegisterInformationDto(ContractEntity contractEntity, CustomerEntity customerEntity) {
+    public RegisterInformationDto(ContractEntity contractEntity, CustomerEntity customerEntity, boolean emailSuccess) {
         this.contractEntity = contractEntity;
         this.customerEntity = customerEntity;
+        this.emailSuccess = emailSuccess;
     }
 
     public ContractEntity getContractEntity() {
@@ -33,5 +35,13 @@ public class RegisterInformationDto {
 
     public void setCustomerEntity(CustomerEntity customerEntity) {
         this.customerEntity = customerEntity;
+    }
+
+    public boolean isEmailSuccess() {
+        return emailSuccess;
+    }
+
+    public void setEmailSuccess(boolean emailSuccess) {
+        this.emailSuccess = emailSuccess;
     }
 }

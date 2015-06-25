@@ -71,7 +71,15 @@ public class RegisterController extends BasicController {
     public ResponseObject postCreateContract(R r) {
         String url = "public/error.jsp";
         // Get information...
-        PublicRegisterFormDto publicRegisterFormDto= (PublicRegisterFormDto) r.ead.entity(PublicRegisterFormDto.class,"register");
+        PublicRegisterFormDto publicRegisterFormDto =
+                (PublicRegisterFormDto) r.ead.entity(PublicRegisterFormDto.class,"register");
+
+        String loginUrl = r.equest.getScheme() +
+                "://" + r.equest.getServerName() +
+                ":" + r.equest.getServerPort() +
+                r.equest.getContextPath() +
+                "/user?action=login";
+
         // Gọi hàm validate ở đây
         List errors = r.ead.validate(publicRegisterFormDto);
         // Nếu có lỗi khi validate
@@ -85,7 +93,8 @@ public class RegisterController extends BasicController {
         }
         // Call to business object
         RegisterBusiness registerBusiness = new RegisterBusiness();
-        RegisterInformationDto register = registerBusiness.registerNewContract(publicRegisterFormDto);
+        RegisterInformationDto register =
+                registerBusiness.registerNewContract(publicRegisterFormDto, getServletContext(), loginUrl);
 
         if (register != null) {
             HttpSession session = r.equest.getSession();

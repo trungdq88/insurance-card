@@ -1,27 +1,31 @@
 package com.fpt.mic.micweb.controller.staff;
 
-import com.fpt.mic.micweb.framework.BasicController;
+import com.fpt.mic.micweb.controller.common.AuthController;
 import com.fpt.mic.micweb.framework.R;
 import com.fpt.mic.micweb.framework.responses.JspPage;
 import com.fpt.mic.micweb.framework.responses.RedirectTo;
 import com.fpt.mic.micweb.framework.responses.ResponseObject;
 import com.fpt.mic.micweb.model.business.StaffBusiness;
+import com.fpt.mic.micweb.model.dto.UserDto;
 import com.fpt.mic.micweb.model.dto.form.CancelContractDto;
 import com.fpt.mic.micweb.model.dto.form.CreateContractDto;
 import com.fpt.mic.micweb.model.dto.form.RenewContractDto;
-import com.fpt.mic.micweb.model.entity.ContractEntity;
-import com.fpt.mic.micweb.model.entity.ContractTypeEntity;
-import com.fpt.mic.micweb.model.entity.CustomerEntity;
-import com.fpt.mic.micweb.model.entity.PaymentEntity;
+import com.fpt.mic.micweb.model.entity.*;
 
 import javax.servlet.annotation.WebServlet;
+import java.util.Collections;
 import java.util.List;
 
 /**
  * Created by dinhquangtrung on 5/23/15.
  */
 @WebServlet(name = "ContractController", urlPatterns = {"/staff/contract"})
-public class ContractController extends BasicController {
+public class ContractController extends AuthController {
+
+    @Override
+    public List<String> getAllowedRoles() {
+        return Collections.singletonList(UserDto.ROLE_STAFF);
+    }
 
     private static String msg = "";
 
@@ -132,7 +136,7 @@ public class ContractController extends BasicController {
 
         // Call to business object
         StaffBusiness staffBus = new StaffBusiness();
-        boolean result = staffBus.renewContract(dto);
+        boolean result = staffBus.renewContract(dto, (StaffEntity) getLoggedInUser());
 
         if (result) {
             msg = "Đã gia hạn hợp đồng thành công";

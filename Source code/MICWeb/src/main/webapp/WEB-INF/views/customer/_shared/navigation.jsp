@@ -25,14 +25,14 @@
     <li class="dropdown">
       <a class="dropdown-toggle" data-toggle="dropdown" href="#">
         <i class="fa fa-user fa-fw"></i>
-        Phúc Nguyễn
+        ${sessionScope.userDto.userEntity.name}
         <i class="fa fa-caret-down"></i>
       </a>
       <ul class="dropdown-menu dropdown-user">
-        <li><a href="#"><i class="fa fa-user fa-fw"></i> Thông tin cá nhân</a>
+        <li><a href="${pageContext.request.contextPath}/customer"><i class="fa fa-user fa-fw"></i> Thông tin cá nhân</a>
         </li>
         <li class="divider"></li>
-        <li><a href="#"><i class="fa fa-sign-out fa-fw"></i> Đăng xuất</a>
+        <li><a href="${pageContext.request.contextPath}/user?action=logout"><i class="fa fa-sign-out fa-fw"></i> Đăng xuất</a>
         </li>
       </ul>
       <!-- /.dropdown-user -->
