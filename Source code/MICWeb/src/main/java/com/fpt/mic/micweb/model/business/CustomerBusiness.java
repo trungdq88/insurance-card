@@ -26,18 +26,18 @@ import java.lang.Thread;
 /**
  * Created by PhucNguyen on 05/06/2015.
  */
-public class CustomerBusniess {
+public class CustomerBusiness {
     //get all contract belong to customer
     public List<ContractEntity> getAllContractByCustomer(String customerCode) {
-        ContractDao contractDa0 = new ContractDao();
-        List<ContractEntity> listContract = contractDa0.getContractByCustomerCode(customerCode);
+        ContractDao contractDao = new ContractDao();
+        List<ContractEntity> listContract = contractDao.getContractByCustomerCode(customerCode);
         return listContract;
     }
 
     // get contract detail
     public ContractEntity getContractDetail(String code) {
-        ContractDao contractDa0 = new ContractDao();
-        ContractEntity contract = contractDa0.read(code);
+        ContractDao contractDao = new ContractDao();
+        ContractEntity contract = contractDao.read(code);
         if (contract != null) {
             return contract;
         } else {
@@ -48,18 +48,16 @@ public class CustomerBusniess {
     /**
      * cancel contract
      *
-     * @param code
-     * @param cancelReason
      * @return contract entity
      */
     public ContractEntity cancelContract(CancelContractDto cancelDto) {
-        ContractDao contractDa0 = new ContractDao();
-        ContractEntity contract = contractDa0.read(cancelDto.getContractCode());
+        ContractDao contractDao = new ContractDao();
+        ContractEntity contract = contractDao.read(cancelDto.getContractCode());
 
         contract.setCancelDate(cancelDto.getCancelDate());
         contract.setCancelReason(cancelDto.getCancelReason());
         contract.setStatus(Constants.ContractStatus.REQUEST_CANCEL);
-        contractDa0.update(contract);
+        contractDao.update(contract);
         return contract;
     }
 

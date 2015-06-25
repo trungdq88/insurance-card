@@ -2,11 +2,10 @@ package com.fpt.mic.micweb.controller.customer;
 
 import com.fpt.mic.micweb.controller.common.AuthController;
 import com.fpt.mic.micweb.framework.responses.RedirectTo;
-import com.fpt.mic.micweb.model.business.CustomerBusniess;
+import com.fpt.mic.micweb.model.business.CustomerBusiness;
 import com.fpt.mic.micweb.model.dto.CheckoutRequestDto;
 import com.fpt.mic.micweb.model.dto.UserDto;
 import com.fpt.mic.micweb.model.dto.form.CancelContractDto;
-import com.fpt.mic.micweb.model.dto.form.CreateContractDto;
 import com.fpt.mic.micweb.model.entity.ContractEntity;
 import com.fpt.mic.micweb.framework.responses.JspPage;
 import com.fpt.mic.micweb.framework.R;
@@ -30,7 +29,7 @@ public class ContractController extends AuthController {
     }
 
     public ResponseObject getView(R r) {
-        CustomerBusniess customerBusiness = new CustomerBusniess();
+        CustomerBusiness customerBusiness = new CustomerBusiness();
         String customerCode = "KH0001";
         List<ContractEntity> listContract = customerBusiness.getAllContractByCustomer(customerCode);
         r.equest.setAttribute("listContract", listContract);
@@ -38,7 +37,7 @@ public class ContractController extends AuthController {
     }
 
     public ResponseObject getContractDetail(R r) {
-        CustomerBusniess customerBusiness = new CustomerBusniess();
+        CustomerBusiness customerBusiness = new CustomerBusiness();
         String code = r.equest.getParameter("code");
         ContractEntity contract = customerBusiness.getContractDetail(code);
         if (contract == null) {
@@ -52,7 +51,7 @@ public class ContractController extends AuthController {
     /* Handle canncel contract */
     public ResponseObject postCancelContract(R r) {
         CancelContractDto cancelDto = (CancelContractDto) r.ead.entity(CancelContractDto.class, "cancel");
-        CustomerBusniess customerBusniess = new CustomerBusniess();
+        CustomerBusiness customerBusiness = new CustomerBusiness();
         java.util.Date date = new java.util.Date();
         cancelDto.setCancelDate(new Timestamp(date.getTime()));
         if(cancelDto.getContractCode() == null){
@@ -63,10 +62,9 @@ public class ContractController extends AuthController {
             if (errors.size() > 0) {
                 r.equest.setAttribute("validateErrors", errors);
                 r.equest.setAttribute("submitted", cancelDto);
-                r.equest.setAttribute("contract", customerBusniess.getContractDetail(cancelDto.getContractCode()));
+                r.equest.setAttribute("contract", customerBusiness.getContractDetail(cancelDto.getContractCode()));
                 return new JspPage("customer/contract-detail.jsp");
             } else {
-                CustomerBusniess customerBusiness = new CustomerBusniess();
                 String mesg = "Yêu Cầu Hủy Thất Bại";
                 ContractEntity contract = customerBusiness.cancelContract(cancelDto);
                 if (contract != null) {
@@ -86,7 +84,7 @@ public class ContractController extends AuthController {
         //get parameter
         Date date = new Date();
         String contractCode = r.equest.getParameter("txtContractCode");
-        CustomerBusniess busniess = new CustomerBusniess();
+        CustomerBusiness busniess = new CustomerBusiness();
         ContractEntity contract = busniess.getContractDetail(contractCode);
         Timestamp expiredDate = contract.getExpiredDate();
         if (contract.getStatus().equalsIgnoreCase(Constants.ContractStatus.READY)) {
@@ -122,11 +120,14 @@ public class ContractController extends AuthController {
 
     public ResponseObject getActiveRenewContract(R r) {
         String url = "public/return.jsp";
-        HttpSession session = r.equest.getSession(false);
-        if(session == null){
+        HttpSession session = r.equest.getSession(true);
+        if (session.getAttribute("RESULT") == null
+                || session.getAttribute("contractCode") == null
+                || session.getAttribute("newExpiredDate") == null
+                || session.getAttribute("amountVND") == null
+                || session.getAttribute("ACK") == null) {
             return new RedirectTo("/error/404");
-        }
-        else {
+        } else {
             Map<String, String> results = new HashMap<String, String>();
             results.putAll((Map<String, String>) session.getAttribute("RESULT"));
 
@@ -137,11 +138,11 @@ public class ContractController extends AuthController {
             r.equest.setAttribute("result", results);
             r.equest.setAttribute("ack", (String) session.getAttribute("ACK"));
             //renew contract by customer
-            CustomerBusniess customerBusiness = new CustomerBusniess();
+            CustomerBusiness customerBusiness = new CustomerBusiness();
             boolean result = customerBusiness.renewContract(contractCode, newExpiredDate,
-                    results.get("PAYMENTINFO_0_TRANSACTIONID").toString());
+                    results.get("PAYMENTINFO_0_TRANSACTIONID"));
 
-            if (result == true) {
+            if (result) {
                 r.equest.setAttribute("message", "Gia hạn thành công.");
             } else {
                 r.equest.setAttribute("message", "Gia hạn thất bại.");
@@ -153,7 +154,7 @@ public class ContractController extends AuthController {
     }
 
     public ResponseObject postRejectRequestCancel(R r) {
-        CustomerBusniess business = new CustomerBusniess();
+        CustomerBusiness business = new CustomerBusiness();
         String contractCode = r.equest.getParameter("contractcode");
         if (business.getContractDetail(contractCode) == null) {
             return new RedirectTo("/error/404");
