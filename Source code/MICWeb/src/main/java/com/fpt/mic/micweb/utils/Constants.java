@@ -14,6 +14,6 @@ public class Constants {
         public static final String CANCELLED = "Cancelled";
     }
     public static class Session {
-        public static final String USER_DTO = "MIC:userDto";
+        public static final String USER_DTO = "userDto";
     }
 }

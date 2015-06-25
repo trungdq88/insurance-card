@@ -4,6 +4,7 @@ import com.fpt.mic.micweb.controller.common.AuthController;
 import com.fpt.mic.micweb.framework.responses.RedirectTo;
 import com.fpt.mic.micweb.model.business.CustomerBusniess;
 import com.fpt.mic.micweb.model.dto.CheckoutRequestDto;
+import com.fpt.mic.micweb.model.dto.UserDto;
 import com.fpt.mic.micweb.model.entity.ContractEntity;
 import com.fpt.mic.micweb.framework.responses.JspPage;
 import com.fpt.mic.micweb.framework.R;
@@ -14,16 +15,17 @@ import com.fpt.mic.micweb.utils.DateUtils;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpSession;
 import java.sql.Timestamp;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by PhucNguyen on 06/05/15.
  */
 @WebServlet(name = "CustomerContractController", urlPatterns = "/customer/contract")
 public class ContractController extends AuthController {
+    @Override
+    public List<String> getAllowedRoles() {
+        return Collections.singletonList(UserDto.ROLE_CUSTOMER);
+    }
 
     public ResponseObject getView(R r) {
         CustomerBusniess customerBusiness = new CustomerBusniess();

@@ -13,6 +13,8 @@ import com.fpt.mic.micweb.utils.Constants;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpSession;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.List;
 
 /**
@@ -64,6 +66,14 @@ public class UserController extends BasicController {
         HttpSession session = r.equest.getSession(true);
         session.setAttribute(Constants.Session.USER_DTO, userDto);
 
+        if (loginDto.getRedirect() != null && !loginDto.getRedirect().isEmpty()) {
+            try {
+                return new RedirectTo(URLDecoder.decode(loginDto.getRedirect(), "UTF-8"));
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+        }
+        // This will continue to run if the redirect URL has encoding problem
         if (loginDto.getRole().equals(UserDto.ROLE_CUSTOMER)) {
             return new RedirectTo("/customer");
         } else if (loginDto.getRole().equals(UserDto.ROLE_STAFF)) {

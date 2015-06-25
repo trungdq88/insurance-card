@@ -16,6 +16,7 @@ public class LoginDto {
     @NotEmpty(message = "Mật khẩu không được để trống")
     private String password;
     private String role;
+    private String redirect;
 
     @AssertTrue(message = "Vai trò không hợp lệ. Liên hệ Admin để biết thêm chi tiết")
     private boolean isRoleValid() {
@@ -55,5 +56,13 @@ public class LoginDto {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public String getRedirect() {
+        return redirect;
+    }
+
+    public void setRedirect(String redirect) {
+        this.redirect = redirect;
     }
 }

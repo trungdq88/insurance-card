@@ -53,6 +53,12 @@
                                 </div>
                             </c:if>
 
+                            <div class="text-danger" id="authorize-failed" style="display: none">
+                                <p>
+                                    Bạn không có quyền truy cập vào trang này
+                                </p>
+                            </div>
+
                             <div class="form-group">
                                 <label>Email hoặc mã khách hàng
                                     <input class="form-control" name="login:emailorcode"
@@ -67,7 +73,17 @@
                                            value="${submitted.password}">
                                 </label>
                             </div>
-                            <input type="hidden" name="login:role" value="customer"/>
+                            <div class="form-group">
+                                <label>Đăng nhập với tư cách:
+                                    <select name="login:role" class="form-control">
+                                        <option value="customer"
+                                         ${submitted.role == "customer" ? "selected" : ""}>Khách hàng</option>
+                                        <option value="staff"
+                                         ${submitted.role == "staff" ? "selected" : ""}>Nhân viên MIC</option>
+                                    </select>
+                                </label>
+                            </div>
+                            <input type="hidden" id="redirectId" name="login:redirect" value="${submitted.redirect}"/>
                             <input type="hidden" name="action" value="login"/>
                             <!-- Change this to a button or input when using this as a form -->
                             <button type="submit" class="btn btn-lg btn-success btn-block">Đăng nhập</button>
@@ -83,6 +99,36 @@
 <script src="${pageContext.request.contextPath}/js/jquery.min.js"></script>
 <!-- Bootstrap Core JavaScript -->
 <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
+
+<script>
+    function getQueryVariable(variable) {
+        var query = window.location.search.substring(1);
+        var vars = query.split("&");
+        for (var i = 0; i < vars.length; i++) {
+            var pair = vars[i].split("=");
+            if (pair[0] == variable) {
+                return pair[1];
+            }
+        }
+        return false;
+    }
+
+    $(function () {
+
+        // Fill redirect value
+        var $redirect = $('#redirectId');
+        if ($redirect.val() == "") {
+            $redirect.val(getQueryVariable('redirect'));
+        }
+
+
+        // Show authorize message
+        if (getQueryVariable("authorize")) {
+            $('#authorize-failed').show();
+        }
+
+    });
+</script>
 
 </body>
 

@@ -6,6 +6,7 @@ import com.fpt.mic.micweb.framework.responses.JspPage;
 import com.fpt.mic.micweb.framework.responses.RedirectTo;
 import com.fpt.mic.micweb.framework.responses.ResponseObject;
 import com.fpt.mic.micweb.model.business.StaffBusiness;
+import com.fpt.mic.micweb.model.dto.UserDto;
 import com.fpt.mic.micweb.model.dto.form.CancelContractDto;
 import com.fpt.mic.micweb.model.dto.form.CreateContractDto;
 import com.fpt.mic.micweb.model.dto.form.RenewContractDto;
@@ -15,6 +16,8 @@ import com.fpt.mic.micweb.model.entity.CustomerEntity;
 import com.fpt.mic.micweb.model.entity.PaymentEntity;
 
 import javax.servlet.annotation.WebServlet;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -22,6 +25,11 @@ import java.util.List;
  */
 @WebServlet(name = "ContractController", urlPatterns = {"/staff/contract"})
 public class ContractController extends AuthController {
+
+    @Override
+    public List<String> getAllowedRoles() {
+        return Collections.singletonList(UserDto.ROLE_STAFF);
+    }
 
     private static String msg = "";
 

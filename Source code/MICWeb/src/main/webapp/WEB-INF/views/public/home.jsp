@@ -48,6 +48,7 @@
         <div class="collapse navbar-collapse" id="top-navbar-1">
             <ul class="nav navbar-nav navbar-right">
                 <li>
+                    <form action="${pageContext.request.contextPath}/user" method="post">
                     <table id="login-box">
                         <tr>
                             <td class="text-left" style="padding-left: 16px">
@@ -59,14 +60,19 @@
                         </tr>
                         <tr>
                             <td class="col-md-5">
-                                <input type="text" name="txtUsername" class="form-control"
-                                       placeholder="">
+                                <input type="text" name="login:emailorcode" class="form-control"
+                                       placeholder=""
+                                       required autofocus title="Vui lòng nhập email hoặc mã khách hàng">
                             </td>
                             <td class="col-md-5 ">
-                                <input type="password" name="txtPassword" class="form-control">
+                                <input type="password" name="login:password" class="form-control"
+                                       required title="Vui lòng nhập mật khẩu">
                             </td>
                             <td>
-                                <a href="/customer" name="btnLogin" class="btn btn-success">Đăng nhập</a>
+                                <input type="hidden" name="login:redirect" value="/customer"/>
+                                <input type="hidden" name="login:role" value="customer"/>
+                                <input type="hidden" name="action" value="login"/>
+                                <button type="submit" name="btnLogin" class="btn btn-success">Đăng nhập</button>
                             </td>
                         </tr>
                         <tr>
@@ -79,6 +85,7 @@
                             </td>
                         </tr>
                     </table>
+                    </form>
                 </li>
             </ul>
         </div>

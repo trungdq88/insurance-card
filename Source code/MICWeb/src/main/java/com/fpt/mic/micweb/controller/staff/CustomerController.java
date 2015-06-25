@@ -5,10 +5,13 @@ import com.fpt.mic.micweb.framework.R;
 import com.fpt.mic.micweb.framework.responses.JspPage;
 import com.fpt.mic.micweb.framework.responses.ResponseObject;
 import com.fpt.mic.micweb.model.business.StaffBusiness;
+import com.fpt.mic.micweb.model.dto.UserDto;
 import com.fpt.mic.micweb.model.entity.ContractEntity;
 import com.fpt.mic.micweb.model.entity.CustomerEntity;
 
 import javax.servlet.annotation.WebServlet;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -17,6 +20,10 @@ import java.util.List;
  */
 @WebServlet(name = "CustomerController", urlPatterns = {"/staff/customer"})
 public class CustomerController extends AuthController {
+    @Override
+    public List<String> getAllowedRoles() {
+        return Collections.singletonList(UserDto.ROLE_STAFF);
+    }
 
     public ResponseObject getView(R r) {
         StaffBusiness staffBus = new StaffBusiness();
