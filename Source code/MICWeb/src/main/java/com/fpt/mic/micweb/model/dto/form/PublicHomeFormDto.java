@@ -53,13 +53,15 @@ public class PublicHomeFormDto {
     }
     @AssertTrue(message = "Số CMND/Hộ chiếu không hợp lệ")
     public boolean isValidPersonalId(){
-        if ( personalId != null ) {
+        if ( personalId == null || personalId.isEmpty() ) {
+            return true;
+        } else {
             if(personalId.length() > 7 && personalId.length() < 16) {
                 java.util.regex.Pattern pattern = java.util.regex.Pattern.compile("[0-9]+");
                 return pattern.matcher(personalId).matches();
             }
+            return false;
         }
-        return false;
     }
 
     private String plate;

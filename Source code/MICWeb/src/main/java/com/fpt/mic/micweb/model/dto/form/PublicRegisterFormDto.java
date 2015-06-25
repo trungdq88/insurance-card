@@ -74,50 +74,48 @@ public class PublicRegisterFormDto {
     }
     @AssertTrue(message = "Số CMND/Hộ chiếu không hợp lệ")
     public boolean isValidPersonalId(){
-        if ( personalId != null ) {
+        if ( personalId == null || personalId.isEmpty() ) {
+            return true;
+        } else {
             if(personalId.length() > 7 && personalId.length() < 16) {
                 java.util.regex.Pattern pattern = java.util.regex.Pattern.compile("[0-9]+");
                 return pattern.matcher(personalId).matches();
             }
+            return false;
         }
-        return false;
     }
 
     @AssertTrue(message = "Dung tích xe phải từ 2 đến 20 ký tự")
     public boolean isValidCapacity(){
-        if ( capacity != null ) {
-            if(capacity.length() > 1 && capacity.length() < 21) {
-                return true;
-            }
+        if ( capacity == null || capacity.isEmpty() ) {
+            return true;
+        } else {
+            return capacity.length() > 1 && capacity.length() < 21;
         }
-        return false;
     }
     @AssertTrue(message = "Loại xe phải từ 2 đến 20 ký tự")
     public boolean isValidType(){
-        if ( type != null ) {
-            if(type.length() > 1 && type.length() < 21) {
-                return true;
-            }
+        if ( type == null || type.isEmpty() ) {
+            return true;
+        } else {
+            return type.length() > 1 && type.length() < 21;
         }
-        return false;
     }
     @AssertTrue(message = "Số loại phải từ 2 đến 20 ký tự")
     public boolean isValidModel(){
-        if ( model != null ) {
-            if(model.length() > 1 && model.length() < 21) {
-                return true;
-            }
+        if ( model == null || model.isEmpty() ) {
+            return true;
+        } else {
+            return model.length() > 1 && model.length() < 21;
         }
-        return false;
     }
     @AssertTrue(message = "Màu xe phải từ 2 đến 20 ký tự")
     public boolean isValidColor(){
-        if ( color != null ) {
-            if(color.length() > 1 && color.length() < 21) {
-                return true;
-            }
+        if ( color == null || color.isEmpty() ) {
+            return true;
+        } else {
+            return color.length() > 1 && color.length() < 21;
         }
-        return false;
     }
 
     @AssertTrue(message = "Đang có hợp đồng hiệu lực với xe có biển số này")
