@@ -10,7 +10,11 @@ import com.fpt.mic.micweb.model.entity.CustomerEntity;
 import com.fpt.mic.micweb.model.entity.PaymentEntity;
 import com.fpt.mic.micweb.utils.Constants;
 import com.fpt.mic.micweb.utils.DateUtils;
+import com.fpt.mic.micweb.utils.EmailUtils;
+import com.fpt.mic.micweb.utils.StringUtils;
 
+import javax.servlet.ServletContext;
+import java.io.InputStream;
 import java.sql.Timestamp;
 import java.util.Date;
 
@@ -18,7 +22,8 @@ import java.util.Date;
  * Created by TriPQM on 06/04/2015.
  */
 public class RegisterBusiness {
-    public RegisterInformationDto registerNewContract(PublicRegisterFormDto publicRegisterFormDto) {
+    public RegisterInformationDto registerNewContract(
+            PublicRegisterFormDto publicRegisterFormDto, ServletContext context) {
         CustomerEntity customerEntity = new CustomerEntity();
         ContractEntity contractEntity = new ContractEntity();
 
@@ -56,7 +61,7 @@ public class RegisterBusiness {
         String customerCode = customerDao.getIncrementId();
         customerEntity.setCustomerCode(customerCode);
         // get customer password - add later
-        String customerPassword = "12345678";
+        String customerPassword = StringUtils.randomString();
         customerEntity.setPassword(customerPassword);
         // get next Contract Code
         contractEntity.setContractCode(contractDao.getIncrementId());
@@ -66,7 +71,15 @@ public class RegisterBusiness {
         if (customer != null) {
             ContractEntity contract = contractDao.create(contractEntity);
             if ( contract != null) {
-                return new RegisterInformationDto(contract, customer);
+                // Send password email
+                InputStream resourceAsStream =
+                        context.getResourceAsStream("/WEB-INF/templates/password-email.html");
+                String content = StringUtils.getString(resourceAsStream)
+                        .replace("{{password}}", customerPassword)
+                        .replace("{{loginUrl}}", context.getContextPath());
+                boolean emailSuccess = EmailUtils.sendMail("trungdq88@gmail.com", content);
+
+                return new RegisterInformationDto(contract, customer, emailSuccess);
             }
 
         }

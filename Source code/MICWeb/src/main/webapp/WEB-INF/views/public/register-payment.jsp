@@ -32,7 +32,8 @@
                                 </h3>
                                 <div class="col-sm-10 col-sm-offset-3">
                                     <p><b>Mã khách hàng:</b> ${register.customerEntity.customerCode}</p>
-                                    <p><b>Mật khẩu đăng nhập hệ thống:</b> (kiểm tra email ${register.customerEntity.email})</p>
+                                    <p><b>Mật khẩu:</b> (kiểm tra email ${register.customerEntity.email})
+                                        (${register.emailSuccess ? "<i class='fa fa-check'></i>" : "<i class='fa fa-times'></i>"})</p>
                                     <p><b>Mã hợp đồng:</b> ${register.contractEntity.contractCode}</p>
                                     <input type="hidden" id="amount" value="${register.contractEntity.contractFee}">
                                     <p><b>Phí cần thanh toán:  </b><span id="amount1"></span> VND</p>
