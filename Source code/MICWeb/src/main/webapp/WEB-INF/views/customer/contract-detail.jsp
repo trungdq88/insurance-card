@@ -50,7 +50,6 @@
                      </span>
                 </h2>
             </div>
-
             <form action="${pageContext.request.contextPath}/customer/contract" method="post">
                 <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog"
                      aria-labelledby="myLargeModalLabel"
@@ -120,11 +119,12 @@
                             <div class="modal-footer">
                                 <%--Post to server (ContractController)--%>
                                 <input type="hidden" name="action" value="CancelContract"/>
-                                <input class="hide" name="txtReason" id="reason">
+                                <input type="hidden" name="cancel:cancelReason" id="reason">
+                                <input type="hidden" name="cancel:contractCode" id="contractId"
+                                       value="${contract.contractCode}"/>
+                                <%---------------------------------------%>
                                 <input id="deleteContract" type="submit" class="btn btn-primary" name="Xác Nhận"
                                        value="Xác Nhận"/>
-                                <input type="hidden" id="contractId" name="contractcode"
-                                       value="${contract.contractCode}"/>
                                 <input type="button" class="btn btn-danger" id="cancelAction" data-dismiss="modal"
                                        value="Hủy Bỏ"/>
                             </div>
@@ -233,6 +233,15 @@
 
         <!-- /.modal-dialog -->
         <div class="col-lg-12">
+            <c:if test="${not empty validateErrors}">
+                <div class="well well-lg text-danger ">
+                    <ul>
+                        <c:forEach var="error" items="${validateErrors}">
+                            <li>${error}</li>
+                        </c:forEach>
+                    </ul>
+                </div>
+            </c:if>
             <c:if test="${contract.status.equalsIgnoreCase('Request cancel')}">
                 <form action="${pageContext.request.contextPath}/customer/contract" method="post">
                     <div class="well well-lg text-center text-danger " style="height:122px !important;">
@@ -294,7 +303,9 @@
                             <div class="col-md-9 text-left">
                                     ${contract.cancelReason}
                             </div>
-                        </div>   <br/>
+                        </div>
+                        <br/>
+
                         <div class="form-group" style="margin-bottom:5px">
                             <label class="col-md-3 text-right">Ghi chú hủy: </label>
 
@@ -326,6 +337,7 @@
             </ul>
         </div>
         <br/>
+
         <div class="tab-content">
             <div role="tabpanel" class="tab-pane active" id="commonInfo">
 

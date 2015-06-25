@@ -4,6 +4,7 @@ import com.fpt.mic.micweb.model.dao.CardDao;
 import com.fpt.mic.micweb.model.dao.CustomerDao;
 import com.fpt.mic.micweb.model.dao.ContractDao;
 import com.fpt.mic.micweb.model.dao.PaymentDao;
+import com.fpt.mic.micweb.model.dto.form.CancelContractDto;
 import com.fpt.mic.micweb.model.entity.CardEntity;
 import com.fpt.mic.micweb.model.entity.CustomerEntity;
 import com.fpt.mic.micweb.model.entity.ContractEntity;
@@ -36,7 +37,12 @@ public class CustomerBusniess {
     // get contract detail
     public ContractEntity getContractDetail(String code) {
         ContractDao contractDa0 = new ContractDao();
-        return contractDa0.read(code);
+        ContractEntity contract = contractDa0.read(code);
+        if (contract != null) {
+            return contract;
+        } else {
+            return null;
+        }
     }
 
     /**
@@ -46,13 +52,12 @@ public class CustomerBusniess {
      * @param cancelReason
      * @return contract entity
      */
-    public ContractEntity cancelContract(String code, String cancelReason) {
+    public ContractEntity cancelContract(CancelContractDto cancelDto) {
         ContractDao contractDa0 = new ContractDao();
-        ContractEntity contract = contractDa0.read(code);
-        //get date now
-        java.util.Date date = new java.util.Date();
-        contract.setCancelDate(new Timestamp(date.getTime()));
-        contract.setCancelReason(cancelReason);
+        ContractEntity contract = contractDa0.read(cancelDto.getContractCode());
+
+        contract.setCancelDate(cancelDto.getCancelDate());
+        contract.setCancelReason(cancelDto.getCancelReason());
         contract.setStatus(Constants.ContractStatus.REQUEST_CANCEL);
         contractDa0.update(contract);
         return contract;

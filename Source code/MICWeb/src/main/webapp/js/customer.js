@@ -1,6 +1,8 @@
+/**
+ * Created by PhucNH on 5/23/15.
+ */
+
 $(document).ready(function () {
-
-
     $('#btn_Modify').click(function () {
         $('.textInFormation').prop('disabled', false);
         $(this).addClass('hide');
@@ -80,7 +82,7 @@ $(document).ready(function () {
     //        $('#notify').addClass('hide');
     //    }
     //});
-    $( "#anotherReason" ).keydown(function( event ) {
+    $("#anotherReason").keydown(function (event) {
         if ($.trim($('#anotherReason').val()) == 0) {
             $('#notify').addClass('hide');
         }
@@ -105,6 +107,7 @@ $(document).ready(function () {
                 return false;
             }
             else {
+
                 result = false;
             }
         });
@@ -129,7 +132,7 @@ $(document).ready(function () {
     $('#renew').click(function () {
         var status = $('#contractStatus').val();
         var myDate = null;
-        if (status == 'Ready' ||status == 'No card' || status == 'Pending' ) {
+        if (status == 'Ready' || status == 'No card' || status == 'Pending') {
             myDate = new Date($('#newStartDate').val());
         }
         else if (status == 'Expired') {
