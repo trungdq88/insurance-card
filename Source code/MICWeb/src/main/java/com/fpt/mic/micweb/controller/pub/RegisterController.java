@@ -119,17 +119,27 @@ public class RegisterController extends BasicController {
 
             r.equest.setAttribute("result", results);
             r.equest.setAttribute("ack", (String) session.getAttribute("ACK"));
-            r.equest.setAttribute("amountVND",(String) session.getAttribute("amountVND"));
+            Float amount = Float.parseFloat((String) session.getAttribute("amountVND"));
+            r.equest.setAttribute("amountVND",amount);
             r.equest.setAttribute("redirectLink","home");
 
             String contractCode = (String) session.getAttribute("CONTRACT_CODE");
             String paypalTransId = results.get("PAYMENTINFO_0_TRANSACTIONID").toString();
             String paymentMethod = "PayPal payment";
             String paymentContent = "Đăng ký hợp đồng mới";
-            Float amount = Float.parseFloat((String) session.getAttribute("amountVND"));
+
             RegisterBusiness registerBusiness = new RegisterBusiness();
-            registerBusiness.updateContractPayment(contractCode,paymentMethod, paymentContent,amount, paypalTransId);
-            session.invalidate();
+            registerBusiness.updateContractPayment(contractCode, paymentMethod, paymentContent, amount, paypalTransId);
+            session.removeAttribute("RESULT");
+            session.removeAttribute("CONTRACT_CODE");
+            session.removeAttribute("amountVND");
+            session.removeAttribute("ACK");
+            session.removeAttribute("SUCCESS_URL");
+            session.removeAttribute("EXPRESS_MARK");
+            session.removeAttribute("payer_id");
+            session.removeAttribute("checkoutDetails");
+            session.removeAttribute("checkout");
+            session.removeAttribute("TOKEN");
             return new JspPage(url);
         }
         //r.equest.setAttribute("error","Phiên giao dịch đã hết thời gian");

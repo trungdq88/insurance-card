@@ -49,7 +49,7 @@ public class CreateContractDto {
     private Integer yearOfManufacture;
     @Range(min = 1, max = 1000, message = "Tự trọng phải có giá trị từ {min} đến {max}")
     private Integer weight;
-    @Range(min = 1, max = 1000, message = "Số người được phép chở phải có giá trị từ {min} đến {max}")
+    @Range(min = 1, max = 100, message = "Số người được phép chở phải có giá trị từ {min} đến {max}")
     private Integer seatCapacity;
     @NotNull(message = "Ngày nộp phí không được để trống")
     private Timestamp paidDate;
@@ -82,7 +82,7 @@ public class CreateContractDto {
             final int HOURS_IN_DAY = 24;
             final int DAYS_IN_YEAR = 366;
             final long MILLISECONDS_IN_YEAR =
-                    (long)MILLIS_IN_SECOND * SECONDS_IN_MINUTE * MINUTES_IN_HOUR
+                    (long) MILLIS_IN_SECOND * SECONDS_IN_MINUTE * MINUTES_IN_HOUR
                             * HOURS_IN_DAY * DAYS_IN_YEAR;
             if (contractTerm <= MILLISECONDS_IN_YEAR) {
                 return true;
@@ -91,6 +91,36 @@ public class CreateContractDto {
             }
         } else {
             return false;
+        }
+    }
+
+    @AssertTrue(message = "Số loại phải có độ dài từ 2 đến 20 ký tự")
+    private boolean isModelCodeValid() {
+        if (modelCode == null || modelCode.isEmpty()) {
+            return true; // Vẫn chấp nhận null hoặc rỗng
+        } else {
+            // Nếu có giá trị thì phải có độ dài đúng requirement
+            return modelCode.length() >= 2 && modelCode.length() <= 20;
+        }
+    }
+
+    @AssertTrue(message = "Loại xe phải có độ dài từ 2 đến 20 ký tự")
+    private boolean isVehicleTypeValid() {
+        if (vehicleType == null || vehicleType.isEmpty()) {
+            return true; // Vẫn chấp nhận null hoặc rỗng
+        } else {
+            // Nếu có giá trị thì phải có độ dài đúng requirement
+            return vehicleType.length() >= 2 && vehicleType.length() <= 20;
+        }
+    }
+
+    @AssertTrue(message = "Màu sắc phải có độ dài từ 2 đến 20 ký tự")
+    private boolean isColorValid() {
+        if (color == null || color.isEmpty()) {
+            return true; // Vẫn chấp nhận null hoặc rỗng
+        } else {
+            // Nếu có giá trị thì phải có độ dài đúng requirement
+            return color.length() >= 2 && color.length() <= 20;
         }
     }
 

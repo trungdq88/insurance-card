@@ -66,7 +66,13 @@ public class ReturnController extends BasicController {
                         "<br>Error Code: " + errorCode +
                         "<br>Error Severity Code: " + errorSeverityCode;
                 r.equest.setAttribute("error", errorString);
-                session.invalidate();
+                session.removeAttribute("ACK");
+                session.removeAttribute("SUCCESS_URL");
+                session.removeAttribute("EXPRESS_MARK");
+                session.removeAttribute("payer_id");
+                session.removeAttribute("checkoutDetails");
+                session.removeAttribute("checkout");
+                session.removeAttribute("TOKEN");
                 return new JspPage("public/error.jsp");
             }
         }

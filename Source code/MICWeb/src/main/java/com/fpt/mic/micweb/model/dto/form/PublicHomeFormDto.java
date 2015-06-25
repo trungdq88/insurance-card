@@ -5,8 +5,10 @@ import org.hibernate.validator.constraints.NotEmpty;
 import org.hibernate.validator.constraints.Range;
 
 import javax.validation.constraints.*;
+import javax.validation.constraints.Pattern;
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.regex.*;
 
 /**
  * Created by TriPQM on 06/23/2015.
@@ -36,6 +38,32 @@ public class PublicHomeFormDto {
     @NotNull(message = "Phí bảo hiểm không được để trống")
     @Range(min = 0, message = "Phí bảo hiểm phải lớn hơn {min}")
     private Float contractFee;
+
+    @AssertTrue(message = "Ngày bắt đầu phải kể từ ngày hôm nay trở đi")
+    private boolean isValidStartDate() {
+        if (startDate != null) {
+            Timestamp currentDate = new Timestamp(new Date().getTime());
+            currentDate.setHours(0);
+            currentDate.setMinutes(0);
+            currentDate.setSeconds(0);
+            currentDate.setNanos(0);
+            return !startDate.before(currentDate);
+        }
+        return false;
+    }
+    @AssertTrue(message = "Số CMND/Hộ chiếu không hợp lệ")
+    public boolean isValidPersonalId(){
+        if ( personalId == null || personalId.isEmpty() ) {
+            return true;
+        } else {
+            if(personalId.length() > 7 && personalId.length() < 16) {
+                java.util.regex.Pattern pattern = java.util.regex.Pattern.compile("[0-9]+");
+                return pattern.matcher(personalId).matches();
+            }
+            return false;
+        }
+    }
+
     private String plate;
     private String brand;
     private String chassis;
@@ -44,10 +72,10 @@ public class PublicHomeFormDto {
     private String type;
     private String model;
     private String color;
-
     private Integer yearOfMan;
     private Integer weight;
     private Integer seatCapacity;
+
 
     public String getPlate() {
         return plate;
@@ -137,15 +165,7 @@ public class PublicHomeFormDto {
         this.seatCapacity = seatCapacity;
     }
 
-    @AssertTrue(message = "Ngày bắt đầu phải kể từ ngày hôm nay trở đi")
-    private boolean isValidStartDate() {
-        Timestamp currentDate = new Timestamp(new Date().getTime());
-        currentDate.setHours(0);
-        currentDate.setMinutes(0);
-        currentDate.setSeconds(0);
-        currentDate.setNanos(0);
-        return !startDate.before(currentDate);
-    }
+
 
     public PublicHomeFormDto() {
     }

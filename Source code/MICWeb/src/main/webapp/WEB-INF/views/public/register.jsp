@@ -177,6 +177,18 @@
                                     </div>
                                 <div class="tab-pane" id="vehicle">
                                     <div class="row">
+                                        <c:if test="${not empty validateErrors}">
+
+                                            <div class="col-sm-12">
+                                                <div class="text-danger">
+                                                    <ul>
+                                                        <c:forEach var="error" items="${validateErrors}">
+                                                            <li>${error}</li>
+                                                        </c:forEach>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </c:if>
                                         <div class="col-sm-12">
                                             <h3 class="info-text"> THÔNG TIN XE </h3>
                                             <h5 class="info-text"> Quý khách vui lòng nhập thông tin dựa trên đăng ký xe
@@ -232,7 +244,7 @@
                                                        id="txtCapacity"
                                                        minlength="2" maxlength="20"
                                                        placeholder="Ví dụ: 110cc"
-                                                       title="Vui lòng nhập dung tích xe!"
+                                                       title="Dung tích xe phải từ 2 đến 20 ký tự!"
                                                        value="${publicHomeFormDto.capacity}">
                                             </div>
                                         </div>
@@ -241,7 +253,7 @@
                                                 <label><b>Số loại</b></label>
                                                 <input type="text" class="form-control" name="register:model" id="txtModel"
                                                        minlength="2" maxlength="20"
-                                                       title="Vui lòng nhập đúng số loại!"
+                                                       title="Số loại phải từ 2 đến 20 ký tự!"
                                                        placeholder="Ví dụ: Air Blade, Future, Wave..."
                                                        value="${publicHomeFormDto.model}">
                                             </div>
@@ -251,7 +263,7 @@
                                                 <label><b>Loại xe</b></label>
                                                 <input type="text" class="form-control" name="register:type" id="txtType"
                                                        minlength="2" maxlength="20"
-                                                       title="Vui lòng nhập đúng loại xe!"
+                                                       title="Loại xe phải từ 2 đến 20 ký tự!"
                                                        placeholder="Ví dụ: hai bánh, ba bánh, khác..."
                                                        value="${publicHomeFormDto.type}">
                                             </div>
@@ -261,7 +273,7 @@
                                                 <label><b>Màu sơn</b></label>
                                                 <input type="text" class="form-control" name="register:color" id="txtColor"
                                                        minlength="2" maxlength="20"
-                                                       title="Vui lòng nhập đúng màu sơn!"
+                                                       title="Màu xe phải từ 2 đến 20 ký tự!"
                                                        placeholder="Ví dụ: Đỏ"
                                                        value="${publicHomeFormDto.color}">
                                             </div>
