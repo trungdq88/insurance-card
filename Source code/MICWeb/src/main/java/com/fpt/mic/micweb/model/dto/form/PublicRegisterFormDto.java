@@ -62,19 +62,70 @@ public class PublicRegisterFormDto {
 
     @AssertTrue(message = "Ngày bắt đầu phải kể từ ngày hôm nay trở đi")
     private boolean isValidStartDate() {
-        Timestamp currentDate = new Timestamp(new Date().getTime());
-        currentDate.setHours(0);
-        currentDate.setMinutes(0);
-        currentDate.setSeconds(0);
-        currentDate.setNanos(0);
-        return !startDate.before(currentDate);
+        if (startDate != null) {
+            Timestamp currentDate = new Timestamp(new Date().getTime());
+            currentDate.setHours(0);
+            currentDate.setMinutes(0);
+            currentDate.setSeconds(0);
+            currentDate.setNanos(0);
+            return !startDate.before(currentDate);
+        }
+        return false;
     }
+    @AssertTrue(message = "Số CMND/Hộ chiếu không hợp lệ")
+    public boolean isValidPersonalId(){
+        if ( personalId != null ) {
+            if(personalId.length() > 7 && personalId.length() < 16) {
+                java.util.regex.Pattern pattern = java.util.regex.Pattern.compile("[0-9]+");
+                return pattern.matcher(personalId).matches();
+            }
+        }
+        return false;
+    }
+
+    @AssertTrue(message = "Dung tích xe phải từ 2 đến 20 ký tự")
+    public boolean isValidCapacity(){
+        if ( capacity != null ) {
+            if(capacity.length() > 1 && capacity.length() < 21) {
+                return true;
+            }
+        }
+        return false;
+    }
+    @AssertTrue(message = "Loại xe phải từ 2 đến 20 ký tự")
+    public boolean isValidType(){
+        if ( type != null ) {
+            if(type.length() > 1 && type.length() < 21) {
+                return true;
+            }
+        }
+        return false;
+    }
+    @AssertTrue(message = "Số loại phải từ 2 đến 20 ký tự")
+    public boolean isValidModel(){
+        if ( model != null ) {
+            if(model.length() > 1 && model.length() < 21) {
+                return true;
+            }
+        }
+        return false;
+    }
+    @AssertTrue(message = "Màu xe phải từ 2 đến 20 ký tự")
+    public boolean isValidColor(){
+        if ( color != null ) {
+            if(color.length() > 1 && color.length() < 21) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     @AssertTrue(message = "Đang có hợp đồng hiệu lực với xe có biển số này")
     private boolean isValidPlate() {
         ContractDao contractDao = new ContractDao();
         return !contractDao.isExistByPlate(plate);
     }
-    @AssertTrue(message = "Đang có hợp đồng hiệu lực với xe có số khung này")
+    /*@AssertTrue(message = "Đang có hợp đồng hiệu lực với xe có số khung này")
     private boolean isValidChassis() {
         ContractDao contractDao = new ContractDao();
         return !contractDao.isExistByChassis(chassis);
@@ -83,7 +134,7 @@ public class PublicRegisterFormDto {
     private boolean isValidEngine() {
         ContractDao contractDao = new ContractDao();
         return !contractDao.isExistByEngine(engine);
-    }
+    }*/
 
     public PublicRegisterFormDto() {
     }

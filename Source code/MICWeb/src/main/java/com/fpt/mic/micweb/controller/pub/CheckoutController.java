@@ -15,7 +15,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by TriPQMSE60746 on 06/10/2015.
+ * Created by TriPQM on 06/10/2015.
  */
 @WebServlet(name = "CheckoutController", urlPatterns = {"/public/checkout"})
 public class CheckoutController extends BasicController {
@@ -77,8 +77,8 @@ public class CheckoutController extends BasicController {
                 nvp = paypal.callMarkExpressCheckout(checkoutDetails, returnURL, cancelURL);
                 session.setAttribute("checkoutDetails", checkoutDetails);
             } else {
-                session.invalidate();
-                session = r.equest.getSession();
+                session.removeAttribute("EXPRESS_MARK");
+                session.removeAttribute("checkout");
                 nvp = paypal.callShortcutExpressCheckout(checkoutDetails, returnURL, cancelURL);
                 session.setAttribute("checkoutDetails", checkoutDetails);
             }
@@ -101,7 +101,13 @@ public class CheckoutController extends BasicController {
                         "<br>Error Code: " + ErrorCode +
                         "<br>Error Severity Code: " + ErrorSeverityCode;
                 r.equest.setAttribute("error", errorString);
-                session.invalidate();
+                session.removeAttribute("ACK");
+                session.removeAttribute("SUCCESS_URL");
+                session.removeAttribute("EXPRESS_MARK");
+                session.removeAttribute("payer_id");
+                session.removeAttribute("checkoutDetails");
+                session.removeAttribute("checkout");
+                session.removeAttribute("TOKEN");
             }
         }
         return new JspPage(url);
