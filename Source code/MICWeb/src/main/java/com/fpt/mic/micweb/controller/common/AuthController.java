@@ -38,7 +38,7 @@ public abstract class AuthController extends BasicController {
      *
      * @return
      */
-    public Object getUser() {
+    public Object getLoggedInUser() {
         return userDto.getUserEntity();
     }
 

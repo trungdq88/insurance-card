@@ -125,8 +125,8 @@
                         Khánh hàng đã hoàn thành hợp đồng và đã có thẻ để sẵn sàng sử dụng.
                     </li>
                     <li>
-                        <span class="label label-warning">Sắp hết hạn</span>
-                        Thời hạn của hợp đồng sắp hết, cần được gia hạn.
+                        <span class="label label-warning">Yêu cầu huỷ</span>
+                        Khách hàng gửi yêu cầu huỷ hợp đồng và đang chờ nhân viên xác nhận.
                     </li>
                     <li>
                         <span class="label label-danger">Hết hạn</span>

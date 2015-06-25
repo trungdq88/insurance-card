@@ -10,6 +10,7 @@ import com.fpt.mic.micweb.model.entity.ContractEntity;
 import com.fpt.mic.micweb.framework.responses.JspPage;
 import com.fpt.mic.micweb.framework.R;
 import com.fpt.mic.micweb.framework.responses.ResponseObject;
+import com.fpt.mic.micweb.model.entity.CustomerEntity;
 import com.fpt.mic.micweb.utils.Constants;
 import com.fpt.mic.micweb.utils.DateUtils;
 
@@ -30,7 +31,7 @@ public class ContractController extends AuthController {
 
     public ResponseObject getView(R r) {
         CustomerBusiness customerBusiness = new CustomerBusiness();
-        String customerCode = "KH0001";
+        String customerCode = ((CustomerEntity) getLoggedInUser()).getCustomerCode();
         List<ContractEntity> listContract = customerBusiness.getAllContractByCustomer(customerCode);
         r.equest.setAttribute("listContract", listContract);
         return new JspPage("customer/contract.jsp");

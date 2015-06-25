@@ -10,13 +10,9 @@ import com.fpt.mic.micweb.model.dto.UserDto;
 import com.fpt.mic.micweb.model.dto.form.CancelContractDto;
 import com.fpt.mic.micweb.model.dto.form.CreateContractDto;
 import com.fpt.mic.micweb.model.dto.form.RenewContractDto;
-import com.fpt.mic.micweb.model.entity.ContractEntity;
-import com.fpt.mic.micweb.model.entity.ContractTypeEntity;
-import com.fpt.mic.micweb.model.entity.CustomerEntity;
-import com.fpt.mic.micweb.model.entity.PaymentEntity;
+import com.fpt.mic.micweb.model.entity.*;
 
 import javax.servlet.annotation.WebServlet;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -140,7 +136,7 @@ public class ContractController extends AuthController {
 
         // Call to business object
         StaffBusiness staffBus = new StaffBusiness();
-        boolean result = staffBus.renewContract(dto);
+        boolean result = staffBus.renewContract(dto, (StaffEntity) getLoggedInUser());
 
         if (result) {
             msg = "Đã gia hạn hợp đồng thành công";

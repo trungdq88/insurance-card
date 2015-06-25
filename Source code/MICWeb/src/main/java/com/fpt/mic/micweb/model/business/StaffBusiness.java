@@ -8,10 +8,7 @@ import com.fpt.mic.micweb.model.dto.form.CancelContractDto;
 import com.fpt.mic.micweb.model.dto.form.CreateContractDto;
 import com.fpt.mic.micweb.model.dto.form.CreateCustomerDto;
 import com.fpt.mic.micweb.model.dto.form.RenewContractDto;
-import com.fpt.mic.micweb.model.entity.ContractEntity;
-import com.fpt.mic.micweb.model.entity.ContractTypeEntity;
-import com.fpt.mic.micweb.model.entity.CustomerEntity;
-import com.fpt.mic.micweb.model.entity.PaymentEntity;
+import com.fpt.mic.micweb.model.entity.*;
 import com.fpt.mic.micweb.utils.Constants;
 
 import java.sql.Timestamp;
@@ -124,7 +121,7 @@ public class StaffBusiness {
         return null;
     }
 
-    public boolean renewContract(RenewContractDto dto) {
+    public boolean renewContract(RenewContractDto dto, StaffEntity receiver) {
         ContractDao contractDao = new ContractDao();
         PaymentDao paymentDao = new PaymentDao();
         ContractEntity contractEntity = contractDao.read(dto.getContractCode());
@@ -144,7 +141,7 @@ public class StaffBusiness {
                 paymentEntity.setAmount(dto.getAmount());
                 paymentEntity.setPaymentMethod("Direct");
                 paymentEntity.setContent("Gia hạn hợp đồng");
-                paymentEntity.setReceiver("KhaNC");
+                paymentEntity.setReceiver(receiver.getName() + " (" + receiver.getStaffCode() + ")");
                 paymentEntity.setContractCode(dto.getContractCode());
                 if (paymentDao.create(paymentEntity) != null) {
                     return true;
