@@ -44,6 +44,12 @@ public class ContractController extends AuthController {
         StaffBusiness staffBus = new StaffBusiness();
         String contractCode = r.equest.getParameter("code");
 
+        // Receive contractCode from failed validation
+        // @see {@link postRenew, postCancel}
+        if (contractCode == null) {
+            contractCode = (String) r.equest.getAttribute("contractCode");
+        }
+
         // Get contract detail
         ContractEntity contractDetail = staffBus.getContractDetail(contractCode);
 
@@ -116,6 +122,21 @@ public class ContractController extends AuthController {
     public ResponseObject postRenew(R r) {
         // Get renew contract information
         RenewContractDto dto = (RenewContractDto) r.ead.entity(RenewContractDto.class, "renew");
+        List errors = r.ead.validate(dto);
+
+        // If there is validation errors
+        if (errors.size() > 0) {
+            // Send error messages to JSP page
+            r.equest.setAttribute("validateErrors", errors);
+            // This is a form in a popup, we don't need to display data again since
+            // the popup will not automatically open when the page is reloaded
+            r.equest.setAttribute("submittedRenew", dto);
+            // Re-call the contract detail page
+            r.equest.setAttribute("contractCode", dto.getContractCode());
+            return getDetail(r);
+        }
+
+        // If the code reached this line that means there is no validation errors
 
         // Call to business object
         StaffBusiness staffBus = new StaffBusiness();
@@ -135,6 +156,21 @@ public class ContractController extends AuthController {
     public ResponseObject postCancel(R r) {
         // Get cancel contract information
         CancelContractDto dto = (CancelContractDto) r.ead.entity(CancelContractDto.class, "cancel");
+        List errors = r.ead.validate(dto);
+
+        // If there is validation errors
+        if (errors.size() > 0) {
+            // Send error messages to JSP page
+            r.equest.setAttribute("validateErrors", errors);
+            // This is a form in a popup, we don't need to display data again since
+            // the popup will not automatically open when the page is reloaded
+            r.equest.setAttribute("submittedCancel", dto);
+            // Re-call the contract detail page
+            r.equest.setAttribute("contractCode", dto.getContractCode());
+            return getDetail(r);
+        }
+
+        // If the code reached this line that means there is no validation errors
 
         // Call to business object
         StaffBusiness staffBus = new StaffBusiness();

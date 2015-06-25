@@ -157,8 +157,8 @@
                                     <span id="displayFee"
                                           style="color:red; font-weight: bolder; font-size: large"></span>
                                 </div>
-                                <input type="hidden" id="contractFee" name="contract:contractFee" value="${submitted.contractFee}">
-                                <input type="hidden" id="amount" name="contract:amount" value="${submitted.amount}" >
+                                <input type="hidden" id="contractFee" name="contract:contractFee">
+                                <input type="hidden" id="amount" name="contract:amount">
                             </div>
                         </div>
                     </fieldset>
@@ -403,12 +403,12 @@
                 document.getElementById("expiredDate").max = getInputDateInNextYear(stDate);
                 contractTerm = daysBetween(stDate, expDate);
                 contractFee = calculateContractFee(contractTerm, pricePerYear);
-                $('#contractFee').val(contractFee);
+                $('#contractFee').val(contractFee)
                 $('#amount').val(contractFee);
                 $('#displayFee').text(contractFee.formatMoney(0));
             });
 
-            $('#contractFee').val(contractFee);
+            $('#contractFee').val(contractFee)
             $('#amount').val(contractFee);
             $('#displayFee').text(contractFee.formatMoney(0));
         }).change();
