@@ -1,5 +1,6 @@
 package com.fpt.mic.micweb.model.business;
 
+import com.fpt.mic.micweb.framework.R;
 import com.fpt.mic.micweb.model.dao.ContractDao;
 import com.fpt.mic.micweb.model.dao.CustomerDao;
 import com.fpt.mic.micweb.model.dao.PaymentDao;
@@ -23,7 +24,7 @@ import java.util.Date;
  */
 public class RegisterBusiness {
     public RegisterInformationDto registerNewContract(
-            PublicRegisterFormDto publicRegisterFormDto, ServletContext context) {
+            PublicRegisterFormDto publicRegisterFormDto, ServletContext context, String loginUrl) {
         CustomerEntity customerEntity = new CustomerEntity();
         ContractEntity contractEntity = new ContractEntity();
 
@@ -70,21 +71,26 @@ public class RegisterBusiness {
         CustomerEntity customer = customerDao.create(customerEntity);
         if (customer != null) {
             ContractEntity contract = contractDao.create(contractEntity);
-            if ( contract != null) {
+            if (contract != null) {
                 // Send password email
                 InputStream resourceAsStream =
                         context.getResourceAsStream("/WEB-INF/templates/password-email.html");
-                String content = StringUtils.getString(resourceAsStream)
-                        .replace("{{password}}", customerPassword)
-                        .replace("{{loginUrl}}", context.getContextPath());
-                boolean emailSuccess = EmailUtils.sendMail("trungdq88@gmail.com", content);
+                String content = StringUtils.getString(resourceAsStream);
+                boolean emailSuccess = false;
+                if (content != null) {
+                    content = content.replaceAll("\\{\\{password\\}\\}", customerPassword)
+                            .replaceAll("\\{\\{loginUrl\\}\\}", loginUrl);
+                    emailSuccess = EmailUtils.sendMail(customer.getEmail(), content);
+                }
 
                 return new RegisterInformationDto(contract, customer, emailSuccess);
             }
 
         }
+
         return null;
     }
+
     public boolean updateContractPayment(String contractCode, String paymentMethod, String paymentContent, Float amount, String paypalTransId) {
         ContractEntity contractEntity = new ContractEntity();
         ContractDao contractDao = new ContractDao();
@@ -109,7 +115,7 @@ public class RegisterBusiness {
 
         PaymentDao paymentDao = new PaymentDao();
         if (contractDao.update(contractEntity) != null) {
-            if (paymentDao.create(paymentEntity) != null){
+            if (paymentDao.create(paymentEntity) != null) {
                 return true;
             }
         }

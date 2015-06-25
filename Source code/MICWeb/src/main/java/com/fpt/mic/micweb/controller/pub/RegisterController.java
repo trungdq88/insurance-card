@@ -52,10 +52,13 @@ public class RegisterController extends BasicController {
         // Get information...
         PublicRegisterFormDto publicRegisterFormDto =
                 (PublicRegisterFormDto) r.ead.entity(PublicRegisterFormDto.class,"register");
+
+        String loginUrl = r.equest.getScheme() + "://" + r.equest.getServerName() + ":" + r.equest.getServerPort() + r.equest.getContextPath() + "/login";
+
         // Call to business object
         RegisterBusiness registerBusiness = new RegisterBusiness();
         RegisterInformationDto register =
-                registerBusiness.registerNewContract(publicRegisterFormDto, getServletContext());
+                registerBusiness.registerNewContract(publicRegisterFormDto, getServletContext(), loginUrl);
 
         if (register != null) {
             HttpSession session = r.equest.getSession();
