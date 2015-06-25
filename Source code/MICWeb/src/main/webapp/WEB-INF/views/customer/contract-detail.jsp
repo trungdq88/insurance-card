@@ -25,7 +25,8 @@
             <div class="col-lg-12">
                 <h2 class="page-header ">Hợp Đồng ${contract.contractCode}
                      <span class="pull-right">
-                           <c:if test="${contract.status.equalsIgnoreCase('Request cancel') || contract.status.equalsIgnoreCase('Cancelled')}">
+                           <c:if test="${contract.status.equalsIgnoreCase('Request cancel') || contract.status.equalsIgnoreCase('Cancelled')
+                                       ||contract.status.equalsIgnoreCase('Pending') }">
 
                                <button type="submit" class="btn btn-info" data-toggle="modal" id="renew"
                                        data-target=".renew-contract-modal" disabled="disabled"><i
@@ -36,7 +37,8 @@
                                        data-target=".bs-example-modal-lg"><i class="fa fa-times"></i> Hủy Hợp Đồng
                                </button>
                            </c:if>
-                          <c:if test="${!contract.status.equalsIgnoreCase('Request cancel') && !contract.status.equalsIgnoreCase('Cancelled')}">
+                          <c:if test="${!contract.status.equalsIgnoreCase('Request cancel') && !contract.status.equalsIgnoreCase('Cancelled')
+                                     && !contract.status.equalsIgnoreCase('Pending') }">
 
                               <button type="submit" class="btn btn-info" data-toggle="modal" id="renew"
                                       data-target=".renew-contract-modal"><i
@@ -119,7 +121,7 @@
                             <div class="modal-footer">
                                 <%--Post to server (ContractController)--%>
                                 <input type="hidden" name="action" value="CancelContract"/>
-                                <input type="hidden" name="cancel:cancelReason" id="reason">
+                                <%--<input type="hidden" name="cancel:cancelReason" id="reason">--%>
                                 <input type="hidden" name="cancel:contractCode" id="contractId"
                                        value="${contract.contractCode}"/>
                                 <%---------------------------------------%>
