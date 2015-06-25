@@ -1,14 +1,13 @@
 package com.fpt.mic.micweb.controller.customer;
 
+import com.fpt.mic.micweb.controller.common.AuthController;
 import com.fpt.mic.micweb.framework.responses.RedirectTo;
 import com.fpt.mic.micweb.model.business.CustomerBusniess;
 import com.fpt.mic.micweb.model.dto.CheckoutRequestDto;
 import com.fpt.mic.micweb.model.entity.ContractEntity;
-import com.fpt.mic.micweb.framework.BasicController;
 import com.fpt.mic.micweb.framework.responses.JspPage;
 import com.fpt.mic.micweb.framework.R;
 import com.fpt.mic.micweb.framework.responses.ResponseObject;
-import com.fpt.mic.micweb.model.entity.PaymentEntity;
 import com.fpt.mic.micweb.utils.Constants;
 import com.fpt.mic.micweb.utils.DateUtils;
 
@@ -24,7 +23,7 @@ import java.util.Map;
  * Created by PhucNguyen on 06/05/15.
  */
 @WebServlet(name = "CustomerContractController", urlPatterns = "/customer/contract")
-public class ContractController extends BasicController {
+public class ContractController extends AuthController {
 
     public ResponseObject getView(R r) {
         CustomerBusniess customerBusiness = new CustomerBusniess();

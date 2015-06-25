@@ -61,8 +61,9 @@ public class RegisterBusiness {
         // get next customer code
         String customerCode = customerDao.getIncrementId();
         customerEntity.setCustomerCode(customerCode);
-        // get customer password - add later
+        // get customer password
         String customerPassword = StringUtils.randomString();
+        // TODO: encrypt password
         customerEntity.setPassword(customerPassword);
         // get next Contract Code
         contractEntity.setContractCode(contractDao.getIncrementId());

@@ -1,6 +1,6 @@
 package com.fpt.mic.micweb.controller.staff;
 
-import com.fpt.mic.micweb.framework.BasicController;
+import com.fpt.mic.micweb.controller.common.AuthController;
 import com.fpt.mic.micweb.framework.R;
 import com.fpt.mic.micweb.framework.responses.JspPage;
 import com.fpt.mic.micweb.framework.responses.RedirectTo;
@@ -21,7 +21,7 @@ import java.util.List;
  * Created by dinhquangtrung on 5/23/15.
  */
 @WebServlet(name = "ContractController", urlPatterns = {"/staff/contract"})
-public class ContractController extends BasicController {
+public class ContractController extends AuthController {
 
     private static String msg = "";
 

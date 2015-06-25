@@ -1,6 +1,6 @@
 package com.fpt.mic.micweb.controller.staff;
 
-import com.fpt.mic.micweb.framework.BasicController;
+import com.fpt.mic.micweb.controller.common.AuthController;
 import com.fpt.mic.micweb.framework.R;
 import com.fpt.mic.micweb.framework.responses.JspPage;
 import com.fpt.mic.micweb.framework.responses.ResponseObject;
@@ -16,7 +16,7 @@ import java.util.List;
  * Implemented by nguyenchikha on 6/7/15.
  */
 @WebServlet(name = "CustomerController", urlPatterns = {"/staff/customer"})
-public class CustomerController extends BasicController {
+public class CustomerController extends AuthController {
 
     public ResponseObject getView(R r) {
         StaffBusiness staffBus = new StaffBusiness();

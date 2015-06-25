@@ -41,8 +41,11 @@ public abstract class BasicController extends HttpServlet {
      * This method receive all GET and POST requests, get "action" parameter and invoke methods
      * @param request request
      * @param response response
+     * @return int
      */
-    public void processRequests(HttpServletRequest request, HttpServletResponse response) throws ServletException {
+    public int processRequests(HttpServletRequest request,
+                                HttpServletResponse response)
+            throws ServletException, IOException {
         try {
             // Get request method and action
             String requestMethod = request.getMethod().toLowerCase();
@@ -58,26 +61,7 @@ public abstract class BasicController extends HttpServlet {
             // Get response
             ResponseObject responseObject = (ResponseObject) invoker.invoke(this, new R(request, response));
 
-            // Process response
-            if (responseObject instanceof JspPage) {
-                // Dispatch the request to JSP page
-                request.getRequestDispatcher(((JspPage) responseObject).getPath())
-                        .forward(request, response);
-            } else if (responseObject instanceof JsonString) {
-                // Write JSON string
-                response.setContentType("application/json;charset=UTF-8");
-                PrintWriter writer = response.getWriter();
-                writer.write(((JsonString) responseObject).getJsonString());
-                writer.close();
-            } else if (responseObject instanceof ForwardTo) {
-                request.getRequestDispatcher(((ForwardTo) responseObject).getControllerUrl())
-                        .forward(request, response);
-            } else if (responseObject instanceof RedirectTo) {
-                response.sendRedirect(((RedirectTo) responseObject).getUrl());
-            } else {
-                // TODO: process other kind of response
-                // Do something else
-            }
+            return processResponse(request, response, responseObject);
 
         } catch (NoSuchMethodException e) {
             e.printStackTrace();
@@ -88,12 +72,35 @@ public abstract class BasicController extends HttpServlet {
         } catch (IllegalAccessException e) {
             e.printStackTrace();
             throw new ServletException(e);
-        } catch (ServletException e) {
-            e.printStackTrace();
-            throw new ServletException(e);
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw new ServletException(e);
         }
+    }
+
+    public int processResponse(HttpServletRequest request,
+                                HttpServletResponse response,
+                                ResponseObject responseObject)
+            throws ServletException, IOException {
+        // Process response
+        if (responseObject instanceof JspPage) {
+            // Dispatch the request to JSP page
+            request.getRequestDispatcher(((JspPage) responseObject).getPath())
+                    .forward(request, response);
+        } else if (responseObject instanceof JsonString) {
+            // Write JSON string
+            response.setContentType("application/json;charset=UTF-8");
+            PrintWriter writer = response.getWriter();
+            writer.write(((JsonString) responseObject).getJsonString());
+            writer.close();
+        } else if (responseObject instanceof ForwardTo) {
+            request.getRequestDispatcher(((ForwardTo) responseObject).getControllerUrl())
+                    .forward(request, response);
+        } else if (responseObject instanceof RedirectTo) {
+            response.sendRedirect(((RedirectTo) responseObject).getUrl());
+        } else {
+            // TODO: process other kind of response
+            // Do something else
+            return -1;
+        }
+
+        return 0;
     }
 }

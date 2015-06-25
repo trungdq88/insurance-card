@@ -29,6 +29,7 @@ public class StringUtils {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        System.out.println("Cannot read mail template!");
         return null;
     }
 }
