@@ -173,7 +173,7 @@
                 <div class="form-top-right">
                     <i class="fa fa-pencil"></i>
                 </div>
-                <form id="myForm" role="form" action="${pageContext.request.contextPath}/public/register" method="post" novalidate>
+                <form id="myForm" role="form" action="${pageContext.request.contextPath}/public/register" method="post">
                     <div class="form-group">
 
                         <div class="form-group col-md-12">

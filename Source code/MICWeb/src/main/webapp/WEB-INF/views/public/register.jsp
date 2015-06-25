@@ -22,7 +22,7 @@
 
                 <!--      Wizard container        -->
                 <div class="wizard-container">
-                    <form id="myForm" role="form" action="${pageContext.request.contextPath}/public/register" method="post" novalidate>
+                    <form id="myForm" role="form" action="${pageContext.request.contextPath}/public/register" method="post">
                         <div class="card wizard-card ct-wizard-azzure" id="wizard">
 
                             <!-- You can switch "ct-wizard-azzure"  with one of the next bright colors: "ct-wizard-blue",
