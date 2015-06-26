@@ -5,6 +5,7 @@ import com.fpt.mic.micweb.framework.R;
 import com.fpt.mic.micweb.framework.responses.JspPage;
 import com.fpt.mic.micweb.framework.responses.ResponseObject;
 import com.fpt.mic.micweb.model.business.StaffBusiness;
+import com.fpt.mic.micweb.model.dto.CreateCustomerInfoDto;
 import com.fpt.mic.micweb.model.dto.UserDto;
 import com.fpt.mic.micweb.model.dto.form.CreateCustomerDto;
 import com.fpt.mic.micweb.model.entity.ContractEntity;
@@ -67,12 +68,17 @@ public class CustomerController extends AuthController {
             // Re-call the create page
             return getCreate(r);
         }
-
         // If the code reached this line that means there is no validation errors
+
+        String loginUrl = r.equest.getScheme() +
+                "://" + r.equest.getServerName() +
+                ":" + r.equest.getServerPort() +
+                r.equest.getContextPath() +
+                "/user?action=login";
 
         // Business object
         StaffBusiness staffBus = new StaffBusiness();
-        CustomerEntity result = staffBus.createCustomer(dto);
+        CreateCustomerInfoDto result = staffBus.createCustomer(dto, getServletContext(), loginUrl);
 
         if (result != null) {
             // Get created customer information

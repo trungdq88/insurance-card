@@ -253,42 +253,15 @@
                                     </div>
                                 </legend>
 
-                                <!-- Customer name & personal ID number -->
+                                <!-- Customer name -->
                                 <div class="form-group">
                                     <label class="col-sm-3 control-label">Họ tên</label>
 
-                                    <div class="col-sm-3">
+                                    <div class="col-sm-8">
                                         <div class="text-value">
-                                            <b>
-                                                <a href="${pageContext.request.contextPath}/staff/customer?action=detail&code=${cust.customerCode}">
-                                                    ${cust.name}
-                                                </a>
-                                            </b>
-                                        </div>
-                                    </div>
-                                    <label class="col-sm-3 control-label">Số CMND / Hộ chiếu</label>
-
-                                    <div class="col-sm-2">
-                                        <div class="text-value">
-                                            ${cust.personalId}
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- Customer email & phone number -->
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label">Email</label>
-
-                                    <div class="col-sm-4">
-                                        <div class="text-value">
-                                            ${cust.email}
-                                        </div>
-                                    </div>
-                                    <label class="col-sm-2 control-label">Số điện thoại</label>
-
-                                    <div class="col-sm-2">
-                                        <div class="text-value">
-                                            ${cust.phone}
+                                            <a href="${pageContext.request.contextPath}/staff/customer?action=detail&code=${cust.customerCode}">
+                                                <strong>${cust.name}</strong>
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
@@ -297,9 +270,39 @@
                                 <div class="form-group">
                                     <label class="col-sm-3 control-label">Địa chỉ</label>
 
-                                    <div class="col-sm-6">
+                                    <div class="col-sm-8">
                                         <div class="text-value">
                                             ${cust.address}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Customer email -->
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">Email</label>
+
+                                    <div class="col-sm-8">
+                                        <div class="text-value">
+                                            ${cust.email}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Email & personal ID -->
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">Số điện thoại</label>
+
+                                    <div class="col-sm-2">
+                                        <div class="text-value">
+                                            ${cust.phone}
+                                        </div>
+                                    </div>
+
+                                    <label class="col-sm-3 control-label">Số CMND / Hộ chiếu</label>
+
+                                    <div class="col-sm-3">
+                                        <div class="text-value">
+                                            ${cust.personalId}
                                         </div>
                                     </div>
                                 </div>
@@ -318,75 +321,78 @@
                                     </div>
                                 </legend>
 
-                                <!-- Vehicle plate number & type -->
+                                <!-- Plate number & brand -->
                                 <div class="form-group">
                                     <label class="col-sm-3 control-label">Biển số</label>
 
-                                    <div class="col-sm-2">
+                                    <div class="col-sm-3">
                                         <div class="text-value">
                                             ${cont.plate}
                                         </div>
                                     </div>
-                                    <label class="col-sm-3 control-label">Loại xe</label>
 
-                                    <div class="col-sm-2">
-                                        <div class="text-value">
-                                            ${cont.vehicleType}
-                                        </div>
-                                    </div>
-                                </div>
+                                    <label class="col-sm-2 control-label">Nhãn hiệu</label>
 
-                                <!-- Vehicle brand & model code -->
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label">Nhãn hiệu</label>
-
-                                    <div class="col-sm-2">
+                                    <div class="col-sm-3">
                                         <div class="text-value">
                                             ${cont.brand}
                                         </div>
                                     </div>
-                                    <label class="col-sm-3 control-label">Số loại</label>
-
-                                    <div class="col-sm-2">
-                                        <div class="text-value">
-                                            ${cont.modelCode}
-                                        </div>
-                                    </div>
                                 </div>
 
-                                <!-- Color & Capacity -->
+                                <!-- Chassis & Engine -->
                                 <div class="form-group">
-                                    <label class="col-sm-3 control-label">Màu sơn</label>
+                                    <label class="col-sm-3 control-label">Số khung</label>
 
-                                    <div class="col-sm-2">
+                                    <div class="col-sm-3">
                                         <div class="text-value">
-                                            ${cont.color}
+                                            ${cont.chassis}
                                         </div>
                                     </div>
-                                    <label class="col-sm-3 control-label">Dung tích</label>
 
-                                    <div class="col-sm-2">
-                                        <div class="text-value">
-                                            ${cont.capacity}
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- Engine & Chassis -->
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label">Số máy</label>
+                                    <label class="col-sm-2 control-label">Số máy</label>
 
                                     <div class="col-sm-3">
                                         <div class="text-value">
                                             ${cont.engine}
                                         </div>
                                     </div>
+                                </div>
 
-                                    <label class="col-sm-2 control-label">Số khung</label>
+                                <!-- Capacity & Color -->
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">Dung tích</label>
 
                                     <div class="col-sm-3">
                                         <div class="text-value">
-                                            ${cont.chassis}
+                                            ${cont.capacity}
+                                        </div>
+                                    </div>
+
+                                    <label class="col-sm-2 control-label">Màu sơn</label>
+
+                                    <div class="col-sm-3">
+                                        <div class="text-value">
+                                            ${cont.color}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Vehicle type & model code -->
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">Số loại</label>
+
+                                    <div class="col-sm-3">
+                                        <div class="text-value">
+                                            ${cont.modelCode}
+                                        </div>
+                                    </div>
+
+                                    <label class="col-sm-2 control-label">Loại xe</label>
+
+                                    <div class="col-sm-3">
+                                        <div class="text-value">
+                                            ${cont.vehicleType}
                                         </div>
                                     </div>
                                 </div>
@@ -461,7 +467,7 @@
                                                     <fmt:formatNumber value="${payment.amount}"
                                                                       type="currency" maxFractionDigits="0"/>
                                                 </td>
-                                                <td>${payment.receiver}</td>
+                                                <td>${payment.micStaffByReceiver.name}</td>
                                                 <td>${payment.paypalTransId}</td>
                                             </tr>
                                         </c:forEach>

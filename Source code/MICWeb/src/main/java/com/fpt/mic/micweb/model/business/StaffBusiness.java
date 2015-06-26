@@ -4,13 +4,18 @@ import com.fpt.mic.micweb.model.dao.ContractDao;
 import com.fpt.mic.micweb.model.dao.ContractTypeDao;
 import com.fpt.mic.micweb.model.dao.CustomerDao;
 import com.fpt.mic.micweb.model.dao.PaymentDao;
+import com.fpt.mic.micweb.model.dto.CreateCustomerInfoDto;
 import com.fpt.mic.micweb.model.dto.form.CancelContractDto;
 import com.fpt.mic.micweb.model.dto.form.CreateContractDto;
 import com.fpt.mic.micweb.model.dto.form.CreateCustomerDto;
 import com.fpt.mic.micweb.model.dto.form.RenewContractDto;
 import com.fpt.mic.micweb.model.entity.*;
 import com.fpt.mic.micweb.utils.Constants;
+import com.fpt.mic.micweb.utils.EmailUtils;
+import com.fpt.mic.micweb.utils.StringUtils;
 
+import javax.servlet.ServletContext;
+import java.io.InputStream;
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -30,30 +35,38 @@ public class StaffBusiness {
         return customerDao.read(customerCode);
     }
 
-    public CustomerEntity createCustomer(CreateCustomerDto dto) {
+    public CreateCustomerInfoDto createCustomer(CreateCustomerDto dto, ServletContext context, String loginUrl) {
         CustomerDao customerDao = new CustomerDao();
         CustomerEntity customerEntity = new CustomerEntity();
-
+        // get next customer code
+        String customerCode = customerDao.getIncrementId();
+        customerEntity.setCustomerCode(customerCode);
         // Set customer information to entity
         customerEntity.setName(dto.getName());
         customerEntity.setAddress(dto.getAddress());
         customerEntity.setEmail(dto.getEmail());
         customerEntity.setPhone(dto.getPhone());
         customerEntity.setPersonalId(dto.getPersonalID());
-
-        // get next customer code
-        String customerCode = customerDao.getIncrementId();
-        customerEntity.setCustomerCode(customerCode);
         // get customer password
-        String customerPassword = "123456";
+        String customerPassword = StringUtils.randomString();
+        // TODO: encrypt password
         customerEntity.setPassword(customerPassword);
 
         CustomerEntity newCustomer = customerDao.create(customerEntity);
         if (newCustomer != null) {
-            return newCustomer;
-        } else {
-            return null;
+            // Send password email
+            InputStream resourceAsStream =
+                    context.getResourceAsStream("WEB-INF/templates/password-email.html");
+            String content = StringUtils.getString(resourceAsStream);
+            boolean emailSuccess = false;
+            if (content != null) {
+                content = content.replaceAll("\\{\\{password\\}\\}", customerPassword)
+                        .replaceAll("\\{\\{loginUrl\\}\\}", loginUrl);
+                emailSuccess = EmailUtils.sendMail(newCustomer.getEmail(), content);
+            }
+            return new CreateCustomerInfoDto(newCustomer, emailSuccess);
         }
+        return null;
     }
 
     public List<ContractEntity> getAllContract() {
@@ -103,6 +116,8 @@ public class StaffBusiness {
         contractEntity.setYearOfManufacture(dto.getYearOfManufacture());
         contractEntity.setWeight(dto.getWeight());
         contractEntity.setSeatCapacity(dto.getSeatCapacity());
+        // Code of the staff created this contract
+        contractEntity.setStaffCode(receiver.getStaffCode());
         // Create new contract
         ContractEntity newContract = contractDao.create(contractEntity);
         // Check contract to add payment
@@ -112,7 +127,7 @@ public class StaffBusiness {
             paymentEntity.setPaymentMethod("Direct");
             paymentEntity.setContent("Đăng ký hợp đồng mới");
             paymentEntity.setAmount(dto.getAmount());
-            paymentEntity.setReceiver(receiver.getName() + " (" + receiver.getStaffCode() + ")");
+            paymentEntity.setReceiver(receiver.getStaffCode());
             paymentEntity.setContractCode(contractCode);
             if (paymentDao.create(paymentEntity) != null) {
                 return newContract;
@@ -141,7 +156,7 @@ public class StaffBusiness {
                 paymentEntity.setAmount(dto.getAmount());
                 paymentEntity.setPaymentMethod("Direct");
                 paymentEntity.setContent("Gia hạn hợp đồng");
-                paymentEntity.setReceiver(receiver.getName() + " (" + receiver.getStaffCode() + ")");
+                paymentEntity.setReceiver(receiver.getStaffCode());
                 paymentEntity.setContractCode(dto.getContractCode());
                 if (paymentDao.create(paymentEntity) != null) {
                     return true;
