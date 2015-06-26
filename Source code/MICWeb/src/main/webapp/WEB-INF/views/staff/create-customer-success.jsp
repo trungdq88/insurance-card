@@ -29,8 +29,8 @@
 
                                 <div class="col-sm-2">
                                     <div class="text-value text-primary">
-                                        <a href="${pageContext.request.contextPath}/staff/customer?action=detail&code=${info.customerCode}">
-                                                <strong>${info.customerCode}</strong>
+                                        <a href="${pageContext.request.contextPath}/staff/customer?action=detail&code=${info.customerEntity.customerCode}">
+                                                <strong>${info.customerEntity.customerCode}</strong>
                                         </a>
                                     </div>
                                 </div>
@@ -39,7 +39,7 @@
 
                                 <div class="col-sm-4">
                                     <div class="text-value">
-                                            ${info.name}
+                                            ${info.customerEntity.name}
                                     </div>
                                 </div>
                             </div>
@@ -50,7 +50,7 @@
 
                                 <div class="col-sm-8">
                                     <div class="text-value">
-                                        ${info.address}
+                                        ${info.customerEntity.address}
                                     </div>
                                 </div>
                             </div>
@@ -61,7 +61,28 @@
 
                                 <div class="col-sm-8">
                                     <div class="text-value">
-                                        ${info.email}
+                                        ${info.customerEntity.email}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Password -->
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Mật khẩu</label>
+
+                                <div class="col-sm-8">
+                                    <div class="text-value">
+                                        <c:if test="${info.emailSuccess}">
+                                            <span class="label label-success"><i class='fa fa-check'></i> Đã gởi</span>
+                                            Kiểm tra email ${info.customerEntity.email}
+                                        </c:if>
+                                        <c:if test="${not info.emailSuccess}">
+                                            <span class="label label-warning"><i class='fa fa-times'></i> Chưa gởi</span>
+                                            Mật khẩu chưa được gởi
+                                            <a href="#" type="button" class="btn btn-info">
+                                                <i class='fa fa-repeat'></i> Gởi lại
+                                            </a>
+                                        </c:if>
                                     </div>
                                 </div>
                             </div>
@@ -72,7 +93,7 @@
 
                                 <div class="col-sm-2">
                                     <div class="text-value">
-                                        ${info.phone}
+                                        ${info.customerEntity.phone}
                                     </div>
                                 </div>
 
@@ -80,7 +101,7 @@
 
                                 <div class="col-sm-2">
                                     <div class="text-value">
-                                            ${info.personalId}
+                                            ${info.customerEntity.personalId}
                                     </div>
                                 </div>
                             </div>
@@ -89,7 +110,7 @@
                 </c:if>
 
                 <div class="text-center">
-                    <a href="${pageContext.request.contextPath}/staff/contract?action=create&code=${info.customerCode}"
+                    <a href="${pageContext.request.contextPath}/staff/contract?action=create&code=${info.customerEntity.customerCode}"
                        type="button" class="btn btn-primary">
                         <i class="fa fa-arrow-right"></i>
                         Thêm hợp đồng cho khách hàng này
