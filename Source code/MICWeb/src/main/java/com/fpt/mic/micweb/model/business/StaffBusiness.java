@@ -1,9 +1,6 @@
 package com.fpt.mic.micweb.model.business;
 
-import com.fpt.mic.micweb.model.dao.ContractDao;
-import com.fpt.mic.micweb.model.dao.ContractTypeDao;
-import com.fpt.mic.micweb.model.dao.CustomerDao;
-import com.fpt.mic.micweb.model.dao.PaymentDao;
+import com.fpt.mic.micweb.model.dao.*;
 import com.fpt.mic.micweb.model.dto.CreateCustomerInfoDto;
 import com.fpt.mic.micweb.model.dto.form.CancelContractDto;
 import com.fpt.mic.micweb.model.dto.form.CreateContractDto;
@@ -16,7 +13,6 @@ import com.fpt.mic.micweb.utils.StringUtils;
 
 import javax.servlet.ServletContext;
 import java.io.InputStream;
-import java.sql.Timestamp;
 import java.util.List;
 
 /**
@@ -139,8 +135,10 @@ public class StaffBusiness {
     public boolean renewContract(RenewContractDto dto, StaffEntity receiver) {
         ContractDao contractDao = new ContractDao();
         PaymentDao paymentDao = new PaymentDao();
+        CardDao cardDao = new CardDao();
         ContractEntity contractEntity = contractDao.read(dto.getContractCode());
         PaymentEntity paymentEntity = new PaymentEntity();
+        CardEntity cardEntity = cardDao.getCardByContract(dto.getContractCode());
 
         // Validate information
 
@@ -149,7 +147,11 @@ public class StaffBusiness {
             // Update contract information
             contractEntity.setExpiredDate(dto.getExpiredDate());
             contractEntity.setContractFee(dto.getContractFee());
-            contractEntity.setStatus(Constants.ContractStatus.READY);
+            if (cardEntity == null) {
+                contractEntity.setStatus(Constants.ContractStatus.NO_CARD);
+            } else {
+                contractEntity.setStatus(Constants.ContractStatus.READY);
+            }
             if (contractDao.update(contractEntity) != null) {
                 // Add payment information
                 paymentEntity.setPaidDate(dto.getPaidDate());
