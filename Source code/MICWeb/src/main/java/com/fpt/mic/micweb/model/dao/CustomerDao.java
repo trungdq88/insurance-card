@@ -10,7 +10,7 @@ import javax.persistence.Query;
 import java.util.List;
 
 /**
- * Created by TriPQMSE60746 on 06/05/2015.
+ * Created by TriPQM on 06/05/2015.
  */
 public class CustomerDao extends IncrementDao<CustomerEntity, String> {
     /*public List<CustomerEntity> getAllCustomer() {
@@ -52,5 +52,16 @@ public class CustomerDao extends IncrementDao<CustomerEntity, String> {
         } catch (NoResultException e) {
             return null;
         }
+    }
+    public boolean isExistByEmail(String email) {
+        EntityManager entity = factory.createEntityManager();
+        String hql = "SELECT cu FROM CustomerEntity AS cu " +
+                "WHERE cu.email = :email";
+        Query query = entity.createQuery(hql);
+        query.setParameter("email", email);
+        if (query.getResultList().size() == 0) {
+            return false;
+        }
+        return true;
     }
 }

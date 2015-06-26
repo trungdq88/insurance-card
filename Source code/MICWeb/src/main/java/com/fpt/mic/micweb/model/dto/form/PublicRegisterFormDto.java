@@ -1,7 +1,7 @@
 package com.fpt.mic.micweb.model.dto.form;
 
 import com.fpt.mic.micweb.model.dao.ContractDao;
-import org.hibernate.validator.constraints.Email;
+import com.fpt.mic.micweb.model.dao.CustomerDao;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.hibernate.validator.constraints.Range;
 
@@ -123,16 +123,11 @@ public class PublicRegisterFormDto {
         ContractDao contractDao = new ContractDao();
         return !contractDao.isExistByPlate(plate);
     }
-    /*@AssertTrue(message = "Đang có hợp đồng hiệu lực với xe có số khung này")
-    private boolean isValidChassis() {
-        ContractDao contractDao = new ContractDao();
-        return !contractDao.isExistByChassis(chassis);
+    @AssertTrue(message = "Email đã được đăng ký bởi người dùng khác")
+    public boolean isValidEmail(){
+        CustomerDao customerDao = new CustomerDao();
+        return !customerDao.isExistByEmail(email);
     }
-    @AssertTrue(message = "Đang có hợp đồng hiệu lực với xe có số máy này")
-    private boolean isValidEngine() {
-        ContractDao contractDao = new ContractDao();
-        return !contractDao.isExistByEngine(engine);
-    }*/
 
     public PublicRegisterFormDto() {
     }
