@@ -6,6 +6,7 @@ import com.fpt.mic.micweb.framework.responses.JspPage;
 import com.fpt.mic.micweb.framework.responses.ResponseObject;
 import com.fpt.mic.micweb.model.business.StaffBusiness;
 import com.fpt.mic.micweb.model.dto.UserDto;
+import com.fpt.mic.micweb.model.dto.form.CreateCustomerDto;
 import com.fpt.mic.micweb.model.entity.ContractEntity;
 import com.fpt.mic.micweb.model.entity.CustomerEntity;
 
@@ -54,19 +55,28 @@ public class CustomerController extends AuthController {
     }
 
     public ResponseObject postCreate(R r) {
-        CustomerEntity customerEntity = new CustomerEntity();
-        customerEntity.setName(r.equest.getParameter("txtName"));
-        customerEntity.setAddress(r.equest.getParameter("txtAddress"));
-        customerEntity.setEmail(r.equest.getParameter("txtEmail"));
-        customerEntity.setPhone(r.equest.getParameter("txtPhone"));
-        customerEntity.setPersonalId(r.equest.getParameter("txtPersonalID"));
+        CreateCustomerDto dto = (CreateCustomerDto) r.ead.entity(CreateCustomerDto.class, "customer");
+        List errors = r.ead.validate(dto);
+
+        // If there is validation errors
+        if (errors.size() > 0) {
+            // Send error messages to JSP page
+            r.equest.setAttribute("validateErrors", errors);
+            // Send submitted data to JSP page
+            r.equest.setAttribute("submitted", dto);
+            // Re-call the create page
+            return getCreate(r);
+        }
+
+        // If the code reached this line that means there is no validation errors
+
         // Business object
         StaffBusiness staffBus = new StaffBusiness();
-        boolean result = staffBus.createCustomer(customerEntity);
+        CustomerEntity result = staffBus.createCustomer(dto);
 
-        if (result) {
+        if (result != null) {
             // Get created customer information
-
+            r.equest.setAttribute("CUSTOMER", result);
             // Return Success JSP Page
             return new JspPage("staff/create-customer-success.jsp");
         } else {

@@ -101,12 +101,13 @@ public class ContractController extends AuthController {
 
         // Call to business object
         StaffBusiness staffBus = new StaffBusiness();
-        ContractEntity result = staffBus.createContract(dto);
+        ContractEntity result = staffBus.createContract(dto, (StaffEntity) getLoggedInUser());
 
         if (result != null) {
-            // Return Success JSP Page
+            // Get created contract information to display success page
             ContractEntity createdContract = staffBus.getContractDetail(result.getContractCode());
-            r.equest.setAttribute("CREATED", createdContract);
+            r.equest.setAttribute("CONTRACT", createdContract);
+            // Return Success JSP Page
             return new JspPage("staff/create-contract-success.jsp");
         } else {
             msg = "Tạo hợp đồng thất bại, vui lòng thử lại hoặc liên hệ IT";
