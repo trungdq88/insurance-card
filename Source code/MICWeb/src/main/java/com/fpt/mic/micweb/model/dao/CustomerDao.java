@@ -10,7 +10,7 @@ import javax.persistence.Query;
 import java.util.List;
 
 /**
- * Created by TriPQMSE60746 on 06/05/2015.
+ * Created by TriPQM on 06/05/2015.
  */
 public class CustomerDao extends IncrementDao<CustomerEntity, String> {
     /**
