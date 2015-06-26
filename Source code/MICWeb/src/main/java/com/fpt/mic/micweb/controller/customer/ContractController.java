@@ -55,10 +55,9 @@ public class ContractController extends AuthController {
         CustomerBusiness customerBusiness = new CustomerBusiness();
         java.util.Date date = new java.util.Date();
         cancelDto.setCancelDate(new Timestamp(date.getTime()));
-        if(cancelDto.getContractCode() == null){
+        if (cancelDto.getContractCode() == null) {
             return new RedirectTo("/error/404");
-        }
-        else {
+        } else {
             List errors = r.ead.validate(cancelDto);
             if (errors.size() > 0) {
                 r.equest.setAttribute("validateErrors", errors);
@@ -137,10 +136,10 @@ public class ContractController extends AuthController {
 
             String contractCode = (String) session.getAttribute("contractCode");
             Timestamp newExpiredDate = (Timestamp) session.getAttribute("newExpiredDate");
-            r.equest.setAttribute("amountVND", (String) session.getAttribute("amountVND"));
+            r.equest.setAttribute("amountVND", session.getAttribute("amountVND"));
             r.equest.setAttribute("redirectLink", "/customer/contract?action=ContractDetail&code=" + contractCode);
             r.equest.setAttribute("result", results);
-            r.equest.setAttribute("ack", (String) session.getAttribute("ACK"));
+            r.equest.setAttribute("ack", session.getAttribute("ACK"));
             //renew contract by customer
             CustomerBusiness customerBusiness = new CustomerBusiness();
             boolean result = customerBusiness.renewContract(contractCode, newExpiredDate,
@@ -151,7 +150,12 @@ public class ContractController extends AuthController {
             } else {
                 r.equest.setAttribute("message", "Gia hạn thất bại.");
             }
-            session.invalidate();
+
+            session.removeAttribute("RESULT");
+            session.removeAttribute("contractCode");
+            session.removeAttribute("newExpiredDate");
+            session.removeAttribute("amountVND");
+            session.removeAttribute("ACK");
 
             return new JspPage(url);
         }

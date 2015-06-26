@@ -19,6 +19,7 @@ public class PaymentEntity {
     private String paypalTransId;
     private String contractCode;
     private ContractEntity micContractByContractCode;
+    private StaffEntity micStaffByReceiver;
 
     @Id
     @Column(name = "id")
@@ -142,5 +143,15 @@ public class PaymentEntity {
 
     public void setMicContractByContractCode(ContractEntity micContractByContractCode) {
         this.micContractByContractCode = micContractByContractCode;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "receiver", referencedColumnName = "staff_code", nullable = true, insertable = false, updatable = false)
+    public StaffEntity getMicStaffByReceiver() {
+        return micStaffByReceiver;
+    }
+
+    public void setMicStaffByReceiver(StaffEntity micStaffByReceiver) {
+        this.micStaffByReceiver = micStaffByReceiver;
     }
 }
