@@ -10,19 +10,11 @@ import javax.persistence.Query;
 import java.util.List;
 
 /**
- * Created by TriPQMSE60746 on 06/05/2015.
+ * Created by TriPQM on 06/05/2015.
  */
 public class CustomerDao extends IncrementDao<CustomerEntity, String> {
-    /*public List<CustomerEntity> getAllCustomer() {
-        CustomerEntity lstCustomer = new CustomerEntity();
-        EntityManager entity = factory.createEntityManager();
-        Query query = entity.createQuery("SELECT * FROM mic_customer ");
-        return query.getResultList();
-    }*/
-
     /**
      * This is the method which get all customer.
-     * Expected return to CustomerDTO, implement later
      *
      * @return list This is result of the query.
      * @author KhaNC
@@ -52,5 +44,16 @@ public class CustomerDao extends IncrementDao<CustomerEntity, String> {
         } catch (NoResultException e) {
             return null;
         }
+    }
+
+    public boolean isExistByEmail(String email) {
+        EntityManager entity = factory.createEntityManager();
+        String hql = "SELECT c FROM CustomerEntity c WHERE c.email= :email";
+        Query query = entity.createQuery(hql);
+        query.setParameter("email", email);
+        if (query.getResultList().size() == 0) {
+            return false;
+        }
+        return true;
     }
 }

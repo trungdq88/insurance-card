@@ -1,5 +1,6 @@
 package com.fpt.mic.micweb.model.dto.form;
 
+import com.fpt.mic.micweb.model.dao.CustomerDao;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.validation.constraints.AssertTrue;
@@ -27,12 +28,18 @@ public class CreateCustomerDto {
     private String phone;
     private String personalID;
 
+    @AssertTrue(message = "Email này đã được sử dụng")
+    private boolean isExistedByEmail() {
+        CustomerDao customerDao = new CustomerDao();
+        return !customerDao.isExistByEmail(email);
+    }
+
     @AssertTrue(message = "Số CMND/Hộ chiếu phải có độ dài từ 8 tới 15 ký tự")
     private boolean isPersonalIDValid() {
         if (personalID == null || personalID.isEmpty()) {
             return true; // Nullable
         } else {
-            return personalID.length() >=8 && personalID.length() <= 15;
+            return personalID.length() >= 8 && personalID.length() <= 15;
         }
     }
 

@@ -1,5 +1,8 @@
 -- 20150626 Changes:
+
+-- Add Unique Index for customer.email
 -- Create foreign key relationship mic_payment."receiver" as mic_staff.staff_code
+
 -- MySQL Workbench Forward Engineering
 
 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
@@ -57,7 +60,8 @@ CREATE TABLE IF NOT EXISTS `mic_data`.`mic_customer` (
   `phone` VARCHAR(15) NOT NULL,
   `personal_id` VARCHAR(15) NULL DEFAULT NULL,
   `password` VARCHAR(32) NOT NULL,
-  PRIMARY KEY (`customer_code`))
+  PRIMARY KEY (`customer_code`),
+  UNIQUE INDEX `email_UNIQUE` (`email` ASC))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COMMENT = 'Customer information';

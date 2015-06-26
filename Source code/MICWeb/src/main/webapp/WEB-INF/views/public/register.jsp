@@ -315,9 +315,6 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <br/>
-                                    <br/>
-                                    <br/>
                                     <div class="pull-right">
                                         <input type='button' onclick="step3()"
                                                class='btn btn-fill btn-success btn-wd btn-sm'

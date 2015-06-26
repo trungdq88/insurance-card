@@ -1,6 +1,7 @@
 package com.fpt.mic.micweb.model.dto.form;
 
-import org.hibernate.validator.constraints.Email;
+
+import com.fpt.mic.micweb.model.dao.CustomerDao;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.hibernate.validator.constraints.Range;
 
@@ -8,7 +9,6 @@ import javax.validation.constraints.*;
 import javax.validation.constraints.Pattern;
 import java.sql.Timestamp;
 import java.util.Date;
-import java.util.regex.*;
 
 /**
  * Created by TriPQM on 06/23/2015.
@@ -62,6 +62,11 @@ public class PublicHomeFormDto {
             }
             return false;
         }
+    }
+    @AssertTrue(message = "Email đã được đăng ký bởi người dùng khác")
+    public boolean isValidEmail(){
+        CustomerDao customerDao = new CustomerDao();
+        return !customerDao.isExistByEmail(email);
     }
 
     private String plate;
