@@ -120,6 +120,14 @@ public class ReturnController extends BasicController {
     }
 
     public ResponseObject getCancel(R r) {
+        HttpSession session = r.equest.getSession();
+        session.removeAttribute("ACK");
+        session.removeAttribute("SUCCESS_URL");
+        session.removeAttribute("EXPRESS_MARK");
+        session.removeAttribute("payer_id");
+        session.removeAttribute("checkoutDetails");
+        session.removeAttribute("checkout");
+        session.removeAttribute("TOKEN");
         return new JspPage("public/cancel.jsp");
     }
 

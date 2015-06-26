@@ -41,10 +41,6 @@
 	<!--  big container -->
 </div>
 </body>
-<% HttpSession nsession = request.getSession(false);
-	if(nsession!=null)
-		session.invalidate();
-%>
 <%@ include file="_shared/footer.jsp" %>
 </html>
 
