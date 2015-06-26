@@ -100,6 +100,8 @@ public class RegisterController extends BasicController {
             HttpSession session = r.equest.getSession();
             session.setAttribute("CONTRACT_CODE", register.getContractEntity().getContractCode());
             session.setAttribute("SUCCESS_URL", "/public/register?action=activeContract");
+            session.setAttribute("cancel_message","Bạn đã hủy thanh toán. Xin vui lòng thực hiện lại hoặc đến thanh toán trực tiếp");
+            session.setAttribute("redirectLink","home");
 
             r.equest.setAttribute("register", register);
             return new JspPage("public/register-payment.jsp");
@@ -110,10 +112,10 @@ public class RegisterController extends BasicController {
     }
 
     public ResponseObject getActiveContract(R r) {
-        String url = "/error/404";
+        String errorUrl = "/error/404";
         HttpSession session = r.equest.getSession(false);
         if (session != null) {
-            url = "public/return.jsp";
+            String successUrl = "public/return.jsp";
             Map<String, String> results = new HashMap<String, String>();
             results.putAll((Map<String, String>) session.getAttribute("RESULT"));
 
@@ -129,21 +131,30 @@ public class RegisterController extends BasicController {
             String paymentContent = "Đăng ký hợp đồng mới";
 
             RegisterBusiness registerBusiness = new RegisterBusiness();
-            registerBusiness.updateContractPayment(contractCode, paymentMethod, paymentContent, amount, paypalTransId);
-            session.removeAttribute("RESULT");
-            session.removeAttribute("CONTRACT_CODE");
-            session.removeAttribute("amountVND");
-            session.removeAttribute("ACK");
-            session.removeAttribute("SUCCESS_URL");
-            session.removeAttribute("EXPRESS_MARK");
-            session.removeAttribute("payer_id");
-            session.removeAttribute("checkoutDetails");
-            session.removeAttribute("checkout");
-            session.removeAttribute("TOKEN");
-            return new JspPage(url);
+            String result = registerBusiness.updateContractPayment(contractCode, paymentMethod, paymentContent, amount, paypalTransId);
+            if (result == null) {
+                session.removeAttribute("RESULT");
+                session.removeAttribute("CONTRACT_CODE");
+                session.removeAttribute("amountVND");
+                session.removeAttribute("ACK");
+                session.removeAttribute("SUCCESS_URL");
+                session.removeAttribute("EXPRESS_MARK");
+                session.removeAttribute("payer_id");
+                session.removeAttribute("checkoutDetails");
+                session.removeAttribute("checkout");
+                session.removeAttribute("TOKEN");
+                return new JspPage(successUrl);
+            }
+            else {
+                session.removeAttribute("cancel_message");
+                r.equest.setAttribute("cancel_message",result);
+                return new JspPage("/public/cancel.jsp");
+            }
+
+
         }
         //r.equest.setAttribute("error","Phiên giao dịch đã hết thời gian");
-        return new RedirectTo(url);
+        return new RedirectTo(errorUrl);
     }
 
 }

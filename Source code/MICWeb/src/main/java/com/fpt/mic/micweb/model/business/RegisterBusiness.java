@@ -92,13 +92,17 @@ public class RegisterBusiness {
         return null;
     }
 
-    public boolean updateContractPayment(String contractCode, String paymentMethod, String paymentContent, Float amount, String paypalTransId) {
-        ContractEntity contractEntity = new ContractEntity();
+    public String updateContractPayment(String contractCode, String paymentMethod, String paymentContent, Float amount, String paypalTransId) {
+        ContractEntity contractEntity;
         ContractDao contractDao = new ContractDao();
         PaymentEntity paymentEntity = new PaymentEntity();
 
         // get contract just added by contract code
         contractEntity = contractDao.read(contractCode);
+        if (contractDao.isExistByPlate(contractEntity.getPlate())) {
+
+            return "Đã có hợp đồng hiệu lực với xe có biển số này";
+        }
 
         // set start date
         Timestamp currentDate = new Timestamp(new Date().getTime());
@@ -117,9 +121,9 @@ public class RegisterBusiness {
         PaymentDao paymentDao = new PaymentDao();
         if (contractDao.update(contractEntity) != null) {
             if (paymentDao.create(paymentEntity) != null) {
-                return true;
+                return null;
             }
         }
-        return false;
+        return "Giao dịch không thành công";
     }
 }

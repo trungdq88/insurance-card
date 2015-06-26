@@ -98,6 +98,9 @@ public class ContractController extends AuthController {
         session.setAttribute("contractCode", contractCode);
         session.setAttribute("newExpiredDate", expiredDate);
         session.setAttribute("SUCCESS_URL", r.equest.getParameter("successUrl"));
+        session.setAttribute("cancel_message","Bạn đã hủy thanh toán. Xin vui lòng thực hiện lại hoặc đến thanh toán trực tiếp");
+        session.setAttribute("redirectLink", "/customer/contract?action=ContractDetail&code=" + contractCode);
+
 
         CheckoutRequestDto checkoutRequest = new CheckoutRequestDto();
         checkoutRequest.setPaymentrequest_name(r.equest.getParameter("L_PAYMENTREQUEST_0_NAME0"));
