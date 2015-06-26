@@ -117,7 +117,7 @@
 
         // Fill redirect value
         var $redirect = $('#redirectId');
-        if ($redirect.val() == "") {
+        if ($redirect.val() == "" && getQueryVariable('redirect')) {
             $redirect.val(getQueryVariable('redirect'));
         }
 
