@@ -55,6 +55,23 @@
                             </div>
                         </legend>
 
+                        <c:if test="${cont.status eq 'Pending'}">
+                            <div class="alert alert-info">
+                                <p class="bs-example text-center text-uppercase">
+                                    Hợp đồng này chưa được thanh toán
+                                </p>
+                                <br/>
+
+                                <p class="text-center">
+                                    <button class="btn btn-primary" type="button" data-toggle="modal"
+                                            data-target="#complete-payment-modal">
+                                        <i class="fa fa-check"></i> Hoàn tất thanh toán
+                                    </button>
+                                </p>
+                            </div>
+                        </c:if>
+                        <%--/Show pending contract alert --%>
+
                         <c:if test="${cont.status eq 'Request cancel'}">
                             <div class="alert alert-info">
                                 <p class="bs-example text-center text-uppercase">
@@ -91,6 +108,7 @@
                                 </p>
                             </div>
                         </c:if>
+                        <%--/Show request cancel contract information --%>
 
                         <c:if test="${cont.status eq 'Cancelled'}">
                             <div class="alert alert-warning">
@@ -130,7 +148,7 @@
                                 </div>
                             </div>
                         </c:if>
-                        <%--/Show cancel contract information--%>
+                        <%--/Show cancel contract information --%>
 
                         <!-- Contract code & Contract status -->
                         <div class="form-group">
@@ -467,7 +485,12 @@
                                                     <fmt:formatNumber value="${payment.amount}"
                                                                       type="currency" maxFractionDigits="0"/>
                                                 </td>
-                                                <td>${payment.micStaffByReceiver.name}</td>
+                                                <td>
+                                                    <a href="${pageContext.request.contextPath}/staff/member?action=detail&code=${payment.micStaffByReceiver.staffCode}">
+                                                        ${payment.micStaffByReceiver.name}
+                                                    </a>
+                                                </td>
+                                                </td>
                                                 <td>${payment.paypalTransId}</td>
                                             </tr>
                                         </c:forEach>
@@ -499,6 +522,108 @@
     </div>
 </div>
 <!-- /#wrapper -->
+
+<!-- model for complete payment -->
+<div class="modal fade" id="complete-payment-modal">
+    <div class="modal-dialog">
+        <form action="${pageContext.request.contextPath}/staff/contract" method="post" class="form-horizontal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Hoàn tất thông tin thanh toán</h4>
+                </div>
+                <div class="modal-body">
+                    <fieldset>
+                        <legend>Thông tin hợp đồng bảo hiểm</legend>
+
+                        <!-- Contract code -->
+                        <input type="hidden" name="payment:contractCode" value="${cont.contractCode}"/>
+
+                        <!-- Contract type -->
+                        <div class="form-group">
+                            <label class="col-sm-5 control-label">Loại hợp đồng</label>
+
+                            <div class="col-sm-6">
+                                <div class="text-value">
+                                    ${cont.micContractTypeByContractTypeId.name}
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Start date -->
+                        <div class="form-group">
+                            <label class="col-sm-5 control-label">Thời điểm có hiệu lực</label>
+
+                            <div class="col-sm-4">
+                                <div class="text-value">
+                                    <fmt:formatDate value="${cont.startDate}" pattern="dd/MM/yyyy"/>
+                                    lúc
+                                    <fmt:formatDate value="${cont.startDate}" type="time"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Expired date -->
+                        <div class="form-group">
+                            <label class="col-sm-5 control-label">Thời điểm hết hiệu lực</label>
+
+                            <div class="col-sm-4">
+                                <div class="text-value">
+                                    <fmt:formatDate value="${cont.expiredDate}" pattern="dd/MM/yyyy"/>
+                                    lúc
+                                    <fmt:formatDate value="${cont.expiredDate}" type="time"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Contract fee -->
+                        <div class="form-group">
+                            <label class="col-sm-5 control-label">Phí bảo hiểm</label>
+
+                            <div class="col-sm-4">
+                                <div class="text-value">
+                                    <fmt:setLocale value="vi_VN"/>
+                                    <fmt:formatNumber value="${cont.contractFee}" type="currency"
+                                                      maxFractionDigits="0"/>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <%--/Contract information--%>
+                    <br/>
+
+                    <fieldset>
+                        <legend>Thông tin thanh toán</legend>
+
+                        <!-- Paid date -->
+                        <div class=" form-group">
+                            <label class="col-sm-5 control-label" for="paidDate">Ngày nộp phí *</label>
+
+                            <div class="col-sm-4">
+                                <input id="paymentDate" name="payment:paidDate" class="form-control input-md"
+                                       type="date" required>
+                                <input type="hidden" name="payment:amount" value="${cont.contractFee}"/>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <%--/Payment information--%>
+                </div>
+                <div class="modal-footer">
+                    <input type="hidden" name="action" value="completePayment"/>
+                    <button type="submit" class="btn btn-success">
+                        <i class="fa fa-arrow-right"></i>
+                        Hoàn tất thanh toán
+                    </button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Đóng</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </form>
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
 
 <!-- model for renew contract -->
 <div class="modal fade" id="renew-contract-modal">
@@ -691,6 +816,7 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
+        $('#paymentDate').val(getCurrentDate());
         $('#paidDate').val(getCurrentDate());
         /*document.getElementById("paidDate").min = getCurrentDateInLastWeek();
          document.getElementById("paidDate").max = getCurrentDateInNextYear();*/
@@ -726,6 +852,11 @@
             $('#renewFee').text(parseFloat(renewFee).formatMoney(0));
         });
 
+        if (contractStatus == 'Pending') {
+            document.getElementById("btnRenew").disabled = true;
+            document.getElementById("btnCancel").disabled = true;
+        }
+
         $('#expiredDate').val(getCurrentDateInNextYear());
         if (contractStatus == 'Expired') {
             document.getElementById("btnCancel").disabled = true;
@@ -738,13 +869,12 @@
             document.getElementById("expiredDate").min = getInputDateNextDate(expDate);
             document.getElementById("expiredDate").max = getInputDateInNextYear(expDate);
         }
-
+        if (contractStatus == 'Request cancel') {
+            document.getElementById("cancelReason").disabled = true;
+        }
         if (contractStatus == 'Cancelled') {
             $('button[type=button]').attr('disabled', true);
             $('#remain').text(0);
-        }
-        if (contractStatus == 'Request cancel') {
-            document.getElementById("cancelReason").disabled = true;
         }
     });
 </script>
