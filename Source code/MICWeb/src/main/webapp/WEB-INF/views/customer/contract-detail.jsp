@@ -17,6 +17,35 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="_shared/header.jsp" %>
+<style type="text/css">
+
+    .tooltip-inner {
+        font-size: 14px;
+        font-weight: 700;
+        color: black;
+        border-width: 1px;
+        background-color: lightsalmon;
+        padding: 10px;
+        border-radius: 0;
+        min-width: 400px;
+    }
+
+    .tooltip.top .tooltip-arrow {
+        border-top-color: #00acd6;
+    }
+
+    .tooltip.right .tooltip-arrow {
+        border-right-color: #00acd6;
+    }
+
+    .tooltip.bottom .tooltip-arrow {
+        border-bottom-color: #00acd6;
+    }
+
+    .tooltip.left .tooltip-arrow {
+        border-left-color: #00acd6;
+    }
+</style>
 <div id="wrapper">
     <%@ include file="_shared/navigation.jsp" %>
     <div id="page-wrapper">
@@ -220,8 +249,8 @@
 
                             </div>
                             <div class="modal-footer">
-                                <input type="hidden" name="L_PAYMENTREQUEST_0_NAME0" id="content1" value="">
-                                <input type="hidden" name="L_PAYMENTREQUEST_0_DESC0" id="content2">
+                                <input type="hidden" name="L_PAYMENTREQUEST_0_NAME0" value="">
+                                <input type="hidden" name="L_PAYMENTREQUEST_0_DESC0" id="content">
                                 <input type="hidden" name="L_PAYMENTREQUEST_0_QTY0" value="1">
                                 <input type="hidden" name="PAYMENTREQUEST_0_ITEMAMT" id="payment">
                                 <input type="hidden" name="PAYMENTREQUEST_0_TAXAMT" value="0">
@@ -345,24 +374,57 @@
                     </p>
                     <form action="${pageContext.request.contextPath}/customer/contract" method="post">
 
-
-                        <button class="btn btn-primary" type="submit" id="payContract"
+                        <button class="btn btn-primary choice" type="submit" id="payContract"
                                 rel="tooltip"
                                 data-toggle="tooltip"
                                 data-trigger="hover"
-                                data-placement="top"
+                                data-placement="bottom"
                                 data-html="true"
-                                data-title="  <ul class='nav  nav-tabs'>
-    <li><b>Loại hợp đồng: </b> ${contract.getMicContractTypeByContractTypeId().getName()}</li>
-    <li><b>Tổng tiền phải trả: </b><span > <fmt:formatNumber
-                                                    value="${contract.getMicContractTypeByContractTypeId().getPricePerYear()}"
-                                                    type="currency"
-                                                    maxFractionDigits="0"/></span>
+                                data-title="
+                                     <div class='form-horizontal'>
+                                    <div class='form-group'>
+                                        <label class='col-sm-5 text-right'>Loại hợp đồng </label>
 
-                                    </li>
+                                        <div class='col-sm-7'>
+                                            ${contract.getMicContractTypeByContractTypeId().getName()}
+                                        </div>
+                                    </div>
+                                    <div class='form-group'>
+                                        <label class='col-sm-5 text-right'>Thời điểm bắt đầu</label>
 
-                                    <li>***************************************</li>
-                                    </ul>">
+                                        <div class='col-sm-4'>
+                                            <input type='hidden' id='startDate'
+                                                   value='${contract.startDate}'/>
+                                            <input type='hidden' name='txtNewStartDate' id='newStartDate'
+                                                   value='${contract.expiredDate}'/>
+
+                                            <fmt:formatDate value='${contract.startDate}' pattern='dd/MM/yyyy'/>
+                                        </div>
+                                    </div>
+                                    <div class='form-group'>
+                                        <label class='col-sm-5 text-right'>Thời điểm kết thúc </label>
+
+                                        <div class='col-sm-4'>
+                                            <fmt:formatDate value='${contract.expiredDate}' pattern='dd/MM/yyyy'/>
+                                        </div>
+                                    </div>
+                                    <div class='form-group'>
+                                        <label class='col-sm-5 text-right'>Phí thanh toán </label>
+
+                                        <div class='col-sm-4'>
+                                            <fmt:setLocale value='vi_VN'/>
+                                            <fmt:formatNumber
+                                                    value='${contract.getMicContractTypeByContractTypeId().getPricePerYear()}'
+                                                    type='currency'
+                                                    maxFractionDigits='0'/>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+
+
+                                ">
                             Thanh toán online bằng Paypal
                         </button>
 
