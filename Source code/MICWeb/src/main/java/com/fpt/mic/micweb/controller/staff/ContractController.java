@@ -8,6 +8,7 @@ import com.fpt.mic.micweb.framework.responses.ResponseObject;
 import com.fpt.mic.micweb.model.business.StaffBusiness;
 import com.fpt.mic.micweb.model.dto.UserDto;
 import com.fpt.mic.micweb.model.dto.form.CancelContractDto;
+import com.fpt.mic.micweb.model.dto.form.CompletePaymentDto;
 import com.fpt.mic.micweb.model.dto.form.CreateContractDto;
 import com.fpt.mic.micweb.model.dto.form.RenewContractDto;
 import com.fpt.mic.micweb.model.entity.*;
@@ -177,6 +178,38 @@ public class ContractController extends AuthController {
             msg = "Đã hủy hợp đồng thành công";
         } else {
             msg = "Hủy hợp đồng thất bại";
+        }
+        // Set contract code to request scope. Use it in message page.
+        r.equest.setAttribute("CODE", dto.getContractCode());
+        r.equest.setAttribute("MESSAGE", msg);
+        return new JspPage("staff/message.jsp");
+    }
+
+    public ResponseObject postCompletePayment(R r) {
+        // Get payment information
+        CompletePaymentDto dto = (CompletePaymentDto) r.ead.entity(CompletePaymentDto.class, "payment");
+        List errors = r.ead.validate(dto);
+        // If there is validation errors
+        if (errors.size() > 0) {
+            // Send error messages to JSP page
+            r.equest.setAttribute("validateErrors", errors);
+            // This is a form in a popup, we don't need to display data again since
+            // the popup will not automatically open when the page is reloaded
+            // r.equest.setAttribute("submitted", dto);
+            // Re-call the contract detail page
+            r.equest.setAttribute("contractCode", dto.getContractCode());
+            return getDetail(r);
+        }
+        // If the code reached this line that means there is no validation errors
+
+        // Call business method
+        StaffBusiness staffBus = new StaffBusiness();
+        boolean result = staffBus.completePayment(dto, (StaffEntity) getLoggedInUser());
+
+        if (result) {
+            msg = "Đã hoàn tất thông tin thanh toán thành công";
+        } else {
+            msg = "Thêm thông tin thanh toán thất bại";
         }
         // Set contract code to request scope. Use it in message page.
         r.equest.setAttribute("CODE", dto.getContractCode());
