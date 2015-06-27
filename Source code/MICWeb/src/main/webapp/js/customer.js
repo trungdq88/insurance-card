@@ -165,6 +165,6 @@ $(document).ready(function () {
         $('#payment1').val((parseFloat($('#payAmount1').val())));
         $('#paymentATM1').val((parseFloat($('#payAmount1').val())));
         var contractCode = $('#contractCode').val();
-        $('#content1').val("Payment for contract "+ contractCode);
+        $('#content3').val("Thanh toán cho hợp đồng "+ contractCode);
     });
 });

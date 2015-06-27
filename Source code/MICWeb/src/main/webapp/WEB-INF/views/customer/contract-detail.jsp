@@ -358,7 +358,7 @@
                         <input id="contractCode" disabled="disabled" type="hidden"
                                value="${contract.contractCode}"/>
                         <input type="hidden" name="L_PAYMENTREQUEST_0_NAME0" value="">
-                        <input type="hidden" name="L_PAYMENTREQUEST_0_DESC0" id="content1">
+                        <input type="hidden" name="L_PAYMENTREQUEST_0_DESC0" id="content3">
                         <input type="hidden" name="L_PAYMENTREQUEST_0_QTY0" value="1">
                         <input type="hidden" name="PAYMENTREQUEST_0_ITEMAMT" id="payment1">
                         <input type="hidden" name="PAYMENTREQUEST_0_TAXAMT" value="0">
