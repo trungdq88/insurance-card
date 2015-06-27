@@ -100,7 +100,7 @@ public class RegisterController extends BasicController {
             HttpSession session = r.equest.getSession();
             session.setAttribute("CONTRACT_CODE", register.getContractEntity().getContractCode());
             session.setAttribute("SUCCESS_URL", "/public/register?action=activeContract");
-            session.setAttribute("cancel_message","Bạn đã hủy thanh toán. Xin vui lòng thực hiện lại hoặc đến thanh toán trực tiếp");
+            session.setAttribute("cancel_message","Bạn đã hủy thanh toán. Xin vui lòng <a href='/user'>Đăng nhập</a> để thanh toán lại hoặc đến thanh toán trực tiếp");
             session.setAttribute("redirectLink","home");
 
             r.equest.setAttribute("register", register);
