@@ -206,8 +206,8 @@
 
                             </div>
                             <div class="modal-footer">
-                                <input type="hidden" name="L_PAYMENTREQUEST_0_NAME0" value="">
-                                <input type="hidden" name="L_PAYMENTREQUEST_0_DESC0" id="content">
+                                <input type="hidden" name="L_PAYMENTREQUEST_0_NAME0" id="content1" value="">
+                                <input type="hidden" name="L_PAYMENTREQUEST_0_DESC0" id="content2">
                                 <input type="hidden" name="L_PAYMENTREQUEST_0_QTY0" value="1">
                                 <input type="hidden" name="PAYMENTREQUEST_0_ITEMAMT" id="payment">
                                 <input type="hidden" name="PAYMENTREQUEST_0_TAXAMT" value="0">

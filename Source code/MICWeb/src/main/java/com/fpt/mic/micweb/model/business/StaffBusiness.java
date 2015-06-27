@@ -118,7 +118,7 @@ public class StaffBusiness {
             // Add payment info
             paymentEntity.setPaidDate(dto.getPaidDate());
             paymentEntity.setPaymentMethod("Trực tiếp");
-            paymentEntity.setContent("Đăng ký hợp đồng mới");
+            paymentEntity.setContent("Đăng ký hợp đồng mới " + newContract.getContractCode());
             paymentEntity.setAmount(dto.getAmount());
             paymentEntity.setReceiver(receiver.getStaffCode());
             paymentEntity.setContractCode(contractCode);
@@ -221,7 +221,7 @@ public class StaffBusiness {
                 paymentEntity.setContractCode(dto.getContractCode());
                 // Set others payment information
                 paymentEntity.setPaymentMethod("Trực tiếp");
-                paymentEntity.setContent("Đăng ký hợp đồng mới");
+                paymentEntity.setContent("Đăng ký hợp đồng mới " + contractEntity.getContractCode());
                 paymentEntity.setReceiver(receiver.getStaffCode());
 
                 if (paymentDao.create(paymentEntity) != null) {

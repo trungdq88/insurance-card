@@ -207,7 +207,32 @@
                                             <td>
                                                 <fmt:formatDate value="${contract.expiredDate}" pattern="dd/MM/yyyy"/>
                                             </td>--%>
-                                        <td>${contract.status}</td>
+                                        <td>
+                                            <c:set var="status" value="${contract.status}"/>
+                                            <c:choose>
+                                                <c:when test="${status.equalsIgnoreCase('Pending')}">
+                                                    <span class="label label-gray">Chưa thanh toán</span>
+                                                </c:when>
+                                                <c:when test="${status.equalsIgnoreCase('No card')}">
+                                                    <span class="label label-primary">Chưa có thẻ</span>
+                                                </c:when>
+                                                <c:when test="${status.equalsIgnoreCase('Ready')}">
+                                                    <span class="label label-success">Sẵn sàng</span>
+                                                </c:when>
+                                                <c:when test="${status.equalsIgnoreCase('Request cancel')}">
+                                                    <span class="label label-warning">Yêu cầu hủy</span>
+                                                </c:when>
+                                                <c:when test="${status.equalsIgnoreCase('Expired')}">
+                                                    <span class="label label-danger">Hết hạn</span>
+                                                </c:when>
+                                                <c:when test="${status.equalsIgnoreCase('Cancelled')}">
+                                                    <span class="label label-dark">Đã huỷ</span>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <span class="label label-default">Không trạng thái</span>
+                                                </c:otherwise>
+                                            </c:choose>
+                                        </td>
                                     </tr>
                                 </c:forEach>
                                 </tbody>

@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigInteger;
 import java.security.SecureRandom;
+import java.text.Normalizer;
+import java.util.regex.Pattern;
 
 /**
  * Created by dinhquangtrung on 5/23/15.
@@ -31,5 +33,12 @@ public class StringUtils {
         }
         System.out.println("Cannot read mail template!");
         return null;
+    }
+
+    public static String unAccent(String s) {
+        String temp = Normalizer.normalize(s, Normalizer.Form.NFD);
+        Pattern pattern = Pattern.compile("\\p{InCombiningDiacriticalMarks}+");
+//        return pattern.matcher(temp).replaceAll("");
+        return pattern.matcher(temp).replaceAll("").replaceAll("Đ", "D").replace("đ", "d");
     }
 }

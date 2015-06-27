@@ -7,10 +7,13 @@ import com.fpt.mic.micweb.framework.responses.ResponseObject;
 import com.fpt.mic.micweb.model.dto.PayPal;
 import com.fpt.mic.micweb.utils.CurrencyUtils;
 import com.fpt.mic.micweb.utils.NumberUtils;
+import com.fpt.mic.micweb.utils.StringUtils;
 import org.apache.commons.lang3.StringEscapeUtils;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpSession;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,13 +22,16 @@ import java.util.Map;
  */
 @WebServlet(name = "CheckoutController", urlPatterns = {"/public/checkout"})
 public class CheckoutController extends BasicController {
+    public ResponseObject postCheckout(R r) {
+        return getCheckout(r);
+    }
     /**
      * Created by TriPQM on 06/07/2015.
      * Reference: Paypal Express Checkout API from https://demo.paypal.com/us/home.
      */
     public ResponseObject getCheckout(R r) {
         // payment
-        HttpSession session = r.equest.getSession();
+        HttpSession session = r.equest.getSession(true);
         PayPal paypal = new PayPal();
         String url = "public/error.jsp";
         /*
@@ -35,7 +41,11 @@ public class CheckoutController extends BasicController {
         '------------------------------------
         */
 
-        String returnURL = r.equest.getScheme() + "://" + r.equest.getServerName() + ":" + r.equest.getServerPort() + r.equest.getContextPath() + "/public/return?action=return&page=return";
+        String returnURL = r.equest.getScheme()
+                + "://" + r.equest.getServerName()
+                + ":" + r.equest.getServerPort()
+                + r.equest.getContextPath()
+                + "/public/return?action=return&page=return";
 
     /*
     '------------------------------------
@@ -43,12 +53,16 @@ public class CheckoutController extends BasicController {
     ' cancel button during authorization of payment during the PayPal flow
     '------------------------------------
     */
-        String cancelURL = r.equest.getScheme() + "://" + r.equest.getServerName() + ":" + r.equest.getServerPort() + r.equest.getContextPath() + "/public/return?action=cancel";
-        Map<String, String> checkoutDetails = new HashMap<String, String>();
-        checkoutDetails = setRequestParams(r);
-        r.equest.setAttribute("result", checkoutDetails);
+        String cancelURL = r.equest.getScheme()
+                + "://" + r.equest.getServerName()
+                + ":" + r.equest.getServerPort()
+                + r.equest.getContextPath()
+                + "/public/return?action=cancel";
+
         //Redirect to check out page for check out mark
         if (isSet(r.equest.getParameter("checkout"))) {
+            Map<String, String> checkoutDetails = setRequestParams(r);
+            r.equest.setAttribute("result", checkoutDetails);
             session.setAttribute("checkoutDetails", checkoutDetails);
 
             if (isSet(r.equest.getParameter("checkout")) || isSet(session.getAttribute("checkout"))) {
@@ -58,21 +72,30 @@ public class CheckoutController extends BasicController {
             //Assign the Return and Cancel to the Session object for ExpressCheckout Mark
             session.setAttribute("EXPRESS_MARK", "ECMark");
 
-            r.equest.setAttribute("PAYMENTREQUEST_0_AMT", StringEscapeUtils.escapeHtml4(r.equest.getParameter("PAYMENTREQUEST_0_AMT")));
+            r.equest.setAttribute("PAYMENTREQUEST_0_AMT",
+                    StringEscapeUtils.escapeHtml4(r.equest.getParameter("PAYMENTREQUEST_0_AMT")));
             //redirect to check out page
             url = "public/checkout.jsp";
         } else {
+            Map<String, String> checkoutDetails = new HashMap<String, String>();
+            checkoutDetails.putAll((Map<String, String>) session.getAttribute("checkoutDetails"));
+            session.setAttribute("amountVND", checkoutDetails.get("PAYMENTREQUEST_0_AMT"));
+            session.setAttribute("descVN", checkoutDetails.get("L_PAYMENTREQUEST_0_NAME0"));
+
+            // Convert the money to USD and round it up to 2 digits after the comma
+            Double paymentAmount = (Double.parseDouble(checkoutDetails.get("PAYMENTREQUEST_0_AMT")));
+            paymentAmount = paymentAmount / CurrencyUtils.getCurrentRate();
+            paymentAmount = NumberUtils.round(paymentAmount, 2);
+            checkoutDetails.put("L_PAYMENTREQUEST_0_NAME0",
+                    StringUtils.unAccent(checkoutDetails.get("L_PAYMENTREQUEST_0_NAME0")));
+            checkoutDetails.put("L_PAYMENTREQUEST_0_DESC0",
+                    StringUtils.unAccent(checkoutDetails.get("L_PAYMENTREQUEST_0_DESC0")));
+            checkoutDetails.put("PAYMENTREQUEST_0_ITEMAMT", paymentAmount.toString());
+            checkoutDetails.put("PAYMENTREQUEST_0_AMT", paymentAmount.toString());
+            checkoutDetails.put("L_PAYMENTREQUEST_0_AMT", paymentAmount.toString());
+
             Map<String, String> nvp = null;
             if (isSet(session.getAttribute("EXPRESS_MARK")) && session.getAttribute("EXPRESS_MARK").equals("ECMark")) {
-                checkoutDetails.putAll((Map<String, String>) session.getAttribute("checkoutDetails"));
-                checkoutDetails.putAll(setRequestParams(r));
-                session.setAttribute("amountVND", checkoutDetails.get("PAYMENTREQUEST_0_AMT"));
-                Double paymentAmount = (Double.parseDouble(checkoutDetails.get("PAYMENTREQUEST_0_AMT")));
-                paymentAmount = paymentAmount / CurrencyUtils.getCurrentRate();
-                paymentAmount = NumberUtils.round(paymentAmount, 2);
-                checkoutDetails.put("PAYMENTREQUEST_0_ITEMAMT", paymentAmount.toString());
-                checkoutDetails.put("PAYMENTREQUEST_0_AMT", paymentAmount.toString());
-                checkoutDetails.put("L_PAYMENTREQUEST_0_AMT", paymentAmount.toString());
                 returnURL = r.equest.getScheme() + "://" + r.equest.getServerName() + ":" + r.equest.getServerPort() + r.equest.getContextPath() + "/public/lightboxreturn?action=view";
                 nvp = paypal.callMarkExpressCheckout(checkoutDetails, returnURL, cancelURL);
                 session.setAttribute("checkoutDetails", checkoutDetails);
@@ -116,7 +139,8 @@ public class CheckoutController extends BasicController {
     private Map<String, String> setRequestParams(R r) {
         Map<String, String> requestMap = new HashMap<String, String>();
         for (String key : r.equest.getParameterMap().keySet()) {
-            requestMap.put(key, StringEscapeUtils.escapeHtml4(r.equest.getParameterMap().get(key)[0]));
+            // requestMap.put(key, StringEscapeUtils.escapeHtml4(r.equest.getParameterMap().get(key)[0]));
+            requestMap.put(key, r.equest.getParameterMap().get(key)[0]);
         }
         return requestMap;
 
