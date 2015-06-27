@@ -57,9 +57,8 @@
                                           class="fa fa-refresh"></i> Gia Hạn
                                   </button>
 
-                                  <button type="button" class="btn btn-danger" data-toggle="modal
-                                          data-target=" .bs-example-modal-lg
-                                  "><i class="fa fa-times"></i> Hủy Hợp Đồng
+                                  <button type="button" class="btn btn-danger" data-toggle="modal"
+                                          data-target=".bs-example-modal-lg"><i class="fa fa-times"></i> Hủy Hợp Đồng
                                   </button>
 
                               </c:if>

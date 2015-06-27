@@ -125,7 +125,7 @@
             <div class="panel-body">
                 <ul>
                     <li>
-                        <span class="label label-default">Chờ thanh toán</span>
+                        <span class="label label-default">Chưa thanh toán</span>
                         Khách hàng đăng ký online nhưng chưa thanh toán.
                     </li>
                     <li>
