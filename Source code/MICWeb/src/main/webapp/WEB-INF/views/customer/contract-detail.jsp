@@ -469,22 +469,33 @@
                                             <label class="text-center">Tình trạng hợp đồng</label>
                                         </td>
                                         <c:if test="${contract.status.equalsIgnoreCase('Ready')}">
-                                            <td class="alert-success text-center">Sẵn sàng</td>
+                                            <td class="text-center">
+                                                <span class="fa label label-success"
+                                                      style="font-size: 16px">Sẵn sàng</span>
+                                            </td>
                                         </c:if>
                                         <c:if test="${contract.status.equalsIgnoreCase('Cancelled')}">
-                                            <td class="alert-danger text-center">Đã huỷ</td>
+                                            <td class="text-center"><span class="label label-dark"
+                                                                          style="font-size: 16px">Đã huỷ</span></td>
                                         </c:if>
                                         <c:if test="${contract.status.equalsIgnoreCase('No card')}">
-                                            <td class="alert-info text-center">Chưa có thẻ</td>
+                                            <td class="text-center"><span class="label label-primary"
+                                                                          style="font-size: 16px">Chưa có thẻ</span>
+                                            </td>
                                         </c:if>
                                         <c:if test="${contract.status.equalsIgnoreCase('Expired')}">
-                                            <td class="alert-danger text-center">Hết hạn</td>
+                                            <td class="text-center"><span class="label label-danger"
+                                                                          style="font-size: 16px"> Hết hạn</span></td>
                                         </c:if>
                                         <c:if test="${contract.status.equalsIgnoreCase('Pending')}">
-                                            <td class="alert-link text-center">Chưa thanh toán</td>
+                                            <td class="text-center"><span
+                                                    class="label label-default"
+                                                    style="font-size: 16px">Chưa thanh toán</span></td>
                                         </c:if>
                                         <c:if test="${contract.status.equalsIgnoreCase('Request cancel')}">
-                                            <td class="alert-warning text-center">Yêu cầu hủy</td>
+                                            <td class="text-center"><span class="label label-warning"
+                                                                          style="font-size: 16px">Yêu cầu hủy</span>
+                                            </td>
                                         </c:if>
                                     </tr>
                                 </table>
