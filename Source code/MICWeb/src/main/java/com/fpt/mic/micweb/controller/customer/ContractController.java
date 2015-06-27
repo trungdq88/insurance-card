@@ -47,9 +47,10 @@ public class ContractController extends AuthController {
 
     public ResponseObject getContractDetail(R r) {
         CustomerBusiness customerBusiness = new CustomerBusiness();
+        String customerCode = ((CustomerEntity) getLoggedInUser()).getCustomerCode();
         String code = r.equest.getParameter("code");
         ContractEntity contract = customerBusiness.getContractDetail(code);
-        if (contract == null) {
+        if (contract == null || contract.getCustomerCode().compareToIgnoreCase(customerCode) != 0) {
             return new RedirectTo("/error/404");
         } else {
             r.equest.setAttribute("contract", contract);
