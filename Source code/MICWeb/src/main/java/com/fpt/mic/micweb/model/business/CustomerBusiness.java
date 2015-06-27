@@ -65,10 +65,10 @@ public class CustomerBusiness {
      * renew contract
      *
      * @param contractCode,        nexExpried
-     * @param paymentTracsactionId
+     * @param paymentTransactionId
      * @return contract
      */
-    public boolean renewContract(String contractCode, Timestamp newExprired, String paymentTracsactionId) {
+    public boolean renewContract(String contractCode, Timestamp neweEpired, String paymentTransactionId) {
         //init
         boolean result = false;
         ContractDao contractDao = new ContractDao();
@@ -81,7 +81,7 @@ public class CustomerBusiness {
         /////////////////////////
         if (contract != null) {
             //update contract
-            contract.setExpiredDate(newExprired);
+            contract.setExpiredDate(neweEpired);
             if(card == null){
                 contract.setStatus(Constants.ContractStatus.NO_CARD);
             }else {
@@ -92,7 +92,7 @@ public class CustomerBusiness {
             payment.setPaymentMethod("PayPal payment");
             payment.setContent("Gia Hạn Hợp Đồng");
             payment.setAmount(contract.getMicContractTypeByContractTypeId().getPricePerYear());
-            payment.setPaypalTransId(paymentTracsactionId);
+            payment.setPaypalTransId(paymentTransactionId);
             payment.setContractCode(contract.getContractCode());
             if (contractDao.update(contract) != null && paymentDao.create(payment) != null) {
                 result = true;
@@ -132,6 +132,34 @@ public class CustomerBusiness {
         } else {
             return null;
         }
+    }
+    /**
+     * payment for contract
+     *
+     * @param contractCode , paymentTransactionId
+     * @return bool result
+     */
+    public boolean paymentContract(String contractCode, String paymentTransactionId){
+        //init
+        boolean result = false;
+        java.util.Date date = new java.util.Date();
+        ContractDao contractDao = new ContractDao();
+        PaymentDao paymentDao = new PaymentDao();
+        ContractEntity contract = contractDao.read(contractCode);
+        PaymentEntity payment = new PaymentEntity();
+        if(contract != null){
+            contract.setStatus(Constants.ContractStatus.NO_CARD);
+            payment.setPaidDate(new Timestamp(date.getTime()));
+            payment.setPaymentMethod("PayPal payment");
+            payment.setContent("Thanh toán hợp đồng");
+            payment.setAmount(contract.getMicContractTypeByContractTypeId().getPricePerYear());
+            payment.setPaypalTransId(paymentTransactionId);
+            payment.setContractCode(contract.getContractCode());
+            if (contractDao.update(contract) != null && paymentDao.create(payment) != null) {
+                result = true;
+            }
+        }
+        return result;
     }
 
 }

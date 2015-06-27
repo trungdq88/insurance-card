@@ -68,22 +68,22 @@
                                 <td><fmt:formatDate value="${contract.expiredDate}" pattern="dd/MM/yyyy"/></td>
                                 <td>
                                     <c:if test="${contract.status.equalsIgnoreCase('Ready')}">
-                                        <span class="label label-success">${contract.status}</span>
+                                        <span class="label label-success">Sẵn sàng</span>
                                     </c:if>
                                     <c:if test="${contract.status.equalsIgnoreCase('Cancelled')}">
-                                        <span class="label label-danger">${contract.status}</span>
+                                        <span class="label label-dark">Đã huỷ</span>
                                     </c:if>
                                     <c:if test="${contract.status.equalsIgnoreCase('No card')}">
-                                        <span class="label label-primary">${contract.status}</span>
+                                        <span class="label label-primary">Chưa có thẻ</span>
                                     </c:if>
                                     <c:if test="${contract.status.equalsIgnoreCase('Expired')}">
-                                        <span class="label label-warning">${contract.status}</span>
+                                        <span class="label label-danger">Hết hạn</span>
                                     </c:if>
                                     <c:if test="${contract.status.equalsIgnoreCase('Pending')}">
-                                        <span class="label label-info">${contract.status}</span>
+                                        <span class="label label-default">Chưa thanh toán</span>
                                     </c:if>
                                     <c:if test="${contract.status.equalsIgnoreCase('Request cancel')}">
-                                        <span class="label label-default">${contract.status}</span>
+                                        <span class="label label-warning">Yêu cầu hủy</span>
                                     </c:if>
                                 </td>
                             </tr>
@@ -125,11 +125,11 @@
             <div class="panel-body">
                 <ul>
                     <li>
-                        <span class="label label-info">Chờ thanh toán</span>
+                        <span class="label label-default">Chờ thanh toán</span>
                         Khách hàng đăng ký online nhưng chưa thanh toán.
                     </li>
                     <li>
-                        <span class="label label-default">Yêu cầu hủy hợp đồng</span>
+                        <span class="label label-warning">Yêu cầu hủy</span>
                         Khách hàng đã yêu cầu hủy hợp đồng
                     </li>
                     <li>
@@ -141,11 +141,11 @@
                         Khánh hàng đã hoàn thành hợp đồng và đã có thẻ để sẵn sàng sử dụng.
                     </li>
                     <li>
-                        <span class="label label-warning">Hết hạn</span>
+                        <span class="label label-danger">Hết hạn</span>
                         Thời hạn của hợp đồng sắp hết, cần được gia hạn.
                     </li>
                     <li>
-                        <span class="label label-danger">Đã huỷ hợp đồng</span>
+                        <span class="label label-dark">Đã huỷ</span>
                         Hợp đồng bị huỷ. Khánh hàng muốn tiếp tục sử dụng cần phải đăng ký hợp đồng mới.
                     </li>
                 </ul>
