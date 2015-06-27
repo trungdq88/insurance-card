@@ -80,7 +80,7 @@
                                     <c:set var="status" value="${cont.status}"/>
                                     <c:choose>
                                         <c:when test="${status.equalsIgnoreCase('Pending')}">
-                                            <span class="label label-gray">Chưa thanh toán</span>
+                                            <span class="label label-gray">Chờ thanh toán</span>
                                         </c:when>
                                         <c:when test="${status.equalsIgnoreCase('No card')}">
                                             <span class="label label-primary">Chưa có thẻ</span>
