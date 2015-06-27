@@ -151,7 +151,7 @@ public class CustomerBusiness {
             contract.setStatus(Constants.ContractStatus.NO_CARD);
             payment.setPaidDate(new Timestamp(date.getTime()));
             payment.setPaymentMethod("PayPal payment");
-            payment.setContent("Thanh toán hợp đồng");
+            payment.setContent("Đăng ký hợp đồng mới " + contract.getContractCode() );
             payment.setAmount(contract.getMicContractTypeByContractTypeId().getPricePerYear());
             payment.setPaypalTransId(paymentTransactionId);
             payment.setContractCode(contract.getContractCode());
