@@ -1,5 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ include file="_shared/header.jsp"%>
+<%@ include file="_shared/header.jsp" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -14,18 +14,20 @@
                     Hợp đồng
 
                     <div class="pull-right">
-                        <a href="${pageContext.request.contextPath}/staff/contract?action=create" class="btn btn-success">
+                        <a href="${pageContext.request.contextPath}/staff/contract?action=create"
+                           class="btn btn-success">
                             <i class="fa fa-plus"></i>
                             Hợp đồng mới
                         </a>
-                    </div></h1>
+                    </div>
+                </h1>
             </div>
             <!-- /.col-lg-12 -->
         </div>
         <!-- /.row -->
         <div class="panel panel-default">
 
-            <c:set var="info" value="${requestScope.INFO}" />
+            <c:set var="info" value="${requestScope.INFO}"/>
 
             <div class="panel-heading">
                 <div class="pull-left center-dropdown-button">
@@ -60,21 +62,46 @@
                                 <td>${counter.count}</td>
                                 <td>
                                     <a href="${pageContext.request.contextPath}/staff/contract?action=detail&code=${cont.contractCode}">
-                                        ${cont.contractCode}
+                                            ${cont.contractCode}
                                     </a>
                                 </td>
                                 <td>
                                     <a href="${pageContext.request.contextPath}/staff/customer?action=detail&code=${cont.customerCode}">
-                                        ${cont.micCustomerByCustomerCode.name}
+                                            ${cont.micCustomerByCustomerCode.name}
                                     </a>
                                 </td>
                                 <td>
-                                    <fmt:formatDate value="${cont.startDate}" pattern="dd/MM/yyyy" />
+                                    <fmt:formatDate value="${cont.startDate}" pattern="dd/MM/yyyy"/>
                                 </td>
                                 <td>
-                                    <fmt:formatDate value="${cont.expiredDate}" pattern="dd/MM/yyyy" />
+                                    <fmt:formatDate value="${cont.expiredDate}" pattern="dd/MM/yyyy"/>
                                 </td>
-                                <td>${cont.status}</td>
+                                <td>
+                                    <c:set var="status" value="${cont.status}"/>
+                                    <c:choose>
+                                        <c:when test="${status.equalsIgnoreCase('Pending')}">
+                                            <span class="label label-gray">Chưa thanh toán</span>
+                                        </c:when>
+                                        <c:when test="${status.equalsIgnoreCase('No card')}">
+                                            <span class="label label-primary">Chưa có thẻ</span>
+                                        </c:when>
+                                        <c:when test="${status.equalsIgnoreCase('Ready')}">
+                                            <span class="label label-success">Sẵn sàng</span>
+                                        </c:when>
+                                        <c:when test="${status.equalsIgnoreCase('Request cancel')}">
+                                            <span class="label label-warning">Yêu cầu hủy</span>
+                                        </c:when>
+                                        <c:when test="${status.equalsIgnoreCase('Expired')}">
+                                            <span class="label label-danger">Hết hạn</span>
+                                        </c:when>
+                                        <c:when test="${status.equalsIgnoreCase('Cancelled')}">
+                                            <span class="label label-dark">Đã huỷ</span>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <span class="label label-default">Không trạng thái</span>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </td>
                             </tr>
                         </c:forEach>
                         </tbody>
@@ -106,7 +133,7 @@
         <!-- /.panel -->
 
 
-        <div class="panel panel-success">
+        <div class="panel panel-info">
             <div class="panel-heading">
                 Các trạng thái của hợp đồng:
             </div>
@@ -130,7 +157,8 @@
                     </li>
                     <li>
                         <span class="label label-danger">Hết hạn</span>
-                        Hợp đồng đã hết hạn và không có giá trị. Khánh hàng phải gia hạn để tiếp tục sử dụng chương trình bảo hiểm.
+                        Hợp đồng đã hết hạn và không có giá trị. Khánh hàng phải gia hạn để tiếp tục sử dụng chương
+                        trình bảo hiểm.
                     </li>
                     <li>
                         <span class="label label-dark">Đã huỷ</span>
@@ -143,5 +171,4 @@
 </div>
 <!-- /#wrapper -->
 
-
-<%@ include file="_shared/footer.jsp"%>
+<%@ include file="_shared/footer.jsp" %>

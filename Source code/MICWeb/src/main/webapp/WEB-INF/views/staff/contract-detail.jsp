@@ -163,7 +163,32 @@
                             <label class="col-sm-3 control-label">Trạng thái</label>
 
                             <div class="col-sm-3">
-                                <div class="text-value">${cont.status}</div>
+                                <div class="text-value">
+                                    <c:set var="status" value="${cont.status}"/>
+                                    <c:choose>
+                                        <c:when test="${status.equalsIgnoreCase('Pending')}">
+                                            <span class="label label-gray">Chưa thanh toán</span>
+                                        </c:when>
+                                        <c:when test="${status.equalsIgnoreCase('No card')}">
+                                            <span class="label label-primary">Chưa có thẻ</span>
+                                        </c:when>
+                                        <c:when test="${status.equalsIgnoreCase('Ready')}">
+                                            <span class="label label-success">Sẵn sàng</span>
+                                        </c:when>
+                                        <c:when test="${status.equalsIgnoreCase('Request cancel')}">
+                                            <span class="label label-warning">Yêu cầu hủy</span>
+                                        </c:when>
+                                        <c:when test="${status.equalsIgnoreCase('Expired')}">
+                                            <span class="label label-danger">Hết hạn</span>
+                                        </c:when>
+                                        <c:when test="${status.equalsIgnoreCase('Cancelled')}">
+                                            <span class="label label-dark">Đã huỷ</span>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <span class="label label-default">Không trạng thái</span>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </div>
                             </div>
                         </div>
 
