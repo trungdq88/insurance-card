@@ -84,7 +84,7 @@ public class InfoActivity extends Activity {
         });
     }
 
-    private void writeToCard(boolean ignoreNFC) {
+    private void writeToCard(final boolean ignoreNFC) {
         if (contractSearchResult.contractEntity.status
                 .equals(Constants.ContractStatus.NO_CARD)) {
             Intent intent = new Intent(InfoActivity.this, WriteActivity.class);
@@ -108,6 +108,7 @@ public class InfoActivity extends Activity {
                     // Override card
                     Intent intent = new Intent(InfoActivity.this, WriteActivity.class);
                     intent.putExtra("contract", contractSearchResult);
+                    intent.putExtra("ignoreNFC", ignoreNFC);
                     startActivity(intent);
                 }
             }, new DialogUtils.IOnCancelClicked() {
