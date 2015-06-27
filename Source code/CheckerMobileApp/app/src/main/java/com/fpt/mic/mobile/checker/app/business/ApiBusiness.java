@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fpt.mic.mobile.checker.app.ApiRequest.ApiRequest;
 import com.fpt.mic.mobile.checker.app.entity.CardEntity;
 import com.fpt.mic.mobile.checker.app.utils.Constants;
+import com.fpt.mic.mobile.checker.app.utils.Settings;
 
 import java.io.IOException;
 
@@ -21,7 +22,7 @@ public class ApiBusiness {
      * @param cb
      */
     public void checkConnection(final IOnConnectionResult cb) {
-        ApiRequest apiRequest = new ApiRequest(Constants.API_BASE);
+        ApiRequest apiRequest = new ApiRequest(Settings.getApiBase());
         apiRequest.setParam("action", "checkConnection");
         apiRequest.get(new ApiRequest.IOnApiResponse() {
             @Override
@@ -31,13 +32,16 @@ public class ApiBusiness {
                 } catch (IOException e) {
                     e.printStackTrace();
                     cb.onConnectionResult(false);
+                } catch (NullPointerException e) {
+                    e.printStackTrace();
+                    cb.onConnectionResult(false);
                 }
             }
         });
     }
 
     public void checkCard(String cardID, final IOnCheckContract cb) {
-        ApiRequest apiRequest = new ApiRequest(Constants.API_BASE);
+        ApiRequest apiRequest = new ApiRequest(Settings.getApiBase());
         apiRequest.setParam("action", "checkCard");
         apiRequest.setParam("cardID", cardID);
         apiRequest.get(new ApiRequest.IOnApiResponse() {

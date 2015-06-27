@@ -19,10 +19,15 @@ public class RequestSender extends AsyncTask<String, Integer, String> {
     }
 
     protected String doInBackground(String... urls) {
-        if(method.equals("GET"))
-          return NetworkUtils.getResponseFromGetRequest(urls[0]);
-        else
-          return NetworkUtils.getResponseFromPOSTRequest(urls[0], param, 30000);
+        try {
+            if (method.equals("GET")) {
+                return NetworkUtils.getResponseFromGetRequest(urls[0]);
+            } else {
+                return NetworkUtils.getResponseFromPOSTRequest(urls[0], param, 5000);
+            }
+        } catch (IllegalArgumentException e) {
+            return null;
+        }
     }
 
     protected void onProgressUpdate(Integer... progress) {

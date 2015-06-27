@@ -8,6 +8,7 @@ import android.view.Window;
 import com.fpt.mic.mobile.checker.app.R;
 import com.fpt.mic.mobile.checker.app.business.ApiBusiness;
 import com.fpt.mic.mobile.checker.app.utils.DialogUtils;
+import com.fpt.mic.mobile.checker.app.utils.Settings;
 
 public class SplashScreen extends Activity {
 
@@ -55,6 +56,17 @@ public class SplashScreen extends Activity {
                                         public void onClick() {
                                             finish();
                                         }
+                                    }, new DialogUtils.IOnNeutralClicked() {
+                                        @Override
+                                        public void onClick() {
+                                            setCustomServerIp(new IServerSetUpDone() {
+                                                @Override
+                                                public void onServerSetUp() {
+                                                    // Try again with new set up
+                                                    (new Handler()).postDelayed(self, CHECK_TIMEOUT);
+                                                }
+                                            });
+                                        }
                                     });
                         }
                     }
@@ -64,6 +76,17 @@ public class SplashScreen extends Activity {
         };
         (new Handler()).postDelayed(checkInternetRunnable, CHECK_TIMEOUT);
 
+    }
+
+    private void setCustomServerIp(final IServerSetUpDone cb) {
+        DialogUtils.showInputBox(this, "Cài đặt", Settings.serverIp,
+                "Vui lòng nhập địa chỉ IP của server", new DialogUtils.IOnTextInput() {
+            @Override
+            public void onInput(String text) {
+                Settings.serverIp = text;
+                cb.onServerSetUp();
+            }
+        });
     }
 
 
@@ -77,5 +100,9 @@ public class SplashScreen extends Activity {
     public void onBackPressed() {
         // Prevent exit app in splash screen
         // super.onBackPressed();
+    }
+
+    public interface IServerSetUpDone {
+        void onServerSetUp();
     }
 }

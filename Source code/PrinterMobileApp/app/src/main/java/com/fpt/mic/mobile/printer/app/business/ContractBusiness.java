@@ -6,6 +6,7 @@ import com.fpt.mic.mobile.printer.app.dto.ContractSearchResult;
 import com.fpt.mic.mobile.printer.app.entity.CardEntity;
 import com.fpt.mic.mobile.printer.app.ApiRequest.ApiRequest;
 import com.fpt.mic.mobile.printer.app.utils.Constants;
+import com.fpt.mic.mobile.printer.app.utils.Settings;
 
 import java.io.IOException;
 import java.util.List;
@@ -19,7 +20,7 @@ public class ContractBusiness {
     ObjectMapper mapper = new ObjectMapper();
 
     public void searchContracts(String keyword, final IOnSearchResult cb) {
-        ApiRequest apiRequest = new ApiRequest(Constants.API_BASE);
+        ApiRequest apiRequest = new ApiRequest(Settings.getApiBase());
         apiRequest.setParam("action", "contracts");
         apiRequest.setParam("keyword", keyword);
         apiRequest.get(new ApiRequest.IOnApiResponse() {
@@ -39,7 +40,7 @@ public class ContractBusiness {
     }
 
     public void updateCardForContract(String contractCode, String cardID, final IOnApiResult cb) {
-        ApiRequest apiRequest = new ApiRequest(Constants.API_BASE);
+        ApiRequest apiRequest = new ApiRequest(Settings.getApiBase());
         apiRequest.setParam("action", "updateCardID");
         apiRequest.setParam("contractCode", contractCode);
         apiRequest.setParam("cardID", cardID);
