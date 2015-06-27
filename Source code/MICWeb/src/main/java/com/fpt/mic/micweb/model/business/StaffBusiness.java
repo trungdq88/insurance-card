@@ -221,7 +221,7 @@ public class StaffBusiness {
                 paymentEntity.setContractCode(dto.getContractCode());
                 // Set others payment information
                 paymentEntity.setPaymentMethod("Trực tiếp");
-                paymentEntity.setContent("Đăng ký hợp đồng mới");
+                paymentEntity.setContent("Đăng ký hợp đồng mới " + contractEntity.getContractCode());
                 paymentEntity.setReceiver(receiver.getStaffCode());
 
                 if (paymentDao.create(paymentEntity) != null) {
