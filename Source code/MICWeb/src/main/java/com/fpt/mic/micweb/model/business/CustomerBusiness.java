@@ -90,7 +90,7 @@ public class CustomerBusiness {
             //update payment
             payment.setPaidDate(new Timestamp(date.getTime()));
             payment.setPaymentMethod("PayPal payment");
-            payment.setContent("Gia Hạn Hợp Đồng");
+            payment.setContent("Gia hạn hợp đồng");
             payment.setAmount(contract.getMicContractTypeByContractTypeId().getPricePerYear());
             payment.setPaypalTransId(paymentTracsactionId);
             payment.setContractCode(contract.getContractCode());

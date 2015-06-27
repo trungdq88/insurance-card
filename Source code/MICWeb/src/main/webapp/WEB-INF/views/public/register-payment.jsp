@@ -19,7 +19,7 @@
 
                 <!--      Wizard container        -->
                 <div class="wizard-container">
-                    <form role="form" action="${pageContext.request.contextPath}/public/checkout" method="get">
+                    <form role="form" action="${pageContext.request.contextPath}/public/checkout" method="post">
                         <div class="card wizard-card ct-wizard-azzure" id="wizard">
 
                             <!-- You can switch "ct-wizard-azzure"  with one of the next bright colors: "ct-wizard-blue",
@@ -50,8 +50,8 @@
                             </div>
 
                         </div>
-                        <input type="hidden" name="L_PAYMENTREQUEST_0_NAME0" value="Create new contract">
-                        <input type="hidden" name="L_PAYMENTREQUEST_0_DESC0" value="Create new contract">
+                        <input type="hidden" name="L_PAYMENTREQUEST_0_NAME0" value="Đăng ký hợp đồng mới ${register.contractEntity.contractCode}">
+                        <input type="hidden" name="L_PAYMENTREQUEST_0_DESC0" value="Đăng ký hợp đồng mới ${register.contractEntity.contractCode}">
                         <input type="hidden" name="L_PAYMENTREQUEST_0_QTY0" value="1">
                         <input type="hidden" name="PAYMENTREQUEST_0_ITEMAMT" value="${register.contractEntity.contractFee}">
                         <input type="hidden" name="PAYMENTREQUEST_0_TAXAMT" value="0">

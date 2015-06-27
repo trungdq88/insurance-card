@@ -121,7 +121,7 @@ public class StaffBusiness {
             // Add payment info
             paymentEntity.setPaidDate(dto.getPaidDate());
             paymentEntity.setPaymentMethod("Direct");
-            paymentEntity.setContent("Đăng ký hợp đồng mới");
+            paymentEntity.setContent("Đăng ký hợp đồng mới " + newContract.getContractCode());
             paymentEntity.setAmount(dto.getAmount());
             paymentEntity.setReceiver(receiver.getStaffCode());
             paymentEntity.setContractCode(contractCode);

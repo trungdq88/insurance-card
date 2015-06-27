@@ -1,5 +1,8 @@
 package com.fpt.mic.micweb.model.dto;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+
 /**
  * Created by TriPQMSE60746 on 06/10/2015.
  */
@@ -31,15 +34,20 @@ public class CheckoutRequestDto {
     }
 
     public String getQueryString() {
-        return  "L_PAYMENTREQUEST_0_NAME0="     + this.paymentrequest_name + "&"+
-                "L_PAYMENTREQUEST_0_DESC0="     + this.paymentrequest_desc + "&"+
-                "L_PAYMENTREQUEST_0_QTY0="      + this.paymentrequest_qty + "&"+
-                "PAYMENTREQUEST_0_ITEMAMT="     + this.paymentrequest_itemamt + "&"+
-                "PAYMENTREQUEST_0_TAXAMT="      + this.paymentrequest_taxamt + "&"+
-                "PAYMENTREQUEST_0_AMT="         + this.paymentrequest_amt + "&"+
-                "currencyCodeType="             + this.currencycodetype + "&"+
-                "paymentType="                  + this.paymenttype + "&"+
-                "L_PAYMENTREQUEST_0_AMT="       + this.paymentrequest_amt_l;
+        try {
+            return  "L_PAYMENTREQUEST_0_NAME0="     + URLEncoder.encode(this.paymentrequest_name, "UTF-8") + "&"+
+                    "L_PAYMENTREQUEST_0_DESC0="     + URLEncoder.encode(this.paymentrequest_desc, "UTF-8") + "&"+
+                    "L_PAYMENTREQUEST_0_QTY0="      + URLEncoder.encode(this.paymentrequest_qty, "UTF-8") + "&"+
+                    "PAYMENTREQUEST_0_ITEMAMT="     + URLEncoder.encode(this.paymentrequest_itemamt, "UTF-8") + "&"+
+                    "PAYMENTREQUEST_0_TAXAMT="      + URLEncoder.encode(this.paymentrequest_taxamt, "UTF-8") + "&"+
+                    "PAYMENTREQUEST_0_AMT="         + URLEncoder.encode(this.paymentrequest_amt, "UTF-8") + "&"+
+                    "currencyCodeType="             + URLEncoder.encode(this.currencycodetype, "UTF-8") + "&"+
+                    "paymentType="                  + URLEncoder.encode(this.paymenttype, "UTF-8") + "&"+
+                    "L_PAYMENTREQUEST_0_AMT="       + URLEncoder.encode(this.paymentrequest_amt_l, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return null;
 
     }
 
