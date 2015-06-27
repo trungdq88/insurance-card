@@ -36,18 +36,33 @@
                                <button type="button" class="btn btn-danger" data-toggle="modal" disabled="disabled"
                                        data-target=".bs-example-modal-lg"><i class="fa fa-times"></i> Hủy Hợp Đồng
                                </button>
+
                            </c:if>
                           <c:if test="${!contract.status.equalsIgnoreCase('Request cancel') && !contract.status.equalsIgnoreCase('Cancelled')
                                      && !contract.status.equalsIgnoreCase('Pending') }">
+                              <c:if test="${contract.status.equalsIgnoreCase('Expired')}">
+                                  <button type="submit" class="btn btn-info" data-toggle="modal" id="renew"
+                                          data-target=".renew-contract-modal"><i
+                                          class="fa fa-refresh"></i> Gia Hạn
+                                  </button>
 
-                              <button type="submit" class="btn btn-info" data-toggle="modal" id="renew"
-                                      data-target=".renew-contract-modal"><i
-                                      class="fa fa-refresh"></i> Gia Hạn
-                              </button>
+                                  <button type="button" class="btn btn-danger" data-toggle="modal" disabled="disabled"
+                                          data-target=".bs-example-modal-lg"><i class="fa fa-times"></i> Hủy Hợp Đồng
+                                  </button>
 
-                              <button type="button" class="btn btn-danger" data-toggle="modal"
-                                      data-target=".bs-example-modal-lg"><i class="fa fa-times"></i> Hủy Hợp Đồng
-                              </button>
+                              </c:if>
+                              <c:if test="${!contract.status.equalsIgnoreCase('Expired')}">
+                                  <button type="submit" class="btn btn-info" data-toggle="modal" id="renew"
+                                          data-target=".renew-contract-modal"><i
+                                          class="fa fa-refresh"></i> Gia Hạn
+                                  </button>
+
+                                  <button type="button" class="btn btn-danger" data-toggle="modal
+                                          data-target=" .bs-example-modal-lg
+                                  "><i class="fa fa-times"></i> Hủy Hợp Đồng
+                                  </button>
+
+                              </c:if>
                           </c:if>
                      </span>
                 </h2>
