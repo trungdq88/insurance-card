@@ -68,42 +68,55 @@ public class InfoActivity extends Activity {
         // txtDatePublish.setText(contractSearchResult.contractEntity.);
         // txtHotline.setText(contractSearchResult.contractEntity.);
 
-        findViewById(R.id.btnWrite).setOnClickListener(new View.OnClickListener() {
+        View btnSaveToCard = findViewById(R.id.btnWrite);
+        btnSaveToCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (contractSearchResult.contractEntity.status
-                        .equals(Constants.ContractStatus.NO_CARD)) {
+                writeToCard(false);
+            }
+        });
+        btnSaveToCard.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                writeToCard(true);
+                return true;
+            }
+        });
+    }
+
+    private void writeToCard(boolean ignoreNFC) {
+        if (contractSearchResult.contractEntity.status
+                .equals(Constants.ContractStatus.NO_CARD)) {
+            Intent intent = new Intent(InfoActivity.this, WriteActivity.class);
+            intent.putExtra("contract", contractSearchResult);
+            intent.putExtra("ignoreNFC", ignoreNFC);
+            startActivity(intent);
+        } else if (contractSearchResult.contractEntity.status
+                .equals(Constants.ContractStatus.PENDING)) {
+            DialogUtils.showAlert(InfoActivity.this, "Hợp đồng này chưa được thanh toán! " +
+                    "Vui lòng thanh toán cho hợp đồng trước khi in thẻ!");
+        } else if (contractSearchResult.contractEntity.status
+                .equals(Constants.ContractStatus.CANCELLED)) {
+            DialogUtils.showAlert(InfoActivity.this, "Hợp đồng này đã bị huỷ. Không thể " +
+                    "in thẻ cho hợp đồng đã bị huỷ!");
+        } else {
+            // READY / EXPIRED / REQUEST_CANCEL
+            DialogUtils.showAlert(InfoActivity.this, "Hợp đồng này đã có 1 thẻ đang được sử dụng." +
+                    " Bạn có muốn in thẻ mới cho hợp đồng này không? (Thẻ cũ sẽ bị vô hiệu hoá)", new DialogUtils.IOnOkClicked() {
+                @Override
+                public void onClick() {
+                    // Override card
                     Intent intent = new Intent(InfoActivity.this, WriteActivity.class);
                     intent.putExtra("contract", contractSearchResult);
                     startActivity(intent);
-                } else if (contractSearchResult.contractEntity.status
-                        .equals(Constants.ContractStatus.PENDING)) {
-                    DialogUtils.showAlert(InfoActivity.this, "Hợp đồng này chưa được thanh toán! " +
-                            "Vui lòng thanh toán cho hợp đồng trước khi in thẻ!");
-                } else if (contractSearchResult.contractEntity.status
-                        .equals(Constants.ContractStatus.CANCELLED)) {
-                    DialogUtils.showAlert(InfoActivity.this, "Hợp đồng này đã bị huỷ. Không thể " +
-                            "in thẻ cho hợp đồng đã bị huỷ!");
-                } else {
-                    // READY / EXPIRED / REQUEST_CANCEL
-                    DialogUtils.showAlert(InfoActivity.this, "Hợp đồng này đã có 1 thẻ đang được sử dụng." +
-                            " Bạn có muốn in thẻ mới cho hợp đồng này không? (Thẻ cũ sẽ bị vô hiệu hoá)", new DialogUtils.IOnOkClicked() {
-                        @Override
-                        public void onClick() {
-                            // Override card
-                            Intent intent = new Intent(InfoActivity.this, WriteActivity.class);
-                            intent.putExtra("contract", contractSearchResult);
-                            startActivity(intent);
-                        }
-                    }, new DialogUtils.IOnCancelClicked() {
-                        @Override
-                        public void onClick() {
-                            // Do nothing
-                        }
-                    });
                 }
-            }
-        });
+            }, new DialogUtils.IOnCancelClicked() {
+                @Override
+                public void onClick() {
+                    // Do nothing
+                }
+            });
+        }
     }
 
 }

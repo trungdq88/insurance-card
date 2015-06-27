@@ -21,6 +21,7 @@ import java.io.IOException;
 public class WriteActivity extends Activity {
 
     ContractSearchResult contractSearchResult;
+    boolean ignoreNFC = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,18 +29,33 @@ public class WriteActivity extends Activity {
         setContentView(R.layout.activity_write);
 
         contractSearchResult = getIntent().getParcelableExtra("contract");
+        ignoreNFC = getIntent().getBooleanExtra("ignoreNFC", false);
+
+        if (ignoreNFC) {
+            DialogUtils.showInputBox(this, "Giả lập NFC Writter", "",
+                    "Nhập mã thẻ để giả lập quá trình ghi thẻ", new DialogUtils.IOnTextInput() {
+                @Override
+                public void onInput(String text) {
+                    syncCardId(text);
+                }
+            });
+        }
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        enableNfcWrite();
+        if (!ignoreNFC) {
+            enableNfcWrite();
+        }
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        disableNfcWrite();
+        if (!ignoreNFC) {
+            disableNfcWrite();
+        }
     }
 
     private PendingIntent getPendingIntent() {
@@ -85,28 +101,33 @@ public class WriteActivity extends Activity {
 
             Toast.makeText(this, "Đang in thẻ...", Toast.LENGTH_SHORT).show();
 
-            // Send tag ID to server
-            ContractBusiness contractBusiness = new ContractBusiness();
-            contractBusiness.updateCardForContract(
-                    contractSearchResult.contractEntity.contractCode, tagID, new ContractBusiness.IOnApiResult() {
-                        @Override
-                        public void onApiResult(CardEntity result) {
-                            if (result != null) {
-                                // Show result
-                                finish();
-                                Intent intent = new Intent(WriteActivity.this, SuccessActivity.class);
-                                intent.putExtra("card", result);
-                                startActivity(intent);
-                            } else {
-                                // This card ID is already exists in the system
-                                //      => Tell user that this card is no longer usable.
-                                DialogUtils.showAlert(WriteActivity.this, "Không thể in thẻ!" +
-                                        " Thẻ này đã được sử dụng trong hệ thống!");
-                            }
-                        }
-                    });
+            syncCardId(tagID);
+
 
         }
+    }
+
+    private void syncCardId(String tagID) {
+        // Send tag ID to server
+        ContractBusiness contractBusiness = new ContractBusiness();
+        contractBusiness.updateCardForContract(
+                contractSearchResult.contractEntity.contractCode, tagID, new ContractBusiness.IOnApiResult() {
+                    @Override
+                    public void onApiResult(CardEntity result) {
+                        if (result != null) {
+                            // Show result
+                            finish();
+                            Intent intent = new Intent(WriteActivity.this, SuccessActivity.class);
+                            intent.putExtra("card", result);
+                            startActivity(intent);
+                        } else {
+                            // This card ID is already exists in the system
+                            //      => Tell user that this card is no longer usable.
+                            DialogUtils.showAlert(WriteActivity.this, "Không thể in thẻ!" +
+                                    " Thẻ này đã được sử dụng trong hệ thống!");
+                        }
+                    }
+                });
     }
 
     private void writeTag(Tag tag) {
