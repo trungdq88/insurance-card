@@ -3,6 +3,7 @@
  */
 
 $(document).ready(function () {
+    $('[data-toggle="tooltip"]').tooltip();
     $('#btn_Modify').click(function () {
         $('.textInFormation').prop('disabled', false);
         $(this).addClass('hide');
@@ -160,4 +161,10 @@ $(document).ready(function () {
     /**
      ------------------------------------------------------------------------------------------------------------------
      */
+    $('#payContract').click(function(){
+        $('#payment1').val((parseFloat($('#payAmount1').val())));
+        $('#paymentATM1').val((parseFloat($('#payAmount1').val())));
+        var contractCode = $('#contractCode').val();
+        $('#content1').val("Payment for contract "+ contractCode);
+    });
 });

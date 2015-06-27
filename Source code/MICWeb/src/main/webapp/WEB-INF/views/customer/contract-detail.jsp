@@ -206,7 +206,6 @@
 
                             </div>
                             <div class="modal-footer">
-
                                 <input type="hidden" name="L_PAYMENTREQUEST_0_NAME0" id="content1" value="">
                                 <input type="hidden" name="L_PAYMENTREQUEST_0_DESC0" id="content2">
                                 <input type="hidden" name="L_PAYMENTREQUEST_0_QTY0" value="1">
@@ -233,7 +232,7 @@
             </form>
         </div>
 
-        <!-- /.modal-dialog -->
+        <!---------------------------------------- /.modal-dialog ---------------------------------------------->
         <div class="col-lg-12">
             <c:if test="${not empty validateErrors}">
                 <div class="well well-lg text-danger ">
@@ -319,6 +318,83 @@
                 </form>
 
             </c:if>
+            <c:if test="${contract.status.equalsIgnoreCase('Pending')}">
+
+                <div class="alert alert-block alert-error fade in well well-lg text-info">
+                    <button type="button" class="close" data-dismiss="alert">×</button>
+                    <h4 class="alert-heading">Hợp đồng của quý khách chưa được thanh toán!</h4>
+
+                    <p>Quý khách có thể thanh toán trực tiếp tại công ty
+                        <button class="btn" data-toggle="modal"
+                                data-target=".map-modal"><i class="fa fa-map-marker"></i>
+                        </button>
+                    </p>
+                    <form action="${pageContext.request.contextPath}/customer/contract" method="post">
+
+
+                        <button class="btn btn-primary" type="submit" id="payContract"
+                                rel="tooltip"
+                                data-toggle="tooltip"
+                                data-trigger="hover"
+                                data-placement="top"
+                                data-html="true"
+                                data-title="  <ul class='nav  nav-tabs'>
+    <li><b>Loại hợp đồng: </b> ${contract.getMicContractTypeByContractTypeId().getName()}</li>
+    <li><b>Tổng tiền phải trả: </b><span > <fmt:formatNumber
+                                                    value="${contract.getMicContractTypeByContractTypeId().getPricePerYear()}"
+                                                    type="currency"
+                                                    maxFractionDigits="0"/></span>
+
+                                    </li>
+
+                                    <li>***************************************</li>
+                                    </ul>">
+                            Thanh toán online bằng Paypal
+                        </button>
+
+                        <!-- input hidden -->
+                        <input id="payAmount1" disabled="disabled" type="hidden"
+                               value="${contract.getMicContractTypeByContractTypeId().getPricePerYear()} VNĐ"/>
+                        <input id="contractCode" disabled="disabled" type="hidden"
+                               value="${contract.contractCode}"/>
+                        <input type="hidden" name="L_PAYMENTREQUEST_0_NAME0" value="">
+                        <input type="hidden" name="L_PAYMENTREQUEST_0_DESC0" id="content1">
+                        <input type="hidden" name="L_PAYMENTREQUEST_0_QTY0" value="1">
+                        <input type="hidden" name="PAYMENTREQUEST_0_ITEMAMT" id="payment1">
+                        <input type="hidden" name="PAYMENTREQUEST_0_TAXAMT" value="0">
+                        <input type="hidden" name="PAYMENTREQUEST_0_AMT" id="paymentATM1">
+                        <input type="hidden" name="currencyCodeType" value="USD">
+                        <input type="hidden" name="paymentType" value="Sale">
+                        <input type="hidden" name="successUrl"
+                               value="/customer/contract?action=ActivePayContract">
+                        <input type="hidden" name="txtContractCode" value="${contract.contractCode}">
+                        <input type="hidden" name="action" value="PayContract">
+
+                    </form>
+
+
+                </div>
+                <div class="modal fade map-modal" tabindex="-1" role="dialog"
+                     aria-labelledby="myLargeModalLabel"
+                     aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-body">
+                                <iframe
+                                        width="100%"
+                                        height="500"
+                                        frameborder="0" style="border:0"
+                                        src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBHWaWHbQJEFOvVmZw7tcR0qIGQQUoxsKM&q=Trường Đại Học FPT, tòa nhà Innovation, Công viên phần mềm Quang Trung, P.Tân Chánh Hiệp, Quận 12, TP. Hồ Chí Minh"
+                                        >
+
+                                </iframe>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </c:if>
         </div>
 
         <div role="tabpanel">
@@ -392,23 +468,23 @@
                                         <td>
                                             <label class="text-center">Tình trạng hợp đồng</label>
                                         </td>
-
-                                        <c:if test="${contract.status.equalsIgnoreCase('Request cancel') || contract.status.equalsIgnoreCase('Cancelled')}">
-
-                                            <td class="alert-danger text-center ">
-                                                    ${contract.status}
-                                            </td>
-                                        </c:if>
-
-                                        <c:if test="${!contract.status.equalsIgnoreCase('Request cancel') && !contract.status.equalsIgnoreCase('Ready')&& !contract.status.equalsIgnoreCase('Cancelled')}">
-                                            <td class="alert-info text-center">
-                                                    ${contract.status}
-                                            </td>
-                                        </c:if>
                                         <c:if test="${contract.status.equalsIgnoreCase('Ready')}">
-                                            <td class="alert-success text-center">
-                                                    ${contract.status}
-                                            </td>
+                                            <td class="alert-success text-center">Sẵn sàng</td>
+                                        </c:if>
+                                        <c:if test="${contract.status.equalsIgnoreCase('Cancelled')}">
+                                            <td class="alert-danger text-center">Đã huỷ</td>
+                                        </c:if>
+                                        <c:if test="${contract.status.equalsIgnoreCase('No card')}">
+                                            <td class="alert-info text-center">Chưa có thẻ</td>
+                                        </c:if>
+                                        <c:if test="${contract.status.equalsIgnoreCase('Expired')}">
+                                            <td class="alert-danger text-center">Hết hạn</td>
+                                        </c:if>
+                                        <c:if test="${contract.status.equalsIgnoreCase('Pending')}">
+                                            <td class="alert-link text-center">Chưa thanh toán</td>
+                                        </c:if>
+                                        <c:if test="${contract.status.equalsIgnoreCase('Request cancel')}">
+                                            <td class="alert-warning text-center">Yêu cầu hủy</td>
                                         </c:if>
                                     </tr>
                                 </table>
@@ -782,6 +858,6 @@
 
 </div>
 <!-- /#wrapper -->
-
+<script src="//www.paypalobjects.com/api/checkout.js" async></script>
 
 <%@ include file="_shared/footer.jsp" %>

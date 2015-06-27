@@ -4,6 +4,7 @@ import com.fpt.mic.micweb.controller.common.AuthController;
 import com.fpt.mic.micweb.framework.responses.RedirectTo;
 import com.fpt.mic.micweb.model.business.CustomerBusiness;
 import com.fpt.mic.micweb.model.dto.CheckoutRequestDto;
+import com.fpt.mic.micweb.model.dto.PayPal;
 import com.fpt.mic.micweb.model.dto.UserDto;
 import com.fpt.mic.micweb.model.dto.form.CancelContractDto;
 import com.fpt.mic.micweb.model.entity.ContractEntity;
@@ -12,7 +13,10 @@ import com.fpt.mic.micweb.framework.R;
 import com.fpt.mic.micweb.framework.responses.ResponseObject;
 import com.fpt.mic.micweb.model.entity.CustomerEntity;
 import com.fpt.mic.micweb.utils.Constants;
+import com.fpt.mic.micweb.utils.CurrencyUtils;
 import com.fpt.mic.micweb.utils.DateUtils;
+import com.fpt.mic.micweb.utils.NumberUtils;
+import org.apache.commons.lang3.StringEscapeUtils;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpSession;
@@ -27,6 +31,10 @@ public class ContractController extends AuthController {
     @Override
     public List<String> getAllowedRoles() {
         return Collections.singletonList(UserDto.ROLE_CUSTOMER);
+    }
+
+    public ResponseObject getNewContract(R r) {
+        return new JspPage("customer/contract-new.jsp");
     }
 
     public ResponseObject getView(R r) {
@@ -79,13 +87,37 @@ public class ContractController extends AuthController {
         }
     }
 
+    /*Payment Contract*/
+    public ResponseObject postPayContract(R r) {
+        //get parameter
+        String contractCode = r.equest.getParameter("txtContractCode");
+        HttpSession session = r.equest.getSession();
+        session.setAttribute("contractCode", contractCode);
+        session.setAttribute("SUCCESS_URL", r.equest.getParameter("successUrl"));
+        session.setAttribute("cancel_message", "Bạn đã hủy thanh toán. Xin vui lòng thực hiện lại hoặc đến thanh toán trực tiếp");
+        session.setAttribute("redirectLink", "/customer/contract?action=ContractDetail&code=" + contractCode);
+
+        CheckoutRequestDto checkoutRequest = new CheckoutRequestDto();
+        checkoutRequest.setPaymentrequest_name(r.equest.getParameter("L_PAYMENTREQUEST_0_NAME0"));
+        checkoutRequest.setPaymentrequest_desc(r.equest.getParameter("L_PAYMENTREQUEST_0_DESC0"));
+        checkoutRequest.setPaymentrequest_qty(r.equest.getParameter("L_PAYMENTREQUEST_0_QTY0"));
+        checkoutRequest.setPaymentrequest_itemamt(r.equest.getParameter("PAYMENTREQUEST_0_ITEMAMT"));
+        checkoutRequest.setPaymentrequest_taxamt(r.equest.getParameter("PAYMENTREQUEST_0_TAXAMT"));
+        checkoutRequest.setPaymentrequest_amt(r.equest.getParameter("PAYMENTREQUEST_0_AMT"));
+        checkoutRequest.setCurrencycodetype(r.equest.getParameter("currencyCodeType"));
+        checkoutRequest.setPaymenttype(r.equest.getParameter("paymentType"));
+        checkoutRequest.setPaymentrequest_amt_l(r.equest.getParameter("PAYMENTREQUEST_0_AMT"));
+        return new RedirectTo("/public/checkout?action=checkout&checkout=true&" + checkoutRequest.getQueryString());
+
+    }
+
     /* Renew contract */
     public ResponseObject postRenewContract(R r) {
         //get parameter
         Date date = new Date();
         String contractCode = r.equest.getParameter("txtContractCode");
-        CustomerBusiness busniess = new CustomerBusiness();
-        ContractEntity contract = busniess.getContractDetail(contractCode);
+        CustomerBusiness business = new CustomerBusiness();
+        ContractEntity contract = business.getContractDetail(contractCode);
         Timestamp expiredDate = contract.getExpiredDate();
         if (contract.getStatus().equalsIgnoreCase(Constants.ContractStatus.READY)) {
             expiredDate = DateUtils.addOneYear(expiredDate);
@@ -97,7 +129,7 @@ public class ContractController extends AuthController {
         session.setAttribute("contractCode", contractCode);
         session.setAttribute("newExpiredDate", expiredDate);
         session.setAttribute("SUCCESS_URL", r.equest.getParameter("successUrl"));
-        session.setAttribute("cancel_message","Bạn đã hủy thanh toán. Xin vui lòng thực hiện lại hoặc đến thanh toán trực tiếp");
+        session.setAttribute("cancel_message", "Bạn đã hủy thanh toán. Xin vui lòng thực hiện lại hoặc đến thanh toán trực tiếp");
         session.setAttribute("redirectLink", "/customer/contract?action=ContractDetail&code=" + contractCode);
 
 
@@ -117,8 +149,42 @@ public class ContractController extends AuthController {
         return new RedirectTo("/public/checkout?action=checkout&checkout=true&" + checkoutRequest.getQueryString());
     }
 
-    public ResponseObject getNewContract(R r) {
-        return new JspPage("customer/contract-new.jsp");
+    public ResponseObject getActivePayContract(R r) {
+        String url = "public/return.jsp";
+        HttpSession session = r.equest.getSession(true);
+        if (session.getAttribute("RESULT") == null
+                || session.getAttribute("contractCode") == null
+                || session.getAttribute("amountVND") == null
+                || session.getAttribute("ACK") == null) {
+            return new RedirectTo("/error/404");
+        } else {
+            Map<String, String> results = new HashMap<String, String>();
+            results.putAll((Map<String, String>) session.getAttribute("RESULT"));
+
+            String contractCode = (String) session.getAttribute("contractCode");
+
+            r.equest.setAttribute("amountVND", session.getAttribute("amountVND"));
+            r.equest.setAttribute("redirectLink", "/customer/contract?action=ContractDetail&code=" + contractCode);
+            r.equest.setAttribute("result", results);
+            r.equest.setAttribute("ack", session.getAttribute("ACK"));
+            //renew contract by customer
+            CustomerBusiness customerBusiness = new CustomerBusiness();
+            boolean result = customerBusiness.paymentContract(contractCode,
+                    results.get("PAYMENTINFO_0_TRANSACTIONID"));
+
+            if (result) {
+                r.equest.setAttribute("message", "Thanh toán cho hợp đồng" + contractCode + " thành công.");
+            } else {
+                r.equest.setAttribute("message", "Thanh toán thất bại.");
+            }
+
+            session.removeAttribute("RESULT");
+            session.removeAttribute("contractCode");
+            session.removeAttribute("amountVND");
+            session.removeAttribute("ACK");
+
+            return new JspPage(url);
+        }
     }
 
     public ResponseObject getActiveRenewContract(R r) {
@@ -179,7 +245,6 @@ public class ContractController extends AuthController {
             }
         }
     }
-
 }
 
 

@@ -2,10 +2,7 @@ package com.fpt.mic.micweb.model.business;
 
 import com.fpt.mic.micweb.model.dao.*;
 import com.fpt.mic.micweb.model.dto.CreateCustomerInfoDto;
-import com.fpt.mic.micweb.model.dto.form.CancelContractDto;
-import com.fpt.mic.micweb.model.dto.form.CreateContractDto;
-import com.fpt.mic.micweb.model.dto.form.CreateCustomerDto;
-import com.fpt.mic.micweb.model.dto.form.RenewContractDto;
+import com.fpt.mic.micweb.model.dto.form.*;
 import com.fpt.mic.micweb.model.entity.*;
 import com.fpt.mic.micweb.utils.Constants;
 import com.fpt.mic.micweb.utils.EmailUtils;
@@ -120,7 +117,7 @@ public class StaffBusiness {
         if (newContract != null) {
             // Add payment info
             paymentEntity.setPaidDate(dto.getPaidDate());
-            paymentEntity.setPaymentMethod("Direct");
+            paymentEntity.setPaymentMethod("Trực tiếp");
             paymentEntity.setContent("Đăng ký hợp đồng mới " + newContract.getContractCode());
             paymentEntity.setAmount(dto.getAmount());
             paymentEntity.setReceiver(receiver.getStaffCode());
@@ -140,8 +137,6 @@ public class StaffBusiness {
         PaymentEntity paymentEntity = new PaymentEntity();
         CardEntity cardEntity = cardDao.getCardByContract(dto.getContractCode());
 
-        // Validate information
-
         // Check contract
         if (contractEntity != null) {
             // Update contract information
@@ -156,7 +151,7 @@ public class StaffBusiness {
                 // Add payment information
                 paymentEntity.setPaidDate(dto.getPaidDate());
                 paymentEntity.setAmount(dto.getAmount());
-                paymentEntity.setPaymentMethod("Direct");
+                paymentEntity.setPaymentMethod("Trực tiếp");
                 paymentEntity.setContent("Gia hạn hợp đồng");
                 paymentEntity.setReceiver(receiver.getStaffCode());
                 paymentEntity.setContractCode(dto.getContractCode());
@@ -171,7 +166,6 @@ public class StaffBusiness {
     public boolean cancelContract(CancelContractDto dto) {
         ContractDao contractDao = new ContractDao();
         ContractEntity contractEntity = contractDao.read(dto.getContractCode());
-        // Validate information
 
         // Check contract
         if (contractEntity != null) {
@@ -202,5 +196,39 @@ public class StaffBusiness {
     public PaymentEntity getPaymentDetail(Integer id) {
         PaymentDao paymentDao = new PaymentDao();
         return paymentDao.read(id);
+    }
+
+    public boolean completePayment(CompletePaymentDto dto, StaffEntity receiver) {
+        ContractDao contractDao = new ContractDao();
+        PaymentDao paymentDao = new PaymentDao();
+        CardDao cardDao = new CardDao();
+        ContractEntity contractEntity = contractDao.read(dto.getContractCode());
+        PaymentEntity paymentEntity = new PaymentEntity();
+        CardEntity cardEntity = cardDao.getCardByContract(dto.getContractCode());
+
+        // Check contract
+        if (contractEntity != null) {
+            // Update contract status
+            if (cardEntity == null) {
+                contractEntity.setStatus(Constants.ContractStatus.NO_CARD);
+            } else {
+                contractEntity.setStatus(Constants.ContractStatus.READY);
+            }
+            if (contractDao.update(contractEntity) != null) {
+                // Set payment information from dto to entity
+                paymentEntity.setPaidDate(dto.getPaidDate());
+                paymentEntity.setAmount(dto.getAmount());
+                paymentEntity.setContractCode(dto.getContractCode());
+                // Set others payment information
+                paymentEntity.setPaymentMethod("Trực tiếp");
+                paymentEntity.setContent("Đăng ký hợp đồng mới");
+                paymentEntity.setReceiver(receiver.getStaffCode());
+
+                if (paymentDao.create(paymentEntity) != null) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }
