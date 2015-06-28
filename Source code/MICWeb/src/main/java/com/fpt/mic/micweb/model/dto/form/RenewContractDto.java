@@ -31,8 +31,19 @@ public class RenewContractDto {
         return contractCode != null && contractDao.read(contractCode) != null;
     }
 
+    @AssertTrue(message = "Ngày bắt đầu gia hạn hợp đồng không đúng")
+    private boolean isValidStartDate() {
+        ContractDao contractDao = new ContractDao();
+        Timestamp contractExpiredDate = contractDao.read(contractCode).getExpiredDate();
+        if (startDate != null & contractExpiredDate != null) {
+            return startDate.equals(contractExpiredDate);
+        } else {
+            return false;
+        }
+    }
+
     @AssertTrue(message = "Thời điểm có hiệu lực phải sau thời điểm hết hiệu lực")
-    private boolean isValidDate() {
+    private boolean isValidExpiredDate() {
         if (startDate != null & expiredDate != null) {
             return expiredDate.after(startDate);
         } else {
