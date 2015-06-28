@@ -114,4 +114,19 @@ public class ContractDao extends IncrementDao<ContractEntity, String> {
         entityManager.close();
         return resultList;
     }
+
+    public List getCustomerContractByCode(String customerCode, String keyword) {
+        EntityManager entityManager = factory.createEntityManager();
+        Query query = entityManager.createQuery(
+                "SELECT co " +
+                        "FROM ContractEntity co " +
+                        "WHERE co.customerCode = :customerCode " +
+                        "AND co.contractCode LIKE :keyword"
+        );
+        query.setParameter("customerCode", customerCode);
+        query.setParameter("keyword", "%" + keyword + "%");
+        List resultList = query.getResultList();
+        entityManager.close();
+        return resultList;
+    }
 }

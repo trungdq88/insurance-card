@@ -162,4 +162,8 @@ public class CustomerBusiness {
         return result;
     }
 
+    public List searchCustomerContractByCode(String customerCode, String keyword) {
+        ContractDao contractDao = new ContractDao();
+        return contractDao.getCustomerContractByCode(customerCode, keyword);
+    }
 }
