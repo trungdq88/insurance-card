@@ -1,13 +1,13 @@
 package com.fpt.mic.micweb.controller.staff;
 
 import com.fpt.mic.micweb.controller.common.AuthController;
+import com.fpt.mic.micweb.framework.Paginator;
 import com.fpt.mic.micweb.framework.R;
 import com.fpt.mic.micweb.framework.responses.JspPage;
 import com.fpt.mic.micweb.framework.responses.RedirectTo;
 import com.fpt.mic.micweb.framework.responses.ResponseObject;
 import com.fpt.mic.micweb.model.business.ContractBusiness;
 import com.fpt.mic.micweb.model.business.StaffBusiness;
-import com.fpt.mic.micweb.model.dto.ContractSearchResultDto;
 import com.fpt.mic.micweb.model.dto.UserDto;
 import com.fpt.mic.micweb.model.dto.form.CancelContractDto;
 import com.fpt.mic.micweb.model.dto.form.CompletePaymentDto;
@@ -25,6 +25,8 @@ import java.util.List;
 @WebServlet(name = "ContractController", urlPatterns = {"/staff/contract"})
 public class ContractController extends AuthController {
 
+    final StaffBusiness staffBus = new StaffBusiness();
+
     @Override
     public List<String> getAllowedRoles() {
         return Collections.singletonList(UserDto.ROLE_STAFF);
@@ -32,10 +34,23 @@ public class ContractController extends AuthController {
 
     private static String msg = "";
 
+    /**
+     * Paginator for contract
+     */
+    Paginator contractPaginator = new Paginator(new Paginator.IGetItems() {
+        @Override
+        public List getItems(int offset, int count) {
+            return staffBus.getAllContract(offset, count);
+        }
+    }, new Paginator.IGetItemSize() {
+        @Override
+        public int getItemSize() {
+            return staffBus.getAllContract().size();
+        }
+    });
+
     public ResponseObject getView(R r) {
-        StaffBusiness staffBus = new StaffBusiness();
-        List<ContractEntity> listContract = staffBus.getAllContract();
-        r.equest.setAttribute("INFO", listContract);
+        r.equest.setAttribute("contractPaginator", contractPaginator);
         return new JspPage("staff/contracts.jsp");
     }
 

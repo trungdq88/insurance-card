@@ -18,7 +18,9 @@ public class ContractDao extends IncrementDao<ContractEntity, String> {
     public List<ContractEntity> getListContract() {
         EntityManager manager = factory.createEntityManager();
         Query query = manager.createQuery("SELECT co FROM ContractEntity co");
-        return query.getResultList();
+        List resultList = query.getResultList();
+        manager.close();
+        return resultList;
     }
 
     /**
@@ -32,9 +34,27 @@ public class ContractDao extends IncrementDao<ContractEntity, String> {
         EntityManager entity = factory.createEntityManager();
         String hql = "SELECT co FROM ContractEntity co ORDER BY co.contractCode DESC";
         Query query = entity.createQuery(hql);
-        return query.getResultList();
+        List resultList = query.getResultList();
+        entity.close();
+        return resultList;
     }
 
+    /**
+     * Get all contract with offset and count
+     * @param offset
+     * @param count
+     * @return
+     */
+    public List getAllContract(int offset, int count) {
+        EntityManager entity = factory.createEntityManager();
+        String hql = "SELECT co FROM ContractEntity co ORDER BY co.contractCode DESC";
+        Query query = entity.createQuery(hql);
+        query.setFirstResult(offset);
+        query.setMaxResults(count);
+        List resultList = query.getResultList();
+        entity.close();
+        return resultList;
+    }
     /**
      * This is the method which get all contract belongs to the customer.
      *
@@ -50,7 +70,9 @@ public class ContractDao extends IncrementDao<ContractEntity, String> {
                 "ORDER BY co.contractCode DESC";
         Query query = entity.createQuery(hql);
         query.setParameter("code", custCode);
-        return query.getResultList();
+        List resultList = query.getResultList();
+        entity.close();
+        return resultList;
     }
 
     @Override
