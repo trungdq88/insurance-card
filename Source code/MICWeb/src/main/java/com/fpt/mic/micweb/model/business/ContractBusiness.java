@@ -17,8 +17,13 @@ public class ContractBusiness {
         return contractTypeDao.getAllContractType();
     }
 
-    public List searchContract(String keyword) {
+    public Long searchContractCount(String keyword) {
         ContractDao contractDao = new ContractDao();
-        return contractDao.getContractByCodeOrCustomerName(keyword);
+        return contractDao.getContractByCodeOrCustomerNameCount(keyword);
+    }
+
+    public List searchContract(String keyword, int offset, int count) {
+        ContractDao contractDao = new ContractDao();
+        return contractDao.getContractByCodeOrCustomerName(keyword, offset, count);
     }
 }

@@ -24,19 +24,19 @@ public class ContractDao extends IncrementDao<ContractEntity, String> {
     }
 
     /**
-     * This is the method which get all contract.
+     * Return all contract count
      *
      * @return list of ContractEntity.
      * @author KhaNC
      * @version 1.0
      */
-    public List<ContractEntity> getAllContract() {
+    public Long getAllContractCount() {
         EntityManager entity = factory.createEntityManager();
-        String hql = "SELECT co FROM ContractEntity co ORDER BY co.contractCode DESC";
+        String hql = "SELECT COUNT(co) FROM ContractEntity co ORDER BY co.contractCode DESC";
         Query query = entity.createQuery(hql);
-        List resultList = query.getResultList();
+        Long result = (Long) query.getSingleResult();
         entity.close();
-        return resultList;
+        return result;
     }
 
     /**
@@ -121,7 +121,23 @@ public class ContractDao extends IncrementDao<ContractEntity, String> {
         return true;
     }
 
-    public List getContractByCodeOrCustomerName(String keyword) {
+    public Long getContractByCodeOrCustomerNameCount(String keyword) {
+
+        EntityManager entityManager = factory.createEntityManager();
+        Query query = entityManager.createQuery(
+                "SELECT COUNT(co) " +
+                        "FROM ContractEntity co " +
+                        "JOIN co.micCustomerByCustomerCode cu " +
+                        "WHERE co.customerCode = cu.customerCode " +
+                        "AND (co.contractCode LIKE :keyword OR cu.name LIKE :keyword) "
+        );
+        query.setParameter("keyword", "%" + keyword + "%");
+        Long resultList = (Long) query.getSingleResult();
+        entityManager.close();
+        return resultList;
+    }
+
+    public List getContractByCodeOrCustomerName(String keyword, int offset, int count) {
 
         EntityManager entityManager = factory.createEntityManager();
         Query query = entityManager.createQuery(
@@ -132,6 +148,8 @@ public class ContractDao extends IncrementDao<ContractEntity, String> {
                         "AND (co.contractCode LIKE :keyword OR cu.name LIKE :keyword) "
         );
         query.setParameter("keyword", "%" + keyword + "%");
+        query.setFirstResult(offset);
+        query.setMaxResults(count);
         List resultList = query.getResultList();
         entityManager.close();
         return resultList;

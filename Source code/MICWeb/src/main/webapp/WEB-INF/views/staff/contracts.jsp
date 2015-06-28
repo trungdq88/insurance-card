@@ -120,7 +120,7 @@
                         <c:forEach begin="1" end="${contractPaginator.pageSize}" var="pageNumber">
                             <li ${param.page == pageNumber ||
                             (pageNumber == 1 && empty param.page) ? "class='active'": ""} >
-                                <a href="?page=${pageNumber}">${pageNumber}</a>
+                                <a href="?action=${param.action}&keyword=${param.keyword}&page=${pageNumber}">${pageNumber}</a>
                             </li>
                         </c:forEach>
                         <li>

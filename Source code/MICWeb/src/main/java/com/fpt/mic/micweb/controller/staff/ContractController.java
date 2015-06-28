@@ -25,8 +25,6 @@ import java.util.List;
 @WebServlet(name = "ContractController", urlPatterns = {"/staff/contract"})
 public class ContractController extends AuthController {
 
-    final StaffBusiness staffBus = new StaffBusiness();
-
     @Override
     public List<String> getAllowedRoles() {
         return Collections.singletonList(UserDto.ROLE_STAFF);
@@ -37,19 +35,22 @@ public class ContractController extends AuthController {
     /**
      * Paginator for contract
      */
-    Paginator contractPaginator = new Paginator(new Paginator.IGetItems() {
-        @Override
-        public List getItems(int offset, int count) {
-            return staffBus.getAllContract(offset, count);
-        }
-    }, new Paginator.IGetItemSize() {
-        @Override
-        public int getItemSize() {
-            return staffBus.getAllContract().size();
-        }
-    });
+    Paginator contractPaginator = new Paginator();
 
     public ResponseObject getView(R r) {
+        final StaffBusiness staffBus = new StaffBusiness();
+        contractPaginator.setGetItemsCallback(new Paginator.IGetItems() {
+            @Override
+            public List getItems(int offset, int count) {
+                return staffBus.getAllContract(offset, count);
+            }
+        });
+        contractPaginator.setGetItemSizeCallback(new Paginator.IGetItemSize() {
+            @Override
+            public Long getItemSize() {
+                return staffBus.getAllContractCount();
+            }
+        });
         r.equest.setAttribute("contractPaginator", contractPaginator);
         return new JspPage("staff/contracts.jsp");
     }
@@ -60,9 +61,23 @@ public class ContractController extends AuthController {
             keyword = "";
         }
 
-        ContractBusiness contractBusiness = new ContractBusiness();
-        List result = contractBusiness.searchContract(keyword);
-        r.equest.setAttribute("INFO", result);
+        final ContractBusiness contractBusiness = new ContractBusiness();
+
+        final String finalKeyword = keyword;
+        contractPaginator.setGetItemsCallback(new Paginator.IGetItems() {
+            @Override
+            public List getItems(int offset, int count) {
+                return contractBusiness.searchContract(finalKeyword, offset, count);
+            }
+        });
+        contractPaginator.setGetItemSizeCallback(new Paginator.IGetItemSize() {
+            @Override
+            public Long getItemSize() {
+                return contractBusiness.searchContractCount(finalKeyword);
+            }
+        });
+
+        r.equest.setAttribute("contractPaginator", contractPaginator);
         return new JspPage("staff/contracts.jsp");
     }
 

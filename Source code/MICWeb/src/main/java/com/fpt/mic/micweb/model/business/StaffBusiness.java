@@ -62,10 +62,9 @@ public class StaffBusiness {
         return null;
     }
 
-    public List<ContractEntity> getAllContract() {
+    public Long getAllContractCount() {
         ContractDao contractDao = new ContractDao();
-        List<ContractEntity> listContract = contractDao.getAllContract();
-        return listContract;
+        return contractDao.getAllContractCount();
     }
 
 

@@ -22,9 +22,7 @@ public class Paginator {
      */
     IGetItemSize getItemSizeCallback;
 
-    public Paginator(IGetItems getItemsCallback, IGetItemSize getItemSizeCallback) {
-        this.getItemsCallback = getItemsCallback;
-        this.getItemSizeCallback = getItemSizeCallback;
+    public Paginator() {
     }
 
     /**
@@ -63,7 +61,7 @@ public class Paginator {
         return (int) Math.ceil(getItemSizeCallback.getItemSize() * 1.0 / itemPerPage);
     }
 
-    public int getItemSize() {
+    public Long getItemSize() {
         return getItemSizeCallback.getItemSize();
     }
 
@@ -99,6 +97,6 @@ public class Paginator {
         List getItems(int offset, int count);
     }
     public interface IGetItemSize {
-        int getItemSize();
+        Long getItemSize();
     }
 }
