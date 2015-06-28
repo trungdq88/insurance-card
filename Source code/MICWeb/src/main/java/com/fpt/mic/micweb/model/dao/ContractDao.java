@@ -12,7 +12,7 @@ import java.util.List;
 import javax.persistence.TypedQuery;
 
 /**
- * Created by TriPQMSE60746 on 06/04/2015.
+ * Created by TriPQM on 06/04/2015.
  */
 public class ContractDao extends IncrementDao<ContractEntity, String> {
     public List<ContractEntity> getListContract() {
@@ -107,17 +107,19 @@ public class ContractDao extends IncrementDao<ContractEntity, String> {
     }
 
     public boolean isExistByPlate(String plate) {
-        EntityManager entity = factory.createEntityManager();
+        EntityManager entityManager = factory.createEntityManager();
         String hql = "SELECT co FROM ContractEntity AS co " +
                 "WHERE co.plate = :plate AND co.status <> :cancelled AND co.status <> :expired AND co.status <> :pending";
-        Query query = entity.createQuery(hql);
+        Query query = entityManager.createQuery(hql);
         query.setParameter("plate", plate);
         query.setParameter("cancelled", Constants.ContractStatus.CANCELLED);
         query.setParameter("expired", Constants.ContractStatus.EXPIRED);
         query.setParameter("pending", Constants.ContractStatus.PENDING);
         if (query.getResultList().size() == 0) {
+            entityManager.close();
             return false;
         }
+        entityManager.close();
         return true;
     }
 
