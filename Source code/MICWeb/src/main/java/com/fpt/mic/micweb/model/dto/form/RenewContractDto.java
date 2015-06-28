@@ -1,16 +1,25 @@
 package com.fpt.mic.micweb.model.dto.form;
 
 import com.fpt.mic.micweb.model.dao.ContractDao;
+import com.fpt.mic.micweb.model.entity.ContractEntity;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
+import java.util.Date;
 
 /**
  * Created by Kha on 23/06/2015.
  */
 public class RenewContractDto {
+
+    private static final int MILLIS_IN_SECOND = 1000;
+    private static final int SECONDS_IN_MINUTE = 60;
+    private static final int MINUTES_IN_HOUR = 60;
+    private static final int HOURS_IN_DAY = 24;
+    private static final int DAYS_IN_YEAR = 366;
+
     @NotEmpty(message = "Mã hợp đồng không được để trống")
     // Mã hợp đồng không tồn tại: @see {@link isNotExisted}
     private String contractCode;
@@ -34,9 +43,21 @@ public class RenewContractDto {
     @AssertTrue(message = "Ngày bắt đầu gia hạn hợp đồng không đúng")
     private boolean isValidStartDate() {
         ContractDao contractDao = new ContractDao();
-        Timestamp contractExpiredDate = contractDao.read(contractCode).getExpiredDate();
-        if (startDate != null & contractExpiredDate != null) {
-            return startDate.equals(contractExpiredDate);
+        ContractEntity contractEntity = contractDao.read(contractCode);
+        if (startDate != null && contractEntity != null) {
+            if (contractEntity.getStatus().equals("Expired")) {
+                Timestamp currentTimestamp = new Timestamp(new Date().getTime());
+                System.out.println(startDate);
+                System.out.println(currentTimestamp);
+                return startDate.equals(currentTimestamp);
+            } else {
+                Timestamp contractExpiredDate = contractEntity.getExpiredDate();
+                if (contractExpiredDate != null) {
+                    return startDate.equals(contractExpiredDate);
+                } else {
+                    return false;
+                }
+            }
         } else {
             return false;
         }
@@ -56,15 +77,30 @@ public class RenewContractDto {
         if (startDate != null & expiredDate != null) {
             long contractTerm = expiredDate.getTime() - startDate.getTime();
 
-            final int MILLIS_IN_SECOND = 1000;
-            final int SECONDS_IN_MINUTE = 60;
-            final int MINUTES_IN_HOUR = 60;
-            final int HOURS_IN_DAY = 24;
-            final int DAYS_IN_YEAR = 366;
             final long MILLISECONDS_IN_YEAR =
                     (long) MILLIS_IN_SECOND * SECONDS_IN_MINUTE * MINUTES_IN_HOUR
                             * HOURS_IN_DAY * DAYS_IN_YEAR;
             if (contractTerm <= MILLISECONDS_IN_YEAR) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+
+    @AssertTrue(message = "Không thể gia hạn hợp đồng còn giá trị trên 2 tháng")
+    private boolean isValidCurrentTerm() {
+        ContractDao contractDao = new ContractDao();
+        ContractEntity contractEntity = contractDao.read(contractCode);
+        if (contractEntity != null) {
+            long currentTerm = contractEntity.getExpiredDate().getTime() - contractEntity.getStartDate().getTime();
+
+            long MILLISECONDS_IN_TWO_MONTHS =
+                    (long) MILLIS_IN_SECOND * SECONDS_IN_MINUTE * MINUTES_IN_HOUR
+                            * HOURS_IN_DAY * 60;
+            if (currentTerm < MILLISECONDS_IN_TWO_MONTHS) {
                 return true;
             } else {
                 return false;
