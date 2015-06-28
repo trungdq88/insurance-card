@@ -52,7 +52,7 @@
                 </li>
                 <li>
                     <a href="${pageContext.request.contextPath}/staff/customer">
-                        <i class="fa fa-users fa-fw"></i> Khách hàng <span class="badge">11</span>
+                        <i class="fa fa-users fa-fw"></i> Khách hàng
                     </a>
                 </li>
                 <li>
@@ -62,17 +62,17 @@
                 </li>
                 <li>
                     <a href="${pageContext.request.contextPath}/staff/card?action=newCardRequest">
-                        <i class="fa fa-exclamation fa-fw"></i> Yêu cầu thẻ mới <span class="badge">2</span>
+                        <i class="fa fa-exclamation fa-fw"></i> Yêu cầu thẻ mới
                     </a>
                 </li>
                 <li>
                     <a href="${pageContext.request.contextPath}/staff/contract">
-                        <i class="fa fa-file-text-o fa-fw"></i> Hợp đồng <span class="badge">21</span>
+                        <i class="fa fa-file-text-o fa-fw"></i> Hợp đồng
                     </a>
                 </li>
                 <li>
                     <a href="${pageContext.request.contextPath}/staff/compensation">
-                        <i class="fa fa-gavel fa-fw"></i> Bồi thường <span class="badge">7</span>
+                        <i class="fa fa-gavel fa-fw"></i> Bồi thường
                     </a>
                 </li>
                 <li>
