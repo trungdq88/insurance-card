@@ -802,11 +802,9 @@ label {
 }
 
 .image-container {
-
     height: 100%;
     background-position: center center;
     background-size: cover;
-    overflow-y: scroll;
 }
 
 .wizard-container {
@@ -814,7 +812,8 @@ label {
     padding-top: 100px;
     z-index: 3;
     margin-right: auto;
-    margin-left: auto
+    margin-left: auto;
+    margin-bottom: 30px;
 }
 
 .wizard-card {
