@@ -92,11 +92,26 @@ public class ContractDao extends IncrementDao<ContractEntity, String> {
         query.setParameter("plate", plate);
         query.setParameter("cancelled", Constants.ContractStatus.CANCELLED);
         query.setParameter("expired", Constants.ContractStatus.EXPIRED);
-        query.setParameter("pending",Constants.ContractStatus.PENDING);
+        query.setParameter("pending", Constants.ContractStatus.PENDING);
         if (query.getResultList().size() == 0) {
             return false;
         }
         return true;
     }
 
+    public List getContractByCodeOrCustomerName(String keyword) {
+
+        EntityManager entityManager = factory.createEntityManager();
+        Query query = entityManager.createQuery(
+                "SELECT co " +
+                        "FROM ContractEntity co " +
+                        "JOIN co.micCustomerByCustomerCode cu " +
+                        "WHERE co.customerCode = cu.customerCode " +
+                        "AND (co.contractCode LIKE :keyword OR cu.name LIKE :keyword) "
+        );
+        query.setParameter("keyword", "%" + keyword + "%");
+        List resultList = query.getResultList();
+        entityManager.close();
+        return resultList;
+    }
 }

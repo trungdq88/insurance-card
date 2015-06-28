@@ -35,10 +35,12 @@
                     <b>Có ${fn:length(info)} hợp đồng</b>
                 </div>
                 <div class="pull-right no-wrap">
-                    <input type="text" class="form-control long-text-box"
-                           placeholder="Tìm kiếm theo tên, mã hợp đồng"/>
-                    <input type="button" class="btn btn-default" value="Tìm kiếm"/>
-
+                    <form action="${pageContext.request.contextPath}/staff/contract" method="get">
+                        <input type="text" class="form-control long-text-box" name="keyword"
+                               placeholder="Tìm kiếm theo tên, mã hợp đồng" value="${param.keyword}"/>
+                        <input type="submit" class="btn btn-default" value="Tìm kiếm"/>
+                        <input type="hidden" name="action" value="search"/>
+                    </form>
                 </div>
                 <div class="clearfix"></div>
             </div>

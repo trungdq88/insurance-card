@@ -5,7 +5,9 @@ import com.fpt.mic.micweb.framework.R;
 import com.fpt.mic.micweb.framework.responses.JspPage;
 import com.fpt.mic.micweb.framework.responses.RedirectTo;
 import com.fpt.mic.micweb.framework.responses.ResponseObject;
+import com.fpt.mic.micweb.model.business.ContractBusiness;
 import com.fpt.mic.micweb.model.business.StaffBusiness;
+import com.fpt.mic.micweb.model.dto.ContractSearchResultDto;
 import com.fpt.mic.micweb.model.dto.UserDto;
 import com.fpt.mic.micweb.model.dto.form.CancelContractDto;
 import com.fpt.mic.micweb.model.dto.form.CompletePaymentDto;
@@ -34,6 +36,18 @@ public class ContractController extends AuthController {
         StaffBusiness staffBus = new StaffBusiness();
         List<ContractEntity> listContract = staffBus.getAllContract();
         r.equest.setAttribute("INFO", listContract);
+        return new JspPage("staff/contracts.jsp");
+    }
+
+    public ResponseObject getSearch(R r) {
+        String keyword = r.equest.getParameter("keyword");
+        if (keyword == null) {
+            keyword = "";
+        }
+
+        ContractBusiness contractBusiness = new ContractBusiness();
+        List result = contractBusiness.searchContract(keyword);
+        r.equest.setAttribute("INFO", result);
         return new JspPage("staff/contracts.jsp");
     }
 
