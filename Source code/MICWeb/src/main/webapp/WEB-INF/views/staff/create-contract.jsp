@@ -27,6 +27,7 @@
                 <p class="text-right"><b>Các ô có dấu * là bắt buộc</b></p>
 
                 <c:set var="listType" value="${requestScope.CONTRACTTYPE}"/>
+                <c:set var="customerCode" value="${param.code}"/>
 
                 <form action="${pageContext.request.contextPath}/staff/contract"
                       method="post" class="form-horizontal">
@@ -38,9 +39,16 @@
                             <label class="col-sm-4 control-label" for="customerCode">Mã khách hàng *</label>
 
                             <div class="col-sm-2">
-                                <input id="customerCode" name="contract:customerCode" class="form-control input-md"
-                                       type="text" required pattern="^KH([0-9A-Z]{4,8})$"
-                                       title="Ví dụ: KH49S4" value="${submitted.customerCode}">
+                                <c:if test="${not empty customerCode}">
+                                    <input id="customerCode" name="contract:customerCode" class="form-control input-md"
+                                           type="text" required pattern="^KH([0-9A-Z]{4,8})$"
+                                           title="Ví dụ: KH49S4" value="${customerCode}">
+                                </c:if>
+                                <c:if test="${empty customerCode}">
+                                    <input id="customerCode" name="contract:customerCode" class="form-control input-md"
+                                           type="text" required pattern="^KH([0-9A-Z]{4,8})$"
+                                           title="Ví dụ: KH49S4" value="${submitted.customerCode}">
+                                </c:if>
                             </div>
 
                             <div class="col-sm-2" data-toggle="modal" data-target="#select-customer-modal">
