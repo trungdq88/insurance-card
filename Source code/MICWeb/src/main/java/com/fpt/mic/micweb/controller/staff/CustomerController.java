@@ -1,6 +1,7 @@
 package com.fpt.mic.micweb.controller.staff;
 
 import com.fpt.mic.micweb.controller.common.AuthController;
+import com.fpt.mic.micweb.framework.Paginator;
 import com.fpt.mic.micweb.framework.R;
 import com.fpt.mic.micweb.framework.responses.JspPage;
 import com.fpt.mic.micweb.framework.responses.ResponseObject;
@@ -12,7 +13,6 @@ import com.fpt.mic.micweb.model.entity.ContractEntity;
 import com.fpt.mic.micweb.model.entity.CustomerEntity;
 
 import javax.servlet.annotation.WebServlet;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -27,10 +27,29 @@ public class CustomerController extends AuthController {
         return Collections.singletonList(UserDto.ROLE_STAFF);
     }
 
+
+    /**
+     * Paginator for contract
+     */
+    Paginator customerPaginator = new Paginator();
+
     public ResponseObject getView(R r) {
-        StaffBusiness staffBus = new StaffBusiness();
-        List<CustomerEntity> listCustomer = staffBus.getAllCustomer();
-        r.equest.setAttribute("INFO", listCustomer);
+        final StaffBusiness staffBus = new StaffBusiness();
+
+        customerPaginator.setGetItemsCallback(new Paginator.IGetItems() {
+            @Override
+            public List getItems(int offset, int count) {
+                return staffBus.getAllCustomer(offset, count);
+            }
+        });
+        customerPaginator.setGetItemSizeCallback(new Paginator.IGetItemSize() {
+            @Override
+            public Long getItemSize() {
+                return staffBus.getAllCustomerCount();
+            }
+        });
+
+        r.equest.setAttribute("customerPaginator", customerPaginator);
         return new JspPage("staff/customers.jsp");
     }
 
@@ -40,10 +59,23 @@ public class CustomerController extends AuthController {
             keyword = "";
         }
 
-        StaffBusiness staffBusiness = new StaffBusiness();
-        List listCustomer = staffBusiness.searchCustomerByNameOrCode(keyword);
+        final StaffBusiness staffBus = new StaffBusiness();
 
-        r.equest.setAttribute("INFO", listCustomer);
+        final String finalKeyword = keyword;
+        customerPaginator.setGetItemsCallback(new Paginator.IGetItems() {
+            @Override
+            public List getItems(int offset, int count) {
+                return staffBus.searchCustomerByNameOrCode(finalKeyword, offset, count);
+            }
+        });
+        customerPaginator.setGetItemSizeCallback(new Paginator.IGetItemSize() {
+            @Override
+            public Long getItemSize() {
+                return staffBus.searchCustomerByNameOrCodeCount(finalKeyword);
+            }
+        });
+
+        r.equest.setAttribute("customerPaginator", customerPaginator);
         return new JspPage("staff/customers.jsp");
     }
 
