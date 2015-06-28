@@ -120,7 +120,7 @@
         var redirect = getQueryVariable('redirect');
         if ($redirect.val() == "" && redirect) {
             $redirect.val(redirect);
-            if (redirect == "%2Fstaff" || redirect == "%2Fcustomer") {
+            if (redirect.substr(0, 8) == "%2Fstaff" || redirect.substr(0, 11) == "%2Fcustomer") {
                 $('#selectRole').val(redirect.substr(3));
             }
         }
