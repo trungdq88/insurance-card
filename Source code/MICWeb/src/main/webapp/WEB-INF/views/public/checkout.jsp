@@ -145,4 +145,9 @@
     };
 </script>
 <script src="//www.paypalobjects.com/api/checkout.js" async></script>
+<script>
+    $(function () {
+        $('.image-container').height('auto');
+    });
+</script>
 <%@ include file="_shared/footer.jsp" %>
