@@ -12,15 +12,9 @@ import java.util.List;
 import javax.persistence.TypedQuery;
 
 /**
- * Created by TriPQMSE60746 on 06/04/2015.
+ * Created by TriPQM on 06/04/2015.
  */
 public class ContractDao extends IncrementDao<ContractEntity, String> {
-    public List<ContractEntity> getListContract() {
-        EntityManager manager = factory.createEntityManager();
-        Query query = manager.createQuery("SELECT co FROM ContractEntity co");
-        return query.getResultList();
-    }
-
     /**
      * This is the method which get all contract.
      *

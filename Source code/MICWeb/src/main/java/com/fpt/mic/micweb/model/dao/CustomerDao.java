@@ -47,13 +47,15 @@ public class CustomerDao extends IncrementDao<CustomerEntity, String> {
     }
 
     public boolean isExistByEmail(String email) {
-        EntityManager entity = factory.createEntityManager();
+        EntityManager entityManager = factory.createEntityManager();
         String hql = "SELECT c FROM CustomerEntity c WHERE c.email= :email";
-        Query query = entity.createQuery(hql);
+        Query query = entityManager.createQuery(hql);
         query.setParameter("email", email);
         if (query.getResultList().size() == 0) {
+            entityManager.close();
             return false;
         }
+        entityManager.close();
         return true;
     }
 }
