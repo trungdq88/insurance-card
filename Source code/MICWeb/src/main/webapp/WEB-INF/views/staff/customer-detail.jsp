@@ -32,7 +32,7 @@
                             </div>
                         </legend>
 
-                        <!-- Customer code & Phone -->
+                        <!-- Customer code -->
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Mã khách hàng</label>
 
@@ -41,20 +41,13 @@
                                     <b>${customer.customerCode}</b>
                                 </div>
                             </div>
-                            <label class="col-sm-2 control-label">Số điện thoại</label>
-
-                            <div class="col-sm-3">
-                                <div class="text-value">
-                                    ${customer.phone}
-                                </div>
-                            </div>
                         </div>
 
                         <!-- Name -->
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Tên khách hàng</label>
 
-                            <div class="col-sm-4">
+                            <div class="col-sm-8">
                                 <div class="text-value">
                                     ${customer.name}
                                 </div>
@@ -65,7 +58,7 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Địa chỉ</label>
 
-                            <div class="col-sm-4">
+                            <div class="col-sm-8">
                                 <div class="text-value">
                                     ${customer.address}
                                 </div>
@@ -83,11 +76,19 @@
                             </div>
                         </div>
 
-                        <!-- Personal ID -->
+                        <!-- Phone & Personal ID -->
                         <div class="form-group">
+                            <label class="col-sm-3 control-label">Số điện thoại</label>
+
+                            <div class="col-sm-2">
+                                <div class="text-value">
+                                    ${customer.phone}
+                                </div>
+                            </div>
+
                             <label class="col-sm-3 control-label">Số CMND / Hộ chiếu</label>
 
-                            <div class="col-sm-4">
+                            <div class="col-sm-3">
                                 <div class="text-value">
                                     ${customer.personalId}
                                 </div>
@@ -171,7 +172,7 @@
                         <legend>
                             Hợp đồng bảo hiểm
                             <div class="pull-right" style="margin-top: -5px;">
-                                <a href="${pageContext.request.contextPath}/staff/contract?action=create"
+                                <a href="${pageContext.request.contextPath}/staff/contract?action=create&code=${customer.customerCode}"
                                    class="btn btn-xs btn-success">
                                     <i class="fa fa-plus-square"></i>
                                     Hợp đồng mới
@@ -186,8 +187,6 @@
                                     <th>#</th>
                                     <th>Mã hợp đồng</th>
                                     <th>Loại hợp đồng</th>
-                                    <%--<th>Ngày bắt đầu</th>
-                                    <th>Ngày kết thúc</th>--%>
                                     <th>Trạng thái</th>
                                 </tr>
                                 </thead>
@@ -201,12 +200,6 @@
                                             </a>
                                         </td>
                                         <td>${contract.micContractTypeByContractTypeId.name}</td>
-                                            <%--<td>
-                                                <fmt:formatDate value="${contract.startDate}" pattern="dd/MM/yyyy"/>
-                                            </td>
-                                            <td>
-                                                <fmt:formatDate value="${contract.expiredDate}" pattern="dd/MM/yyyy"/>
-                                            </td>--%>
                                         <td>
                                             <c:set var="status" value="${contract.status}"/>
                                             <c:choose>

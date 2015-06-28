@@ -1,10 +1,12 @@
 package com.fpt.mic.micweb.controller.staff;
 
 import com.fpt.mic.micweb.controller.common.AuthController;
+import com.fpt.mic.micweb.framework.Paginator;
 import com.fpt.mic.micweb.framework.R;
 import com.fpt.mic.micweb.framework.responses.JspPage;
 import com.fpt.mic.micweb.framework.responses.RedirectTo;
 import com.fpt.mic.micweb.framework.responses.ResponseObject;
+import com.fpt.mic.micweb.model.business.ContractBusiness;
 import com.fpt.mic.micweb.model.business.StaffBusiness;
 import com.fpt.mic.micweb.model.dto.UserDto;
 import com.fpt.mic.micweb.model.dto.form.CancelContractDto;
@@ -22,6 +24,10 @@ import java.util.List;
  */
 @WebServlet(name = "ContractController", urlPatterns = {"/staff/contract"})
 public class ContractController extends AuthController {
+    /**
+     * Paginator for contract
+     */
+    Paginator contractPaginator = new Paginator();
 
     @Override
     public List<String> getAllowedRoles() {
@@ -30,10 +36,48 @@ public class ContractController extends AuthController {
 
     private static String msg = "";
 
+
     public ResponseObject getView(R r) {
-        StaffBusiness staffBus = new StaffBusiness();
-        List<ContractEntity> listContract = staffBus.getAllContract();
-        r.equest.setAttribute("INFO", listContract);
+        final StaffBusiness staffBus = new StaffBusiness();
+        contractPaginator.setGetItemsCallback(new Paginator.IGetItems() {
+            @Override
+            public List getItems(int offset, int count) {
+                return staffBus.getAllContract(offset, count);
+            }
+        });
+        contractPaginator.setGetItemSizeCallback(new Paginator.IGetItemSize() {
+            @Override
+            public Long getItemSize() {
+                return staffBus.getAllContractCount();
+            }
+        });
+        r.equest.setAttribute("contractPaginator", contractPaginator);
+        return new JspPage("staff/contracts.jsp");
+    }
+
+    public ResponseObject getSearch(R r) {
+        String keyword = r.equest.getParameter("keyword");
+        if (keyword == null) {
+            keyword = "";
+        }
+
+        final ContractBusiness contractBusiness = new ContractBusiness();
+
+        final String finalKeyword = keyword;
+        contractPaginator.setGetItemsCallback(new Paginator.IGetItems() {
+            @Override
+            public List getItems(int offset, int count) {
+                return contractBusiness.searchContract(finalKeyword, offset, count);
+            }
+        });
+        contractPaginator.setGetItemSizeCallback(new Paginator.IGetItemSize() {
+            @Override
+            public Long getItemSize() {
+                return contractBusiness.searchContractCount(finalKeyword);
+            }
+        });
+
+        r.equest.setAttribute("contractPaginator", contractPaginator);
         return new JspPage("staff/contracts.jsp");
     }
 

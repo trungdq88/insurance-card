@@ -1,10 +1,10 @@
 package com.fpt.mic.micweb.controller.customer;
 
 import com.fpt.mic.micweb.controller.common.AuthController;
+import com.fpt.mic.micweb.framework.Paginator;
 import com.fpt.mic.micweb.framework.responses.RedirectTo;
 import com.fpt.mic.micweb.model.business.CustomerBusiness;
 import com.fpt.mic.micweb.model.dto.CheckoutRequestDto;
-import com.fpt.mic.micweb.model.dto.PayPal;
 import com.fpt.mic.micweb.model.dto.UserDto;
 import com.fpt.mic.micweb.model.dto.form.CancelContractDto;
 import com.fpt.mic.micweb.model.entity.ContractEntity;
@@ -13,10 +13,7 @@ import com.fpt.mic.micweb.framework.R;
 import com.fpt.mic.micweb.framework.responses.ResponseObject;
 import com.fpt.mic.micweb.model.entity.CustomerEntity;
 import com.fpt.mic.micweb.utils.Constants;
-import com.fpt.mic.micweb.utils.CurrencyUtils;
 import com.fpt.mic.micweb.utils.DateUtils;
-import com.fpt.mic.micweb.utils.NumberUtils;
-import org.apache.commons.lang3.StringEscapeUtils;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpSession;
@@ -28,6 +25,12 @@ import java.util.*;
  */
 @WebServlet(name = "CustomerContractController", urlPatterns = "/customer/contract")
 public class ContractController extends AuthController {
+
+    /**
+     * Paginator for contract
+     */
+    Paginator contractPaginator = new Paginator();
+
     @Override
     public List<String> getAllowedRoles() {
         return Collections.singletonList(UserDto.ROLE_CUSTOMER);
@@ -38,10 +41,51 @@ public class ContractController extends AuthController {
     }
 
     public ResponseObject getView(R r) {
-        CustomerBusiness customerBusiness = new CustomerBusiness();
-        String customerCode = ((CustomerEntity) getLoggedInUser()).getCustomerCode();
-        List<ContractEntity> listContract = customerBusiness.getAllContractByCustomer(customerCode);
-        r.equest.setAttribute("listContract", listContract);
+        final CustomerBusiness customerBusiness = new CustomerBusiness();
+        final String customerCode = ((CustomerEntity) getLoggedInUser()).getCustomerCode();
+
+        contractPaginator.setGetItemsCallback(new Paginator.IGetItems() {
+            @Override
+            public List getItems(int offset, int count) {
+                return customerBusiness.getAllContractByCustomer(customerCode, offset, count);
+            }
+        });
+        contractPaginator.setGetItemSizeCallback(new Paginator.IGetItemSize() {
+            @Override
+            public Long getItemSize() {
+                return customerBusiness.getAllContractByCustomerCount(customerCode);
+            }
+        });
+
+        r.equest.setAttribute("contractPaginator", contractPaginator);
+        return new JspPage("customer/contract.jsp");
+    }
+
+    public ResponseObject getSearch(R r) {
+        String keyword = r.equest.getParameter("keyword");
+        if (keyword == null) {
+            keyword = "";
+        }
+
+        final String customerCode = ((CustomerEntity) getLoggedInUser()).getCustomerCode();
+
+        final CustomerBusiness customerBusiness = new CustomerBusiness();
+
+        final String finalKeyword = keyword;
+        contractPaginator.setGetItemsCallback(new Paginator.IGetItems() {
+            @Override
+            public List getItems(int offset, int count) {
+                return customerBusiness.searchCustomerContractByCode(customerCode, finalKeyword, offset, count);
+            }
+        });
+        contractPaginator.setGetItemSizeCallback(new Paginator.IGetItemSize() {
+            @Override
+            public Long getItemSize() {
+                return customerBusiness.searchCustomerContractByCodeCount(customerCode, finalKeyword);
+            }
+        });
+
+        r.equest.setAttribute("contractPaginator", contractPaginator);
         return new JspPage("customer/contract.jsp");
     }
 

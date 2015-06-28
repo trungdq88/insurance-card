@@ -15,36 +15,79 @@ import javax.persistence.TypedQuery;
  * Created by TriPQM on 06/04/2015.
  */
 public class ContractDao extends IncrementDao<ContractEntity, String> {
+    public List<ContractEntity> getListContract() {
+        EntityManager manager = factory.createEntityManager();
+        Query query = manager.createQuery("SELECT co FROM ContractEntity co");
+        List resultList = query.getResultList();
+        manager.close();
+        return resultList;
+    }
+
     /**
-     * This is the method which get all contract.
+     * Return all contract count
      *
      * @return list of ContractEntity.
      * @author KhaNC
      * @version 1.0
      */
-    public List<ContractEntity> getAllContract() {
+    public Long getAllContractCount() {
+        EntityManager entity = factory.createEntityManager();
+        String hql = "SELECT COUNT(co) FROM ContractEntity co ORDER BY co.contractCode DESC";
+        Query query = entity.createQuery(hql);
+        Long result = (Long) query.getSingleResult();
+        entity.close();
+        return result;
+    }
+
+    /**
+     * Get all contract with offset and count
+     * @param offset
+     * @param count
+     * @return
+     */
+    public List getAllContract(int offset, int count) {
         EntityManager entity = factory.createEntityManager();
         String hql = "SELECT co FROM ContractEntity co ORDER BY co.contractCode DESC";
         Query query = entity.createQuery(hql);
-        return query.getResultList();
+        query.setFirstResult(offset);
+        query.setMaxResults(count);
+        List resultList = query.getResultList();
+        entity.close();
+        return resultList;
     }
-
     /**
      * This is the method which get all contract belongs to the customer.
      *
      * @param custCode This is stand for customer's code.
-     * @return list of ContractEntity.
+     * @param offset
+     *@param count @return list of ContractEntity.
      * @author KhaNC
      * @version 1.0
      */
-    public List<ContractEntity> getContractByCustomerCode(String custCode) {
+    public List getContractByCustomerCode(String custCode, int offset, int count) {
         EntityManager entity = factory.createEntityManager();
         String hql = "SELECT co FROM ContractEntity AS co " +
                 "WHERE co.customerCode = :code " +
                 "ORDER BY co.contractCode DESC";
         Query query = entity.createQuery(hql);
         query.setParameter("code", custCode);
-        return query.getResultList();
+        query.setFirstResult(offset);
+        query.setMaxResults(count);
+        List resultList = query.getResultList();
+        entity.close();
+        return resultList;
+    }
+
+    public Long getContractByCustomerCodeCount(String customerCode) {
+        EntityManager entity = factory.createEntityManager();
+        String hql = "SELECT COUNT(co) FROM ContractEntity AS co " +
+                "WHERE co.customerCode = :code " +
+                "ORDER BY co.contractCode DESC";
+        Query query = entity.createQuery(hql);
+        query.setParameter("code", customerCode);
+        Long result = (Long) query.getSingleResult();
+        entity.close();
+        return result;
     }
 
     @Override
@@ -86,7 +129,7 @@ public class ContractDao extends IncrementDao<ContractEntity, String> {
         query.setParameter("plate", plate);
         query.setParameter("cancelled", Constants.ContractStatus.CANCELLED);
         query.setParameter("expired", Constants.ContractStatus.EXPIRED);
-        query.setParameter("pending",Constants.ContractStatus.PENDING);
+        query.setParameter("pending", Constants.ContractStatus.PENDING);
         if (query.getResultList().size() == 0) {
             entityManager.close();
             return false;
@@ -95,4 +138,70 @@ public class ContractDao extends IncrementDao<ContractEntity, String> {
         return true;
     }
 
+    public Long getContractByCodeOrCustomerNameCount(String keyword) {
+
+        EntityManager entityManager = factory.createEntityManager();
+        Query query = entityManager.createQuery(
+                "SELECT COUNT(co) " +
+                        "FROM ContractEntity co " +
+                        "JOIN co.micCustomerByCustomerCode cu " +
+                        "WHERE co.customerCode = cu.customerCode " +
+                        "AND (co.contractCode LIKE :keyword OR cu.name LIKE :keyword) "
+        );
+        query.setParameter("keyword", "%" + keyword + "%");
+        Long resultList = (Long) query.getSingleResult();
+        entityManager.close();
+        return resultList;
+    }
+
+    public List getContractByCodeOrCustomerName(String keyword, int offset, int count) {
+
+        EntityManager entityManager = factory.createEntityManager();
+        Query query = entityManager.createQuery(
+                "SELECT co " +
+                        "FROM ContractEntity co " +
+                        "JOIN co.micCustomerByCustomerCode cu " +
+                        "WHERE co.customerCode = cu.customerCode " +
+                        "AND (co.contractCode LIKE :keyword OR cu.name LIKE :keyword) " +
+                        " ORDER BY co.contractCode DESC"
+        );
+        query.setParameter("keyword", "%" + keyword + "%");
+        query.setFirstResult(offset);
+        query.setMaxResults(count);
+        List resultList = query.getResultList();
+        entityManager.close();
+        return resultList;
+    }
+
+    public List getCustomerContractByCode(String customerCode, String keyword, int offset, int count) {
+        EntityManager entityManager = factory.createEntityManager();
+        Query query = entityManager.createQuery(
+                "SELECT co " +
+                        "FROM ContractEntity co " +
+                        "WHERE co.customerCode = :customerCode " +
+                        "AND co.contractCode LIKE :keyword"
+        );
+        query.setParameter("customerCode", customerCode);
+        query.setParameter("keyword", "%" + keyword + "%");
+        query.setFirstResult(offset);
+        query.setMaxResults(count);
+        List resultList = query.getResultList();
+        entityManager.close();
+        return resultList;
+    }
+
+    public Long getCustomerContractByCodeCount(String customerCode, String keyword) {
+        EntityManager entityManager = factory.createEntityManager();
+        Query query = entityManager.createQuery(
+                "SELECT COUNT(co) " +
+                        "FROM ContractEntity co " +
+                        "WHERE co.customerCode = :customerCode " +
+                        "AND co.contractCode LIKE :keyword"
+        );
+        query.setParameter("customerCode", customerCode);
+        query.setParameter("keyword", "%" + keyword + "%");
+        Long result = (Long) query.getSingleResult();
+        entityManager.close();
+        return result;
+    }
 }

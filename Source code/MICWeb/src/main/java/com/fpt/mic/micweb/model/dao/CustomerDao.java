@@ -19,12 +19,27 @@ public class CustomerDao extends IncrementDao<CustomerEntity, String> {
      * @return list This is result of the query.
      * @author KhaNC
      * @version 1.0
+     * @param offset
+     * @param count
      */
-    public List<CustomerEntity> getAllCustomer() {
+    public List getAllCustomer(int offset, int count) {
         EntityManager entity = factory.createEntityManager();
         String hql = "SELECT c FROM CustomerEntity c ORDER BY c.customerCode DESC";
         Query query = entity.createQuery(hql);
-        return query.getResultList();
+        query.setFirstResult(offset);
+        query.setMaxResults(count);
+        List resultList = query.getResultList();
+        entity.close();
+        return resultList;
+    }
+
+    public Long getAllCustomerCount() {
+        EntityManager entity = factory.createEntityManager();
+        String hql = "SELECT COUNT(c) FROM CustomerEntity c ORDER BY c.customerCode DESC";
+        Query query = entity.createQuery(hql);
+        Long singleResult = (Long) query.getSingleResult();
+        entity.close();
+        return singleResult;
     }
 
     @Override
@@ -57,5 +72,35 @@ public class CustomerDao extends IncrementDao<CustomerEntity, String> {
         }
         entityManager.close();
         return true;
+    }
+
+    /**
+     * Return customers with name or code that contains keyword
+     * @param keyword
+     * @param offset
+     * @param count
+     */
+    public List searchCustomerByNameOrCode(String keyword, int offset, int count) {
+        EntityManager entity = factory.createEntityManager();
+        Query query = entity.createQuery(
+                "SELECT c FROM CustomerEntity c WHERE c.customerCode LIKE :keyword " +
+                        "OR c.name LIKE :keyword");
+        query.setParameter("keyword", "%" + keyword + "%");
+        query.setFirstResult(offset);
+        query.setMaxResults(count);
+        List resultList = query.getResultList();
+        entity.close();
+        return resultList;
+    }
+
+    public Long searchCustomerByNameOrCodeCount(String keyword) {
+        EntityManager entity = factory.createEntityManager();
+        Query query = entity.createQuery(
+                "SELECT COUNT(c) FROM CustomerEntity c WHERE c.customerCode LIKE :keyword " +
+                        "OR c.name LIKE :keyword");
+        query.setParameter("keyword", "%" + keyword + "%");
+        Long result = (Long) query.getSingleResult();
+        entity.close();
+        return result;
     }
 }
