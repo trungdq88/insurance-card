@@ -106,7 +106,10 @@ public class RegisterBusiness {
 
         // set start date
         Timestamp currentDate = new Timestamp(new Date().getTime());
-        contractEntity.setStartDate(currentDate);
+        if (currentDate.after(contractEntity.getStartDate()))
+        {
+            contractEntity.setStartDate(currentDate);
+        }
         // set expired date = start_date + 1 year
         contractEntity.setExpiredDate(DateUtils.addOneYear(contractEntity.getStartDate()));
         contractEntity.setStatus(Constants.ContractStatus.NO_CARD);
