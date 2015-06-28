@@ -27,11 +27,11 @@
 
         <div class="panel panel-default">
 
-            <c:set var="info" value="${requestScope.INFO}"/>
+            <c:set var="info" value="${customerPaginator.getItemsOnCurrentPage(param.page)}"/>
 
             <div class="panel-heading">
                 <div class="pull-left center-dropdown-button">
-                    <b>Có ${fn:length(info)} khách hàng</b>
+                    <b>Có ${customerPaginator.itemSize} khách hàng (${customerPaginator.pageSize} trang)</b>
                 </div>
                 <div class="pull-right no-wrap">
                     <form action="${pageContext.request.contextPath}/staff/customer" method="get">
@@ -60,7 +60,7 @@
                         <tbody>
                         <c:forEach var="customer" items="${info}" varStatus="counter">
                             <tr>
-                                <td>${counter.count}</td>
+                                <td>${(customerPaginator.getCurrentPage(param.page) - 1) * customerPaginator.itemPerPage + counter.count}</td>
                                 <td>
                                     <a href="${pageContext.request.contextPath}/staff/customer?action=detail&code=${customer.customerCode}">
                                             ${customer.customerCode}
@@ -79,18 +79,19 @@
                 <nav class="text-right">
                     <ul class="pagination">
                         <li>
-                            <a href="#" aria-label="Previous">
-                                <span aria-hidden="true">&laquo;</span>
+                            <a href="?action=${param.action}&keyword=${param.keyword}&page=1" aria-label="Previous">
+                                <span aria-hidden="true">Đầu</span>
                             </a>
                         </li>
-                        <li class="active"><a href="#">1</a></li>
-                        <li><a href="#">2</a></li>
-                        <li><a href="#">3</a></li>
-                        <li><a href="#">4</a></li>
-                        <li><a href="#">5</a></li>
+                        <c:forEach begin="1" end="${customerPaginator.pageSize}" var="pageNumber">
+                            <li ${param.page == pageNumber ||
+                                    (pageNumber == 1 && empty param.page) ? "class='active'": ""} >
+                                <a href="?action=${param.action}&keyword=${param.keyword}&page=${pageNumber}">${pageNumber}</a>
+                            </li>
+                        </c:forEach>
                         <li>
-                            <a href="#" aria-label="Next">
-                                <span aria-hidden="true">&raquo;</span>
+                            <a href="?action=${param.action}&keyword=${param.keyword}&page=${customerPaginator.pageSize}" aria-label="Next">
+                                <span aria-hidden="true">Cuối</span>
                             </a>
                         </li>
                     </ul>

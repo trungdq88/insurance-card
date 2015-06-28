@@ -24,6 +24,10 @@ import java.util.List;
  */
 @WebServlet(name = "ContractController", urlPatterns = {"/staff/contract"})
 public class ContractController extends AuthController {
+    /**
+     * Paginator for contract
+     */
+    Paginator contractPaginator = new Paginator();
 
     @Override
     public List<String> getAllowedRoles() {
@@ -32,10 +36,6 @@ public class ContractController extends AuthController {
 
     private static String msg = "";
 
-    /**
-     * Paginator for contract
-     */
-    Paginator contractPaginator = new Paginator();
 
     public ResponseObject getView(R r) {
         final StaffBusiness staffBus = new StaffBusiness();

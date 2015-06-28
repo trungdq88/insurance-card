@@ -28,12 +28,15 @@ import java.lang.Thread;
  */
 public class CustomerBusiness {
     //get all contract belong to customer
-    public List<ContractEntity> getAllContractByCustomer(String customerCode) {
+    public List getAllContractByCustomer(String customerCode, int offset, int count) {
         ContractDao contractDao = new ContractDao();
-        List<ContractEntity> listContract = contractDao.getContractByCustomerCode(customerCode);
-        return listContract;
+        return contractDao.getContractByCustomerCode(customerCode, offset, count);
     }
 
+    public Long getAllContractByCustomerCount(String customerCode) {
+        ContractDao contractDao = new ContractDao();
+        return contractDao.getContractByCustomerCodeCount(customerCode);
+    }
     // get contract detail
     public ContractEntity getContractDetail(String code) {
         ContractDao contractDao = new ContractDao();
@@ -162,8 +165,13 @@ public class CustomerBusiness {
         return result;
     }
 
-    public List searchCustomerContractByCode(String customerCode, String keyword) {
+    public List searchCustomerContractByCode(String customerCode, String keyword, int offset, int count) {
         ContractDao contractDao = new ContractDao();
-        return contractDao.getCustomerContractByCode(customerCode, keyword);
+        return contractDao.getCustomerContractByCode(customerCode, keyword, offset, count);
+    }
+
+    public Long searchCustomerContractByCodeCount(String customerCode, String keyword) {
+        ContractDao contractDao = new ContractDao();
+        return contractDao.getCustomerContractByCodeCount(customerCode, keyword);
     }
 }

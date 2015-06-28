@@ -113,7 +113,7 @@
                 <nav class="text-right">
                     <ul class="pagination">
                         <li>
-                            <a href="?page=1" aria-label="Previous">
+                            <a href="?action=${param.action}&keyword=${param.keyword}&page=1" aria-label="Previous">
                                 <span aria-hidden="true">Đầu</span>
                             </a>
                         </li>
@@ -124,7 +124,7 @@
                             </li>
                         </c:forEach>
                         <li>
-                            <a href="?page=${contractPaginator.pageSize}" aria-label="Next">
+                            <a href="?action=${param.action}&keyword=${param.keyword}&page=${contractPaginator.pageSize}" aria-label="Next">
                                 <span aria-hidden="true">Cuối</span>
                             </a>
                         </li>

@@ -17,10 +17,9 @@ import java.util.List;
  */
 public class StaffBusiness {
 
-    public List<CustomerEntity> getAllCustomer() {
+    public List getAllCustomer(int offset, int count) {
         CustomerDao customerDao = new CustomerDao();
-        List<CustomerEntity> listCustomer = customerDao.getAllCustomer();
-        return listCustomer;
+        return customerDao.getAllCustomer(offset, count);
     }
 
     public CustomerEntity getCustomerDetail(String customerCode) {
@@ -73,10 +72,9 @@ public class StaffBusiness {
         return contractDao.getAllContract(offset, count);
     }
 
-    public List<ContractEntity> getContractByCustomerCode(String customerCode) {
+    public List getContractByCustomerCode(String customerCode, int offset, int count) {
         ContractDao contractDao = new ContractDao();
-        List<ContractEntity> listCustomerContract = contractDao.getContractByCustomerCode(customerCode);
-        return listCustomerContract;
+        return contractDao.getContractByCustomerCode(customerCode, offset, count);
     }
 
     public ContractEntity getContractDetail(String contractCode) {
@@ -237,8 +235,18 @@ public class StaffBusiness {
         return false;
     }
 
-    public List searchCustomerByNameOrCode(String keyword) {
+    public List searchCustomerByNameOrCode(String keyword, int offset, int count) {
         CustomerDao customerDao = new CustomerDao();
-        return customerDao.searchCustomerByNameOrCode(keyword);
+        return customerDao.searchCustomerByNameOrCode(keyword, offset, count);
+    }
+
+    public Long getAllCustomerCount() {
+        CustomerDao customerDao = new CustomerDao();
+        return customerDao.getAllCustomerCount();
+    }
+
+    public Long searchCustomerByNameOrCodeCount(String keyword) {
+        CustomerDao customerDao = new CustomerDao();
+        return customerDao.searchCustomerByNameOrCodeCount(keyword);
     }
 }

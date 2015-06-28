@@ -1,7 +1,9 @@
 package com.fpt.mic.micweb.model.dto.form;
 
 import com.fpt.mic.micweb.model.dao.ContractDao;
+import com.fpt.mic.micweb.model.dao.ContractTypeDao;
 import com.fpt.mic.micweb.model.dao.CustomerDao;
+import com.fpt.mic.micweb.model.entity.ContractTypeEntity;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.hibernate.validator.constraints.Range;
 
@@ -127,6 +129,19 @@ public class PublicRegisterFormDto {
     public boolean isValidEmail(){
         CustomerDao customerDao = new CustomerDao();
         return !customerDao.isExistByEmail(email);
+    }
+
+    @AssertTrue(message = "Phí bảo hiểm không đúng")
+    public boolean isValidContactFee(){
+        try {
+            ContractTypeDao contractTypeDao = new ContractTypeDao();
+            ContractTypeEntity contractTypeEntity = contractTypeDao.read(contractType);
+            if (contractFee == contractTypeEntity.getPricePerYear())
+                return true;
+        } catch (NullPointerException e) {
+            return false;
+        }
+        return false;
     }
 
     public PublicRegisterFormDto() {
