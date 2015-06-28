@@ -29,6 +29,8 @@ import java.util.TimerTask;
  * Created by PhucNguyen on 24/06/2015.
  */
 public class ScheduleBusiness {
+
+    /*
     //    Timer timer = new Timer();
     Thread t = new Thread() {
         @Override
@@ -70,6 +72,7 @@ public class ScheduleBusiness {
     public void startTask() {
         t.start();
     }
+    */
 
 
 }
