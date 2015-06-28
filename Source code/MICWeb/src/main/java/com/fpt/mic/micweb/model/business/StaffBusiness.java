@@ -231,4 +231,9 @@ public class StaffBusiness {
         }
         return false;
     }
+
+    public List searchCustomerByNameOrCode(String keyword) {
+        CustomerDao customerDao = new CustomerDao();
+        return customerDao.searchCustomerByNameOrCode(keyword);
+    }
 }

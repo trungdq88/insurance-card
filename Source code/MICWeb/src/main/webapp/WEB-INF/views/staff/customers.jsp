@@ -34,9 +34,12 @@
                     <b>Có ${fn:length(info)} khách hàng</b>
                 </div>
                 <div class="pull-right no-wrap">
-                    <input type="text" class="form-control long-text-box"
-                           placeholder="Tìm kiếm theo tên, mã hợp đồng, mã thẻ"/>
-                    <input type="button" class="btn btn-default" value="Tìm kiếm"/>
+                    <form action="${pageContext.request.contextPath}/staff/customer" method="get">
+                        <input type="text" class="form-control long-text-box" name="keyword"
+                               placeholder="Tìm kiếm theo tên, mã hợp đồng, mã thẻ" value="${param.keyword}"/>
+                        <input type="submit" class="btn btn-default" value="Tìm kiếm"/>
+                        <input type="hidden" name="action" value="search"/>
+                    </form>
                 </div>
                 <div class="clearfix"></div>
             </div>
@@ -60,7 +63,7 @@
                                 <td>${counter.count}</td>
                                 <td>
                                     <a href="${pageContext.request.contextPath}/staff/customer?action=detail&code=${customer.customerCode}">
-                                        ${customer.customerCode}
+                                            ${customer.customerCode}
                                     </a>
                                 </td>
                                 <td>${customer.name}</td>
