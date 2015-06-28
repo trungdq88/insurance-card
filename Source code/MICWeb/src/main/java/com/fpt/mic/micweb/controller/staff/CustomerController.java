@@ -22,16 +22,15 @@ import java.util.List;
  */
 @WebServlet(name = "CustomerController", urlPatterns = {"/staff/customer"})
 public class CustomerController extends AuthController {
+    /**
+     * Paginator for customer
+     */
+    Paginator customerPaginator = new Paginator();
+
     @Override
     public List<String> getAllowedRoles() {
         return Collections.singletonList(UserDto.ROLE_STAFF);
     }
-
-
-    /**
-     * Paginator for contract
-     */
-    Paginator customerPaginator = new Paginator();
 
     public ResponseObject getView(R r) {
         final StaffBusiness staffBus = new StaffBusiness();
@@ -89,7 +88,8 @@ public class CustomerController extends AuthController {
         r.equest.setAttribute("CUSTOMER", customerDetail);
 
         // Get customer's contracts
-        List<ContractEntity> listCustomerContract = staffBus.getContractByCustomerCode(customerDetail.getCustomerCode());
+        List<ContractEntity> listCustomerContract =
+                staffBus.getContractByCustomerCode(customerDetail.getCustomerCode(), 0, 10);
         r.equest.setAttribute("CONTRACTS", listCustomerContract);
 
         // Dispatch to JSP page

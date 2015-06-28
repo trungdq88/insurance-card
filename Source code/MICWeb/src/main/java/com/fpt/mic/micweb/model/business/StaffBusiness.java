@@ -72,10 +72,9 @@ public class StaffBusiness {
         return contractDao.getAllContract(offset, count);
     }
 
-    public List<ContractEntity> getContractByCustomerCode(String customerCode) {
+    public List getContractByCustomerCode(String customerCode, int offset, int count) {
         ContractDao contractDao = new ContractDao();
-        List<ContractEntity> listCustomerContract = contractDao.getContractByCustomerCode(customerCode);
-        return listCustomerContract;
+        return contractDao.getContractByCustomerCode(customerCode, offset, count);
     }
 
     public ContractEntity getContractDetail(String contractCode) {
