@@ -90,7 +90,7 @@ public class CustomerBusiness {
             //update payment
             payment.setPaidDate(new Timestamp(date.getTime()));
             payment.setPaymentMethod("PayPal payment");
-            payment.setContent("Gia Hạn Hợp Đồng");
+            payment.setContent("Gia hạn hợp đồng");
             payment.setAmount(contract.getMicContractTypeByContractTypeId().getPricePerYear());
             payment.setPaypalTransId(paymentTransactionId);
             payment.setContractCode(contract.getContractCode());
@@ -151,7 +151,7 @@ public class CustomerBusiness {
             contract.setStatus(Constants.ContractStatus.NO_CARD);
             payment.setPaidDate(new Timestamp(date.getTime()));
             payment.setPaymentMethod("PayPal payment");
-            payment.setContent("Thanh toán hợp đồng");
+            payment.setContent("Đăng ký hợp đồng mới " + contract.getContractCode() );
             payment.setAmount(contract.getMicContractTypeByContractTypeId().getPricePerYear());
             payment.setPaypalTransId(paymentTransactionId);
             payment.setContractCode(contract.getContractCode());
@@ -162,4 +162,8 @@ public class CustomerBusiness {
         return result;
     }
 
+    public List searchCustomerContractByCode(String customerCode, String keyword) {
+        ContractDao contractDao = new ContractDao();
+        return contractDao.getCustomerContractByCode(customerCode, keyword);
+    }
 }

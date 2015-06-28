@@ -62,10 +62,15 @@ public class StaffBusiness {
         return null;
     }
 
-    public List<ContractEntity> getAllContract() {
+    public Long getAllContractCount() {
         ContractDao contractDao = new ContractDao();
-        List<ContractEntity> listContract = contractDao.getAllContract();
-        return listContract;
+        return contractDao.getAllContractCount();
+    }
+
+
+    public List getAllContract(int offset, int count) {
+        ContractDao contractDao = new ContractDao();
+        return contractDao.getAllContract(offset, count);
     }
 
     public List<ContractEntity> getContractByCustomerCode(String customerCode) {
@@ -118,7 +123,7 @@ public class StaffBusiness {
             // Add payment info
             paymentEntity.setPaidDate(dto.getPaidDate());
             paymentEntity.setPaymentMethod("Trực tiếp");
-            paymentEntity.setContent("Đăng ký hợp đồng mới");
+            paymentEntity.setContent("Đăng ký hợp đồng mới " + newContract.getContractCode());
             paymentEntity.setAmount(dto.getAmount());
             paymentEntity.setReceiver(receiver.getStaffCode());
             paymentEntity.setContractCode(contractCode);
@@ -221,7 +226,7 @@ public class StaffBusiness {
                 paymentEntity.setContractCode(dto.getContractCode());
                 // Set others payment information
                 paymentEntity.setPaymentMethod("Trực tiếp");
-                paymentEntity.setContent("Đăng ký hợp đồng mới");
+                paymentEntity.setContent("Đăng ký hợp đồng mới " + contractEntity.getContractCode());
                 paymentEntity.setReceiver(receiver.getStaffCode());
 
                 if (paymentDao.create(paymentEntity) != null) {
@@ -230,5 +235,10 @@ public class StaffBusiness {
             }
         }
         return false;
+    }
+
+    public List searchCustomerByNameOrCode(String keyword) {
+        CustomerDao customerDao = new CustomerDao();
+        return customerDao.searchCustomerByNameOrCode(keyword);
     }
 }

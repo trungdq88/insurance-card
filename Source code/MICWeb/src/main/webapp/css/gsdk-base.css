@@ -774,6 +774,7 @@ h1 .subtitle {
 }
 
 .card {
+    position: relative;
     background-color: #FFFFFF;
     padding: 10px 0 20px;
     width: 100%;
@@ -807,9 +808,12 @@ label {
 }
 
 .wizard-container {
-
+    position: relative;
     padding-top: 100px;
     z-index: 3;
+    margin-right: auto;
+    margin-left: auto;
+    margin-bottom: 30px;
 }
 
 .wizard-card {

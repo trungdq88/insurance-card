@@ -176,6 +176,7 @@
                                                    class='btn btn-fill btn-success btn-wd btn-sm'
                                                    name='btnNext' value='Tiếp theo'/>
                                         </div>
+                                        <br>
                                     </div>
                                 <div class="tab-pane" id="vehicle">
                                     <div class="row">
@@ -320,6 +321,7 @@
                                                class='btn btn-fill btn-success btn-wd btn-sm'
                                                 value='Tiếp theo'/>
                                     </div>
+                                    <br>
                                 </div>
 
                                 <div class="tab-pane" id="contract">
@@ -419,6 +421,7 @@
                                         <input type='submit' class='btn btn-fill btn-success btn-wd btn-sm'
                                                name='btnFinish' id="btnFinish" value='Tạo hợp đồng và thanh toán'/>
                                     </div>
+                                    <br>
                                 </div>
 
                                 <div class="tab-pane" id="payment">
@@ -488,27 +491,7 @@
                                         </div>
                                     </div>
                                 </div>
-
-
                             </div>
-
-                            <%--<div class="wizard-footer">--%>
-                                <%--<div class="pull-right">--%>
-                                    <%--<input type='button' onclick="step2()"--%>
-                                           <%--class='btn btn-next btn-fill btn-success btn-wd btn-sm'--%>
-                                           <%--name='btnNext' value='Tiếp theo'/>--%>
-                            <%--<input type="hidden" name="action" value="createContract"/>--%>
-                                    <%--<input type='submit' class='btn btn-finish btn-fill btn-success btn-wd btn-sm'--%>
-                                           <%--name='btnFinish' id="btnFinish" value='Tạo hợp đồng và thanh toán'/>--%>
-
-                                <%--</div>--%>
-                                <%--<div class="pull-left">--%>
-                                    <%--<input type='button' class='btn btn-previous btn-fill btn-default btn-wd btn-sm'--%>
-                                           <%--name='btnBack' value='Quay lại'/>--%>
-                                <%--</div>--%>
-                                <%--<div class="clearfix"></div>--%>
-                            <%--</div>--%>
-
                         </div>
                         <input type="hidden" name="checkout" value="check out">
                     </form>

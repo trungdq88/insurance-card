@@ -78,8 +78,7 @@
                         </tr>
                         <tr>
                             <td class="text-left" style="padding-left: 16px">
-                                <input type="checkbox">
-                                Duy trì đăng nhập
+
                             </td>
                             <td class="text-left" style="padding-left: 16px;">
                                 <a href="#" style="color: white">Quên Mật Khẩu?</a>

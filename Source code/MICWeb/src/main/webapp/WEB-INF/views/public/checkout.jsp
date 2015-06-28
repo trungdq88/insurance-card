@@ -3,11 +3,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="_shared/header.jsp" %>
-<script language="javascript" type="text/javascript">
-    function resizeIframe(obj) {
-        obj.style.height = obj.contentWindow.document.body.scrollHeight + 'px';
-    }
-</script>
 <body>
 <div class="image-container set-full-height"
      style="background-image: url('${pageContext.request.contextPath}/img/wizard-city.jpg')">
@@ -18,114 +13,115 @@
                  style="height: 70px;">
         </div>
     </a>
-<div class="container">
-    <div class="row">
-        <div style="max-width: 800px;margin: 0 auto;">
 
-            <!--      Wizard container        -->
+    <div class="container">
+        <div class="row">
+            <div style="max-width: 800px;margin: 0 auto;">
 
-            <div class="wizard-container">
-                <div class="card wizard-card ct-wizard-azzure" id="wizard">
+                <!--      Wizard container        -->
 
-                    <!-- You can switch "ct-wizard-azzure"  with one of the next bright colors: "ct-wizard-blue",
-                    "ct-wizard-green", "ct-wizard-orange", "ct-wizard-red" -->
+                <div class="wizard-container">
+                    <div class="card wizard-card ct-wizard-azzure" id="wizard">
 
-                    <div class="wizard-header">
-                        <h3>
-                            <b> THANH TOÁN</b><br>
-                            <p class="lead">Xin lựa chọn phương thức thanh toán sau:</p>
+                        <!-- You can switch "ct-wizard-azzure"  with one of the next bright colors: "ct-wizard-blue",
+                        "ct-wizard-green", "ct-wizard-orange", "ct-wizard-red" -->
 
-                        </h3>
-                        <form class="form" action="${pageContext.request.contextPath}/public/checkout" method="get">
-                            <div class="row">
-                                <div class="col-sm-9 col-sm-offset-2">
-                                    <% HashMap result = (HashMap) request.getAttribute("result");  %>
+                        <div class="wizard-header">
+                            <h3>
+                                <b> THANH TOÁN</b><br>
+
+                                <p class="lead">Xin lựa chọn phương thức thanh toán sau:</p>
+
+                            </h3>
+                            <form class="form" action="${pageContext.request.contextPath}/public/checkout" method="get">
+                                <div class="row">
                                     <div class="col-sm-9 col-sm-offset-2">
-                                        <p><b>Nội dung thanh toán: </b> ${param.L_PAYMENTREQUEST_0_DESC0}</p>
-                                        <input type="hidden" id="amount" value="${requestScope.result['PAYMENTREQUEST_0_AMT']}">
-                                        <p><b>Tổng tiền phải trả: </b><span id="amount1"></span> (VND)
-                                        </p>
-                                    </div>
+                                        <% HashMap result = (HashMap) request.getAttribute("result"); %>
+                                        <div class="col-sm-9 col-sm-offset-2">
+                                            <p><b>Nội dung thanh toán: </b> ${param.L_PAYMENTREQUEST_0_DESC0}</p>
+                                            <input type="hidden" id="amount"
+                                                   value="${requestScope.result['PAYMENTREQUEST_0_AMT']}">
 
-                                    <div class="col-sm-6">
-                                        <div class="choice" data-toggle="wizard-radio" rel="tooltip"
-                                             title="Chọn nếu quý khách thanh toán qua Paypal">
-                                            <input type="radio" name="type" value="Paypal">
-
-                                            <div class="form-group">
-                                                <!-- PayPal Logo -->
-                                                <table border="0" cellpadding="6" cellspacing="0"
-                                                       align="center">
-                                                    <tr>
-                                                        <td align="center"></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td align="center">
-                                                            <input type="submit" id="checkout" value=""
-                                                                   style="background-image: url(https://www.paypalobjects.com/webstatic/mktg/logo/pp_cc_mark_74x46.jpg); border: solid 0px #000000; width: 150px; height: 94px;"/>
-                                                        </td>
-
-                                                    </tr>
-                                                </table>
-                                                <!-- PayPal Logo -->
-                                            </div>
-                                            <h6>Paypal</h6>
+                                            <p><b>Tổng tiền phải trả: </b><span id="amount1"></span> (VND)
+                                            </p>
                                         </div>
-                                    </div>
 
-                                    <div class="col-sm-5">
-                                        <a href="#companyAddress" data-toggle="collapse"
-                                           aria-expanded="false" aria-controls="companyAddress">
+                                        <div class="col-sm-6">
                                             <div class="choice" data-toggle="wizard-radio" rel="tooltip"
-                                                 title="Chọn nếu quý khách thanh toán trực tiếp">
-                                                <input type="radio" name="type" value="Trực tiếp">
+                                                 title="Chọn nếu quý khách thanh toán qua Paypal">
+                                                <input type="radio" name="type" value="Paypal">
 
-                                                <div class="icon">
-                                                    <i class="fa fa-building"></i>
+                                                <div class="form-group">
+                                                    <!-- PayPal Logo -->
+                                                    <table border="0" cellpadding="6" cellspacing="0"
+                                                           align="center">
+                                                        <tr>
+                                                            <td align="center"></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td align="center">
+                                                                <input type="submit" id="checkout" value=""
+                                                                       style="background-image: url(https://www.paypalobjects.com/webstatic/mktg/logo/pp_cc_mark_74x46.jpg); border: solid 0px #000000; width: 150px; height: 94px;"/>
+                                                            </td>
+
+                                                        </tr>
+                                                    </table>
+                                                    <!-- PayPal Logo -->
                                                 </div>
-                                                <h6>Trực tiếp</h6>
+                                                <h6>Paypal</h6>
                                             </div>
-                                        </a>
-                                    </div>
-                                    <div class="col-sm-12">
-                                        <div class="collapse" id="companyAddress">
-                                            <div class="form-group">
-                                                <p class="text-muted"><b>Địa chỉ:</b> Lầu 2, tòa nhà Innovation,
-                                                    lô 24, Công viên phần mềm
-                                                    Quang Trung, P.Tân Chánh Hiệp, Quận 12, TP. Hồ Chí Minh.
-                                                </p>
+                                        </div>
 
-                                                <p class="text-muted"><b>Số điện thoại:</b> 0937337009</p>
+                                        <div class="col-sm-5">
+                                            <a href="#companyAddress" data-toggle="collapse"
+                                               aria-expanded="false" aria-controls="companyAddress">
+                                                <div class="choice" data-toggle="wizard-radio" rel="tooltip"
+                                                     title="Chọn nếu quý khách thanh toán trực tiếp">
+                                                    <input type="radio" name="type" value="Trực tiếp">
 
-                                                <p class="text-muted"><b>Email:</b> hydrangea8604@gmail.com</p>
-                                                <%--<img src="${pageContext.request.contextPath}/img/map.png" alt="Trường đại học FPT"/>--%>
-                                                <iframe
-                                                        width="600"
-                                                        height="450"
-                                                        frameborder="0" style="border:0"
-                                                        src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBHWaWHbQJEFOvVmZw7tcR0qIGQQUoxsKM&q=Trường Đại Học FPT, tòa nhà Innovation, Công viên phần mềm Quang Trung, P.Tân Chánh Hiệp, Quận 12, TP. Hồ Chí Minh"
-                                                        >
+                                                    <div class="icon">
+                                                        <i class="fa fa-building"></i>
+                                                    </div>
+                                                    <h6>Trực tiếp</h6>
+                                                </div>
+                                            </a>
+                                        </div>
+                                        <div class="col-sm-12">
+                                            <div class="collapse" id="companyAddress">
+                                                <div class="form-group">
+                                                    <p class="text-muted"><b>Địa chỉ:</b> Lầu 2, tòa nhà Innovation,
+                                                        lô 24, Công viên phần mềm
+                                                        Quang Trung, P.Tân Chánh Hiệp, Quận 12, TP. Hồ Chí Minh.
+                                                    </p>
 
-                                                </iframe>
+                                                    <p class="text-muted"><b>Số điện thoại:</b> 0937337009</p>
+
+                                                    <p class="text-muted"><b>Email:</b> hydrangea8604@gmail.com</p>
+                                                    <%--<img src="${pageContext.request.contextPath}/img/map.png" alt="Trường đại học FPT"/>--%>
+                                                    <iframe
+                                                            width="600"
+                                                            height="450"
+                                                            frameborder="0" style="border:0"
+                                                            src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBHWaWHbQJEFOvVmZw7tcR0qIGQQUoxsKM&q=Trường Đại Học FPT, tòa nhà Innovation, Công viên phần mềm Quang Trung, P.Tân Chánh Hiệp, Quận 12, TP. Hồ Chí Minh">
+                                                    </iframe>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <input type="hidden" name="action" value="checkout">
+                                <input type="hidden" name="action" value="checkout">
 
-                        </form>
+                            </form>
+                        </div>
+
+
                     </div>
-
-
-
                 </div>
+                <!-- wizard container -->
             </div>
-            <!-- wizard container -->
         </div>
+        <!-- row -->
     </div>
-    <!-- row -->
-</div>
     <!--  big container -->
 </div>
 </body>
@@ -135,7 +131,7 @@
             button: 'checkout',
             environment: '<%= new com.fpt.mic.micweb.model.dto.PayPal().getEnvironment() %>'
         });
-        Number.prototype.formatMoney = function(c, d, t){
+        Number.prototype.formatMoney = function (c, d, t) {
             var n = this,
                     c = isNaN(c = Math.abs(c)) ? 2 : c,
                     d = d == undefined ? "." : d,
@@ -149,4 +145,9 @@
     };
 </script>
 <script src="//www.paypalobjects.com/api/checkout.js" async></script>
+<script>
+    $(function () {
+        $('.image-container').height('auto');
+    });
+</script>
 <%@ include file="_shared/footer.jsp" %>

@@ -10,4 +10,5 @@
     <string name="noConnection">Không thể kết nối đến máy chủ. Bạn có muốn thử lại?</string>
     <string name="alert">Thông báo</string>
     <string name="cancel">Huỷ</string>
+    <string name="setting">Cài đặt</string>
 </resources>

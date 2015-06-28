@@ -34,9 +34,12 @@
                     <b>Có ${listContract.size()} hợp đồng</b>
                 </div>
                 <div class="pull-right no-wrap">
-                    <input type="text" class="form-control long-text-box"
-                           placeholder="Tìm kiếm theo tên, mã hợp đồng"/>
-                    <input type="button" class="btn btn-default" value="Tìm kiếm"/>
+                    <form action="${pageContext.request.contextPath}/customer/contract" method="get">
+                        <input type="text" class="form-control long-text-box" name="keyword"
+                               placeholder="Tìm kiếm theo mã hợp đồng" value="${param.keyword}"/>
+                        <input type="submit" class="btn btn-default" value="Tìm kiếm"/>
+                        <input type="hidden" name="action" value="search"/>
+                    </form>
 
                 </div>
                 <div class="clearfix"></div>
@@ -125,7 +128,7 @@
             <div class="panel-body">
                 <ul>
                     <li>
-                        <span class="label label-default">Chờ thanh toán</span>
+                        <span class="label label-default">Chưa thanh toán</span>
                         Khách hàng đăng ký online nhưng chưa thanh toán.
                     </li>
                     <li>

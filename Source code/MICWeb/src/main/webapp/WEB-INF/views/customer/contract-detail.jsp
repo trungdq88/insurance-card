@@ -17,6 +17,35 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="_shared/header.jsp" %>
+<style type="text/css">
+
+    .tooltip-inner {
+        font-size: 14px;
+        font-weight: 700;
+        color: black;
+        border-width: 1px;
+        background-color: lightsalmon;
+        padding: 10px;
+        border-radius: 0;
+        min-width: 400px;
+    }
+
+    .tooltip.top .tooltip-arrow {
+        border-top-color: #00acd6;
+    }
+
+    .tooltip.right .tooltip-arrow {
+        border-right-color: #00acd6;
+    }
+
+    .tooltip.bottom .tooltip-arrow {
+        border-bottom-color: #00acd6;
+    }
+
+    .tooltip.left .tooltip-arrow {
+        border-left-color: #00acd6;
+    }
+</style>
 <div id="wrapper">
     <%@ include file="_shared/navigation.jsp" %>
     <div id="page-wrapper">
@@ -36,18 +65,32 @@
                                <button type="button" class="btn btn-danger" data-toggle="modal" disabled="disabled"
                                        data-target=".bs-example-modal-lg"><i class="fa fa-times"></i> Hủy Hợp Đồng
                                </button>
+
                            </c:if>
                           <c:if test="${!contract.status.equalsIgnoreCase('Request cancel') && !contract.status.equalsIgnoreCase('Cancelled')
                                      && !contract.status.equalsIgnoreCase('Pending') }">
+                              <c:if test="${contract.status.equalsIgnoreCase('Expired')}">
+                                  <button type="submit" class="btn btn-info" data-toggle="modal" id="renew"
+                                          data-target=".renew-contract-modal"><i
+                                          class="fa fa-refresh"></i> Gia Hạn
+                                  </button>
 
-                              <button type="submit" class="btn btn-info" data-toggle="modal" id="renew"
-                                      data-target=".renew-contract-modal"><i
-                                      class="fa fa-refresh"></i> Gia Hạn
-                              </button>
+                                  <button type="button" class="btn btn-danger" data-toggle="modal" disabled="disabled"
+                                          data-target=".bs-example-modal-lg"><i class="fa fa-times"></i> Hủy Hợp Đồng
+                                  </button>
 
-                              <button type="button" class="btn btn-danger" data-toggle="modal"
-                                      data-target=".bs-example-modal-lg"><i class="fa fa-times"></i> Hủy Hợp Đồng
-                              </button>
+                              </c:if>
+                              <c:if test="${!contract.status.equalsIgnoreCase('Expired')}">
+                                  <button type="submit" class="btn btn-info" data-toggle="modal" id="renew"
+                                          data-target=".renew-contract-modal"><i
+                                          class="fa fa-refresh"></i> Gia Hạn
+                                  </button>
+
+                                  <button type="button" class="btn btn-danger" data-toggle="modal"
+                                          data-target=".bs-example-modal-lg"><i class="fa fa-times"></i> Hủy Hợp Đồng
+                                  </button>
+
+                              </c:if>
                           </c:if>
                      </span>
                 </h2>
@@ -206,8 +249,8 @@
 
                             </div>
                             <div class="modal-footer">
-                                <input type="hidden" name="L_PAYMENTREQUEST_0_NAME0" value="">
-                                <input type="hidden" name="L_PAYMENTREQUEST_0_DESC0" id="content">
+                                <input type="hidden" name="L_PAYMENTREQUEST_0_NAME0" id="content1" value="">
+                                <input type="hidden" name="L_PAYMENTREQUEST_0_DESC0" id="content2">
                                 <input type="hidden" name="L_PAYMENTREQUEST_0_QTY0" value="1">
                                 <input type="hidden" name="PAYMENTREQUEST_0_ITEMAMT" id="payment">
                                 <input type="hidden" name="PAYMENTREQUEST_0_TAXAMT" value="0">
@@ -331,24 +374,57 @@
                     </p>
                     <form action="${pageContext.request.contextPath}/customer/contract" method="post">
 
-
-                        <button class="btn btn-primary" type="submit" id="payContract"
+                        <button class="btn btn-primary choice" type="submit" id="payContract"
                                 rel="tooltip"
                                 data-toggle="tooltip"
                                 data-trigger="hover"
-                                data-placement="top"
+                                data-placement="bottom"
                                 data-html="true"
-                                data-title="  <ul class='nav  nav-tabs'>
-    <li><b>Loại hợp đồng: </b> ${contract.getMicContractTypeByContractTypeId().getName()}</li>
-    <li><b>Tổng tiền phải trả: </b><span > <fmt:formatNumber
-                                                    value="${contract.getMicContractTypeByContractTypeId().getPricePerYear()}"
-                                                    type="currency"
-                                                    maxFractionDigits="0"/></span>
+                                data-title="
+                                     <div class='form-horizontal'>
+                                    <div class='form-group'>
+                                        <label class='col-sm-5 text-right'>Loại hợp đồng </label>
 
-                                    </li>
+                                        <div class='col-sm-7'>
+                                            ${contract.getMicContractTypeByContractTypeId().getName()}
+                                        </div>
+                                    </div>
+                                    <div class='form-group'>
+                                        <label class='col-sm-5 text-right'>Thời điểm bắt đầu</label>
 
-                                    <li>***************************************</li>
-                                    </ul>">
+                                        <div class='col-sm-4'>
+                                            <input type='hidden' id='startDate'
+                                                   value='${contract.startDate}'/>
+                                            <input type='hidden' name='txtNewStartDate' id='newStartDate'
+                                                   value='${contract.expiredDate}'/>
+
+                                            <fmt:formatDate value='${contract.startDate}' pattern='dd/MM/yyyy'/>
+                                        </div>
+                                    </div>
+                                    <div class='form-group'>
+                                        <label class='col-sm-5 text-right'>Thời điểm kết thúc </label>
+
+                                        <div class='col-sm-4'>
+                                            <fmt:formatDate value='${contract.expiredDate}' pattern='dd/MM/yyyy'/>
+                                        </div>
+                                    </div>
+                                    <div class='form-group'>
+                                        <label class='col-sm-5 text-right'>Phí thanh toán </label>
+
+                                        <div class='col-sm-4'>
+                                            <fmt:setLocale value='vi_VN'/>
+                                            <fmt:formatNumber
+                                                    value='${contract.getMicContractTypeByContractTypeId().getPricePerYear()}'
+                                                    type='currency'
+                                                    maxFractionDigits='0'/>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+
+
+                                ">
                             Thanh toán online bằng Paypal
                         </button>
 
@@ -358,7 +434,7 @@
                         <input id="contractCode" disabled="disabled" type="hidden"
                                value="${contract.contractCode}"/>
                         <input type="hidden" name="L_PAYMENTREQUEST_0_NAME0" value="">
-                        <input type="hidden" name="L_PAYMENTREQUEST_0_DESC0" id="content1">
+                        <input type="hidden" name="L_PAYMENTREQUEST_0_DESC0" id="content3">
                         <input type="hidden" name="L_PAYMENTREQUEST_0_QTY0" value="1">
                         <input type="hidden" name="PAYMENTREQUEST_0_ITEMAMT" id="payment1">
                         <input type="hidden" name="PAYMENTREQUEST_0_TAXAMT" value="0">
@@ -469,22 +545,33 @@
                                             <label class="text-center">Tình trạng hợp đồng</label>
                                         </td>
                                         <c:if test="${contract.status.equalsIgnoreCase('Ready')}">
-                                            <td class="alert-success text-center">Sẵn sàng</td>
+                                            <td class="text-center">
+                                                <span class="fa label label-success"
+                                                      style="font-size: 16px">Sẵn sàng</span>
+                                            </td>
                                         </c:if>
                                         <c:if test="${contract.status.equalsIgnoreCase('Cancelled')}">
-                                            <td class="alert-danger text-center">Đã huỷ</td>
+                                            <td class="text-center"><span class="label label-dark"
+                                                                          style="font-size: 16px">Đã huỷ</span></td>
                                         </c:if>
                                         <c:if test="${contract.status.equalsIgnoreCase('No card')}">
-                                            <td class="alert-info text-center">Chưa có thẻ</td>
+                                            <td class="text-center"><span class="label label-primary"
+                                                                          style="font-size: 16px">Chưa có thẻ</span>
+                                            </td>
                                         </c:if>
                                         <c:if test="${contract.status.equalsIgnoreCase('Expired')}">
-                                            <td class="alert-danger text-center">Hết hạn</td>
+                                            <td class="text-center"><span class="label label-danger"
+                                                                          style="font-size: 16px"> Hết hạn</span></td>
                                         </c:if>
                                         <c:if test="${contract.status.equalsIgnoreCase('Pending')}">
-                                            <td class="alert-link text-center">Chưa thanh toán</td>
+                                            <td class="text-center"><span
+                                                    class="label label-default"
+                                                    style="font-size: 16px">Chờ thanh toán</span></td>
                                         </c:if>
                                         <c:if test="${contract.status.equalsIgnoreCase('Request cancel')}">
-                                            <td class="alert-warning text-center">Yêu cầu hủy</td>
+                                            <td class="text-center"><span class="label label-warning"
+                                                                          style="font-size: 16px">Yêu cầu hủy</span>
+                                            </td>
                                         </c:if>
                                     </tr>
                                 </table>

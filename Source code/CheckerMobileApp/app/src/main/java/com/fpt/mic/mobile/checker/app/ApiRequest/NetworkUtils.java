@@ -29,9 +29,9 @@ public class NetworkUtils {
     /** Get Data Fom URL Using GET Method */
     public static String getResponseFromGetRequest(String url) {
         HttpParams httpParameters = new BasicHttpParams();
-        int timeoutConnection = 20000;
+        int timeoutConnection = 5000;
         HttpConnectionParams.setConnectionTimeout(httpParameters, timeoutConnection);
-        int timeoutSocket = 20000;
+        int timeoutSocket = 5000;
         HttpConnectionParams.setSoTimeout(httpParameters, timeoutSocket);
         HttpClient httpClient = new DefaultHttpClient(httpParameters);
         HttpGet httpGet = new HttpGet(url);

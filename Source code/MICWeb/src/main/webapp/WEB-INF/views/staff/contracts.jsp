@@ -27,18 +27,20 @@
         <!-- /.row -->
         <div class="panel panel-default">
 
-            <c:set var="info" value="${requestScope.INFO}"/>
+            <c:set var="info" value="${contractPaginator.getItemsOnCurrentPage(param.page)}"/>
 
             <div class="panel-heading">
                 <div class="pull-left center-dropdown-button">
                     <!--<input type="checkbox" class="check-all"/>-->
-                    <b>Có ${fn:length(info)} hợp đồng</b>
+                    <b>Có ${contractPaginator.itemSize} hợp đồng (${contractPaginator.pageSize} trang)</b>
                 </div>
                 <div class="pull-right no-wrap">
-                    <input type="text" class="form-control long-text-box"
-                           placeholder="Tìm kiếm theo tên, mã hợp đồng"/>
-                    <input type="button" class="btn btn-default" value="Tìm kiếm"/>
-
+                    <form action="${pageContext.request.contextPath}/staff/contract" method="get">
+                        <input type="text" class="form-control long-text-box" name="keyword"
+                               placeholder="Tìm kiếm theo tên, mã hợp đồng" value="${param.keyword}"/>
+                        <input type="submit" class="btn btn-default" value="Tìm kiếm"/>
+                        <input type="hidden" name="action" value="search"/>
+                    </form>
                 </div>
                 <div class="clearfix"></div>
             </div>
@@ -59,7 +61,7 @@
                         <tbody>
                         <c:forEach var="cont" items="${info}" varStatus="counter">
                             <tr>
-                                <td>${counter.count}</td>
+                                <td>${(contractPaginator.getCurrentPage(param.page) - 1) * contractPaginator.itemPerPage + counter.count}</td>
                                 <td>
                                     <a href="${pageContext.request.contextPath}/staff/contract?action=detail&code=${cont.contractCode}">
                                             ${cont.contractCode}
@@ -80,7 +82,7 @@
                                     <c:set var="status" value="${cont.status}"/>
                                     <c:choose>
                                         <c:when test="${status.equalsIgnoreCase('Pending')}">
-                                            <span class="label label-gray">Chưa thanh toán</span>
+                                            <span class="label label-gray">Chờ thanh toán</span>
                                         </c:when>
                                         <c:when test="${status.equalsIgnoreCase('No card')}">
                                             <span class="label label-primary">Chưa có thẻ</span>
@@ -111,18 +113,19 @@
                 <nav class="text-right">
                     <ul class="pagination">
                         <li>
-                            <a href="#" aria-label="Previous">
-                                <span aria-hidden="true">&laquo;</span>
+                            <a href="?page=1" aria-label="Previous">
+                                <span aria-hidden="true">Đầu</span>
                             </a>
                         </li>
-                        <li class="active"><a href="#">1</a></li>
-                        <li><a href="#">2</a></li>
-                        <li><a href="#">3</a></li>
-                        <li><a href="#">4</a></li>
-                        <li><a href="#">5</a></li>
+                        <c:forEach begin="1" end="${contractPaginator.pageSize}" var="pageNumber">
+                            <li ${param.page == pageNumber ||
+                            (pageNumber == 1 && empty param.page) ? "class='active'": ""} >
+                                <a href="?action=${param.action}&keyword=${param.keyword}&page=${pageNumber}">${pageNumber}</a>
+                            </li>
+                        </c:forEach>
                         <li>
-                            <a href="#" aria-label="Next">
-                                <span aria-hidden="true">&raquo;</span>
+                            <a href="?page=${contractPaginator.pageSize}" aria-label="Next">
+                                <span aria-hidden="true">Cuối</span>
                             </a>
                         </li>
                     </ul>

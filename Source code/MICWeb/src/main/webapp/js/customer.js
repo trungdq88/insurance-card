@@ -155,7 +155,8 @@ $(document).ready(function () {
             ((1 + startDate.getMonth()).toString().length > 1 ? (1 + startDate.getMonth()).toString() : '0' + (1 + startDate.getMonth()).toString()) + '/' +
             startDate.getFullYear();
 
-        $('#content').val("Renew contract from " + startDate + " to " + day + '/' + month + '/' + year);
+        $('#content1').val("Gia hạn hợp đồng từ " + startDate + " đến " + day + '/' + month + '/' + year);
+        $('#content2').val("Gia hạn hợp đồng từ " + startDate + " đến " + day + '/' + month + '/' + year);
     });
     /**
      ------------------------------------------------------------------------------------------------------------------
@@ -164,6 +165,6 @@ $(document).ready(function () {
         $('#payment1').val((parseFloat($('#payAmount1').val())));
         $('#paymentATM1').val((parseFloat($('#payAmount1').val())));
         var contractCode = $('#contractCode').val();
-        $('#content1').val("Payment for contract "+ contractCode);
+        $('#content3').val("Thanh toán cho hợp đồng "+ contractCode);
     });
 });

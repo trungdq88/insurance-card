@@ -45,11 +45,27 @@ public class ContractController extends AuthController {
         return new JspPage("customer/contract.jsp");
     }
 
+    public ResponseObject getSearch(R r) {
+        String keyword = r.equest.getParameter("keyword");
+        if (keyword == null) {
+            keyword = "";
+        }
+
+        String customerCode = ((CustomerEntity) getLoggedInUser()).getCustomerCode();
+
+        CustomerBusiness customerBusiness = new CustomerBusiness();
+        List listContract = customerBusiness.searchCustomerContractByCode(customerCode, keyword);
+
+        r.equest.setAttribute("listContract", listContract);
+        return new JspPage("customer/contract.jsp");
+    }
+
     public ResponseObject getContractDetail(R r) {
         CustomerBusiness customerBusiness = new CustomerBusiness();
+        String customerCode = ((CustomerEntity) getLoggedInUser()).getCustomerCode();
         String code = r.equest.getParameter("code");
         ContractEntity contract = customerBusiness.getContractDetail(code);
-        if (contract == null) {
+        if (contract == null || contract.getCustomerCode().compareToIgnoreCase(customerCode) != 0) {
             return new RedirectTo("/error/404");
         } else {
             r.equest.setAttribute("contract", contract);

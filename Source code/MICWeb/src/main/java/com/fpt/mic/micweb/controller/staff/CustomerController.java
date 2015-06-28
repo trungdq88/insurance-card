@@ -34,6 +34,19 @@ public class CustomerController extends AuthController {
         return new JspPage("staff/customers.jsp");
     }
 
+    public ResponseObject getSearch(R r) {
+        String keyword = r.equest.getParameter("keyword");
+        if (keyword == null) {
+            keyword = "";
+        }
+
+        StaffBusiness staffBusiness = new StaffBusiness();
+        List listCustomer = staffBusiness.searchCustomerByNameOrCode(keyword);
+
+        r.equest.setAttribute("INFO", listCustomer);
+        return new JspPage("staff/customers.jsp");
+    }
+
     public ResponseObject getDetail(R r) {
         StaffBusiness staffBus = new StaffBusiness();
         String customerCode = r.equest.getParameter("code");
