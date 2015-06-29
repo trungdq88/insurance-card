@@ -18,7 +18,7 @@ public class CancelContractDto {
     @NotNull(message = "Ngày hủy hợp đồng không được trống")
     private Timestamp cancelDate;
     @NotEmpty(message = "Lý do hủy hợp đồng không được để trống")
-    @Size(min = 1, max = 255, message = "Lý do hủy hợp đồng phải có từ {min} đến {max} ký tự")
+    @Size(min = 1, max = 250, message = "Lý do hủy hợp đồng phải có từ {min} đến {max} ký tự")
     private String cancelReason;
     private String cancelNote;
 
