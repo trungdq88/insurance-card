@@ -27,11 +27,11 @@
 
         <div class="panel panel-default">
 
-            <c:set var="info" value="${customerPaginator.getItemsOnCurrentPage(param.page)}"/>
+            <c:set var="customers" value="${customerPaginator.getItemsOnCurrentPage(param.page)}"/>
 
             <div class="panel-heading">
                 <div class="pull-left center-dropdown-button">
-                    <b>Có ${customerPaginator.itemSize} khách hàng (${customerPaginator.pageSize} trang)</b>
+                    <b>Có ${customerPaginator.itemSize} khách hàng</b>
                 </div>
                 <div class="pull-right no-wrap">
                     <form action="${pageContext.request.contextPath}/staff/customer" method="get">
@@ -58,20 +58,31 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <c:forEach var="customer" items="${info}" varStatus="counter">
-                            <tr>
-                                <td>${(customerPaginator.getCurrentPage(param.page) - 1) * customerPaginator.itemPerPage + counter.count}</td>
-                                <td>
-                                    <a href="${pageContext.request.contextPath}/staff/customer?action=detail&code=${customer.customerCode}">
-                                            ${customer.customerCode}
-                                    </a>
-                                </td>
-                                <td>${customer.name}</td>
-                                <td>${customer.phone}</td>
-                                <td><a href="#"></a>Add later</td>
-                                <td><a href="#"></a>Add later</td>
-                            </tr>
-                        </c:forEach>
+                        <c:choose>
+                            <c:when test="${customers.size() == 0}">
+                                <tr>
+                                    <td colspan="6" style="vertical-align: middle; text-align: center;">
+                                        Không có hợp đồng nào
+                                    </td>
+                                </tr>
+                            </c:when>
+                            <c:otherwise>
+                                <c:forEach var="customer" items="${customers}" varStatus="counter">
+                                    <tr>
+                                        <td>${(customerPaginator.getCurrentPage(param.page) - 1) * customerPaginator.itemPerPage + counter.count}</td>
+                                        <td>
+                                            <a href="${pageContext.request.contextPath}/staff/customer?action=detail&code=${customer.customerCode}">
+                                                    ${customer.customerCode}
+                                            </a>
+                                        </td>
+                                        <td>${customer.name}</td>
+                                        <td>${customer.phone}</td>
+                                        <td><a href="#"></a>Add later</td>
+                                        <td><a href="#"></a>Add later</td>
+                                    </tr>
+                                </c:forEach>
+                            </c:otherwise>
+                        </c:choose>
                         </tbody>
                     </table>
                 </div>

@@ -31,7 +31,7 @@
             <div class="panel-heading">
                 <div class="pull-left center-dropdown-button">
                     <!--<input type="checkbox" class="check-all"/>-->
-                    <b>Có ${contractPaginator.itemSize} hợp đồng (${contractPaginator.pageSize} trang)</b>
+                    <b>Có ${contractPaginator.itemSize} hợp đồng</b>
                 </div>
                 <div class="pull-right no-wrap">
                     <form action="${pageContext.request.contextPath}/customer/contract" method="get">
@@ -58,40 +58,52 @@
                         </tr>
                         </thead>
                         <tbody>
+                        <c:set var="contracts" value="${contractPaginator.getItemsOnCurrentPage(param.page)}"/>
+                        <c:choose>
+                            <c:when test="${contracts.size() == 0}">
+                                <tr>
+                                    <td colspan="5" style="vertical-align: middle; text-align: center;">
+                                        Không có hợp đồng nào
+                                    </td>
+                                </tr>
+                            </c:when>
+                            <c:otherwise>
+                                <c:forEach items="${contractPaginator.getItemsOnCurrentPage(param.page)}" var="contract"
+                                           varStatus="counter">
 
-                        <c:forEach items="${contractPaginator.getItemsOnCurrentPage(param.page)}" var="contract"
-                                   varStatus="counter">
+                                    <tr>
+                                        <td>${(contractPaginator.getCurrentPage(param.page) - 1) * contractPaginator.itemPerPage + counter.count}</td>
+                                        <td>
+                                            <a href="${pageContext.request.contextPath}/customer/contract?action=ContractDetail&code=${contract.contractCode}">
+                                                    ${contract.contractCode}</a>
+                                        </td>
+                                        <td><fmt:formatDate value="${contract.startDate}" pattern="dd/MM/yyyy"/></td>
+                                        <td><fmt:formatDate value="${contract.expiredDate}" pattern="dd/MM/yyyy"/></td>
+                                        <td>
+                                            <c:if test="${contract.status.equalsIgnoreCase('Ready')}">
+                                                <span class="label label-success">Sẵn sàng</span>
+                                            </c:if>
+                                            <c:if test="${contract.status.equalsIgnoreCase('Cancelled')}">
+                                                <span class="label label-dark">Đã huỷ</span>
+                                            </c:if>
+                                            <c:if test="${contract.status.equalsIgnoreCase('No card')}">
+                                                <span class="label label-primary">Chưa có thẻ</span>
+                                            </c:if>
+                                            <c:if test="${contract.status.equalsIgnoreCase('Expired')}">
+                                                <span class="label label-danger">Hết hạn</span>
+                                            </c:if>
+                                            <c:if test="${contract.status.equalsIgnoreCase('Pending')}">
+                                                <span class="label label-default">Chưa thanh toán</span>
+                                            </c:if>
+                                            <c:if test="${contract.status.equalsIgnoreCase('Request cancel')}">
+                                                <span class="label label-warning">Yêu cầu hủy</span>
+                                            </c:if>
+                                        </td>
+                                    </tr>
+                                </c:forEach>
+                            </c:otherwise>
+                        </c:choose>
 
-                            <tr>
-                                <td>${(contractPaginator.getCurrentPage(param.page) - 1) * contractPaginator.itemPerPage + counter.count}</td>
-                                <td>
-                                    <a href="${pageContext.request.contextPath}/customer/contract?action=ContractDetail&code=${contract.contractCode}">
-                                            ${contract.contractCode}</a>
-                                </td>
-                                <td><fmt:formatDate value="${contract.startDate}" pattern="dd/MM/yyyy"/></td>
-                                <td><fmt:formatDate value="${contract.expiredDate}" pattern="dd/MM/yyyy"/></td>
-                                <td>
-                                    <c:if test="${contract.status.equalsIgnoreCase('Ready')}">
-                                        <span class="label label-success">Sẵn sàng</span>
-                                    </c:if>
-                                    <c:if test="${contract.status.equalsIgnoreCase('Cancelled')}">
-                                        <span class="label label-dark">Đã huỷ</span>
-                                    </c:if>
-                                    <c:if test="${contract.status.equalsIgnoreCase('No card')}">
-                                        <span class="label label-primary">Chưa có thẻ</span>
-                                    </c:if>
-                                    <c:if test="${contract.status.equalsIgnoreCase('Expired')}">
-                                        <span class="label label-danger">Hết hạn</span>
-                                    </c:if>
-                                    <c:if test="${contract.status.equalsIgnoreCase('Pending')}">
-                                        <span class="label label-default">Chưa thanh toán</span>
-                                    </c:if>
-                                    <c:if test="${contract.status.equalsIgnoreCase('Request cancel')}">
-                                        <span class="label label-warning">Yêu cầu hủy</span>
-                                    </c:if>
-                                </td>
-                            </tr>
-                        </c:forEach>
 
                         </tbody>
                     </table>
