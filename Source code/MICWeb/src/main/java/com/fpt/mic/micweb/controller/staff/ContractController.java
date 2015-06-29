@@ -60,6 +60,7 @@ public class ContractController extends AuthController {
         if (keyword == null) {
             keyword = "";
         }
+        keyword = keyword.trim();
 
         final ContractBusiness contractBusiness = new ContractBusiness();
 

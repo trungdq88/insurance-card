@@ -57,6 +57,7 @@ public class CustomerController extends AuthController {
         if (keyword == null) {
             keyword = "";
         }
+        keyword = keyword.trim();
 
         final StaffBusiness staffBus = new StaffBusiness();
 
