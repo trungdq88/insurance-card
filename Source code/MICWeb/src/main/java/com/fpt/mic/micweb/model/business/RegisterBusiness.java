@@ -116,7 +116,12 @@ public class RegisterBusiness {
         }
         // set expired date = start_date + 1 year
         contractEntity.setExpiredDate(DateUtils.addOneYear(contractEntity.getStartDate()));
-        contractEntity.setStatus(Constants.ContractStatus.NO_CARD);
+
+        if(contractEntity.getStartDate().after(currentDate)) {
+            contractEntity.setStatus(Constants.ContractStatus.PENDING);
+        } else {
+            contractEntity.setStatus(Constants.ContractStatus.NO_CARD);
+        }
 
         paymentEntity.setPaidDate(new Timestamp(new Date().getTime()));
         paymentEntity.setPaymentMethod(paymentMethod);
