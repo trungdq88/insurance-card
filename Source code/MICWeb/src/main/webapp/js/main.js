@@ -68,29 +68,34 @@ function daysBetween(date1, date2) {
     //Get 1 day in milliseconds
     var one_day = 24 * 60 * 60 * 1000;
 
-    // Covert both dates to milliseconds
-    var date1_ms = date1.getTime();
-    var date2_ms = date2.getTime();
+    if (date1 && date2) {
+        // Covert both dates to milliseconds
+        var date1_ms = date1.getTime();
+        var date2_ms = date2.getTime();
 
-    // Calculate the difference in milliseconds
-    var diff_ms = date2_ms - date1_ms;
+        // Calculate the difference in milliseconds
+        var diff_ms = date2_ms - date1_ms;
 
-    // Convert back to days and return
-    var diffDays = 0;
-    if (diff_ms > 0) {
-        diffDays = Math.ceil(diff_ms / one_day);
+        // Convert back to days and return
+        var diffDays = 0;
+        if (diff_ms > 0) {
+            diffDays = Math.ceil(diff_ms / one_day);
+        }
+
+        return diffDays;
+    } else {
+        return 0;
     }
-    return diffDays;
 }
 
 function calculateContractFee(contractTerm, pricePerYear) {
     var nTerm = parseInt(contractTerm);
     var fPrice = parseFloat(pricePerYear);
-    var contractFee;
+    var contractFee = 0;
 
     if (nTerm == 365 || nTerm == 366) {
         contractFee = fPrice;
-    } else if (contractTerm < 30) {
+    } else if (nTerm >= 1 && nTerm <= 30) {
         contractFee = fPrice / 12;
     } else {
         contractFee = (fPrice / 365) * nTerm;
