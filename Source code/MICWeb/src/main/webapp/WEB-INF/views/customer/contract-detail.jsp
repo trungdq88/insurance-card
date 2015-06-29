@@ -509,7 +509,7 @@
                                     </tr>
                                     <tr>
                                         <td class="col-md-5">
-                                            <label class="text-center">Ngày tham gia</label>
+                                            <label class="text-center">Ngày tham gia lúc</label>
                                         </td>
                                         <td class="col-md-5">
                                             <fmt:formatDate value="${contract.startDate}" pattern="dd/MM/yyyy"/>
@@ -605,11 +605,12 @@
                                     </tr>
                                     <tr>
                                         <td class="col-md-5">
-                                            <label>Loại xe</label>
+                                            <label>Số khung</label>
                                         </td>
                                         <td class="col-md-5">
-                                            ${contract.vehicleType}
+                                            ${contract.chassis}
                                         </td>
+
                                     </tr>
                                 </table>
                             </td>
@@ -617,10 +618,10 @@
                                 <table class="table table-bordered">
                                     <tr>
                                         <td class="col-md-5">
-                                            <label class="text-center">Màu sơn</label>
+                                            <label class="text-center">Nhãn hiệu</label>
                                         </td>
                                         <td class="col-md-5">
-                                            ${contract.color}
+                                            ${contract.brand}
                                         </td>
                                     </tr>
                                     <tr>
@@ -639,22 +640,46 @@
                                 <table class="table table-bordered">
                                     <tr>
                                         <td class="col-md-5">
-                                            <label>Nhãn hiệu</label>
-                                        </td>
-                                        <td class="col-md-5">
-                                            ${contract.modelCode}
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="col-md-5">
                                             <label>Dung tích</label>
                                         </td>
                                         <td class="col-md-5">
                                             ${contract.capacity}
                                         </td>
                                     </tr>
+                                    <tr>
+                                        <td class="col-md-5">
+                                            <label>Số loại</label>
+                                        </td>
+                                        <td class="col-md-5">
+                                            ${contract.modelCode}
+                                        </td>
+                                    </tr>
+
                                 </table>
                             </td>
+                            <td>
+                                <table class="table table-bordered">
+                                    <tr>
+                                        <td class="col-md-5">
+                                            <label class="text-center">Màu sơn</label>
+                                        </td>
+                                        <td class="col-md-5">
+                                            ${contract.color}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="col-md-5">
+                                            <label>Loại xe</label>
+                                        </td>
+                                        <td class="col-md-5">
+                                            ${contract.vehicleType}
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+
+                        <tr>
                             <td>
                                 <table class="table table-bordered">
                                     <tr>
@@ -667,15 +692,30 @@
                                     </tr>
                                     <tr>
                                         <td class="col-md-5">
-                                            <label>Số khung</label>
+                                            <label>Tự trọng</label>
                                         </td>
                                         <td class="col-md-5">
-                                            ${contract.chassis}
+                                            ${contract.capacity}
                                         </td>
                                     </tr>
                                 </table>
                             </td>
+
+                            <td>
+                                <table class="table table-bordered">
+                                    <tr>
+                                        <td class="col-md-5">
+                                            <label>Số người được chở</label>
+                                        </td>
+                                        <td class="col-md-5">
+                                            ${contract.seatCapacity}
+                                        </td>
+                                    </tr>
+
+                                </table>
+                            </td>
                         </tr>
+
 
 
                     </table>
