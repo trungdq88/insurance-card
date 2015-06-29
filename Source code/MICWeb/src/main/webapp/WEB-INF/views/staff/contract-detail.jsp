@@ -829,9 +829,6 @@
                             </div>
                         </div>
 
-                        <!-- New start date -->
-                        <input type="hidden" id="startDate" name="renew:startDate"/>
-
                         <!-- New expired date -->
                         <div class="form-group">
                             <label class="col-sm-5 control-label" for="expiredDate">Gia hạn đến *</label>

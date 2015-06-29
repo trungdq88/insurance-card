@@ -8,6 +8,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
+import java.util.Date;
 
 /**
  * Created by Kha on 23/06/2015.
@@ -23,8 +24,6 @@ public class RenewContractDto {
     @NotEmpty(message = "Mã hợp đồng không được để trống")
     // Mã hợp đồng không tồn tại: @see {@link isNotExisted}
     private String contractCode;
-    @NotNull(message = "Thời điểm có hiệu lực không được để trống")
-    private Timestamp startDate;
     @NotNull(message = "Thời điểm hết hiệu lực không được để trống")
     private Timestamp expiredDate;
     @NotNull(message = "Phí bảo hiểm không được để trống")
@@ -40,29 +39,9 @@ public class RenewContractDto {
         return contractCode != null && contractDao.read(contractCode) != null;
     }
 
-    @AssertTrue(message = "Ngày bắt đầu gia hạn hợp đồng không đúng")
-    private boolean isValidStartDate() {
-        ContractDao contractDao = new ContractDao();
-        ContractEntity contractEntity = contractDao.read(contractCode);
-        if (startDate != null && contractEntity != null) {
-            if (contractEntity.getStatus().equals("Expired")) {
-                Timestamp currentTimestamp = DateUtils.currentDateWithoutTime();
-                return startDate.equals(currentTimestamp);
-            } else {
-                Timestamp contractExpiredDate = contractEntity.getExpiredDate();
-                if (contractExpiredDate != null) {
-                    return startDate.equals(contractExpiredDate);
-                } else {
-                    return false;
-                }
-            }
-        } else {
-            return false;
-        }
-    }
-
     @AssertTrue(message = "Thời điểm có hiệu lực phải sau thời điểm hết hiệu lực")
     private boolean isValidExpiredDate() {
+        Timestamp startDate = getStartDate();
         if (startDate != null & expiredDate != null) {
             return expiredDate.after(startDate);
         } else {
@@ -72,6 +51,7 @@ public class RenewContractDto {
 
     @AssertTrue(message = "Thời hạn hợp đồng tối đa là 1 năm")
     private boolean isValidTerm() {
+        Timestamp startDate = getStartDate();
         if (startDate != null & expiredDate != null) {
             long contractTerm = expiredDate.getTime() - startDate.getTime();
 
@@ -111,30 +91,25 @@ public class RenewContractDto {
     public RenewContractDto() {
     }
 
-    public RenewContractDto(String contractCode, Timestamp startDate, Timestamp expiredDate, float contractFee,
+    public RenewContractDto(String contractCode, Timestamp expiredDate, float contractFee,
                             Timestamp paidDate, Float amount) {
         this.contractCode = contractCode;
-        this.startDate = startDate;
         this.expiredDate = expiredDate;
         this.contractFee = contractFee;
         this.paidDate = paidDate;
         this.amount = amount;
     }
 
-    public String getContractCode() {
-        return contractCode;
-    }
-
-    public void setContractCode(String contractCode) {
-        this.contractCode = contractCode;
-    }
-
     public Timestamp getStartDate() {
+        ContractDao contractDao = new ContractDao();
+        ContractEntity contractEntity = contractDao.read(contractCode);
+        Timestamp startDate;
+        if (contractEntity.getStatus().equals("Expired")) {
+            startDate = new Timestamp(new Date().getTime());
+        } else {
+            startDate = contractEntity.getExpiredDate();
+        }
         return startDate;
-    }
-
-    public void setStartDate(Timestamp startDate) {
-        this.startDate = startDate;
     }
 
     public Timestamp getExpiredDate() {
@@ -167,5 +142,13 @@ public class RenewContractDto {
 
     public void setAmount(Float amount) {
         this.amount = amount;
+    }
+
+    public String getContractCode() {
+        return contractCode;
+    }
+
+    public void setContractCode(String contractCode) {
+        this.contractCode = contractCode;
     }
 }
