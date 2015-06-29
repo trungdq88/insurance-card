@@ -151,7 +151,13 @@ public class CustomerBusiness {
         ContractEntity contract = contractDao.read(contractCode);
         PaymentEntity payment = new PaymentEntity();
         if(contract != null){
-            contract.setStatus(Constants.ContractStatus.NO_CARD);
+            // kiem tra neu chua den ngay start hop dong thi de la pending, nguoc lai thi no_card
+            Timestamp currentDate = new Timestamp(new java.util.Date().getTime());
+            if(contract.getStartDate().after(currentDate)) {
+                contract.setStatus(Constants.ContractStatus.PENDING);
+            } else {
+                contract.setStatus(Constants.ContractStatus.NO_CARD);
+            }
             payment.setPaidDate(new Timestamp(date.getTime()));
             payment.setPaymentMethod("PayPal payment");
             payment.setContent("Đăng ký hợp đồng mới " + contract.getContractCode() );

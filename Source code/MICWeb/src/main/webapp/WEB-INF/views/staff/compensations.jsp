@@ -165,8 +165,8 @@
             <div class="panel-body">
                 <ul>
                     <li>
-                        <span class="label label-gray">Chờ thanh toán</span>
-                        Khách hàng đăng ký online nhưng chưa thanh toán.
+                        <span class="label label-gray">Chưa kích hoạt</span>
+                        Khách hàng đăng ký online nhưng chưa thanh toán hoặc thời điểm bắt đầu hiệu lực của hợp đồng chưa đến.
                     </li>
                     <li>
                         <span class="label label-primary">Chưa có thẻ</span>

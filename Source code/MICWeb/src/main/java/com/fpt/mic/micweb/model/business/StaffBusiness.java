@@ -237,11 +237,16 @@ public class StaffBusiness {
             // Set expired date = start_date + 1 year
             contractEntity.setExpiredDate(DateUtils.addOneYear(contractEntity.getStartDate()));
             // Update contract status
-            if (cardEntity == null) {
-                contractEntity.setStatus(Constants.ContractStatus.NO_CARD);
-            } else {
-                contractEntity.setStatus(Constants.ContractStatus.READY);
-            }
+            // kiem tra neu chua den ngay start hop dong thi de la pending, nguoc lai thi no_card
+            if(contractEntity.getStartDate().after(currentDate)) {
+                contractEntity.setStatus(Constants.ContractStatus.PENDING);
+            } else if (cardEntity == null) {
+                    contractEntity.setStatus(Constants.ContractStatus.NO_CARD);
+                } else {
+                    contractEntity.setStatus(Constants.ContractStatus.READY);
+                }
+
+
             if (contractDao.update(contractEntity) != null) {
                 // Set payment information from dto to entity
                 paymentEntity.setPaidDate(dto.getPaidDate());
