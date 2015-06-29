@@ -156,7 +156,9 @@ public class ContractController extends AuthController {
 
     }
 
-    /* Renew contract */
+    /**
+     * Renew contract, called when user click "Gia han hop dong" button
+     */
     public ResponseObject postRenewContract(R r) {
         //get parameter
         String contractCode = r.equest.getParameter("txtContractCode");
@@ -169,7 +171,7 @@ public class ContractController extends AuthController {
 
         Timestamp newExpiredDate = contractBusiness.getNewExpiredDate(contractCode);
         if (newExpiredDate == null) {
-            return showCustomError(r, contractCode, contractBusiness, "Hợp đồng không tồn tại hoặc trạng thái không hợp lệ!");
+            return showCustomError(r, contractCode, contractBusiness, "Hợp đồng không tồn tại hoặc trạng thái không hợp lệ");
         }
 
         HttpSession session = r.equest.getSession();
