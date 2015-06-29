@@ -112,22 +112,26 @@
                 <!-- /.table-responsive -->
                 <nav class="text-right">
                     <ul class="pagination">
-                        <li>
-                            <a href="?action=${param.action}&keyword=${param.keyword}&page=1" aria-label="Previous">
-                                <span aria-hidden="true">Đầu</span>
-                            </a>
-                        </li>
+                        <c:if test="${param.page != 1 && not empty param.page}">
+                            <li>
+                                <a href="?action=${param.action}&keyword=${param.keyword}&page=1" aria-label="Previous">
+                                    <span aria-hidden="true">Đầu</span>
+                                </a>
+                            </li>
+                        </c:if>
                         <c:forEach begin="1" end="${contractPaginator.pageSize}" var="pageNumber">
-                            <li ${param.page == pageNumber ||
-                            (pageNumber == 1 && empty param.page) ? "class='active'": ""} >
+                            <li ${param.page == pageNumber ||(pageNumber == 1 && empty param.page) ? "class='active'": ""} >
                                 <a href="?action=${param.action}&keyword=${param.keyword}&page=${pageNumber}">${pageNumber}</a>
                             </li>
                         </c:forEach>
-                        <li>
-                            <a href="?action=${param.action}&keyword=${param.keyword}&page=${contractPaginator.pageSize}" aria-label="Next">
-                                <span aria-hidden="true">Cuối</span>
-                            </a>
-                        </li>
+                        <c:if test="${param.page != contractPaginator.pageSize && contractPaginator.pageSize != 1}">
+                            <li>
+                                <a href="?action=${param.action}&keyword=${param.keyword}&page=${contractPaginator.pageSize}"
+                                   aria-label="Next">
+                                    <span aria-hidden="true">Cuối</span>
+                                </a>
+                            </li>
+                        </c:if>
                     </ul>
                 </nav>
             </div>
