@@ -3,6 +3,7 @@ package com.fpt.mic.micweb.controller.customer;
 import com.fpt.mic.micweb.controller.common.AuthController;
 import com.fpt.mic.micweb.framework.Paginator;
 import com.fpt.mic.micweb.framework.responses.RedirectTo;
+import com.fpt.mic.micweb.model.business.ContractBusiness;
 import com.fpt.mic.micweb.model.business.CustomerBusiness;
 import com.fpt.mic.micweb.model.dto.CheckoutRequestDto;
 import com.fpt.mic.micweb.model.dto.UserDto;
@@ -12,8 +13,6 @@ import com.fpt.mic.micweb.framework.responses.JspPage;
 import com.fpt.mic.micweb.framework.R;
 import com.fpt.mic.micweb.framework.responses.ResponseObject;
 import com.fpt.mic.micweb.model.entity.CustomerEntity;
-import com.fpt.mic.micweb.utils.Constants;
-import com.fpt.mic.micweb.utils.DateUtils;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpSession;
@@ -160,21 +159,23 @@ public class ContractController extends AuthController {
     /* Renew contract */
     public ResponseObject postRenewContract(R r) {
         //get parameter
-        Date date = new Date();
         String contractCode = r.equest.getParameter("txtContractCode");
-        CustomerBusiness business = new CustomerBusiness();
-        ContractEntity contract = business.getContractDetail(contractCode);
-        Timestamp expiredDate = contract.getExpiredDate();
-        if (contract.getStatus().equalsIgnoreCase(Constants.ContractStatus.READY)
-            ||contract.getStatus().equalsIgnoreCase(Constants.ContractStatus.NO_CARD)) {
-            expiredDate = DateUtils.addOneYear(expiredDate);
-        } else if (contract.getStatus().equalsIgnoreCase(Constants.ContractStatus.EXPIRED)) {
-            expiredDate = DateUtils.addOneYear(new Timestamp(date.getTime()));
+
+        // Validate: check if the remaining days is greater than 2 months
+        ContractBusiness contractBusiness = new ContractBusiness();
+        if (!contractBusiness.isRenewable(contractCode)) {
+            return showCustomError(r, contractCode, contractBusiness, "Không thể gia hạn hợp đồng còn giá trị trên 2 tháng");
         }
+
+        Timestamp newExpiredDate = contractBusiness.getNewExpiredDate(contractCode);
+        if (newExpiredDate == null) {
+            return showCustomError(r, contractCode, contractBusiness, "Hợp đồng không tồn tại hoặc trạng thái không hợp lệ!");
+        }
+
         HttpSession session = r.equest.getSession();
 
         session.setAttribute("contractCode", contractCode);
-        session.setAttribute("newExpiredDate", expiredDate);
+        session.setAttribute("newExpiredDate", newExpiredDate);
         session.setAttribute("SUCCESS_URL", r.equest.getParameter("successUrl"));
         session.setAttribute("cancel_message", "Bạn đã hủy thanh toán. Xin vui lòng thực hiện lại hoặc đến thanh toán trực tiếp");
         session.setAttribute("redirectLink", "/customer/contract?action=ContractDetail&code=" + contractCode);
@@ -194,6 +195,13 @@ public class ContractController extends AuthController {
 
 
         return new RedirectTo("/public/checkout?action=checkout&checkout=true&" + checkoutRequest.getQueryString());
+    }
+
+    private ResponseObject showCustomError(R r, String contractCode, ContractBusiness contractBusiness, String errorMessage) {
+        r.equest.setAttribute("validateErrors",
+                Collections.singletonList(errorMessage));
+        r.equest.setAttribute("contract", contractBusiness.getContract(contractCode));
+        return new JspPage("customer/contract-detail.jsp");
     }
 
     public ResponseObject getActivePayContract(R r) {
