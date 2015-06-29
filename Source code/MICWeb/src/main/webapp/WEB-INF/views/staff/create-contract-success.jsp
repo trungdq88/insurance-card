@@ -12,15 +12,15 @@
             <div class="col-lg-12">
                 <h1 class="page-header">Thêm hợp đồng mới</h1>
             </div>
-            <!-- /.col-lg-12 -->
         </div>
         <div class="row">
             <div class="col-lg-12">
-                <div class="bs-example well text-center text-primary">
-                    <i class="fa fa-check"></i> Hợp đồng đã được khởi tạo thành công!
+                <div class="well text-primary text-center bs-example">
+                    <i class="fa fa-check"></i>
+                    Hợp đồng đã được khởi tạo thành công!
                 </div>
 
-                <c:set var="info" value="${requestScope.CREATED}"/>
+                <c:set var="info" value="${requestScope.CONTRACT}"/>
 
                 <c:if test="${not empty info}">
                     <div class="table-responsive">
@@ -67,9 +67,27 @@
                 <div class="text-center">
                     <a href="${pageContext.request.contextPath}/staff/contract" type="button" class="btn btn-primary">
                         <i class="fa fa-arrow-left"></i>
-                        Quay lại trang hợp đồng
+                        Danh sách hợp đồng
                     </a>
                 </div>
+
+                <br/>
+
+                <div class="panel panel-success">
+                    <div class="panel-heading">
+                        Hướng dẫn cách phát hành thẻ cho khách hàng
+                    </div>
+                    <div class="panel-body">
+                        Để cấp thẻ cho khách hàng, nhân viên cần sử dụng <b>Ứng dụng in thẻ</b> trên điện thoại để in
+                        thông tin khách hàng lên thẻ.
+                        <ol>
+                            <li>Tìm kiếm thông tin khách hàng trên ứng dụng.</li>
+                            <li>Kiểm tra chính xác thông tin khác hàng.</li>
+                            <li>In thông tin ra thẻ và chuyển phát cho khách hàng.</li>
+                        </ol>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
