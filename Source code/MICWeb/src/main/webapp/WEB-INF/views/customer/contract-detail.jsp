@@ -540,9 +540,10 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>
-                                            <label> Hợp đồng còn</label>
-                                        </td>
+                                        <!-- added by trungdq -->
+                                         <td>
+                                             <label> Hợp đồng còn</label>
+                                         </td>
                                         <td class="text-center" colspan="2">
                                             <input type="hidden" name="txtNewStartDate" id="expiredDate"
                                                    value="${contract.expiredDate}"/>
