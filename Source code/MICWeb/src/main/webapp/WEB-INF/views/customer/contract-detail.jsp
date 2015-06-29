@@ -195,7 +195,6 @@
                                 <div class="form-horizontal">
                                     <div class="alert alert-block alert-error fade
                                      in well well-lg text-info alertRenew hide">
-                                        <button type="button" class="close" data-dismiss="alert">×</button>
                                         <h4 class="alert-heading text-center">KHÔNG THỂ GIA HẠN HỢP ĐỒNG CÒN GIÁ TRỊ
                                             TRÊN 2 THÁNG</h4>
                                     </div>
@@ -370,7 +369,6 @@
             <c:if test="${contract.status.equalsIgnoreCase('Pending')}">
 
                 <div class="alert alert-block alert-error fade in well well-lg text-info">
-                    <button type="button" class="close" data-dismiss="alert">×</button>
                     <h4 class="alert-heading">Hợp đồng của quý khách chưa được thanh toán!</h4>
 
                     <p>Quý khách có thể thanh toán trực tiếp tại công ty
@@ -543,14 +541,20 @@
                                         <td>
                                             <label> Tình trạng hợp đồng</label>
                                         </td>
-                                        <td class="text-center" colspan="2">
-                                            <input type="hidden" name="txtNewStartDate" id="expiredDate"
-                                                   value="${contract.expiredDate}"/>
-                                            <label>
-                                                <input id="dateAvailable" type="text"  disabled="disabled"
-                                                       style="border:none ; background-color: white; width: 100%"/></label>
-                                        </td>
-
+                                        <c:if test="${!contract.status.equalsIgnoreCase('Cancelled')}">
+                                            <td class="text-center" colspan="2">
+                                                <input type="hidden" name="txtNewStartDate" id="expiredDate"
+                                                       value="${contract.expiredDate}"/>
+                                                <label>
+                                                    <input id="dateAvailable" type="text" disabled="disabled"
+                                                           style="border:none ; background-color: white; width: 100%"/></label>
+                                            </td>
+                                        </c:if>
+                                        <c:if test="${contract.status.equalsIgnoreCase('Cancelled')}">
+                                            <td class="text-center" colspan="2">
+                                                <label>Hợp đồng đã bị hủy</label>
+                                            </td>
+                                        </c:if>
                                     </tr>
                                     <tr>
                                         <td>
