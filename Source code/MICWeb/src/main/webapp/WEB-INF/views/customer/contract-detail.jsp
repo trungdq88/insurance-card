@@ -578,7 +578,7 @@
                                         <c:if test="${contract.status.equalsIgnoreCase('Pending')}">
                                             <td class="text-center"><span
                                                     class="label label-default"
-                                                    style="font-size: 16px">Chờ thanh toán</span></td>
+                                                    style="font-size: 16px">Chưa kích hoạt</span></td>
                                         </c:if>
                                         <c:if test="${contract.status.equalsIgnoreCase('Request cancel')}">
                                             <td class="text-center"><span class="label label-warning"

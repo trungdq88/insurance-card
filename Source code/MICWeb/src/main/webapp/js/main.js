@@ -133,7 +133,7 @@ function changeLabelByContractCode(contractStatus) {
     switch (contractStatus) {
         case "Pending":
             $('#contStatus').switchClass("label label-default", "label label-gray", 0);
-            document.getElementById("contStatus").innerHTML = "Chờ thanh toán";
+            document.getElementById("contStatus").innerHTML = "Chưa kích hoạt";
             break;
         case "No card":
             $('#contStatus').switchClass("label label-default", "label label-primary", 0);
