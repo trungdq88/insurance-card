@@ -196,7 +196,8 @@
                                     <div class="alert alert-block alert-error fade
                                      in well well-lg text-info alertRenew hide">
                                         <button type="button" class="close" data-dismiss="alert">×</button>
-                                        <h4 class="alert-heading text-center">KHÔNG THỂ GIA HẠN HỢP ĐỒNG CÒN GIÁ TRỊ TRÊN 2 THÁNG</h4>
+                                        <h4 class="alert-heading text-center">KHÔNG THỂ GIA HẠN HỢP ĐỒNG CÒN GIÁ TRỊ
+                                            TRÊN 2 THÁNG</h4>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-sm-5 text-right">Loại hợp đồng </label>
@@ -539,16 +540,15 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>
-                                            <label> Hợp đồng còn</label>
-                                        </td>
-                                        <td class="text-center">
+
+                                        <td class="text-center" colspan="2">
                                             <input type="hidden" name="txtNewStartDate" id="expiredDate"
                                                    value="${contract.expiredDate}"/>
                                             <label>
-                                                <input id="dateAvailable" type="text" class="text-center "
-                                                       style="border:none ; background-color: white; width: 100%"></label>
+                                                <input id="dateAvailable" type="text"  disabled="disabled"
+                                                       style="border:none ; background-color: white; width: 100%"/></label>
                                         </td>
+
                                     </tr>
                                     <tr>
                                         <td>
@@ -715,7 +715,6 @@
                                 </table>
                             </td>
                         </tr>
-
 
 
                     </table>
