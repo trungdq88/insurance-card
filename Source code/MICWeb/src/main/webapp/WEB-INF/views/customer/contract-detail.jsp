@@ -517,6 +517,7 @@
                                         </td>
                                         <td class="col-md-5">
                                             <fmt:formatDate value="${contract.startDate}" pattern="dd/MM/yyyy"/>
+                                            &nbsp; <fmt:formatDate value="${contract.startDate}" type="time"/>
                                         </td>
                                     </tr>
                                     <tr>
@@ -525,6 +526,7 @@
                                         </td>
                                         <td class="col-md-5">
                                             <fmt:formatDate value="${contract.expiredDate}" pattern="dd/MM/yyyy"/>
+                                            &nbsp; <fmt:formatDate value="${contract.expiredDate}" type="time"/>
                                         </td>
                                     </tr>
                                 </table>
