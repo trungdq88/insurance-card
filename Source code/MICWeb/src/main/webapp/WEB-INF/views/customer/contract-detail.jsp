@@ -193,6 +193,11 @@
                             </div>
                             <div class="modal-body">
                                 <div class="form-horizontal">
+                                    <div class="alert alert-block alert-error fade
+                                     in well well-lg text-info alertRenew hide">
+                                        <button type="button" class="close" data-dismiss="alert">×</button>
+                                        <h4 class="alert-heading text-center">KHÔNG THỂ GIA HẠN HỢP ĐỒNG CÒN GIÁ TRỊ TRÊN 2 THÁNG</h4>
+                                    </div>
                                     <div class="form-group">
                                         <label class="col-sm-5 text-right">Loại hợp đồng </label>
 
@@ -262,7 +267,7 @@
                                 <input type="hidden" name="txtContractCode" value="${contract.contractCode}"/>
                                 <input type="hidden" name="action" value="RenewContract"/>
                                 <input type="hidden" id="contractStatus" value="${contract.status}"/>
-                                <input type="submit" class="btn btn-success" value="Gia hạn hợp đồng"/>
+                                <input type="submit" class="btn btn-success" value="Gia hạn hợp đồng" id="acceptRenew"/>
 
                                 <button type="button" class="btn btn-primary" data-dismiss="modal">Đóng</button>
                             </div>
@@ -504,7 +509,7 @@
                                     </tr>
                                     <tr>
                                         <td class="col-md-5">
-                                            <label class="text-center">Ngày tham gia</label>
+                                            <label class="text-center">Ngày tham gia lúc</label>
                                         </td>
                                         <td class="col-md-5">
                                             <fmt:formatDate value="${contract.startDate}" pattern="dd/MM/yyyy"/>
@@ -531,6 +536,18 @@
                                         </td>
                                         <td>
                                             ${contract.getMicContractTypeByContractTypeId().getDescription()}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <label> Hợp đồng còn</label>
+                                        </td>
+                                        <td class="text-center">
+                                            <input type="hidden" name="txtNewStartDate" id="expiredDate"
+                                                   value="${contract.expiredDate}"/>
+                                            <label>
+                                                <input id="dateAvailable" type="text" class="text-center "
+                                                       style="border:none ; background-color: white; width: 100%"></label>
                                         </td>
                                     </tr>
                                     <tr>
@@ -567,6 +584,7 @@
                                             </td>
                                         </c:if>
                                     </tr>
+
                                 </table>
                             </td>
                         </tr>
@@ -587,11 +605,12 @@
                                     </tr>
                                     <tr>
                                         <td class="col-md-5">
-                                            <label>Loại xe</label>
+                                            <label>Số khung</label>
                                         </td>
                                         <td class="col-md-5">
-                                            ${contract.vehicleType}
+                                            ${contract.chassis}
                                         </td>
+
                                     </tr>
                                 </table>
                             </td>
@@ -599,10 +618,10 @@
                                 <table class="table table-bordered">
                                     <tr>
                                         <td class="col-md-5">
-                                            <label class="text-center">Màu sơn</label>
+                                            <label class="text-center">Nhãn hiệu</label>
                                         </td>
                                         <td class="col-md-5">
-                                            ${contract.color}
+                                            ${contract.brand}
                                         </td>
                                     </tr>
                                     <tr>
@@ -621,22 +640,46 @@
                                 <table class="table table-bordered">
                                     <tr>
                                         <td class="col-md-5">
-                                            <label>Nhãn hiệu</label>
-                                        </td>
-                                        <td class="col-md-5">
-                                            ${contract.modelCode}
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="col-md-5">
                                             <label>Dung tích</label>
                                         </td>
                                         <td class="col-md-5">
                                             ${contract.capacity}
                                         </td>
                                     </tr>
+                                    <tr>
+                                        <td class="col-md-5">
+                                            <label>Số loại</label>
+                                        </td>
+                                        <td class="col-md-5">
+                                            ${contract.modelCode}
+                                        </td>
+                                    </tr>
+
                                 </table>
                             </td>
+                            <td>
+                                <table class="table table-bordered">
+                                    <tr>
+                                        <td class="col-md-5">
+                                            <label class="text-center">Màu sơn</label>
+                                        </td>
+                                        <td class="col-md-5">
+                                            ${contract.color}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="col-md-5">
+                                            <label>Loại xe</label>
+                                        </td>
+                                        <td class="col-md-5">
+                                            ${contract.vehicleType}
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+
+                        <tr>
                             <td>
                                 <table class="table table-bordered">
                                     <tr>
@@ -649,15 +692,30 @@
                                     </tr>
                                     <tr>
                                         <td class="col-md-5">
-                                            <label>Số khung</label>
+                                            <label>Tự trọng</label>
                                         </td>
                                         <td class="col-md-5">
-                                            ${contract.chassis}
+                                            ${contract.capacity}
                                         </td>
                                     </tr>
                                 </table>
                             </td>
+
+                            <td>
+                                <table class="table table-bordered">
+                                    <tr>
+                                        <td class="col-md-5">
+                                            <label>Số người được chở</label>
+                                        </td>
+                                        <td class="col-md-5">
+                                            ${contract.seatCapacity}
+                                        </td>
+                                    </tr>
+
+                                </table>
+                            </td>
                         </tr>
+
 
 
                     </table>
