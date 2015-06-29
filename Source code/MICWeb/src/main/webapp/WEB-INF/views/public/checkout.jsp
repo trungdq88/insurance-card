@@ -30,20 +30,21 @@
                             <h3>
                                 <b> THANH TOÁN</b><br>
 
-                                <p class="lead">Xin lựa chọn phương thức thanh toán sau:</p>
+
 
                             </h3>
                             <form class="form" action="${pageContext.request.contextPath}/public/checkout" method="get">
                                 <div class="row">
                                     <div class="col-sm-9 col-sm-offset-2">
                                         <% HashMap result = (HashMap) request.getAttribute("result"); %>
-                                        <div class="col-sm-9 col-sm-offset-2">
-                                            <p><b>Nội dung thanh toán: </b> ${param.L_PAYMENTREQUEST_0_DESC0}</p>
+                                        <div class="col-sm-9 col-sm-offset-1">
+                                            <p class="text-center"><b>Nội dung thanh toán: </b> ${param.L_PAYMENTREQUEST_0_DESC0}</p>
                                             <input type="hidden" id="amount"
                                                    value="${requestScope.result['PAYMENTREQUEST_0_AMT']}">
 
-                                            <p><b>Tổng tiền phải trả: </b><span id="amount1"></span> (VND)
+                                            <p class="text-center"><b>Tổng tiền phải trả: </b><span id="amount1"></span> (VND)
                                             </p>
+                                            <p class="lead">Xin lựa chọn phương thức thanh toán sau:</p>
                                         </div>
 
                                         <div class="col-sm-6">
