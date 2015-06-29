@@ -6,7 +6,7 @@ package com.fpt.mic.mobile.checker.app.utils;
  */
 public class Settings {
     // Default emulator to host IP
-    public static String serverIp = "10.2.2.2";
+    public static String serverIp = "10.0.2.2";
     // Connect to localhost via simulator: 10.0.2.2
     public static String getApiBase() {
         return "http://" + Settings.serverIp + ":8080/api";
