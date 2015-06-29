@@ -10,6 +10,7 @@ import com.fpt.mic.micweb.utils.StringUtils;
 
 import javax.servlet.ServletContext;
 import java.io.InputStream;
+import java.sql.Timestamp;
 import java.util.List;
 
 /**
@@ -212,11 +213,17 @@ public class StaffBusiness {
         // Check contract
         if (contractEntity != null) {
             // Update contract status
-            if (cardEntity == null) {
-                contractEntity.setStatus(Constants.ContractStatus.NO_CARD);
-            } else {
-                contractEntity.setStatus(Constants.ContractStatus.READY);
-            }
+            // kiem tra neu chua den ngay start hop dong thi de la pending, nguoc lai thi no_card
+            Timestamp currentDate = new Timestamp(new java.util.Date().getTime());
+            if(contractEntity.getStartDate().after(currentDate)) {
+                contractEntity.setStatus(Constants.ContractStatus.PENDING);
+            } else if (cardEntity == null) {
+                    contractEntity.setStatus(Constants.ContractStatus.NO_CARD);
+                } else {
+                    contractEntity.setStatus(Constants.ContractStatus.READY);
+                }
+
+
             if (contractDao.update(contractEntity) != null) {
                 // Set payment information from dto to entity
                 paymentEntity.setPaidDate(dto.getPaidDate());
