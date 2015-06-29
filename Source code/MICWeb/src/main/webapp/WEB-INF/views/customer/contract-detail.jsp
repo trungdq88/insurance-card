@@ -554,7 +554,7 @@
                                     </tr>
                                     <tr>
                                         <td>
-                                            <label class="text-center">Tình trạng hợp đồng</label>
+                                            <label class="text-center">Trạng thái</label>
                                         </td>
                                         <c:if test="${contract.status.equalsIgnoreCase('Ready')}">
                                             <td class="text-center">
