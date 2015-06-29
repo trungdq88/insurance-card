@@ -33,8 +33,15 @@
                                 <div class="col-sm-10 col-sm-offset-3">
                                     <p style="color: red;">Vui lòng thanh toán để hợp đồng có hiệu lực</p>
                                     <p><b>Mã khách hàng:</b> ${register.customerEntity.customerCode}</p>
-                                    <p><b>Mật khẩu:</b> (kiểm tra email ${register.customerEntity.email})
-                                        (${register.emailSuccess ? "<i class='fa fa-check'></i>" : "<i class='fa fa-times'></i>"})</p>
+                                    <p><b>Mật khẩu:</b>
+                                        ${register.emailSuccess ? "<span class='label label-success'>đã gửi</span>" : "<span class='label label-danger'>gửi thất bại</span>"}
+                                        (kiểm tra email ${register.customerEntity.email})
+                                        <button type="button" id="btnResendPassword" class="btn btn-xs btn-primary">
+                                            <i class="fa fa-refresh"></i>
+                                            Gửi lại email
+                                        </button>
+                                    </p>
+
                                     <p><b>Mã hợp đồng:</b> ${register.contractEntity.contractCode}</p>
                                     <input type="hidden" id="amount" value="${register.contractEntity.contractFee}">
                                     <p><b>Phí cần thanh toán:  </b><span id="amount1"></span> VND</p>
@@ -81,6 +88,53 @@
         return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
     };
     $('#amount1').text(parseFloat($('#amount').val()).formatMoney(0));
+
+
+    $(function () {
+        var $btnResendPassword = $('#btnResendPassword');
+        $btnResendPassword.click(function () {
+
+            if ($btnResendPassword.hasClass('sending')) {
+                return;
+            }
+
+            function restoreBtn() {
+                setTimeout(function () {
+                    $btnResendPassword.removeAttr('disabled');
+                    $btnResendPassword.removeClass('sending');
+                    $btnResendPassword.html('<i class="fa fa-refresh"></i> Gửi lại email');
+                }, 2000);
+            }
+
+            var sendFailed = function () {
+                $btnResendPassword.html('<i class="fa fa-times"></i> Gửi không thành công!');
+            };
+
+            var sendSuccess = function () {
+                $btnResendPassword.html('<i class="fa fa-check"></i> Đã gửi thành công!');
+            };
+
+            $btnResendPassword.attr('disabled', 'disabled');
+            $btnResendPassword.html('Đang gửi...');
+            $btnResendPassword.addClass('sending');
+
+            $.ajax({
+                url: '/ajax',
+                method: 'post',
+                data: {
+                    action: 'resendPassword',
+                    customerCode: '${register.customerEntity.customerCode}'
+                },
+                dataType: 'json'
+            }).done(function (msg) {
+                if (msg) {
+                    sendSuccess();
+                } else {
+                    sendFailed();
+                }
+            }).fail(sendFailed).always(restoreBtn);
+        });
+    })
 </script>
 
 <%@ include file="_shared/footer.jsp" %>

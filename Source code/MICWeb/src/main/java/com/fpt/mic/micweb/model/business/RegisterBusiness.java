@@ -73,23 +73,27 @@ public class RegisterBusiness {
         if (customer != null) {
             ContractEntity contract = contractDao.create(contractEntity);
             if (contract != null) {
-                // Send password email
-                InputStream resourceAsStream =
-                        context.getResourceAsStream("/WEB-INF/templates/password-email.html");
-                String content = StringUtils.getString(resourceAsStream);
-                boolean emailSuccess = false;
-                if (content != null) {
-                    content = content.replaceAll("\\{\\{password\\}\\}", customerPassword)
-                            .replaceAll("\\{\\{loginUrl\\}\\}", loginUrl);
-                    emailSuccess = EmailUtils.sendMail(customer.getEmail(), content);
-                }
-
+                boolean emailSuccess = sendPasswordEmail(context, loginUrl, customerPassword, customer);
                 return new RegisterInformationDto(contract, customer, emailSuccess);
             }
 
         }
 
         return null;
+    }
+
+    public boolean sendPasswordEmail(ServletContext context, String loginUrl, String customerPassword, CustomerEntity customer) {
+        // Send password email
+        InputStream resourceAsStream =
+                context.getResourceAsStream("/WEB-INF/templates/password-email.html");
+        String content = StringUtils.getString(resourceAsStream);
+        boolean emailSuccess = false;
+        if (content != null) {
+            content = content.replaceAll("\\{\\{password\\}\\}", customerPassword)
+                    .replaceAll("\\{\\{loginUrl\\}\\}", loginUrl);
+            emailSuccess = EmailUtils.sendMail(customer.getEmail(), content);
+        }
+        return emailSuccess;
     }
 
     public String updateContractPayment(String contractCode, String paymentMethod, String paymentContent, Float amount, String paypalTransId) {
