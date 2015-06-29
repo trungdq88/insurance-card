@@ -36,7 +36,7 @@
                                     <p><b>Mật khẩu:</b>
                                         ${register.emailSuccess ? "<span class='label label-success'>đã gửi</span>" : "<span class='label label-danger'>gửi thất bại</span>"}
                                         (kiểm tra email ${register.customerEntity.email})
-                                        <button type="button" id="btnResendPassword" class="btn btn-xs btn-primary">
+                                        <button data-customer-code="${register.customerEntity.customerCode}" type="button" id="btnResendPassword" class="btn btn-xs btn-primary">
                                             <i class="fa fa-refresh"></i>
                                             Gửi lại email
                                         </button>
@@ -90,51 +90,6 @@
     $('#amount1').text(parseFloat($('#amount').val()).formatMoney(0));
 
 
-    $(function () {
-        var $btnResendPassword = $('#btnResendPassword');
-        $btnResendPassword.click(function () {
-
-            if ($btnResendPassword.hasClass('sending')) {
-                return;
-            }
-
-            function restoreBtn() {
-                setTimeout(function () {
-                    $btnResendPassword.removeAttr('disabled');
-                    $btnResendPassword.removeClass('sending');
-                    $btnResendPassword.html('<i class="fa fa-refresh"></i> Gửi lại email');
-                }, 2000);
-            }
-
-            var sendFailed = function () {
-                $btnResendPassword.html('<i class="fa fa-times"></i> Gửi không thành công!');
-            };
-
-            var sendSuccess = function () {
-                $btnResendPassword.html('<i class="fa fa-check"></i> Đã gửi thành công!');
-            };
-
-            $btnResendPassword.attr('disabled', 'disabled');
-            $btnResendPassword.html('Đang gửi...');
-            $btnResendPassword.addClass('sending');
-
-            $.ajax({
-                url: '/ajax',
-                method: 'post',
-                data: {
-                    action: 'resendPassword',
-                    customerCode: '${register.customerEntity.customerCode}'
-                },
-                dataType: 'json'
-            }).done(function (msg) {
-                if (msg) {
-                    sendSuccess();
-                } else {
-                    sendFailed();
-                }
-            }).fail(sendFailed).always(restoreBtn);
-        });
-    })
 </script>
-
+<script src="/js/resend-email.js"></script>
 <%@ include file="_shared/footer.jsp" %>
