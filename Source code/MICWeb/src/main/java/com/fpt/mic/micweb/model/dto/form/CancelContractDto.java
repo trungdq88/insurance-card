@@ -28,6 +28,15 @@ public class CancelContractDto {
         return contractCode != null && contractDao.read(contractCode) != null;
     }
 
+    @AssertTrue(message = "Lý do hủy hợp đồng không thể là khoảng trắng")
+    private boolean isCancelReasonValid() {
+        if (cancelReason.trim().equals("")) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
     @AssertTrue(message = "Ghi chú hủy phải có độ dài từ 1 đến 2000 ký tự")
     private boolean isCancelNoteValid() {
         if (cancelNote == null || cancelNote.isEmpty()) {
