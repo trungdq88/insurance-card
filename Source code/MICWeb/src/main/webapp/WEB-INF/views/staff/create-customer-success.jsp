@@ -79,10 +79,12 @@
                                         <c:if test="${not info.emailSuccess}">
                                             <span class="label label-warning"><i class='fa fa-times'></i> Chưa gởi</span>
                                             Mật khẩu chưa được gởi
-                                            <a href="#" type="button" class="btn btn-info">
-                                                <i class='fa fa-repeat'></i> Gởi lại
-                                            </a>
                                         </c:if>
+
+                                        <button type="button" data-customer-code="${info.customerEntity.customerCode}" id="btnResendPassword" class="btn btn-xs btn-primary">
+                                            <i class="fa fa-refresh"></i>
+                                            Gửi lại email
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -144,5 +146,5 @@
     </div>
 </div>
 <!-- /#wrapper -->
-
+<script src="/js/resend-email.js"></script>
 <%@ include file="_shared/footer.jsp"%>

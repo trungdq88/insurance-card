@@ -925,7 +925,7 @@
                                     <input type="hidden" name="cancel:cancelReason" value="${cont.cancelReason}"/>
                                 </c:if>
                                 <input id="cancelReason" name="cancel:cancelReason" class="form-control input-md"
-                                       type="text" required maxlength="255" pattern="^\w.+$"
+                                       type="text" required maxlength="250" pattern="^\w.+$"
                                        title="Vui lòng nhập lý do hủy hợp đồng" placeholder="Ví dụ: Mất xe"
                                        value="${cont.cancelReason}">
                             </div>
