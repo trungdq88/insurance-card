@@ -28,10 +28,10 @@
                             <div class="wizard-header">
                                 <h3>
                                     <b> TẠO HỢP ĐỒNG MỚI THÀNH CÔNG </b><br>
-                                    <small>Vui lòng thanh toán để hợp đồng có hiệu lực.</small>
+                                    <small>Vui lòng ghi nhớ những thông tin cần thiết sau:</small>
                                 </h3>
                                 <div class="col-sm-10 col-sm-offset-3">
-                                    <p style="color: red;">Vui lòng ghi nhớ những thông tin cần thiết sau:</p>
+                                    <p style="color: red;">Vui lòng thanh toán để hợp đồng có hiệu lực</p>
                                     <p><b>Mã khách hàng:</b> ${register.customerEntity.customerCode}</p>
                                     <p><b>Mật khẩu:</b> (kiểm tra email ${register.customerEntity.email})
                                         (${register.emailSuccess ? "<i class='fa fa-check'></i>" : "<i class='fa fa-times'></i>"})</p>

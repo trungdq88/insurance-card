@@ -8,6 +8,9 @@
     <c:set var="cont" value="${requestScope.CONTRACT}"/>
     <c:set var="cust" value="${requestScope.CUSTOMER}"/>
     <c:set var="listPayment" value="${requestScope.PAYMENT}"/>
+    <c:set var="listCompensation" value="${requestScope.COMPENSATION}"/>
+    <c:set var="listAccident" value="${requestScope.ACCIDENT}"/>
+    <c:set var="listPunishment" value="${requestScope.PUNISHMENT}"/>
 
     <%@ include file="_shared/navigation.jsp" %>
     <div id="page-wrapper">
@@ -160,7 +163,7 @@
                                 </div>
                             </div>
 
-                            <label class="col-sm-3 control-label">Trạng thái</label>
+                            <label class="col-sm-2 control-label">Trạng thái</label>
 
                             <div class="col-sm-3">
                                 <div class="text-value">
@@ -196,7 +199,7 @@
                         <div class="form-group">
                             <label class="col-sm-4 control-label">Loại hợp đồng</label>
 
-                            <div class="col-sm-6">
+                            <div class="col-sm-7">
                                 <div class="text-value">
                                     ${cont.micContractTypeByContractTypeId.name}
                                 </div>
@@ -233,19 +236,16 @@
                         <div class="form-group">
                             <label class="col-sm-4 control-label">Thời gian đến ngày hết hạn</label>
 
-                            <div class="col-sm-4">
+                            <div class="col-sm-2">
                                 <div class="text-value">
                                     <span id="remain"
                                           style="color:deepskyblue; font-weight: bolder; font-size: large"></span> ngày
                                 </div>
                             </div>
-                        </div>
 
-                        <!-- Contract fee -->
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label">Phí bảo hiểm (VNĐ)</label>
+                            <label class="col-sm-2 control-label">Phí bảo hiểm</label>
 
-                            <div class="col-sm-3">
+                            <div class="col-sm-2">
                                 <div class="text-value">
                                     <fmt:setLocale value="vi_VN"/>
                                     <fmt:formatNumber value="${cont.contractFee}" type="currency"
@@ -262,28 +262,31 @@
                     <!-- Nav tabs -->
                     <ul class="nav nav-tabs" role="tablist">
                         <li role="presentation" class="active">
-                            <a href="#contractinfo" aria-controls="home" role="tab" data-toggle="tab">Thông tin hợp
-                                đồng</a>
+                            <a href="#contractInfo" aria-controls="home" role="tab" data-toggle="tab">
+                                <strong>Thông tin hợp đồng</strong>
+                            </a>
                         </li>
                         <li role="presentation">
-                            <a href="#compensations" aria-controls="profile" role="tab" data-toggle="tab">Lịch sử bồi
-                                thường</a>
+                            <a href="#compensations" aria-controls="profile" role="tab" data-toggle="tab">
+                                <strong>Lịch sử bồi thường</strong>
+                            </a>
                         </li>
                         <li role="presentation">
-                            <a href="#accidents" aria-controls="settings" role="tab" data-toggle="tab">Lịch sử gây tai
-                                nạn</a>
+                            <a href="#accidents" aria-controls="settings" role="tab" data-toggle="tab">
+                                <strong>Lịch sử tai nạn</strong>
+                            </a>
                         </li>
                         <li role="presentation">
-                            <a href="#punishments" aria-controls="messages" role="tab" data-toggle="tab">Lịch sử vi phạm
-                                luật GT</a>
+                            <a href="#punishments" aria-controls="messages" role="tab" data-toggle="tab">
+                                <strong>Lịch sử vi phạm luật ATGT</strong>
+                            </a>
                         </li>
                     </ul>
                 </div>
 
                 <div class="tab-content">
-                    <div role="tabpanel" class="tab-pane active" id="contractinfo">
+                    <div role="tabpanel" class="tab-pane active" id="contractInfo">
                         <br/>
-
                         <form class="form-horizontal">
                             <fieldset>
                                 <legend>Thông tin khách hàng
@@ -515,22 +518,138 @@
                                                         ${payment.micStaffByReceiver.name}
                                                     </a>
                                                 </td>
-                                                </td>
                                                 <td>${payment.paypalTransId}</td>
                                             </tr>
                                         </c:forEach>
                                         </tbody>
                                     </table>
                                 </div>
-
                             </fieldset>
                             <%--/Payment information--%>
                         </form>
                     </div>
-                    <div role="tabpanel" class="tab-pane" id="compensations">...</div>
-                    <div role="tabpanel" class="tab-pane" id="accidents">...</div>
-                    <div role="tabpanel" class="tab-pane" id="punishments">...</div>
+                    <%--/Contract information tab --%>
+                    <div role="tabpanel" class="tab-pane" id="compensations">
+                        <br/>
+                        <form class="form-horizontal">
+                            <fieldset>
+                                <legend>Lịch sử bồi thường</legend>
+                            </fieldset>
+                            <div class="table-responsive">
+                                <table class="table table-striped table-bordered table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Mã</th>
+                                        <th>Thời gian</th>
+                                        <th>Quyết định</th>
+                                        <th>Trạng thái</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <c:forEach var="compensation" items="${listCompensation}" varStatus="counter">
+                                        <tr>
+                                            <td>${counter.count}</td>
+                                            <td>
+                                                <a href="${pageContext.request.contextPath}/staff/compensation?action=detail&code=${compensation.compensationCode}">
+                                                    ${compensation.compensationCode}
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <fmt:formatDate value="${payment.createdDate}" pattern="dd/MM/yyyy"/>
+                                            </td>
+                                            <td>${compensation.decision}</td>
+                                            <td>
+                                                <c:set var="resolve" value="${compensation.resolveDate}"/>
+                                                <c:choose>
+                                                    <c:when test="${not empty resolve}">
+                                                        <span class="label label-success">Đã giải quyết</span>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <span class="label label-default">Chưa giải quyết</span>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                            </td>
+                                        </tr>
+                                    </c:forEach>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </form>
+                    </div>
+                    <%--/Compensation information tab --%>
+                    <div role="tabpanel" class="tab-pane" id="accidents">
+                        <br/>
+                        <form class="form-horizontal">
+                            <fieldset>
+                                <legend>Lịch sử tai nạn</legend>
+                            </fieldset>
+                            <div class="table-responsive">
+                                <table class="table table-striped table-bordered table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Mã</th>
+                                        <th>Nội dung</th>
+                                        <th>Thời gian</th>
+                                        <th>Biên bản</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <c:forEach var="accident" items="${listAccident}" varStatus="counter">
+                                        <tr>
+                                            <td>${counter.count}</td>
+                                            <td>${accident.id}</td>
+                                            <td>${accident.title}</td>
+                                            <td>
+                                                <fmt:formatDate value="${accident.createdDate}" pattern="dd/MM/yyyy"/>
+                                            </td>
+                                            <td>${accident.attachment}</td>
+                                        </tr>
+                                    </c:forEach>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </form>
+                    </div>
+                    <%--/Accident information tab --%>
+                    <div role="tabpanel" class="tab-pane" id="punishments">
+                        <br/>
+                        <form class="form-horizontal">
+                            <fieldset>
+                                <legend>Lịch sử vi phạm luật ATGT</legend>
+                            </fieldset>
+                            <div class="table-responsive">
+                                <table class="table table-striped table-bordered table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Mã</th>
+                                        <th>Nội dung</th>
+                                        <th>Thời gian</th>
+                                        <th>Biên bản</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <c:forEach var="punishment" items="${listPunishment}" varStatus="counter">
+                                        <tr>
+                                            <td>${counter.count}</td>
+                                            <td>${punishment.id}</td>
+                                            <td>${punishment.title}</td>
+                                            <td>
+                                                <fmt:formatDate value="${punishment.createdDate}" pattern="dd/MM/yyyy"/>
+                                            </td>
+                                            <td>${punishment.attachment}</td>
+                                        </tr>
+                                    </c:forEach>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </form>
+                    </div>
+                    <%--/Punishments information tab --%>
                 </div>
+                <%--/Tab content --%>
                 <br/>
                 <br/>
 
@@ -665,8 +784,8 @@
                         <legend>Thông tin hợp đồng bảo hiểm</legend>
 
                         <div id="renewMsg" class="alert alert-info">
-                            <p class="bs-example text-center text-uppercase">
-                                Hợp đồng này còn thời hạn <span id="remain2"></span> ngày
+                            <p class="text-center text-uppercase" style="font-weight: bolder">
+                                Không thể gia hạn hợp đồng còn giá trị trên 2 tháng
                             </p>
                         </div>
 
@@ -757,7 +876,7 @@
                 </div>
                 <div class="modal-footer">
                     <input type="hidden" name="action" value="renew"/>
-                    <button type="submit" class="btn btn-success">
+                    <button type="submit" class="btn btn-success" id="btnProcessRenew">
                         <i class="fa fa-arrow-right"></i>
                         Gia hạn hợp đồng
                     </button>
@@ -862,6 +981,8 @@
         $('#remain2').text(remainDays);
         if (remainDays < 60) {
             $("#renewMsg").hide();
+        } else {
+            document.getElementById("btnProcessRenew").disabled = true;
         }
 
         $('input[type="date"]').not('#paidDate').blur(function () {
