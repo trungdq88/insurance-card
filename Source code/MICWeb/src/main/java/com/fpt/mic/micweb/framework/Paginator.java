@@ -36,6 +36,7 @@ public class Paginator {
         } else {
             try {
                 page = Integer.parseInt(pageStr);
+                if (page == 0) page = 1;
             } catch (NumberFormatException e) {
                 e.printStackTrace();
                 page = 1;
@@ -58,7 +59,9 @@ public class Paginator {
     }
 
     public int getPageSize() {
-        return (int) Math.ceil(getItemSizeCallback.getItemSize() * 1.0 / itemPerPage);
+        int size = (int) Math.ceil(getItemSizeCallback.getItemSize() * 1.0 / itemPerPage);
+        if (size == 0) size = 1;
+        return size;
     }
 
     public Long getItemSize() {

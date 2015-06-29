@@ -130,7 +130,20 @@ $(document).ready(function () {
     /**
      -----------------------------------------Handle Renew Contract----------------------------------------------
      */
+    function DayDiff(date) {
+        var oneDay = 24 * 60 * 60 * 1000;
+        var timeNow = new Date();
+        var expiredDate = new Date(date);
+        return Math.round((expiredDate.getTime() - timeNow.getTime()) / (oneDay));
+    }
+
+    $('#dateAvailable').val(Math.abs(DayDiff($('#expiredDate').val())) + ' ngày');
+
     $('#renew').click(function () {
+        if (DayDiff($('#expiredDate').val()) > 30) {
+            $('#acceptRenew').prop('disabled', true);
+            $('.alertRenew').removeClass('hide');
+        }
         var status = $('#contractStatus').val();
         var myDate = null;
         if (status == 'Ready' || status == 'No card' || status == 'Pending') {
@@ -157,14 +170,16 @@ $(document).ready(function () {
 
         $('#content1').val("Gia hạn hợp đồng từ " + startDate + " đến " + day + '/' + month + '/' + year);
         $('#content2').val("Gia hạn hợp đồng từ " + startDate + " đến " + day + '/' + month + '/' + year);
+
+
     });
     /**
      ------------------------------------------------------------------------------------------------------------------
      */
-    $('#payContract').click(function(){
+    $('#payContract').click(function () {
         $('#payment1').val((parseFloat($('#payAmount1').val())));
         $('#paymentATM1').val((parseFloat($('#payAmount1').val())));
         var contractCode = $('#contractCode').val();
-        $('#content3').val("Thanh toán cho hợp đồng "+ contractCode);
+        $('#content3').val("Thanh toán cho hợp đồng " + contractCode);
     });
 });

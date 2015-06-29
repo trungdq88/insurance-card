@@ -193,6 +193,11 @@
                             </div>
                             <div class="modal-body">
                                 <div class="form-horizontal">
+                                    <div class="alert alert-block alert-error fade
+                                     in well well-lg text-info alertRenew hide">
+                                        <button type="button" class="close" data-dismiss="alert">×</button>
+                                        <h4 class="alert-heading text-center">KHÔNG THỂ GIA HẠN HỢP ĐỒNG CÒN GIÁ TRỊ TRÊN 2 THÁNG</h4>
+                                    </div>
                                     <div class="form-group">
                                         <label class="col-sm-5 text-right">Loại hợp đồng </label>
 
@@ -262,7 +267,7 @@
                                 <input type="hidden" name="txtContractCode" value="${contract.contractCode}"/>
                                 <input type="hidden" name="action" value="RenewContract"/>
                                 <input type="hidden" id="contractStatus" value="${contract.status}"/>
-                                <input type="submit" class="btn btn-success" value="Gia hạn hợp đồng"/>
+                                <input type="submit" class="btn btn-success" value="Gia hạn hợp đồng" id="acceptRenew"/>
 
                                 <button type="button" class="btn btn-primary" data-dismiss="modal">Đóng</button>
                             </div>
@@ -535,6 +540,18 @@
                                     </tr>
                                     <tr>
                                         <td>
+                                            <label> Hợp đồng còn</label>
+                                        </td>
+                                        <td class="text-center">
+                                            <input type="hidden" name="txtNewStartDate" id="expiredDate"
+                                                   value="${contract.expiredDate}"/>
+                                            <label>
+                                                <input id="dateAvailable" type="text" class="text-center "
+                                                       style="border:none ; background-color: white; width: 100%"></label>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
                                             <label class="text-center">Tình trạng hợp đồng</label>
                                         </td>
                                         <c:if test="${contract.status.equalsIgnoreCase('Ready')}">
@@ -567,6 +584,7 @@
                                             </td>
                                         </c:if>
                                     </tr>
+
                                 </table>
                             </td>
                         </tr>
