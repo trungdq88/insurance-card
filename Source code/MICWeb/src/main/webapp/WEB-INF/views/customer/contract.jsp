@@ -93,7 +93,7 @@
                                                 <span class="label label-danger">Hết hạn</span>
                                             </c:if>
                                             <c:if test="${contract.status.equalsIgnoreCase('Pending')}">
-                                                <span class="label label-default">Chưa thanh toán</span>
+                                                <span class="label label-default">Chưa kích hoạt</span>
                                             </c:if>
                                             <c:if test="${contract.status.equalsIgnoreCase('Request cancel')}">
                                                 <span class="label label-warning">Yêu cầu hủy</span>
@@ -146,7 +146,7 @@
             <div class="panel-body">
                 <ul>
                     <li>
-                        <span class="label label-default">Chưa thanh toán</span>
+                        <span class="label label-default">Chưa kích hoạt</span>
                         Khách hàng đăng ký online nhưng chưa thanh toán.
                     </li>
                     <li>
