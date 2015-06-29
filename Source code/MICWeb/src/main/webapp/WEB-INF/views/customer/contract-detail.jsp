@@ -24,7 +24,7 @@
         font-weight: 700;
         color: black;
         border-width: 1px;
-        background-color: lightsalmon;
+        background-color: #FAE6A4;
         padding: 10px;
         border-radius: 0;
         min-width: 400px;
@@ -383,33 +383,28 @@
                                 data-title="
                                      <div class='form-horizontal'>
                                     <div class='form-group'>
-                                        <label class='col-sm-5 text-right'>Loại hợp đồng </label>
+                                        <label class='col-sm-5 text-right'>Loại hợp đồng :</label>
 
                                         <div class='col-sm-7'>
                                             ${contract.getMicContractTypeByContractTypeId().getName()}
                                         </div>
                                     </div>
                                     <div class='form-group'>
-                                        <label class='col-sm-5 text-right'>Thời điểm bắt đầu</label>
+                                        <label class='col-sm-5 text-right'>Thời điểm bắt đầu :</label>
 
                                         <div class='col-sm-4'>
-                                            <input type='hidden' id='startDate'
-                                                   value='${contract.startDate}'/>
-                                            <input type='hidden' name='txtNewStartDate' id='newStartDate'
-                                                   value='${contract.expiredDate}'/>
-
                                             <fmt:formatDate value='${contract.startDate}' pattern='dd/MM/yyyy'/>
                                         </div>
                                     </div>
                                     <div class='form-group'>
-                                        <label class='col-sm-5 text-right'>Thời điểm kết thúc </label>
+                                        <label class='col-sm-5 text-right'>Thời điểm kết thúc :</label>
 
                                         <div class='col-sm-4'>
                                             <fmt:formatDate value='${contract.expiredDate}' pattern='dd/MM/yyyy'/>
                                         </div>
                                     </div>
                                     <div class='form-group'>
-                                        <label class='col-sm-5 text-right'>Phí thanh toán </label>
+                                        <label class='col-sm-5 text-right'>Phí thanh toán :</label>
 
                                         <div class='col-sm-4'>
                                             <fmt:setLocale value='vi_VN'/>
@@ -421,13 +416,9 @@
 
                                     </div>
                                 </div>
-
-
-
                                 ">
                             Thanh toán online bằng Paypal
                         </button>
-
                         <!-- input hidden -->
                         <input id="payAmount1" disabled="disabled" type="hidden"
                                value="${contract.getMicContractTypeByContractTypeId().getPricePerYear()} VNĐ"/>
