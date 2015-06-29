@@ -137,7 +137,9 @@ $(document).ready(function () {
         return Math.round((expiredDate.getTime() - timeNow.getTime()) / (oneDay));
     }
 
-    $('#dateAvailable').val(Math.abs(DayDiff($('#expiredDate').val())) + ' ngày');
+
+    DayDiff($('#expiredDate').val()) > 0 ? $('#dateAvailable').val("Còn hạn: " + Math.abs(DayDiff($('#expiredDate').val())) + ' ngày')
+        : $('#dateAvailable').val("Quá hạn: " + Math.abs(DayDiff($('#expiredDate').val())) + ' ngày');
 
     $('#renew').click(function () {
         if (DayDiff($('#expiredDate').val()) > 30) {

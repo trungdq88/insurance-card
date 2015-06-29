@@ -27,12 +27,12 @@
         <!-- /.row -->
         <div class="panel panel-default">
 
-            <c:set var="info" value="${contractPaginator.getItemsOnCurrentPage(param.page)}"/>
+            <c:set var="contracts" value="${contractPaginator.getItemsOnCurrentPage(param.page)}"/>
 
             <div class="panel-heading">
                 <div class="pull-left center-dropdown-button">
                     <!--<input type="checkbox" class="check-all"/>-->
-                    <b>Có ${contractPaginator.itemSize} hợp đồng (${contractPaginator.pageSize} trang)</b>
+                    <b>Có ${contractPaginator.itemSize} hợp đồng</b>
                 </div>
                 <div class="pull-right no-wrap">
                     <form action="${pageContext.request.contextPath}/staff/contract" method="get">
@@ -59,53 +59,64 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <c:forEach var="cont" items="${info}" varStatus="counter">
-                            <tr>
-                                <td>${(contractPaginator.getCurrentPage(param.page) - 1) * contractPaginator.itemPerPage + counter.count}</td>
-                                <td>
-                                    <a href="${pageContext.request.contextPath}/staff/contract?action=detail&code=${cont.contractCode}">
-                                            ${cont.contractCode}
-                                    </a>
-                                </td>
-                                <td>
-                                    <a href="${pageContext.request.contextPath}/staff/customer?action=detail&code=${cont.customerCode}">
-                                            ${cont.micCustomerByCustomerCode.name}
-                                    </a>
-                                </td>
-                                <td>
-                                    <fmt:formatDate value="${cont.startDate}" pattern="dd/MM/yyyy"/>
-                                </td>
-                                <td>
-                                    <fmt:formatDate value="${cont.expiredDate}" pattern="dd/MM/yyyy"/>
-                                </td>
-                                <td>
-                                    <c:set var="status" value="${cont.status}"/>
-                                    <c:choose>
-                                        <c:when test="${status.equalsIgnoreCase('Pending')}">
-                                            <span class="label label-gray">Chờ thanh toán</span>
-                                        </c:when>
-                                        <c:when test="${status.equalsIgnoreCase('No card')}">
-                                            <span class="label label-primary">Chưa có thẻ</span>
-                                        </c:when>
-                                        <c:when test="${status.equalsIgnoreCase('Ready')}">
-                                            <span class="label label-success">Sẵn sàng</span>
-                                        </c:when>
-                                        <c:when test="${status.equalsIgnoreCase('Request cancel')}">
-                                            <span class="label label-warning">Yêu cầu hủy</span>
-                                        </c:when>
-                                        <c:when test="${status.equalsIgnoreCase('Expired')}">
-                                            <span class="label label-danger">Hết hạn</span>
-                                        </c:when>
-                                        <c:when test="${status.equalsIgnoreCase('Cancelled')}">
-                                            <span class="label label-dark">Đã huỷ</span>
-                                        </c:when>
-                                        <c:otherwise>
-                                            <span class="label label-default">Không trạng thái</span>
-                                        </c:otherwise>
-                                    </c:choose>
-                                </td>
-                            </tr>
-                        </c:forEach>
+                        <c:choose>
+                            <c:when test="${contracts.size() == 0}">
+                                <tr>
+                                    <td colspan="6" style="vertical-align: middle; text-align: center;">
+                                        Không có hợp đồng nào
+                                    </td>
+                                </tr>
+                            </c:when>
+                            <c:otherwise>
+                                <c:forEach var="cont" items="${contracts}" varStatus="counter">
+                                    <tr>
+                                        <td>${(contractPaginator.getCurrentPage(param.page) - 1) * contractPaginator.itemPerPage + counter.count}</td>
+                                        <td>
+                                            <a href="${pageContext.request.contextPath}/staff/contract?action=detail&code=${cont.contractCode}">
+                                                    ${cont.contractCode}
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <a href="${pageContext.request.contextPath}/staff/customer?action=detail&code=${cont.customerCode}">
+                                                    ${cont.micCustomerByCustomerCode.name}
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <fmt:formatDate value="${cont.startDate}" pattern="dd/MM/yyyy"/>
+                                        </td>
+                                        <td>
+                                            <fmt:formatDate value="${cont.expiredDate}" pattern="dd/MM/yyyy"/>
+                                        </td>
+                                        <td>
+                                            <c:set var="status" value="${cont.status}"/>
+                                            <c:choose>
+                                                <c:when test="${status.equalsIgnoreCase('Pending')}">
+                                                    <span class="label label-gray">Chờ thanh toán</span>
+                                                </c:when>
+                                                <c:when test="${status.equalsIgnoreCase('No card')}">
+                                                    <span class="label label-primary">Chưa có thẻ</span>
+                                                </c:when>
+                                                <c:when test="${status.equalsIgnoreCase('Ready')}">
+                                                    <span class="label label-success">Sẵn sàng</span>
+                                                </c:when>
+                                                <c:when test="${status.equalsIgnoreCase('Request cancel')}">
+                                                    <span class="label label-warning">Yêu cầu hủy</span>
+                                                </c:when>
+                                                <c:when test="${status.equalsIgnoreCase('Expired')}">
+                                                    <span class="label label-danger">Hết hạn</span>
+                                                </c:when>
+                                                <c:when test="${status.equalsIgnoreCase('Cancelled')}">
+                                                    <span class="label label-dark">Đã huỷ</span>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <span class="label label-default">Không trạng thái</span>
+                                                </c:otherwise>
+                                            </c:choose>
+                                        </td>
+                                    </tr>
+                                </c:forEach>
+                            </c:otherwise>
+                        </c:choose>
                         </tbody>
                     </table>
                 </div>

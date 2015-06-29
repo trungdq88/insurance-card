@@ -5,12 +5,14 @@ import com.fpt.mic.micweb.model.dto.CreateCustomerInfoDto;
 import com.fpt.mic.micweb.model.dto.form.*;
 import com.fpt.mic.micweb.model.entity.*;
 import com.fpt.mic.micweb.utils.Constants;
+import com.fpt.mic.micweb.utils.DateUtils;
 import com.fpt.mic.micweb.utils.EmailUtils;
 import com.fpt.mic.micweb.utils.StringUtils;
 
 import javax.servlet.ServletContext;
 import java.io.InputStream;
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -120,7 +122,12 @@ public class StaffBusiness {
         // Check contract to add payment
         if (newContract != null) {
             // Add payment info
-            paymentEntity.setPaidDate(dto.getPaidDate());
+            Timestamp paidDate = dto.getPaidDate();
+            if (paidDate.equals(DateUtils.currentDateWithoutTime())) {
+                paymentEntity.setPaidDate(new Timestamp(new Date().getTime()));
+            } else {
+                paymentEntity.setPaidDate(paidDate);
+            }
             paymentEntity.setPaymentMethod("Trực tiếp");
             paymentEntity.setContent("Đăng ký hợp đồng mới " + newContract.getContractCode());
             paymentEntity.setAmount(dto.getAmount());
@@ -153,7 +160,12 @@ public class StaffBusiness {
             }
             if (contractDao.update(contractEntity) != null) {
                 // Add payment information
-                paymentEntity.setPaidDate(dto.getPaidDate());
+                Timestamp paidDate = dto.getPaidDate();
+                if (paidDate.equals(DateUtils.currentDateWithoutTime())) {
+                    paymentEntity.setPaidDate(new Timestamp(new Date().getTime()));
+                } else {
+                    paymentEntity.setPaidDate(paidDate);
+                }
                 paymentEntity.setAmount(dto.getAmount());
                 paymentEntity.setPaymentMethod("Trực tiếp");
                 paymentEntity.setContent("Gia hạn hợp đồng");
@@ -174,7 +186,12 @@ public class StaffBusiness {
         // Check contract
         if (contractEntity != null) {
             // Update contract information
-            contractEntity.setCancelDate(dto.getCancelDate());
+            Timestamp cancelDate = dto.getCancelDate();
+            if (cancelDate.equals(DateUtils.currentDateWithoutTime())) {
+                contractEntity.setCancelDate(new Timestamp(new Date().getTime()));
+            } else {
+                contractEntity.setCancelDate(cancelDate);
+            }
             contractEntity.setCancelReason(dto.getCancelReason());
             contractEntity.setCancelNote(dto.getCancelNote());
             contractEntity.setStatus(Constants.ContractStatus.CANCELLED);
@@ -212,9 +229,15 @@ public class StaffBusiness {
 
         // Check contract
         if (contractEntity != null) {
+            // Set start date
+            Timestamp currentDate = new Timestamp(new Date().getTime());
+            if (currentDate.after(contractEntity.getStartDate())) {
+                contractEntity.setStartDate(currentDate);
+            }
+            // Set expired date = start_date + 1 year
+            contractEntity.setExpiredDate(DateUtils.addOneYear(contractEntity.getStartDate()));
             // Update contract status
             // kiem tra neu chua den ngay start hop dong thi de la pending, nguoc lai thi no_card
-            Timestamp currentDate = new Timestamp(new java.util.Date().getTime());
             if(contractEntity.getStartDate().after(currentDate)) {
                 contractEntity.setStatus(Constants.ContractStatus.PENDING);
             } else if (cardEntity == null) {
