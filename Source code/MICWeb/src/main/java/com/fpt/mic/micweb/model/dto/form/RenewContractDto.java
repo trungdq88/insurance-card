@@ -2,12 +2,12 @@ package com.fpt.mic.micweb.model.dto.form;
 
 import com.fpt.mic.micweb.model.dao.ContractDao;
 import com.fpt.mic.micweb.model.entity.ContractEntity;
+import com.fpt.mic.micweb.utils.DateUtils;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
-import java.util.Date;
 
 /**
  * Created by Kha on 23/06/2015.
@@ -46,9 +46,7 @@ public class RenewContractDto {
         ContractEntity contractEntity = contractDao.read(contractCode);
         if (startDate != null && contractEntity != null) {
             if (contractEntity.getStatus().equals("Expired")) {
-                Timestamp currentTimestamp = new Timestamp(new Date().getTime());
-                System.out.println(startDate);
-                System.out.println(currentTimestamp);
+                Timestamp currentTimestamp = DateUtils.currentDateWithoutTime();
                 return startDate.equals(currentTimestamp);
             } else {
                 Timestamp contractExpiredDate = contractEntity.getExpiredDate();
@@ -95,9 +93,9 @@ public class RenewContractDto {
         ContractDao contractDao = new ContractDao();
         ContractEntity contractEntity = contractDao.read(contractCode);
         if (contractEntity != null) {
-            long currentTerm = contractEntity.getExpiredDate().getTime() - contractEntity.getStartDate().getTime();
+            long currentTerm = contractEntity.getExpiredDate().getTime() - System.currentTimeMillis();
 
-            long MILLISECONDS_IN_TWO_MONTHS =
+            final long MILLISECONDS_IN_TWO_MONTHS =
                     (long) MILLIS_IN_SECOND * SECONDS_IN_MINUTE * MINUTES_IN_HOUR
                             * HOURS_IN_DAY * 60;
             if (currentTerm < MILLISECONDS_IN_TWO_MONTHS) {

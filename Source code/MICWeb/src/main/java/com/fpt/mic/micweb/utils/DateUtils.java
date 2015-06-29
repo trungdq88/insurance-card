@@ -29,6 +29,7 @@ public class DateUtils {
 
         return timeStamp;
     }
+
     public static Timestamp addOneYear (Timestamp timestamp) {
         Date dt = new Date(timestamp.getTime());
         Calendar c = Calendar.getInstance();
@@ -37,5 +38,15 @@ public class DateUtils {
         dt = c.getTime();
         timestamp = new Timestamp(dt.getTime());
         return timestamp;
+    }
+
+    public static Timestamp currentDateWithoutTime() {
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.HOUR_OF_DAY, 0);
+        cal.set(Calendar.MINUTE, 0);
+        cal.set(Calendar.SECOND, 0);
+        cal.set(Calendar.MILLISECOND, 0);
+        Date dateWithoutTime = cal.getTime();
+        return new Timestamp(dateWithoutTime.getTime());
     }
 }
