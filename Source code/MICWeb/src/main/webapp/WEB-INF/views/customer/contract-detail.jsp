@@ -20,31 +20,31 @@
 <style type="text/css">
 
     .tooltip-inner {
-        font-size: 14px;
-        font-weight: 700;
-        color: black;
-        border-width: 1px;
-        background-color: #FAE6A4;
-        padding: 10px;
-        border-radius: 0;
+        font-size: 13px;
+        background-color: #3D6199;
+        color: White;
         min-width: 400px;
+        border-radius: 5px;
     }
 
-    .tooltip.top .tooltip-arrow {
-        border-top-color: #00acd6;
+    .tooltip:before {
+        border-color: transparent #3D6199 transparent transparent;
+        border-right: 6px solid #3D6199;
+        border-style: solid;
+        border-width: 6px 6px 6px 0px;
+        content: "";
+        display: block;
+        height: 0;
+        width: 0;
+        line-height: 0;
+        position: absolute;
+
     }
 
-    .tooltip.right .tooltip-arrow {
-        border-right-color: #00acd6;
+    .tooltip-arrow {
+        display: none;
     }
 
-    .tooltip.bottom .tooltip-arrow {
-        border-bottom-color: #00acd6;
-    }
-
-    .tooltip.left .tooltip-arrow {
-        border-left-color: #00acd6;
-    }
 </style>
 <div id="wrapper">
     <%@ include file="_shared/navigation.jsp" %>
@@ -372,7 +372,7 @@
                     <h4 class="alert-heading">Hợp đồng của quý khách chưa được thanh toán!</h4>
 
                     <p>Quý khách có thể thanh toán trực tiếp tại công ty
-                        <button class="btn" data-toggle="modal"
+                        <button class="btn" data-toggle="modal" title="Hiện địa chỉ công ty"
                                 data-target=".map-modal"><i class="fa fa-map-marker"></i>
                         </button>
                     </p>
