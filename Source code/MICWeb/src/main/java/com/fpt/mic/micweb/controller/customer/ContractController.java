@@ -164,7 +164,8 @@ public class ContractController extends AuthController {
         CustomerBusiness business = new CustomerBusiness();
         ContractEntity contract = business.getContractDetail(contractCode);
         Timestamp expiredDate = contract.getExpiredDate();
-        if (contract.getStatus().equalsIgnoreCase(Constants.ContractStatus.READY)) {
+        if (contract.getStatus().equalsIgnoreCase(Constants.ContractStatus.READY)
+            ||contract.getStatus().equalsIgnoreCase(Constants.ContractStatus.NO_CARD)) {
             expiredDate = DateUtils.addOneYear(expiredDate);
         } else if (contract.getStatus().equalsIgnoreCase(Constants.ContractStatus.EXPIRED)) {
             expiredDate = DateUtils.addOneYear(new Timestamp(date.getTime()));
