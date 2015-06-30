@@ -44,6 +44,9 @@
     .tooltip-arrow {
         display: none;
     }
+    .fontText{
+        font-weight: 500;
+    }
 
 </style>
 <div id="wrapper">
@@ -325,7 +328,7 @@
             </c:if>
             <c:if test="${contract.status.equalsIgnoreCase('Cancelled')}">
                 <form action="${pageContext.request.contextPath}/customer/contract" method="post">
-                    <div class="well well-lg text-center text-danger " style="height:132px !important;">
+                    <div class="well well-lg text-center text-danger " style="height:140px !important;">
                         <div class="form-group">
                             <label class="col-md-6 text-right fa-lg"> Hợp đồng đã bị hủy </label>
 
@@ -500,9 +503,9 @@
                                 <table class="table table-bordered">
                                     <tr>
                                         <td class="col-md-5">
-                                            <label class="text-center">Mã hợp đồng</label>
+                                            <label>Mã hợp đồng</label>
                                         </td>
-                                        <td class="col-md-5">
+                                        <td class="col-md-5 fontText">
                                             ${contract.contractCode}
                                         </td>
                                     </tr>
@@ -510,16 +513,16 @@
                                         <td class="col-md-5">
                                             <label class="text-center">Ngày tham gia lúc</label>
                                         </td>
-                                        <td class="col-md-5">
+                                        <td class="col-md-5 fontText">
                                             <fmt:formatDate value="${contract.startDate}" pattern="dd/MM/yyyy"/>
                                             &nbsp; <fmt:formatDate value="${contract.startDate}" type="time"/>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class="col-md-5">
-                                            <label class="text-center">Ngày hết hạn</label>
+                                            <label>Ngày hết hạn</label>
                                         </td>
-                                        <td class="col-md-5">
+                                        <td class="col-md-5 fontText">
                                             <fmt:formatDate value="${contract.expiredDate}" pattern="dd/MM/yyyy"/>
                                             &nbsp; <fmt:formatDate value="${contract.expiredDate}" type="time"/>
                                         </td>
@@ -530,19 +533,19 @@
                                 <table class="table table-bordered">
 
                                     <tr>
-                                        <td>
-                                            <label class="text-center">Quyền lợi bảo hiểm</label>
+                                        <td class="text-center">
+                                            <label>Quyền lợi bảo hiểm</label>
                                         </td>
-                                        <td>
+                                        <td class="fontText">
                                             ${contract.getMicContractTypeByContractTypeId().getDescription()}
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>
+                                        <td class="text-center">
                                             <label> Tình trạng hợp đồng</label>
                                         </td>
                                         <c:if test="${!contract.status.equalsIgnoreCase('Cancelled')}">
-                                            <td class="text-center" colspan="2">
+                                            <td class="text-center fontText" colspan="2">
                                                 <input type="hidden" name="txtNewStartDate" id="expiredDate"
                                                        value="${contract.expiredDate}"/>
                                                 <label>
@@ -557,8 +560,8 @@
                                         </c:if>
                                     </tr>
                                     <tr>
-                                        <td>
-                                            <label class="text-center">Trạng thái</label>
+                                        <td class="text-center">
+                                            <label>Trạng thái</label>
                                         </td>
                                         <c:if test="${contract.status.equalsIgnoreCase('Ready')}">
                                             <td class="text-center">
@@ -605,7 +608,7 @@
                                         <td class="col-md-5">
                                             <label>Biển số đăng ký</label>
                                         </td>
-                                        <td class="col-md-5">
+                                        <td class="col-md-5 fontText">
                                             ${contract.plate}
                                         </td>
                                     </tr>
@@ -613,7 +616,7 @@
                                         <td class="col-md-5">
                                             <label>Số khung</label>
                                         </td>
-                                        <td class="col-md-5">
+                                        <td class="col-md-5 fontText">
                                             ${contract.chassis}
                                         </td>
 
@@ -626,7 +629,7 @@
                                         <td class="col-md-5">
                                             <label class="text-center">Nhãn hiệu</label>
                                         </td>
-                                        <td class="col-md-5">
+                                        <td class="col-md-5 fontText">
                                             ${contract.brand}
                                         </td>
                                     </tr>
@@ -634,7 +637,7 @@
                                         <td class="col-md-5">
                                             <label>Số máy</label>
                                         </td>
-                                        <td class="col-md-5">
+                                        <td class="col-md-5 fontText">
                                             ${contract.engine}
                                         </td>
                                     </tr>
@@ -648,7 +651,7 @@
                                         <td class="col-md-5">
                                             <label>Dung tích</label>
                                         </td>
-                                        <td class="col-md-5">
+                                        <td class="col-md-5 fontText">
                                             ${contract.capacity}
                                         </td>
                                     </tr>
@@ -656,7 +659,7 @@
                                         <td class="col-md-5">
                                             <label>Số loại</label>
                                         </td>
-                                        <td class="col-md-5">
+                                        <td class="col-md-5 fontText">
                                             ${contract.modelCode}
                                         </td>
                                     </tr>
@@ -669,7 +672,7 @@
                                         <td class="col-md-5">
                                             <label class="text-center">Màu sơn</label>
                                         </td>
-                                        <td class="col-md-5">
+                                        <td class="col-md-5 fontText">
                                             ${contract.color}
                                         </td>
                                     </tr>
@@ -677,7 +680,7 @@
                                         <td class="col-md-5">
                                             <label>Loại xe</label>
                                         </td>
-                                        <td class="col-md-5">
+                                        <td class="col-md-5 fontText">
                                             ${contract.vehicleType}
                                         </td>
                                     </tr>
@@ -692,7 +695,7 @@
                                         <td class="col-md-5">
                                             <label>Năm sản xuất</label>
                                         </td>
-                                        <td class="col-md-5">
+                                        <td class="col-md-5 fontText">
                                             ${contract.yearOfManufacture}
                                         </td>
                                     </tr>
@@ -700,7 +703,7 @@
                                         <td class="col-md-5">
                                             <label>Tự trọng</label>
                                         </td>
-                                        <td class="col-md-5">
+                                        <td class="col-md-5 fontText">
                                             ${contract.capacity}
                                         </td>
                                     </tr>
@@ -713,7 +716,7 @@
                                         <td class="col-md-5">
                                             <label>Số người được chở</label>
                                         </td>
-                                        <td class="col-md-5">
+                                        <td class="col-md-5 fontText">
                                             ${contract.seatCapacity}
                                         </td>
                                     </tr>
