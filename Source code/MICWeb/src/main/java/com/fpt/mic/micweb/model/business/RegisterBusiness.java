@@ -33,6 +33,7 @@ public class RegisterBusiness {
         customerEntity.setEmail(publicRegisterFormDto.getEmail());
         customerEntity.setName(publicRegisterFormDto.getName());
         customerEntity.setPersonalId(publicRegisterFormDto.getPersonalId());
+        customerEntity.setLastModified(new Timestamp(new Date().getTime()));
 
         contractEntity.setPlate(publicRegisterFormDto.getPlate());
         contractEntity.setBrand(publicRegisterFormDto.getBrand());
@@ -52,6 +53,7 @@ public class RegisterBusiness {
         Timestamp startDate = publicRegisterFormDto.getStartDate();
         contractEntity.setStartDate(startDate);
         contractEntity.setExpiredDate(startDate);
+        contractEntity.setLastModified(new Timestamp(new Date().getTime()));
 
         ContractDao contractDao = new ContractDao();
         CustomerDao customerDao = new CustomerDao();
