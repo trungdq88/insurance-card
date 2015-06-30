@@ -124,8 +124,6 @@ public class RegisterController extends BasicController {
             String contractCode = (String) session.getAttribute("CONTRACT_CODE");
             checkoutDto.setStartModifyTime(startModifyTime);
             checkoutDto.setContractLastModified(contractBusiness.getContract(contractCode).getLastModified());
-            System.out.println(checkoutDto.getStartModifyTime()+ " active");
-            System.out.println(checkoutDto.getContractLastModified());
             // Gọi hàm validate ở đây
             List errors = r.ead.validate(checkoutDto);
             // Nếu có lỗi khi validate
