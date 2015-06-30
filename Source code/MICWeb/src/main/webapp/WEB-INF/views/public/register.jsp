@@ -572,7 +572,7 @@
             if ($('#txtWeight').val() == "")
                 $('#txtWeight1').text("Không có");
             else
-                $('#txtWeight1').text($('#txtType').val());
+                $('#txtWeight1').text($('#txtWeight').val());
             if ($('#txtSeatCapacity').val() == "")
                 $('#txtSeatCapacity1').text("Không có");
             else
