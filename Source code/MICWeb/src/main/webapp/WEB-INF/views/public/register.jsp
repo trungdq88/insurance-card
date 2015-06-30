@@ -542,20 +542,41 @@
             $('#txtAddress1').text($('#txtAddress').val());
             $('#txtEmail1').text($('#txtEmail').val());
             $('#txtPhone1').text($('#txtPhone').val());
-            $('#txtPersonalId1').text($('#txtPersonalId').val());
+            if ($('#txtPersonalId').val() == "")
+                $('#txtPersonalId1').text("Không có");
+            else
+                $('#txtPersonalId1').text($('#txtPersonalId').val());
             $('#txtStartDate1').text($('#txtStartDate').val());
             $('#ddlContractType1').text($('#ddlContractType option:selected').attr('label'));
             $('#txtPlate1').text($('#txtPlate').val());
             $('#txtBrand1').text($('#txtBrand').val());
-            $('#txtModel1').text($('#txtModel').val());
-            $('#txtType1').text($('#txtType').val());
-            $('#txtColor1').text($('#txtColor').val());
+            if ($('#txtModel').val() == "")
+                $('#txtModel1').text("Không có");
+            else
+                $('#txtModel1').text($('#txtModel').val());
+            if ($('#txtType').val() == "")
+                $('#txtType1').text("Không có");
+            else
+                $('#txtType1').text($('#txtType').val());
+            if ($('#txtColor').val() == "")
+                $('#txtColor1').text("Không có");
+            else
+                $('#txtColor1').text($('#txtColor').val());
             $('#txtEngine1').text($('#txtEngine').val());
             $('#txtChassis1').text($('#txtChassis').val());
             $('#txtCapacity1').text($('#txtCapacity').val());
-            $('#txtYearOfMan1').text($('#txtYearOfMan').val());
-            $('#txtWeight1').text($('#txtWeight').val());
-            $('#txtSeatCapacity1').text($('#txtSeatCapacity').val());
+            if ($('#txtYearOfMan').val() == "")
+                $('#txtYearOfMan1').text("Không có");
+            else
+                $('#txtYearOfMan1').text($('#txtYearOfMan').val());
+            if ($('#txtWeight').val() == "")
+                $('#txtWeight1').text("Không có");
+            else
+                $('#txtWeight1').text($('#txtType').val());
+            if ($('#txtSeatCapacity').val() == "")
+                $('#txtSeatCapacity1').text("Không có");
+            else
+                $('#txtSeatCapacity1').text($('#txtSeatCapacity').val());
         }
     </script>
 </div>
