@@ -40,23 +40,6 @@ public class CheckoutController extends BasicController {
         if (session == null){
             return new RedirectTo("/error/404");
         }
-        CheckoutDto checkoutDto = new CheckoutDto();
-        ContractBusiness contractBusiness = new ContractBusiness();
-        Timestamp startModifyTime =(Timestamp) session.getAttribute("START_MODIFY_TIME");
-        String contractCode = (String) session.getAttribute("CONTRACT_CODE");
-        checkoutDto.setStartModifyTime(startModifyTime);
-        checkoutDto.setContractLastModified(contractBusiness.getContract(contractCode).getLastModified());
-        System.out.println(checkoutDto.getStartModifyTime());
-        System.out.println(checkoutDto.getContractLastModified());
-        // Gọi hàm validate ở đây
-        List errors = r.ead.validate(checkoutDto);
-
-        // Nếu có lỗi khi validate
-        if (errors.size() > 0) {
-            // Gửi lỗi về trang JSP
-            r.equest.setAttribute("error", errors.get(0));
-            return new JspPage("public/error.jsp");
-        }
         PayPal paypal = new PayPal();
         String url = "public/error.jsp";
         /*
