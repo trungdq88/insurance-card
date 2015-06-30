@@ -61,7 +61,7 @@
                            <c:if test="${contract.status.equalsIgnoreCase('Request cancel') || contract.status.equalsIgnoreCase('Cancelled')
                                        ||contract.status.equalsIgnoreCase('Pending') }">
 
-                               <button type="submit" class="btn btn-info" data-toggle="modal" id="renew"
+                               <button type="submit" class="btn btn-primary" data-toggle="modal" id="renew"
                                        data-target=".renew-contract-modal" disabled="disabled"><i
                                        class="fa fa-refresh"></i> Gia Hạn
                                </button>
@@ -74,7 +74,7 @@
                           <c:if test="${!contract.status.equalsIgnoreCase('Request cancel') && !contract.status.equalsIgnoreCase('Cancelled')
                                      && !contract.status.equalsIgnoreCase('Pending') }">
                               <c:if test="${contract.status.equalsIgnoreCase('Expired')}">
-                                  <button type="submit" class="btn btn-info" data-toggle="modal" id="renew"
+                                  <button type="submit" class="btn btn-primary" data-toggle="modal" id="renew"
                                           data-target=".renew-contract-modal"><i
                                           class="fa fa-refresh"></i> Gia Hạn
                                   </button>
@@ -85,7 +85,7 @@
 
                               </c:if>
                               <c:if test="${!contract.status.equalsIgnoreCase('Expired')}">
-                                  <button type="submit" class="btn btn-info" data-toggle="modal" id="renew"
+                                  <button type="submit" class="btn btn-primary" data-toggle="modal" id="renew"
                                           data-target=".renew-contract-modal"><i
                                           class="fa fa-refresh"></i> Gia Hạn
                                   </button>
@@ -271,9 +271,9 @@
                                 <input type="hidden" name="txtContractCode" value="${contract.contractCode}"/>
                                 <input type="hidden" name="action" value="RenewContract"/>
                                 <input type="hidden" id="contractStatus" value="${contract.status}"/>
-                                <input type="submit" class="btn btn-success" value="Gia hạn hợp đồng" id="acceptRenew"/>
+                                <input type="submit" class="btn btn-primary" value="Gia hạn hợp đồng" id="acceptRenew"/>
 
-                                <button type="button" class="btn btn-primary" data-dismiss="modal">Đóng</button>
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">Đóng</button>
                             </div>
                         </div>
                     </div>
