@@ -35,6 +35,7 @@ public class ContractEntity {
     private String staffCode;
     private int contractTypeId;
     private String customerCode;
+    private Timestamp lastModified;
     private Collection<AccidentEntity> micAccidentsByContractCode;
     private Collection<CardEntity> micCardsByContractCode;
     private Collection<CompensationEntity> micCompensationsByContractCode;
@@ -262,6 +263,16 @@ public class ContractEntity {
 
     public void setCustomerCode(String customerCode) {
         this.customerCode = customerCode;
+    }
+
+    @Basic
+    @Column(name = "last_modified")
+    public Timestamp getLastModified() {
+        return lastModified;
+    }
+
+    public void setLastModified(Timestamp lastModified) {
+        this.lastModified = lastModified;
     }
 
     @Override

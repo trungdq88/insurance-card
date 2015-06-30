@@ -32,6 +32,7 @@ public class CompensationEntity {
     private String decision;
     private String resolveNote;
     private String contractCode;
+    private Timestamp lastModified;
     private ContractEntity micContractByContractCode;
 
     @Id
@@ -242,6 +243,17 @@ public class CompensationEntity {
 
     public void setResolveNote(String resolveNote) {
         this.resolveNote = resolveNote;
+    }
+
+
+    @Basic
+    @Column(name = "last_modified")
+    public Timestamp getLastModified() {
+        return lastModified;
+    }
+
+    public void setLastModified(Timestamp lastModified) {
+        this.lastModified = lastModified;
     }
 
     @Override

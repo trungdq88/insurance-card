@@ -18,6 +18,8 @@ public class PaymentEntity {
     private String receiver;
     private String paypalTransId;
     private String contractCode;
+    private Timestamp startDate;
+    private Timestamp expireDate;
     private ContractEntity micContractByContractCode;
     private StaffEntity micStaffByReceiver;
 
@@ -101,6 +103,22 @@ public class PaymentEntity {
         this.contractCode = contractCode;
     }
 
+    public Timestamp getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(Timestamp startDate) {
+        this.startDate = startDate;
+    }
+
+    public Timestamp getExpireDate() {
+        return expireDate;
+    }
+
+    public void setExpireDate(Timestamp expireDate) {
+        this.expireDate = expireDate;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -110,28 +128,30 @@ public class PaymentEntity {
 
         if (id != that.id) return false;
         if (Float.compare(that.amount, amount) != 0) return false;
-        if (paidDate != null ? !paidDate.equals(that.paidDate) : that.paidDate != null) return false;
-        if (paymentMethod != null ? !paymentMethod.equals(that.paymentMethod) : that.paymentMethod != null)
-            return false;
-        if (content != null ? !content.equals(that.content) : that.content != null) return false;
+        if (!paidDate.equals(that.paidDate)) return false;
+        if (!paymentMethod.equals(that.paymentMethod)) return false;
+        if (!content.equals(that.content)) return false;
         if (receiver != null ? !receiver.equals(that.receiver) : that.receiver != null) return false;
         if (paypalTransId != null ? !paypalTransId.equals(that.paypalTransId) : that.paypalTransId != null)
             return false;
-        if (contractCode != null ? !contractCode.equals(that.contractCode) : that.contractCode != null) return false;
+        if (!contractCode.equals(that.contractCode)) return false;
+        if (startDate != null ? !startDate.equals(that.startDate) : that.startDate != null) return false;
+        return !(expireDate != null ? !expireDate.equals(that.expireDate) : that.expireDate != null);
 
-        return true;
     }
 
     @Override
     public int hashCode() {
         int result = id;
-        result = 31 * result + (paidDate != null ? paidDate.hashCode() : 0);
-        result = 31 * result + (paymentMethod != null ? paymentMethod.hashCode() : 0);
-        result = 31 * result + (content != null ? content.hashCode() : 0);
+        result = 31 * result + paidDate.hashCode();
+        result = 31 * result + paymentMethod.hashCode();
+        result = 31 * result + content.hashCode();
         result = 31 * result + (amount != +0.0f ? Float.floatToIntBits(amount) : 0);
         result = 31 * result + (receiver != null ? receiver.hashCode() : 0);
         result = 31 * result + (paypalTransId != null ? paypalTransId.hashCode() : 0);
-        result = 31 * result + (contractCode != null ? contractCode.hashCode() : 0);
+        result = 31 * result + contractCode.hashCode();
+        result = 31 * result + (startDate != null ? startDate.hashCode() : 0);
+        result = 31 * result + (expireDate != null ? expireDate.hashCode() : 0);
         return result;
     }
 

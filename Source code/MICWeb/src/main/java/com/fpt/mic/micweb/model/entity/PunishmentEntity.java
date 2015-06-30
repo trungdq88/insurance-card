@@ -15,6 +15,7 @@ public class PunishmentEntity {
     private String title;
     private String attachment;
     private String contractCode;
+    private Timestamp lastModified;
     private ContractEntity micContractByContractCode;
 
     @Id
@@ -65,6 +66,17 @@ public class PunishmentEntity {
 
     public void setContractCode(String contractCode) {
         this.contractCode = contractCode;
+    }
+
+
+    @Basic
+    @Column(name = "last_modified")
+    public Timestamp getLastModified() {
+        return lastModified;
+    }
+
+    public void setLastModified(Timestamp lastModified) {
+        this.lastModified = lastModified;
     }
 
     @Override
