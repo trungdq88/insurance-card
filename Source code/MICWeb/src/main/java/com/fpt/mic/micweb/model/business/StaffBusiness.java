@@ -42,6 +42,8 @@ public class StaffBusiness {
         customerEntity.setEmail(dto.getEmail());
         customerEntity.setPhone(dto.getPhone());
         customerEntity.setPersonalId(dto.getPersonalID());
+        // Set lastModifed is current date
+        customerEntity.setLastModified(new Timestamp(new Date().getTime()));
         // get customer password
         String customerPassword = StringUtils.randomString();
         // TODO: encrypt password
@@ -117,6 +119,8 @@ public class StaffBusiness {
         contractEntity.setSeatCapacity(dto.getSeatCapacity());
         // Code of the staff created this contract
         contractEntity.setStaffCode(receiver.getStaffCode());
+        // Set lastModified is current date
+        contractEntity.setLastModified(new Timestamp(new Date().getTime()));
         // Create new contract
         ContractEntity newContract = contractDao.create(contractEntity);
         // Check contract to add payment
