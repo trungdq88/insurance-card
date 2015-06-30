@@ -142,7 +142,7 @@ $(document).ready(function () {
         : $('#dateAvailable').val("Quá hạn: " + Math.abs(DayDiff($('#expiredDate').val())) + ' ngày');
 
     $('#renew').click(function () {
-        if (DayDiff($('#expiredDate').val()) > 30) {
+        if (DayDiff($('#expiredDate').val()) > 60) {
             $('#acceptRenew').prop('disabled', true);
             $('.alertRenew').removeClass('hide');
         }
