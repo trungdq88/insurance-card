@@ -93,7 +93,9 @@ public class RegisterBusiness {
         String content = StringUtils.getString(resourceAsStream);
         boolean emailSuccess = false;
         if (content != null) {
-            content = content.replaceAll("\\{\\{password\\}\\}", customerPassword)
+            content = content
+                    .replaceAll("\\{\\{customerCode\\}\\}", customer.getCustomerCode())
+                    .replaceAll("\\{\\{password\\}\\}", customerPassword)
                     .replaceAll("\\{\\{loginUrl\\}\\}", loginUrl);
             emailSuccess = EmailUtils.sendMail(customer.getEmail(), content);
         }

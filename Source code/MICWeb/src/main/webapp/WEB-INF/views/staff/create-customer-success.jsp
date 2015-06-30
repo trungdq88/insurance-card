@@ -113,14 +113,12 @@
 
                 <div class="text-center">
                     <a href="${pageContext.request.contextPath}/staff/contract?action=create&code=${info.customerEntity.customerCode}"
-                       type="button" class="btn btn-primary">
-                        <i class="fa fa-arrow-right"></i>
-                        Thêm hợp đồng cho khách hàng này
+                       type="button" class="btn btn-default">
+                        <i class="fa fa-arrow-right"></i> <strong>Thêm hợp đồng cho khách hàng này</strong>
                     </a>
                     <br/><br/>
-                    <a href="${pageContext.request.contextPath}/staff/customer" type="button" class="btn btn-success">
-                        <i class="fa fa-arrow-left"></i>
-                        Danh sách khách hàng
+                    <a href="${pageContext.request.contextPath}/staff/customer" type="button" class="btn btn-default">
+                        <i class="fa fa-arrow-left"></i> <strong>Danh sách khách hàng</strong>
                     </a>
                 </div>
 
