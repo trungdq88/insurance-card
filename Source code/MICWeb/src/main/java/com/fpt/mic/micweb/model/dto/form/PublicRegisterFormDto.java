@@ -4,6 +4,7 @@ import com.fpt.mic.micweb.model.dao.ContractDao;
 import com.fpt.mic.micweb.model.dao.ContractTypeDao;
 import com.fpt.mic.micweb.model.dao.CustomerDao;
 import com.fpt.mic.micweb.model.entity.ContractTypeEntity;
+import com.fpt.mic.micweb.utils.DateUtils;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.hibernate.validator.constraints.Range;
 
@@ -65,11 +66,7 @@ public class PublicRegisterFormDto {
     @AssertTrue(message = "Ngày bắt đầu phải kể từ ngày hôm nay trở đi")
     private boolean isValidStartDate() {
         if (startDate != null) {
-            Timestamp currentDate = new Timestamp(new Date().getTime());
-            currentDate.setHours(0);
-            currentDate.setMinutes(0);
-            currentDate.setSeconds(0);
-            currentDate.setNanos(0);
+            Timestamp currentDate = DateUtils.currentDateWithoutTime();
             return !startDate.before(currentDate);
         }
         return false;
