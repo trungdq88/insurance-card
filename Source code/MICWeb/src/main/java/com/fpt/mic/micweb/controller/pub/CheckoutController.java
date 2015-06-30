@@ -3,8 +3,11 @@ package com.fpt.mic.micweb.controller.pub;
 import com.fpt.mic.micweb.framework.BasicController;
 import com.fpt.mic.micweb.framework.R;
 import com.fpt.mic.micweb.framework.responses.JspPage;
+import com.fpt.mic.micweb.framework.responses.RedirectTo;
 import com.fpt.mic.micweb.framework.responses.ResponseObject;
+import com.fpt.mic.micweb.model.business.ContractBusiness;
 import com.fpt.mic.micweb.model.dto.PayPal;
+import com.fpt.mic.micweb.model.dto.form.CheckoutDto;
 import com.fpt.mic.micweb.utils.CurrencyUtils;
 import com.fpt.mic.micweb.utils.NumberUtils;
 import com.fpt.mic.micweb.utils.StringUtils;
@@ -14,7 +17,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpSession;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.sql.Timestamp;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -31,7 +36,27 @@ public class CheckoutController extends BasicController {
      */
     public ResponseObject getCheckout(R r) {
         // payment
-        HttpSession session = r.equest.getSession(true);
+        HttpSession session = r.equest.getSession(false);
+        if (session == null){
+            return new RedirectTo("/error/404");
+        }
+        CheckoutDto checkoutDto = new CheckoutDto();
+        ContractBusiness contractBusiness = new ContractBusiness();
+        Timestamp startModifyTime =(Timestamp) session.getAttribute("START_MODIFY_TIME");
+        String contractCode = (String) session.getAttribute("CONTRACT_CODE");
+        checkoutDto.setStartModifyTime(startModifyTime);
+        checkoutDto.setContractLastModified(contractBusiness.getContract(contractCode).getLastModified());
+        System.out.println(checkoutDto.getStartModifyTime());
+        System.out.println(checkoutDto.getContractLastModified());
+        // Gọi hàm validate ở đây
+        List errors = r.ead.validate(checkoutDto);
+
+        // Nếu có lỗi khi validate
+        if (errors.size() > 0) {
+            // Gửi lỗi về trang JSP
+            r.equest.setAttribute("error", errors.get(0));
+            return new JspPage("public/error.jsp");
+        }
         PayPal paypal = new PayPal();
         String url = "public/error.jsp";
         /*
