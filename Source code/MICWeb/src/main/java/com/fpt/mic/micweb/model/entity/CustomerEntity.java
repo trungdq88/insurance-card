@@ -1,6 +1,7 @@
 package com.fpt.mic.micweb.model.entity;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.util.Collection;
 
 /**
@@ -17,6 +18,8 @@ public class CustomerEntity {
     private String phone;
     private String personalId;
     private String password;
+    private int isDefaultPassword;
+    private Timestamp lastModified;
     private Collection<ContractEntity> micContractsByCustomerCode;
     private Collection<NewCardRequestEntity> micNewCardRequestsByCustomerCode;
 
@@ -90,6 +93,26 @@ public class CustomerEntity {
         this.password = password;
     }
 
+    @Basic
+    @Column(name = "is_default_password")
+    public int getIsDefaultPassword() {
+        return isDefaultPassword;
+    }
+
+    public void setIsDefaultPassword(int isDefaultPassword) {
+        this.isDefaultPassword = isDefaultPassword;
+    }
+
+    @Basic
+    @Column(name = "last_modified")
+    public Timestamp getLastModified() {
+        return lastModified;
+    }
+
+    public void setLastModified(Timestamp lastModified) {
+        this.lastModified = lastModified;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -97,6 +120,7 @@ public class CustomerEntity {
 
         CustomerEntity that = (CustomerEntity) o;
 
+        if (isDefaultPassword != that.isDefaultPassword) return false;
         if (customerCode != null ? !customerCode.equals(that.customerCode) : that.customerCode != null) return false;
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
         if (address != null ? !address.equals(that.address) : that.address != null) return false;
@@ -104,8 +128,8 @@ public class CustomerEntity {
         if (phone != null ? !phone.equals(that.phone) : that.phone != null) return false;
         if (personalId != null ? !personalId.equals(that.personalId) : that.personalId != null) return false;
         if (password != null ? !password.equals(that.password) : that.password != null) return false;
+        return !(lastModified != null ? !lastModified.equals(that.lastModified) : that.lastModified != null);
 
-        return true;
     }
 
     @Override
@@ -117,6 +141,8 @@ public class CustomerEntity {
         result = 31 * result + (phone != null ? phone.hashCode() : 0);
         result = 31 * result + (personalId != null ? personalId.hashCode() : 0);
         result = 31 * result + (password != null ? password.hashCode() : 0);
+        result = 31 * result + isDefaultPassword;
+        result = 31 * result + (lastModified != null ? lastModified.hashCode() : 0);
         return result;
     }
 
