@@ -13,6 +13,7 @@ import com.fpt.mic.micweb.framework.responses.JspPage;
 import com.fpt.mic.micweb.framework.R;
 import com.fpt.mic.micweb.framework.responses.ResponseObject;
 import com.fpt.mic.micweb.model.entity.CustomerEntity;
+import com.fpt.mic.micweb.utils.DateUtils;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpSession;
@@ -107,7 +108,7 @@ public class ContractController extends AuthController {
         CancelContractDto cancelDto = (CancelContractDto) r.ead.entity(CancelContractDto.class, "cancel");
         CustomerBusiness customerBusiness = new CustomerBusiness();
         java.util.Date date = new java.util.Date();
-        cancelDto.setCancelDate(new Timestamp(date.getTime()));
+        cancelDto.setCancelDate(DateUtils.currentDateWithoutTime());
         if (cancelDto.getContractCode() == null) {
             return new RedirectTo("/error/404");
         } else {
