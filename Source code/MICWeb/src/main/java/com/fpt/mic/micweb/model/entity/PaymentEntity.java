@@ -19,7 +19,7 @@ public class PaymentEntity {
     private String paypalTransId;
     private String contractCode;
     private Timestamp startDate;
-    private Timestamp expireDate;
+    private Timestamp expiredDate;
     private ContractEntity micContractByContractCode;
     private StaffEntity micStaffByReceiver;
 
@@ -103,6 +103,8 @@ public class PaymentEntity {
         this.contractCode = contractCode;
     }
 
+    @Basic
+    @Column(name = "start_date")
     public Timestamp getStartDate() {
         return startDate;
     }
@@ -111,12 +113,14 @@ public class PaymentEntity {
         this.startDate = startDate;
     }
 
-    public Timestamp getExpireDate() {
-        return expireDate;
+    @Basic
+    @Column(name = "expired_date")
+    public Timestamp getExpiredDate() {
+        return expiredDate;
     }
 
-    public void setExpireDate(Timestamp expireDate) {
-        this.expireDate = expireDate;
+    public void setExpiredDate(Timestamp expiredDate) {
+        this.expiredDate = expiredDate;
     }
 
     @Override
@@ -136,7 +140,7 @@ public class PaymentEntity {
             return false;
         if (!contractCode.equals(that.contractCode)) return false;
         if (startDate != null ? !startDate.equals(that.startDate) : that.startDate != null) return false;
-        return !(expireDate != null ? !expireDate.equals(that.expireDate) : that.expireDate != null);
+        return !(expiredDate != null ? !expiredDate.equals(that.expiredDate) : that.expiredDate != null);
 
     }
 
@@ -151,7 +155,7 @@ public class PaymentEntity {
         result = 31 * result + (paypalTransId != null ? paypalTransId.hashCode() : 0);
         result = 31 * result + contractCode.hashCode();
         result = 31 * result + (startDate != null ? startDate.hashCode() : 0);
-        result = 31 * result + (expireDate != null ? expireDate.hashCode() : 0);
+        result = 31 * result + (expiredDate != null ? expiredDate.hashCode() : 0);
         return result;
     }
 
