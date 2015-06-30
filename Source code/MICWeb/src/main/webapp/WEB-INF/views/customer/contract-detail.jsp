@@ -44,7 +44,8 @@
     .tooltip-arrow {
         display: none;
     }
-    .fontText{
+
+    .fontText {
         font-weight: 500;
     }
 
@@ -358,7 +359,14 @@
                             <label class="col-md-3 text-right">Ghi chú hủy: </label>
 
                             <div class="col-md-9 text-left">
-                                    ${contract.cancelNote}
+                                <c:choose>
+                                    <c:when test="${empty contract.cancelNote}">
+                                        <label class="empty-value">Không có</label>
+                                    </c:when>
+                                    <c:otherwise>
+                                        ${contract.cancelNote}
+                                    </c:otherwise>
+                                </c:choose>
                             </div>
                         </div>
                     </div>
@@ -654,7 +662,14 @@
                                             <label>Số loại</label>
                                         </td>
                                         <td class="col-md-5 fontText">
-                                            ${contract.modelCode}
+                                            <c:choose>
+                                                <c:when test="${empty contract.modelCode}">
+                                                    <label class="empty-value">Không có</label>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    ${contract.modelCode}
+                                                </c:otherwise>
+                                            </c:choose>
                                         </td>
                                     </tr>
 
@@ -667,7 +682,14 @@
                                             <label class="text-center">Màu sơn</label>
                                         </td>
                                         <td class="col-md-5 fontText">
-                                            ${contract.color}
+                                            <c:choose>
+                                                <c:when test="${empty contract.color}">
+                                                    <label class="empty-value">Không có</label>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    ${contract.color}
+                                                </c:otherwise>
+                                            </c:choose>
                                         </td>
                                     </tr>
                                     <tr>
@@ -675,7 +697,14 @@
                                             <label>Loại xe</label>
                                         </td>
                                         <td class="col-md-5 fontText">
-                                            ${contract.vehicleType}
+                                            <c:choose>
+                                                <c:when test="${empty contract.vehicleType}">
+                                                    <label class="empty-value">Không có</label>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    ${contract.vehicleType}
+                                                </c:otherwise>
+                                            </c:choose>
                                         </td>
                                     </tr>
                                 </table>
@@ -690,7 +719,14 @@
                                             <label>Năm sản xuất</label>
                                         </td>
                                         <td class="col-md-5 fontText">
-                                            ${contract.yearOfManufacture}
+                                            <c:choose>
+                                                <c:when test="${empty contract.yearOfManufacture}">
+                                                    <label class="empty-value">Không có</label>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    ${contract.yearOfManufacture}
+                                                </c:otherwise>
+                                            </c:choose>
                                         </td>
                                     </tr>
                                     <tr>
@@ -711,7 +747,14 @@
                                             <label>Số người được chở</label>
                                         </td>
                                         <td class="col-md-5 fontText">
-                                            ${contract.seatCapacity}
+                                            <c:choose>
+                                                <c:when test="${empty contract.seatCapacity}">
+                                                    <label class="empty-value">Không có</label>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    ${contract.seatCapacity}
+                                                </c:otherwise>
+                                            </c:choose>
                                         </td>
                                     </tr>
 
