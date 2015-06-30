@@ -4,6 +4,28 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     metadata-complete="false"
     xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
+    <servlet>
+        <servlet-name>QuartzInitializer</servlet-name>
+        <display-name>Quartz Initializer Servlet</display-name>
+        <servlet-class>
+            org.quartz.ee.servlet.QuartzInitializerServlet
+        </servlet-class>
+        <load-on-startup>
+            1
+        </load-on-startup>
+        <init-param>
+            <param-name>shutdown-on-unload</param-name>
+            <param-value>true</param-value>
+        </init-param>
+        <init-param>
+            <param-name>wait-on-shutdown</param-name>
+            <param-value>true</param-value>
+        </init-param>
+        <init-param>
+            <param-name>start-scheduler-on-load</param-name>
+            <param-value>true</param-value>
+        </init-param>
+    </servlet>
     <filter>
         <filter-name>CharsetFilter</filter-name>
         <filter-class>com.fpt.mic.micweb.framework.CharsetFilter</filter-class>
