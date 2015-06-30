@@ -105,7 +105,7 @@ public class RenewContractDto {
         ContractEntity contractEntity = contractDao.read(contractCode);
         Timestamp startDate;
         if (contractEntity.getStatus().equals("Expired")) {
-            startDate = new Timestamp(new Date().getTime());
+            startDate = DateUtils.currentDateWithoutTime();
         } else {
             startDate = contractEntity.getExpiredDate();
         }

@@ -122,12 +122,7 @@ public class StaffBusiness {
         // Check contract to add payment
         if (newContract != null) {
             // Add payment info
-            Timestamp paidDate = dto.getPaidDate();
-            if (paidDate.equals(DateUtils.currentDateWithoutTime())) {
-                paymentEntity.setPaidDate(new Timestamp(new Date().getTime()));
-            } else {
-                paymentEntity.setPaidDate(paidDate);
-            }
+            paymentEntity.setPaidDate(dto.getPaidDate());
             paymentEntity.setPaymentMethod("Trực tiếp");
             paymentEntity.setContent("Đăng ký hợp đồng mới " + newContract.getContractCode());
             paymentEntity.setAmount(dto.getAmount());
@@ -160,12 +155,7 @@ public class StaffBusiness {
             }
             if (contractDao.update(contractEntity) != null) {
                 // Add payment information
-                Timestamp paidDate = dto.getPaidDate();
-                if (paidDate.equals(DateUtils.currentDateWithoutTime())) {
-                    paymentEntity.setPaidDate(new Timestamp(new Date().getTime()));
-                } else {
-                    paymentEntity.setPaidDate(paidDate);
-                }
+                paymentEntity.setPaidDate(dto.getPaidDate());
                 paymentEntity.setAmount(dto.getAmount());
                 paymentEntity.setPaymentMethod("Trực tiếp");
                 paymentEntity.setContent("Gia hạn hợp đồng");
@@ -186,12 +176,7 @@ public class StaffBusiness {
         // Check contract
         if (contractEntity != null) {
             // Update contract information
-            Timestamp cancelDate = dto.getCancelDate();
-            if (cancelDate.equals(DateUtils.currentDateWithoutTime())) {
-                contractEntity.setCancelDate(new Timestamp(new Date().getTime()));
-            } else {
-                contractEntity.setCancelDate(cancelDate);
-            }
+            contractEntity.setCancelDate(dto.getCancelDate());
             contractEntity.setCancelReason(dto.getCancelReason());
             contractEntity.setCancelNote(dto.getCancelNote());
             contractEntity.setStatus(Constants.ContractStatus.CANCELLED);
@@ -230,7 +215,7 @@ public class StaffBusiness {
         // Check contract
         if (contractEntity != null) {
             // Set start date
-            Timestamp currentDate = new Timestamp(new Date().getTime());
+            Timestamp currentDate = DateUtils.currentDateWithoutTime();
             if (currentDate.after(contractEntity.getStartDate())) {
                 contractEntity.setStartDate(currentDate);
             }
@@ -238,14 +223,13 @@ public class StaffBusiness {
             contractEntity.setExpiredDate(DateUtils.addOneYear(contractEntity.getStartDate()));
             // Update contract status
             // kiem tra neu chua den ngay start hop dong thi de la pending, nguoc lai thi no_card
-            if(contractEntity.getStartDate().after(currentDate)) {
+            if (contractEntity.getStartDate().after(currentDate)) {
                 contractEntity.setStatus(Constants.ContractStatus.PENDING);
             } else if (cardEntity == null) {
-                    contractEntity.setStatus(Constants.ContractStatus.NO_CARD);
-                } else {
-                    contractEntity.setStatus(Constants.ContractStatus.READY);
-                }
-
+                contractEntity.setStatus(Constants.ContractStatus.NO_CARD);
+            } else {
+                contractEntity.setStatus(Constants.ContractStatus.READY);
+            }
 
             if (contractDao.update(contractEntity) != null) {
                 // Set payment information from dto to entity
