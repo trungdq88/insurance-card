@@ -121,28 +121,28 @@ public class CustomerEntity {
         CustomerEntity that = (CustomerEntity) o;
 
         if (isDefaultPassword != that.isDefaultPassword) return false;
-        if (customerCode != null ? !customerCode.equals(that.customerCode) : that.customerCode != null) return false;
-        if (name != null ? !name.equals(that.name) : that.name != null) return false;
-        if (address != null ? !address.equals(that.address) : that.address != null) return false;
-        if (email != null ? !email.equals(that.email) : that.email != null) return false;
-        if (phone != null ? !phone.equals(that.phone) : that.phone != null) return false;
+        if (!customerCode.equals(that.customerCode)) return false;
+        if (!name.equals(that.name)) return false;
+        if (!address.equals(that.address)) return false;
+        if (!email.equals(that.email)) return false;
+        if (!phone.equals(that.phone)) return false;
         if (personalId != null ? !personalId.equals(that.personalId) : that.personalId != null) return false;
-        if (password != null ? !password.equals(that.password) : that.password != null) return false;
-        return !(lastModified != null ? !lastModified.equals(that.lastModified) : that.lastModified != null);
+        if (!password.equals(that.password)) return false;
+        return lastModified.equals(that.lastModified);
 
     }
 
     @Override
     public int hashCode() {
-        int result = customerCode != null ? customerCode.hashCode() : 0;
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (address != null ? address.hashCode() : 0);
-        result = 31 * result + (email != null ? email.hashCode() : 0);
-        result = 31 * result + (phone != null ? phone.hashCode() : 0);
+        int result = customerCode.hashCode();
+        result = 31 * result + name.hashCode();
+        result = 31 * result + address.hashCode();
+        result = 31 * result + email.hashCode();
+        result = 31 * result + phone.hashCode();
         result = 31 * result + (personalId != null ? personalId.hashCode() : 0);
-        result = 31 * result + (password != null ? password.hashCode() : 0);
+        result = 31 * result + password.hashCode();
         result = 31 * result + isDefaultPassword;
-        result = 31 * result + (lastModified != null ? lastModified.hashCode() : 0);
+        result = 31 * result + lastModified.hashCode();
         return result;
     }
 
