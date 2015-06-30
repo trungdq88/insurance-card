@@ -25,9 +25,8 @@
                         <legend>
                             Thông tin cá nhân
                             <div class="pull-right" style="margin-top: -5px;">
-                                <a href="#" class="btn btn-xs btn-success">
-                                    <i class="fa fa-pencil"></i>
-                                    Chỉnh sửa
+                                <a href="#" class="btn btn-xs btn-primary">
+                                    <i class="fa fa-pencil"></i> Chỉnh sửa
                                 </a>
                             </div>
                         </legend>
@@ -98,76 +97,6 @@
                     <%--/Customer information--%>
                     <br/>
 
-                    <%--<fieldset>
-                        <legend>
-                            Thẻ hiện hành
-
-                            <div class="pull-right" style="margin-top: -5px;">
-                                <a href="#" class="btn btn-xs btn-primary"
-                                   data-toggle="modal" data-target="#card-history-modal">
-                                    <i class="fa fa-history"></i>
-                                    Xem lịch sử
-                                </a>
-
-                                <a href="#" class="btn btn-xs btn-success"
-                                   data-toggle="modal" data-target="#change-card-modal">
-                                    <i class="fa fa-refresh"></i>
-                                    Đổi thẻ mới
-                                </a>
-                            </div>
-                        </legend>
-
-                        <div class="table-responsive">
-                            <table class="table table-striped table-bordered table-hover">
-                                <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Mã thẻ</th>
-                                    <th>Mã hợp đồng</th>
-                                    <th>Có hiệu lực từ</th>
-                                    <th>Lần cuối truy cập</th>
-                                    <th></th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <c:forEach var="card" items="${listCards}" varStatus="counter">
-                                    <tr>
-                                        <td>${counter.count}</td>
-                                        <td>
-                                            <a href="${pageContext.request.contextPath}/staff/card?action=detail&
-                                            code=${card.cardId}">
-                                                ${card.cardId}
-                                            </a>
-                                        </td>
-                                        <td>
-                                            <a href="${pageContext.request.contextPath}/staff/contract?action=detail&
-                                            code=${card.contractCode}">
-                                                ${card.contractCode}
-                                            </a>
-                                        </td>
-                                        <td>
-                                            <fmt:formatDate value="${card.activatedDate}" pattern="dd/MM/yyyy"/>
-                                        </td>
-                                        <td>
-                                            Add later
-                                                &lt;%&ndash;<fmt:formatDate value="${card.expiredDate}" pattern="dd/MM/yyyy"/>&ndash;%&gt;
-                                        </td>
-                                        <td>
-                                            <i class="fa fa-question-circle"
-                                               data-toggle="tooltip" data-placement="bottom"
-                                               title="Ghi nhận lần cuối cùng thẻ được đọc bởi thiết bị từ CSGT."></i>
-                                            <a href="detail-card.html#card-access-history">(xem lịch sử)</a>
-                                        </td>
-                                    </tr>
-                                </c:forEach>
-                                </tbody>
-                            </table>
-                        </div>
-                        <!-- /.table-responsive -->
-                    </fieldset>
-                    &lt;%&ndash;/Card information&ndash;%&gt;
-                    <br/>--%>
-
                     <fieldset>
                         <legend>
                             Hợp đồng bảo hiểm
@@ -204,7 +133,7 @@
                                             <c:set var="status" value="${contract.status}"/>
                                             <c:choose>
                                                 <c:when test="${status.equalsIgnoreCase('Pending')}">
-                                                    <span class="label label-gray">Chưa thanh toán</span>
+                                                    <span class="label label-gray">Chưa kích hoạt</span>
                                                 </c:when>
                                                 <c:when test="${status.equalsIgnoreCase('No card')}">
                                                     <span class="label label-primary">Chưa có thẻ</span>
@@ -237,9 +166,8 @@
                 <br/>
                 <br/>
                 <div class="text-center">
-                    <a href="${pageContext.request.contextPath}/staff/customer" type="button" class="btn btn-success">
-                        <i class="fa fa-arrow-left"></i>
-                        Danh sách khách hàng
+                    <a href="${pageContext.request.contextPath}/staff/customer" type="button" class="btn btn-default">
+                        <i class="fa fa-arrow-left"></i> <strong>Danh sách khách hàng</strong>
                     </a>
                 </div>
                 <br/>

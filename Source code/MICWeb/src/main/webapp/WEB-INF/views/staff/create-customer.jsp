@@ -101,7 +101,7 @@
                             </div>
                         </div>
                     </fieldset>
-
+                    <br/>
                     <!-- Create new customer button -->
                     <div class="text-center">
                         <input type="hidden" name="action" value="create"/>

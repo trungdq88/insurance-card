@@ -19,7 +19,7 @@
                 <h1 class="page-header">
                     ${cont.contractCode}
                     <div class="pull-right">
-                        <button id="btnRenew" type="button" class="btn btn-info"
+                        <button id="btnRenew" type="button" class="btn btn-primary"
                                 data-toggle="modal" data-target="#renew-contract-modal">
                             <i class="fa fa-refresh"></i> Gia hạn
                         </button>
@@ -50,10 +50,9 @@
                     <fieldset>
                         <legend>Thông tin về dịch vụ bảo hiểm
                             <div class="pull-right" style="margin-top: -5px;">
-                                <button type="button" class="btn btn-xs btn-success"
+                                <button type="button" class="btn btn-xs btn-primary"
                                         data-toggle="modal" data-target="#edit-contract-modal">
-                                    <i class="fa fa-pencil"></i>
-                                    Chỉnh sửa
+                                    <i class="fa fa-pencil"></i> Chỉnh sửa
                                 </button>
                             </div>
                         </legend>
@@ -66,7 +65,7 @@
                                 <br/>
 
                                 <p class="text-center">
-                                    <button class="btn btn-primary" type="button" data-toggle="modal"
+                                    <button class="btn btn-success" type="button" data-toggle="modal"
                                             data-target="#complete-payment-modal">
                                         <i class="fa fa-check"></i> Hoàn tất thanh toán
                                     </button>
@@ -170,7 +169,7 @@
                                     <c:set var="status" value="${cont.status}"/>
                                     <c:choose>
                                         <c:when test="${status.equalsIgnoreCase('Pending')}">
-                                            <span class="label label-gray">Chưa thanh toán</span>
+                                            <span class="label label-gray">Chưa kích hoạt</span>
                                         </c:when>
                                         <c:when test="${status.equalsIgnoreCase('No card')}">
                                             <span class="label label-primary">Chưa có thẻ</span>
@@ -291,10 +290,9 @@
                             <fieldset>
                                 <legend>Thông tin khách hàng
                                     <div class="pull-right" style="margin-top: -5px;">
-                                        <button type="button" class="btn btn-xs btn-success"
+                                        <button type="button" class="btn btn-xs btn-primary"
                                                 data-toggle="modal" data-target="#edit-contract-modal">
-                                            <i class="fa fa-pencil"></i>
-                                            Chỉnh sửa
+                                            <i class="fa fa-pencil"></i> Chỉnh sửa
                                         </button>
                                     </div>
                                 </legend>
@@ -359,10 +357,9 @@
                             <fieldset>
                                 <legend>Thông tin về xe cơ giới
                                     <div class="pull-right" style="margin-top: -5px;">
-                                        <button type="button" class="btn btn-xs btn-success"
+                                        <button type="button" class="btn btn-xs btn-primary"
                                                 data-toggle="modal" data-target="#edit-contract-modal">
-                                            <i class="fa fa-pencil"></i>
-                                            Chỉnh sửa
+                                            <i class="fa fa-pencil"></i> Chỉnh sửa
                                         </button>
                                     </div>
                                 </legend>
@@ -474,15 +471,7 @@
                             <br/>
 
                             <fieldset>
-                                <legend>Thông tin thanh toán
-                                    <div class="pull-right" style="margin-top: -5px;">
-                                        <button type="button" class="btn btn-xs btn-success"
-                                                data-toggle="modal" data-target="#edit-contract-modal">
-                                            <i class="fa fa-pencil"></i>
-                                            Chỉnh sửa
-                                        </button>
-                                    </div>
-                                </legend>
+                                <legend>Thông tin thanh toán</legend>
 
                                 <div class="table-responsive">
                                     <table class="table table-striped table-bordered table-hover">
@@ -654,9 +643,8 @@
                 <br/>
 
                 <div class="text-center">
-                    <a href="${pageContext.request.contextPath}/staff/contract" type="button" class="btn btn-success">
-                        <i class="fa fa-arrow-left"></i>
-                        Danh sách hợp đồng
+                    <a href="${pageContext.request.contextPath}/staff/contract" type="button" class="btn btn-default">
+                        <i class="fa fa-arrow-left"></i> <strong>Danh sách hợp đồng</strong>
                     </a>
                 </div>
                 <br/>
@@ -756,10 +744,9 @@
                 <div class="modal-footer">
                     <input type="hidden" name="action" value="completePayment"/>
                     <button type="submit" class="btn btn-success">
-                        <i class="fa fa-arrow-right"></i>
-                        Hoàn tất thanh toán
+                        <i class="fa fa-arrow-right"></i> Hoàn tất thanh toán
                     </button>
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">Đóng</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Đóng</button>
                 </div>
             </div>
             <!-- /.modal-content -->
@@ -873,11 +860,10 @@
                 </div>
                 <div class="modal-footer">
                     <input type="hidden" name="action" value="renew"/>
-                    <button type="submit" class="btn btn-success" id="btnProcessRenew">
-                        <i class="fa fa-arrow-right"></i>
-                        Gia hạn hợp đồng
+                    <button type="submit" class="btn btn-primary" id="btnProcessRenew">
+                        <i class="fa fa-arrow-right"></i> Gia hạn hợp đồng
                     </button>
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">Đóng</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Đóng</button>
                 </div>
             </div>
             <!-- /.modal-content -->
@@ -941,11 +927,10 @@
                 </div>
                 <div class="modal-footer">
                     <input type="hidden" name="action" value="cancel"/>
-                    <button type="submit" class="btn btn-danger">
-                        <i class="fa fa-check"></i>
-                        Đồng ý hủy
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fa fa-check"></i> Đồng ý hủy
                     </button>
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">Đóng</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Đóng</button>
                 </div>
             </div>
             <!-- /.modal-content -->

@@ -65,9 +65,8 @@
                 <br/>
 
                 <div class="text-center">
-                    <a href="${pageContext.request.contextPath}/staff/contract" type="button" class="btn btn-primary">
-                        <i class="fa fa-arrow-left"></i>
-                        Danh sách hợp đồng
+                    <a href="${pageContext.request.contextPath}/staff/contract" type="button" class="btn btn-default">
+                        <i class="fa fa-arrow-left"></i> <strong>Danh sách hợp đồng</strong>
                     </a>
                 </div>
 

@@ -35,3 +35,9 @@
     color: #aaa;
     opacity: 1;
 }
+
+.empty-value {
+    font-style: italic;
+    color: #777;
+    font-size: 15px;
+}
