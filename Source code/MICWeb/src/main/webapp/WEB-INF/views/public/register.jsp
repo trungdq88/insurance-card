@@ -542,41 +542,74 @@
             $('#txtAddress1').text($('#txtAddress').val());
             $('#txtEmail1').text($('#txtEmail').val());
             $('#txtPhone1').text($('#txtPhone').val());
-            if ($('#txtPersonalId').val() == "")
+            if ($('#txtPersonalId').val() == ""){
                 $('#txtPersonalId1').text("Không có");
-            else
+                $('#txtPersonalId1').addClass("empty-value");
+            }
+            else {
                 $('#txtPersonalId1').text($('#txtPersonalId').val());
+                $('#txtPersonalId1').removeClass("empty-value");
+
+            }
             $('#txtStartDate1').text($('#txtStartDate').val());
             $('#ddlContractType1').text($('#ddlContractType option:selected').attr('label'));
             $('#txtPlate1').text($('#txtPlate').val());
             $('#txtBrand1').text($('#txtBrand').val());
-            if ($('#txtModel').val() == "")
+            if ($('#txtModel').val() == ""){
                 $('#txtModel1').text("Không có");
-            else
+                $('#txtModel1').addClass("empty-value");
+            }
+            else {
                 $('#txtModel1').text($('#txtModel').val());
-            if ($('#txtType').val() == "")
+                $('#txtModel1').removeClass("empty-value");
+
+            }
+            if ($('#txtType').val() == ""){
                 $('#txtType1').text("Không có");
-            else
+                $('#txtType1').addClass("empty-value");
+            }
+            else {
                 $('#txtType1').text($('#txtType').val());
-            if ($('#txtColor').val() == "")
+                $('#txtType1').removeClass("empty-value");
+            }
+            if ($('#txtColor').val() == ""){
                 $('#txtColor1').text("Không có");
-            else
+                $('#txtColor1').addClass("empty-value");
+            }
+            else {
                 $('#txtColor1').text($('#txtColor').val());
+                $('#txtColor1').removeClass("empty-value");
+            }
+
             $('#txtEngine1').text($('#txtEngine').val());
             $('#txtChassis1').text($('#txtChassis').val());
             $('#txtCapacity1').text($('#txtCapacity').val());
-            if ($('#txtYearOfMan').val() == "")
+            if ($('#txtYearOfMan').val() == ""){
                 $('#txtYearOfMan1').text("Không có");
-            else
+                $('#txtYearOfMan1').addClass("empty-value");
+            }
+            else {
                 $('#txtYearOfMan1').text($('#txtYearOfMan').val());
-            if ($('#txtWeight').val() == "")
+                $('#txtYearOfMan1').removeClass("empty-value");
+            }
+            if ($('#txtWeight').val() == ""){
                 $('#txtWeight1').text("Không có");
-            else
+                $('#txtWeight1').addClass("empty-value");
+            }
+            else {
                 $('#txtWeight1').text($('#txtWeight').val());
-            if ($('#txtSeatCapacity').val() == "")
+                $('#txtWeight1').removeClass("empty-value");
+            }
+
+            if ($('#txtSeatCapacity').val() == ""){
                 $('#txtSeatCapacity1').text("Không có");
-            else
+                $('#txtSeatCapacity1').addClass("empty-value");
+            }
+            else {
                 $('#txtSeatCapacity1').text($('#txtSeatCapacity').val());
+                $('#txtSeatCapacity1').removeClass("empty-value");
+            }
+
         }
     </script>
 </div>
