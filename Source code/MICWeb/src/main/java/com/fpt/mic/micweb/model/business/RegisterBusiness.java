@@ -53,7 +53,9 @@ public class RegisterBusiness {
         Timestamp startDate = publicRegisterFormDto.getStartDate();
         contractEntity.setStartDate(startDate);
         contractEntity.setExpiredDate(startDate);
-        contractEntity.setLastModified(new Timestamp(new Date().getTime()));
+        Timestamp currentTime = new Timestamp(new Date().getTime());
+        currentTime.setNanos(0);
+        contractEntity.setLastModified(currentTime);
 
         ContractDao contractDao = new ContractDao();
         CustomerDao customerDao = new CustomerDao();

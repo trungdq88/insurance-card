@@ -27,7 +27,10 @@ public class ReturnController extends BasicController {
     }
 
     public ResponseObject postReturn(R r) {
-        HttpSession session = r.equest.getSession(true);
+        HttpSession session = r.equest.getSession(false);
+        if (session == null) {
+            return new RedirectTo("/error/404");
+        }
 
         if (isSet(r.equest.getParameter("PayerID")))
             session.setAttribute("payer_id", r.equest.getParameter("PayerID"));
