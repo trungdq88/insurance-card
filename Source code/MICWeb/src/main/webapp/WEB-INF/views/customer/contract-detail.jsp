@@ -296,7 +296,7 @@
             </c:if>
             <c:if test="${contract.status.equalsIgnoreCase('Request cancel')}">
                 <form action="${pageContext.request.contextPath}/customer/contract" method="post">
-                    <div class="well well-lg text-center text-danger " style="height:122px !important;">
+                    <div class="well well-lg text-center text-danger " style="height:128px !important;">
                         <label>Hợp đồng đã được yêu cầu hủy vui lòng chờ xác nhận của nhân viên</label> &nbsp;
                         <input type="hidden" name="contractcode"
                                value="${contract.contractCode}"/>
@@ -308,8 +308,6 @@
 
                             <div class="col-md-8 text-left">
                                 <fmt:formatDate value="${contract.cancelDate}" pattern="dd/MM/yyyy"/>
-                                lúc
-                                <fmt:formatDate value="${contract.cancelDate}" type="time"/>
                             </div>
                         </div>
                         <br/>
@@ -343,8 +341,6 @@
 
                             <div class="col-md-9 text-left">
                                 <fmt:formatDate value="${contract.cancelDate}" pattern="dd/MM/yyyy"/>
-                                lúc
-                                <fmt:formatDate value="${contract.cancelDate}" type="time"/>
                             </div>
                         </div>
                         <br/>
@@ -515,7 +511,6 @@
                                         </td>
                                         <td class="col-md-5 fontText">
                                             <fmt:formatDate value="${contract.startDate}" pattern="dd/MM/yyyy"/>
-                                            &nbsp; <fmt:formatDate value="${contract.startDate}" type="time"/>
                                         </td>
                                     </tr>
                                     <tr>
@@ -524,7 +519,6 @@
                                         </td>
                                         <td class="col-md-5 fontText">
                                             <fmt:formatDate value="${contract.expiredDate}" pattern="dd/MM/yyyy"/>
-                                            &nbsp; <fmt:formatDate value="${contract.expiredDate}" type="time"/>
                                         </td>
                                     </tr>
                                 </table>

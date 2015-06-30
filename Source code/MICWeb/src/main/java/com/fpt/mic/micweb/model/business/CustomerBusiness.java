@@ -10,6 +10,7 @@ import com.fpt.mic.micweb.model.entity.CustomerEntity;
 import com.fpt.mic.micweb.model.entity.ContractEntity;
 import com.fpt.mic.micweb.model.entity.PaymentEntity;
 import com.fpt.mic.micweb.utils.Constants;
+import com.fpt.mic.micweb.utils.DateUtils;
 import sun.util.calendar.BaseCalendar;
 import sun.util.calendar.LocalGregorianCalendar;
 
@@ -91,7 +92,7 @@ public class CustomerBusiness {
                 contract.setStatus(Constants.ContractStatus.READY);
             }
             //update payment
-            payment.setPaidDate(new Timestamp(date.getTime()));
+            payment.setPaidDate(DateUtils.currentDateWithoutTime());
             payment.setPaymentMethod("PayPal payment");
             payment.setContent("Gia hạn hợp đồng");
             payment.setAmount(contract.getMicContractTypeByContractTypeId().getPricePerYear());

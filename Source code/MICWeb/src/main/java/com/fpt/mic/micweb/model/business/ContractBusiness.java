@@ -63,12 +63,12 @@ public class ContractBusiness {
 
         if (contract == null) return null;
 
-        Timestamp expiredDate = contract.getExpiredDate();
+        Timestamp expiredDate = DateUtils.convertDateTimeToDate(contract.getExpiredDate());
         if (contract.getStatus().equalsIgnoreCase(Constants.ContractStatus.READY)
                 ||contract.getStatus().equalsIgnoreCase(Constants.ContractStatus.NO_CARD)) {
             expiredDate = DateUtils.addOneYear(expiredDate);
         } else if (contract.getStatus().equalsIgnoreCase(Constants.ContractStatus.EXPIRED)) {
-            expiredDate = DateUtils.addOneYear(new Timestamp((new Date()).getTime()));
+            expiredDate = DateUtils.addOneYear(DateUtils.currentDateWithoutTime());
         } else {
             return null;
         }
