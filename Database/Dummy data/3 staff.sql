@@ -4,7 +4,7 @@ LIMIT 0, 1000
 
 -- Date: 2015-06-05 20:58
 */
-INSERT INTO `mic_staff` (`staff_code`,`password`,`name`,`email`,`phone`) VALUES ('NV0001','qwerty','Lê Tuấn Anh','anhlt@gmail.com','0912025544');
+INSERT INTO `mic_staff` (`staff_code`,`password`,`name`,`email`,`phone`) VALUES ('NV8604','123456','Nguyễn Chí Kha','khanc@gmail.com','0912025544');
 INSERT INTO `mic_staff` (`staff_code`,`password`,`name`,`email`,`phone`) VALUES ('NV0C03','123456','Lê Xuân Tiến','globavina.hrd@gmail.com','0983660909');
 INSERT INTO `mic_staff` (`staff_code`,`password`,`name`,`email`,`phone`) VALUES ('NV44C2','huyhoang','Trương Đắc Huy Hoàng','hoangtdh@gmail.com','0912116730');
 INSERT INTO `mic_staff` (`staff_code`,`password`,`name`,`email`,`phone`) VALUES ('NV44DD','minhcaoto','Vũ Nhật Minh','minhnm@gmail.com','0915250309');
