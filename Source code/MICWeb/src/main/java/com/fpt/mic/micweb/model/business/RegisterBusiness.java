@@ -109,7 +109,7 @@ public class RegisterBusiness {
         }
 
         // set start date
-        Timestamp currentDate = new Timestamp(new Date().getTime());
+        Timestamp currentDate = DateUtils.currentDateWithoutTime();
         if (currentDate.after(contractEntity.getStartDate()))
         {
             contractEntity.setStartDate(currentDate);
