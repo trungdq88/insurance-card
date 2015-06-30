@@ -341,8 +341,6 @@
 
                             <div class="col-md-9 text-left">
                                 <fmt:formatDate value="${contract.cancelDate}" pattern="dd/MM/yyyy"/>
-                                lúc
-                                <fmt:formatDate value="${contract.cancelDate}" type="time"/>
                             </div>
                         </div>
                         <br/>
