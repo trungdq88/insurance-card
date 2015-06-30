@@ -107,7 +107,7 @@ public class RegisterController extends BasicController {
             return new JspPage("public/register-payment.jsp");
         }
 
-        r.equest.setAttribute("error", "Something wrong");
+        r.equest.setAttribute("error", "Không thể tạo hợp đồng. Xin thử lại");
         return new JspPage(url);
     }
 

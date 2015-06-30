@@ -407,7 +407,7 @@
                                             <label><b>Năm sản xuất: </b></label>
                                             <label id="txtYearOfMan1"></label>
                                         </div>
-                                        <div class="col-sm-3">
+                                        <div class="col-sm-4">
                                             <label><b>Tự trọng (kg): </b></label>
                                             <label id="txtWeight1"></label>
                                         </div>
