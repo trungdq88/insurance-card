@@ -90,6 +90,7 @@
                                         <div class="col-sm-12">
                                             <div class="collapse" id="companyAddress">
                                                 <div class="form-group">
+                                                    <p class="lead">Quý khách vui lòng đi đến địa chỉ sau đây để thanh toán:</p>
                                                     <p class="text-muted"><b>Địa chỉ:</b> Lầu 2, tòa nhà Innovation,
                                                         lô 24, Công viên phần mềm
                                                         Quang Trung, P.Tân Chánh Hiệp, Quận 12, TP. Hồ Chí Minh.
@@ -103,7 +104,7 @@
                                                             width="600"
                                                             height="450"
                                                             frameborder="0" style="border:0"
-                                                            src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBHWaWHbQJEFOvVmZw7tcR0qIGQQUoxsKM&q=Trường Đại Học FPT, tòa nhà Innovation, Công viên phần mềm Quang Trung, P.Tân Chánh Hiệp, Quận 12, TP. Hồ Chí Minh">
+                                                            src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBHWaWHbQJEFOvVmZw7tcR0qIGQQUoxsKM&q=Trường Đại học FPT Tân Chánh Hiệp Hồ Chí Minh Việt Nam">
                                                     </iframe>
                                                 </div>
                                             </div>
