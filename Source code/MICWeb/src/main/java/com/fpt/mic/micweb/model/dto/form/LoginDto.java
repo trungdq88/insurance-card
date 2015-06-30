@@ -23,7 +23,7 @@ public class LoginDto {
         return role.equals(UserDto.ROLE_CUSTOMER) || role.equals(UserDto.ROLE_STAFF);
     }
 
-    @AssertTrue(message = "Mật khẩu không chính xác")
+    @AssertTrue(message = "Email (mã số) hoặc mật khẩu không chính xác")
     private boolean isPasswordCorrect() {
         LoginBusiness loginBusiness = new LoginBusiness();
         return loginBusiness.checkLogin(this) != null;
