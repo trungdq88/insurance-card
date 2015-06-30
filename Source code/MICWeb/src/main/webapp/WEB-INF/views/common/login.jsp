@@ -1,98 +1,106 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-    <title>Đăng nhập</title>
-
-    <!-- Bootstrap Core CSS -->
-    <link href="${pageContext.request.contextPath}/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Custom CSS -->
-    <link href="${pageContext.request.contextPath}/css/sb-admin-2.css" rel="stylesheet">
-    <!-- Custom CSS -->
-    <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet">
-
-    <!-- Custom Fonts -->
-    <link href="${pageContext.request.contextPath}/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-
-    <style>
-        label {
-            width: 100%;
-        }
-    </style>
-</head>
-
+<%@ include file="_shared/header.jsp" %>
+<style>
+    label, input {
+        width: 100%;
+    }
+</style>
 <body>
+<div class="image-container set-full-height"
+     style="background-image: url('${pageContext.request.contextPath}/img/wizard-city.jpg')">
+    <!--   MIC Branding   -->
+    <a href="home">
+        <div class="logo-container">
+            <img src="${pageContext.request.contextPath}/img/logoCompany.png"
+                 style="height: 70px;">
+        </div>
+    </a>
 
-<div class="container">
-    <div class="row">
-        <div class="col-md-4 col-md-offset-4">
-            <div class="login-panel panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Đăng nhập</h3>
+    <div class="container">
+        <div class="row">
+            <div style="max-width: 400px;margin: 0 auto;">
+
+                <!--      Wizard container        -->
+
+                <div class="wizard-container">
+                    <div class="card wizard-card ct-wizard-azzure" id="wizard">
+
+
+                        <!-- You can switch "ct-wizard-azzure"  with one of the next bright colors: "ct-wizard-blue",
+                        "ct-wizard-green", "ct-wizard-orange", "ct-wizard-red" -->
+
+                        <div class="wizard-header">
+                            <h3>
+                                <b>ĐĂNG NHẬP</b><br>
+                            </h3>
+                        </div>
+                        <div style="padding: 30px;">
+
+                            <form role="form" action="${pageContext.request.contextPath}/user" method="post">
+                                <fieldset>
+
+                                    <c:if test="${not empty validateErrors}">
+                                        <div class="text-danger">
+                                            <ul>
+                                                <c:forEach var="error" items="${validateErrors}">
+                                                    <li>${error}</li>
+                                                </c:forEach>
+                                            </ul>
+                                        </div>
+                                    </c:if>
+
+                                    <div class="text-danger" id="authorize-failed" style="display: none">
+                                        <p>
+                                            Bạn không có quyền truy cập vào trang này
+                                        </p>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Email hoặc mã số
+                                            <input class="form-control" name="login:emailorcode"
+                                                   required autofocus title="Vui lòng nhập email hoặc mã khách hàng"
+                                                   value="${submitted.emailorcode}">
+                                        </label>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Mật khẩu
+                                            <input class="form-control" name="login:password" type="password"
+                                                   required title="Vui lòng nhập mật khẩu"
+                                                   value="${submitted.password}">
+                                        </label>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Đăng nhập với tư cách:
+                                            <select id="selectRole" name="login:role" class="form-control">
+                                                <option value="customer"
+                                                ${submitted.role == "customer" ? "selected" : ""}>Khách hàng
+                                                </option>
+                                                <option value="staff"
+                                                ${submitted.role == "staff" ? "selected" : ""}>Nhân viên MIC
+                                                </option>
+                                            </select>
+                                        </label>
+                                    </div>
+                                    <input type="hidden" id="redirectId" name="login:redirect"
+                                           value="${submitted.redirect}"/>
+                                    <input type="hidden" name="action" value="login"/>
+                                    <!-- Change this to a button or input when using this as a form -->
+                                    <button type="submit" class="btn btn-lg btn-success btn-block">Đăng nhập</button>
+                                </fieldset>
+                            </form>
+
+
+                        </div>
+
+
+                    </div>
                 </div>
-                <div class="panel-body">
-                    <form role="form" action="${pageContext.request.contextPath}/user" method="post">
-                        <fieldset>
-
-                            <c:if test="${not empty validateErrors}">
-                                <div class="text-danger">
-                                    <ul>
-                                        <c:forEach var="error" items="${validateErrors}">
-                                            <li>${error}</li>
-                                        </c:forEach>
-                                    </ul>
-                                </div>
-                            </c:if>
-
-                            <div class="text-danger" id="authorize-failed" style="display: none">
-                                <p>
-                                    Bạn không có quyền truy cập vào trang này
-                                </p>
-                            </div>
-
-                            <div class="form-group">
-                                <label>Email hoặc mã số
-                                    <input class="form-control" name="login:emailorcode"
-                                           required autofocus title="Vui lòng nhập email hoặc mã khách hàng"
-                                            value="${submitted.emailorcode}">
-                                </label>
-                            </div>
-                            <div class="form-group">
-                                <label>Mật khẩu
-                                    <input class="form-control" name="login:password" type="password"
-                                           required title="Vui lòng nhập mật khẩu"
-                                           value="${submitted.password}">
-                                </label>
-                            </div>
-                            <div class="form-group">
-                                <label>Đăng nhập với tư cách:
-                                    <select id="selectRole" name="login:role" class="form-control">
-                                        <option value="customer"
-                                         ${submitted.role == "customer" ? "selected" : ""}>Khách hàng</option>
-                                        <option value="staff"
-                                         ${submitted.role == "staff" ? "selected" : ""}>Nhân viên MIC</option>
-                                    </select>
-                                </label>
-                            </div>
-                            <input type="hidden" id="redirectId" name="login:redirect" value="${submitted.redirect}"/>
-                            <input type="hidden" name="action" value="login"/>
-                            <!-- Change this to a button or input when using this as a form -->
-                            <button type="submit" class="btn btn-lg btn-success btn-block">Đăng nhập</button>
-                        </fieldset>
-                    </form>
-                </div>
+                <!-- wizard container -->
             </div>
         </div>
+        <!-- row -->
     </div>
+    <!--  big container -->
 </div>
 
 <!-- jQuery -->
@@ -143,4 +151,4 @@
 
 </body>
 
-</html>
+<%@ include file="_shared/footer.jsp" %>
