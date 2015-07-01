@@ -13,6 +13,7 @@ import com.fpt.mic.micweb.model.dto.form.ConcurrencyDto;
 import com.fpt.mic.micweb.model.dto.form.PublicHomeFormDto;
 import com.fpt.mic.micweb.model.dto.form.PublicRegisterFormDto;
 import com.fpt.mic.micweb.model.entity.ContractTypeEntity;
+import com.fpt.mic.micweb.utils.Constants;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpSession;
@@ -93,8 +94,13 @@ public class RegisterController extends BasicController {
 
         if (register != null) {
             HttpSession session = r.equest.getSession();
-            Timestamp startModifyTime = register.getContractEntity().getLastModified();
-            session.setAttribute("CHECKOUT:START_MODIFY_TIME",startModifyTime);
+
+            // Save last_modified value for concurrency check
+            Timestamp lastModified = register.getContractEntity().getLastModified();
+            session.setAttribute(
+                    Constants.Session.CONCURRENCY + register.getContractEntity().getContractCode(),
+                    lastModified);
+
             session.setAttribute("CONTRACT_CODE", register.getContractEntity().getContractCode());
             session.setAttribute("SUCCESS_URL", "/public/register?action=activeContract");
             session.setAttribute("cancel_message","Bạn đã hủy thanh toán. Xin vui lòng <a href='/user'>Đăng nhập</a> để thanh toán lại hoặc đến thanh toán trực tiếp");
@@ -112,30 +118,37 @@ public class RegisterController extends BasicController {
         String errorUrl = "/error/404";
         HttpSession session = r.equest.getSession(false);
         if (session != null) {
+            String returnUrl = "public/return.jsp";
             ConcurrencyDto concurrencyDto = new ConcurrencyDto();
-            ContractBusiness contractBusiness = new ContractBusiness();
-            Timestamp startModifyTime =(Timestamp) session.getAttribute("CHECKOUT:START_MODIFY_TIME");
-            session.removeAttribute("CHECKOUT:START_MODIFY_TIME");
+
             String contractCode = (String) session.getAttribute("CONTRACT_CODE");
-            concurrencyDto.setStartModifyTime(startModifyTime);
-            concurrencyDto.setContractLastModified(contractBusiness.getContract(contractCode).getLastModified());
-            // Gọi hàm validate ở đây
-            List errors = r.ead.validate(concurrencyDto);
-            // Nếu có lỗi khi validate
-            if (errors.size() > 0) {
-                // Gửi lỗi về trang JSP
-                r.equest.setAttribute("error", errors.get(0));
-                return new JspPage("public/error.jsp");
-            }
-            String successUrl = "public/return.jsp";
+            Timestamp startModifyTime =(Timestamp)
+                    session.getAttribute(Constants.Session.CONCURRENCY + contractCode);
+
+            concurrencyDto.setLastModified(startModifyTime);
+            concurrencyDto.setContractCode(contractCode);
+
             Map<String, String> results = new HashMap<String, String>();
             results.putAll((Map<String, String>) session.getAttribute("RESULT"));
 
             r.equest.setAttribute("result", results);
             r.equest.setAttribute("ack", (String) session.getAttribute("ACK"));
             Float amount = Float.parseFloat((String) session.getAttribute("amountVND"));
-            r.equest.setAttribute("amountVND",amount);
-            r.equest.setAttribute("redirectLink","home");
+            r.equest.setAttribute("amountVND", amount);
+            r.equest.setAttribute("redirectLink", "home");
+
+            // Check concurrency
+            List errors = r.ead.validate(concurrencyDto);
+            if (errors.size() > 0) {
+
+                StringBuilder message = new StringBuilder();
+                for (Object error : errors) {
+                    message.append((String) error).append("<br/>");
+                }
+
+                r.equest.setAttribute("message", message);
+                return new JspPage(returnUrl);
+            }
 
             String paypalTransId = results.get("PAYMENTINFO_0_TRANSACTIONID");
             String paymentMethod = "PayPal payment";
@@ -155,7 +168,7 @@ public class RegisterController extends BasicController {
                 session.removeAttribute("checkout");
                 session.removeAttribute("TOKEN");
                 r.equest.setAttribute("message", "Thanh toán thành công");
-                return new JspPage(successUrl);
+                return new JspPage(returnUrl);
             }
             else {
                 session.removeAttribute("cancel_message");

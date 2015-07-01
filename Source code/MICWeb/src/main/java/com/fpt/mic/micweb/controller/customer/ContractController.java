@@ -246,7 +246,7 @@ public class ContractController extends AuthController {
             // Concurrency check
             if (customerBusiness.isContractChanged(contractCode, lastModified)) {
                 r.equest.setAttribute("message", "Thông tin hợp đồng đã bị thay đổi bởi một " +
-                        "người khác, vui lòng thực hiện lại thao tác. <br/>" +
+                        "người khác, thanh toán đã bị huỷ. <br/>" +
                         "Vui lòng lưu lại mã giao dịch để đối chiếu trong trường hợp hoàn lại tiền");
                 // TODO: refund?
             } else {
@@ -299,7 +299,7 @@ public class ContractController extends AuthController {
             // Concurrency check
             if (customerBusiness.isContractChanged(contractCode, lastModified)) {
                 r.equest.setAttribute("message", "Thông tin hợp đồng đã bị thay đổi bởi một " +
-                        "người khác, vui lòng thực hiện lại thao tác. <br/>" +
+                        "người khác, thanh toán đã bị huỷ. <br/>" +
                         "Vui lòng lưu lại mã giao dịch để đối chiếu trong trường hợp hoàn lại tiền");
                 // TODO: refund?
             } else {

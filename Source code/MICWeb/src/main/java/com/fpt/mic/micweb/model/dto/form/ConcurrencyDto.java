@@ -1,32 +1,55 @@
 package com.fpt.mic.micweb.model.dto.form;
 
+import com.fpt.mic.micweb.model.dao.ContractDao;
+import com.fpt.mic.micweb.model.entity.ContractEntity;
+
 import javax.validation.constraints.AssertTrue;
+import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 
 /**
  * Created by TriPQM on 06/30/2015.
  */
 public class ConcurrencyDto {
-    private Timestamp startModifyTime;
-    private Timestamp contractLastModified;
+    private String contractCode;
+    private Timestamp lastModified;
 
-    @AssertTrue(message = "Hợp đồng đã bị thay đổi. Xin vui lòng kiểm tra và thực hiện lại")
-    private boolean isUpToDate() {
-        return startModifyTime.equals(contractLastModified);
+    @AssertTrue(message = "Thông tin hợp đồng đã bị thay đổi bởi một " +
+            "người khác, thanh toán đã bị huỷ. <br/>" +
+            "Vui lòng lưu lại mã giao dịch để đối chiếu trong trường hợp hoàn lại tiền")
+    private boolean isContractNotChanged() {
+        if (this.lastModified != null && this.contractCode != null) {
+            ContractDao contractDao = new ContractDao();
+            ContractEntity contractEntity = contractDao.read(contractCode);
+            return contractEntity.getLastModified().equals(lastModified);
+        } else {
+            return false;
+        }
     }
 
-    public Timestamp getStartModifyTime() {
-        return startModifyTime;
+    @AssertTrue(message = "Mã hợp đồng không tồn tại")
+    private boolean isContractExists() {
+        if (contractCode != null) {
+            ContractDao contractDao = new ContractDao();
+            return contractDao.read(contractCode) != null;
+        }
+        return false;
     }
-    public void setStartModifyTime(Timestamp startModifyTime) {
-        this.startModifyTime = startModifyTime;
+
+    public String getContractCode() {
+        return contractCode;
     }
-    public ConcurrencyDto() {
+
+    public void setContractCode(String contractCode) {
+        this.contractCode = contractCode;
     }
-    public Timestamp getContractLastModified() {
-        return contractLastModified;
+
+    public Timestamp getLastModified() {
+        return lastModified;
     }
-    public void setContractLastModified(Timestamp contractLastModified) {
-        this.contractLastModified = contractLastModified;
+
+    public void setLastModified(Timestamp lastModified) {
+        this.lastModified = lastModified;
     }
+
 }
