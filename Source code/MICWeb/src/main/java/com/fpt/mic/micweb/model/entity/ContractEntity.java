@@ -36,6 +36,8 @@ public class ContractEntity {
     private int contractTypeId;
     private String customerCode;
     private Timestamp lastModified;
+    private Timestamp createdDate;
+
     private Collection<AccidentEntity> micAccidentsByContractCode;
     private Collection<CardEntity> micCardsByContractCode;
     private Collection<CompensationEntity> micCompensationsByContractCode;
@@ -271,6 +273,17 @@ public class ContractEntity {
         return lastModified;
     }
 
+    @Basic
+    @Column(name = "created_date", insertable=false)
+    public Timestamp getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(Timestamp createdDate) {
+        this.createdDate = createdDate;
+    }
+
+
     public void setLastModified(Timestamp lastModified) {
         this.lastModified = lastModified;
     }
@@ -324,8 +337,10 @@ public class ContractEntity {
         result = 31 * result + (chassis != null ? chassis.hashCode() : 0);
         result = 31 * result + (capacity != null ? capacity.hashCode() : 0);
         result = 31 * result + (yearOfManufacture != null ? yearOfManufacture.hashCode() : 0);
-        result = 31 * result + (weight != null ? weight.hashCode() : 0);;
-        result = 31 * result + (seatCapacity != null ? seatCapacity.hashCode() : 0);;
+        result = 31 * result + (weight != null ? weight.hashCode() : 0);
+        ;
+        result = 31 * result + (seatCapacity != null ? seatCapacity.hashCode() : 0);
+        ;
         result = 31 * result + (cancelDate != null ? cancelDate.hashCode() : 0);
         result = 31 * result + (cancelReason != null ? cancelReason.hashCode() : 0);
         result = 31 * result + (cancelNote != null ? cancelNote.hashCode() : 0);
