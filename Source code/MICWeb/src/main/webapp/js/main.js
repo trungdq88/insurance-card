@@ -42,7 +42,7 @@ function getCurrentDateInNextYear() {
     return nextYearDisplay;
 }
 
-function getInputDateNextDate(inputDate){
+function getInputDateNextDate(inputDate) {
     var today = inputDate;
     var nextDate = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 1);
     var nextDateDisplay = ("0000" + nextDate.getFullYear().toString()).slice(-4) + "-"

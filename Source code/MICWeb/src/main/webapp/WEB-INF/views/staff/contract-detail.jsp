@@ -1006,6 +1006,7 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
+        $('#expiredDate').val(getCurrentDateInNextYear());
         $('#paymentDate').val(getCurrentDate());
         $('#paidDate').val(getCurrentDate());
         /*document.getElementById("paidDate").min = getCurrentDateInLastWeek();
@@ -1026,9 +1027,9 @@
         $('#remain').text(remainDays);
         $('#remain2').text(remainDays);
         if (remainDays < 60) {
-            $("#renewMsg").hide();
+            $("#renewMsg").addClass('hide');
         } else {
-            document.getElementById("btnProcessRenew").disabled = true;
+            $("#btnProcessRenew").addClass('hide');
         }
 
         $('input[type="date"]').not('#paidDate').blur(function () {
@@ -1045,13 +1046,27 @@
         });
 
         if (contractStatus == 'Pending') {
-            document.getElementById("btnRenew").disabled = true;
-            document.getElementById("btnCancel").disabled = true;
+            $('#btnRenew').addClass('hide');
+            $('#btnCancel').addClass('hide');
         }
 
-        $('#expiredDate').val(getCurrentDateInNextYear());
+        if (contractStatus == 'No card') {
+            if (remainDays > 60) {
+                $('#btnRenew').addClass('hide');
+            }
+        }
+
+        if (contractStatus == 'Ready') {
+            if (remainDays > 60) {
+                $('#btnRenew').addClass('hide');
+            }
+        }
+
         if (contractStatus == 'Expired') {
-            document.getElementById("btnCancel").disabled = true;
+            if (remainDays > 60) {
+                $('#btnRenew').addClass('hide');
+            }
+            $('#btnCancel').addClass('hide');
             $('#startDate').val(getCurrentDate());
             document.getElementById("expiredDate").min = getCurrentDate();
             document.getElementById("expiredDate").max = getCurrentDateInNextYear();
@@ -1061,11 +1076,14 @@
             document.getElementById("expiredDate").min = getInputDateNextDate(expDate);
             document.getElementById("expiredDate").max = getInputDateInNextYear(expDate);
         }
+
         if (contractStatus == 'Request cancel') {
-            document.getElementById("cancelReason").disabled = true;
+            $('#btnRenew').addClass('hide');
+            $('#btnCancel').addClass('hide');
         }
+
         if (contractStatus == 'Cancelled') {
-            $('button[type=button]').attr('disabled', true);
+            $('button[type=button]').addClass('hide');
             $('#remain').text(0);
         }
     });
