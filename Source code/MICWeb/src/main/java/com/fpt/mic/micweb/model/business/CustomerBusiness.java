@@ -91,7 +91,11 @@ public class CustomerBusiness {
         java.util.Date date = new java.util.Date();
         /////////////////////////
         if (contract != null) {
-            //update contract
+            if (contract.getStatus().equalsIgnoreCase(Constants.ContractStatus.EXPIRED)) {
+                payment.setStartDate(DateUtils.currentDateWithoutTime());
+            } else {
+                payment.setStartDate(contract.getExpiredDate());
+            }
             contract.setExpiredDate(neweEpired);
             if (card == null) {
                 contract.setStatus(Constants.ContractStatus.NO_CARD);
@@ -99,6 +103,7 @@ public class CustomerBusiness {
                 contract.setStatus(Constants.ContractStatus.READY);
             }
             //update payment
+            payment.setExpiredDate(neweEpired);
             payment.setPaidDate(DateUtils.currentDateWithoutTime());
             payment.setPaymentMethod("PayPal payment");
             payment.setContent("Gia hạn hợp đồng");
