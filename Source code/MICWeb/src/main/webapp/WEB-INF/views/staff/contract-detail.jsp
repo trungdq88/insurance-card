@@ -999,7 +999,7 @@
 
                     <!-- New card -->
                     <div class="form-group">
-                        <label class="col-sm-5 control-label">Báo mất thẻ và yêu cầu thẻ mới</label>
+                        <label class="col-sm-5 control-label">Cấp thẻ mới</label>
 
                         <div class="col-sm-4">
                             <div class="text-value">
