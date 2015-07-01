@@ -13,6 +13,7 @@ import com.fpt.mic.micweb.framework.responses.JspPage;
 import com.fpt.mic.micweb.framework.R;
 import com.fpt.mic.micweb.framework.responses.ResponseObject;
 import com.fpt.mic.micweb.model.entity.CustomerEntity;
+import com.fpt.mic.micweb.utils.Constants;
 import com.fpt.mic.micweb.utils.DateUtils;
 
 import javax.servlet.annotation.WebServlet;
@@ -98,6 +99,11 @@ public class ContractController extends AuthController {
         if (contract == null || contract.getCustomerCode().compareToIgnoreCase(customerCode) != 0) {
             return new RedirectTo("/error/404");
         } else {
+            // Save last_modified value for concurrency check
+            r.equest.getSession(true).setAttribute(
+                    Constants.Session.CONCURRENCY + contract.getContractCode(),
+                    contract.getLastModified());
+
             r.equest.setAttribute("contract", contract);
             return new JspPage("customer/contract-detail.jsp");
         }
@@ -227,13 +233,27 @@ public class ContractController extends AuthController {
             r.equest.setAttribute("ack", session.getAttribute("ACK"));
             //renew contract by customer
             CustomerBusiness customerBusiness = new CustomerBusiness();
-            boolean result = customerBusiness.paymentContract(contractCode,
-                    results.get("PAYMENTINFO_0_TRANSACTIONID"));
 
-            if (result) {
-                r.equest.setAttribute("message", "Thanh toán cho hợp đồng" + contractCode + " thành công.");
+            // Get concurrency data
+            Timestamp lastModified = (Timestamp) r.equest.getSession(true).getAttribute(
+                    Constants.Session.CONCURRENCY + contractCode);
+
+            // Concurrency check
+            if (customerBusiness.isContractChanged(contractCode, lastModified)) {
+                r.equest.setAttribute("message", "Thông tin hợp đồng đã bị thay đổi bởi một " +
+                        "người khác, vui lòng thực hiện lại thao tác. <br/>" +
+                        "Vui lòng lưu lại mã giao dịch để đối chiếu trong trường hợp hoàn lại tiền");
+                // TODO: refund?
             } else {
-                r.equest.setAttribute("message", "Thanh toán thất bại.");
+                // Concurrency check success
+                boolean result = customerBusiness.paymentContract(contractCode,
+                        results.get("PAYMENTINFO_0_TRANSACTIONID"));
+
+                if (result) {
+                    r.equest.setAttribute("message", "Thanh toán cho hợp đồng" + contractCode + " thành công.");
+                } else {
+                    r.equest.setAttribute("message", "Thanh toán thất bại.");
+                }
             }
 
             session.removeAttribute("RESULT");
