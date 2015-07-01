@@ -13,11 +13,7 @@ public class SchedulerJob implements Job {
     @Override
     public void execute(final JobExecutionContext ctx)
             throws JobExecutionException {
-
-        System.out.println("Executing Job " + (new Date()));
-        ContractDao contractDao = new ContractDao();
-        Long count = contractDao.getAllContractCount();
-        System.out.println("Count: " + count);
+        System.out.println("Executing Schedule Job " + (new Date()));
         SchedulerBusiness schedulerBusiness = new SchedulerBusiness();
         schedulerBusiness.updateContracts();
 
