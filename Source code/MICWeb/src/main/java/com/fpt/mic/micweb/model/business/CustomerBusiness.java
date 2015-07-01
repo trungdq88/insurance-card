@@ -150,6 +150,9 @@ public class CustomerBusiness {
         contract.setCancelReason(null);
         contract.setCancelNote(null);
 
+        // Concurrency set value
+        contract.setLastModified(new Timestamp(new java.util.Date().getTime()));
+
 
         if (contractDao.update(contract) != null) {
             return contract;

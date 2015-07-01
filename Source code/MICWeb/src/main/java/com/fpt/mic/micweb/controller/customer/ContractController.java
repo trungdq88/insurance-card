@@ -330,16 +330,26 @@ public class ContractController extends AuthController {
         if (business.getContractDetail(contractCode) == null) {
             return new RedirectTo("/error/404");
         } else {
-            ContractEntity contract = business.rejectCancelContract(contractCode);
-            String mesg = "Không thể gở bỏ yêu cầu hủy hợp đồng";
-            if (contract != null) {
-                r.equest.setAttribute("contract", contract);
-                return new RedirectTo("contract?action=ContractDetail&code=" + contractCode);
+            String mesg;
+
+            // Get concurrency data
+            Timestamp lastModified = (Timestamp) r.equest.getSession(true).getAttribute(
+                    Constants.Session.CONCURRENCY + contractCode);
+
+            if (business.isContractChanged(contractCode, lastModified)) {
+                mesg = "Thông tin hợp đồng đã bị sửa đổi trước đó bởi một người khác, vui lòng thực hiện lại thao tác";
             } else {
-                r.equest.setAttribute("result", mesg);
-                r.equest.setAttribute("contractCode", contractCode);
-                return new JspPage("customer/message.jsp");
+                ContractEntity contract = business.rejectCancelContract(contractCode);
+
+                mesg = "Không thể gở bỏ yêu cầu hủy hợp đồng";
+                if (contract != null) {
+                    r.equest.setAttribute("contract", contract);
+                    return new RedirectTo("contract?action=ContractDetail&code=" + contractCode);
+                }
             }
+            r.equest.setAttribute("result", mesg);
+            r.equest.setAttribute("contractCode", contractCode);
+            return new JspPage("customer/message.jsp");
         }
     }
 }
