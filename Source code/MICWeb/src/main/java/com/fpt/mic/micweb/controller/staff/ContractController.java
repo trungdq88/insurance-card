@@ -251,6 +251,13 @@ public class ContractController extends AuthController {
     public ResponseObject postCompletePayment(R r) {
         // Get payment information
         CompletePaymentDto dto = (CompletePaymentDto) r.ead.entity(CompletePaymentDto.class, "payment");
+
+        // Get concurrency data
+        Timestamp lastModified = (Timestamp) r.equest.getSession(true).getAttribute(
+                Constants.Session.CONCURRENCY + dto.getContractCode());
+        dto.setLastModified(lastModified);
+
+
         List errors = r.ead.validate(dto);
         // If there is validation errors
         if (errors.size() > 0) {

@@ -237,6 +237,10 @@ public class StaffBusiness {
             }
             // Set expired date = start_date + 1 year
             contractEntity.setExpiredDate(DateUtils.addOneYear(contractEntity.getStartDate()));
+
+            // Concurrency check value
+            contractEntity.setLastModified(new Timestamp(new Date().getTime()));
+
             // Update contract status
             // kiem tra neu chua den ngay start hop dong thi de la pending, nguoc lai thi no_card
             if (contractEntity.getStartDate().after(currentDate)) {
