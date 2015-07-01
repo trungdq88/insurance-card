@@ -5,9 +5,7 @@ import com.fpt.mic.micweb.framework.R;
 import com.fpt.mic.micweb.framework.responses.JspPage;
 import com.fpt.mic.micweb.framework.responses.RedirectTo;
 import com.fpt.mic.micweb.framework.responses.ResponseObject;
-import com.fpt.mic.micweb.model.business.ContractBusiness;
 import com.fpt.mic.micweb.model.dto.PayPal;
-import com.fpt.mic.micweb.model.dto.form.CheckoutDto;
 import com.fpt.mic.micweb.utils.CurrencyUtils;
 import com.fpt.mic.micweb.utils.NumberUtils;
 import com.fpt.mic.micweb.utils.StringUtils;
@@ -15,11 +13,7 @@ import org.apache.commons.lang3.StringEscapeUtils;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpSession;
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-import java.sql.Timestamp;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**

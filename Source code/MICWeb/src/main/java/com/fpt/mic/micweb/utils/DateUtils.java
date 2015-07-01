@@ -1,5 +1,8 @@
 package com.fpt.mic.micweb.utils;
 
+import org.joda.time.DateTime;
+import org.joda.time.Days;
+
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -12,6 +15,10 @@ import java.util.Date;
  * Modified by KhaNC on 06/08/2015.
  */
 public class DateUtils {
+    private static final int MILLIS_IN_SECOND = 1000;
+    private static final int SECONDS_IN_MINUTE = 60;
+    private static final int MINUTES_IN_HOUR = 60;
+    private static final int HOURS_IN_DAY = 24;
     public static Timestamp stringToTime(String inputDate) {
         Timestamp timeStamp = null;
         try {
@@ -58,5 +65,9 @@ public class DateUtils {
         cal.set( Calendar.MILLISECOND, 0);
         Date day = cal.getTime();
         return new Timestamp(day.getTime());
+    }
+    public static long dateBetween(Timestamp t1, Timestamp t2) {
+        long diffTime = t2.getTime() - t1.getTime();
+        return diffTime / (MILLIS_IN_SECOND * SECONDS_IN_MINUTE * MINUTES_IN_HOUR * HOURS_IN_DAY);
     }
 }
