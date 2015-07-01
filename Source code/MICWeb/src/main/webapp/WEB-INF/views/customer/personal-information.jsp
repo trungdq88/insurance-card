@@ -84,7 +84,7 @@
             <div class="form-group">
                 <label for="inputPassword3" class="col-sm-4 control-label">CMND/Hộ chiếu</label>
 
-                <div class="col-sm-5">
+                <div class="col-sm-7">
                     <input type="text" class="form-control handleInput textInFormation" disabled="disabled"
                            value="${customer.personalId}">
                 </div>
