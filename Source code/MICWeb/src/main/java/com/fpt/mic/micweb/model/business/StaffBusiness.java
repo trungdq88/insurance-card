@@ -43,7 +43,7 @@ public class StaffBusiness {
         customerEntity.setPhone(dto.getPhone());
         customerEntity.setPersonalId(dto.getPersonalID());
         // Set lastModifed is current date
-        customerEntity.setLastModified(new Timestamp(new Date().getTime()));
+        customerEntity.setLastModified(DateUtils.currentTimeWithoutNanos());
         // get customer password
         String customerPassword = StringUtils.randomString();
         // TODO: encrypt password
@@ -102,7 +102,12 @@ public class StaffBusiness {
         contractEntity.setStartDate(dto.getStartDate());
         contractEntity.setExpiredDate(dto.getExpiredDate());
         // Set contract status by pre-defined constants
-        contractEntity.setStatus(Constants.ContractStatus.NO_CARD);
+        Timestamp currentDate = DateUtils.currentDateWithoutTime();
+        if (contractEntity.getStartDate().after(currentDate)) {
+            contractEntity.setStatus(Constants.ContractStatus.PENDING);
+        } else {
+            contractEntity.setStatus(Constants.ContractStatus.NO_CARD);
+        }
         // Set contract entity from DTO
         contractEntity.setContractFee(dto.getContractFee());
         // Vehicle information
@@ -120,7 +125,7 @@ public class StaffBusiness {
         // Code of the staff created this contract
         contractEntity.setStaffCode(receiver.getStaffCode());
         // Set lastModified is current date
-        contractEntity.setLastModified(new Timestamp(new Date().getTime()));
+        contractEntity.setLastModified(DateUtils.currentTimeWithoutNanos());
         // Create new contract
         ContractEntity newContract = contractDao.create(contractEntity);
         // Check contract to add payment
@@ -155,7 +160,7 @@ public class StaffBusiness {
             contractEntity.setContractFee(dto.getContractFee());
 
             // Concurrency set value
-            contractEntity.setLastModified(new Timestamp(new Date().getTime()));
+            contractEntity.setLastModified(DateUtils.currentTimeWithoutNanos());
 
             if (cardEntity == null) {
                 contractEntity.setStatus(Constants.ContractStatus.NO_CARD);
@@ -194,7 +199,7 @@ public class StaffBusiness {
             contractEntity.setStatus(Constants.ContractStatus.CANCELLED);
 
             // Concurrency set value
-            contractEntity.setLastModified(new Timestamp(new Date().getTime()));
+            contractEntity.setLastModified(DateUtils.currentTimeWithoutNanos());
 
             if (contractDao.update(contractEntity) != null) {
                 return true;
@@ -211,7 +216,7 @@ public class StaffBusiness {
 
     public List<PaymentEntity> getPaymentByContractCode(String contractCode) {
         PaymentDao paymentDao = new PaymentDao();
-        List<PaymentEntity> listPayment = paymentDao.getPaymentByCustomerCode(contractCode);
+        List<PaymentEntity> listPayment = paymentDao.getPaymentByContractCode(contractCode);
         return listPayment;
     }
 
@@ -239,7 +244,7 @@ public class StaffBusiness {
             contractEntity.setExpiredDate(DateUtils.addOneYear(contractEntity.getStartDate()));
 
             // Concurrency check value
-            contractEntity.setLastModified(new Timestamp(new Date().getTime()));
+            contractEntity.setLastModified(DateUtils.currentTimeWithoutNanos());
 
             // Update contract status
             // kiem tra neu chua den ngay start hop dong thi de la pending, nguoc lai thi no_card

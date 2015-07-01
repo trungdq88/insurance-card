@@ -62,7 +62,7 @@
                             <c:when test="${customers.size() == 0}">
                                 <tr>
                                     <td colspan="6" style="vertical-align: middle; text-align: center;">
-                                        Không có hợp đồng nào
+                                        Không có khách hàng nào
                                     </td>
                                 </tr>
                             </c:when>

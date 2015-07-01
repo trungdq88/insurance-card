@@ -13,11 +13,24 @@ public class Constants {
         public static final String REQUEST_CANCEL = "Request cancel";
         public static final String CANCELLED = "Cancelled";
     }
+
     public static class DueDate {
         public static final int PAYMENT_DUE_DATE = 7;
         public static final int RENEW_DUE_DATE = 7;
         public static final int NEARLY_EXCEED_EXPIRED = 7;
     }
+
+    public static class StaffConfiguration {
+        public static final int START_DATE_BEFORE = 7;
+        public static final int START_DATE_AFTER = 60;
+        public static final int EXPIRED_DATE_AFTER = 1;
+        public static final int CONTRACT_DEFAULT_TERM = 1;
+        public static final int PAID_DATE_BEFORE = 7;
+        public static final int PAID_DATE_AFTER = 30;
+        public static final int CANCEL_DATE_BEFORE = 7;
+        public static final int CANCEL_DATE_AFTER = 30;
+    }
+
     public static class Session {
         public static final String USER_DTO = "userDto";
         public static final String CONCURRENCY = "concurrency_";
