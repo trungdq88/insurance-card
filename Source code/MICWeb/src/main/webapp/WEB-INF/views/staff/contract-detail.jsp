@@ -550,7 +550,12 @@
                                         <tbody>
                                         <c:forEach var="payment" items="${listPayment}" varStatus="counter">
                                             <tr>
-                                                <td>${payment.id}</td>
+                                                <td>
+                                                    <a href="javascript:;" class="payment-id-clicker"
+                                                       payment-id="${payment.id}">
+                                                        ${payment.id}
+                                                    </a>
+                                                </td>
                                                 <td>
                                                     <fmt:formatDate value="${payment.paidDate}" pattern="dd/MM/yyyy"/>
                                                 </td>
@@ -716,7 +721,7 @@
 <!-- /#wrapper -->
 
 <!-- model for detail payment -->
-<%--<div class="modal fade" id="detail-payment-modal">
+<div class="modal fade" id="detail-payment-modal">
     <div class="modal-dialog">
         <form class="form-horizontal">
             <div class="modal-content">
@@ -727,100 +732,61 @@
                 </div>
                 <div class="modal-body">
                     <fieldset>
-                        <legend>Thông tin thanh toán</legend>
-
-                        <!-- Payment ID -->
+                        <!-- Payment ID & Paid date -->
                         <div class="form-group">
-                            <label class="col-sm-5 control-label">Mã giao dịch</label>
+                            <label class="col-sm-3 control-label">Mã giao dịch</label>
 
-                            <div class="col-sm-6">
-                                <div class="text-value">
+                            <div class="col-sm-2">
+                                <div class="text-value" id="payment-id-value"></div>
+                            </div>
 
-                                </div>
+                            <label class="col-sm-2 control-label">Thời gian</label>
+
+                            <div class="col-sm-4">
+                                <div class="text-value" id="paid-date-value"></div>
                             </div>
                         </div>
 
-                        <!-- Paid date -->
+                        <!-- Payment method & Content -->
                         <div class="form-group">
-                            <label class="col-sm-5 control-label">Thời gian</label>
+                            <label class="col-sm-3 control-label">Hình thức</label>
 
-                            <div class="col-sm-6">
-                                <div class="text-value">
-
-                                </div>
+                            <div class="col-sm-2">
+                                <div class="text-value" id="payment-method-value"></div>
                             </div>
-                        </div>
 
-                        <!-- Payment method -->
-                        <div class="form-group">
-                            <label class="col-sm-5 control-label">Hình thức</label>
 
-                            <div class="col-sm-6">
-                                <div class="text-value">
+                            <label class="col-sm-2 control-label">Dịch vụ</label>
 
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Content -->
-                        <div class="form-group">
-                            <label class="col-sm-5 control-label">Dịch vụ</label>
-
-                            <div class="col-sm-6">
-                                <div class="text-value">
-
-                                </div>
+                            <div class="col-sm-5">
+                                <div class="text-value" id="content-value"></div>
                             </div>
                         </div>
 
                         <!-- Amount -->
                         <div class="form-group">
-                            <label class="col-sm-5 control-label">Số tiền</label>
+                            <label class="col-sm-3 control-label">Số tiền</label>
 
-                            <div class="col-sm-6">
-                                <div class="text-value">
-
-                                </div>
+                            <div class="col-sm-2">
+                                <div class="text-value" id="amount-value"></div>
                             </div>
                         </div>
 
                         <!-- Receiver -->
                         <div class="form-group">
-                            <label class="col-sm-5 control-label">Người nhận</label>
+                            <label class="col-sm-3 control-label">Người nhận</label>
 
-                            <div class="col-sm-6">
-                                <div class="text-value">
-
-                                </div>
+                            <div class="col-sm-3">
+                                <div class="text-value" id="receiver-value"></div>
                             </div>
                         </div>
 
                         <!-- Paypal ID -->
                         <div class="form-group">
-                            <label class="col-sm-5 control-label">Mã Paypal</label>
+                            <label class="col-sm-3 control-label">Mã Paypal</label>
 
-                            <div class="col-sm-6">
-                                <div class="text-value">
-                                    <c:choose>
-                                        <c:when test="">
-
-                                        </c:when>
-                                        <c:otherwise>
-                                            <span class="empty-value">Không có</span>
-                                        </c:otherwise>
-                                    </c:choose>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Contract code -->
-                        <div class="form-group">
-                            <label class="col-sm-5 control-label">Mã hợp đồng</label>
-
-                            <div class="col-sm-6">
-                                <div class="text-value">
-
-                                </div>
+                            <div class="col-sm-4">
+                                <div class="text-value" id="paypal-id-value"></div>
                             </div>
                         </div>
 
@@ -828,12 +794,8 @@
                         <div class="form-group">
                             <label class="col-sm-5 control-label">Ngày bắt đầu gia hạn</label>
 
-                            <div class="col-sm-6">
-                                <div class="text-value">
-                                    <fmt:formatDate value="" pattern="dd/MM/yyyy"/>
-                                    lúc
-                                    <fmt:formatDate value="" type="time"/>
-                                </div>
+                            <div class="col-sm-4">
+                                <div class="text-value" id="start-date-value"></div>
                             </div>
                         </div>
 
@@ -841,16 +803,12 @@
                         <div class="form-group">
                             <label class="col-sm-5 control-label">Ngày hết hạn hợp đồng</label>
 
-                            <div class="col-sm-6">
-                                <div class="text-value">
-                                    <fmt:formatDate value="" pattern="dd/MM/yyyy"/>
-                                    lúc
-                                    <fmt:formatDate value="" type="time"/>
-                                </div>
+                            <div class="col-sm-4">
+                                <div class="text-value" id="expired-date-value"></div>
                             </div>
                         </div>
                     </fieldset>
-                    &lt;%&ndash;/Payment information&ndash;%&gt;
+                    <%--/Payment information--%>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Đóng</button>
@@ -860,7 +818,7 @@
         </form>
     </div>
     <!-- /.modal-dialog -->
-</div>--%>
+</div>
 <!-- /.modal -->
 
 <!-- model for complete payment -->
@@ -1186,12 +1144,12 @@
         document.getElementById("cancelDate").max = '${config.cancelDateMax}';
 
         $('.collapse').collapse();
-        $('input[type=checkbox]').on('click', function (e) {
+        $('#newCard').on('click', function (e) {
             e.stopPropagation();
             $(this).parent().trigger('click');
         })
         $('#collapseNewCard').on('show.bs.collapse', function (e) {
-            if (!$('input[type=checkbox]').is(':checked')) {
+            if (!$('#newCard').is(':checked')) {
                 return false;
             }
         });
@@ -1205,7 +1163,6 @@
         $('#amount').val(pricePerYear);
         $('#renewFee').text(parseFloat(pricePerYear).formatMoney(0));
         $('#newCardFee').text(newCardFee);
-        $('#totalFee').val(pricePerYear + newCardFee);
 
         var remainDays = daysBetween(new Date(), expDate);
         $('#remain').text(remainDays);
@@ -1219,9 +1176,13 @@
                 contractTerm = daysBetween(new Date(getCurrentDate()), inputDate);
             }
             var renewFee = calculateContractFee(contractTerm, pricePerYear);
-            $('#contractFee').val(pricePerYear);
-            $('#amount').val(pricePerYear);
+            $('#contractFee').val(renewFee);
+            $('#amount').val(renewFee);
             $('#renewFee').text(parseFloat(renewFee).formatMoney(0));
+            $('#totalFee').text(parseFloat(renewFee).formatMoney(0));
+            if ($('#newCard').is(':checked')) {
+                $('#totalFee').text(parseFloat((renewFee + newCardFee)).formatMoney(0));
+            }
         });
 
         if (contractStatus == 'Pending') {
@@ -1268,6 +1229,27 @@
             $('button[type=button]').not('#btnRenew, #btnCancel').addClass('hide');
             $('#remain').text(0);
         }
+
+        $(".payment-id-clicker").on("click", function(){
+            var that = this;
+            var paymentId = that.getAttribute("payment-id");
+            $.ajax({
+                    url: "${pageContext.request.contextPath}/ajax?action=paymentDetail&paymentId=" + paymentId,
+                    type: "GET",
+            }).done(function(data){
+                $("#payment-id-value").html(data.id);
+                $("#paid-date-value").html(getDateTime(data.paidDate));
+                $("#payment-method-value").html(data.paymentMethod);
+                $("#content-value").html(data.content);
+                $("#amount-value").html(data.amount);
+                $("#receiver-value").html(data.micStaffByReceiver.name);
+                $("#paypal-id-value").html(data.paypalTransId);
+                $("#start-date-value").html(getDateTime(data.startDate));
+                $("#expired-date-value").html(getDateTime(data.expiredDate));
+
+                $("#detail-payment-modal").modal("show");
+            });
+        });
     });
 </script>
 
