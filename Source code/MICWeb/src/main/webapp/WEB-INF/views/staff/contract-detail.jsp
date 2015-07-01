@@ -924,7 +924,7 @@
                 </div>
                 <div class="modal-footer">
                     <input type="hidden" name="action" value="renew"/>
-                    <button type="submit" class="btn btn-primary hide" id="btnProcessRenew">
+                    <button type="submit" class="btn btn-primary">
                         <i class="fa fa-arrow-right"></i> Gia hạn hợp đồng
                     </button>
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Đóng</button>
@@ -1026,10 +1026,8 @@
         var remainDays = daysBetween(new Date(), expDate);
         $('#remain').text(remainDays);
         $('#remain2').text(remainDays);
-        if (remainDays < 60) {
+        if (remainDays > 60) {
             $("#renewMsg").removeClass('hide');
-        } else {
-            $("#btnProcessRenew").removeClass('hide');
         }
 
         $('input[type="date"]').not('#paidDate').blur(function () {

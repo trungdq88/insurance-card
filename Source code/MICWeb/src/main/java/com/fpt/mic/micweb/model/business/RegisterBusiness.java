@@ -123,6 +123,9 @@ public class RegisterBusiness {
         // set expired date = start_date + 1 year
         contractEntity.setExpiredDate(DateUtils.addOneYear(contractEntity.getStartDate()));
 
+        // set new last modified time
+        contractEntity.setLastModified(new Timestamp(new Date().getTime()));
+
         if(contractEntity.getStartDate().after(currentDate)) {
             contractEntity.setStatus(Constants.ContractStatus.PENDING);
         } else {
