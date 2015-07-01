@@ -553,7 +553,7 @@
                                                 <td>
                                                     <a href="javascript:;" class="payment-id-clicker"
                                                        payment-id="${payment.id}">
-                                                        ${payment.id}
+                                                            ${payment.id}
                                                     </a>
                                                 </td>
                                                 <td>
@@ -1010,8 +1010,8 @@
                         </div>
                     </div>
 
-                    <!-- New card fee -->
                     <div id="collapseNewCard" class="panel-collapse collapse in">
+                        <!-- New card fee -->
                         <div class="form-group">
                             <label class="col-sm-5 control-label">Phí thẻ mới</label>
 
@@ -1022,21 +1022,21 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
 
+                        <!-- Total fee -->
+                        <div class="form-group">
+                            <label class="col-sm-5 control-label">Tổng chi phí</label>
 
-                    <!-- New card fee -->
-                    <div class="form-group">
-                        <label class="col-sm-5 control-label">Tổng chi phí</label>
-
-                        <div class="col-sm-4">
-                            <div class="text-value">
+                            <div class="col-sm-4">
+                                <div class="text-value">
                                     <span id="totalFee"
                                           style="color:red; font-weight: bolder; font-size: large"></span> đ
-                                <input type="hidden" id="amount" name="renew:amount"/>
+                                    <input type="hidden" id="amount" name="renew:amount"/>
+                                </div>
                             </div>
                         </div>
                     </div>
+
 
                     <!-- Paid date -->
                     <div class=" form-group">
@@ -1143,6 +1143,19 @@
         document.getElementById("cancelDate").min = '${config.cancelDateMin}';
         document.getElementById("cancelDate").max = '${config.cancelDateMax}';
 
+        var contractStatus = '${cont.status}';
+        var expDate = new Date("${cont.expiredDate}");
+        var pricePerYear = '${cont.micContractTypeByContractTypeId.pricePerYear}';
+        var contractTerm = 365;
+        var renewFee = pricePerYear;
+        var newCardFee = 10000;
+        var totalFee = parseFloat(renewFee) + newCardFee;
+        $('#contractFee').val(pricePerYear);
+        $('#amount').val(pricePerYear);
+        $('#renewFee').text(parseFloat(pricePerYear).formatMoney(0));
+        $('#newCardFee').text(parseFloat(newCardFee).formatMoney(0));
+        $('#totalFee').text(parseFloat(totalFee).formatMoney(0));
+
         $('.collapse').collapse();
         $('#newCard').on('click', function (e) {
             e.stopPropagation();
@@ -1153,16 +1166,6 @@
                 return false;
             }
         });
-
-        var contractStatus = '${cont.status}';
-        var expDate = new Date("${cont.expiredDate}");
-        var pricePerYear = '${cont.micContractTypeByContractTypeId.pricePerYear}';
-        var contractTerm = 365;
-        var newCardFee = parseFloat('10,000');
-        $('#contractFee').val(pricePerYear);
-        $('#amount').val(pricePerYear);
-        $('#renewFee').text(parseFloat(pricePerYear).formatMoney(0));
-        $('#newCardFee').text(newCardFee);
 
         var remainDays = daysBetween(new Date(), expDate);
         $('#remain').text(remainDays);
@@ -1175,13 +1178,15 @@
             } else {
                 contractTerm = daysBetween(new Date(getCurrentDate()), inputDate);
             }
-            var renewFee = calculateContractFee(contractTerm, pricePerYear);
+            renewFee = calculateContractFee(contractTerm, pricePerYear);
             $('#contractFee').val(renewFee);
             $('#amount').val(renewFee);
             $('#renewFee').text(parseFloat(renewFee).formatMoney(0));
             $('#totalFee').text(parseFloat(renewFee).formatMoney(0));
-            if ($('#newCard').is(':checked')) {
-                $('#totalFee').text(parseFloat((renewFee + newCardFee)).formatMoney(0));
+            if (document.getElementById("newCard").checked) {
+                totalFee = parseFloat(renewFee) + newCardFee;
+                $('#amount').val(totalFee);
+                $('#totalFee').text(parseFloat(totalFee).formatMoney(0));
             }
         });
 
@@ -1230,13 +1235,13 @@
             $('#remain').text(0);
         }
 
-        $(".payment-id-clicker").on("click", function(){
+        $(".payment-id-clicker").on("click", function () {
             var that = this;
             var paymentId = that.getAttribute("payment-id");
             $.ajax({
-                    url: "${pageContext.request.contextPath}/ajax?action=paymentDetail&paymentId=" + paymentId,
-                    type: "GET",
-            }).done(function(data){
+                url: "${pageContext.request.contextPath}/ajax?action=paymentDetail&paymentId=" + paymentId,
+                type: "GET",
+            }).done(function (data) {
                 $("#payment-id-value").html(data.id);
                 $("#paid-date-value").html(getDateTime(data.paidDate));
                 $("#payment-method-value").html(data.paymentMethod);
