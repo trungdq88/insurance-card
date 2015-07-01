@@ -19,11 +19,11 @@
                 <h1 class="page-header">
                     ${cont.contractCode}
                     <div class="pull-right">
-                        <button id="btnRenew" type="button" class="btn btn-primary"
+                        <button id="btnRenew" type="button" class="btn btn-primary hide"
                                 data-toggle="modal" data-target="#renew-contract-modal">
                             <i class="fa fa-refresh"></i> Gia hạn
                         </button>
-                        <button id="btnCancel" type="button" class="btn btn-danger"
+                        <button id="btnCancel" type="button" class="btn btn-danger hide"
                                 data-toggle="modal" data-target="#cancel-contract-modal">
                             <i class="fa fa-times"></i> Hủy hợp đồng
                         </button>
@@ -834,7 +834,7 @@
                     <fieldset>
                         <legend>Thông tin hợp đồng bảo hiểm</legend>
 
-                        <div id="renewMsg" class="alert alert-info">
+                        <div id="renewMsg" class="alert alert-info hide">
                             <p class="text-center text-uppercase" style="font-weight: bolder">
                                 Không thể gia hạn hợp đồng còn giá trị trên 2 tháng
                             </p>
@@ -924,7 +924,7 @@
                 </div>
                 <div class="modal-footer">
                     <input type="hidden" name="action" value="renew"/>
-                    <button type="submit" class="btn btn-primary" id="btnProcessRenew">
+                    <button type="submit" class="btn btn-primary hide" id="btnProcessRenew">
                         <i class="fa fa-arrow-right"></i> Gia hạn hợp đồng
                     </button>
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Đóng</button>
@@ -1027,9 +1027,9 @@
         $('#remain').text(remainDays);
         $('#remain2').text(remainDays);
         if (remainDays < 60) {
-            $("#renewMsg").addClass('hide');
+            $("#renewMsg").removeClass('hide');
         } else {
-            $("#btnProcessRenew").addClass('hide');
+            $("#btnProcessRenew").removeClass('hide');
         }
 
         $('input[type="date"]').not('#paidDate').blur(function () {
@@ -1046,27 +1046,28 @@
         });
 
         if (contractStatus == 'Pending') {
-            $('#btnRenew').addClass('hide');
-            $('#btnCancel').addClass('hide');
+            $('#btnRenew').removeClass('hide');
+            $('#btnCancel').removeClass('hide');
         }
 
         if (contractStatus == 'No card') {
-            if (remainDays > 60) {
-                $('#btnRenew').addClass('hide');
+            if (remainDays < 60) {
+                $('#btnRenew').removeClass('hide');
             }
+            $('#btnCancel').removeClass('hide');
         }
 
         if (contractStatus == 'Ready') {
-            if (remainDays > 60) {
-                $('#btnRenew').addClass('hide');
+            if (remainDays < 60) {
+                $('#btnRenew').removeClass('hide');
             }
+            $('#btnCancel').removeClass('hide');
         }
 
         if (contractStatus == 'Expired') {
-            if (remainDays > 60) {
-                $('#btnRenew').addClass('hide');
+            if (remainDays < 60) {
+                $('#btnRenew').removeClass('hide');
             }
-            $('#btnCancel').addClass('hide');
             $('#startDate').val(getCurrentDate());
             document.getElementById("expiredDate").min = getCurrentDate();
             document.getElementById("expiredDate").max = getCurrentDateInNextYear();
@@ -1078,12 +1079,12 @@
         }
 
         if (contractStatus == 'Request cancel') {
-            $('#btnRenew').addClass('hide');
-            $('#btnCancel').addClass('hide');
+            $('#btnRenew').removeClass('hide');
+            $('#btnCancel').removeClass('hide');
         }
 
         if (contractStatus == 'Cancelled') {
-            $('button[type=button]').addClass('hide');
+            $('button[type=button]').not('#btnRenew, #btnCancel').addClass('hide');
             $('#remain').text(0);
         }
     });
