@@ -2,9 +2,7 @@ package com.fpt.mic.micweb.model.business;
 
 import com.fpt.mic.micweb.model.dao.CardDao;
 import com.fpt.mic.micweb.model.dao.ContractDao;
-import com.fpt.mic.micweb.model.dao.PaymentDao;
 import com.fpt.mic.micweb.model.entity.ContractEntity;
-import com.fpt.mic.micweb.model.entity.PaymentEntity;
 import com.fpt.mic.micweb.utils.Constants;
 import com.fpt.mic.micweb.utils.DateUtils;
 
@@ -20,11 +18,10 @@ public class SchedulerBusiness {
         List<ContractEntity> contractEntityList = contractDao.getListContract();
         Timestamp currentDate = DateUtils.currentDateWithoutTime();
         for (ContractEntity contractEntity : contractEntityList) {
-            // check if contract exceeded renew due date
+            // check if contract exceeded renew due date (1)
             if (contractEntity.getStatus().equals(Constants.ContractStatus.EXPIRED)) {
                 if (DateUtils.dateBetween(contractEntity.getExpiredDate(),currentDate) > Constants.DueDate.RENEW_DUE_DATE){
                     contractEntity.setStatus(Constants.ContractStatus.CANCELLED);
-                    System.out.println("contract cancelled " + contractEntity.getContractCode());
                     contractDao.update(contractEntity);
                 }
             }
@@ -32,37 +29,37 @@ public class SchedulerBusiness {
             if (contractEntity.getStatus().equals(Constants.ContractStatus.READY)
                     || contractEntity.getStatus().equals(Constants.ContractStatus.NO_CARD)
                     || contractEntity.getStatus().equals(Constants.ContractStatus.REQUEST_CANCEL)) {
-                // check if contract expired
+                // check if contract expired (2)
                 if (contractEntity.getExpiredDate().before(currentDate)) {
                     contractEntity.setStatus(Constants.ContractStatus.EXPIRED);
                     contractDao.update(contractEntity);
-                    System.out.println("contract expired " + contractEntity.getContractCode());
                     // TODO send notification to customer
                 }
-                // check if contract nearly exceeded expired
-                if (DateUtils.dateBetween(currentDate, contractEntity.getExpiredDate()) < 15 ) {
+                // check if contract nearly exceeded expired (3)
+                if (DateUtils.dateBetween(currentDate, contractEntity.getExpiredDate()) < Constants.DueDate.NEARLY_EXCEED_EXPIRED ) {
                     // TODO send notification to customer
                 }
             }
-            // checking PENDING contract
+            // checking PENDING contract (4)
             if (contractEntity.getStatus().equals(Constants.ContractStatus.PENDING)) {
                 // check if Pending contract exceeded payment due date
                 if ( contractEntity.getStartDate().equals(contractEntity.getExpiredDate())) {
-                    // TODO after create registeredDate
+                    if (DateUtils.dateBetween(contractEntity.getCreatedDate(),currentDate) > Constants.DueDate.PAYMENT_DUE_DATE) {
+                        contractEntity.setStatus(Constants.ContractStatus.CANCELLED);
+                        contractDao.update(contractEntity);
+                    }
                 }
-                // else check if completed payment pending contract exceeded startDate
+                // else check if completed payment pending contract exceeded startDate (5)
                 else {
                     if (contractEntity.getStartDate().equals(currentDate) || contractEntity.getStartDate().before(currentDate)) {
                         CardDao cardDao = new CardDao();
                         if ( null == cardDao.getCardByContract(contractEntity.getContractCode())) {
                             contractEntity.setStatus(Constants.ContractStatus.NO_CARD);
                             contractDao.update(contractEntity);
-                            System.out.println("Contract no card " +contractEntity.getContractCode());
                         }
                         else {
                             contractEntity.setStatus(Constants.ContractStatus.READY);
                             contractDao.update(contractEntity);
-                            System.out.println("Contract ready "+contractEntity.getContractCode());
                         }
                     }
                 }
