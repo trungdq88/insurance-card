@@ -44,21 +44,21 @@
 
         <form class="form-horizontal">
             <div class="form-group">
-                <label for="inputEmail3" class="col-sm-4 control-label">Tên Đăng Nhập</label>
+                <label for="inputEmail3" class="col-sm-4 control-label">Tên đăng nhập</label>
 
                 <div class="col-sm-5">
                     <p class="form-control-static">${customer.customerCode}</p>
                 </div>
             </div>
             <div class="form-group">
-                <label for="inputPassword3" class="col-sm-4 control-label">Họ Và Tên</label>
+                <label for="inputPassword3" class="col-sm-4 control-label">Họ và tên</label>
 
                 <div class="col-sm-5">
                     <p class="form-control-static">${customer.name}</p>
                 </div>
             </div>
             <div class="form-group">
-                <label for="inputPassword3" class="col-sm-4 control-label">Địa Chỉ</label>
+                <label for="inputPassword3" class="col-sm-4 control-label">Địa chỉ</label>
 
                 <div class="col-sm-5">
                     <input type="text" class="form-control handleInput textInFormation" placeholder="Địa Chỉ" disabled="disabled"
@@ -74,7 +74,7 @@
                 </div>
             </div>
             <div class="form-group">
-                <label for="inputPassword3" class="col-sm-4 control-label">Số Điện Thoại</label>
+                <label for="inputPassword3" class="col-sm-4 control-label">Số đện thoại</label>
 
                 <div class="col-sm-5">
                     <input type="text" class="form-control handleInput textInFormation" disabled="disabled"
@@ -82,7 +82,7 @@
                 </div>
             </div>
             <div class="form-group">
-                <label for="inputPassword3" class="col-sm-4 control-label">CMND/Hộ Chiếu</label>
+                <label for="inputPassword3" class="col-sm-4 control-label">CMND/Hộ chiếu</label>
 
                 <div class="col-sm-5">
                     <input type="text" class="form-control handleInput textInFormation" disabled="disabled"
