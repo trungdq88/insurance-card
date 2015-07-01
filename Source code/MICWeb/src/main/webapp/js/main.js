@@ -157,3 +157,26 @@ function changeLabelByContractCode(contractStatus) {
             break;
     }
 }
+
+
+function addZero(i) {
+    if (i < 10) {
+        i = "0" + i;
+    }
+    return i;
+}
+
+function getDateTime(longTime) {
+    if (longTime) {
+        var returnDate = new Date(longTime);
+
+        var yearStr = returnDate.getFullYear();
+        var monthStr = addZero(returnDate.getMonth() + 1);
+        var dayStr = addZero(returnDate.getDay());
+        var hourStr = addZero(returnDate.getHours());
+        var minuteStr = addZero(returnDate.getMinutes());
+        var secondStr = addZero(returnDate.getSeconds());
+
+        return dayStr + "/" + monthStr + "/" + yearStr + " lúc " + hourStr + ":" + minuteStr + ":" + secondStr;
+    }
+}

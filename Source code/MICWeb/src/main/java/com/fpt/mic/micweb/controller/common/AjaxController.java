@@ -5,6 +5,8 @@ import com.fpt.mic.micweb.framework.R;
 import com.fpt.mic.micweb.framework.responses.JsonString;
 import com.fpt.mic.micweb.framework.responses.ResponseObject;
 import com.fpt.mic.micweb.model.business.AjaxBusiness;
+import com.fpt.mic.micweb.model.business.StaffBusiness;
+import com.fpt.mic.micweb.model.entity.PaymentEntity;
 
 import javax.servlet.annotation.WebServlet;
 
@@ -34,5 +36,14 @@ public class AjaxController extends BasicController {
 
         boolean b = ajaxBusiness.resendPassword(getServletContext(), customerCode, loginUrl);
         return new JsonString(b);
+    }
+
+
+    public ResponseObject getPaymentDetail(R r) {
+        Integer paymentId = Integer.parseInt(r.equest.getParameter("paymentId"));
+
+        StaffBusiness staffBusiness = new StaffBusiness();
+        PaymentEntity paymentEntity = staffBusiness.getPaymentDetail(paymentId);
+        return new JsonString(paymentEntity);
     }
 }
