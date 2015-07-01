@@ -339,7 +339,7 @@
                 </form>
 
             </c:if>
-            <c:if test="${contract.status.equalsIgnoreCase('Pending')}">
+            <c:if test="${contract.status.equalsIgnoreCase('Pending') && contract.startDate != contract.expiredDate}">
 
                 <div class="alert alert-block alert-error fade in well well-lg text-info">
                     <h4 class="alert-heading">Hợp đồng của quý khách chưa được thanh toán!</h4>

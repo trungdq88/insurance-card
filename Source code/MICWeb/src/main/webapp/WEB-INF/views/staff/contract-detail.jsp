@@ -58,7 +58,7 @@
                             </div>
                         </legend>
 
-                        <c:if test="${cont.status eq 'Pending'}">
+                        <c:if test="${cont.status eq 'Pending' && contract.startDate != contract.expiredDate}">
                             <div class="alert alert-info">
                                 <p class="bs-example text-center text-uppercase">
                                     Hợp đồng này chưa được thanh toán
