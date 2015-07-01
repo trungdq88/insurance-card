@@ -146,7 +146,8 @@
                                         <input type="password" class="form-control"
                                                required
                                                title="Nhập mật khẩu mới"
-                                               maxlength="50"
+                                               minlength="6"
+                                               maxlength="32"
                                                id="newPass"
                                                name="newPass:newPassword"
                                                 >
@@ -161,7 +162,8 @@
                                         <input type="password" class="form-control"
                                                required
                                                title="Xác nhận lại mật khẩu"
-                                               maxlength="50"
+                                               minlength="6"
+                                               maxlength="32"
                                                id="confirmPass"
                                                name="newPass:confirmPassword"
                                                 >
