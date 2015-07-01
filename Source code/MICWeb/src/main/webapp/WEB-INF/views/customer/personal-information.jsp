@@ -46,38 +46,47 @@
             <div class="form-group">
                 <label for="inputEmail3" class="col-sm-4 control-label">Tên đăng nhập</label>
 
-                <div class="col-sm-5">
+                <div class="col-sm-7">
                     <p class="form-control-static">${customer.customerCode}</p>
                 </div>
             </div>
             <div class="form-group">
                 <label for="inputPassword3" class="col-sm-4 control-label">Họ và tên</label>
 
-                <div class="col-sm-5">
+                <div class="col-sm-7">
                     <p class="form-control-static">${customer.name}</p>
                 </div>
             </div>
             <div class="form-group">
                 <label for="inputPassword3" class="col-sm-4 control-label">Địa chỉ</label>
 
-                <div class="col-sm-5">
-                    <input type="text" class="form-control handleInput textInFormation" placeholder="Địa Chỉ" disabled="disabled"
+                <div class="col-sm-7">
+                    <input type="text" class="form-control handleInput textInFormation"
+                           required
+                           maxlength="250"
+                           placeholder="Địa Chỉ" disabled="disabled"
                            value="${customer.address}">
                 </div>
             </div>
             <div class="form-group">
                 <label for="inputPassword3" class="col-sm-4 control-label">Email</label>
 
-                <div class="col-sm-5">
-                    <input type="email" class="form-control handleInput textInFormation" placeholder="Email" disabled="disabled"
+                <div class="col-sm-7">
+                    <input type="email" class="form-control handleInput textInFormation"
+                           required
+                           maxlength="50"
+                           placeholder="Email" disabled="disabled"
                            value="${customer.email}">
                 </div>
             </div>
             <div class="form-group">
                 <label for="inputPassword3" class="col-sm-4 control-label">Số đện thoại</label>
 
-                <div class="col-sm-5">
-                    <input type="text" class="form-control handleInput textInFormation" disabled="disabled"
+                <div class="col-sm-7">
+                    <input type="text" class="form-control handleInput textInFormation"
+                           required
+                           maxlength="15"
+                           disabled="disabled"
                            value="${customer.phone}">
                 </div>
             </div>
@@ -85,7 +94,10 @@
                 <label for="inputPassword3" class="col-sm-4 control-label">CMND/Hộ chiếu</label>
 
                 <div class="col-sm-7">
-                    <input type="text" class="form-control handleInput textInFormation" disabled="disabled"
+                    <input type="text" class="form-control handleInput textInFormation"
+                           required
+                           maxlength="15"
+                           disabled="disabled"
                            value="${customer.personalId}">
                 </div>
             </div>
