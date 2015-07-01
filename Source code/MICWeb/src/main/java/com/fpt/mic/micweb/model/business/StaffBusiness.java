@@ -192,6 +192,10 @@ public class StaffBusiness {
             contractEntity.setCancelReason(dto.getCancelReason());
             contractEntity.setCancelNote(dto.getCancelNote());
             contractEntity.setStatus(Constants.ContractStatus.CANCELLED);
+
+            // Concurrency set value
+            contractEntity.setLastModified(new Timestamp(new Date().getTime()));
+
             if (contractDao.update(contractEntity) != null) {
                 return true;
             }

@@ -211,6 +211,12 @@ public class ContractController extends AuthController {
     public ResponseObject postCancel(R r) {
         // Get cancel contract information
         CancelContractDto dto = (CancelContractDto) r.ead.entity(CancelContractDto.class, "cancel");
+
+        // Get concurrency data
+        Timestamp lastModified = (Timestamp) r.equest.getSession(true).getAttribute(
+                Constants.Session.CONCURRENCY + dto.getContractCode());
+        dto.setLastModified(lastModified);
+
         List errors = r.ead.validate(dto);
 
         // If there is validation errors
