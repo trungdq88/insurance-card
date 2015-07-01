@@ -11,6 +11,7 @@
     <c:set var="listCompensation" value="${requestScope.COMPENSATION}"/>
     <c:set var="listAccident" value="${requestScope.ACCIDENT}"/>
     <c:set var="listPunishment" value="${requestScope.PUNISHMENT}"/>
+    <c:set var="config" value="${requestScope.CONFIG}"/>
 
     <%@ include file="_shared/navigation.jsp" %>
     <div id="page-wrapper">
@@ -538,20 +539,17 @@
                                     <table class="table table-striped table-bordered table-hover">
                                         <thead>
                                         <tr>
-                                            <th>#</th>
                                             <th>Mã GD</th>
                                             <th>Thời gian</th>
                                             <th>Hình thức</th>
                                             <th>Dịch vụ</th>
                                             <th>Số tiền</th>
                                             <th>Người nhận</th>
-                                            <th>Mã PayPal</th>
                                         </tr>
                                         </thead>
                                         <tbody>
                                         <c:forEach var="payment" items="${listPayment}" varStatus="counter">
                                             <tr>
-                                                <td>${counter.count}</td>
                                                 <td>${payment.id}</td>
                                                 <td>
                                                     <fmt:formatDate value="${payment.paidDate}" pattern="dd/MM/yyyy"/>
@@ -568,7 +566,6 @@
                                                             ${payment.micStaffByReceiver.name}
                                                     </a>
                                                 </td>
-                                                <td>${payment.paypalTransId}</td>
                                             </tr>
                                         </c:forEach>
                                         </tbody>
@@ -704,7 +701,6 @@
                 </div>
                 <%--/Tab content --%>
                 <br/>
-                <br/>
 
                 <div class="text-center">
                     <a href="${pageContext.request.contextPath}/staff/contract" type="button" class="btn btn-default">
@@ -718,6 +714,154 @@
     </div>
 </div>
 <!-- /#wrapper -->
+
+<!-- model for detail payment -->
+<%--<div class="modal fade" id="detail-payment-modal">
+    <div class="modal-dialog">
+        <form class="form-horizontal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Chi tiết thông tin thanh toán</h4>
+                </div>
+                <div class="modal-body">
+                    <fieldset>
+                        <legend>Thông tin thanh toán</legend>
+
+                        <!-- Payment ID -->
+                        <div class="form-group">
+                            <label class="col-sm-5 control-label">Mã giao dịch</label>
+
+                            <div class="col-sm-6">
+                                <div class="text-value">
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Paid date -->
+                        <div class="form-group">
+                            <label class="col-sm-5 control-label">Thời gian</label>
+
+                            <div class="col-sm-6">
+                                <div class="text-value">
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Payment method -->
+                        <div class="form-group">
+                            <label class="col-sm-5 control-label">Hình thức</label>
+
+                            <div class="col-sm-6">
+                                <div class="text-value">
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Content -->
+                        <div class="form-group">
+                            <label class="col-sm-5 control-label">Dịch vụ</label>
+
+                            <div class="col-sm-6">
+                                <div class="text-value">
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Amount -->
+                        <div class="form-group">
+                            <label class="col-sm-5 control-label">Số tiền</label>
+
+                            <div class="col-sm-6">
+                                <div class="text-value">
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Receiver -->
+                        <div class="form-group">
+                            <label class="col-sm-5 control-label">Người nhận</label>
+
+                            <div class="col-sm-6">
+                                <div class="text-value">
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Paypal ID -->
+                        <div class="form-group">
+                            <label class="col-sm-5 control-label">Mã Paypal</label>
+
+                            <div class="col-sm-6">
+                                <div class="text-value">
+                                    <c:choose>
+                                        <c:when test="">
+
+                                        </c:when>
+                                        <c:otherwise>
+                                            <span class="empty-value">Không có</span>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Contract code -->
+                        <div class="form-group">
+                            <label class="col-sm-5 control-label">Mã hợp đồng</label>
+
+                            <div class="col-sm-6">
+                                <div class="text-value">
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Start date -->
+                        <div class="form-group">
+                            <label class="col-sm-5 control-label">Ngày bắt đầu gia hạn</label>
+
+                            <div class="col-sm-6">
+                                <div class="text-value">
+                                    <fmt:formatDate value="" pattern="dd/MM/yyyy"/>
+                                    lúc
+                                    <fmt:formatDate value="" type="time"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Expired date -->
+                        <div class="form-group">
+                            <label class="col-sm-5 control-label">Ngày hết hạn hợp đồng</label>
+
+                            <div class="col-sm-6">
+                                <div class="text-value">
+                                    <fmt:formatDate value="" pattern="dd/MM/yyyy"/>
+                                    lúc
+                                    <fmt:formatDate value="" type="time"/>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    &lt;%&ndash;/Payment information&ndash;%&gt;
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Đóng</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </form>
+    </div>
+    <!-- /.modal-dialog -->
+</div>--%>
+<!-- /.modal -->
 
 <!-- model for complete payment -->
 <div class="modal fade" id="complete-payment-modal">
@@ -831,96 +975,120 @@
                     <h4 class="modal-title">Gia hạn hợp đồng</h4>
                 </div>
                 <div class="modal-body">
-                    <fieldset>
-                        <legend>Thông tin hợp đồng bảo hiểm</legend>
 
-                        <div id="renewMsg" class="alert alert-info hide">
-                            <p class="text-center text-uppercase" style="font-weight: bolder">
-                                Không thể gia hạn hợp đồng còn giá trị trên 2 tháng
-                            </p>
-                        </div>
+                    <!-- Contract code -->
+                    <input type="hidden" name="renew:contractCode" value="${cont.contractCode}"/>
 
-                        <!-- Contract code -->
-                        <input type="hidden" name="renew:contractCode" value="${cont.contractCode}"/>
+                    <!-- Contract type -->
+                    <div class="form-group">
+                        <label class="col-sm-5 control-label">Loại hợp đồng</label>
 
-                        <!-- Contract type -->
-                        <div class="form-group">
-                            <label class="col-sm-5 control-label">Loại hợp đồng</label>
-
-                            <div class="col-sm-6">
-                                <div class="text-value">
-                                    ${cont.micContractTypeByContractTypeId.name}
-                                </div>
+                        <div class="col-sm-7">
+                            <div class="text-value">
+                                ${cont.micContractTypeByContractTypeId.name}
                             </div>
                         </div>
+                    </div>
 
-                        <!-- Start date -->
-                        <div class="form-group">
-                            <label class="col-sm-5 control-label">Thời điểm có hiệu lực</label>
+                    <!-- Start date -->
+                    <div class="form-group">
+                        <label class="col-sm-5 control-label">Bắt đầu có hiệu lực từ</label>
 
-                            <div class="col-sm-4">
-                                <div class="text-value">
-                                    <fmt:formatDate value="${cont.startDate}" pattern="dd/MM/yyyy"/>
-                                    lúc
-                                    <fmt:formatDate value="${cont.startDate}" type="time"/>
-                                </div>
+                        <div class="col-sm-4">
+                            <div class="text-value">
+                                <fmt:formatDate value="${cont.startDate}" pattern="dd/MM/yyyy"/>
+                                lúc
+                                <fmt:formatDate value="${cont.startDate}" type="time"/>
                             </div>
                         </div>
+                    </div>
 
-                        <!-- Expired date -->
-                        <div class="form-group">
-                            <label class="col-sm-5 control-label">Thời điểm hết hiệu lực</label>
+                    <!-- Expired date -->
+                    <div class="form-group">
+                        <label class="col-sm-5 control-label">Thời điểm hết hiệu lực</label>
 
-                            <div class="col-sm-4">
-                                <div class="text-value">
-                                    <fmt:formatDate value="${cont.expiredDate}" pattern="dd/MM/yyyy"/>
-                                    lúc
-                                    <fmt:formatDate value="${cont.expiredDate}" type="time"/>
-                                </div>
+                        <div class="col-sm-4">
+                            <div class="text-value">
+                                <fmt:formatDate value="${cont.expiredDate}" pattern="dd/MM/yyyy"/>
+                                lúc
+                                <fmt:formatDate value="${cont.expiredDate}" type="time"/>
                             </div>
                         </div>
+                    </div>
 
-                        <!-- New expired date -->
-                        <div class="form-group">
-                            <label class="col-sm-5 control-label" for="expiredDate">Gia hạn đến *</label>
+                    <!-- New expired date -->
+                    <div class="form-group">
+                        <label class="col-sm-5 control-label" for="expiredDate">Gia hạn đến *</label>
 
-                            <div class="col-sm-4">
-                                <input id="expiredDate" name="renew:expiredDate" class="form-control input-md"
-                                       type="date" required>
-                            </div>
+                        <div class="col-sm-4">
+                            <input id="expiredDate" name="renew:expiredDate" class="form-control input-md"
+                                   type="date" required>
                         </div>
+                    </div>
 
-                        <!-- Renew fee -->
-                        <div class="form-group">
-                            <label class="col-sm-5 control-label">Phí gia hạn (VNĐ) *</label>
+                    <!-- Renew fee -->
+                    <div class="form-group">
+                        <label class="col-sm-5 control-label">Phí gia hạn</label>
 
-                            <div class="col-sm-4">
-                                <div class="text-value">
+                        <div class="col-sm-4">
+                            <div class="text-value">
                                     <span id="renewFee"
-                                          style="color:deepskyblue; font-weight: bolder; font-size: large"></span>
-                                    <input type="hidden" id="contractFee" name="renew:contractFee"/>
+                                          style="color:deepskyblue; font-weight: bolder; font-size: large"></span> đ
+                                <input type="hidden" id="contractFee" name="renew:contractFee"/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- New card -->
+                    <div class="form-group">
+                        <label class="col-sm-5 control-label">Báo mất thẻ và yêu cầu thẻ mới</label>
+
+                        <div class="col-sm-4">
+                            <div class="text-value">
+                                <a data-toggle="collapse" href="#collapseNewCard" data-parent="#accordion">
+                                    <input type="checkbox" id="newCard" name="renew:newCard">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- New card fee -->
+                    <div id="collapseNewCard" class="panel-collapse collapse in">
+                        <div class="form-group">
+                            <label class="col-sm-5 control-label">Phí thẻ mới</label>
+
+                            <div class="col-sm-4">
+                                <div class="text-value">
+                                    <span id="newCardFee"
+                                          style="color:navy; font-weight: bolder; font-size: large"></span> đ
                                 </div>
                             </div>
                         </div>
-                    </fieldset>
-                    <%--/Contract information--%>
-                    <br/>
+                    </div>
 
-                    <fieldset>
-                        <legend>Thông tin thanh toán</legend>
 
-                        <!-- Paid date -->
-                        <div class=" form-group">
-                            <label class="col-sm-5 control-label" for="paidDate">Ngày nộp phí *</label>
+                    <!-- New card fee -->
+                    <div class="form-group">
+                        <label class="col-sm-5 control-label">Tổng chi phí</label>
 
-                            <div class="col-sm-4">
-                                <input id="paidDate" name="renew:paidDate" class="form-control input-md"
-                                       type="date" required>
+                        <div class="col-sm-4">
+                            <div class="text-value">
+                                    <span id="totalFee"
+                                          style="color:red; font-weight: bolder; font-size: large"></span> đ
                                 <input type="hidden" id="amount" name="renew:amount"/>
                             </div>
                         </div>
-                    </fieldset>
-                    <%--/Payment information--%>
+                    </div>
+
+                    <!-- Paid date -->
+                    <div class=" form-group">
+                        <label class="col-sm-5 control-label" for="paidDate">Ngày nộp phí *</label>
+
+                        <div class="col-sm-4">
+                            <input id="paidDate" name="renew:paidDate" class="form-control input-md"
+                                   type="date" required>
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <input type="hidden" name="action" value="renew"/>
@@ -1008,27 +1176,40 @@
     $(document).ready(function () {
         $('#expiredDate').val(getCurrentDateInNextYear());
         $('#paymentDate').val(getCurrentDate());
+        document.getElementById("paymentDate").min = '${config.paidDateMin}';
+        document.getElementById("paymentDate").max = '${config.paidDateMax}';
         $('#paidDate').val(getCurrentDate());
-        /*document.getElementById("paidDate").min = getCurrentDateInLastWeek();
-         document.getElementById("paidDate").max = getCurrentDateInNextYear();*/
+        document.getElementById("paidDate").min = '${config.paidDateMin}';
+        document.getElementById("paidDate").max = '${config.paidDateMax}';
         $('#cancelDate').val(getCurrentDate());
-        /*document.getElementById("cancelDate").min = getCurrentDateInLastWeek();
-         document.getElementById("cancelDate").max = getCurrentDateInNextYear();*/
+        document.getElementById("cancelDate").min = '${config.cancelDateMin}';
+        document.getElementById("cancelDate").max = '${config.cancelDateMax}';
+
+        $('.collapse').collapse();
+        $('input[type=checkbox]').on('click', function (e) {
+            e.stopPropagation();
+            $(this).parent().trigger('click');
+        })
+        $('#collapseNewCard').on('show.bs.collapse', function (e) {
+            if (!$('input[type=checkbox]').is(':checked')) {
+                return false;
+            }
+        });
 
         var contractStatus = '${cont.status}';
         var expDate = new Date("${cont.expiredDate}");
         var pricePerYear = '${cont.micContractTypeByContractTypeId.pricePerYear}';
         var contractTerm = 365;
+        var newCardFee = parseFloat('10,000');
         $('#contractFee').val(pricePerYear);
         $('#amount').val(pricePerYear);
         $('#renewFee').text(parseFloat(pricePerYear).formatMoney(0));
+        $('#newCardFee').text(newCardFee);
+        $('#totalFee').val(pricePerYear + newCardFee);
 
         var remainDays = daysBetween(new Date(), expDate);
         $('#remain').text(remainDays);
         $('#remain2').text(remainDays);
-        if (remainDays > 60) {
-            $("#renewMsg").removeClass('hide');
-        }
 
         $('input[type="date"]').not('#paidDate').blur(function () {
             var inputDate = new Date(this.value);
@@ -1044,7 +1225,9 @@
         });
 
         if (contractStatus == 'Pending') {
-            $('#btnRenew').removeClass('hide');
+            if (remainDays < 60) {
+                $('#btnRenew').removeClass('hide');
+            }
             $('#btnCancel').removeClass('hide');
         }
 
@@ -1067,8 +1250,8 @@
                 $('#btnRenew').removeClass('hide');
             }
             $('#startDate').val(getCurrentDate());
-            document.getElementById("expiredDate").min = getCurrentDate();
-            document.getElementById("expiredDate").max = getCurrentDateInNextYear();
+            document.getElementById("expiredDate").min = '${config.expiredDateMin}';
+            document.getElementById("expiredDate").max = '${config.expiredDateMax}';
         } else {
             $('#startDate').val('${cont.expiredDate}');
             $('#expiredDate').val(getInputDateInNextYear(expDate));

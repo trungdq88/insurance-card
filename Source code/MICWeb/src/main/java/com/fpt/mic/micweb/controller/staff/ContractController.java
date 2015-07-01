@@ -14,6 +14,7 @@ import com.fpt.mic.micweb.model.dto.form.CompletePaymentDto;
 import com.fpt.mic.micweb.model.dto.form.CreateContractDto;
 import com.fpt.mic.micweb.model.dto.form.RenewContractDto;
 import com.fpt.mic.micweb.model.entity.*;
+import com.fpt.mic.micweb.utils.ConfigUtils;
 import com.fpt.mic.micweb.utils.Constants;
 
 import javax.servlet.annotation.WebServlet;
@@ -110,10 +111,12 @@ public class ContractController extends AuthController {
         CustomerEntity customerDetail = staffBus.getCustomerDetail(contractDetail.getCustomerCode());
         // Get payment detail
         List<PaymentEntity> listPayment = staffBus.getPaymentByContractCode(contractCode);
+        ConfigUtils config = new ConfigUtils();
 
         r.equest.setAttribute("CUSTOMER", customerDetail);
         r.equest.setAttribute("CONTRACT", contractDetail);
         r.equest.setAttribute("PAYMENT", listPayment);
+        r.equest.setAttribute("CONFIG", config);
 
         // Dispatch to JSP page
         return new JspPage("staff/contract-detail.jsp");
@@ -122,7 +125,9 @@ public class ContractController extends AuthController {
     public ResponseObject getCreate(R r) {
         StaffBusiness staffBus = new StaffBusiness();
         List<ContractTypeEntity> listContractType = staffBus.getAllContractType();
+        ConfigUtils config = new ConfigUtils();
         r.equest.setAttribute("CONTRACTTYPE", listContractType);
+        r.equest.setAttribute("CONFIG", config);
         return new JspPage("staff/create-contract.jsp");
     }
 

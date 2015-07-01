@@ -20,7 +20,7 @@ public class PaymentDao extends GenericDaoJpaImpl<PaymentEntity, Integer> {
      * @author KhaNC
      * @version 1.0
      */
-    public List<PaymentEntity> getPaymentByCustomerCode(String contractCode) {
+    public List<PaymentEntity> getPaymentByContractCode(String contractCode) {
         EntityManager entity = factory.createEntityManager();
         String hql = "SELECT pm FROM PaymentEntity AS pm " +
                 "WHERE pm.contractCode = :code";

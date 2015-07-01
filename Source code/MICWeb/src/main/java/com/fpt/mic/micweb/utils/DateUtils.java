@@ -56,6 +56,7 @@ public class DateUtils {
         Date dateWithoutTime = cal.getTime();
         return new Timestamp(dateWithoutTime.getTime());
     }
+
     public static Timestamp convertDateTimeToDate (Timestamp date) {
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
@@ -66,8 +67,15 @@ public class DateUtils {
         Date day = cal.getTime();
         return new Timestamp(day.getTime());
     }
+
     public static long dateBetween(Timestamp t1, Timestamp t2) {
         long diffTime = t2.getTime() - t1.getTime();
         return diffTime / (MILLIS_IN_SECOND * SECONDS_IN_MINUTE * MINUTES_IN_HOUR * HOURS_IN_DAY);
+    }
+
+    public static Timestamp currentTimeWithoutNanos() {
+        Timestamp currentTime = new Timestamp(new Date().getTime());
+        currentTime.setNanos(0);
+        return currentTime;
     }
 }
