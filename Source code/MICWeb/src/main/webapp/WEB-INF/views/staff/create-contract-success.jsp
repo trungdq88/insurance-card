@@ -53,9 +53,18 @@
                                     <fmt:formatDate value="${info.expiredDate}" pattern="dd/MM/yyyy"/>
                                 </td>
                                 <td>
-                                <span class="label label-info">
-                                        ${info.status}
-                                </span>
+                                    <c:set var="status" value="${info.status}"/>
+                                    <c:choose>
+                                        <c:when test="${status.equalsIgnoreCase('Pending')}">
+                                            <span class="label label-gray">Chưa kích hoạt</span>
+                                        </c:when>
+                                        <c:when test="${status.equalsIgnoreCase('No card')}">
+                                            <span class="label label-primary">Chưa có thẻ</span>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <span class="label label-default">Không trạng thái</span>
+                                        </c:otherwise>
+                                    </c:choose>
                                 </td>
                             </tr>
                             </tbody>

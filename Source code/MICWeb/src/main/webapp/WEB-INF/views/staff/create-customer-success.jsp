@@ -103,7 +103,14 @@
 
                                 <div class="col-sm-2">
                                     <div class="text-value">
-                                            ${info.customerEntity.personalId}
+                                        <c:choose>
+                                            <c:when test="${empty info.customerEntity.personalId}">
+                                                <span class="empty-value">Không có</span>
+                                            </c:when>
+                                            <c:otherwise>
+                                                ${info.customerEntity.personalId}
+                                            </c:otherwise>
+                                        </c:choose>
                                     </div>
                                 </div>
                             </div>
