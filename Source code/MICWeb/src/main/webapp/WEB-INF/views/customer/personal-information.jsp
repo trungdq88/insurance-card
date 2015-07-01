@@ -178,8 +178,6 @@
                                    value="${customer.isDefaultPassword}"/>
                             <input type="hidden" name="newPass:customerCode" id="customerCode"
                                    value="${customer.customerCode}"/>
-                            <input type="hidden" id="customerPass"
-                                   value="${customer.password}"/>
                             <%---------------------------------------%>
                             <input id="confirm" type="submit" class="btn btn-primary" name="Xác Nhận"
                                    value="Xác Nhận"/>

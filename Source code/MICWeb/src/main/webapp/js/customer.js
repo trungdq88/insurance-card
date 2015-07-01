@@ -4,8 +4,8 @@
 
 $(document).ready(function () {
     $('[data-toggle="tooltip"]').tooltip();
-    if($('#isFirstLogin').val() == 0){
-        $('#changePass').trigger( "click" );
+    if ($('#isFirstLogin').val() == 0) {
+        $('#changePass').trigger("click");
     }
     $('#confirm').click(function () {
         var currentPass = $('#currentPass').val();
@@ -14,11 +14,7 @@ $(document).ready(function () {
         $('#notify1').addClass('hide');
         $('#notify2').addClass('hide');
         if (currentPass != null && newPass != null && confirmPass != null) {
-            if (currentPass != $('#customerPass').val()) {
-                $('#notify1').removeClass('hide');
-                return false;
-            }
-            else if (confirmPass != newPass) {
+            if (confirmPass != newPass) {
                 $('#notify2').removeClass('hide');
                 return false;
             }
