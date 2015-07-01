@@ -145,7 +145,16 @@
                                     <label class="col-sm-3 control-label">Ghi chú hủy</label>
 
                                     <div class="col-sm-7">
-                                        <div class="text-value">${cont.cancelNote}</div>
+                                        <div class="text-value">
+                                            <c:choose>
+                                                <c:when test="${empty cont.cancelNote}">
+                                                    <span class="empty-value">Không có</span>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    ${cont.cancelNote}
+                                                </c:otherwise>
+                                            </c:choose>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -286,6 +295,7 @@
                 <div class="tab-content">
                     <div role="tabpanel" class="tab-pane active" id="contractInfo">
                         <br/>
+
                         <form class="form-horizontal">
                             <fieldset>
                                 <legend>Thông tin khách hàng
@@ -346,7 +356,14 @@
 
                                     <div class="col-sm-3">
                                         <div class="text-value">
-                                            ${cust.personalId}
+                                            <c:choose>
+                                                <c:when test="${empty cust.personalId}">
+                                                    <span class="empty-value">Không có</span>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    ${cust.personalId}
+                                                </c:otherwise>
+                                            </c:choose>
                                         </div>
                                     </div>
                                 </div>
@@ -416,7 +433,14 @@
 
                                     <div class="col-sm-3">
                                         <div class="text-value">
-                                            ${cont.color}
+                                            <c:choose>
+                                                <c:when test="${empty cont.color}">
+                                                    <span class="empty-value">Không có</span>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    ${cont.color}
+                                                </c:otherwise>
+                                            </c:choose>
                                         </div>
                                     </div>
                                 </div>
@@ -427,7 +451,14 @@
 
                                     <div class="col-sm-3">
                                         <div class="text-value">
-                                            ${cont.modelCode}
+                                            <c:choose>
+                                                <c:when test="${empty cont.modelCode}">
+                                                    <span class="empty-value">Không có</span>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    ${cont.modelCode}
+                                                </c:otherwise>
+                                            </c:choose>
                                         </div>
                                     </div>
 
@@ -435,7 +466,14 @@
 
                                     <div class="col-sm-3">
                                         <div class="text-value">
-                                            ${cont.vehicleType}
+                                            <c:choose>
+                                                <c:when test="${empty cont.vehicleType}">
+                                                    <span class="empty-value">Không có</span>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    ${cont.vehicleType}
+                                                </c:otherwise>
+                                            </c:choose>
                                         </div>
                                     </div>
                                 </div>
@@ -444,25 +482,48 @@
                                 <div class="form-group">
                                     <label class="col-sm-3 control-label">Năm sản xuất</label>
 
-                                    <div class="col-sm-1">
+                                    <div class="col-sm-2">
                                         <div class="text-value">
-                                            ${cont.yearOfManufacture}
+                                            <c:choose>
+                                                <c:when test="${empty cont.yearOfManufacture}">
+                                                    <span class="empty-value">Không có</span>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    ${cont.yearOfManufacture}
+                                                </c:otherwise>
+                                            </c:choose>
                                         </div>
                                     </div>
 
-                                    <label class="col-sm-2 control-label">Tự trọng</label>
+                                    <label class="col-sm-3 control-label">Tự trọng</label>
 
-                                    <div class="col-sm-1">
+                                    <div class="col-sm-2">
                                         <div class="text-value">
-                                            ${cont.weight}
+                                            <c:choose>
+                                                <c:when test="${empty cont.weight}">
+                                                    <span class="empty-value">Không có</span>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    ${cont.weight}
+                                                </c:otherwise>
+                                            </c:choose>
                                         </div>
                                     </div>
+                                </div>
 
+                                <div class="form-group">
                                     <label class="col-sm-3 control-label">Số người được chở</label>
 
-                                    <div class="col-sm-1">
+                                    <div class="col-sm-2">
                                         <div class="text-value">
-                                            ${cont.seatCapacity}
+                                            <c:choose>
+                                                <c:when test="${empty cont.seatCapacity}">
+                                                    <span class="empty-value">Không có</span>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    ${cont.seatCapacity}
+                                                </c:otherwise>
+                                            </c:choose>
                                         </div>
                                     </div>
                                 </div>
@@ -504,7 +565,7 @@
                                                 </td>
                                                 <td>
                                                     <a href="${pageContext.request.contextPath}/staff/member?action=detail&code=${payment.micStaffByReceiver.staffCode}">
-                                                        ${payment.micStaffByReceiver.name}
+                                                            ${payment.micStaffByReceiver.name}
                                                     </a>
                                                 </td>
                                                 <td>${payment.paypalTransId}</td>
@@ -520,6 +581,7 @@
                     <%--/Contract information tab --%>
                     <div role="tabpanel" class="tab-pane" id="compensations">
                         <br/>
+
                         <form class="form-horizontal">
                             <fieldset>
                                 <legend>Lịch sử bồi thường</legend>
@@ -541,7 +603,7 @@
                                             <td>${counter.count}</td>
                                             <td>
                                                 <a href="${pageContext.request.contextPath}/staff/compensation?action=detail&code=${compensation.compensationCode}">
-                                                    ${compensation.compensationCode}
+                                                        ${compensation.compensationCode}
                                                 </a>
                                             </td>
                                             <td>
@@ -569,6 +631,7 @@
                     <%--/Compensation information tab --%>
                     <div role="tabpanel" class="tab-pane" id="accidents">
                         <br/>
+
                         <form class="form-horizontal">
                             <fieldset>
                                 <legend>Lịch sử tai nạn</legend>
@@ -604,6 +667,7 @@
                     <%--/Accident information tab --%>
                     <div role="tabpanel" class="tab-pane" id="punishments">
                         <br/>
+
                         <form class="form-horizontal">
                             <fieldset>
                                 <legend>Lịch sử vi phạm luật ATGT</legend>
