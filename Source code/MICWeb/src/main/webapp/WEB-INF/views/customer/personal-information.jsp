@@ -47,6 +47,7 @@
 
                 <div class="col-sm-5">
                     <input type="text" class="form-control" placeholder="Họ Và Tên" disabled="disabled"
+                           style="width: 50% !important;"
                            value="${customer.name}">
                 </div>
             </div>
@@ -63,6 +64,7 @@
 
                 <div class="col-sm-5">
                     <input type="email" class="form-control textInFormation" placeholder="Email" disabled="disabled"
+                           style="width: 60% !important;"
                            value="${customer.email}">
                 </div>
             </div>
@@ -71,6 +73,7 @@
 
                 <div class="col-sm-5">
                     <input type="text" class="form-control textInFormation" disabled="disabled"
+                           style="width: 40% !important;"
                            value="${customer.phone}">
                 </div>
             </div>
@@ -79,6 +82,7 @@
 
                 <div class="col-sm-5">
                     <input type="text" class="form-control textInFormation" disabled="disabled"
+                           style="width: 40% !important;"
                            value="${customer.personalId}">
                 </div>
             </div>
@@ -101,14 +105,10 @@
                         <div class="modal-body">
                             <div class="text-center alert alert-danger alert-dismissible hide" id="notify1"
                                  role="alert">
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
-                                        aria-hidden="true">&times;</span></button>
                                 Mật khẩu hiện tại không đúng
                             </div>
                             <div class="text-center alert alert-danger alert-dismissible hide" id="notify2"
                                  role="alert">
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
-                                        aria-hidden="true">&times;</span></button>
                                 Xác nhận mật khẩu không khớp với mật khẩu mới
                             </div>
                             <div class="form-horizontal">
@@ -131,6 +131,7 @@
                                         <input type="password" class="form-control"
                                                required
                                                title="Nhập mật khẩu mới"
+                                               maxlength="50"
                                                id="newPass"
                                                name="newPass:newPassword"
                                                 >
@@ -145,6 +146,7 @@
                                         <input type="password" class="form-control"
                                                required
                                                title="Xác nhận lại mật khẩu"
+                                               maxlength="50"
                                                id="confirmPass"
                                                name="newPass:confirmPassword"
                                                 >
