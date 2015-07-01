@@ -154,6 +154,7 @@ public class RegisterController extends BasicController {
                 session.removeAttribute("checkoutDetails");
                 session.removeAttribute("checkout");
                 session.removeAttribute("TOKEN");
+                r.equest.setAttribute("message", "Thanh toán thành công");
                 return new JspPage(successUrl);
             }
             else {

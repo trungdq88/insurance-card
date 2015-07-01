@@ -33,7 +33,7 @@
 
 
                                 <!-- Display the Transaction Details-->
-                                <p class="lead"> Bạn đã thanh toán thành công! </p>
+                                <p class="lead"> ${message} </p>
 
                                 <p>Mã giao dịch PayPal: <%=result.get("PAYMENTINFO_0_TRANSACTIONID")%>
                                 </p>
