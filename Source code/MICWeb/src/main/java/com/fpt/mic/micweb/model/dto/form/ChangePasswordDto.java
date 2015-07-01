@@ -2,6 +2,8 @@ package com.fpt.mic.micweb.model.dto.form;
 
 import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 import com.fpt.mic.micweb.model.dao.CustomerDao;
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -11,11 +13,16 @@ import org.hibernate.validator.constraints.NotEmpty;
 public class ChangePasswordDto {
     @NotEmpty(message = "Không tìm thấy mã khách hàng")
     private String customerCode;
+
     @NotEmpty(message = "Mật khẩu hiện tại không được để trống")
     private String currentPassword;
+
     @NotEmpty(message = "Mật khẩu mới không được để trống")
+    @Size(min = 6, max = 32, message = "Mật khẩu phải từ 6 đến 32 ký tự")
     private String newPassword;
+
     @NotEmpty(message = "Xác nhận mật khẩu không được để trống")
+    @Size(min = 6, max = 32, message = "Mật khẩu phải từ 6 đến 32 ký tự")
     private String confirmPassword;
 
     @AssertTrue(message = "Mã khách hàng không tồn tại")
