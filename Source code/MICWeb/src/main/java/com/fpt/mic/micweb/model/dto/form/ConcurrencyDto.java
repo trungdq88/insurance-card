@@ -6,7 +6,7 @@ import java.sql.Timestamp;
 /**
  * Created by TriPQM on 06/30/2015.
  */
-public class CheckoutDto {
+public class ConcurrencyDto {
     private Timestamp startModifyTime;
     private Timestamp contractLastModified;
 
@@ -21,7 +21,7 @@ public class CheckoutDto {
     public void setStartModifyTime(Timestamp startModifyTime) {
         this.startModifyTime = startModifyTime;
     }
-    public CheckoutDto() {
+    public ConcurrencyDto() {
     }
     public Timestamp getContractLastModified() {
         return contractLastModified;

@@ -8,17 +8,11 @@ import com.fpt.mic.micweb.framework.responses.RedirectTo;
 import com.fpt.mic.micweb.framework.responses.ResponseObject;
 import com.fpt.mic.micweb.model.business.ContractBusiness;
 import com.fpt.mic.micweb.model.business.RegisterBusiness;
-import com.fpt.mic.micweb.model.dao.ContractDao;
 import com.fpt.mic.micweb.model.dto.RegisterInformationDto;
-import com.fpt.mic.micweb.model.dto.form.CheckoutDto;
+import com.fpt.mic.micweb.model.dto.form.ConcurrencyDto;
 import com.fpt.mic.micweb.model.dto.form.PublicHomeFormDto;
 import com.fpt.mic.micweb.model.dto.form.PublicRegisterFormDto;
-import com.fpt.mic.micweb.model.entity.ContractEntity;
 import com.fpt.mic.micweb.model.entity.ContractTypeEntity;
-import com.fpt.mic.micweb.model.entity.CustomerEntity;
-import com.fpt.mic.micweb.model.entity.PaymentEntity;
-import com.fpt.mic.micweb.utils.Constants;
-import com.fpt.mic.micweb.utils.DateUtils;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpSession;
@@ -100,7 +94,7 @@ public class RegisterController extends BasicController {
         if (register != null) {
             HttpSession session = r.equest.getSession();
             Timestamp startModifyTime = register.getContractEntity().getLastModified();
-            session.setAttribute("START_MODIFY_TIME",startModifyTime);
+            session.setAttribute("CHECKOUT:START_MODIFY_TIME",startModifyTime);
             session.setAttribute("CONTRACT_CODE", register.getContractEntity().getContractCode());
             session.setAttribute("SUCCESS_URL", "/public/register?action=activeContract");
             session.setAttribute("cancel_message","Bạn đã hủy thanh toán. Xin vui lòng <a href='/user'>Đăng nhập</a> để thanh toán lại hoặc đến thanh toán trực tiếp");
@@ -118,14 +112,15 @@ public class RegisterController extends BasicController {
         String errorUrl = "/error/404";
         HttpSession session = r.equest.getSession(false);
         if (session != null) {
-            CheckoutDto checkoutDto = new CheckoutDto();
+            ConcurrencyDto concurrencyDto = new ConcurrencyDto();
             ContractBusiness contractBusiness = new ContractBusiness();
-            Timestamp startModifyTime =(Timestamp) session.getAttribute("START_MODIFY_TIME");
+            Timestamp startModifyTime =(Timestamp) session.getAttribute("CHECKOUT:START_MODIFY_TIME");
+            session.removeAttribute("CHECKOUT:START_MODIFY_TIME");
             String contractCode = (String) session.getAttribute("CONTRACT_CODE");
-            checkoutDto.setStartModifyTime(startModifyTime);
-            checkoutDto.setContractLastModified(contractBusiness.getContract(contractCode).getLastModified());
+            concurrencyDto.setStartModifyTime(startModifyTime);
+            concurrencyDto.setContractLastModified(contractBusiness.getContract(contractCode).getLastModified());
             // Gọi hàm validate ở đây
-            List errors = r.ead.validate(checkoutDto);
+            List errors = r.ead.validate(concurrencyDto);
             // Nếu có lỗi khi validate
             if (errors.size() > 0) {
                 // Gửi lỗi về trang JSP
