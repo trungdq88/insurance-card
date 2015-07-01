@@ -284,15 +284,29 @@ public class ContractController extends AuthController {
             r.equest.setAttribute("redirectLink", "/customer/contract?action=ContractDetail&code=" + contractCode);
             r.equest.setAttribute("result", results);
             r.equest.setAttribute("ack", session.getAttribute("ACK"));
-            //renew contract by customer
-            CustomerBusiness customerBusiness = new CustomerBusiness();
-            boolean result = customerBusiness.renewContract(contractCode, newExpiredDate,
-                    results.get("PAYMENTINFO_0_TRANSACTIONID"));
 
-            if (result) {
-                r.equest.setAttribute("message", "Gia hạn thành công.");
+
+            // Get concurrency data
+            Timestamp lastModified = (Timestamp) r.equest.getSession(true).getAttribute(
+                    Constants.Session.CONCURRENCY + contractCode);
+
+            CustomerBusiness customerBusiness = new CustomerBusiness();
+            // Concurrency check
+            if (customerBusiness.isContractChanged(contractCode, lastModified)) {
+                r.equest.setAttribute("message", "Thông tin hợp đồng đã bị thay đổi bởi một " +
+                        "người khác, vui lòng thực hiện lại thao tác. <br/>" +
+                        "Vui lòng lưu lại mã giao dịch để đối chiếu trong trường hợp hoàn lại tiền");
+                // TODO: refund?
             } else {
-                r.equest.setAttribute("message", "Gia hạn thất bại.");
+                //renew contract by customer
+                boolean result = customerBusiness.renewContract(contractCode, newExpiredDate,
+                        results.get("PAYMENTINFO_0_TRANSACTIONID"));
+
+                if (result) {
+                    r.equest.setAttribute("message", "Gia hạn thành công.");
+                } else {
+                    r.equest.setAttribute("message", "Gia hạn thất bại.");
+                }
             }
 
             session.removeAttribute("RESULT");

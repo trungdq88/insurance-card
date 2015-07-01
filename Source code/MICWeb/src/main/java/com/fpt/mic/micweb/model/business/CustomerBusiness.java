@@ -92,6 +92,9 @@ public class CustomerBusiness {
         java.util.Date date = new java.util.Date();
         /////////////////////////
         if (contract != null) {
+            // Concurrency set value
+            contract.setLastModified(new Timestamp(new java.util.Date().getTime()));
+
             if (contract.getStatus().equalsIgnoreCase(Constants.ContractStatus.EXPIRED)) {
                 payment.setStartDate(DateUtils.currentDateWithoutTime());
             } else {
