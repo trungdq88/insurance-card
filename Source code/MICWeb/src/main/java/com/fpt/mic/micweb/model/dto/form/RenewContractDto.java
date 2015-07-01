@@ -32,6 +32,26 @@ public class RenewContractDto {
     private Timestamp paidDate;
     @NotNull(message = "Phí bảo hiểm không được để trống")
     private Float amount;
+    private Timestamp lastModified;
+
+    public Timestamp getLastModified() {
+        return lastModified;
+    }
+
+    public void setLastModified(Timestamp lastModified) {
+        this.lastModified = lastModified;
+    }
+
+    @AssertTrue(message = "Thông tin hợp đồng đã bị sửa đổi trước đó bởi một người khác, vui lòng thực hiện lại thao tác")
+    private boolean isContractNotChanged() {
+        if (this.lastModified != null && this.contractCode != null) {
+            ContractDao contractDao = new ContractDao();
+            ContractEntity contractEntity = contractDao.read(contractCode);
+            return contractEntity.getLastModified().equals(lastModified);
+        } else {
+            return false;
+        }
+    }
 
     @AssertTrue(message = "Mã hợp đồng không tồn tại")
     private boolean isNotExisted() {
