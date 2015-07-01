@@ -100,7 +100,9 @@ public class SchedulerBusiness {
         Timestamp currentDate = DateUtils.currentDateWithoutTime();
         // check if completed payment pending contract exceeded startDate
         if (contractEntity.getStatus().equals(Constants.ContractStatus.PENDING)) {
-            if (!(contractEntity.getStartDate().after(currentDate))) {
+            if (!(contractEntity.getStartDate().after(currentDate)) // If the date has come
+                    && !contractEntity.getStartDate().equals(contractEntity.getExpiredDate()) // And the contract is paid
+                    ) {
                 CardDao cardDao = new CardDao();
                 if (null == cardDao.getCardByContract(contractEntity.getContractCode())) {
                     contractEntity.setStatus(Constants.ContractStatus.NO_CARD);
