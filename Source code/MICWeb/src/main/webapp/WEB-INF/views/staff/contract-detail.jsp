@@ -545,16 +545,14 @@
                                             <th>Dịch vụ</th>
                                             <th>Số tiền</th>
                                             <th>Người nhận</th>
+                                            <th>Chi tiết</th>
                                         </tr>
                                         </thead>
                                         <tbody>
                                         <c:forEach var="payment" items="${listPayment}" varStatus="counter">
                                             <tr>
                                                 <td>
-                                                    <a href="javascript:;" class="payment-id-clicker"
-                                                       payment-id="${payment.id}">
-                                                            ${payment.id}
-                                                    </a>
+                                                    ${payment.id}
                                                 </td>
                                                 <td>
                                                     <fmt:formatDate value="${payment.paidDate}" pattern="dd/MM/yyyy"/>
@@ -569,6 +567,13 @@
                                                 <td>
                                                     <a href="${pageContext.request.contextPath}/staff/member?action=detail&code=${payment.micStaffByReceiver.staffCode}">
                                                             ${payment.micStaffByReceiver.name}
+                                                    </a>
+                                                </td>
+                                                <td>
+
+                                                    <a href="javascript:;" class="payment-id-clicker btn btn-primary btn-xs"
+                                                       payment-id="${payment.id}">
+                                                        Xem chi tiết
                                                     </a>
                                                 </td>
                                             </tr>
@@ -1247,7 +1252,7 @@
                 $("#payment-method-value").html(data.paymentMethod);
                 $("#content-value").html(data.content);
                 $("#amount-value").html(data.amount);
-                $("#receiver-value").html(data.micStaffByReceiver.name);
+                $("#receiver-value").html(data.micStaffByReceiver ? data.micStaffByReceiver.name : '');
                 $("#paypal-id-value").html(data.paypalTransId);
                 $("#start-date-value").html(getDateTime(data.startDate));
                 $("#expired-date-value").html(getDateTime(data.expiredDate));
