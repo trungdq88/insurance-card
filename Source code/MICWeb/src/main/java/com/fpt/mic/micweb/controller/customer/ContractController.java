@@ -13,6 +13,7 @@ import com.fpt.mic.micweb.framework.responses.JspPage;
 import com.fpt.mic.micweb.framework.R;
 import com.fpt.mic.micweb.framework.responses.ResponseObject;
 import com.fpt.mic.micweb.model.entity.CustomerEntity;
+import com.fpt.mic.micweb.utils.Constants;
 import com.fpt.mic.micweb.utils.DateUtils;
 
 import javax.servlet.annotation.WebServlet;
@@ -98,6 +99,11 @@ public class ContractController extends AuthController {
         if (contract == null || contract.getCustomerCode().compareToIgnoreCase(customerCode) != 0) {
             return new RedirectTo("/error/404");
         } else {
+            // Save last_modified value for concurrency check
+            r.equest.getSession(true).setAttribute(
+                    Constants.Session.CONCURRENCY + contract.getContractCode(),
+                    contract.getLastModified());
+
             r.equest.setAttribute("contract", contract);
             return new JspPage("customer/contract-detail.jsp");
         }
@@ -106,12 +112,17 @@ public class ContractController extends AuthController {
     /* Handle canncel contract */
     public ResponseObject postCancelContract(R r) {
         CancelContractDto cancelDto = (CancelContractDto) r.ead.entity(CancelContractDto.class, "cancel");
-        CustomerBusiness customerBusiness = new CustomerBusiness();
-        java.util.Date date = new java.util.Date();
         cancelDto.setCancelDate(DateUtils.currentDateWithoutTime());
+
+        // Get concurrency data
+        Timestamp lastModified = (Timestamp) r.equest.getSession(true).getAttribute(
+                Constants.Session.CONCURRENCY + cancelDto.getContractCode());
+        cancelDto.setLastModified(lastModified);
+
         if (cancelDto.getContractCode() == null) {
             return new RedirectTo("/error/404");
         } else {
+            CustomerBusiness customerBusiness = new CustomerBusiness();
             List errors = r.ead.validate(cancelDto);
             if (errors.size() > 0) {
                 r.equest.setAttribute("validateErrors", errors);
@@ -227,13 +238,27 @@ public class ContractController extends AuthController {
             r.equest.setAttribute("ack", session.getAttribute("ACK"));
             //renew contract by customer
             CustomerBusiness customerBusiness = new CustomerBusiness();
-            boolean result = customerBusiness.paymentContract(contractCode,
-                    results.get("PAYMENTINFO_0_TRANSACTIONID"));
 
-            if (result) {
-                r.equest.setAttribute("message", "Thanh toán cho hợp đồng" + contractCode + " thành công.");
+            // Get concurrency data
+            Timestamp lastModified = (Timestamp) r.equest.getSession(true).getAttribute(
+                    Constants.Session.CONCURRENCY + contractCode);
+
+            // Concurrency check
+            if (customerBusiness.isContractChanged(contractCode, lastModified)) {
+                r.equest.setAttribute("message", "Thông tin hợp đồng đã bị thay đổi bởi một " +
+                        "người khác, vui lòng thực hiện lại thao tác. <br/>" +
+                        "Vui lòng lưu lại mã giao dịch để đối chiếu trong trường hợp hoàn lại tiền");
+                // TODO: refund?
             } else {
-                r.equest.setAttribute("message", "Thanh toán thất bại.");
+                // Concurrency check success
+                boolean result = customerBusiness.paymentContract(contractCode,
+                        results.get("PAYMENTINFO_0_TRANSACTIONID"));
+
+                if (result) {
+                    r.equest.setAttribute("message", "Thanh toán cho hợp đồng" + contractCode + " thành công.");
+                } else {
+                    r.equest.setAttribute("message", "Thanh toán thất bại.");
+                }
             }
 
             session.removeAttribute("RESULT");
@@ -264,15 +289,29 @@ public class ContractController extends AuthController {
             r.equest.setAttribute("redirectLink", "/customer/contract?action=ContractDetail&code=" + contractCode);
             r.equest.setAttribute("result", results);
             r.equest.setAttribute("ack", session.getAttribute("ACK"));
-            //renew contract by customer
-            CustomerBusiness customerBusiness = new CustomerBusiness();
-            boolean result = customerBusiness.renewContract(contractCode, newExpiredDate,
-                    results.get("PAYMENTINFO_0_TRANSACTIONID"));
 
-            if (result) {
-                r.equest.setAttribute("message", "Gia hạn thành công.");
+
+            // Get concurrency data
+            Timestamp lastModified = (Timestamp) r.equest.getSession(true).getAttribute(
+                    Constants.Session.CONCURRENCY + contractCode);
+
+            CustomerBusiness customerBusiness = new CustomerBusiness();
+            // Concurrency check
+            if (customerBusiness.isContractChanged(contractCode, lastModified)) {
+                r.equest.setAttribute("message", "Thông tin hợp đồng đã bị thay đổi bởi một " +
+                        "người khác, vui lòng thực hiện lại thao tác. <br/>" +
+                        "Vui lòng lưu lại mã giao dịch để đối chiếu trong trường hợp hoàn lại tiền");
+                // TODO: refund?
             } else {
-                r.equest.setAttribute("message", "Gia hạn thất bại.");
+                //renew contract by customer
+                boolean result = customerBusiness.renewContract(contractCode, newExpiredDate,
+                        results.get("PAYMENTINFO_0_TRANSACTIONID"));
+
+                if (result) {
+                    r.equest.setAttribute("message", "Gia hạn thành công.");
+                } else {
+                    r.equest.setAttribute("message", "Gia hạn thất bại.");
+                }
             }
 
             session.removeAttribute("RESULT");
@@ -291,16 +330,26 @@ public class ContractController extends AuthController {
         if (business.getContractDetail(contractCode) == null) {
             return new RedirectTo("/error/404");
         } else {
-            ContractEntity contract = business.rejectCancelContract(contractCode);
-            String mesg = "Không thể gở bỏ yêu cầu hủy hợp đồng";
-            if (contract != null) {
-                r.equest.setAttribute("contract", contract);
-                return new RedirectTo("contract?action=ContractDetail&code=" + contractCode);
+            String mesg;
+
+            // Get concurrency data
+            Timestamp lastModified = (Timestamp) r.equest.getSession(true).getAttribute(
+                    Constants.Session.CONCURRENCY + contractCode);
+
+            if (business.isContractChanged(contractCode, lastModified)) {
+                mesg = "Thông tin hợp đồng đã bị sửa đổi trước đó bởi một người khác, vui lòng thực hiện lại thao tác";
             } else {
-                r.equest.setAttribute("result", mesg);
-                r.equest.setAttribute("contractCode", contractCode);
-                return new JspPage("customer/message.jsp");
+                ContractEntity contract = business.rejectCancelContract(contractCode);
+
+                mesg = "Không thể gở bỏ yêu cầu hủy hợp đồng";
+                if (contract != null) {
+                    r.equest.setAttribute("contract", contract);
+                    return new RedirectTo("contract?action=ContractDetail&code=" + contractCode);
+                }
             }
+            r.equest.setAttribute("result", mesg);
+            r.equest.setAttribute("contractCode", contractCode);
+            return new JspPage("customer/message.jsp");
         }
     }
 }

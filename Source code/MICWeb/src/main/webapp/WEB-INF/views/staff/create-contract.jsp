@@ -27,6 +27,7 @@
                 <p class="text-right"><b>Các ô có dấu * là bắt buộc</b></p>
 
                 <c:set var="listType" value="${requestScope.CONTRACTTYPE}"/>
+                <c:set var="config" value="${requestScope.CONFIG}"/>
                 <c:set var="customerCode" value="${param.code}"/>
 
                 <form action="${pageContext.request.contextPath}/staff/contract"
@@ -126,7 +127,7 @@
                                     </option>
                                     <c:forEach var="type" items="${listType}">
                                         <option label="${type.name}" value="${type.id}"
-                                        ${type.id == submitted.contractTypeId ? "selected" : ""}>
+                                            ${type.id == submitted.contractTypeId ? "selected" : ""}>
                                                 ${type.pricePerYear}
                                         </option>
                                     </c:forEach>
@@ -381,18 +382,18 @@
         if ($('#startDate').val() == "") {
             $('#startDate').val(getCurrentDate());
         }
-        /*document.getElementById("startDate").min = getCurrentDateInLastWeek();
-         document.getElementById("startDate").max = getCurrentDateInNextYear();*/
+        document.getElementById("startDate").min = '${config.startDateMin}';
+        document.getElementById("startDate").max = '${config.startDateMax}';
         if ($('#expiredDate').val() == "") {
             $('#expiredDate').val(getCurrentDateInNextYear());
         }
-        document.getElementById("expiredDate").min = getCurrentDateInNextWeek();
-        document.getElementById("expiredDate").max = getCurrentDateInNextYear();
+        document.getElementById("expiredDate").min = '${config.expiredDateMin}';
+        document.getElementById("expiredDate").max = '${config.expiredDateMax}';
         if ($('#paidDate').val() == "") {
             $('#paidDate').val(getCurrentDate());
         }
-        /*document.getElementById("paidDate").min = getCurrentDateInLastWeek();
-         document.getElementById("paidDate").max = getCurrentDateInNextYear();*/
+        document.getElementById("paidDate").min = '${config.paidDateMin}';
+        document.getElementById("paidDate").max = '${config.paidDateMax}';
 
         var stDate = new Date($("#startDate").val());
         var expDate = new Date($("#expiredDate").val());

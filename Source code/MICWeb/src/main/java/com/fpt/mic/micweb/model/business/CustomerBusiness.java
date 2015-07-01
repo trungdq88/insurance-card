@@ -69,6 +69,10 @@ public class CustomerBusiness {
         contract.setCancelDate(cancelDto.getCancelDate());
         contract.setCancelReason(cancelDto.getCancelReason());
         contract.setStatus(Constants.ContractStatus.REQUEST_CANCEL);
+
+        // Concurrency set value
+        contract.setLastModified(new Timestamp(new java.util.Date().getTime()));
+
         contractDao.update(contract);
         return contract;
     }
@@ -92,6 +96,9 @@ public class CustomerBusiness {
         java.util.Date date = new java.util.Date();
         /////////////////////////
         if (contract != null) {
+            // Concurrency set value
+            contract.setLastModified(new Timestamp(new java.util.Date().getTime()));
+
             if (contract.getStatus().equalsIgnoreCase(Constants.ContractStatus.EXPIRED)) {
                 payment.setStartDate(DateUtils.currentDateWithoutTime());
             } else {
@@ -143,6 +150,9 @@ public class CustomerBusiness {
         contract.setCancelReason(null);
         contract.setCancelNote(null);
 
+        // Concurrency set value
+        contract.setLastModified(new Timestamp(new java.util.Date().getTime()));
+
 
         if (contractDao.update(contract) != null) {
             return contract;
@@ -166,6 +176,9 @@ public class CustomerBusiness {
         ContractEntity contract = contractDao.read(contractCode);
         PaymentEntity payment = new PaymentEntity();
         if (contract != null) {
+            // Concurrency set value
+            contract.setLastModified(new Timestamp(new java.util.Date().getTime()));
+
             // kiem tra neu chua den ngay start hop dong thi de la pending, nguoc lai thi no_card
             Timestamp currentDate = new Timestamp(new java.util.Date().getTime());
             if (contract.getStartDate().after(currentDate)) {
@@ -216,5 +229,18 @@ public class CustomerBusiness {
             }
         }
         return result;
+    }
+
+    /**
+     * Returns true if the contract has changed
+     * Returns false if the contract is not changed or the contract code is not exists
+     * @param contractCode
+     * @param lastModified
+     * @return
+     */
+    public boolean isContractChanged(String contractCode, Timestamp lastModified) {
+        ContractDao contractDao = new ContractDao();
+        ContractEntity contractEntity = contractDao.read(contractCode);
+        return contractEntity != null && !contractEntity.getLastModified().equals(lastModified);
     }
 }
