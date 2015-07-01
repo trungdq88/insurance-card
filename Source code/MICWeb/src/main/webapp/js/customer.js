@@ -41,6 +41,50 @@ $(document).ready(function () {
      *********************************************contract detail **********************************************
      */
     /**
+     ------------------------------------------Handle button contract detail------------------------------------------
+     */
+    handleShowingButton($('#contractStatus1').val());
+    function handleShowingButton(status) {
+        //Ready
+        if (status == 'Ready') {
+            if (DayDiff($('#expiredDate').val()) > 60) {
+                $('#renew').addClass('hide');
+            }
+        }
+        //Cancelled
+        else if (status == 'Cancelled') {
+            $('#renew').addClass('hide');
+            $('#delete').addClass('hide');
+        }
+        //Expired
+        else if (status == 'Expired') {
+            if (DayDiff($('#expiredDate').val()) > 60) {
+                $('#renew').addClass('hide');
+            }
+            $('#delete').addClass('hide');
+        }
+        //Pending
+        else if (status == 'Pending') {
+            $('#renew').addClass('hide');
+            $('#delete').addClass('hide');
+        }
+        //Request cancel
+        else if (status == 'Request cancel') {
+            $('#renew').addClass('hide');
+            $('#delete').addClass('hide');
+        }
+        //No card
+        else if (status == 'No card') {
+            if (DayDiff($('#expiredDate').val()) > 60) {
+                $('#renew').addClass('hide');
+            }
+        }
+    }
+
+    /**
+     -----------------------------------------------------------------------------------------------------------
+     */
+    /**
      ------------------------------------------Handle Cancel contract------------------------------------------
      */
     $('#rdbReason1').click(function () {
