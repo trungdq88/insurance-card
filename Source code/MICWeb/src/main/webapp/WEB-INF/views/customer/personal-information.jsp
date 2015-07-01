@@ -21,37 +21,42 @@
                 <div class="form-group">
                     <label for="inputEmail3" class="col-sm-3 control-label">Tên Đăng Nhập</label>
                     <div class="col-sm-5">
-                        <p class="form-control-static">PhucNguyen111</p>
+                        <p class="form-control-static">${customer.customerCode}</p>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="inputPassword3" class="col-sm-3 control-label">Họ Và Tên</label>
                     <div class="col-sm-5">
-                        <input type="text" class="form-control" placeholder="Họ Và Tên" disabled="disabled" value="Phùng Quang Minh Trí">
+                        <input type="text" class="form-control" placeholder="Họ Và Tên" disabled="disabled"
+                               value="${customer.name}">
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="inputPassword3" class="col-sm-3 control-label">Địa Chỉ</label>
                     <div class="col-sm-5">
-                        <input type="text" class="form-control textInFormation" placeholder="Địa Chỉ" disabled="disabled">
+                        <input type="text" class="form-control textInFormation" placeholder="Địa Chỉ" disabled="disabled"
+                               value="${customer.address}" >
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="inputPassword3" class="col-sm-3 control-label">Email</label>
                     <div class="col-sm-5">
-                        <input type="email" class="form-control textInFormation" placeholder="Email" disabled="disabled">
+                        <input type="email" class="form-control textInFormation" placeholder="Email" disabled="disabled"
+                               value="${customer.email}">
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="inputPassword3" class="col-sm-3 control-label">Số Điện Thoại</label>
                     <div class="col-sm-5">
-                        <input type="text" class="form-control textInFormation" disabled="disabled">
+                        <input type="text" class="form-control textInFormation" disabled="disabled"
+                               value="${customer.phone}" >
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="inputPassword3" class="col-sm-3 control-label">CMND/Hộ Chiếu</label>
                     <div class="col-sm-5">
-                        <input type="text" class="form-control textInFormation" disabled="disabled">
+                        <input type="text" class="form-control textInFormation" disabled="disabled"
+                               value="${customer.personalId}">
                     </div>
                 </div>
 

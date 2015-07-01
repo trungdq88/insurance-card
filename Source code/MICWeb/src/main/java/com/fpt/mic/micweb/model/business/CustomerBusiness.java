@@ -28,6 +28,12 @@ import java.lang.Thread;
  * Created by PhucNguyen on 05/06/2015.
  */
 public class CustomerBusiness {
+    //get information customer
+    public CustomerEntity getCustomer(String customerCode) {
+        CustomerDao customerDao = new CustomerDao();
+        return customerDao.read(customerCode);
+    }
+
     //get all contract belong to customer
     public List getAllContractByCustomer(String customerCode, int offset, int count) {
         ContractDao contractDao = new ContractDao();
@@ -38,6 +44,7 @@ public class CustomerBusiness {
         ContractDao contractDao = new ContractDao();
         return contractDao.getContractByCustomerCodeCount(customerCode);
     }
+
     // get contract detail
     public ContractEntity getContractDetail(String code) {
         ContractDao contractDao = new ContractDao();
@@ -86,9 +93,9 @@ public class CustomerBusiness {
         if (contract != null) {
             //update contract
             contract.setExpiredDate(neweEpired);
-            if(card == null){
+            if (card == null) {
                 contract.setStatus(Constants.ContractStatus.NO_CARD);
-            }else {
+            } else {
                 contract.setStatus(Constants.ContractStatus.READY);
             }
             //update payment
@@ -137,13 +144,14 @@ public class CustomerBusiness {
             return null;
         }
     }
+
     /**
      * payment for contract
      *
      * @param contractCode , paymentTransactionId
      * @return bool result
      */
-    public boolean paymentContract(String contractCode, String paymentTransactionId){
+    public boolean paymentContract(String contractCode, String paymentTransactionId) {
         //init
         boolean result = false;
         java.util.Date date = new java.util.Date();
@@ -151,17 +159,17 @@ public class CustomerBusiness {
         PaymentDao paymentDao = new PaymentDao();
         ContractEntity contract = contractDao.read(contractCode);
         PaymentEntity payment = new PaymentEntity();
-        if(contract != null){
+        if (contract != null) {
             // kiem tra neu chua den ngay start hop dong thi de la pending, nguoc lai thi no_card
             Timestamp currentDate = new Timestamp(new java.util.Date().getTime());
-            if(contract.getStartDate().after(currentDate)) {
+            if (contract.getStartDate().after(currentDate)) {
                 contract.setStatus(Constants.ContractStatus.PENDING);
             } else {
                 contract.setStatus(Constants.ContractStatus.NO_CARD);
             }
             payment.setPaidDate(new Timestamp(date.getTime()));
             payment.setPaymentMethod("PayPal payment");
-            payment.setContent("Đăng ký hợp đồng mới " + contract.getContractCode() );
+            payment.setContent("Đăng ký hợp đồng mới " + contract.getContractCode());
             payment.setAmount(contract.getMicContractTypeByContractTypeId().getPricePerYear());
             payment.setPaypalTransId(paymentTransactionId);
             payment.setContractCode(contract.getContractCode());
