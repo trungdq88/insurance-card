@@ -153,6 +153,10 @@ public class StaffBusiness {
             // Update contract information
             contractEntity.setExpiredDate(dto.getExpiredDate());
             contractEntity.setContractFee(dto.getContractFee());
+
+            // Concurrency set value
+            contractEntity.setLastModified(new Timestamp(new Date().getTime()));
+
             if (cardEntity == null) {
                 contractEntity.setStatus(Constants.ContractStatus.NO_CARD);
             } else {
