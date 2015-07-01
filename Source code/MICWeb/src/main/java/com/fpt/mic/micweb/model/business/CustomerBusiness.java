@@ -5,6 +5,7 @@ import com.fpt.mic.micweb.model.dao.CustomerDao;
 import com.fpt.mic.micweb.model.dao.ContractDao;
 import com.fpt.mic.micweb.model.dao.PaymentDao;
 import com.fpt.mic.micweb.model.dto.form.CancelContractDto;
+import com.fpt.mic.micweb.model.dto.form.ChangePasswordDto;
 import com.fpt.mic.micweb.model.entity.CardEntity;
 import com.fpt.mic.micweb.model.entity.CustomerEntity;
 import com.fpt.mic.micweb.model.entity.ContractEntity;
@@ -193,5 +194,27 @@ public class CustomerBusiness {
     public Long searchCustomerContractByCodeCount(String customerCode, String keyword) {
         ContractDao contractDao = new ContractDao();
         return contractDao.getCustomerContractByCodeCount(customerCode, keyword);
+    }
+
+    /**
+     * change password
+     *
+     * @param customerCode, currentPassword, newPass, confirmPass
+     * @return bool result
+     */
+    public boolean changePassword(ChangePasswordDto dto) {
+        boolean result = false;
+        CustomerDao customerDao = new CustomerDao();
+        CustomerEntity customerEntity = customerDao.read(dto.getCustomerCode());
+        if (customerEntity != null) {
+            if (customerEntity.getPassword().equalsIgnoreCase(dto.getCurrentPassword())) {
+                if (dto.getConfirmPassword().equalsIgnoreCase(dto.getNewPassword())) {
+                    customerEntity.setPassword(dto.getConfirmPassword());
+                    customerEntity.setIsDefaultPassword(1);
+                    result = customerDao.update(customerEntity) != null;
+                }
+            }
+        }
+        return result;
     }
 }

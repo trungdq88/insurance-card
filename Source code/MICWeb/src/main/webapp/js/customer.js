@@ -4,6 +4,28 @@
 
 $(document).ready(function () {
     $('[data-toggle="tooltip"]').tooltip();
+    if($('#isFirstLogin').val() == 0){
+        $('#changePass').trigger( "click" );
+    }
+    $('#confirm').click(function () {
+        var currentPass = $('#currentPass').val();
+        var newPass = $('#newPass').val();
+        var confirmPass = $('#confirmPass').val();
+        $('#notify1').addClass('hide');
+        $('#notify2').addClass('hide');
+        if (currentPass != null && newPass != null && confirmPass != null) {
+            if (currentPass != $('#customerPass').val()) {
+                $('#notify1').removeClass('hide');
+                return false;
+            }
+            else if (confirmPass != newPass) {
+                $('#notify2').removeClass('hide');
+                return false;
+            }
+        }
+
+
+    });
     $('#btn_Modify').click(function () {
         $('.textInFormation').prop('disabled', false);
         $(this).addClass('hide');
