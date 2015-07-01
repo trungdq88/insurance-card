@@ -86,11 +86,7 @@ public class FormReader<T> {
         String valueString = request.getParameter(formPrefix + ":" + fieldName);
 
         if (valueString == null) {
-            try {
-                throw new Exception(formPrefix + ":" + fieldName + " not found!");
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            System.out.println("FormReader: WARNING: " + formPrefix + ":" + fieldName + " not found!");
             return null;
         }
 

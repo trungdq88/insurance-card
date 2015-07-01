@@ -20,5 +20,6 @@ public class Constants {
     }
     public static class Session {
         public static final String USER_DTO = "userDto";
+        public static final String CONCURRENCY = "concurrency_";
     }
 }

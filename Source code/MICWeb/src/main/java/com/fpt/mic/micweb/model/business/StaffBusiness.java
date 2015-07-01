@@ -153,6 +153,10 @@ public class StaffBusiness {
             // Update contract information
             contractEntity.setExpiredDate(dto.getExpiredDate());
             contractEntity.setContractFee(dto.getContractFee());
+
+            // Concurrency set value
+            contractEntity.setLastModified(new Timestamp(new Date().getTime()));
+
             if (cardEntity == null) {
                 contractEntity.setStatus(Constants.ContractStatus.NO_CARD);
             } else {
@@ -188,6 +192,10 @@ public class StaffBusiness {
             contractEntity.setCancelReason(dto.getCancelReason());
             contractEntity.setCancelNote(dto.getCancelNote());
             contractEntity.setStatus(Constants.ContractStatus.CANCELLED);
+
+            // Concurrency set value
+            contractEntity.setLastModified(new Timestamp(new Date().getTime()));
+
             if (contractDao.update(contractEntity) != null) {
                 return true;
             }
@@ -229,6 +237,10 @@ public class StaffBusiness {
             }
             // Set expired date = start_date + 1 year
             contractEntity.setExpiredDate(DateUtils.addOneYear(contractEntity.getStartDate()));
+
+            // Concurrency check value
+            contractEntity.setLastModified(new Timestamp(new Date().getTime()));
+
             // Update contract status
             // kiem tra neu chua den ngay start hop dong thi de la pending, nguoc lai thi no_card
             if (contractEntity.getStartDate().after(currentDate)) {

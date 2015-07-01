@@ -14,8 +14,10 @@ import com.fpt.mic.micweb.model.dto.form.CompletePaymentDto;
 import com.fpt.mic.micweb.model.dto.form.CreateContractDto;
 import com.fpt.mic.micweb.model.dto.form.RenewContractDto;
 import com.fpt.mic.micweb.model.entity.*;
+import com.fpt.mic.micweb.utils.Constants;
 
 import javax.servlet.annotation.WebServlet;
+import java.sql.Timestamp;
 import java.util.Collections;
 import java.util.List;
 
@@ -100,6 +102,10 @@ public class ContractController extends AuthController {
             return new RedirectTo("/error/404");
         }
 
+        // Save last_modified value for concurrency check
+        r.equest.getSession(true).setAttribute(
+                Constants.Session.CONCURRENCY + contractCode, contractDetail.getLastModified());
+
         // Get customer detail
         CustomerEntity customerDetail = staffBus.getCustomerDetail(contractDetail.getCustomerCode());
         // Get payment detail
@@ -165,6 +171,12 @@ public class ContractController extends AuthController {
     public ResponseObject postRenew(R r) {
         // Get renew contract information
         RenewContractDto dto = (RenewContractDto) r.ead.entity(RenewContractDto.class, "renew");
+
+        // Get concurrency data
+        Timestamp lastModified = (Timestamp) r.equest.getSession(true).getAttribute(
+                Constants.Session.CONCURRENCY + dto.getContractCode());
+        dto.setLastModified(lastModified);
+
         List errors = r.ead.validate(dto);
 
         // If there is validation errors
@@ -199,6 +211,12 @@ public class ContractController extends AuthController {
     public ResponseObject postCancel(R r) {
         // Get cancel contract information
         CancelContractDto dto = (CancelContractDto) r.ead.entity(CancelContractDto.class, "cancel");
+
+        // Get concurrency data
+        Timestamp lastModified = (Timestamp) r.equest.getSession(true).getAttribute(
+                Constants.Session.CONCURRENCY + dto.getContractCode());
+        dto.setLastModified(lastModified);
+
         List errors = r.ead.validate(dto);
 
         // If there is validation errors
@@ -233,6 +251,13 @@ public class ContractController extends AuthController {
     public ResponseObject postCompletePayment(R r) {
         // Get payment information
         CompletePaymentDto dto = (CompletePaymentDto) r.ead.entity(CompletePaymentDto.class, "payment");
+
+        // Get concurrency data
+        Timestamp lastModified = (Timestamp) r.equest.getSession(true).getAttribute(
+                Constants.Session.CONCURRENCY + dto.getContractCode());
+        dto.setLastModified(lastModified);
+
+
         List errors = r.ead.validate(dto);
         // If there is validation errors
         if (errors.size() > 0) {
