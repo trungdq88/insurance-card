@@ -69,6 +69,10 @@ public class CustomerBusiness {
         contract.setCancelDate(cancelDto.getCancelDate());
         contract.setCancelReason(cancelDto.getCancelReason());
         contract.setStatus(Constants.ContractStatus.REQUEST_CANCEL);
+
+        // Concurrency set value
+        contract.setLastModified(new Timestamp(new java.util.Date().getTime()));
+
         contractDao.update(contract);
         return contract;
     }

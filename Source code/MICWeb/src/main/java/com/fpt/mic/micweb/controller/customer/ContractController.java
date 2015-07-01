@@ -112,12 +112,17 @@ public class ContractController extends AuthController {
     /* Handle canncel contract */
     public ResponseObject postCancelContract(R r) {
         CancelContractDto cancelDto = (CancelContractDto) r.ead.entity(CancelContractDto.class, "cancel");
-        CustomerBusiness customerBusiness = new CustomerBusiness();
-        java.util.Date date = new java.util.Date();
         cancelDto.setCancelDate(DateUtils.currentDateWithoutTime());
+
+        // Get concurrency data
+        Timestamp lastModified = (Timestamp) r.equest.getSession(true).getAttribute(
+                Constants.Session.CONCURRENCY + cancelDto.getContractCode());
+        cancelDto.setLastModified(lastModified);
+
         if (cancelDto.getContractCode() == null) {
             return new RedirectTo("/error/404");
         } else {
+            CustomerBusiness customerBusiness = new CustomerBusiness();
             List errors = r.ead.validate(cancelDto);
             if (errors.size() > 0) {
                 r.equest.setAttribute("validateErrors", errors);
