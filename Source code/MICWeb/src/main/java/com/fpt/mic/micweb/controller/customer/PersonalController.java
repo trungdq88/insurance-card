@@ -7,6 +7,8 @@ import com.fpt.mic.micweb.framework.responses.RedirectTo;
 import com.fpt.mic.micweb.framework.responses.ResponseObject;
 import com.fpt.mic.micweb.model.business.CustomerBusiness;
 import com.fpt.mic.micweb.model.dto.UserDto;
+import com.fpt.mic.micweb.model.dto.form.CancelContractDto;
+import com.fpt.mic.micweb.model.dto.form.ChangePasswordDto;
 import com.fpt.mic.micweb.model.entity.CustomerEntity;
 
 import javax.servlet.annotation.WebServlet;
@@ -33,5 +35,39 @@ public class PersonalController extends AuthController {
         r.equest.setAttribute("customer", customerEntity);
         return new JspPage("customer/personal-information.jsp");
 
+    }
+    public ResponseObject postChangePassword(R r){
+        String mess = "";
+        boolean result = false;
+        CustomerBusiness customerBusiness = new CustomerBusiness();
+        ChangePasswordDto dto = (ChangePasswordDto) r.ead.entity(ChangePasswordDto.class, "newPass");
+        if (dto.getCustomerCode() == null) {
+            return new RedirectTo("/error/404");
+        }
+        else {
+            List errors = r.ead.validate(dto);
+
+            if (errors.size() > 0) {
+                r.equest.setAttribute("validateErrors", errors);
+                r.equest.setAttribute("submitted", dto);
+                r.equest.setAttribute("customer", customerBusiness.getCustomer(dto.getCustomerCode()));
+                return new JspPage("customer/personal-information.jsp");
+            }
+            else {
+                result = customerBusiness.changePassword(dto);
+                if(result == true){
+                    mess = "Bạn đã đổi mật khẩu thành công";
+                    r.equest.setAttribute("message", mess);
+                    r.equest.setAttribute("customer", customerBusiness.getCustomer(dto.getCustomerCode()));
+                    return new JspPage("customer/personal-information.jsp");
+                }
+                else {
+                    mess = "Thay đổi mật khẩu thất bại";
+                    r.equest.setAttribute("message", mess);
+                    r.equest.setAttribute("customer", customerBusiness.getCustomer(dto.getCustomerCode()));
+                    return new JspPage("customer/personal-information.jsp");
+                }
+            }
+        }
     }
 }
