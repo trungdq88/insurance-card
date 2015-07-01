@@ -24,9 +24,8 @@ public class QuartzListener extends QuartzInitializerListener {
             Trigger trigger = TriggerBuilder.newTrigger()
                     .withIdentity("simple", "group1")
                     .startNow()
-                    .withSchedule(SimpleScheduleBuilder.simpleSchedule()
-                            .withIntervalInSeconds(40)
-                            .repeatForever())
+                    .withSchedule(SimpleScheduleBuilder
+                            .repeatMinutelyForever())
                     .build();
 
             scheduler.scheduleJob(jobDetail, trigger);
