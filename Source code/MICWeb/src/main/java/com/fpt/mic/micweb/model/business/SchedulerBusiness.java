@@ -19,17 +19,25 @@ public class SchedulerBusiness {
         List<ContractEntity> contractEntityList = contractDao.getListContract();
 
         for (ContractEntity contractEntity : contractEntityList) {
-            // check if contract is expired
-            if(!checkIfContractExpired(contractEntity)){
-                // if not, check if contract is nearly expired
-                if(!checkIfContractNearlyExpired(contractEntity)){
-                    // if not, check if contract if exceeded payment due date
-                    if(!checkIfContractExceedPaymentDueDate(contractEntity)){
-                        // check if contract is started.
-                        checkIfPendingContractStart(contractEntity);
+            boolean isNotChanged = contractEntity.getLastModified().equals(contractDao.read(contractEntity.getContractCode()).getLastModified());
+            do {
+                if (isNotChanged) {
+                    // check if contract is expired
+                    if(!checkIfContractExpired(contractEntity)){
+                        // if not, check if contract is nearly expired
+                        if(!checkIfContractNearlyExpired(contractEntity)){
+                            // if not, check if contract if exceeded payment due date
+                            if(!checkIfContractExceedPaymentDueDate(contractEntity)){
+                                // check if contract is started.
+                                checkIfPendingContractStart(contractEntity);
+                            }
+                        }
                     }
+                } else {
+                    contractEntity = contractDao.read(contractEntity.getContractCode());
+                    isNotChanged = contractEntity.getLastModified().equals(contractDao.read(contractEntity.getContractCode()).getLastModified());
                 }
-            }
+            } while (!isNotChanged);
         }
     }
     public boolean checkIfContractNearlyExpired(ContractEntity contractEntity) {
