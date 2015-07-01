@@ -26,13 +26,18 @@ $(document).ready(function () {
 
 
     });
+    $('.textInFormation').removeClass('form-control')
     $('#btn_Modify').click(function () {
         $('.textInFormation').prop('disabled', false);
         $(this).addClass('hide');
+        $('.textInFormation').removeClass('handleInput');
+        $('.textInFormation').addClass('form-control')
         $('#btn_Save').removeClass('hide');
     });
     $('#btn_Save').click(function () {
         $('.textInFormation').prop('disabled', true);
+        $('.textInFormation').addClass('handleInput');
+        $('.textInFormation').removeClass('form-control')
         $(this).addClass('hide');
         $('#btn_Modify').removeClass('hide');
     });

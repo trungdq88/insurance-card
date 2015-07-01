@@ -1,5 +1,13 @@
 ﻿<%@ include file="_shared/header.jsp" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<style type="text/css">
+    .handleInput {
+        border:none ;
+        background-color: white;
+        width: 100%;
+        padding-top: 6px ;
+    }
+</style>
 <div id="wrapper">
 
     <%@ include file="_shared/navigation.jsp" %>
@@ -36,53 +44,48 @@
 
         <form class="form-horizontal">
             <div class="form-group">
-                <label for="inputEmail3" class="col-sm-3 control-label">Tên Đăng Nhập</label>
+                <label for="inputEmail3" class="col-sm-4 control-label">Tên Đăng Nhập</label>
 
                 <div class="col-sm-5">
                     <p class="form-control-static">${customer.customerCode}</p>
                 </div>
             </div>
             <div class="form-group">
-                <label for="inputPassword3" class="col-sm-3 control-label">Họ Và Tên</label>
+                <label for="inputPassword3" class="col-sm-4 control-label">Họ Và Tên</label>
 
                 <div class="col-sm-5">
-                    <input type="text" class="form-control" placeholder="Họ Và Tên" disabled="disabled"
-                           style="width: 50% !important;"
-                           value="${customer.name}">
+                    <p class="form-control-static">${customer.name}</p>
                 </div>
             </div>
             <div class="form-group">
-                <label for="inputPassword3" class="col-sm-3 control-label">Địa Chỉ</label>
+                <label for="inputPassword3" class="col-sm-4 control-label">Địa Chỉ</label>
 
                 <div class="col-sm-5">
-                    <input type="text" class="form-control textInFormation" placeholder="Địa Chỉ" disabled="disabled"
+                    <input type="text" class="form-control handleInput textInFormation" placeholder="Địa Chỉ" disabled="disabled"
                            value="${customer.address}">
                 </div>
             </div>
             <div class="form-group">
-                <label for="inputPassword3" class="col-sm-3 control-label">Email</label>
+                <label for="inputPassword3" class="col-sm-4 control-label">Email</label>
 
                 <div class="col-sm-5">
-                    <input type="email" class="form-control textInFormation" placeholder="Email" disabled="disabled"
-                           style="width: 60% !important;"
+                    <input type="email" class="form-control handleInput textInFormation" placeholder="Email" disabled="disabled"
                            value="${customer.email}">
                 </div>
             </div>
             <div class="form-group">
-                <label for="inputPassword3" class="col-sm-3 control-label">Số Điện Thoại</label>
+                <label for="inputPassword3" class="col-sm-4 control-label">Số Điện Thoại</label>
 
                 <div class="col-sm-5">
-                    <input type="text" class="form-control textInFormation" disabled="disabled"
-                           style="width: 40% !important;"
+                    <input type="text" class="form-control handleInput textInFormation" disabled="disabled"
                            value="${customer.phone}">
                 </div>
             </div>
             <div class="form-group">
-                <label for="inputPassword3" class="col-sm-3 control-label">CMND/Hộ Chiếu</label>
+                <label for="inputPassword3" class="col-sm-4 control-label">CMND/Hộ Chiếu</label>
 
                 <div class="col-sm-5">
-                    <input type="text" class="form-control textInFormation" disabled="disabled"
-                           style="width: 40% !important;"
+                    <input type="text" class="form-control handleInput textInFormation" disabled="disabled"
                            value="${customer.personalId}">
                 </div>
             </div>
@@ -157,7 +160,7 @@
                         <div class="modal-footer">
                             <%--Post to server (PersonalController)--%>
                             <input type="hidden" name="action" value="ChangePassword"/>
-                            <input type="hidden"  id="isFirstLogin"
+                            <input type="hidden" id="isFirstLogin"
                                    value="${customer.isDefaultPassword}"/>
                             <input type="hidden" name="newPass:customerCode" id="customerCode"
                                    value="${customer.customerCode}"/>
