@@ -146,6 +146,7 @@ public class StaffBusiness {
         ContractEntity contractEntity = contractDao.read(dto.getContractCode());
         PaymentEntity paymentEntity = new PaymentEntity();
         CardEntity cardEntity = cardDao.getCardByContract(dto.getContractCode());
+        Timestamp startDate = dto.getStartDate();
 
         // Check contract
         if (contractEntity != null) {
@@ -161,10 +162,13 @@ public class StaffBusiness {
                 // Add payment information
                 paymentEntity.setPaidDate(dto.getPaidDate());
                 paymentEntity.setAmount(dto.getAmount());
-                paymentEntity.setPaymentMethod("Trực tiếp");
-                paymentEntity.setContent("Gia hạn hợp đồng");
+                paymentEntity.setStartDate(startDate);
+                paymentEntity.setExpiredDate(dto.getExpiredDate());
                 paymentEntity.setReceiver(receiver.getStaffCode());
                 paymentEntity.setContractCode(dto.getContractCode());
+                // Set payment information when renew
+                paymentEntity.setPaymentMethod("Trực tiếp");
+                paymentEntity.setContent("Gia hạn hợp đồng");
                 if (paymentDao.create(paymentEntity) != null) {
                     return true;
                 }
