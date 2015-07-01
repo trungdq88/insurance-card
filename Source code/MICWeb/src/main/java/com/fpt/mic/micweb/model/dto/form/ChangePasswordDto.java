@@ -26,11 +26,11 @@ public class ChangePasswordDto {
     @AssertTrue(message = "Sai mật khẩu hiện tại")
     private boolean isMatchCurrentPassword() {
         CustomerDao customerDao = new CustomerDao();
-        return currentPassword.equalsIgnoreCase(customerDao.read(customerCode).getPassword());
+        return currentPassword.equals(customerDao.read(customerCode).getPassword());
     }
     @AssertTrue(message = "Xác nhận mật khẩu không khớp với mật khẩu mới")
     private boolean isMatchPassword() {
-        return newPassword.equalsIgnoreCase(confirmPassword);
+        return newPassword.equals(confirmPassword);
     }
     public ChangePasswordDto() {
     }

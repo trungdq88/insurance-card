@@ -220,8 +220,8 @@ public class CustomerBusiness {
         CustomerDao customerDao = new CustomerDao();
         CustomerEntity customerEntity = customerDao.read(dto.getCustomerCode());
         if (customerEntity != null) {
-            if (customerEntity.getPassword().equalsIgnoreCase(dto.getCurrentPassword())) {
-                if (dto.getConfirmPassword().equalsIgnoreCase(dto.getNewPassword())) {
+            if (customerEntity.getPassword().equals(dto.getCurrentPassword())) {
+                if (dto.getConfirmPassword().equals(dto.getNewPassword())) {
                     customerEntity.setPassword(dto.getConfirmPassword());
                     customerEntity.setIsDefaultPassword(1);
                     result = customerDao.update(customerEntity) != null;
