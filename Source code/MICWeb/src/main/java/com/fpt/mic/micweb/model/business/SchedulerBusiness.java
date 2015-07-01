@@ -20,13 +20,13 @@ public class SchedulerBusiness {
         for (ContractEntity contractEntity : contractEntityList) {
             // check if contract exceeded renew due date (1)
             if (contractEntity.getStatus().equals(Constants.ContractStatus.EXPIRED)) {
-                if (DateUtils.dateBetween(contractEntity.getExpiredDate(),currentDate) > Constants.DueDate.RENEW_DUE_DATE){
+                if (DateUtils.dateBetween(contractEntity.getExpiredDate(), currentDate) > Constants.DueDate.RENEW_DUE_DATE) {
                     contractEntity.setStatus(Constants.ContractStatus.CANCELLED);
                     contractDao.update(contractEntity);
                 }
             }
             // checking READY, NO_CARD and REQUEST_CANCEL contracts
-            if (contractEntity.getStatus().equals(Constants.ContractStatus.READY)
+            else if (contractEntity.getStatus().equals(Constants.ContractStatus.READY)
                     || contractEntity.getStatus().equals(Constants.ContractStatus.NO_CARD)
                     || contractEntity.getStatus().equals(Constants.ContractStatus.REQUEST_CANCEL)) {
                 // check if contract expired (2)
@@ -36,33 +36,31 @@ public class SchedulerBusiness {
                     // TODO send notification to customer
                 }
                 // check if contract nearly exceeded expired (3)
-                if (DateUtils.dateBetween(currentDate, contractEntity.getExpiredDate()) < Constants.DueDate.NEARLY_EXCEED_EXPIRED ) {
+                else if (DateUtils.dateBetween(currentDate, contractEntity.getExpiredDate()) < Constants.DueDate.NEARLY_EXCEED_EXPIRED) {
                     // TODO send notification to customer
                 }
             }
             // checking PENDING contract (4)
-            if (contractEntity.getStatus().equals(Constants.ContractStatus.PENDING)) {
+            else if (contractEntity.getStatus().equals(Constants.ContractStatus.PENDING)) {
                 // check if Pending contract exceeded payment due date
-                if ( contractEntity.getStartDate().equals(contractEntity.getExpiredDate())) {
-                    if (DateUtils.dateBetween(contractEntity.getCreatedDate(),currentDate) > Constants.DueDate.PAYMENT_DUE_DATE) {
+                if (contractEntity.getStartDate().equals(contractEntity.getExpiredDate())) {
+                    if (DateUtils.dateBetween(contractEntity.getCreatedDate(), currentDate) > Constants.DueDate.PAYMENT_DUE_DATE) {
                         contractEntity.setStatus(Constants.ContractStatus.CANCELLED);
                         contractDao.update(contractEntity);
                     }
                 }
                 // else check if completed payment pending contract exceeded startDate (5)
-                else {
-                    if (contractEntity.getStartDate().equals(currentDate) || contractEntity.getStartDate().before(currentDate)) {
-                        CardDao cardDao = new CardDao();
-                        if ( null == cardDao.getCardByContract(contractEntity.getContractCode())) {
-                            contractEntity.setStatus(Constants.ContractStatus.NO_CARD);
-                            contractDao.update(contractEntity);
-                        }
-                        else {
-                            contractEntity.setStatus(Constants.ContractStatus.READY);
-                            contractDao.update(contractEntity);
-                        }
+                else if (contractEntity.getStartDate().equals(currentDate) || contractEntity.getStartDate().before(currentDate)) {
+                    CardDao cardDao = new CardDao();
+                    if (null == cardDao.getCardByContract(contractEntity.getContractCode())) {
+                        contractEntity.setStatus(Constants.ContractStatus.NO_CARD);
+                        contractDao.update(contractEntity);
+                    } else {
+                        contractEntity.setStatus(Constants.ContractStatus.READY);
+                        contractDao.update(contractEntity);
                     }
                 }
+
             }
         }
     }
