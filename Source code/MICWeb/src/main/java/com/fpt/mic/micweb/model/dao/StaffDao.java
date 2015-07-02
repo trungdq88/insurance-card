@@ -35,6 +35,32 @@ public class StaffDao extends IncrementDao<StaffEntity, String> {
     }
 
     /**
+     * Get all staffs with offset and count
+     * @param offset
+     * @param count
+     * @return
+     */
+    public List getOnePageStaff(int offset, int count) {
+        EntityManager entity = factory.createEntityManager();
+        String hql = "SELECT co FROM StaffEntity co ORDER BY co.staffCode DESC";
+        Query query = entity.createQuery(hql);
+        query.setFirstResult(offset);
+        query.setMaxResults(count);
+        List resultList = query.getResultList();
+        entity.close();
+        return resultList;
+    }
+
+    public Long getAllStaffCount() {
+        EntityManager entity = factory.createEntityManager();
+        String hql = "SELECT COUNT(co) FROM StaffEntity co ORDER BY co.staffCode DESC";
+        Query query = entity.createQuery(hql);
+        Long result = (Long) query.getSingleResult();
+        entity.close();
+        return result;
+    }
+
+    /**
      * Find staff by name
      * @param keyword
      * @return List<StaffEntity>

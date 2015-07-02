@@ -74,10 +74,19 @@ public class StaffBusiness {
         return contractDao.getAllContractCount();
     }
 
+    public Long getAllStaffCount() {
+        StaffDao staffDao = new StaffDao();
+        return staffDao.getAllStaffCount();
+    }
+
 
     public List getAllContract(int offset, int count) {
         ContractDao contractDao = new ContractDao();
         return contractDao.getAllContract(offset, count);
+    }
+    public List getOnePageStaff(int offset, int count) {
+        StaffDao staffDao = new StaffDao();
+        return staffDao.getOnePageStaff(offset, count);
     }
 
     public List getContractByCustomerCode(String customerCode, int offset, int count) {

@@ -56,6 +56,7 @@ public class ContractDao extends IncrementDao<ContractEntity, String> {
         entity.close();
         return resultList;
     }
+
     /**
      * This is the method which get all contract belongs to the customer.
      *
