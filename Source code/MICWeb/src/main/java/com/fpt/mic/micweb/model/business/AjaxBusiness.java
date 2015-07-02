@@ -21,10 +21,10 @@ public class AjaxBusiness {
 
         // Get the customer a new password
         String customerPassword = StringUtils.randomString();
+        String encryptedPassword = StringUtils.getMD5Hash(customerPassword);
 
         // Update new password for customer
-        // TODO: encrypt password
-        customerEntity.setPassword(customerPassword);
+        customerEntity.setPassword(encryptedPassword);
         customerDao.update(customerEntity);
 
         // Send new password email

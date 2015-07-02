@@ -6,13 +6,14 @@
 
 <div id="wrapper">
 
+    <c:set var="contracts" value="${contractPaginator.getItemsOnCurrentPage(param.page)}"/>
+
     <%@ include file="_shared/navigation.jsp" %>
     <div id="page-wrapper">
         <div class="row">
             <div class="col-lg-12">
                 <h1 class="page-header">
                     Hợp đồng
-
                     <div class="pull-right">
                         <a href="${pageContext.request.contextPath}/staff/contract?action=create"
                            class="btn btn-success">
@@ -26,9 +27,6 @@
         </div>
         <!-- /.row -->
         <div class="panel panel-default">
-
-            <c:set var="contracts" value="${contractPaginator.getItemsOnCurrentPage(param.page)}"/>
-
             <div class="panel-heading">
                 <div class="pull-left center-dropdown-button">
                     <!--<input type="checkbox" class="check-all"/>-->
@@ -68,27 +66,27 @@
                                 </tr>
                             </c:when>
                             <c:otherwise>
-                                <c:forEach var="cont" items="${contracts}" varStatus="counter">
+                                <c:forEach var="contract" items="${contracts}" varStatus="counter">
                                     <tr>
                                         <td>${(contractPaginator.getCurrentPage(param.page) - 1) * contractPaginator.itemPerPage + counter.count}</td>
                                         <td>
-                                            <a href="${pageContext.request.contextPath}/staff/contract?action=detail&code=${cont.contractCode}">
-                                                    ${cont.contractCode}
+                                            <a href="${pageContext.request.contextPath}/staff/contract?action=detail&code=${contract.contractCode}">
+                                                    ${contract.contractCode}
                                             </a>
                                         </td>
                                         <td>
-                                            <a href="${pageContext.request.contextPath}/staff/customer?action=detail&code=${cont.customerCode}">
-                                                    ${cont.micCustomerByCustomerCode.name}
+                                            <a href="${pageContext.request.contextPath}/staff/customer?action=detail&code=${contract.customerCode}">
+                                                    ${contract.micCustomerByCustomerCode.name}
                                             </a>
                                         </td>
                                         <td>
-                                            <fmt:formatDate value="${cont.startDate}" pattern="dd/MM/yyyy"/>
+                                            <fmt:formatDate value="${contract.startDate}" pattern="dd/MM/yyyy"/>
                                         </td>
                                         <td>
-                                            <fmt:formatDate value="${cont.expiredDate}" pattern="dd/MM/yyyy"/>
+                                            <fmt:formatDate value="${contract.expiredDate}" pattern="dd/MM/yyyy"/>
                                         </td>
                                         <td>
-                                            <c:set var="status" value="${cont.status}"/>
+                                            <c:set var="status" value="${contract.status}"/>
                                             <c:choose>
                                                 <c:when test="${status.equalsIgnoreCase('Pending')}">
                                                     <span class="label label-gray">Chưa kích hoạt</span>

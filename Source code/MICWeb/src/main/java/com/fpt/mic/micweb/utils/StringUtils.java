@@ -1,8 +1,13 @@
 package com.fpt.mic.micweb.utils;
 
+import sun.security.provider.MD5;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigInteger;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.text.Normalizer;
 import java.util.regex.Pattern;
@@ -40,5 +45,17 @@ public class StringUtils {
         Pattern pattern = Pattern.compile("\\p{InCombiningDiacriticalMarks}+");
 //        return pattern.matcher(temp).replaceAll("");
         return pattern.matcher(temp).replaceAll("").replaceAll("Đ", "D").replace("đ", "d");
+    }
+
+    public static String getMD5Hash(String s) {
+        MessageDigest md5 = null;
+        try {
+            md5 = MessageDigest.getInstance("MD5");
+            md5.update(StandardCharsets.UTF_8.encode(s));
+            return String.format("%032x", new BigInteger(1, md5.digest()));
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }

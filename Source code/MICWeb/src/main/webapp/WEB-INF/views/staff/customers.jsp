@@ -53,8 +53,7 @@
                             <th>Mã KH</th>
                             <th>Tên</th>
                             <th>Số điện thoại</th>
-                            <th>Mã hợp đồng</th>
-                            <th>Mã thẻ</th>
+                            <th>Email</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -77,8 +76,7 @@
                                         </td>
                                         <td>${customer.name}</td>
                                         <td>${customer.phone}</td>
-                                        <td><a href="#"></a>Add later</td>
-                                        <td><a href="#"></a>Add later</td>
+                                        <td>${customer.email}</td>
                                     </tr>
                                 </c:forEach>
                             </c:otherwise>

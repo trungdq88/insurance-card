@@ -17,17 +17,6 @@ function getCurrentDate() {
     return today;
 }
 
-function getCurrentDateInNextWeek() {
-    var now = new Date();
-    var curYear = now.getFullYear();
-    var curYearMonth = now.getMonth() + 1;
-    var curYearDay = now.getDate();
-    var nextWeekDay = curYearDay + 7;
-    var nextWeek = ("0000" + curYear.toString()).slice(-4) + "-"
-        + ("00" + curYearMonth.toString()).slice(-2) + "-" + ("00" + nextWeekDay.toString()).slice(-2);
-    return nextWeek;
-}
-
 function getCurrentDateInNextYear() {
     var now = new Date();
     var curYear = now.getFullYear();
@@ -122,49 +111,20 @@ Number.prototype.formatMoney = function (c, d, t) {
     return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
 };
 
-/**
- * Change label by contract code
- *
- * @param contractCode
- * @author KhaNC
- * @version 1.0
- */
-function changeLabelByContractCode(contractStatus) {
-    switch (contractStatus) {
-        case "Pending":
-            $('#contStatus').switchClass("label label-default", "label label-gray", 0);
-            document.getElementById("contStatus").innerHTML = "Chưa kích hoạt";
-            break;
-        case "No card":
-            $('#contStatus').switchClass("label label-default", "label label-primary", 0);
-            document.getElementById("contStatus").innerHTML = "Chưa có thẻ";
-            break;
-        case "Ready":
-            $('#contStatus').switchClass("label label-default", "label label-success", 0);
-            document.getElementById("contStatus").innerHTML = "Sẵn sàng";
-            break;
-        case "Request cancel":
-            $('#contStatus').switchClass("label label-default", "label label-warning", 0);
-            document.getElementById("contStatus").innerHTML = "Yêu cầu huỷ";
-            break;
-        case "Expired":
-            $('#contStatus').switchClass("label label-default", "label label-danger", 0);
-            document.getElementById("contStatus").innerHTML = "Hết hạn";
-            break;
-        case "Cancelled":
-            $('#contStatus').switchClass("label label-default", "label label-dark", 0);
-            document.getElementById("contStatus").innerHTML = "Đã huỷ";
-            break;
-    }
-}
-
-
 function addZero(i) {
     if (i < 10) {
         i = "0" + i;
     }
     return i;
 }
+
+/**
+ * Return date time from input is millisecond
+ * @param longTime
+ *
+ * @author KhaNC
+ * @version 1.0
+ */
 
 function getDateTime(longTime) {
     if (longTime) {

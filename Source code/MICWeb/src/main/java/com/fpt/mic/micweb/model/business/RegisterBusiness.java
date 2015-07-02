@@ -67,8 +67,8 @@ public class RegisterBusiness {
         customerEntity.setCustomerCode(customerCode);
         // get customer password
         String customerPassword = StringUtils.randomString();
-        // TODO: encrypt password
-        customerEntity.setPassword(customerPassword);
+        String encryptedPassword = StringUtils.getMD5Hash(customerPassword);
+        customerEntity.setPassword(encryptedPassword);
         // get next Contract Code
         contractEntity.setContractCode(contractDao.getIncrementId());
         contractEntity.setCustomerCode(customerCode);

@@ -46,8 +46,9 @@ public class StaffBusiness {
         customerEntity.setLastModified(DateUtils.currentTimeWithoutNanos());
         // get customer password
         String customerPassword = StringUtils.randomString();
-        // TODO: encrypt password
-        customerEntity.setPassword(customerPassword);
+        String encryptedPassword = StringUtils.getMD5Hash(customerPassword);
+
+        customerEntity.setPassword(encryptedPassword);
 
         CustomerEntity newCustomer = customerDao.create(customerEntity);
         if (newCustomer != null) {
@@ -57,7 +58,9 @@ public class StaffBusiness {
             String content = StringUtils.getString(resourceAsStream);
             boolean emailSuccess = false;
             if (content != null) {
-                content = content.replaceAll("\\{\\{password\\}\\}", customerPassword)
+                content = content
+                        .replaceAll("\\{\\{customerCode\\}\\}", newCustomer.getCustomerCode())
+                        .replaceAll("\\{\\{password\\}\\}", customerPassword)
                         .replaceAll("\\{\\{loginUrl\\}\\}", loginUrl);
                 emailSuccess = EmailUtils.sendMail(newCustomer.getEmail(), content);
             }

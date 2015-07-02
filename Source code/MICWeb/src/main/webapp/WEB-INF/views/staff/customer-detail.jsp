@@ -5,7 +5,7 @@
 
 <div id="wrapper">
 
-    <c:set var="customer" value="${requestScope.CUSTOMER}"/>
+    <c:set var="customer" value="${requestScope.CUSTOMER}" scope="request"/>
     <c:set var="listContracts" value="${requestScope.CONTRACTS}"/>
 
     <%@ include file="_shared/navigation.jsp" %>
@@ -13,7 +13,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <h1 class="page-header">
-                    ${customer.name}
+                    ${customer.customerCode}
                 </h1>
             </div>
             <!-- /.col-lg-12 -->
@@ -21,79 +21,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <form class="form-horizontal">
-                    <fieldset>
-                        <legend>
-                            Thông tin cá nhân
-                            <div class="pull-right" style="margin-top: -5px;">
-                                <a href="#" class="btn btn-xs btn-primary">
-                                    <i class="fa fa-pencil"></i> Chỉnh sửa
-                                </a>
-                            </div>
-                        </legend>
-
-                        <!-- Customer code -->
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">Mã khách hàng</label>
-
-                            <div class="col-sm-2">
-                                <div class="text-value text-primary">
-                                    <b>${customer.customerCode}</b>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Name -->
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">Tên khách hàng</label>
-
-                            <div class="col-sm-8">
-                                <div class="text-value">
-                                    ${customer.name}
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Address -->
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">Địa chỉ</label>
-
-                            <div class="col-sm-8">
-                                <div class="text-value">
-                                    ${customer.address}
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Email & Personal ID -->
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">Email</label>
-
-                            <div class="col-sm-4">
-                                <div class="text-value">
-                                    ${customer.email}
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Phone & Personal ID -->
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">Số điện thoại</label>
-
-                            <div class="col-sm-2">
-                                <div class="text-value">
-                                    ${customer.phone}
-                                </div>
-                            </div>
-
-                            <label class="col-sm-3 control-label">Số CMND / Hộ chiếu</label>
-
-                            <div class="col-sm-3">
-                                <div class="text-value">
-                                    ${customer.personalId}
-                                </div>
-                            </div>
-                        </div>
-                    </fieldset>
+                    <c:import url="contract-detail-customer.jsp"/>
                     <%--/Customer information--%>
                     <br/>
 
@@ -178,91 +106,5 @@
     </div>
 </div>
 <!-- /#wrapper -->
-
-<!-- model for card history -->
-<div class="modal fade" id="card-history-modal">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                        aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Các thẻ đã được sử dụng bởi Đinh Quang Trung</h4>
-            </div>
-            <div class="modal-body">
-                <p>
-                    <b>Tổng số: 2 thẻ</b>
-                </p>
-
-                <div class="table-responsive">
-                    <table class="table table-striped table-bordered table-hover">
-                        <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Mã thẻ</th>
-                            <th>Ngày hiệu lực</th>
-                            <th>Trạng thái</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td><a href="detail-card.html">AC7-37F-E8E-DDC</a></td>
-                            <td>7/5/2015</td>
-                            <td><span class="label label-success">Hoạt động</span></td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td><a href="detail-card.html">FC3-DDA-4B6-773</a></td>
-                            <td>7/4/2015</td>
-                            <td><span class="label label-danger">Ngưng hoạt động</span></td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <!-- /.table-responsive -->
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal">Đóng</button>
-            </div>
-        </div>
-        <!-- /.modal-content -->
-    </div>
-    <!-- /.modal-dialog -->
-</div>
-<!-- /.modal -->
-
-<!-- model for change card -->
-<div class="modal fade" id="change-card-modal">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                        aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Quy trình đổi thẻ mới</h4>
-            </div>
-            <div class="modal-body">
-                <p>Để đổi thẻ mới cho khách hàng, cần thực hiện các bước sau đây:</p>
-                <ol>
-                    <li>Nhận lại thẻ cũ từ khách hàng (nếu có).</li>
-                    <li>Sử dụng <b>Ứng dụng in thẻ</b> trên điện thoại, dùng chức năng <b>Đổi thẻ</b> để tìm và in thẻ
-                        mới cho khách hàng.
-                    </li>
-                    <li>Chuyển phát thẻ mới cho khách hàng, thẻ cũ sẽ tự động bị <b>vô hiệu hoá</b> và sẽ <b>không thể
-                        sử dụng lại được nữa</b>.
-                    </li>
-                </ol>
-
-                <p>Trong trường hợp cần thiết, các thông tin lưu trên thẻ cũ vẫn có thể được tra cứu lại tại trang <a
-                        href="cards.html">Quản lý thẻ</a></p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal">Đóng</button>
-            </div>
-        </div>
-        <!-- /.modal-content -->
-    </div>
-    <!-- /.modal-dialog -->
-</div>
-<!-- /.modal -->
 
 <%@ include file="_shared/footer.jsp" %>
