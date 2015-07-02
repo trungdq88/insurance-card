@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="_shared/header.jsp" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <body>
 <div class="image-container set-full-height"
@@ -28,19 +29,23 @@
                             <div class="wizard-header">
                                 <h3>
                                     <b> TẠO HỢP ĐỒNG MỚI THÀNH CÔNG </b><br>
-                                    <small>Vui lòng ghi nhớ những thông tin cần thiết sau:</small>
+                                    <c:if test="${!register.existCustomer}">
+                                        <small>Vui lòng ghi nhớ những thông tin cần thiết sau:</small>
+                                    </c:if>
                                 </h3>
                                 <div class="col-sm-10 col-sm-offset-3">
                                     <p style="color: red;">Vui lòng thanh toán để hợp đồng có hiệu lực</p>
                                     <p><b>Mã khách hàng:</b> ${register.customerEntity.customerCode}</p>
-                                    <p><b>Mật khẩu:</b>
-                                        ${register.emailSuccess ? "<span class='label label-success'>đã gửi</span>" : "<span class='label label-danger'>gửi thất bại</span>"}
-                                        (kiểm tra email ${register.customerEntity.email})
-                                        <button data-customer-code="${register.customerEntity.customerCode}" type="button" id="btnResendPassword" class="btn btn-xs btn-primary">
-                                            <i class="fa fa-refresh"></i>
-                                            Gửi lại email
-                                        </button>
-                                    </p>
+                                    <c:if test="${!register.existCustomer}">
+                                        <p><b>Mật khẩu:</b>
+                                                ${register.emailSuccess ? "<span class='label label-success'>đã gửi</span>" : "<span class='label label-danger'>gửi thất bại</span>"}
+                                            (kiểm tra email ${register.customerEntity.email})
+                                            <button data-customer-code="${register.customerEntity.customerCode}" type="button" id="btnResendPassword" class="btn btn-xs btn-primary">
+                                                <i class="fa fa-refresh"></i>
+                                                Gửi lại email
+                                            </button>
+                                        </p>
+                                    </c:if>
 
                                     <p><b>Mã hợp đồng:</b> ${register.contractEntity.contractCode}</p>
                                     <input type="hidden" id="amount" value="${register.contractEntity.contractFee}">

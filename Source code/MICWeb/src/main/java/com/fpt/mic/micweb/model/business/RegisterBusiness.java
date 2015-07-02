@@ -5,6 +5,7 @@ import com.fpt.mic.micweb.model.dao.ContractDao;
 import com.fpt.mic.micweb.model.dao.CustomerDao;
 import com.fpt.mic.micweb.model.dao.PaymentDao;
 import com.fpt.mic.micweb.model.dto.RegisterInformationDto;
+import com.fpt.mic.micweb.model.dto.form.CustomerCreateContractDto;
 import com.fpt.mic.micweb.model.dto.form.PublicRegisterFormDto;
 import com.fpt.mic.micweb.model.entity.ContractEntity;
 import com.fpt.mic.micweb.model.entity.CustomerEntity;
@@ -23,6 +24,47 @@ import java.util.Date;
  * Created by TriPQM on 06/04/2015.
  */
 public class RegisterBusiness {
+    // register new contract by customer
+    public RegisterInformationDto customerCreateContract(CustomerCreateContractDto customerCreateContractDto, String customerCode) {
+        RegisterInformationDto registerInformationDto = new RegisterInformationDto();
+        ContractDao contractDao = new ContractDao();
+        CustomerDao customerDao = new CustomerDao();
+        CustomerEntity customerEntity = customerDao.read(customerCode);
+        ContractEntity contractEntity = new ContractEntity();
+
+        contractEntity.setPlate(customerCreateContractDto.getPlate());
+        contractEntity.setBrand(customerCreateContractDto.getBrand());
+        contractEntity.setModelCode(customerCreateContractDto.getModel());
+        contractEntity.setVehicleType(customerCreateContractDto.getType());
+        contractEntity.setColor(customerCreateContractDto.getColor());
+        contractEntity.setEngine(customerCreateContractDto.getEngine());
+        contractEntity.setChassis(customerCreateContractDto.getChassis());
+        contractEntity.setCapacity(customerCreateContractDto.getCapacity());
+        contractEntity.setYearOfManufacture(customerCreateContractDto.getYearOfMan());
+        contractEntity.setWeight(customerCreateContractDto.getWeight());
+        contractEntity.setSeatCapacity(customerCreateContractDto.getSeatCapacity());
+        contractEntity.setContractFee(customerCreateContractDto.getContractFee());
+        contractEntity.setStatus(Constants.ContractStatus.PENDING);
+        contractEntity.setContractTypeId(customerCreateContractDto.getContractType());
+        // lay ngay nhap vao
+        Timestamp startDate = customerCreateContractDto.getStartDate();
+        contractEntity.setStartDate(startDate);
+        contractEntity.setExpiredDate(startDate);
+        Timestamp currentTime = new Timestamp(new Date().getTime());
+        currentTime.setNanos(0);
+        contractEntity.setLastModified(currentTime);
+        contractEntity.setContractCode(contractDao.getIncrementId());
+        contractEntity.setCustomerCode(customerCode);
+
+        ContractEntity contract = contractDao.create(contractEntity);
+        registerInformationDto.setCustomerEntity(customerEntity);
+        registerInformationDto.setContractEntity(contractEntity);
+        registerInformationDto.setExistCustomer(true);
+        return registerInformationDto;
+    }
+
+
+    // register new contract by guest
     public RegisterInformationDto registerNewContract(
             PublicRegisterFormDto publicRegisterFormDto, ServletContext context, String loginUrl) {
         CustomerEntity customerEntity = new CustomerEntity();

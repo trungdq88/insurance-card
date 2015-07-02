@@ -85,4 +85,9 @@ public class ContractBusiness {
         ContractDao contractDao = new ContractDao();
         return contractDao.read(contractCode);
     }
+
+    public ContractTypeEntity getContractType(int contractTypeId) {
+        ContractTypeDao contractTypeDao = new ContractTypeDao();
+        return contractTypeDao.read(contractTypeId);
+    }
 }

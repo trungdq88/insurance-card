@@ -5,13 +5,18 @@ import com.fpt.mic.micweb.framework.Paginator;
 import com.fpt.mic.micweb.framework.responses.RedirectTo;
 import com.fpt.mic.micweb.model.business.ContractBusiness;
 import com.fpt.mic.micweb.model.business.CustomerBusiness;
+import com.fpt.mic.micweb.model.business.RegisterBusiness;
 import com.fpt.mic.micweb.model.dto.CheckoutRequestDto;
+import com.fpt.mic.micweb.model.dto.RegisterInformationDto;
 import com.fpt.mic.micweb.model.dto.UserDto;
 import com.fpt.mic.micweb.model.dto.form.CancelContractDto;
+import com.fpt.mic.micweb.model.dto.form.ConcurrencyDto;
+import com.fpt.mic.micweb.model.dto.form.CustomerCreateContractDto;
 import com.fpt.mic.micweb.model.entity.ContractEntity;
 import com.fpt.mic.micweb.framework.responses.JspPage;
 import com.fpt.mic.micweb.framework.R;
 import com.fpt.mic.micweb.framework.responses.ResponseObject;
+import com.fpt.mic.micweb.model.entity.ContractTypeEntity;
 import com.fpt.mic.micweb.model.entity.CustomerEntity;
 import com.fpt.mic.micweb.utils.Constants;
 import com.fpt.mic.micweb.utils.DateUtils;
@@ -38,7 +43,78 @@ public class ContractController extends AuthController {
     }
 
     public ResponseObject getNewContract(R r) {
+        ContractBusiness contractBusiness = new ContractBusiness();
+        List<ContractTypeEntity> list = contractBusiness.getAllContractType();
+        HashMap<Integer,ContractTypeEntity> mapContractType = new HashMap<Integer, ContractTypeEntity>();
+        for (int i = 0; i< list.size();i++) {
+            mapContractType.put(list.get(i).getId(),list.get(i));
+        }
+        r.equest.setAttribute("mapContractType",mapContractType);
         return new JspPage("customer/contract-new.jsp");
+    }
+    public ResponseObject getReviewNewContract(R r) {
+        CustomerCreateContractDto customerCreateContractDto = (CustomerCreateContractDto) r.ead.entity(CustomerCreateContractDto.class,"contract");
+        // Gọi hàm validate ở đây
+        List errors = r.ead.validate(customerCreateContractDto);
+
+        // Nếu có lỗi khi validate
+        if (errors.size() > 0) {
+            // Gửi lỗi về trang JSP
+            r.equest.setAttribute("validateErrors", errors);
+            // Gửi dữ liệu mà người dùng đã nhập về trang JSP, gán vào biến submitted
+            r.equest.setAttribute("submitted", customerCreateContractDto);
+            r.equest.setAttribute("startDate", r.equest.getParameter("contract:startDate"));
+            return getNewContract(r);
+        }
+        r.equest.setAttribute("startDate", r.equest.getParameter("contract:startDate"));
+        r.equest.setAttribute("submitted", customerCreateContractDto);
+        ContractBusiness contractBusiness = new ContractBusiness();
+        r.equest.setAttribute("contractTypeName",contractBusiness.getContractType(customerCreateContractDto.getContractType()).getName());
+        return new JspPage("customer/contract-review.jsp");
+    }
+
+    public ResponseObject getCreateContract(R r) {
+        String url = "public/error.jsp";
+        CustomerCreateContractDto customerCreateContractDto = (CustomerCreateContractDto) r.ead.entity(CustomerCreateContractDto.class,"contract");
+        // Gọi hàm validate ở đây
+        List errors = r.ead.validate(customerCreateContractDto);
+
+        // Nếu có lỗi khi validate
+        if (errors.size() > 0) {
+            // Gửi lỗi về trang JSP
+            r.equest.setAttribute("validateErrors", errors);
+            // Gửi dữ liệu mà người dùng đã nhập về trang JSP, gán vào biến submitted
+            r.equest.setAttribute("submitted", customerCreateContractDto);
+            r.equest.setAttribute("startDate", r.equest.getParameter("contract:startDate"));
+            return getNewContract(r);
+        }
+        String customerCode = ((CustomerEntity) getLoggedInUser()).getCustomerCode();
+
+        // Call to business object
+        RegisterBusiness registerBusiness = new RegisterBusiness();
+        RegisterInformationDto register =
+                registerBusiness.customerCreateContract(customerCreateContractDto, customerCode);
+
+        if (register.getContractEntity() != null) {
+            HttpSession session = r.equest.getSession();
+
+            // Save last_modified value for concurrency check
+            Timestamp lastModified = register.getContractEntity().getLastModified();
+            session.setAttribute(
+                    Constants.Session.CONCURRENCY + register.getContractEntity().getContractCode(),
+                    lastModified);
+
+            session.setAttribute("CONTRACT_CODE", register.getContractEntity().getContractCode());
+            session.setAttribute("SUCCESS_URL", "/customer/contract?action=activeCreateContract");
+            session.setAttribute("cancel_message","Bạn đã hủy thanh toán. Xin vui lòng thực hiện lại hoặc đến thanh toán trực tiếp");
+            session.setAttribute("redirectLink","home");
+
+            r.equest.setAttribute("register", register);
+            return new JspPage("public/register-payment.jsp");
+        }
+
+        r.equest.setAttribute("error", "Không thể tạo hợp đồng. Xin thử lại");
+        return new JspPage(url);
     }
 
     public ResponseObject getView(R r) {
@@ -351,6 +427,71 @@ public class ContractController extends AuthController {
             r.equest.setAttribute("contractCode", contractCode);
             return new JspPage("customer/message.jsp");
         }
+    }
+    public ResponseObject getActiveCreateContract(R r) {
+        String errorUrl = "/error/404";
+        HttpSession session = r.equest.getSession(false);
+        if (session != null) {
+            String returnUrl = "public/return.jsp";
+            ConcurrencyDto concurrencyDto = new ConcurrencyDto();
+
+            String contractCode = (String) session.getAttribute("CONTRACT_CODE");
+            Timestamp startModifyTime =(Timestamp)
+                    session.getAttribute(Constants.Session.CONCURRENCY + contractCode);
+
+            concurrencyDto.setLastModified(startModifyTime);
+            concurrencyDto.setContractCode(contractCode);
+
+            Map<String, String> results = new HashMap<String, String>();
+            results.putAll((Map<String, String>) session.getAttribute("RESULT"));
+
+            r.equest.setAttribute("result", results);
+            r.equest.setAttribute("ack", (String) session.getAttribute("ACK"));
+            Float amount = Float.parseFloat((String) session.getAttribute("amountVND"));
+            r.equest.setAttribute("amountVND", amount);
+            r.equest.setAttribute("redirectLink", "/customer/contract?action=ContractDetail&code=" + contractCode);
+
+            // Check concurrency
+            List errors = r.ead.validate(concurrencyDto);
+            if (errors.size() > 0) {
+
+                StringBuilder message = new StringBuilder();
+                for (Object error : errors) {
+                    message.append((String) error).append("<br/>");
+                }
+
+                r.equest.setAttribute("message", message);
+                return new JspPage(returnUrl);
+            }
+
+            String paypalTransId = results.get("PAYMENTINFO_0_TRANSACTIONID");
+            String paymentMethod = "PayPal payment";
+            String paymentContent = (String) session.getAttribute("descVN");
+
+            RegisterBusiness registerBusiness = new RegisterBusiness();
+            String result = registerBusiness.updateContractPayment(contractCode, paymentMethod, paymentContent, amount, paypalTransId);
+            if (result == null) {
+                session.removeAttribute("RESULT");
+                session.removeAttribute("CONTRACT_CODE");
+                session.removeAttribute("amountVND");
+                session.removeAttribute("ACK");
+                session.removeAttribute("SUCCESS_URL");
+                session.removeAttribute("EXPRESS_MARK");
+                session.removeAttribute("payer_id");
+                session.removeAttribute("checkoutDetails");
+                session.removeAttribute("checkout");
+                session.removeAttribute("TOKEN");
+                r.equest.setAttribute("message", "Thanh toán thành công");
+                return new JspPage(returnUrl);
+            }
+            else {
+                session.removeAttribute("cancel_message");
+                r.equest.setAttribute("cancel_message",result);
+                return new JspPage("/public/cancel.jsp");
+            }
+        }
+        //r.equest.setAttribute("error","Phiên giao dịch đã hết thời gian");
+        return new RedirectTo(errorUrl);
     }
 }
 

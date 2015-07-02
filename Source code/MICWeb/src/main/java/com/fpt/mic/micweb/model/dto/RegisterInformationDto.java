@@ -11,8 +11,20 @@ public class RegisterInformationDto {
     private ContractEntity contractEntity;
     private CustomerEntity customerEntity;
     private boolean emailSuccess;
+    private boolean existCustomer;
+
+    public boolean isExistCustomer() {
+        return existCustomer;
+    }
+
+    public void setExistCustomer(boolean existCustomer) {
+        this.existCustomer = existCustomer;
+    }
 
     public RegisterInformationDto() {
+        contractEntity = null;
+        customerEntity = null;
+        emailSuccess = false;
     }
 
     public RegisterInformationDto(ContractEntity contractEntity, CustomerEntity customerEntity, boolean emailSuccess) {
