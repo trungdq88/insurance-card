@@ -397,7 +397,10 @@
                 $("#content-value").html(data.content);
                 $("#payment-method-value").html(data.paymentMethod);
                 $("#paid-date-value").html(getDateTime(data.paidDate));
-                if ((data.paymentMethod).toLowerCase() == ("Paypal").toLowerCase()) {
+                console.log(data.paidDate);
+                console.log(data.startDate);
+                console.log(data.expiredDate);
+                if ((data.paymentMethod).toLowerCase().indexOf("paypal") > -1) {
                     $("#ppIDCtrl").removeClass('hide');
                     $("#paypal-id-value").html(data.paypalTransId);
                 }

@@ -128,15 +128,22 @@ function addZero(i) {
 
 function getDateTime(longTime) {
     if (longTime) {
+        // create a new javascript Date object based on the timestamp
         var returnDate = new Date(longTime);
+        // date part of the timestamp
+        var date = addZero(returnDate.getDate());
+        // months part of the timestamp
+        var months = addZero(returnDate.getMonth() + 1);
+        // year part of the timestamp
+        var years = returnDate.getFullYear();
+        // hours part from the timestamp
+        var hours = addZero(returnDate.getHours());
+        // minutes part from the timestamp
+        var minutes = addZero(returnDate.getMinutes());
+        // seconds part from the timestamp
+        var seconds = addZero(returnDate.getSeconds());
 
-        var yearStr = returnDate.getFullYear();
-        var monthStr = addZero(returnDate.getMonth() + 1);
-        var dayStr = addZero(returnDate.getDay());
-        var hourStr = addZero(returnDate.getHours());
-        var minuteStr = addZero(returnDate.getMinutes());
-        var secondStr = addZero(returnDate.getSeconds());
-
-        return dayStr + "/" + monthStr + "/" + yearStr + " lúc " + hourStr + ":" + minuteStr + ":" + secondStr;
+        // will display time in dd/MM/yyyy lúc hh:mm:ss format
+        return date + '/' + months + '/' + years + ' lúc ' + hours + ':' + minutes + ':' + seconds;
     }
 }
