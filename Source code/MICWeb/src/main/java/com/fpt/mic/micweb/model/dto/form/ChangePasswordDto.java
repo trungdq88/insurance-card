@@ -5,6 +5,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import com.fpt.mic.micweb.model.dao.CustomerDao;
+import com.fpt.mic.micweb.utils.StringUtils;
 import org.hibernate.validator.constraints.NotEmpty;
 
 /**
@@ -33,7 +34,8 @@ public class ChangePasswordDto {
     @AssertTrue(message = "Sai mật khẩu hiện tại")
     private boolean isMatchCurrentPassword() {
         CustomerDao customerDao = new CustomerDao();
-        return currentPassword.equals(customerDao.read(customerCode).getPassword());
+        String encryptedPassword = StringUtils.getMD5Hash(currentPassword);
+        return customerDao.read(customerCode).getPassword().equals(encryptedPassword);
     }
     @AssertTrue(message = "Xác nhận mật khẩu không khớp với mật khẩu mới")
     private boolean isMatchPassword() {
