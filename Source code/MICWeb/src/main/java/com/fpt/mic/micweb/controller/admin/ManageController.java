@@ -36,4 +36,11 @@ public class ManageController extends BasicController{
         r.equest.setAttribute("staffPaginator", staffPaginator);
         return new JspPage("/admin/manage.jsp");
     }
+    public ResponseObject getStaffDetail(R r) {
+        StaffBusiness staffBusiness = new StaffBusiness();
+        String staffCode = r.equest.getParameter("code");
+        r.equest.setAttribute("staff",staffBusiness.getStaff(staffCode));
+        return new JspPage("admin/staff-detail.jsp");
+
+    }
 }

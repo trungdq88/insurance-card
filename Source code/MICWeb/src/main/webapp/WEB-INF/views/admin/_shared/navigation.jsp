@@ -23,24 +23,24 @@
     </div>
     <!-- /.navbar-header -->
 
-    <ul class="nav navbar-top-links navbar-right">
-        <li class="dropdown">
-            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                <i class="fa fa-user fa-fw"></i>
-                ${sessionScope.userDto.userEntity.name}
-                <i class="fa fa-caret-down"></i>
-            </a>
-            <ul class="dropdown-menu dropdown-user">
-                <li><a href="${pageContext.request.contextPath}/staff"><i class="fa fa-user fa-fw"></i> Thông tin cá nhân</a>
-                </li>
-                <li class="divider"></li>
-                <li><a href="${pageContext.request.contextPath}/user?action=logout"><i class="fa fa-sign-out fa-fw"></i> Đăng xuất</a>
-                </li>
-            </ul>
-            <!-- /.dropdown-user -->
-        </li>
-        <!-- /.dropdown -->
-    </ul>
+    <%--<ul class="nav navbar-top-links navbar-right">--%>
+        <%--<li class="dropdown">--%>
+            <%--<a class="dropdown-toggle" data-toggle="dropdown" href="#">--%>
+                <%--<i class="fa fa-user fa-fw"></i>--%>
+                <%--${sessionScope.userDto.userEntity.name}--%>
+                <%--<i class="fa fa-caret-down"></i>--%>
+            <%--</a>--%>
+            <%--<ul class="dropdown-menu dropdown-user">--%>
+                <%--<li><a href="${pageContext.request.contextPath}/staff"><i class="fa fa-user fa-fw"></i> Thông tin cá nhân</a>--%>
+                <%--</li>--%>
+                <%--<li class="divider"></li>--%>
+                <%--<li><a href="${pageContext.request.contextPath}/user?action=logout"><i class="fa fa-sign-out fa-fw"></i> Đăng xuất</a>--%>
+                <%--</li>--%>
+            <%--</ul>--%>
+            <%--<!-- /.dropdown-user -->--%>
+        <%--</li>--%>
+        <%--<!-- /.dropdown -->--%>
+    <%--</ul>--%>
 
     <div class="navbar-default sidebar" role="navigation">
         <div class="sidebar-nav navbar-collapse">

@@ -30,6 +30,11 @@ public class StaffBusiness {
         return customerDao.read(customerCode);
     }
 
+    public StaffEntity getStaff(String staffCode) {
+        StaffDao staffDao = new StaffDao();
+        return staffDao.read(staffCode);
+    }
+
     public CreateCustomerInfoDto createCustomer(CreateCustomerDto dto, ServletContext context, String loginUrl) {
         CustomerDao customerDao = new CustomerDao();
         CustomerEntity customerEntity = new CustomerEntity();
