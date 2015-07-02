@@ -31,10 +31,16 @@
                 <i class="fa fa-caret-down"></i>
             </a>
             <ul class="dropdown-menu dropdown-user">
-                <li><a href="${pageContext.request.contextPath}/staff"><i class="fa fa-user fa-fw"></i> Thông tin cá nhân</a>
+                <li>
+                    <a href="${pageContext.request.contextPath}/staff/profile?action=detail&code=${sessionScope.userDto.id}">
+                        <i class="fa fa-user fa-fw"></i> Thông tin cá nhân
+                    </a>
                 </li>
                 <li class="divider"></li>
-                <li><a href="${pageContext.request.contextPath}/user?action=logout"><i class="fa fa-sign-out fa-fw"></i> Đăng xuất</a>
+                <li>
+                    <a href="${pageContext.request.contextPath}/user?action=logout">
+                        <i class="fa fa-sign-out fa-fw"></i> Đăng xuất
+                    </a>
                 </li>
             </ul>
             <!-- /.dropdown-user -->

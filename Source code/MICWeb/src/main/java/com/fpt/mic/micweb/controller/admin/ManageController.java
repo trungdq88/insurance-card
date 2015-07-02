@@ -39,7 +39,7 @@ public class ManageController extends BasicController{
     public ResponseObject getStaffDetail(R r) {
         StaffBusiness staffBusiness = new StaffBusiness();
         String staffCode = r.equest.getParameter("code");
-        r.equest.setAttribute("staff",staffBusiness.getStaff(staffCode));
+        r.equest.setAttribute("staff",staffBusiness.getStaffDetail(staffCode));
         return new JspPage("admin/staff-detail.jsp");
 
     }
