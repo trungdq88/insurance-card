@@ -17,8 +17,40 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Mã giao dịch</label>
 
+                            <div class="col-sm-1">
+                                <div class="text-value">
+                                    <strong id="payment-id-value"></strong>
+                                </div>
+                            </div>
+
+                            <label class="col-sm-3 control-label">Mã hợp đồng</label>
+
                             <div class="col-sm-2">
-                                <div class="text-value" id="payment-id-value"></div>
+                                <div class="text-value" id="contract-code-value"></div>
+                            </div>
+                        </div>
+
+                        <!-- Amount & Content -->
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Số tiền</label>
+
+                            <div class="col-sm-2">
+                                <div class="text-value" id="amount-value"></div>
+                            </div>
+
+                            <label class="col-sm-2 control-label">Dịch vụ</label>
+
+                            <div class="col-sm-5">
+                                <div class="text-value" id="content-value"></div>
+                            </div>
+                        </div>
+
+                        <!-- Payment method & Paid date -->
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Hình thức</label>
+
+                            <div class="col-sm-2">
+                                <div class="text-value" id="payment-method-value"></div>
                             </div>
 
                             <label class="col-sm-2 control-label">Thời gian</label>
@@ -28,42 +60,8 @@
                             </div>
                         </div>
 
-                        <!-- Payment method & Content -->
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">Hình thức</label>
-
-                            <div class="col-sm-2">
-                                <div class="text-value" id="payment-method-value"></div>
-                            </div>
-
-
-                            <label class="col-sm-2 control-label">Dịch vụ</label>
-
-                            <div class="col-sm-5">
-                                <div class="text-value" id="content-value"></div>
-                            </div>
-                        </div>
-
-                        <!-- Amount -->
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">Số tiền</label>
-
-                            <div class="col-sm-2">
-                                <div class="text-value" id="amount-value"></div>
-                            </div>
-                        </div>
-
-                        <!-- Receiver -->
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">Người nhận</label>
-
-                            <div class="col-sm-3">
-                                <div class="text-value" id="receiver-value"></div>
-                            </div>
-                        </div>
-
                         <!-- Paypal ID -->
-                        <div class="form-group">
+                        <div id="ppIDCtrl" class="form-group hide">
                             <label class="col-sm-3 control-label">Mã Paypal</label>
 
                             <div class="col-sm-4">
@@ -71,8 +69,17 @@
                             </div>
                         </div>
 
-                        <!-- Start date -->
+                        <!-- Receiver -->
                         <div class="form-group">
+                            <label class="col-sm-3 control-label">Người nhận</label>
+
+                            <div class="col-sm-4">
+                                <div class="text-value" id="receiver-value"></div>
+                            </div>
+                        </div>
+
+                        <!-- Start date -->
+                        <div id="stDateCtrl" class="form-group hide">
                             <label class="col-sm-5 control-label">Ngày bắt đầu gia hạn</label>
 
                             <div class="col-sm-4">
@@ -81,7 +88,7 @@
                         </div>
 
                         <!-- Expired date -->
-                        <div class="form-group">
+                        <div id="expDateCtrl" class="form-group hide">
                             <label class="col-sm-5 control-label">Ngày hết hạn hợp đồng</label>
 
                             <div class="col-sm-4">

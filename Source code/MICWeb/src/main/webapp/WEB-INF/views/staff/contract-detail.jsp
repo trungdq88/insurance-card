@@ -235,7 +235,8 @@
                                                 </td>
                                                 <td>
 
-                                                    <a href="javascript:;" class="payment-id-clicker btn btn-primary btn-xs"
+                                                    <a href="javascript:;"
+                                                       class="payment-id-clicker btn btn-primary btn-xs"
                                                        payment-id="${payment.id}">
                                                         Chi tiết
                                                     </a>
@@ -391,18 +392,44 @@
                 type: "GET",
             }).done(function (data) {
                 $("#payment-id-value").html(data.id);
-                $("#paid-date-value").html(getDateTime(data.paidDate));
-                $("#payment-method-value").html(data.paymentMethod);
-                $("#content-value").html(data.content);
+                $("#contract-code-value").html(data.contractCode);
                 $("#amount-value").html(data.amount);
+                $("#content-value").html(data.content);
+                $("#payment-method-value").html(data.paymentMethod);
+                $("#paid-date-value").html(getDateTime(data.paidDate));
+                if ((data.paymentMethod).toLowerCase() == ("Paypal").toLowerCase()) {
+                    $("#ppIDCtrl").removeClass('hide');
+                    $("#paypal-id-value").html(data.paypalTransId);
+                }
                 $("#receiver-value").html(data.micStaffByReceiver ? data.micStaffByReceiver.name : '');
-                $("#paypal-id-value").html(data.paypalTransId);
-                $("#start-date-value").html(getDateTime(data.startDate));
-                $("#expired-date-value").html(getDateTime(data.expiredDate));
+                if (data.startDate) {
+                    $("#stDateCtrl").removeClass('hide');
+                    $("#start-date-value").html(getDateTime(data.startDate));
+                }
+                if (data.expiredDate) {
+                    $("#expDateCtrl").removeClass('hide');
+                    $("#expired-date-value").html(getDateTime(data.expiredDate));
+                }
 
                 $("#detail-payment-modal").modal("show");
             });
         });
+
+        $('#detail-payment-modal').on('hidden.bs.modal', function () {
+            $("#payment-id-value").html("");
+            $("#contract-code-value").html("");
+            $("#amount-value").html("");
+            $("#content-value").html("");
+            $("#payment-method-value").html("");
+            $("#paid-date-value").html("");
+            $("#ppIDCtrl").addClass('hide');
+            $("#paypal-id-value").html("");
+            $("#receiver-value").html("");
+            $("#stDateCtrl").addClass('hide');
+            $("#start-date-value").html("");
+            $("#expDateCtrl").addClass('hide');
+            $("#expired-date-value").html("");
+        })
     });
 </script>
 
