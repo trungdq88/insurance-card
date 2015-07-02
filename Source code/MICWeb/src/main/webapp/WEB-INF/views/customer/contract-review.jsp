@@ -23,6 +23,10 @@
         </div>
         <div class="row">
             <div class="col-lg-12">
+                <h3>
+                    <p class="text-center"><b>Vui lòng kiểm tra lại các thông tin hợp đồng</b></p>
+                    <p class="text-center"><b>nhấn nút Xác nhận để hoàn tất tạo hợp đồng:</b></p>
+                </h3>
                 <p class="text-center">
                     <b>
                         <c:if test="${not empty validateErrors}">
@@ -176,14 +180,17 @@
                                 <input id="txtColor" name="contract:color"
                                        type="hidden"
                                        value="${submitted.color}">
-                                <c:choose>
-                                    <c:when test="${empty submitted.color}">
-                                        <span class="empty-value">Không có</span>
-                                    </c:when>
-                                    <c:otherwise>
-                                        ${submitted.color}
-                                    </c:otherwise>
-                                </c:choose>
+
+                                <div class="text-value">
+                                    <c:choose>
+                                        <c:when test="${empty submitted.color}">
+                                            <span class="empty-value">Không có</span>
+                                        </c:when>
+                                        <c:otherwise>
+                                            ${submitted.color}
+                                        </c:otherwise>
+                                    </c:choose>
+                                </div>
 
                             </div>
                         </div>
@@ -196,14 +203,17 @@
                                 <input id="txtType" name="contract:type"
                                        type="hidden"
                                        value="${submitted.type}">
-                                <c:choose>
-                                    <c:when test="${empty submitted.type}">
-                                        <span class="empty-value">Không có</span>
-                                    </c:when>
-                                    <c:otherwise>
-                                        ${submitted.type}
-                                    </c:otherwise>
-                                </c:choose>
+
+                                <div class="text-value">
+                                    <c:choose>
+                                        <c:when test="${empty submitted.type}">
+                                            <span class="empty-value">Không có</span>
+                                        </c:when>
+                                        <c:otherwise>
+                                            ${submitted.type}
+                                        </c:otherwise>
+                                    </c:choose>
+                                </div>
                             </div>
 
                             <label class="col-sm-2 control-label" for="txtModel">Số loại :</label>
@@ -212,14 +222,17 @@
                                 <input id="txtModel" name="contract:model"
                                        type="hidden"
                                        value="${submitted.model}">
-                                <c:choose>
-                                    <c:when test="${empty submitted.model}">
-                                        <span class="empty-value">Không có</span>
-                                    </c:when>
-                                    <c:otherwise>
-                                        ${submitted.model}
-                                    </c:otherwise>
-                                </c:choose>
+
+                                <div class="text-value">
+                                    <c:choose>
+                                        <c:when test="${empty submitted.model}">
+                                            <span class="empty-value">Không có</span>
+                                        </c:when>
+                                        <c:otherwise>
+                                            ${submitted.model}
+                                        </c:otherwise>
+                                    </c:choose>
+                                </div>
                             </div>
                         </div>
 
@@ -231,14 +244,17 @@
                                 <input id="txtYearOfMan" name="contract:yearOfMan"
                                        type="hidden"
                                        value="${submitted.yearOfMan}">
-                                <c:choose>
-                                    <c:when test="${empty submitted.yearOfMan}">
-                                        <span class="empty-value">Không có</span>
-                                    </c:when>
-                                    <c:otherwise>
-                                        ${submitted.yearOfMan}
-                                    </c:otherwise>
-                                </c:choose>
+
+                                <div class="text-value">
+                                    <c:choose>
+                                        <c:when test="${empty submitted.yearOfMan}">
+                                            <span class="empty-value">Không có</span>
+                                        </c:when>
+                                        <c:otherwise>
+                                            ${submitted.yearOfMan}
+                                        </c:otherwise>
+                                    </c:choose>
+                                </div>
                             </div>
 
                             <label class="col-sm-3 control-label" for="txtWeight">Tự trọng (kg): </label>
@@ -247,14 +263,17 @@
                                 <input id="txtWeight" name="contract:weight"
                                        type="hidden"
                                        value="${submitted.weight}">
-                                <c:choose>
-                                    <c:when test="${empty submitted.weight}">
-                                        <span class="empty-value">Không có</span>
-                                    </c:when>
-                                    <c:otherwise>
-                                        ${submitted.weight}
-                                    </c:otherwise>
-                                </c:choose>
+
+                                <div class="text-value">
+                                    <c:choose>
+                                        <c:when test="${empty submitted.weight}">
+                                            <span class="empty-value">Không có</span>
+                                        </c:when>
+                                        <c:otherwise>
+                                            ${submitted.weight}
+                                        </c:otherwise>
+                                    </c:choose>
+                                </div>
                             </div>
                         </div>
 
@@ -266,14 +285,17 @@
                                 <input id="txtSeatCapacity" name="contract:seatCapacity"
                                        type="hidden"
                                        value="${submitted.seatCapacity}">
-                                <c:choose>
-                                    <c:when test="${empty submitted.seatCapacity}">
-                                        <span class="empty-value">Không có</span>
-                                    </c:when>
-                                    <c:otherwise>
-                                        ${submitted.seatCapacity}
-                                    </c:otherwise>
-                                </c:choose>
+
+                                <div class="text-value">
+                                    <c:choose>
+                                        <c:when test="${empty submitted.seatCapacity}">
+                                            <span class="empty-value">Không có</span>
+                                        </c:when>
+                                        <c:otherwise>
+                                            ${submitted.seatCapacity}
+                                        </c:otherwise>
+                                    </c:choose>
+                                </div>
                             </div>
                         </div>
                     </fieldset>
