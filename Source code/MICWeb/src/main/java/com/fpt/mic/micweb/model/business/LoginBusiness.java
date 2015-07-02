@@ -6,6 +6,7 @@ import com.fpt.mic.micweb.model.dto.UserDto;
 import com.fpt.mic.micweb.model.dto.form.LoginDto;
 import com.fpt.mic.micweb.model.entity.CustomerEntity;
 import com.fpt.mic.micweb.model.entity.StaffEntity;
+import com.fpt.mic.micweb.utils.StringUtils;
 
 /**
  * FPT University - Capstone Project - Summer 2015 - MICWeb
@@ -33,8 +34,8 @@ public class LoginBusiness {
             }
 
             // If customer found, check if password is correct
-            // TODO: do the encryption here
-            if (customer.getPassword().equals(dto.getPassword())) {
+            String encryptedPassword = StringUtils.getMD5Hash(dto.getPassword());
+            if (customer.getPassword().equals(encryptedPassword)) {
                 return customer;
             } else {
                 return null;
@@ -54,8 +55,8 @@ public class LoginBusiness {
             }
 
             // If staff found, check if password is correct
-            // TODO: do the encryption here
-            if (staff.getPassword().equals(dto.getPassword())) {
+            String encryptedPassword = StringUtils.getMD5Hash(dto.getPassword());
+            if (staff.getPassword().equals(encryptedPassword)) {
                 return staff;
             } else {
                 return null;

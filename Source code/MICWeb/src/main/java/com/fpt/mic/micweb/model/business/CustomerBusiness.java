@@ -12,6 +12,7 @@ import com.fpt.mic.micweb.model.entity.ContractEntity;
 import com.fpt.mic.micweb.model.entity.PaymentEntity;
 import com.fpt.mic.micweb.utils.Constants;
 import com.fpt.mic.micweb.utils.DateUtils;
+import com.fpt.mic.micweb.utils.StringUtils;
 import sun.util.calendar.BaseCalendar;
 import sun.util.calendar.LocalGregorianCalendar;
 
@@ -220,9 +221,11 @@ public class CustomerBusiness {
         CustomerDao customerDao = new CustomerDao();
         CustomerEntity customerEntity = customerDao.read(dto.getCustomerCode());
         if (customerEntity != null) {
-            if (customerEntity.getPassword().equals(dto.getCurrentPassword())) {
+            String encryptedPassword = StringUtils.getMD5Hash(dto.getCurrentPassword());
+            if (customerEntity.getPassword().equals(encryptedPassword)) {
                 if (dto.getConfirmPassword().equals(dto.getNewPassword())) {
-                    customerEntity.setPassword(dto.getConfirmPassword());
+                    String encryptedConfirmPassword = StringUtils.getMD5Hash(dto.getConfirmPassword());
+                    customerEntity.setPassword(encryptedConfirmPassword);
                     customerEntity.setIsDefaultPassword(1);
                     result = customerDao.update(customerEntity) != null;
                 }
