@@ -261,6 +261,7 @@ public class ContractController extends AuthController {
         Timestamp lastModified = (Timestamp) r.equest.getSession(true).getAttribute(
                 Constants.Session.CONCURRENCY + dto.getContractCode());
         dto.setLastModified(lastModified);
+        System.out.println("postCompletePayment"+dto.getContractCode());
 
 
         List errors = r.ead.validate(dto);

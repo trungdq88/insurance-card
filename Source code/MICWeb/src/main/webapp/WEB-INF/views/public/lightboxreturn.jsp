@@ -1,24 +1,12 @@
-<%@ page import="java.util.Map" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<script src="${pageContext.request.contextPath}/js/jquery.min.js" type="text/javascript"></script>
 
-<%
-    String url = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath() + "/";
-
-    url = url + "/public/return?action=return&page=return&";
-
-
-    Map<String, String[]> parameters = request.getParameterMap();
-    for (Map.Entry<String, String[]> entry : parameters.entrySet()) {
-        url += entry.getKey() + "=" + request.getParameter(entry.getKey()) + "&";
-
-    }
-    System.out.println(url);
-%>
 <html>
 <head>
-
+    <input type="hidden" id="url" value="${url1}">
     <title>Mic- Thẻ Bảo Hiểm</title>
     <!--Including Bootstrap style files-->
-
+    <c:set var="url1" value="${url1}"></c:set>
 </head>
 <body>
 <div class="container-fluid">
@@ -32,10 +20,10 @@
 </div>
 <script type="text/javascript">
     if (window != top) {
-        top.location.href = '<%=url%>';
+        top.location.href = '${url}';
     } //lightbox return
     else
-        window.location.href = '<%=url%>'; //return from full page paypal flow
+        window.location.href = '${url}'; //return from full page paypal flow
 </script>
 </body>
 </html>

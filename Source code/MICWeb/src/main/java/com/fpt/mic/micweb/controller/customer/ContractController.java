@@ -103,11 +103,12 @@ public class ContractController extends AuthController {
             session.setAttribute(
                     Constants.Session.CONCURRENCY + register.getContractEntity().getContractCode(),
                     lastModified);
+            System.out.println("getCreateContract" + lastModified);
 
             session.setAttribute("CONTRACT_CODE", register.getContractEntity().getContractCode());
             session.setAttribute("SUCCESS_URL", "/customer/contract?action=activeCreateContract");
             session.setAttribute("cancel_message","Bạn đã hủy thanh toán. Xin vui lòng thực hiện lại hoặc đến thanh toán trực tiếp");
-            session.setAttribute("redirectLink","home");
+            session.setAttribute("redirectLink","/customer/contract");
 
             r.equest.setAttribute("register", register);
             return new JspPage("public/register-payment.jsp");
@@ -225,7 +226,7 @@ public class ContractController extends AuthController {
         //get parameter
         String contractCode = r.equest.getParameter("txtContractCode");
         HttpSession session = r.equest.getSession();
-        session.setAttribute("contractCode", contractCode);
+        session.setAttribute("CONTRACT_CODE", contractCode);
         session.setAttribute("SUCCESS_URL", r.equest.getParameter("successUrl"));
         session.setAttribute("cancel_message", "Bạn đã hủy thanh toán. Xin vui lòng thực hiện lại hoặc đến thanh toán trực tiếp");
         session.setAttribute("redirectLink", "/customer/contract?action=ContractDetail&code=" + contractCode);
@@ -264,7 +265,7 @@ public class ContractController extends AuthController {
 
         HttpSession session = r.equest.getSession();
 
-        session.setAttribute("contractCode", contractCode);
+        session.setAttribute("CONTRACT_CODE", contractCode);
         session.setAttribute("newExpiredDate", newExpiredDate);
         session.setAttribute("SUCCESS_URL", r.equest.getParameter("successUrl"));
         session.setAttribute("cancel_message", "Bạn đã hủy thanh toán. Xin vui lòng thực hiện lại hoặc đến thanh toán trực tiếp");
@@ -298,7 +299,7 @@ public class ContractController extends AuthController {
         String url = "public/return.jsp";
         HttpSession session = r.equest.getSession(true);
         if (session.getAttribute("RESULT") == null
-                || session.getAttribute("contractCode") == null
+                || session.getAttribute("CONTRACT_CODE") == null
                 || session.getAttribute("amountVND") == null
                 || session.getAttribute("ACK") == null) {
             return new RedirectTo("/error/404");
@@ -306,7 +307,8 @@ public class ContractController extends AuthController {
             Map<String, String> results = new HashMap<String, String>();
             results.putAll((Map<String, String>) session.getAttribute("RESULT"));
 
-            String contractCode = (String) session.getAttribute("contractCode");
+            String contractCode = (String) session.getAttribute("CONTRACT_CODE");
+            System.out.println("getActivePayContract:" + contractCode);
 
             r.equest.setAttribute("amountVND", session.getAttribute("amountVND"));
             r.equest.setAttribute("redirectLink", "/customer/contract?action=ContractDetail&code=" + contractCode);
@@ -338,7 +340,7 @@ public class ContractController extends AuthController {
             }
 
             session.removeAttribute("RESULT");
-            session.removeAttribute("contractCode");
+            session.removeAttribute("CONTRACT_CODE");
             session.removeAttribute("amountVND");
             session.removeAttribute("ACK");
 
@@ -350,7 +352,7 @@ public class ContractController extends AuthController {
         String url = "public/return.jsp";
         HttpSession session = r.equest.getSession(true);
         if (session.getAttribute("RESULT") == null
-                || session.getAttribute("contractCode") == null
+                || session.getAttribute("CONTRACT_CODE") == null
                 || session.getAttribute("newExpiredDate") == null
                 || session.getAttribute("amountVND") == null
                 || session.getAttribute("ACK") == null) {
@@ -359,7 +361,9 @@ public class ContractController extends AuthController {
             Map<String, String> results = new HashMap<String, String>();
             results.putAll((Map<String, String>) session.getAttribute("RESULT"));
 
-            String contractCode = (String) session.getAttribute("contractCode");
+            String contractCode = (String) session.getAttribute("CONTRACT_CODE");
+            System.out.println("getActiveRenewContract:" + contractCode);
+
             Timestamp newExpiredDate = (Timestamp) session.getAttribute("newExpiredDate");
             r.equest.setAttribute("amountVND", session.getAttribute("amountVND"));
             r.equest.setAttribute("redirectLink", "/customer/contract?action=ContractDetail&code=" + contractCode);
@@ -391,7 +395,7 @@ public class ContractController extends AuthController {
             }
 
             session.removeAttribute("RESULT");
-            session.removeAttribute("contractCode");
+            session.removeAttribute("CONTRACT_CODE");
             session.removeAttribute("newExpiredDate");
             session.removeAttribute("amountVND");
             session.removeAttribute("ACK");
@@ -436,11 +440,6 @@ public class ContractController extends AuthController {
             ConcurrencyDto concurrencyDto = new ConcurrencyDto();
 
             String contractCode = (String) session.getAttribute("CONTRACT_CODE");
-            Timestamp startModifyTime =(Timestamp)
-                    session.getAttribute(Constants.Session.CONCURRENCY + contractCode);
-
-            concurrencyDto.setLastModified(startModifyTime);
-            concurrencyDto.setContractCode(contractCode);
 
             Map<String, String> results = new HashMap<String, String>();
             results.putAll((Map<String, String>) session.getAttribute("RESULT"));
@@ -451,18 +450,6 @@ public class ContractController extends AuthController {
             r.equest.setAttribute("amountVND", amount);
             r.equest.setAttribute("redirectLink", "/customer/contract?action=ContractDetail&code=" + contractCode);
 
-            // Check concurrency
-            List errors = r.ead.validate(concurrencyDto);
-            if (errors.size() > 0) {
-
-                StringBuilder message = new StringBuilder();
-                for (Object error : errors) {
-                    message.append((String) error).append("<br/>");
-                }
-
-                r.equest.setAttribute("message", message);
-                return new JspPage(returnUrl);
-            }
 
             String paypalTransId = results.get("PAYMENTINFO_0_TRANSACTIONID");
             String paymentMethod = "PayPal payment";

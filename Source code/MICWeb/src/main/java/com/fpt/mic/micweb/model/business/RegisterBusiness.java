@@ -143,7 +143,15 @@ public class RegisterBusiness {
         }
         return emailSuccess;
     }
+    public boolean isPaidContract(String contractCode){
+        PaymentDao paymentDao = new PaymentDao();
+        return paymentDao.isPaidContract(contractCode);
+    }
 
+    public boolean isExistByPlate(String plate){
+        ContractDao contractDao = new ContractDao();
+        return contractDao.isExistByPlate(plate);
+    }
     public String updateContractPayment(String contractCode, String paymentMethod, String paymentContent, Float amount, String paypalTransId) {
         ContractEntity contractEntity;
         ContractDao contractDao = new ContractDao();

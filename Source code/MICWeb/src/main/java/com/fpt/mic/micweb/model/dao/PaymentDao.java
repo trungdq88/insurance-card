@@ -28,4 +28,16 @@ public class PaymentDao extends GenericDaoJpaImpl<PaymentEntity, Integer> {
         query.setParameter("code", contractCode);
         return query.getResultList();
     }
+    public boolean isPaidContract(String contractCode){
+        EntityManager entity = factory.createEntityManager();
+        String hql = "SELECT pm FROM PaymentEntity AS pm " +
+                "WHERE pm.contractCode = :code";
+        Query query = entity.createQuery(hql);
+        query.setParameter("code", contractCode);
+        List result = query.getResultList();
+        if (result.size() == 0) {
+            return false;
+        }
+            return true;
+    }
 }

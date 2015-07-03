@@ -180,13 +180,14 @@ public class CustomerBusiness {
             // Concurrency set value
             contract.setLastModified(new Timestamp(new java.util.Date().getTime()));
 
-            // kiem tra neu chua den ngay start hop dong thi de la pending, nguoc lai thi no_card
-            Timestamp currentDate = new Timestamp(new java.util.Date().getTime());
-            if (contract.getStartDate().after(currentDate)) {
-                contract.setStatus(Constants.ContractStatus.PENDING);
-            } else {
-                contract.setStatus(Constants.ContractStatus.NO_CARD);
+            // set start date
+            Timestamp currentDate = DateUtils.currentDateWithoutTime();
+            if (currentDate.after(contract.getStartDate()))
+            {
+                contract.setStartDate(currentDate);
             }
+            // set expired date = start_date + 1 year
+            contract.setExpiredDate(DateUtils.addOneYear(contract.getStartDate()));
             payment.setPaidDate(new Timestamp(date.getTime()));
             payment.setPaymentMethod("PayPal payment");
             payment.setContent("Đăng ký hợp đồng mới " + contract.getContractCode());

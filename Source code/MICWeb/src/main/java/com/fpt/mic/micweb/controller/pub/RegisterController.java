@@ -119,14 +119,7 @@ public class RegisterController extends BasicController {
         HttpSession session = r.equest.getSession(false);
         if (session != null) {
             String returnUrl = "public/return.jsp";
-            ConcurrencyDto concurrencyDto = new ConcurrencyDto();
 
-            String contractCode = (String) session.getAttribute("CONTRACT_CODE");
-            Timestamp startModifyTime =(Timestamp)
-                    session.getAttribute(Constants.Session.CONCURRENCY + contractCode);
-
-            concurrencyDto.setLastModified(startModifyTime);
-            concurrencyDto.setContractCode(contractCode);
 
             Map<String, String> results = new HashMap<String, String>();
             results.putAll((Map<String, String>) session.getAttribute("RESULT"));
@@ -136,20 +129,7 @@ public class RegisterController extends BasicController {
             Float amount = Float.parseFloat((String) session.getAttribute("amountVND"));
             r.equest.setAttribute("amountVND", amount);
             r.equest.setAttribute("redirectLink", "home");
-
-            // Check concurrency
-            List errors = r.ead.validate(concurrencyDto);
-            if (errors.size() > 0) {
-
-                StringBuilder message = new StringBuilder();
-                for (Object error : errors) {
-                    message.append((String) error).append("<br/>");
-                }
-
-                r.equest.setAttribute("message", message);
-                return new JspPage(returnUrl);
-            }
-
+            String contractCode = (String) session.getAttribute("CONTRACT_CODE");
             String paypalTransId = results.get("PAYMENTINFO_0_TRANSACTIONID");
             String paymentMethod = "PayPal payment";
             String paymentContent = (String) session.getAttribute("descVN");
