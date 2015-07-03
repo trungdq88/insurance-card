@@ -234,7 +234,6 @@
                                                     </a>
                                                 </td>
                                                 <td>
-
                                                     <a href="javascript:;"
                                                        class="payment-id-clicker btn btn-primary btn-xs"
                                                        payment-id="${payment.id}">

@@ -6,6 +6,7 @@ import com.fpt.mic.micweb.framework.R;
 import com.fpt.mic.micweb.framework.responses.JspPage;
 import com.fpt.mic.micweb.framework.responses.RedirectTo;
 import com.fpt.mic.micweb.framework.responses.ResponseObject;
+import com.fpt.mic.micweb.model.business.CompensationBusiness;
 import com.fpt.mic.micweb.model.business.ContractBusiness;
 import com.fpt.mic.micweb.model.business.StaffBusiness;
 import com.fpt.mic.micweb.model.dto.UserDto;
@@ -87,6 +88,7 @@ public class ContractController extends AuthController {
 
     public ResponseObject getDetail(R r) {
         StaffBusiness staffBus = new StaffBusiness();
+        CompensationBusiness compenBus = new CompensationBusiness();
         String contractCode = r.equest.getParameter("code");
 
         // Receive contractCode from failed validation
@@ -109,13 +111,19 @@ public class ContractController extends AuthController {
 
         // Get customer detail
         CustomerEntity customerDetail = staffBus.getCustomerDetail(contractDetail.getCustomerCode());
-        // Get payment detail
-        List<PaymentEntity> listPayment = staffBus.getPaymentByContractCode(contractCode);
+        // Get contract payment
+        List<PaymentEntity> listPayment = staffBus.getPaymentByContractCode(contractDetail.getContractCode());
+        // Get contract compensation
+        List<CompensationEntity> listCompensation =
+                compenBus.getCompensationByContractCode(contractDetail.getContractCode());
+        // Get contract accident
+        // Get contract punishment
         ConfigUtils config = new ConfigUtils();
 
         r.equest.setAttribute("CUSTOMER", customerDetail);
         r.equest.setAttribute("CONTRACT", contractDetail);
         r.equest.setAttribute("PAYMENT", listPayment);
+        r.equest.setAttribute("COMPENSATION", listCompensation);
         r.equest.setAttribute("CONFIG", config);
 
         // Dispatch to JSP page
