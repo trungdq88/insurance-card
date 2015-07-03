@@ -332,7 +332,9 @@ CREATE TABLE `mic_data`.`mic_notification` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `content` VARCHAR(2000) NOT NULL,
   `receiver` VARCHAR(250) NOT NULL,
-  `related_link` VARCHAR(2000) NULL,
+  `method` INT NOT NULL,
+  `type` INT NOT NULL,
+  `extra_data` VARCHAR(2000) NULL,
   `created_date` DATETIME NOT NULL,
   `resolved_date` DATETIME NULL,
   `resolved_staff` VARCHAR(10) NULL,
@@ -343,6 +345,7 @@ CREATE TABLE `mic_data`.`mic_notification` (
     REFERENCES `mic_data`.`mic_staff` (`staff_code`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
+
 
 CREATE TABLE `mic_data`.`mic_notification_read` (
   `id` INT NOT NULL AUTO_INCREMENT,

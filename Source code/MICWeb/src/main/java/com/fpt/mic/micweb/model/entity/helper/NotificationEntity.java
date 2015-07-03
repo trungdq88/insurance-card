@@ -12,10 +12,26 @@ import java.sql.Timestamp;
 @Entity
 @Table(name = "mic_notification", schema = "", catalog = "mic_data")
 public class NotificationEntity {
+    public static class Type {
+        public static final int CUSTOMER_CREATE_CONTRACT = 1;
+        public static final int CUSTOMER_SEND_COMPENSATION = 2;
+        public static final int CUSTOMER_SEND_NEW_CARD_REQUEST = 3;
+        public static final int CONTRACT_NEARLY_EXPIRED = 4;
+        public static final int CONTRACT_EXPIRED = 5;
+        public static final int CUSTOMER_REQUEST_CANCEL = 6;
+        public static final int CONTRACT_CANCELLED_NO_PAYMENT = 7;
+        public static final int CONTRACT_START_DATE_COME = 8;
+    }
+    public static class Method {
+        public static final int WEB = 1;
+        public static final int EMAIL = 2;
+    }
     private int id;
     private String content;
     private String receiver;
-    private String relatedLink;
+    private int method;
+    private int type;
+    private String extraData;
     private Timestamp createdDate;
     private Timestamp resolvedDate;
     private String resolvedStaff;
@@ -52,13 +68,33 @@ public class NotificationEntity {
     }
 
     @Basic
-    @Column(name = "related_link")
-    public String getRelatedLink() {
-        return relatedLink;
+    @Column(name = "method")
+    public int getMethod() {
+        return method;
     }
 
-    public void setRelatedLink(String relatedLink) {
-        this.relatedLink = relatedLink;
+    public void setMethod(int method) {
+        this.method = method;
+    }
+
+    @Basic
+    @Column(name = "type")
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
+
+    @Basic
+    @Column(name = "extra_data")
+    public String getExtraData() {
+        return extraData;
+    }
+
+    public void setExtraData(String relatedLink) {
+        this.extraData = relatedLink;
     }
 
     @Basic
@@ -101,6 +137,27 @@ public class NotificationEntity {
         this.micStaffByResolvedStaff = resolvedStaff;
     }
 
+    /**
+     * Depend on the notification type, this method will return suitable link
+     * @return
+     */
+    public String generateRelatedLink() {
+        switch (type) {
+            case Type.CUSTOMER_CREATE_CONTRACT:
+            case Type.CONTRACT_NEARLY_EXPIRED:
+            case Type.CONTRACT_EXPIRED:
+            case Type.CUSTOMER_REQUEST_CANCEL:
+            case Type.CONTRACT_CANCELLED_NO_PAYMENT:
+            case Type.CONTRACT_START_DATE_COME:
+                return "/staff/contract?action=detail&code=" + extraData;
+            case Type.CUSTOMER_SEND_COMPENSATION:
+                return "/staff/compensation?action=detail&code=" + extraData;
+            case Type.CUSTOMER_SEND_NEW_CARD_REQUEST:
+                return "/staff/card?action=newCardRequest";
+        }
+        return null; // Wrong type
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -110,7 +167,7 @@ public class NotificationEntity {
 
         if (id != that.id) return false;
         if (content != null ? !content.equals(that.content) : that.content != null) return false;
-        if (relatedLink != null ? !relatedLink.equals(that.relatedLink) : that.relatedLink != null) return false;
+        if (extraData != null ? !extraData.equals(that.extraData) : that.extraData != null) return false;
         if (createdDate != null ? !createdDate.equals(that.createdDate) : that.createdDate != null) return false;
         if (resolvedDate != null ? !resolvedDate.equals(that.resolvedDate) : that.resolvedDate != null) return false;
 
@@ -121,7 +178,7 @@ public class NotificationEntity {
     public int hashCode() {
         int result = id;
         result = 31 * result + (content != null ? content.hashCode() : 0);
-        result = 31 * result + (relatedLink != null ? relatedLink.hashCode() : 0);
+        result = 31 * result + (extraData != null ? extraData.hashCode() : 0);
         result = 31 * result + (createdDate != null ? createdDate.hashCode() : 0);
         result = 31 * result + (resolvedDate != null ? resolvedDate.hashCode() : 0);
         return result;
