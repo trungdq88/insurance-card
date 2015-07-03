@@ -188,6 +188,11 @@ public class CustomerBusiness {
             }
             // set expired date = start_date + 1 year
             contract.setExpiredDate(DateUtils.addOneYear(contract.getStartDate()));
+            if(contract.getStartDate().after(currentDate)) {
+                contract.setStatus(Constants.ContractStatus.PENDING);
+            } else {
+                contract.setStatus(Constants.ContractStatus.NO_CARD);
+            }
             payment.setPaidDate(new Timestamp(date.getTime()));
             payment.setPaymentMethod("PayPal payment");
             payment.setContent("Đăng ký hợp đồng mới " + contract.getContractCode());
@@ -214,7 +219,7 @@ public class CustomerBusiness {
     /**
      * change password
      *
-     * @param customerCode, currentPassword, newPass, confirmPass
+     * @param , currentPassword, newPass, confirmPass
      * @return bool result
      */
     public boolean changePassword(ChangePasswordDto dto) {
