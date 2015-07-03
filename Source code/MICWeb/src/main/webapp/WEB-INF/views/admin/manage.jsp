@@ -6,14 +6,18 @@
 
   <%@ include file="_shared/navigation.jsp" %>
   <div id="page-wrapper">
+    <form action="${pageContext.request.contextPath}/admin/home"
+          method="post" class="form-horizontal">
     <div class="row">
       <div class="col-lg-12">
         <h1 class="page-header">
           Người quản lý
           <div class="pull-right">
-            <a href="${pageContext.request.contextPath}/staff/member?action=create" class="btn btn-success">
-              <i class="fa fa-plus"></i>
-              Thêm nhân viên
+              <input type="hidden" name="action" value="viewCreateStaff">
+              <button type="submit" class="btn btn-success">
+                <i class="fa fa-plus"></i>
+                Thêm nhân viên
+              </button>
             </a>
           </div>
         </h1>
@@ -23,7 +27,9 @@
     <!-- /.row -->
 
     <div>
-
+        <div class="text-info">
+          ${message}
+        </div>
     </div>
     <div class="panel panel-default">
       <div class="panel-heading">
@@ -44,7 +50,6 @@
           <table class="table table-hover table-striped">
             <thead>
             <tr>
-              <th></th>
               <th>#</th>
               <th>Mã nhân viên</th>
               <th>Tên nhân viên</th>
@@ -65,7 +70,6 @@
               <c:otherwise>
                 <c:forEach var="staff" items="${staffs}" varStatus="counter">
                   <tr>
-                    <td><input type="checkbox"></td>
                     <td>${(staffPaginator.getCurrentPage(param.page) - 1) * staffPaginator.itemPerPage + counter.count}</td>
                     <td>
                       <a href="${pageContext.request.contextPath}/admin/home?action=staffDetail&code=${staff.staffCode}">
@@ -113,16 +117,11 @@
             </c:if>
           </ul>
         </nav>
-        <p>
-          <a href="#" class="btn btn-danger">
-            <i class="fa fa-trash"></i>
-            Xoá nhân viên
-          </a>
-        </p>
       </div>
       <!-- /.panel-body -->
     </div>
     <!-- /.panel -->
+      </form>
   </div>
 </div>
 <!-- /#wrapper -->

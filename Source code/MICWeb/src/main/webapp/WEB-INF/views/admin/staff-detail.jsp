@@ -14,7 +14,14 @@
   <div id="page-wrapper">
     <div class="row">
       <div class="col-lg-12">
-        <h1 class="page-header">Thông tin nhân viên</h1>
+        <h1 class="page-header">Thông tin nhân viên
+          <div class="pull-right">
+            <a href="${pageContext.request.contextPath}/admin/home?action=deleteStaff&code=${param.code}" class="btn btn-danger">
+              <i class="fa fa-trash"></i>
+              Xóa nhân viên này
+            </a>
+          </div>
+        </h1>
       </div>
       <!-- /.col-lg-12 -->
     </div>
