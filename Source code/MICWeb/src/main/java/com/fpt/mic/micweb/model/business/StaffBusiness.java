@@ -12,7 +12,6 @@ import com.fpt.mic.micweb.utils.StringUtils;
 import javax.servlet.ServletContext;
 import java.io.InputStream;
 import java.sql.Timestamp;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -28,11 +27,6 @@ public class StaffBusiness {
     public CustomerEntity getCustomerDetail(String customerCode) {
         CustomerDao customerDao = new CustomerDao();
         return customerDao.read(customerCode);
-    }
-
-    public StaffEntity getStaff(String staffCode) {
-        StaffDao staffDao = new StaffDao();
-        return staffDao.read(staffCode);
     }
 
     public CreateCustomerInfoDto createCustomer(CreateCustomerDto dto, ServletContext context, String loginUrl) {
@@ -79,16 +73,21 @@ public class StaffBusiness {
         return contractDao.getAllContractCount();
     }
 
+    public List getAllContract(int offset, int count) {
+        ContractDao contractDao = new ContractDao();
+        return contractDao.getAllContract(offset, count);
+    }
+
+    public StaffEntity getStaffDetail(String staffCode) {
+        StaffDao staffDao = new StaffDao();
+        return staffDao.read(staffCode);
+    }
+
     public Long getAllStaffCount() {
         StaffDao staffDao = new StaffDao();
         return staffDao.getAllStaffCount();
     }
 
-
-    public List getAllContract(int offset, int count) {
-        ContractDao contractDao = new ContractDao();
-        return contractDao.getAllContract(offset, count);
-    }
     public List getOnePageStaff(int offset, int count) {
         StaffDao staffDao = new StaffDao();
         return staffDao.getOnePageStaff(offset, count);

@@ -1,16 +1,19 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <form class="form-horizontal">
     <fieldset>
         <legend>
             Lịch sử bồi thường
-            <div class="pull-right">
-                <a href="${pageContext.request.contextPath}/staff/compensation?action=create"
-                   class="btn btn-sm btn-success">
-                    <i class="fa fa-plus"></i>
-                    Thêm bồi thường
-                </a>
-            </div>
+            <c:if test="${(contract.status eq 'No card') or (contract.status eq 'Ready')}">
+                <div class="pull-right">
+                    <a href="${pageContext.request.contextPath}/staff/compensation?action=create"
+                       class="btn btn-sm btn-success">
+                        <i class="fa fa-plus"></i>
+                        Thêm bồi thường
+                    </a>
+                </div>
+            </c:if>
         </legend>
     </fieldset>
     <div class="table-responsive">
@@ -19,7 +22,7 @@
             <tr>
                 <th>#</th>
                 <th>Mã</th>
-                <th>Thời gian</th>
+                <th>Ngày yêu cầu</th>
                 <th>Quyết định</th>
                 <th>Trạng thái</th>
             </tr>
@@ -34,7 +37,7 @@
                         </a>
                     </td>
                     <td>
-                        <fmt:formatDate value="${payment.createdDate}" pattern="dd/MM/yyyy"/>
+                        <fmt:formatDate value="${compensation.createdDate}" pattern="dd/MM/yyyy"/>
                     </td>
                     <td>${compensation.decision}</td>
                     <td>

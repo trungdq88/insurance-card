@@ -82,7 +82,6 @@ public class CustomerController extends AuthController {
     public ResponseObject getDetail(R r) {
         StaffBusiness staffBus = new StaffBusiness();
         String customerCode = r.equest.getParameter("code");
-        System.out.println(customerCode);
 
         // Get customer detail
         CustomerEntity customerDetail = staffBus.getCustomerDetail(customerCode);

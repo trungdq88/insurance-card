@@ -1,15 +1,24 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ include file="_shared/header.jsp"%>
+<%@ include file="_shared/header.jsp" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <div id="wrapper">
 
     <%@ include file="_shared/navigation.jsp" %>
-    
     <div id="page-wrapper">
         <div class="row">
             <div class="col-lg-12">
                 <h1 class="page-header">
                     Yêu cầu bồi thường
+
+                    <div class="pull-right">
+                        <a href="${pageContext.request.contextPath}/staff/compensation?action=create"
+                           class="btn btn-success">
+                            <i class="fa fa-plus"></i>
+                            Yêu cầu bồi thường mới
+                        </a>
+                    </div>
                 </h1>
             </div>
             <!-- /.col-lg-12 -->
@@ -20,16 +29,20 @@
 
         </div>
         <div class="panel panel-default">
+
+            <c:set var="compensations" value="${compenPaginator.getItemsOnCurrentPage(param.page)}"/>
+
             <div class="panel-heading">
                 <div class="pull-left center-dropdown-button">
-                    <!--<input type="checkbox" class="check-all"/>-->
-                    <b>Có 3 yêu cầu bồi thường chưa xử lý</b>
+                    <b>Có ${compenPaginator.itemSize} yêu cầu bồi thường</b>
                 </div>
                 <div class="pull-right no-wrap">
-                    <input type="text" class="form-control long-text-box"
-                           placeholder="Tìm kiếm theo tên, mã hợp đồng"/>
-                    <input type="button" class="btn btn-default" value="Tìm kiếm"/>
-
+                    <form action="${pageContext.request.contextPath}/staff/compensation" method="get">
+                        <input type="text" class="form-control long-text-box" name="keyword"
+                               placeholder="Tìm kiếm theo mã yêu cầu..." value="${param.keyword}"/>
+                        <input type="submit" class="btn btn-default" value="Tìm kiếm"/>
+                        <input type="hidden" name="action" value="search"/>
+                    </form>
                 </div>
                 <div class="clearfix"></div>
             </div>
@@ -41,158 +54,87 @@
                         <tr>
                             <th>#</th>
                             <th>Mã yêu cầu</th>
-                            <th>Mã hợp đồng</th>
-                            <th>Tên khách hàng</th>
                             <th>Ngày yêu cầu</th>
-                            <th>Ngày giải quyết</th>
+                            <th>Mã hợp đồng</th>
+                            <th>Trạng thái</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td><a href="${pageContext.request.contextPath}/staff/compensation?action=detail">COM736</a></td>
-                            <td><a href="detail-contract.html">BHBB374</a></td>
-                            <td><a href="detail-customer.html">Đinh Quang Trung</a></td>
-                            <td>04/05/2015</td>
-                            <td><span class="label label-warning">Đang giải quyết</span></td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td><a href="${pageContext.request.contextPath}/staff/compensation?action=detail">COM736</a></td>
-                            <td><a href="detail-contract.html">BHBB374</a></td>
-                            <td><a href="detail-customer.html">Đinh Quang Trung</a></td>
-                            <td>04/05/2015</td>
-                            <td><span class="label label-warning">Đang giải quyết</span></td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td><a href="${pageContext.request.contextPath}/staff/compensation?action=detail">COM736</a></td>
-                            <td><a href="detail-contract.html">BHBB374</a></td>
-                            <td><a href="detail-customer.html">Đinh Quang Trung</a></td>
-                            <td>04/05/2015</td>
-                            <td><span class="label label-warning">Đang giải quyết</span></td>
-                        </tr>
-
-                        <tr>
-                            <td>1</td>
-                            <td><a href="${pageContext.request.contextPath}/staff/compensation?action=detail">COM736</a></td>
-                            <td><a href="detail-contract.html">BHBB374</a></td>
-                            <td><a href="detail-customer.html">Đinh Quang Trung</a></td>
-                            <td>04/05/2015</td>
-                            <td>10/10/2015</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td><a href="${pageContext.request.contextPath}/staff/compensation?action=detail">COM736</a></td>
-                            <td><a href="detail-contract.html">BHBB374</a></td>
-                            <td><a href="detail-customer.html">Đinh Quang Trung</a></td>
-                            <td>04/05/2015</td>
-                            <td>10/10/2015</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td><a href="${pageContext.request.contextPath}/staff/compensation?action=detail">COM736</a></td>
-                            <td><a href="detail-contract.html">BHBB374</a></td>
-                            <td><a href="detail-customer.html">Đinh Quang Trung</a></td>
-                            <td>04/05/2015</td>
-                            <td>10/10/2015</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td><a href="${pageContext.request.contextPath}/staff/compensation?action=detail">COM736</a></td>
-                            <td><a href="detail-contract.html">BHBB374</a></td>
-                            <td><a href="detail-customer.html">Đinh Quang Trung</a></td>
-                            <td>04/05/2015</td>
-                            <td>10/03/2015 </td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td><a href="${pageContext.request.contextPath}/staff/compensation?action=detail">COM736</a></td>
-                            <td><a href="detail-contract.html">BHBB374</a></td>
-                            <td><a href="detail-customer.html">Đinh Quang Trung</a></td>
-                            <td>04/05/2015</td>
-                            <td>10/03/2015 </td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td><a href="${pageContext.request.contextPath}/staff/compensation?action=detail">COM736</a></td>
-                            <td><a href="detail-contract.html">BHBB374</a></td>
-                            <td><a href="detail-customer.html">Đinh Quang Trung</a></td>
-                            <td>04/05/2015</td>
-                            <td>10/03/2015 </td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td><a href="${pageContext.request.contextPath}/staff/compensation?action=detail">COM736</a></td>
-                            <td><a href="detail-contract.html">BHBB374</a></td>
-                            <td><a href="detail-customer.html">Đinh Quang Trung</a></td>
-                            <td>04/05/2015</td>
-                            <td>10/03/2015 </td>
-                        </tr>
+                        <c:choose>
+                            <c:when test="${compensations.size() eq 0}">
+                                <tr>
+                                    <td colspan="6" style="vertical-align: middle; text-align: center;">
+                                        Không có yêu cầu bồi thường nào
+                                    </td>
+                                </tr>
+                            </c:when>
+                            <c:otherwise>
+                                <c:forEach var="compensation" items="${compensations}" varStatus="counter">
+                                    <tr>
+                                        <td>${counter.count}</td>
+                                        <td>
+                                            <a href="${pageContext.request.contextPath}/staff/compensation?action=detail&code=${compensation.compensationCode}">
+                                                    ${compensation.compensationCode}
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <fmt:formatDate value="${compensation.createdDate}" pattern="dd/MM/yyyy"/>
+                                        </td>
+                                        <td>
+                                            <a href="${pageContext.request.contextPath}/staff/contract?action=detail&code=${compensation.contractCode}">
+                                                ${compensation.contractCode}
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <c:set var="resolve" value="${compensation.resolveDate}"/>
+                                            <c:choose>
+                                                <c:when test="${not empty resolve}">
+                                                    <span class="label label-success">Đã giải quyết</span>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <span class="label label-default">Chưa giải quyết</span>
+                                                </c:otherwise>
+                                            </c:choose>
+                                        </td>
+                                    </tr>
+                                </c:forEach>
+                            </c:otherwise>
+                        </c:choose>
                         </tbody>
                     </table>
                 </div>
                 <!-- /.table-responsive -->
                 <nav class="text-right">
                     <ul class="pagination">
-                        <li>
-                            <a href="#" aria-label="Previous">
-                                <span aria-hidden="true">&laquo;</span>
-                            </a>
-                        </li>
-                        <li class="active"><a href="#">1</a></li>
-                        <li><a href="#">2</a></li>
-                        <li><a href="#">3</a></li>
-                        <li><a href="#">4</a></li>
-                        <li><a href="#">5</a></li>
-                        <li>
-                            <a href="#" aria-label="Next">
-                                <span aria-hidden="true">&raquo;</span>
-                            </a>
-                        </li>
+                        <c:if test="${param.page != 1 && not empty param.page}">
+                            <li>
+                                <a href="?action=${param.action}&keyword=${param.keyword}&page=1" aria-label="Previous">
+                                    <span aria-hidden="true">Đầu</span>
+                                </a>
+                            </li>
+                        </c:if>
+                        <c:forEach begin="1" end="${compenPaginator.pageSize}" var="pageNumber">
+                            <li ${param.page == pageNumber ||(pageNumber == 1 && empty param.page) ? "class='active'": ""} >
+                                <a href="?action=${param.action}&keyword=${param.keyword}&page=${pageNumber}">${pageNumber}</a>
+                            </li>
+                        </c:forEach>
+                        <c:if test="${param.page != compenPaginator.pageSize && compenPaginator.pageSize != 1}">
+                            <li>
+                                <a href="?action=${param.action}&keyword=${param.keyword}&page=${compenPaginator.pageSize}"
+                                   aria-label="Next">
+                                    <span aria-hidden="true">Cuối</span>
+                                </a>
+                            </li>
+                        </c:if>
                     </ul>
                 </nav>
+                <%--/.pagination--%>
             </div>
             <!-- /.panel-body -->
         </div>
         <!-- /.panel -->
-
-
-        <div class="panel panel-success">
-            <div class="panel-heading">
-                Các trạng thái của hợp đồng:
-            </div>
-            <div class="panel-body">
-                <ul>
-                    <li>
-                        <span class="label label-gray">Chưa kích hoạt</span>
-                        Khách hàng đăng ký online nhưng chưa thanh toán hoặc thời điểm bắt đầu hiệu lực của hợp đồng chưa đến.
-                    </li>
-                    <li>
-                        <span class="label label-primary">Chưa có thẻ</span>
-                        Khách hàng đã thanh toán cho hợp đồng nhưng chưa được in thẻ để sử dụng.
-                    </li>
-                    <li>
-                        10/03/2015
-                        Khánh hàng đã hoàn thành hợp đồng và đã có thẻ để sẵn sàng sử dụng.
-                    </li>
-                    <li>
-                        <span class="label label-warning">Sắp hết hạn</span>
-                        Thời hạn của hợp đồng sắp hết, cần được gia hạn.
-                    </li>
-                    <li>
-                        <span class="label label-danger">Hết hạn</span>
-                        Hợp đồng đã hết hạn và không có giá trị. Khánh hàng phải gia hạn để tiếp tục sử dụng chương trình bảo hiểm.
-                    </li>
-                    <li>
-                        <span class="label label-dark">Đã huỷ hợp đồng</span>
-                        Hợp đồng bị huỷ. Khánh hàng muốn tiếp tục sử dụng cần phải đăng ký hợp đồng mới.
-                    </li>
-                </ul>
-            </div>
-        </div>
     </div>
 </div>
 <!-- /#wrapper -->
 
-<%@ include file="_shared/footer.jsp"%>
+<%@ include file="_shared/footer.jsp" %>

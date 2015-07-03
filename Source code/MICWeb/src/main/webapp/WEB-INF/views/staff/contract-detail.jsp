@@ -234,7 +234,6 @@
                                                     </a>
                                                 </td>
                                                 <td>
-
                                                     <a href="javascript:;"
                                                        class="payment-id-clicker btn btn-primary btn-xs"
                                                        payment-id="${payment.id}">
@@ -328,9 +327,6 @@
         var remainDays = daysBetween(new Date(), expDate);
         $('#remain').text(remainDays);
         $('#remain2').text(remainDays);
-        if (remainDays < 60) {
-            $('#btnRenew').removeClass('hide');
-        }
 
         $('input[type="date"]').not('#paidDate').blur(function () {
             var inputDate = new Date(this.value);
@@ -351,19 +347,26 @@
             }
         });
 
-        if (contractStatus == 'Pending') {
+        if (contractStatus.toLowerCase() == 'Pending'.toLowerCase()) {
             $('#btnCancel').removeClass('hide');
         }
 
-        if (contractStatus == 'No card') {
+        if (contractStatus.toLowerCase() == 'No card'.toLowerCase()) {
+            if (remainDays < 60) {
+                $('#btnRenew').removeClass('hide');
+            }
             $('#btnCancel').removeClass('hide');
         }
 
-        if (contractStatus == 'Ready') {
+        if (contractStatus.toLowerCase() == 'Ready'.toLowerCase()) {
+            if (remainDays < 60) {
+                $('#btnRenew').removeClass('hide');
+            }
             $('#btnCancel').removeClass('hide');
         }
 
-        if (contractStatus == 'Expired') {
+        if (contractStatus.toLowerCase() == 'Expired'.toLowerCase()) {
+            $('#btnRenew').removeClass('hide');
             $('#startDate').val(getCurrentDate());
             document.getElementById("expiredDate").min = '${config.expiredDateMin}';
             document.getElementById("expiredDate").max = '${config.expiredDateMax}';
@@ -374,12 +377,12 @@
             document.getElementById("expiredDate").max = getInputDateInNextYear(expDate);
         }
 
-        if (contractStatus == 'Request cancel') {
+        if (contractStatus.toLowerCase() == 'Request cancel'.toLowerCase()) {
             $('#btnCancel').removeClass('hide');
             $('#cancelReason').attr('disabled', true);
         }
 
-        if (contractStatus == 'Cancelled') {
+        if (contractStatus.toLowerCase() == 'Cancelled'.toLowerCase()) {
             $('button[type=button]').not('#btnRenew, #btnCancel').addClass('hide');
             $('#remain').text(0);
         }
@@ -397,15 +400,22 @@
                 $("#content-value").html(data.content);
                 $("#payment-method-value").html(data.paymentMethod);
                 $("#paid-date-value").html(getDateTime(data.paidDate));
-                if ((data.paymentMethod).toLowerCase() == ("Paypal").toLowerCase()) {
+                console.log(data.paidDate);
+                console.log(data.startDate);
+                console.log(data.expiredDate);
+                if ((data.paymentMethod).toLowerCase().indexOf("paypal") > -1) {
                     $("#ppIDCtrl").removeClass('hide');
                     $("#paypal-id-value").html(data.paypalTransId);
+                } else {
+                    $("#receiverCtrl").removeClass('hide');
+                    $("#receiver-value").html(data.micStaffByReceiver ? data.micStaffByReceiver.name : '');
                 }
-                $("#receiver-value").html(data.micStaffByReceiver ? data.micStaffByReceiver.name : '');
+
                 if (data.startDate) {
                     $("#stDateCtrl").removeClass('hide');
                     $("#start-date-value").html(getDateTime(data.startDate));
                 }
+
                 if (data.expiredDate) {
                     $("#expDateCtrl").removeClass('hide');
                     $("#expired-date-value").html(getDateTime(data.expiredDate));
@@ -424,6 +434,7 @@
             $("#paid-date-value").html("");
             $("#ppIDCtrl").addClass('hide');
             $("#paypal-id-value").html("");
+            $("#receiverCtrl").addClass('hide');
             $("#receiver-value").html("");
             $("#stDateCtrl").addClass('hide');
             $("#start-date-value").html("");
