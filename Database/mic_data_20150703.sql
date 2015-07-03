@@ -1,6 +1,8 @@
 -- 20150703 Changes:
 -- Add table mic_notification
 -- Add table mic_notification_read
+-- Add column mic_compensation.observer_address
+-- MySQL Workbench Forward Engineering
 
 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
@@ -253,6 +255,7 @@ CREATE TABLE IF NOT EXISTS `mic_data`.`mic_compensation` (
   `human_damage` VARCHAR(2000) NOT NULL,
   `asset_damage` VARCHAR(2000) NOT NULL,
   `observer` VARCHAR(80) NOT NULL,
+  `observer_address` VARCHAR(250) NOT NULL,
   `compensation_note` VARCHAR(2000) NULL DEFAULT NULL,
   `attachment` VARCHAR(255) NULL DEFAULT NULL,
   `created_date` DATETIME NOT NULL,
