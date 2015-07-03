@@ -37,6 +37,17 @@ public class CardDao extends GenericDaoJpaImpl<CardEntity, String> {
             return null;
         }
     }
+    public List<CardEntity> getCardByContractIncludeDeactive(String contractCode) {
+        EntityManager entity = factory.createEntityManager();
+        String hql = "SELECT ca FROM CardEntity ca WHERE ca.contractCode = :contractCode ";
+        Query query = entity.createQuery(hql);
+        query.setParameter("contractCode", contractCode);
+        try {
+            return query.getResultList();
+        } catch (NoResultException e) {
+            return null;
+        }
+    }
 
 
 

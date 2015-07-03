@@ -5,9 +5,11 @@ import com.fpt.mic.micweb.framework.R;
 import com.fpt.mic.micweb.framework.responses.JspPage;
 import com.fpt.mic.micweb.framework.responses.RedirectTo;
 import com.fpt.mic.micweb.framework.responses.ResponseObject;
+import com.fpt.mic.micweb.model.business.CardBusiness;
 import com.fpt.mic.micweb.model.business.ContractBusiness;
 import com.fpt.mic.micweb.model.business.RegisterBusiness;
 import com.fpt.mic.micweb.model.dto.form.ConcurrencyDto;
+import com.fpt.mic.micweb.model.dto.form.NewCardRequestDto;
 import com.fpt.mic.micweb.utils.Constants;
 
 import javax.servlet.annotation.WebServlet;
@@ -23,31 +25,47 @@ import java.util.Map;
 public class LightboxreturnController extends BasicController {
     public ResponseObject getView (R r) {
         HttpSession session = r.equest.getSession(false);
+        // if payment succeed, remember to remove CONTRACT_CODE
         if(session == null || null == session.getAttribute("CONTRACT_CODE")) {
             new RedirectTo("/error/404");
         }
-        // Check concurrency
-        ConcurrencyDto concurrencyDto = new ConcurrencyDto();
-        String contractCode = (String) session.getAttribute("CONTRACT_CODE");
-        System.out.println("LightboxreturnController"+ contractCode);
+        // check if payment for crete + renew contract
+        NewCardRequestDto newCardRequestDto =(NewCardRequestDto) session.getAttribute("NEW_CARD_DTO");
+        if( null == newCardRequestDto){
 
-        Timestamp startModifyTime =(Timestamp)
-                session.getAttribute(Constants.Session.CONCURRENCY + contractCode);
+            // Check concurrency
+            ConcurrencyDto concurrencyDto = new ConcurrencyDto();
+            String contractCode = (String) session.getAttribute("CONTRACT_CODE");
+            System.out.println("LightboxreturnController"+ contractCode);
 
-        concurrencyDto.setLastModified(startModifyTime);
-        concurrencyDto.setContractCode(contractCode);
-        List errors = r.ead.validate(concurrencyDto);
+            Timestamp startModifyTime =(Timestamp)
+                    session.getAttribute(Constants.Session.CONCURRENCY + contractCode);
 
-        if (errors.size() > 0) {
+            concurrencyDto.setLastModified(startModifyTime);
+            concurrencyDto.setContractCode(contractCode);
+            List errors = r.ead.validate(concurrencyDto);
 
-            StringBuilder message = new StringBuilder();
-            for (Object error : errors) {
-                message.append((String) error).append("<br/>");
+            if (errors.size() > 0) {
+
+                StringBuilder message = new StringBuilder();
+                for (Object error : errors) {
+                    message.append((String) error).append("<br/>");
+                }
+
+                r.equest.setAttribute("error", message);
+                return new JspPage("public/error.jsp");
+            }
+        // new card request payment
+        } else {
+            CardBusiness cardBusiness = new CardBusiness();
+            String result = cardBusiness.requestNewCard(newCardRequestDto);
+            if (result != null){
+                r.equest.setAttribute("error",result);
+                new JspPage("public/error.jsp");
             }
 
-            r.equest.setAttribute("error", message);
-            return new JspPage("public/error.jsp");
         }
+
 //        RegisterBusiness registerBusiness = new RegisterBusiness();
 //        ContractBusiness contractBusiness = new ContractBusiness();
 //        if(registerBusiness.isPaidContract(contractCode) || registerBusiness.isExistByPlate(contractBusiness.getContract(contractCode).getPlate())){

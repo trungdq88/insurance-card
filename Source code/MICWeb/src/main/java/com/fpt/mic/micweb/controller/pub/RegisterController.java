@@ -131,7 +131,7 @@ public class RegisterController extends BasicController {
             r.equest.setAttribute("redirectLink", "home");
             String contractCode = (String) session.getAttribute("CONTRACT_CODE");
             String paypalTransId = results.get("PAYMENTINFO_0_TRANSACTIONID");
-            String paymentMethod = "PayPal payment";
+            String paymentMethod = "PayPal";
             String paymentContent = (String) session.getAttribute("descVN");
 
             RegisterBusiness registerBusiness = new RegisterBusiness();
