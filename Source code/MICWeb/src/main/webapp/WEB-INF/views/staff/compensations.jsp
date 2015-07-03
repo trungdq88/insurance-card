@@ -24,10 +24,6 @@
             <!-- /.col-lg-12 -->
         </div>
         <!-- /.row -->
-
-        <div>
-
-        </div>
         <div class="panel panel-default">
 
             <c:set var="compensations" value="${compenPaginator.getItemsOnCurrentPage(param.page)}"/>
@@ -56,6 +52,7 @@
                             <th>Mã yêu cầu</th>
                             <th>Ngày yêu cầu</th>
                             <th>Mã hợp đồng</th>
+                            <th>Tên khách hàng</th>
                             <th>Trạng thái</th>
                         </tr>
                         </thead>
@@ -74,7 +71,7 @@
                                         <td>${counter.count}</td>
                                         <td>
                                             <a href="${pageContext.request.contextPath}/staff/compensation?action=detail&code=${compensation.compensationCode}">
-                                                    ${compensation.compensationCode}
+                                                ${compensation.compensationCode}
                                             </a>
                                         </td>
                                         <td>
@@ -86,13 +83,17 @@
                                             </a>
                                         </td>
                                         <td>
-                                            <c:set var="resolve" value="${compensation.resolveDate}"/>
+                                            <a href="${pageContext.request.contextPath}/staff/customer?action=detail&code=${compensation.micContractByContractCode.micCustomerByCustomerCode.customerCode}">
+                                                ${compensation.micContractByContractCode.micCustomerByCustomerCode.name}
+                                            </a>
+                                        </td>
+                                        <td>
                                             <c:choose>
-                                                <c:when test="${not empty resolve}">
-                                                    <span class="label label-success">Đã giải quyết</span>
+                                                <c:when test="${empty compensation.resolveDate}">
+                                                    <span class="label label-default">Chưa giải quyết</span>
                                                 </c:when>
                                                 <c:otherwise>
-                                                    <span class="label label-default">Chưa giải quyết</span>
+                                                    <span class="label label-success">Đã giải quyết</span>
                                                 </c:otherwise>
                                             </c:choose>
                                         </td>
