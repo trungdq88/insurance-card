@@ -88,4 +88,28 @@ public class StaffDao extends IncrementDao<StaffEntity, String> {
             return null;
         }
     }
+    public boolean isExistByEmail(String email) {
+        EntityManager entityManager = factory.createEntityManager();
+        String hql = "SELECT c FROM StaffEntity c WHERE c.email= :email";
+        Query query = entityManager.createQuery(hql);
+        query.setParameter("email", email);
+        if (query.getResultList().size() == 0) {
+            entityManager.close();
+            return false;
+        }
+        entityManager.close();
+        return true;
+    }
+    public boolean isExistByCode(String staffCode) {
+        EntityManager entityManager = factory.createEntityManager();
+        String hql = "SELECT c FROM StaffEntity c WHERE c.staffCode= :staffCode";
+        Query query = entityManager.createQuery(hql);
+        query.setParameter("staffCode", staffCode);
+        if (query.getResultList().size() == 0) {
+            entityManager.close();
+            return false;
+        }
+        entityManager.close();
+        return true;
+    }
 }
