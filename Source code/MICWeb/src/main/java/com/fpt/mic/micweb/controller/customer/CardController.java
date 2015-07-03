@@ -34,7 +34,13 @@ public class CardController extends AuthController {
         return new JspPage("/customer/card.jsp");
     }
 
-    public ResponseObject getNewCard(R r) {
+    public ResponseObject postNewCard(R r) {
+        String contractCode = r.equest.getParameter("contractCode");
+        String customerCode = ((CustomerEntity) getLoggedInUser()).getCustomerCode();
+        r.equest.setAttribute("customerCode",customerCode);
+        r.equest.setAttribute("contractCode",contractCode);
+        r.equest.setAttribute("newCardFee",50000);// add constant later
+        r.equest.setAttribute("transformFee",10000);
         return new JspPage("/customer/new-card-request.jsp");
     }
 
