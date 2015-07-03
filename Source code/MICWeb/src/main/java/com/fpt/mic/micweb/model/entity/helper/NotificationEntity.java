@@ -14,6 +14,7 @@ import java.sql.Timestamp;
 public class NotificationEntity {
     private int id;
     private String content;
+    private String receiver;
     private String relatedLink;
     private Timestamp createdDate;
     private Timestamp resolvedDate;
@@ -38,6 +39,16 @@ public class NotificationEntity {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    @Basic
+    @Column(name = "receiver")
+    public String getReceiver() {
+        return receiver;
+    }
+
+    public void setReceiver(String receiver) {
+        this.receiver = receiver;
     }
 
     @Basic
