@@ -11,7 +11,9 @@ import javax.persistence.*;
 public class NotificationReadEntity {
     private int id;
     private String userCode;
+    private int notificationId;
     private int isRead;
+    private NotificationEntity micNotificationByNotificationId;
 
     @Id
     @Column(name = "id")
@@ -41,6 +43,26 @@ public class NotificationReadEntity {
 
     public void setIsRead(int isRead) {
         this.isRead = isRead;
+    }
+
+    @Basic
+    @Column(name = "notification_id")
+    public int getNotificationId() {
+        return notificationId;
+    }
+
+    public void setNotificationId(int notificationId) {
+        this.notificationId = notificationId;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "notification_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
+    public NotificationEntity getMicNotificationByNotificationId() {
+        return micNotificationByNotificationId;
+    }
+
+    public void setMicNotificationByNotificationId(NotificationEntity micNotificationByNotificationId) {
+        this.micNotificationByNotificationId = micNotificationByNotificationId;
     }
 
     @Override
