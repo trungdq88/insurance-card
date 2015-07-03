@@ -35,6 +35,7 @@ public class NotificationEntity {
     private Timestamp createdDate;
     private Timestamp resolvedDate;
     private String resolvedStaff;
+    private Integer isRead;
     private StaffEntity micStaffByResolvedStaff;
 
     @Id
@@ -158,6 +159,15 @@ public class NotificationEntity {
         return null; // Wrong type
     }
 
+    @Basic
+    @Column(name = "is_read")
+    public Integer getIsRead() {
+        return isRead;
+    }
+
+    public void setIsRead(Integer isRead) {
+        this.isRead = isRead;
+    }
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
