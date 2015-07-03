@@ -402,12 +402,16 @@
                 if ((data.paymentMethod).toLowerCase().indexOf("paypal") > -1) {
                     $("#ppIDCtrl").removeClass('hide');
                     $("#paypal-id-value").html(data.paypalTransId);
+                } else {
+                    $("#receiverCtrl").removeClass('hide');
+                    $("#receiver-value").html(data.micStaffByReceiver ? data.micStaffByReceiver.name : '');
                 }
-                $("#receiver-value").html(data.micStaffByReceiver ? data.micStaffByReceiver.name : '');
+
                 if (data.startDate) {
                     $("#stDateCtrl").removeClass('hide');
                     $("#start-date-value").html(getDateTime(data.startDate));
                 }
+
                 if (data.expiredDate) {
                     $("#expDateCtrl").removeClass('hide');
                     $("#expired-date-value").html(getDateTime(data.expiredDate));
@@ -426,6 +430,7 @@
             $("#paid-date-value").html("");
             $("#ppIDCtrl").addClass('hide');
             $("#paypal-id-value").html("");
+            $("#receiverCtrl").addClass('hide');
             $("#receiver-value").html("");
             $("#stDateCtrl").addClass('hide');
             $("#start-date-value").html("");

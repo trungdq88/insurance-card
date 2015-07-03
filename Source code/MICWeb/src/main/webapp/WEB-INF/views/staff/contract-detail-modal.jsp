@@ -70,7 +70,7 @@
                         </div>
 
                         <!-- Receiver -->
-                        <div class="form-group">
+                        <div id="receiverCtrl" class="form-group hide">
                             <label class="col-sm-3 control-label">Người nhận</label>
 
                             <div class="col-sm-4">
