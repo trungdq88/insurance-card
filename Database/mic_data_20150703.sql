@@ -366,6 +366,10 @@ ADD CONSTRAINT `fk_notification_id`
   REFERENCES `mic_data`.`mic_notification` (`id`)
   ON DELETE NO ACTION
   ON UPDATE NO ACTION;
+  
+ALTER TABLE `mic_data`.`mic_notification_read` 
+DROP INDEX `uq_user_code_is_read` ,
+ADD UNIQUE INDEX `uq_user_code_is_read` (`user_code` ASC, `notification_id` ASC);
 
 
 SET SQL_MODE=@OLD_SQL_MODE;

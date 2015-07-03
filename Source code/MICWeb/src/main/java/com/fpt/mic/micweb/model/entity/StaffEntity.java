@@ -1,5 +1,7 @@
 package com.fpt.mic.micweb.model.entity;
 
+import com.fpt.mic.micweb.model.entity.helper.IUserEntity;
+
 import javax.persistence.*;
 import java.util.Collection;
 
@@ -9,7 +11,7 @@ import java.util.Collection;
  */
 @Entity
 @Table(name = "mic_staff", schema = "", catalog = "mic_data")
-public class StaffEntity {
+public class StaffEntity implements IUserEntity {
     private String staffCode;
     private String password;
     private String name;
@@ -100,5 +102,10 @@ public class StaffEntity {
 
     public void setMicContractsByStaffCode(Collection<ContractEntity> micContractsByStaffCode) {
         this.micContractsByStaffCode = micContractsByStaffCode;
+    }
+
+    @Override
+    public String calcUserCode() {
+        return staffCode;
     }
 }

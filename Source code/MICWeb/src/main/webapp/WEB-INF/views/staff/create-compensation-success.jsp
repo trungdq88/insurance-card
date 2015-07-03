@@ -28,7 +28,7 @@
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">Mã yêu cầu</label>
 
-                                <div class="col-sm-1">
+                                <div class="col-sm-2">
                                     <div class="text-value">
                                         <a href="${pageContext.request.contextPath}/staff/compensation?action=detail&code=${compensation.compensationCode}">
                                             <strong>${compensation.compensationCode}</strong>
@@ -59,20 +59,17 @@
                                 </div>
                             </div>
 
-                            <!-- Driver name -->
+                            <!-- Driver name & phone -->
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">Họ tên lái xe</label>
 
-                                <div class="col-sm-4">
+                                <div class="col-sm-3">
                                     <div class="text-value">
                                             ${compensation.driverName}
                                     </div>
                                 </div>
-                            </div>
 
-                            <!-- Phone -->
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">Điện thoại</label>
+                                <label class="col-sm-2 control-label">Điện thoại</label>
 
                                 <div class="col-sm-3">
                                     <div class="text-value">

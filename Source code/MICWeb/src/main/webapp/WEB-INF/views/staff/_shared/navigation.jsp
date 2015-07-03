@@ -24,6 +24,16 @@
     <!-- /.navbar-header -->
 
     <ul class="nav navbar-top-links navbar-right">
+        <li class="dropdown" id="notif-icon">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                <i class="fa fa-bell fa-fw"></i>
+                <span class="badge badge-red" style="display: none" id="unread-notifs"></span>
+            </a>
+            <ul class="dropdown-menu dropdown-alerts" id="notif-list">
+                <li>Loading...</li>
+            </ul>
+            <!-- /.dropdown-alerts -->
+        </li>
         <li class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                 <i class="fa fa-user fa-fw"></i>

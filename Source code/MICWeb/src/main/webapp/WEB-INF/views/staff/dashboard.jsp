@@ -1,6 +1,8 @@
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ include file="_shared/header.jsp"%>
+<%@ include file="_shared/header.jsp" %>
 
 <div id="wrapper">
 
@@ -27,17 +29,32 @@
                             </c:when>
                             <c:otherwise>
                                 <c:forEach var="notification" items="${notifications}" varStatus="counter">
-                                    <tr>
+                                    <tr class="notif-item" data-id="${notification.id}"
+                                        data-is-read="${notification.isRead != null ? 'true' : 'false'}">
                                         <td>
-                                            <a href="${notification.generateRelatedLink()}">
-                                                <i class="fa fa-bullhorn"></i> ${notification.content}
+                                            <a class="notif-link" href="/notif?action=markAsRead&id=${notification.id}&redirect=true">
+                                                <i class="fa fa-bell-o"></i> ${notification.content}
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <fmt:formatDate value="${notification.createdDate}" pattern="dd/MM/yyyy"/>
+                                            lúc
+                                            <fmt:formatDate value="${notification.createdDate}" type="time"/>
+                                        </td>
+                                        <td>
+                                            <a class="notif-control mark-as-read" href="javascript:markAsRead(${notification.id})"
+                                               data-toggle="tooltip" title="Đánh dấu đã đọc">
+                                                <i class="fa fa-check"></i>
+                                            </a>
+                                            <a class="notif-control mark-as-unread" href="javascript:markAsUnread(${notification.id})"
+                                               data-toggle="tooltip" title="Đánh dấu chưa đọc">
+                                                <i class="fa fa-bell"></i>
                                             </a>
                                         </td>
                                     </tr>
                                 </c:forEach>
                             </c:otherwise>
                         </c:choose>
-                        </tbody>
                     </table>
                 </div>
             </div>
@@ -68,6 +85,7 @@
                         <div class="panel-footer">
                             <span class="pull-left">Xem danh sách</span>
                             <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+
                             <div class="clearfix"></div>
                         </div>
                     </a>
@@ -90,6 +108,7 @@
                         <div class="panel-footer">
                             <span class="pull-left">Xem danh sách</span>
                             <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+
                             <div class="clearfix"></div>
                         </div>
                     </a>
@@ -112,6 +131,7 @@
                         <div class="panel-footer">
                             <span class="pull-left">Xem danh sách</span>
                             <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+
                             <div class="clearfix"></div>
                         </div>
                     </a>
@@ -134,6 +154,7 @@
                         <div class="panel-footer">
                             <span class="pull-left">Xem danh sách</span>
                             <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+
                             <div class="clearfix"></div>
                         </div>
                     </a>
@@ -144,4 +165,4 @@
 </div>
 <!-- /#wrapper -->
 
-<%@ include file="_shared/footer.jsp"%>
+<%@ include file="_shared/footer.jsp" %>

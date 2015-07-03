@@ -21,7 +21,8 @@ public class NotificationDao extends GenericDaoJpaImpl<NotificationEntity, Integ
                         "FROM mic_notification n " +
                         "LEFT JOIN mic_notification_read nr " +
                         "ON n.id = nr.notification_id " +
-                        "WHERE :user_code REGEXP receiver;",
+                        "WHERE :user_code REGEXP receiver " +
+                        "ORDER BY n.created_date DESC ",
                 NotificationEntity.class);
         query.setParameter("user_code", code);
         List resultList = query.getResultList();
@@ -30,6 +31,11 @@ public class NotificationDao extends GenericDaoJpaImpl<NotificationEntity, Integ
     }
 
     public List getUnreadNotifications(String code) {
+        return getUnreadNotifications(code, 0);
+    }
+
+    public List getUnreadNotifications(String code, int size) {
+
         EntityManager entityManager = factory.createEntityManager();
 
         Query query = entityManager.createNativeQuery(
@@ -38,9 +44,13 @@ public class NotificationDao extends GenericDaoJpaImpl<NotificationEntity, Integ
                         "LEFT JOIN mic_notification_read nr " +
                         "ON n.id = nr.notification_id " +
                         "WHERE :user_code REGEXP receiver " +
-                        "AND nr.is_read IS NULL;",
+                        "AND nr.is_read IS NULL " +
+                        "ORDER BY n.created_date DESC ",
                 NotificationEntity.class);
         query.setParameter("user_code", code);
+        if (size > 0) {
+            query.setMaxResults(size);
+        }
         List resultList = query.getResultList();
         entityManager.close();
         return resultList;
@@ -55,11 +65,32 @@ public class NotificationDao extends GenericDaoJpaImpl<NotificationEntity, Integ
                         "LEFT JOIN mic_notification_read nr " +
                         "ON n.id = nr.notification_id " +
                         "WHERE :user_code REGEXP receiver " +
-                        "AND nr.is_read IS NULL;");
+                        "AND nr.is_read IS NULL ");
         query.setParameter("user_code", code);
         BigInteger result = (BigInteger) query.getSingleResult();
         entityManager.close();
         return result;
     }
 
+    public NotificationEntity get(int id) {
+        EntityManager entityManager = factory.createEntityManager();
+
+        Query query = entityManager.createNativeQuery(
+                "SELECT n.*, nr.is_read " +
+                        "FROM mic_notification n " +
+                        "LEFT JOIN mic_notification_read nr " +
+                        "ON n.id = nr.notification_id " +
+                        "WHERE n.id = :id " +
+                        "ORDER BY n.created_date DESC ",
+                NotificationEntity.class);
+        query.setParameter("id", id);
+        NotificationEntity resultList = null;
+        try {
+            resultList = (NotificationEntity) query.getSingleResult();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        entityManager.close();
+        return resultList;
+    }
 }
