@@ -1,4 +1,5 @@
-﻿<%@ include file="_shared/header.jsp" %>
+﻿<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ include file="_shared/header.jsp" %>
 
 <div id="wrapper">
 
@@ -28,7 +29,7 @@
 
                 <div class="col-sm-5">
                     <input type="password" class="form-control" name="request:password" id="password"
-                           required title="Vui lòng nhập mật khẩu">
+                           required title="Vui lòng nhập mật khẩu" value="${submitted.password}">
                 </div>
             </div>
             <div class="form-group">
@@ -36,7 +37,7 @@
 
                 <div class="col-sm-5">
                     <textarea name="request:note" id="note" class="form-control" cols="3"
-                              required title="Vui lòng nhập ghi chú"></textarea>
+                              required title="Vui lòng nhập ghi chú" >${submitted.note}</textarea>
                 </div>
             </div>
 
@@ -97,6 +98,7 @@
                 <label class="col-sm-3 control-label"></label>
 
                 <div class="col-sm-5">
+                    <input type="hidden" name="contractCode" value="${contractCode}">
                     <input type="hidden" name="request:contractCode" value="${contractCode}">
                     <input type="hidden" name="request:customerCode" value="${customerCode}">
                     <input type="hidden" name="action" value="createNewCardRequest">
