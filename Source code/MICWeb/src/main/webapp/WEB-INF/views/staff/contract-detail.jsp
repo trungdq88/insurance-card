@@ -327,9 +327,6 @@
         var remainDays = daysBetween(new Date(), expDate);
         $('#remain').text(remainDays);
         $('#remain2').text(remainDays);
-        if (remainDays < 60) {
-            $('#btnRenew').removeClass('hide');
-        }
 
         $('input[type="date"]').not('#paidDate').blur(function () {
             var inputDate = new Date(this.value);
@@ -350,19 +347,26 @@
             }
         });
 
-        if (contractStatus == 'Pending') {
+        if (contractStatus.toLowerCase() == 'Pending'.toLowerCase()) {
             $('#btnCancel').removeClass('hide');
         }
 
-        if (contractStatus == 'No card') {
+        if (contractStatus.toLowerCase() == 'No card'.toLowerCase()) {
+            if (remainDays < 60) {
+                $('#btnRenew').removeClass('hide');
+            }
             $('#btnCancel').removeClass('hide');
         }
 
-        if (contractStatus == 'Ready') {
+        if (contractStatus.toLowerCase() == 'Ready'.toLowerCase()) {
+            if (remainDays < 60) {
+                $('#btnRenew').removeClass('hide');
+            }
             $('#btnCancel').removeClass('hide');
         }
 
-        if (contractStatus == 'Expired') {
+        if (contractStatus.toLowerCase() == 'Expired'.toLowerCase()) {
+            $('#btnRenew').removeClass('hide');
             $('#startDate').val(getCurrentDate());
             document.getElementById("expiredDate").min = '${config.expiredDateMin}';
             document.getElementById("expiredDate").max = '${config.expiredDateMax}';
@@ -373,12 +377,12 @@
             document.getElementById("expiredDate").max = getInputDateInNextYear(expDate);
         }
 
-        if (contractStatus == 'Request cancel') {
+        if (contractStatus.toLowerCase() == 'Request cancel'.toLowerCase()) {
             $('#btnCancel').removeClass('hide');
             $('#cancelReason').attr('disabled', true);
         }
 
-        if (contractStatus == 'Cancelled') {
+        if (contractStatus.toLowerCase() == 'Cancelled'.toLowerCase()) {
             $('button[type=button]').not('#btnRenew, #btnCancel').addClass('hide');
             $('#remain').text(0);
         }
