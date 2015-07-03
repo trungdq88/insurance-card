@@ -15,6 +15,8 @@
         <class>com.fpt.mic.micweb.model.entity.PunishmentEntity</class>
         <class>com.fpt.mic.micweb.model.entity.StaffEntity</class>
         <class>com.fpt.mic.micweb.model.entity.helper.IncrementsEntity</class>
+        <class>com.fpt.mic.micweb.model.entity.helper.NotificationEntity</class>
+        <class>com.fpt.mic.micweb.model.entity.helper.NotificationReadEntity</class>
 
         <properties>
             <property name="hibernate.connection.url" value="${db.connectionURL}/mic_data?useEncoding=true&amp;characterEncoding=UTF-8" />
