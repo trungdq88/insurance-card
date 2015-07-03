@@ -13,7 +13,6 @@ public class NotificationReadEntity {
     private String userCode;
     private int notificationId;
     private int isRead;
-    private NotificationEntity micNotificationByNotificationId;
 
     @Id
     @Column(name = "id")
@@ -55,15 +54,6 @@ public class NotificationReadEntity {
         this.notificationId = notificationId;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "notification_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
-    public NotificationEntity getMicNotificationByNotificationId() {
-        return micNotificationByNotificationId;
-    }
-
-    public void setMicNotificationByNotificationId(NotificationEntity micNotificationByNotificationId) {
-        this.micNotificationByNotificationId = micNotificationByNotificationId;
-    }
 
     @Override
     public boolean equals(Object o) {

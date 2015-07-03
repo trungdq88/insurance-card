@@ -5,17 +5,28 @@ import com.fpt.mic.micweb.framework.R;
 import com.fpt.mic.micweb.framework.responses.JsonString;
 import com.fpt.mic.micweb.framework.responses.ResponseObject;
 import com.fpt.mic.micweb.model.business.AjaxBusiness;
+import com.fpt.mic.micweb.model.business.NotificationBusiness;
 import com.fpt.mic.micweb.model.business.StaffBusiness;
 import com.fpt.mic.micweb.model.entity.PaymentEntity;
+import com.fpt.mic.micweb.model.entity.StaffEntity;
+import com.fpt.mic.micweb.model.entity.helper.IUserEntity;
 
 import javax.servlet.annotation.WebServlet;
+import javax.xml.ws.Response;
+import java.math.BigInteger;
+import java.util.List;
 
 /**
  * FPT University - Capstone Project - Summer 2015 - MICWeb
  * Created by dinhquangtrung on 6/29/15.
  */
 @WebServlet(name = "AjaxController", urlPatterns = {"/ajax"})
-public class AjaxController extends BasicController {
+public class AjaxController extends AuthController {
+
+    @Override
+    public List<String> getAllowedRoles() {
+        return null;
+    }
 
     /**
      * Resend password for customer
@@ -46,4 +57,25 @@ public class AjaxController extends BasicController {
         PaymentEntity paymentEntity = staffBusiness.getPaymentDetail(paymentId);
         return new JsonString(paymentEntity);
     }
+
+    public ResponseObject getUnreadCount(R r) {
+        if (!isLoggedIn()) return null;
+
+        String userCode = ((IUserEntity) getLoggedInUser()).calcUserCode();
+
+        NotificationBusiness bus = new NotificationBusiness();
+        BigInteger count = bus.getUnreadNotificationsCount(userCode);
+        return new JsonString(count);
+    }
+
+    public ResponseObject getListUnread(R r) {
+        if (!isLoggedIn()) return null;
+
+        String userCode = ((IUserEntity) getLoggedInUser()).calcUserCode();
+
+        NotificationBusiness bus = new NotificationBusiness();
+        List unreadNotifications = bus.getUnreadNotifications(userCode, 10);
+        return new JsonString(unreadNotifications);
+    }
+
 }

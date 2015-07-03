@@ -25,7 +25,7 @@ public class DashboardController extends AuthController {
 
     public ResponseObject getView(R r) {
         NotificationBusiness notificationBusiness = new NotificationBusiness();
-        List<NotificationEntity> notifications = notificationBusiness.getNotifications(
+        List notifications = notificationBusiness.getNotifications(
                 ((StaffEntity) getLoggedInUser()).getStaffCode());
 
         r.equest.setAttribute("notifications", notifications);
