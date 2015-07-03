@@ -11,6 +11,8 @@ import com.fpt.mic.micweb.model.entity.ContractEntity;
 import com.fpt.mic.micweb.model.entity.helper.NotificationEntity;
 
 import javax.servlet.annotation.WebServlet;
+import java.math.BigInteger;
+import java.util.List;
 
 /**
  * FPT University - Capstone Project - Summer 2015 - MICWeb
@@ -20,11 +22,23 @@ import javax.servlet.annotation.WebServlet;
 public class TestNotification extends BasicController {
     public ResponseObject getView(R r) {
         ContractDao dao = new ContractDao();
-        ContractEntity contract = dao.read("HD0001");
+        ContractEntity contract = dao.read("HD0003");
         NotificationBusiness notificationBusiness = new NotificationBusiness();
         NotificationEntity entity = notificationBusiness
                 .sendNotification(NotificationBuilder.customerCreateContract(contract));
         return new JsonString(entity);
+    }
+
+    public ResponseObject getList(R r) {
+        NotificationBusiness notificationBusiness = new NotificationBusiness();
+        List notifications = notificationBusiness.getNotifications("NV0923");
+        return new JsonString(notifications);
+    }
+
+    public ResponseObject getUnread(R r) {
+        NotificationBusiness notificationBusiness = new NotificationBusiness();
+        BigInteger count = notificationBusiness.getUnreadNotificationsCount("NV0001");
+        return new JsonString(count);
     }
 
     public static void main(String[] args) {

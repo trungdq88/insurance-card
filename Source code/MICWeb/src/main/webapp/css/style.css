@@ -84,3 +84,20 @@ th {
     color: #777;
     font-size: 15px;
 }
+
+.badge-red {
+    background-color: #f66;
+}
+
+.notif-item[data-is-read=true] .notif-link {
+    color: #525252;
+}
+.notif-item[data-is-read=true] .notif-link:hover {
+    color: #353535;
+}
+.mark-as-unread {
+    visibility: hidden;
+}
+.notif-item:hover .mark-as-unread:not(.dont-show) {
+    visibility: visible;
+}

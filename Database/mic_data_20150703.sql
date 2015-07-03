@@ -357,6 +357,21 @@ CREATE TABLE `mic_data`.`mic_notification_read` (
   PRIMARY KEY (`id`),
   UNIQUE INDEX `uq_user_code_is_read` (`user_code` ASC, `is_read` ASC));
 
+ALTER TABLE `mic_data`.`mic_notification_read` 
+ADD COLUMN `notification_id` INT NOT NULL AFTER `user_code`,
+ADD INDEX `fk_notification_id_idx` (`notification_id` ASC);
+ALTER TABLE `mic_data`.`mic_notification_read` 
+ADD CONSTRAINT `fk_notification_id`
+  FOREIGN KEY (`notification_id`)
+  REFERENCES `mic_data`.`mic_notification` (`id`)
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION;
+  
+ALTER TABLE `mic_data`.`mic_notification_read` 
+DROP INDEX `uq_user_code_is_read` ,
+ADD UNIQUE INDEX `uq_user_code_is_read` (`user_code` ASC, `notification_id` ASC);
+
+
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;

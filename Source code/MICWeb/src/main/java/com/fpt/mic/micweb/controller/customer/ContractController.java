@@ -452,7 +452,7 @@ public class ContractController extends AuthController {
 
 
             String paypalTransId = results.get("PAYMENTINFO_0_TRANSACTIONID");
-            String paymentMethod = "PayPal payment";
+            String paymentMethod = "PayPal";
             String paymentContent = (String) session.getAttribute("descVN");
 
             RegisterBusiness registerBusiness = new RegisterBusiness();
