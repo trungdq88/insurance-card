@@ -25,6 +25,7 @@ public class CompensationEntity {
     private String humanDamage;
     private String assetDamage;
     private String observer;
+    private String observerAddress;
     private String compensationNote;
     private String attachment;
     private Timestamp createdDate;
@@ -33,7 +34,10 @@ public class CompensationEntity {
     private String resolveNote;
     private String contractCode;
     private Timestamp lastModified;
+
     private ContractEntity micContractByContractCode;
+
+
 
     @Id
     @Column(name = "compensation_code")
@@ -184,6 +188,15 @@ public class CompensationEntity {
     public void setObserver(String observer) {
         this.observer = observer;
     }
+    @Basic
+    @Column(name = "observer_address")
+    public String getObserverAddress() {
+        return observerAddress;
+    }
+
+    public void setObserverAddress(String observerAddress) {
+        this.observerAddress = observerAddress;
+    }
 
     @Basic
     @Column(name = "compensation_note")
@@ -284,6 +297,7 @@ public class CompensationEntity {
         if (humanDamage != null ? !humanDamage.equals(that.humanDamage) : that.humanDamage != null) return false;
         if (assetDamage != null ? !assetDamage.equals(that.assetDamage) : that.assetDamage != null) return false;
         if (observer != null ? !observer.equals(that.observer) : that.observer != null) return false;
+        if (observerAddress != null ? !observerAddress.equals(that.observerAddress) : that.observerAddress != null) return false;
         if (compensationNote != null ? !compensationNote.equals(that.compensationNote) : that.compensationNote != null)
             return false;
         if (attachment != null ? !attachment.equals(that.attachment) : that.attachment != null) return false;
@@ -312,6 +326,7 @@ public class CompensationEntity {
         result = 31 * result + (humanDamage != null ? humanDamage.hashCode() : 0);
         result = 31 * result + (assetDamage != null ? assetDamage.hashCode() : 0);
         result = 31 * result + (observer != null ? observer.hashCode() : 0);
+        result = 31 * result + (observerAddress != null ? observerAddress.hashCode() : 0);
         result = 31 * result + (compensationNote != null ? compensationNote.hashCode() : 0);
         result = 31 * result + (attachment != null ? attachment.hashCode() : 0);
         result = 31 * result + (createdDate != null ? createdDate.hashCode() : 0);
