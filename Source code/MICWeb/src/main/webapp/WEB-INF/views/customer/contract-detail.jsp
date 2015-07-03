@@ -456,6 +456,13 @@
                         luật
                         GT</a>
                 </li>
+                <div class="pull-right">
+                    <a href="${pageContext.request.contextPath}/customer/card?action=newCard&code=${param.code}"
+                       class="btn btn-sm btn-success">
+                        <i class="fa fa-plus"></i>
+                        Yêu cầu thẻ mới
+                    </a>
+                </div>
             </ul>
         </div>
         <br/>
