@@ -1,6 +1,8 @@
 -- 20150703 Changes:
 -- Add table mic_notification
 -- Add table mic_notification_read
+-- Add column mic_compensation.observer_address
+-- MySQL Workbench Forward Engineering
 
 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
@@ -253,6 +255,7 @@ CREATE TABLE IF NOT EXISTS `mic_data`.`mic_compensation` (
   `human_damage` VARCHAR(2000) NOT NULL,
   `asset_damage` VARCHAR(2000) NOT NULL,
   `observer` VARCHAR(80) NOT NULL,
+  `observer_address` VARCHAR(250) NOT NULL,
   `compensation_note` VARCHAR(2000) NULL DEFAULT NULL,
   `attachment` VARCHAR(255) NULL DEFAULT NULL,
   `created_date` DATETIME NOT NULL,
@@ -271,6 +274,40 @@ CREATE TABLE IF NOT EXISTS `mic_data`.`mic_compensation` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COMMENT = 'Compensation information';
+
+
+-- -----------------------------------------------------
+-- Table `mic_data`.`mic_notification`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mic_data`.`mic_notification` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `content` VARCHAR(2000) NOT NULL,
+  `related_link` VARCHAR(2000) NULL DEFAULT NULL,
+  `created_date` DATETIME NOT NULL,
+  `resolved_date` DATETIME NULL DEFAULT NULL,
+  `resolved_staff` VARCHAR(10) NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_resolved_staff_staff_code_idx` (`resolved_staff` ASC),
+  CONSTRAINT `fk_resolved_staff_staff_code`
+    FOREIGN KEY (`resolved_staff`)
+    REFERENCES `mic_data`.`mic_staff` (`staff_code`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `mic_data`.`mic_notification_read`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mic_data`.`mic_notification_read` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `user_code` VARCHAR(10) NOT NULL,
+  `is_read` INT(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `uq_user_code_is_read` (`user_code` ASC, `is_read` ASC))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
@@ -328,27 +365,6 @@ AUTO_INCREMENT = 6
 DEFAULT CHARACTER SET = utf8
 COMMENT = 'Punishment information';
 
-CREATE TABLE `mic_data`.`mic_notification` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `content` VARCHAR(2000) NOT NULL,
-  `related_link` VARCHAR(2000) NULL,
-  `created_date` DATETIME NOT NULL,
-  `resolved_date` DATETIME NULL,
-  `resolved_staff` VARCHAR(10) NULL,
-  PRIMARY KEY (`id`),
-  INDEX `fk_resolved_staff_staff_code_idx` (`resolved_staff` ASC),
-  CONSTRAINT `fk_resolved_staff_staff_code`
-    FOREIGN KEY (`resolved_staff`)
-    REFERENCES `mic_data`.`mic_staff` (`staff_code`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION);
-
-CREATE TABLE `mic_data`.`mic_notification_read` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `user_code` VARCHAR(10) NOT NULL,
-  `is_read` INT NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE INDEX `uq_user_code_is_read` (`user_code` ASC, `is_read` ASC));
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
