@@ -7,6 +7,20 @@ $(document).ready(function () {
     if ($('#isFirstLogin').val() == 0) {
         $('#changePass').trigger("click");
     }
+    $('#cancel').click(function () {
+        var cutomerCode = $('#customerCode').val();
+        $.ajax({
+            url: '/ajax',
+            method: 'post',
+            data: {
+                action: 'RejectChangePassword',
+                customerCode: cutomerCode
+            },
+            dataType: 'json'
+        }).done(function (msg) {
+
+        });
+    });
     $('#confirm').click(function () {
         var currentPass = $('#currentPass').val();
         var newPass = $('#newPass').val();
@@ -16,6 +30,10 @@ $(document).ready(function () {
         if (currentPass != null && newPass != null && confirmPass != null) {
             if (confirmPass != newPass) {
                 $('#notify2').removeClass('hide');
+                return false;
+            }
+            if (currentPass == newPass) {
+                $('#notify1').removeClass('hide');
                 return false;
             }
         }
@@ -254,10 +272,10 @@ $(document).ready(function () {
     /**
      * ---------------------------------Region add new punishment
      */
-    $('input[type=file]').change(function(e){
+    $('input[type=file]').change(function (e) {
         var root = $(this).val();
         var array = root.split('\\');
-        root = array[array.length -1];
+        root = array[array.length - 1];
         $('#attch').val(root);
     });
     $("#contentPunishment").keydown(function (event) {
@@ -266,7 +284,7 @@ $(document).ready(function () {
         }
     });
     $('#confirmPunishment').click(function () {
-        if ($.trim($('#contentPunishment').val())== 0) {
+        if ($.trim($('#contentPunishment').val()) == 0) {
             $('#notifyPunishment').removeClass('hide');
             return false;
         }

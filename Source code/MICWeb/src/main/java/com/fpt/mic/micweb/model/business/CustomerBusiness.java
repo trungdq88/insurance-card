@@ -187,13 +187,12 @@ public class CustomerBusiness {
 
             // set start date
             Timestamp currentDate = DateUtils.currentDateWithoutTime();
-            if (currentDate.after(contract.getStartDate()))
-            {
+            if (currentDate.after(contract.getStartDate())) {
                 contract.setStartDate(currentDate);
             }
             // set expired date = start_date + 1 year
             contract.setExpiredDate(DateUtils.addOneYear(contract.getStartDate()));
-            if(contract.getStartDate().after(currentDate)) {
+            if (contract.getStartDate().after(currentDate)) {
                 contract.setStatus(Constants.ContractStatus.PENDING);
             } else {
                 contract.setStatus(Constants.ContractStatus.NO_CARD);
@@ -244,10 +243,26 @@ public class CustomerBusiness {
         }
         return result;
     }
-
+    /**
+     * reject change password
+     *
+     * @param , customerCode
+     * @return bool result
+     */
+    public boolean rejectChangePassword(String customerCode) {
+        boolean result = false;
+        CustomerDao customerDao = new CustomerDao();
+        CustomerEntity customerEntity = customerDao.read(customerCode);
+        customerEntity.setIsDefaultPassword(1);
+        if(customerDao.update(customerEntity) != null){
+            result = true;
+        }
+        return result;
+    }
     /**
      * Returns true if the contract has changed
      * Returns false if the contract is not changed or the contract code is not exists
+     *
      * @param contractCode
      * @param lastModified
      * @return

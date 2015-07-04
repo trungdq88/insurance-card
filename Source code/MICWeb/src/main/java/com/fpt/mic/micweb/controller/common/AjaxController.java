@@ -5,9 +5,11 @@ import com.fpt.mic.micweb.framework.R;
 import com.fpt.mic.micweb.framework.responses.JsonString;
 import com.fpt.mic.micweb.framework.responses.ResponseObject;
 import com.fpt.mic.micweb.model.business.AjaxBusiness;
+import com.fpt.mic.micweb.model.business.CustomerBusiness;
 import com.fpt.mic.micweb.model.business.NotificationBusiness;
 import com.fpt.mic.micweb.model.business.StaffBusiness;
 import com.fpt.mic.micweb.model.entity.PaymentEntity;
+import com.fpt.mic.micweb.model.entity.CustomerEntity;
 import com.fpt.mic.micweb.model.entity.StaffEntity;
 import com.fpt.mic.micweb.model.entity.helper.IUserEntity;
 
@@ -31,6 +33,7 @@ public class AjaxController extends AuthController {
     /**
      * Resend password for customer
      * TODO: security this
+     *
      * @param r
      * @return
      */
@@ -56,6 +59,14 @@ public class AjaxController extends AuthController {
         StaffBusiness staffBusiness = new StaffBusiness();
         PaymentEntity paymentEntity = staffBusiness.getPaymentDetail(paymentId);
         return new JsonString(paymentEntity);
+    }
+
+    public ResponseObject postRejectChangePassword(R r) {
+        boolean result = false;
+        String customerCode = r.equest.getParameter("customerCode");
+        CustomerBusiness customerBusiness = new CustomerBusiness();
+        result = customerBusiness.rejectChangePassword(customerCode);
+        return new JsonString(result);
     }
 
     public ResponseObject getUnreadCount(R r) {
