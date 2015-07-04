@@ -49,4 +49,30 @@ public class CompensationDao extends IncrementDao<CompensationEntity, String> {
         entityManager.close();
         return resultList;
     }
+
+    public Long getAllCompensationByContractCodeCount(String contractCode) {
+        EntityManager entityManager = factory.createEntityManager();
+        String hql = "SELECT COUNT(compensation) FROM CompensationEntity AS compensation " +
+                "WHERE compensation.contractCode = :code " +
+                "ORDER BY compensation.compensationCode DESC";
+        Query query = entityManager.createQuery(hql);
+        query.setParameter("code", contractCode);
+        Long singleResult = (Long) query.getSingleResult();
+        entityManager.close();
+        return singleResult;
+    }
+
+    public List getCompensationByContractCode(String contractCode, int offset, int count) {
+        EntityManager entityManager = factory.createEntityManager();
+        String hql = "SELECT compensation FROM CompensationEntity AS compensation " +
+                "WHERE compensation.contractCode = :code " +
+                "ORDER BY compensation.compensationCode DESC";
+        Query query = entityManager.createQuery(hql);
+        query.setParameter("code", contractCode);
+        query.setFirstResult(offset);
+        query.setMaxResults(count);
+        List resultList = query.getResultList();
+        entityManager.close();
+        return resultList;
+    }
 }

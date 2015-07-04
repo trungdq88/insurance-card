@@ -84,7 +84,7 @@ $(function () {
 
                 html += '<li class="divider"></li>' +
                     '<li>' +
-                    '<a class="text-center" href="/staff">' +
+                    '<a class="text-center" href="/' + $('body').data('role') + '/dashboard">' +
                     '<strong>Xem tất cả thông báo</strong> ' +
                     '<i class="fa fa-angle-right"></i>' +
                     '</a>' +

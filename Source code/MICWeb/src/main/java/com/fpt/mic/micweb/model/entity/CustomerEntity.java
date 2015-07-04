@@ -170,4 +170,9 @@ public class CustomerEntity implements IUserEntity {
     public String calcUserCode() {
         return customerCode;
     }
+
+    @Override
+    public String calcRole() {
+        return "customer";
+    }
 }
