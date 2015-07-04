@@ -85,10 +85,10 @@ public class CreateCompensationDto {
         return false;
     }
 
-    @AssertTrue(message = "Thời điểm xảy ra tai nạn không được sau ngày hiện tại")
+    @AssertTrue(message = "Thời điểm xảy ra tai nạn không được sau ngày gởi yêu cầu")
     private boolean isValidAccidentDate() {
         if (accidentDate != null) {
-            return !accidentDate.after(DateUtils.currentDateWithoutTime());
+            return !accidentDate.after(createdDate);
         }
         return false;
     }
