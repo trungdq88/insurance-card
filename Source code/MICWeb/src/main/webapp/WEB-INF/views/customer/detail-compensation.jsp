@@ -242,7 +242,7 @@
                 <br/>
 
                 <div class="text-center">
-                    <a href="${pageContext.request.contextPath}/customer/contract?action=ContractDetail&code=${compensation.contractCode}" type="button"
+                    <a href="${pageContext.request.contextPath}/customer/contract?action=detail&code=${compensation.contractCode}" type="button"
                        class="btn btn-default">
                         <i class="fa fa-arrow-left"></i> <strong>Quay về trang thông tin hợp đồng</strong>
                     </a>
