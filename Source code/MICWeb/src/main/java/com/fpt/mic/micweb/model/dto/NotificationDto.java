@@ -1,6 +1,7 @@
 package com.fpt.mic.micweb.model.dto;
 
 import com.fpt.mic.micweb.model.entity.StaffEntity;
+import com.fpt.mic.micweb.model.entity.helper.NotificationEntity;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -12,20 +13,7 @@ import java.sql.Timestamp;
 @Entity
 @Table(name = "mic_notification", schema = "", catalog = "mic_data")
 public class NotificationDto {
-    public static class Type {
-        public static final int CUSTOMER_CREATE_CONTRACT = 1;
-        public static final int CUSTOMER_SEND_COMPENSATION = 2;
-        public static final int CUSTOMER_SEND_NEW_CARD_REQUEST = 3;
-        public static final int CONTRACT_NEARLY_EXPIRED = 4;
-        public static final int CONTRACT_EXPIRED = 5;
-        public static final int CUSTOMER_REQUEST_CANCEL = 6;
-        public static final int CONTRACT_CANCELLED_NO_PAYMENT = 7;
-        public static final int CONTRACT_START_DATE_COME = 8;
-    }
-    public static class Method {
-        public static final int WEB = 1;
-        public static final int EMAIL = 2;
-    }
+
     private int id;
     private String content;
     private String receiver;
@@ -144,16 +132,18 @@ public class NotificationDto {
      */
     public String generateRelatedLink(String role) {
         switch (type) {
-            case Type.CUSTOMER_CREATE_CONTRACT:
-            case Type.CONTRACT_NEARLY_EXPIRED:
-            case Type.CONTRACT_EXPIRED:
-            case Type.CUSTOMER_REQUEST_CANCEL:
-            case Type.CONTRACT_CANCELLED_NO_PAYMENT:
-            case Type.CONTRACT_START_DATE_COME:
+            case NotificationEntity.Type.CUSTOMER_CREATE_CONTRACT:
+            case NotificationEntity.Type.CONTRACT_NEARLY_EXPIRED_1:
+            case NotificationEntity.Type.CONTRACT_NEARLY_EXPIRED_2:
+            case NotificationEntity.Type.CONTRACT_NEARLY_EXPIRED_3:
+            case NotificationEntity.Type.CONTRACT_EXPIRED:
+            case NotificationEntity.Type.CUSTOMER_REQUEST_CANCEL:
+            case NotificationEntity.Type.CONTRACT_CANCELLED_NO_PAYMENT:
+            case NotificationEntity.Type.CONTRACT_START_DATE_COME:
                 return "/" + role + "/contract?action=detail&code=" + extraData;
-            case Type.CUSTOMER_SEND_COMPENSATION:
+            case NotificationEntity.Type.CUSTOMER_SEND_COMPENSATION:
                 return "/" + role + "/compensation?action=detail&code=" + extraData;
-            case Type.CUSTOMER_SEND_NEW_CARD_REQUEST:
+            case NotificationEntity.Type.CUSTOMER_SEND_NEW_CARD_REQUEST:
                 return "/" + role + "/card?action=newCardRequest";
         }
         return null; // Wrong type

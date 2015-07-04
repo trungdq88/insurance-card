@@ -1,6 +1,5 @@
 package com.fpt.mic.micweb.model.business;
 
-import com.fpt.mic.micweb.framework.R;
 import com.fpt.mic.micweb.model.dao.ContractDao;
 import com.fpt.mic.micweb.model.dao.CustomerDao;
 import com.fpt.mic.micweb.model.dao.PaymentDao;
@@ -11,7 +10,6 @@ import com.fpt.mic.micweb.model.dto.form.PublicRegisterFormDto;
 import com.fpt.mic.micweb.model.entity.ContractEntity;
 import com.fpt.mic.micweb.model.entity.CustomerEntity;
 import com.fpt.mic.micweb.model.entity.PaymentEntity;
-import com.fpt.mic.micweb.model.entity.helper.NotificationEntity;
 import com.fpt.mic.micweb.utils.Constants;
 import com.fpt.mic.micweb.utils.DateUtils;
 import com.fpt.mic.micweb.utils.EmailUtils;
@@ -127,7 +125,7 @@ public class RegisterBusiness {
                 NotificationBusiness notif = new NotificationBusiness();
                 ContractDao dao = new ContractDao();
                 ContractEntity notifContract = dao.read(contract.getContractCode());
-                notif.sendNotification(NotificationBuilder.customerCreateContract(notifContract));
+                notif.send(NotificationBuilder.customerCreateContract(notifContract));
 
                 return new RegisterInformationDto(contract, customer, emailSuccess);
             }

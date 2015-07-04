@@ -2,7 +2,9 @@ package com.fpt.mic.micweb.model.business;
 
 import com.fpt.mic.micweb.model.dao.CardDao;
 import com.fpt.mic.micweb.model.dao.ContractDao;
+import com.fpt.mic.micweb.model.dto.NotificationBuilder;
 import com.fpt.mic.micweb.model.entity.ContractEntity;
+import com.fpt.mic.micweb.model.entity.helper.NotificationEntity;
 import com.fpt.mic.micweb.utils.Constants;
 import com.fpt.mic.micweb.utils.DateUtils;
 
@@ -48,9 +50,22 @@ public class SchedulerBusiness {
                 || contractEntity.getStatus().equals(Constants.ContractStatus.NO_CARD)
                 || contractEntity.getStatus().equals(Constants.ContractStatus.REQUEST_CANCEL)){
             // check if contract nearly exceeded expired (3)
-            if (DateUtils.dateBetween(currentDate, contractEntity.getExpiredDate()) < Constants.DueDate.NEARLY_EXCEED_EXPIRED) {
-                // TODO send notification to customer
-                System.out.println("Nearly expired: "+contractEntity.getContractCode());
+
+            NotificationBusiness bus = new NotificationBusiness();
+
+            if (DateUtils.dateBetween(currentDate, contractEntity.getExpiredDate()) < Constants.DueDate.NEARLY_EXCEED_EXPIRED_1) {
+                bus.send(NotificationBuilder.contractNearlyExpired(contractEntity,
+                        NotificationEntity.Type.CONTRACT_NEARLY_EXPIRED_1));
+                return true;
+            }
+            if (DateUtils.dateBetween(currentDate, contractEntity.getExpiredDate()) < Constants.DueDate.NEARLY_EXCEED_EXPIRED_2) {
+                bus.send(NotificationBuilder.contractNearlyExpired(contractEntity,
+                        NotificationEntity.Type.CONTRACT_NEARLY_EXPIRED_2));
+                return true;
+            }
+            if (DateUtils.dateBetween(currentDate, contractEntity.getExpiredDate()) < Constants.DueDate.NEARLY_EXCEED_EXPIRED_3) {
+                bus.send(NotificationBuilder.contractNearlyExpired(contractEntity,
+                        NotificationEntity.Type.CONTRACT_NEARLY_EXPIRED_3));
                 return true;
             }
         }
@@ -68,7 +83,11 @@ public class SchedulerBusiness {
                 contractEntity.setStatus(Constants.ContractStatus.EXPIRED);
                 contractEntity.setLastModified(new Timestamp(new Date().getTime()));
                 contractDao.update(contractEntity);
-                // TODO send notification to customer
+
+                // Send notification to customer
+                NotificationBusiness bus = new NotificationBusiness();
+                bus.send(NotificationBuilder.contractExpired(contractEntity));
+
                 return true;
             }
         }
@@ -87,7 +106,10 @@ public class SchedulerBusiness {
                     contractEntity.setCancelReason("Quá ngày thanh toán hợp đồng");
                     contractEntity.setLastModified(new Timestamp(new Date().getTime()));
                     contractDao.update(contractEntity);
-                    // TODO notify
+
+                    // Send notification to customer
+                    NotificationBusiness bus = new NotificationBusiness();
+                    bus.send(NotificationBuilder.contractCancelledNoPayment(contractEntity));
                     return true;
                 }
             }
@@ -113,6 +135,10 @@ public class SchedulerBusiness {
                     contractEntity.setLastModified(new Timestamp(new Date().getTime()));
                     contractDao.update(contractEntity);
                 }
+
+                // Send notification to customer
+                NotificationBusiness bus = new NotificationBusiness();
+                bus.send(NotificationBuilder.contractStartDateCome(contractEntity));
                 return true;
             }
         }

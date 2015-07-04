@@ -25,7 +25,7 @@ public class TestNotification extends BasicController {
         ContractEntity contract = dao.read("HD0003");
         NotificationBusiness notificationBusiness = new NotificationBusiness();
         NotificationEntity entity = notificationBusiness
-                .sendNotification(NotificationBuilder.customerCreateContract(contract));
+                .send(NotificationBuilder.customerCreateContract(contract));
         return new JsonString(entity);
     }
 

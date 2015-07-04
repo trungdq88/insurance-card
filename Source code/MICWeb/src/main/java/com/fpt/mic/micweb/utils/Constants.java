@@ -17,7 +17,9 @@ public class Constants {
     public static class DueDate {
         public static final int PAYMENT_DUE_DATE = 7;
         public static final int RENEW_DUE_DATE = 7;
-        public static final int NEARLY_EXCEED_EXPIRED = 7;
+        public static final int NEARLY_EXCEED_EXPIRED_1 = 15;
+        public static final int NEARLY_EXCEED_EXPIRED_2 = 8;
+        public static final int NEARLY_EXCEED_EXPIRED_3 = 3;
     }
 
     public static class StaffConfiguration {
