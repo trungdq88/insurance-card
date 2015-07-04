@@ -1,6 +1,8 @@
 package com.fpt.mic.micweb.model.dto.form;
 
+import com.fpt.mic.micweb.model.business.CustomerBusiness;
 import com.fpt.mic.micweb.model.business.LoginBusiness;
+import com.fpt.mic.micweb.model.entity.ContractEntity;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -27,6 +29,16 @@ public class NewCardRequestDto {
         }
         LoginBusiness loginBusiness = new LoginBusiness();
         return loginBusiness.checkPassword(customerCode,password);
+    }
+
+    @AssertTrue(message = "Mã hợp đồng đã bị sửa đổi")
+    public boolean isValidContract(){
+        CustomerBusiness customerBusiness = new CustomerBusiness();
+        ContractEntity contract = customerBusiness.getContractDetail(contractCode);
+        if (contract == null || contract.getCustomerCode().compareToIgnoreCase(customerCode) != 0) {
+            return false;
+        }
+        return true;
     }
     public String getPassword() {
         return password;

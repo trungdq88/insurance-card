@@ -47,25 +47,25 @@
 
             <div class="form-group">
                 <div class="col-sm-3 control-label">
-                    <input type="radio" name="request:payment" value="direct" onclick="{
+                    <input type="radio" name="request:payment" value="paypal" onclick="{
                         $('.tranformCost').removeClass('hide');
                         $('.newCardCost').removeClass('hide');
-                        $('#total_Cost').val(parseFloat($('#newCard_Cost').val()) + parseFloat($('#transform_Cost').val()) + ' VND');
+                        $('#total_Cost').text((parseFloat($('#newCard_Cost').val()) + parseFloat($('#transform_Cost').val())).formatMoney(0));
                     }" checked>
                 </div>
                 <div class="col-sm-5">
-                    <p class="form-control-static">Thanh toán trực tiếp (tại công ty)</p>
+                    <p class="form-control-static">Thanh toán qua PayPal</p>
                 </div>
             </div>
             <div class="form-group">
                 <div class="col-sm-3 control-label">
-                    <input type="radio" name="request:payment" value="paypal" onclick="{
+                    <input type="radio" name="request:payment" value="direct" onclick="{
+                    $('#total_Cost').text(parseFloat($('#newCard_Cost').val()).formatMoney(0));
                     $('.tranformCost').addClass('hide');
-                    $('#total_Cost').val(parseFloat($('#newCard_Cost').val()) + ' VND');
                     }">
                 </div>
                 <div class="col-sm-5">
-                    <p class="form-control-static">Paypal</p>
+                    <p class="form-control-static">Thanh toán trực tiếp (tại công ty)</p>
                 </div>
             </div>
 
@@ -74,7 +74,7 @@
                 <label class="col-sm-3 control-label">Phí Làm Thẻ Mới:</label>
 
                 <div class="col-sm-5">
-                    <p class="form-control-static">${newCardFee} VND <input class="hide" id="newCard_Cost" name="newCardFee"
+                    <p class="form-control-static"><span id="newCard_Cost1"></span> VND <input class="hide" id="newCard_Cost" name="newCardFee"
                                                                     value="${newCardFee}"/></p>
                 </div>
             </div>
@@ -82,7 +82,7 @@
                 <label class="col-sm-3 control-label">Phí Vận Chuyển: </label>
 
                 <div class="col-sm-5">
-                    <p class="form-control-static">${transformFee} VND <input class="hide" id="transform_Cost" name="transformFee"
+                    <p class="form-control-static"><span id="transform_Cost1"></span> VND <input class="hide" id="transform_Cost" name="transformFee"
                                                                     value="${transformFee}"/></p>
                 </div>
             </div>
@@ -102,8 +102,7 @@
                     <input type="hidden" name="request:contractCode" value="${contractCode}">
                     <input type="hidden" name="request:customerCode" value="${customerCode}">
                     <input type="hidden" name="action" value="createNewCardRequest">
-                    <button type="submit" class="btn btn-success">
-                        <i class="fa fa-plus"></i>
+                    <button type="submit" class="btn btn-primary">
                         Xác nhận
                     </button>
                     <%--<button type="submit" class="btn btn-cancel">Hủy Bỏ</button>--%>
@@ -119,7 +118,19 @@
 
 <%@ include file="_shared/footer.jsp" %>
 <script language="JavaScript">
+    Number.prototype.formatMoney = function(c, d, t){
+        var n = this,
+                c = isNaN(c = Math.abs(c)) ? 2 : c,
+                d = d == undefined ? "." : d,
+                t = t == undefined ? "," : t,
+                s = n < 0 ? "-" : "",
+                i = parseInt(n = Math.abs(+n || 0).toFixed(c)) + "",
+                j = (j = i.length) > 3 ? j % 3 : 0;
+        return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
+    };
     $('.tranformCost').removeClass('hide');
     $('.newCardCost').removeClass('hide');
-    $('#total_Cost').text(parseFloat($('#newCard_Cost').val()) + parseFloat($('#transform_Cost').val()));
+    $('#total_Cost').text((parseFloat($('#newCard_Cost').val()) + parseFloat($('#transform_Cost').val())).formatMoney(0));
+    $('#newCard_Cost1').text(parseFloat($('#newCard_Cost').val()).formatMoney(0));
+    $('#transform_Cost1').text(parseFloat($('#transform_Cost').val()).formatMoney(0));
 </script>

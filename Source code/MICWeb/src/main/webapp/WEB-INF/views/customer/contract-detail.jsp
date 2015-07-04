@@ -40,6 +40,7 @@
         position: absolute;
 
     }
+
     .tooltip-arrow {
         display: none;
     }
@@ -261,6 +262,9 @@
                     </ul>
                 </div>
             </c:if>
+            <div class="text-info text-center">
+                ${message}
+            </div>
             <c:if test="${contract.status.equalsIgnoreCase('Request cancel')}">
                 <form action="${pageContext.request.contextPath}/customer/contract" method="post">
                     <div class="well well-lg text-center text-danger " style="height:128px !important;">
@@ -456,20 +460,22 @@
                         luật
                         GT</a>
                 </li>
-                <form action="${pageContext.request.contextPath}/customer/card" method="post">
-                <div class="pull-right">
-                    <%--<a href="${pageContext.request.contextPath}/customer/card?action=newCard&code=${param.code}"--%>
-                       <%--class="btn btn-sm btn-success">--%>
-                        <%--<i class="fa fa-plus"></i>--%>
-                        <%--Yêu cầu thẻ mới--%>
-                    <%--</a>--%>
-                    <button type="submit" class="btn btn-success">
-                        <i class="fa fa-plus"></i> Yêu cầu thẻ mới
-                    </button>
-                    <input type="hidden" name="action" value="newCard">
-                    <input type="hidden" name="contractCode" value="${contract.contractCode}">
-                </div>
+                <c:if test="${contract.status.equalsIgnoreCase('Ready') }">
+                    <form action="${pageContext.request.contextPath}/customer/card" method="post">
+                        <div class="pull-right">
+                                <%--<a href="${pageContext.request.contextPath}/customer/card?action=newCard&code=${param.code}"--%>
+                                <%--class="btn btn-sm btn-success">--%>
+                                <%--<i class="fa fa-plus"></i>--%>
+                                <%--Yêu cầu thẻ mới--%>
+                                <%--</a>--%>
+                            <button type="submit" class="btn btn-success">
+                                <i class="fa fa-plus"></i> Yêu cầu thẻ mới
+                            </button>
+                            <input type="hidden" name="action" value="newCard">
+                            <input type="hidden" name="contractCode" value="${contract.contractCode}">
+                        </div>
                     </form>
+                </c:if>
             </ul>
         </div>
         <br/>
