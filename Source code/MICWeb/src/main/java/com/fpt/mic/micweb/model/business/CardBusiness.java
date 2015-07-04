@@ -2,6 +2,7 @@ package com.fpt.mic.micweb.model.business;
 
 import com.fpt.mic.micweb.model.dao.CardDao;
 import com.fpt.mic.micweb.model.dao.helper.NewCardRequestDao;
+import com.fpt.mic.micweb.model.dto.NotificationBuilder;
 import com.fpt.mic.micweb.model.dto.form.NewCardRequestDto;
 import com.fpt.mic.micweb.model.entity.CardEntity;
 import com.fpt.mic.micweb.model.entity.NewCardRequestEntity;
@@ -34,7 +35,7 @@ public class CardBusiness {
         }
         return false;
     }
-    public boolean requestNewCard(NewCardRequestDto newCardRequestDto){
+    public boolean requestNewCardRequest(NewCardRequestDto newCardRequestDto){
         NewCardRequestDao newCardRequestDao = new NewCardRequestDao();
         CardDao cardDao = new CardDao();
         NewCardRequestEntity newCardRequestEntity  = new NewCardRequestEntity();
@@ -43,7 +44,14 @@ public class CardBusiness {
         newCardRequestEntity.setOldCardId(cardEntity.getCardId());
         newCardRequestEntity.setNote(newCardRequestDto.getNote());
         newCardRequestEntity.setRequestDate(new Timestamp(new Date().getTime()));
-        if (newCardRequestDao.create(newCardRequestEntity) != null) {
+        NewCardRequestEntity entity = newCardRequestDao.create(newCardRequestEntity);
+        if (entity != null) {
+
+            // Send notification
+            NewCardRequestEntity notifEntity = newCardRequestDao.read(entity.getId());
+            NotificationBusiness bus = new NotificationBusiness();
+            bus.send(NotificationBuilder.customerSendNewCardRequest(notifEntity));
+
             return true;
         }
         return false;
