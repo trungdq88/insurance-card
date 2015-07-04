@@ -5,7 +5,6 @@ import com.fpt.mic.micweb.model.entity.ContractEntity;
 import com.fpt.mic.micweb.model.entity.NewCardRequestEntity;
 import com.fpt.mic.micweb.model.entity.helper.NotificationEntity;
 import com.fpt.mic.micweb.utils.DateUtils;
-import com.sun.nio.sctp.Notification;
 
 import java.sql.Timestamp;
 import java.util.Date;
@@ -95,7 +94,7 @@ public class NotificationBuilder {
      * @param contractEntity
      * @return
      */
-    public static NotificationEntity contractNearlyExpired(ContractEntity contractEntity) {
+    public static NotificationEntity contractNearlyExpired(ContractEntity contractEntity, int type) {
         NotificationEntity entity = new NotificationEntity();
         String content = "Hợp đồng %s sẽ hết hạn trong %s ngày nữa";
         entity.setContent(String.format(content,
@@ -103,7 +102,7 @@ public class NotificationBuilder {
                 DateUtils.dateBetween(new Timestamp(new Date().getTime()),
                         contractEntity.getExpiredDate())));
         entity.setCreatedDate(new Timestamp(new Date().getTime()));
-        entity.setType(NotificationEntity.Type.CONTRACT_NEARLY_EXPIRED);
+        entity.setType(type);
         entity.setExtraData(contractEntity.getContractCode());
         entity.setReceiver("^" + contractEntity.getCustomerCode() + "$");
         entity.setMethod(NotificationEntity.Method.WEB & NotificationEntity.Method.EMAIL);

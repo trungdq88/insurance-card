@@ -16,7 +16,9 @@ public class NotificationEntity {
         public static final int CUSTOMER_CREATE_CONTRACT = 1;
         public static final int CUSTOMER_SEND_COMPENSATION = 2;
         public static final int CUSTOMER_SEND_NEW_CARD_REQUEST = 3;
-        public static final int CONTRACT_NEARLY_EXPIRED = 4;
+        public static final int CONTRACT_NEARLY_EXPIRED_1 = 41;
+        public static final int CONTRACT_NEARLY_EXPIRED_2 = 42;
+        public static final int CONTRACT_NEARLY_EXPIRED_3 = 43;
         public static final int CONTRACT_EXPIRED = 5;
         public static final int CUSTOMER_REQUEST_CANCEL = 6;
         public static final int CONTRACT_CANCELLED_NO_PAYMENT = 7;
@@ -144,7 +146,9 @@ public class NotificationEntity {
     public String generateRelatedLink(String role) {
         switch (type) {
             case Type.CUSTOMER_CREATE_CONTRACT:
-            case Type.CONTRACT_NEARLY_EXPIRED:
+            case Type.CONTRACT_NEARLY_EXPIRED_1:
+            case Type.CONTRACT_NEARLY_EXPIRED_2:
+            case Type.CONTRACT_NEARLY_EXPIRED_3:
             case Type.CONTRACT_EXPIRED:
             case Type.CUSTOMER_REQUEST_CANCEL:
             case Type.CONTRACT_CANCELLED_NO_PAYMENT:
