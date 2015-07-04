@@ -23,12 +23,17 @@ public class NotificationBusiness {
         int type41 = NotificationEntity.Type.CONTRACT_NEARLY_EXPIRED_1;
         int type42 = NotificationEntity.Type.CONTRACT_NEARLY_EXPIRED_2;
         int type43 = NotificationEntity.Type.CONTRACT_NEARLY_EXPIRED_3;
-        NotificationEntity existsNotif = dao.isNotified(entity.getExtraData());
-        if ((entity.getType() == type41 ||
+
+        if (entity.getType() == type41 ||
                 entity.getType() == type42 ||
-                entity.getType() == type43) && existsNotif != null) {
-            // No need to do anything;
-            return existsNotif;
+                entity.getType() == type43) {
+
+            NotificationEntity existsNotif = dao.isNotified(entity.getType(),
+                    entity.getExtraData());
+            if (existsNotif != null) {
+                // No need to do anything;
+                return existsNotif;
+            }
         }
 
         // If reached here, create the notification

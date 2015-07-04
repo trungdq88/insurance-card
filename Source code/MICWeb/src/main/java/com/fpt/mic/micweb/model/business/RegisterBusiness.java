@@ -57,6 +57,12 @@ public class RegisterBusiness {
         contractEntity.setCustomerCode(customerCode);
 
         ContractEntity contract = contractDao.create(contractEntity);
+
+        // Send notification
+        NotificationBusiness notif = new NotificationBusiness();
+        ContractEntity notifContract = contractDao.read(contract.getContractCode());
+        notif.send(NotificationBuilder.customerCreateContract(notifContract));
+
         registerInformationDto.setCustomerEntity(customerEntity);
         registerInformationDto.setContractEntity(contractEntity);
         registerInformationDto.setExistCustomer(true);
@@ -123,8 +129,7 @@ public class RegisterBusiness {
 
                 // Send notification
                 NotificationBusiness notif = new NotificationBusiness();
-                ContractDao dao = new ContractDao();
-                ContractEntity notifContract = dao.read(contract.getContractCode());
+                ContractEntity notifContract = contractDao.read(contract.getContractCode());
                 notif.send(NotificationBuilder.customerCreateContract(notifContract));
 
                 return new RegisterInformationDto(contract, customer, emailSuccess);

@@ -66,8 +66,8 @@ public class SchedulerBusiness {
             }
             if (type > 0) {
                 bus.send(NotificationBuilder.contractNearlyExpired(contractEntity, type));
+                return true;
             }
-            return true;
         }
         return false;
     }
