@@ -3,6 +3,7 @@ package com.fpt.mic.micweb.controller.customer;
 import com.fpt.mic.micweb.controller.common.AuthController;
 import com.fpt.mic.micweb.framework.Paginator;
 import com.fpt.mic.micweb.framework.responses.RedirectTo;
+import com.fpt.mic.micweb.model.business.CompensationBusiness;
 import com.fpt.mic.micweb.model.business.ContractBusiness;
 import com.fpt.mic.micweb.model.business.CustomerBusiness;
 import com.fpt.mic.micweb.model.business.RegisterBusiness;
@@ -12,6 +13,7 @@ import com.fpt.mic.micweb.model.dto.UserDto;
 import com.fpt.mic.micweb.model.dto.form.CancelContractDto;
 import com.fpt.mic.micweb.model.dto.form.ConcurrencyDto;
 import com.fpt.mic.micweb.model.dto.form.CustomerCreateContractDto;
+import com.fpt.mic.micweb.model.entity.CompensationEntity;
 import com.fpt.mic.micweb.model.entity.ContractEntity;
 import com.fpt.mic.micweb.framework.responses.JspPage;
 import com.fpt.mic.micweb.framework.R;
@@ -45,15 +47,16 @@ public class ContractController extends AuthController {
     public ResponseObject getNewContract(R r) {
         ContractBusiness contractBusiness = new ContractBusiness();
         List<ContractTypeEntity> list = contractBusiness.getAllContractType();
-        HashMap<Integer,ContractTypeEntity> mapContractType = new HashMap<Integer, ContractTypeEntity>();
-        for (int i = 0; i< list.size();i++) {
-            mapContractType.put(list.get(i).getId(),list.get(i));
+        HashMap<Integer, ContractTypeEntity> mapContractType = new HashMap<Integer, ContractTypeEntity>();
+        for (int i = 0; i < list.size(); i++) {
+            mapContractType.put(list.get(i).getId(), list.get(i));
         }
-        r.equest.setAttribute("mapContractType",mapContractType);
+        r.equest.setAttribute("mapContractType", mapContractType);
         return new JspPage("customer/contract-new.jsp");
     }
+
     public ResponseObject getReviewNewContract(R r) {
-        CustomerCreateContractDto customerCreateContractDto = (CustomerCreateContractDto) r.ead.entity(CustomerCreateContractDto.class,"contract");
+        CustomerCreateContractDto customerCreateContractDto = (CustomerCreateContractDto) r.ead.entity(CustomerCreateContractDto.class, "contract");
         // Gọi hàm validate ở đây
         List errors = r.ead.validate(customerCreateContractDto);
 
@@ -69,13 +72,13 @@ public class ContractController extends AuthController {
         r.equest.setAttribute("startDate", r.equest.getParameter("contract:startDate"));
         r.equest.setAttribute("submitted", customerCreateContractDto);
         ContractBusiness contractBusiness = new ContractBusiness();
-        r.equest.setAttribute("contractTypeName",contractBusiness.getContractType(customerCreateContractDto.getContractType()).getName());
+        r.equest.setAttribute("contractTypeName", contractBusiness.getContractType(customerCreateContractDto.getContractType()).getName());
         return new JspPage("customer/contract-review.jsp");
     }
 
     public ResponseObject getCreateContract(R r) {
         String url = "public/error.jsp";
-        CustomerCreateContractDto customerCreateContractDto = (CustomerCreateContractDto) r.ead.entity(CustomerCreateContractDto.class,"contract");
+        CustomerCreateContractDto customerCreateContractDto = (CustomerCreateContractDto) r.ead.entity(CustomerCreateContractDto.class, "contract");
         // Gọi hàm validate ở đây
         List errors = r.ead.validate(customerCreateContractDto);
 
@@ -107,8 +110,8 @@ public class ContractController extends AuthController {
 
             session.setAttribute("CONTRACT_CODE", register.getContractEntity().getContractCode());
             session.setAttribute("SUCCESS_URL", "/customer/contract?action=activeCreateContract");
-            session.setAttribute("cancel_message","Bạn đã hủy thanh toán. Xin vui lòng thực hiện lại hoặc đến thanh toán trực tiếp");
-            session.setAttribute("redirectLink","/customer/contract");
+            session.setAttribute("cancel_message", "Bạn đã hủy thanh toán. Xin vui lòng thực hiện lại hoặc đến thanh toán trực tiếp");
+            session.setAttribute("redirectLink", "/customer/contract");
 
             r.equest.setAttribute("register", register);
             return new JspPage("public/register-payment.jsp");
@@ -170,9 +173,11 @@ public class ContractController extends AuthController {
 
     public ResponseObject getContractDetail(R r) {
         CustomerBusiness customerBusiness = new CustomerBusiness();
+        final CompensationBusiness compensationBusiness = new CompensationBusiness();
         String customerCode = ((CustomerEntity) getLoggedInUser()).getCustomerCode();
-        String code = r.equest.getParameter("code");
+        final String code = r.equest.getParameter("code");
         ContractEntity contract = customerBusiness.getContractDetail(code);
+
         if (contract == null || contract.getCustomerCode().compareToIgnoreCase(customerCode) != 0) {
             return new RedirectTo("/error/404");
         } else {
@@ -181,7 +186,23 @@ public class ContractController extends AuthController {
                     Constants.Session.CONCURRENCY + contract.getContractCode(),
                     contract.getLastModified());
 
+            // compensation region
+            Paginator compensationPaginator = new Paginator();
+            compensationPaginator.setGetItemsCallback(new Paginator.IGetItems() {
+                @Override
+                public List getItems(int offset, int count) {
+                    return compensationBusiness.getAllCompensationByContractCode(code, offset, count);
+                }
+            });
+            compensationPaginator.setGetItemSizeCallback(new Paginator.IGetItemSize() {
+                @Override
+                public Long getItemSize() {
+                    return compensationBusiness.getAllCompensationByContractCodeCount(code);
+                }
+            });
+            //
             r.equest.setAttribute("contract", contract);
+            r.equest.setAttribute("compensationPaginator", compensationPaginator);
             return new JspPage("customer/contract-detail.jsp");
         }
     }
@@ -432,6 +453,7 @@ public class ContractController extends AuthController {
             return new JspPage("customer/message.jsp");
         }
     }
+
     public ResponseObject getActiveCreateContract(R r) {
         String errorUrl = "/error/404";
         HttpSession session = r.equest.getSession(false);
@@ -470,10 +492,9 @@ public class ContractController extends AuthController {
                 session.removeAttribute("TOKEN");
                 r.equest.setAttribute("message", "Thanh toán thành công");
                 return new JspPage(returnUrl);
-            }
-            else {
+            } else {
                 session.removeAttribute("cancel_message");
-                r.equest.setAttribute("cancel_message",result);
+                r.equest.setAttribute("cancel_message", result);
                 return new JspPage("/public/cancel.jsp");
             }
         }

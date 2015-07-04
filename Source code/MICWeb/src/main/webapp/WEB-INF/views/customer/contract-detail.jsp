@@ -40,6 +40,7 @@
         position: absolute;
 
     }
+
     .tooltip-arrow {
         display: none;
     }
@@ -444,10 +445,10 @@
         <div role="tabpanel">
             <!-- Nav tabs -->
             <ul class="nav nav-tabs" role="tablist">
-                <li role="presentation" class="active">
+                <li role="presentation">
                     <a href="#commonInfo" aria-controls="profile" role="tab" data-toggle="tab">Thông Tin Chung</a>
                 </li>
-                <li role="presentation">
+                <li role="presentation" class="active">
                     <a href="#compensations" aria-controls="profile" role="tab" data-toggle="tab">Lịch sử bồi
                         thường</a>
                 </li>
@@ -461,7 +462,7 @@
         <br/>
 
         <div class="tab-content">
-            <div role="tabpanel" class="tab-pane active" id="commonInfo">
+            <div role="tabpanel" class="tab-pane " id="commonInfo">
 
                 <%--<div class="col-md-5">--%>
                 <%--<img src="http://finefrugality.files.wordpress.com/2012/06/handshake.jpg" width="100%" height="100%">--%>
@@ -733,7 +734,7 @@
                 </div>
             </div>
 
-            <div role="tabpanel" class="tab-pane" id="compensations">
+            <div role="tabpane1" class="tab-pane active" id="compensations">
                 <div class="row">
                     <div class="col-lg-12">
                           <span class="pull-right">
@@ -743,12 +744,11 @@
                     </div>
 
                 </div>
-
                 <div class="panel panel-default">
                     <div class="panel panel-heading">
                         <div class="pull-left">
                             <!--<input type="checkbox" class="check-all"/>-->
-                            <b>Có 200 Vụ Bồi Thường</b>
+                            <b>Có ${compensationPaginator.itemSize} Vụ Bồi Thường</b>
                         </div>
                         <div class="pull-right ">
                             <input type="text" class="form-control long-text-box"
@@ -778,143 +778,80 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr class="active">
-                                    <td class="text-center">1</td>
-                                    <td class="text-center"><a
-                                            href="${pageContext.request.contextPath}/customer/compensation?action=detail">COM736</a>
-                                    </td>
-                                    <td class="text-center"><a href="detail-contract.html">BHBB374</a></td>
-                                    <td class="text-center"><a href="detail-customer.html">Đinh Quang Trung</a></td>
-                                    <td class="text-center">04/05/2015</td>
-                                    <td class="text-center"><span class="label label-warning">Đang giải quyết</span>
-                                    </td>
-                                </tr>
-                                <tr class="">
-                                    <td class="text-center">2</td>
-                                    <td class="text-center"><a
-                                            href="${pageContext.request.contextPath}/customer/compensation?action=detail">COM736</a>
-                                    </td>
-                                    <td class="text-center"><a href="detail-contract.html">BHBB374</a></td>
-                                    <td class="text-center"><a href="detail-customer.html">Đinh Quang Trung</a></td>
-                                    <td class="text-center">04/05/2015</td>
-                                    <td class="text-center"><span class="label label-warning">Đang giải quyết</span>
-                                    </td>
-                                </tr>
-                                <tr class="active">
-                                    <td class="text-center">3</td>
-                                    <td class="text-center"><a
-                                            href="${pageContext.request.contextPath}/customer/compensation?action=detail">COM736</a>
-                                    </td>
-                                    <td class="text-center"><a href="detail-contract.html">BHBB374</a></td>
-                                    <td class="text-center"><a href="detail-customer.html">Đinh Quang Trung</a></td>
-                                    <td class="text-center">04/05/2015</td>
-                                    <td class="text-center"><span class="label label-warning">Đang giải quyết</span>
-                                    </td>
-                                </tr>
-                                <tr class="">
-                                    <td class="text-center">4</td>
-                                    <td class="text-center"><a
-                                            href="${pageContext.request.contextPath}/customer/compensation?action=detail">COM736</a>
-                                    </td>
-                                    <td class="text-center"><a href="detail-contract.html">BHBB374</a></td>
-                                    <td class="text-center"><a href="detail-customer.html">Đinh Quang Trung</a></td>
-                                    <td class="text-center">04/05/2015</td>
-                                    <td class="text-center"><span class="label label-warning">Đang giải quyết</span>
-                                    </td>
-                                </tr>
-                                <tr class="active">
-                                    <td class="text-center">5</td>
-                                    <td class="text-center"><a
-                                            href="${pageContext.request.contextPath}/customer/compensation?action=detail">COM736</a>
-                                    </td>
-                                    <td class="text-center"><a href="detail-contract.html">BHBB374</a></td>
-                                    <td class="text-center"><a href="detail-customer.html">Đinh Quang Trung</a></td>
-                                    <td class="text-center">04/05/2015</td>
-                                    <td class="text-center"><span>10/10/2015</span></td>
-                                </tr>
-                                <tr class="">
-                                    <td class="text-center">6</td>
-                                    <td class="text-center"><a
-                                            href="${pageContext.request.contextPath}/customer/compensation?action=detail">COM736</a>
-                                    </td>
-                                    <td class="text-center"><a href="detail-contract.html">BHBB374</a></td>
-                                    <td class="text-center"><a href="detail-customer.html">Đinh Quang Trung</a></td>
-                                    <td class="text-center">04/05/2015</td>
-                                    <td class="text-center"><span>10/10/2015</span></td>
-                                </tr>
-                                <tr class="active">
-                                    <td class="text-center">7</td>
-                                    <td class="text-center"><a
-                                            href="${pageContext.request.contextPath}/customer/compensation?action=detail">COM736</a>
-                                    </td>
-                                    <td class="text-center"><a href="detail-contract.html">BHBB374</a></td>
-                                    <td class="text-center"><a href="detail-customer.html">Đinh Quang Trung</a></td>
-                                    <td class="text-center">04/05/2015</td>
-                                    <td class="text-center"><span>10/10/2015</span></td>
-                                </tr>
-                                <tr class="">
-                                    <td class="text-center">8</td>
-                                    <td class="text-center"><a
-                                            href="${pageContext.request.contextPath}/customer/compensation?action=detail">COM736</a>
-                                    </td>
-                                    <td class="text-center"><a href="detail-contract.html">BHBB374</a></td>
-                                    <td class="text-center"><a href="detail-customer.html">Đinh Quang Trung</a></td>
-                                    <td class="text-center">04/05/2015</td>
-                                    <td class="text-center"><span>10/10/2015</span></td>
-                                </tr>
-                                <tr class="active">
-                                    <td class="text-center">9</td>
-                                    <td class="text-center"><a
-                                            href="${pageContext.request.contextPath}/customer/compensation?action=detail">COM736</a>
-                                    </td>
-                                    <td class="text-center"><a href="detail-contract.html">BHBB374</a></td>
-                                    <td class="text-center"><a href="detail-customer.html">Đinh Quang Trung</a></td>
-                                    <td class="text-center">04/05/2015</td>
-                                    <td class="text-center"><span>10/10/2015</span></td>
-                                </tr>
-                                <tr class="">
-                                    <td class="text-center">10</td>
-                                    <td class="text-center"><a
-                                            href="${pageContext.request.contextPath}/customer/compensation?action=detail">COM736</a>
-                                    </td>
-                                    <td class="text-center"><a href="detail-contract.html">BHBB374</a></td>
-                                    <td class="text-center"><a href="detail-customer.html">Đinh Quang Trung</a></td>
-                                    <td class="text-center">04/05/2015</td>
-                                    <td class="text-center"><span>10/10/2015</span></td>
-                                </tr>
+                                <c:set var="compensations"
+                                       value="${compensationPaginator.getItemsOnCurrentPage(param.page)}"/>
+                                <c:choose>
+                                    <c:when test="${compensations.size() == 0}">
+                                        <tr>
+                                            <td colspan="5" style="vertical-align: middle; text-align: center;">
+                                                Không có đền bù nào
+                                            </td>
+                                        </tr>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <c:forEach items="${compensationPaginator.getItemsOnCurrentPage(param.page)}"
+                                                   var="compensation"
+                                                   varStatus="counter">
+                                            <tr>
+                                                <td class="text-center">
+                                                        ${(compensationPaginator.getCurrentPage(param.page) - 1) * compensationPaginator.itemPerPage + counter.count}
+                                                </td>
+                                                <td class="text-center"><a
+                                                        href="${pageContext.request.contextPath}/customer/compensation?action=detail">
+                                                        ${compensation.compensationCode}</a>
+                                                </td>
+                                                <td class="text-center">
+                                                    <a href="detail-contract.html">${compensation.contractCode}</a>
+                                                </td>
+                                                <td class="text-center">
+                                                    <a href="detail-customer.html">${compensation.driverName}</a>
+                                                </td>
+                                                <td class="text-center">
+                                                        ${compensation.createdDate}
+                                                </td>
+                                                <td class="text-center">
+                                                        ${compensation.resolveDate}
+                                                </td>
+                                            </tr>
+                                        </c:forEach>
+                                    </c:otherwise>
+                                </c:choose>
+
                                 </tbody>
                             </table>
                         </div>
                         <div class="panel panel-footer">
                             <nav class="text-right">
                                 <ul class="pagination">
-                                    <li>
-                                        <a href="#" aria-label="Previous">
-                                            <span aria-hidden="true">&laquo;</span>
-                                        </a>
-                                    </li>
-                                    <li class="active"><a href="#">1</a></li>
-                                    <li><a href="#">2</a></li>
-                                    <li><a href="#">3</a></li>
-                                    <li><a href="#">4</a></li>
-                                    <li><a href="#">5</a></li>
-                                    <li>
-                                        <a href="#" aria-label="Next">
-                                            <span aria-hidden="true">&raquo;</span>
-                                        </a>
-                                    </li>
+                                    <c:if test="${param.page != 1 && not empty param.page}">
+                                        <li>
+                                            <a href="?action=${param.action}&keyword=${param.keyword}&page=1"
+                                               aria-label="Previous">
+                                                <span aria-hidden="true">Đầu</span>
+                                            </a>
+                                        </li>
+                                    </c:if>
+                                    <c:forEach begin="1" end="${compensationPaginator.pageSize}" var="pageNumber">
+                                        <li ${param.page == pageNumber ||(pageNumber == 1 && empty param.page) ? "class='active'": ""} >
+                                            <a href="?action=${param.action}&keyword=${param.keyword}&page=${pageNumber}">${pageNumber}</a>
+                                        </li>
+                                    </c:forEach>
+                                    <c:if test="${param.page != compensationPaginator.pageSize && compensationPaginator.pageSize != 1}">
+                                        <li>
+                                            <a href="?action=${param.action}&keyword=${param.keyword}&page=${compensationPaginator.pageSize}"
+                                               aria-label="Next">
+                                                <span aria-hidden="true">Cuối</span>
+                                            </a>
+                                        </li>
+                                    </c:if>
                                 </ul>
                             </nav>
                         </div>
-
-
                     </div>
                 </div>
-
-
             </div>
 
-            <div role="tabpanel" class="tab-pane" id="punishments">
+            <div role="tabpane1" class="tab-pane" id="punishments">
 
                 <div class="panel panel-default">
                     <div class="panel panel-heading">
@@ -969,7 +906,6 @@
 
                                 </tbody>
                             </table>
-
                         </div>
                     </div>
                     <div class="panel panel-footer">
@@ -994,17 +930,13 @@
                         </nav>
                     </div>
                 </div>
-
             </div>
         </div>
 
     </div>
 
-
 </div>
 <!-- /#page-wrapper -->
-
-
 </div>
 <!-- /#wrapper -->
 <script src="//www.paypalobjects.com/api/checkout.js" async></script>
