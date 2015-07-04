@@ -1,6 +1,7 @@
 package com.fpt.mic.micweb.model.business;
 
 import com.fpt.mic.micweb.model.dao.CompensationDao;
+import com.fpt.mic.micweb.model.dto.NotificationBuilder;
 import com.fpt.mic.micweb.model.dto.form.CreateCompensationDto;
 import com.fpt.mic.micweb.model.dto.form.EditCompensationDto;
 import com.fpt.mic.micweb.model.dto.form.ResolveCompensationDto;
@@ -67,6 +68,12 @@ public class CompensationBusiness {
         CompensationEntity newCompensation = compensationDao.create(compensationEntity);
 
         if (newCompensation != null) {
+
+            // Send notification
+            NotificationBusiness bus = new NotificationBusiness();
+            CompensationEntity notifCompensation = compensationDao.read(newCompensation.getCompensationCode());
+            bus.send(NotificationBuilder.customerSendCompensation(notifCompensation));
+
             return newCompensation;
         }
         return null;
