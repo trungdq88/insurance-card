@@ -2,6 +2,7 @@ package com.fpt.mic.micweb.model.business;
 
 import com.fpt.mic.micweb.model.dao.CompensationDao;
 import com.fpt.mic.micweb.model.dto.form.CreateCompensationDto;
+import com.fpt.mic.micweb.model.dto.form.ResolveCompensationDto;
 import com.fpt.mic.micweb.model.entity.CompensationEntity;
 import com.fpt.mic.micweb.model.entity.StaffEntity;
 import com.fpt.mic.micweb.utils.DateUtils;
@@ -23,6 +24,7 @@ public class CompensationBusiness {
         CompensationDao compensationDao = new CompensationDao();
         return compensationDao.getAllCompensationCount();
     }
+
     public CompensationEntity getCompensationDetail(String code) {
         CompensationDao compensationDao = new CompensationDao();
         return compensationDao.read(code);
@@ -70,6 +72,26 @@ public class CompensationBusiness {
         }
         return null;
     }
+
+    public boolean resolveCompensation(ResolveCompensationDto dto) {
+        CompensationDao compensationDao = new CompensationDao();
+        CompensationEntity compensationEntity = compensationDao.read(dto.getCompensationCode());
+
+        // Check compensation entity
+        if (compensationEntity != null) {
+            compensationEntity.setResolveDate(dto.getResolveDate());
+            compensationEntity.setDecision(dto.getDecision());
+            compensationEntity.setResolveNote(dto.getResolveNote());
+            // Concurrency set value
+            compensationEntity.setLastModified(DateUtils.currentTimeWithoutNanos());
+
+            if (compensationDao.update(compensationEntity) != null) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public Long getAllCompensationByContractCodeCount(String code) {
         CompensationDao compensationDao = new CompensationDao();
         return compensationDao.getAllCompensationByContractCodeCount(code);
