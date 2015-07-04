@@ -14,7 +14,8 @@
                 <h1 class="page-header">
                     ${compensation.compensationCode}
                     <div class="pull-right">
-                        <a href="#" type="button" class="btn btn-primary">
+                        <a href="${pageContext.request.contextPath}/staff/compensation?action=edit&code=${compensation.compensationCode}"
+                           type="button" class="btn btn-primary">
                             <i class="fa fa-pencil"></i> Chỉnh sửa yêu cầu
                         </a>
                     </div>
