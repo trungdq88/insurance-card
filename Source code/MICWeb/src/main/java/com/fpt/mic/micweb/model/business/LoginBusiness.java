@@ -66,4 +66,17 @@ public class LoginBusiness {
             return null;
         }
     }
+    public boolean checkPassword(String customerCode, String password){
+        CustomerDao customerDao = new CustomerDao();
+        // Try to find customer by email
+        CustomerEntity customerEntity = customerDao.read(customerCode);
+        if (customerEntity != null) {
+            // If customer found, check if password is correct
+            String encryptedPassword = StringUtils.getMD5Hash(password);
+            if (customerEntity.getPassword().equals(encryptedPassword)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

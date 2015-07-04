@@ -23,7 +23,6 @@ public class CompensationBusiness {
         CompensationDao compensationDao = new CompensationDao();
         return compensationDao.getAllCompensationCount();
     }
-
     public CompensationEntity getCompensationDetail(String code) {
         CompensationDao compensationDao = new CompensationDao();
         return compensationDao.read(code);
@@ -70,5 +69,13 @@ public class CompensationBusiness {
             return newCompensation;
         }
         return null;
+    }
+    public Long getAllCompensationByContractCodeCount(String code) {
+        CompensationDao compensationDao = new CompensationDao();
+        return compensationDao.getAllCompensationByContractCodeCount(code);
+    }
+    public List getAllCompensationByContractCode(String code, int offset, int count) {
+        CompensationDao compensationDao = new CompensationDao();
+        return compensationDao.getCompensationByContractCode(code, offset, count);
     }
 }

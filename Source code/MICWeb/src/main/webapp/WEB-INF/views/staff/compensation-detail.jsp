@@ -1,37 +1,58 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ include file="_shared/header.jsp"%>
+<%@ include file="_shared/header.jsp" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <div id="wrapper">
+
+    <c:set var="compensation" value="${requestScope.COMPENSATION}"/>
 
     <%@ include file="_shared/navigation.jsp" %>
     <div id="page-wrapper">
         <div class="row">
             <div class="col-lg-12">
                 <h1 class="page-header">
-                    Yêu cầu bồi thường COM384
+                    ${compensation.compensationCode}
                     <div class="pull-right">
-                        <span style="font-size: 40%" class="label label-warning">Đang giải quyết</span>
+                        <a href="#" type="button" class="btn btn-primary">
+                            <i class="fa fa-pencil"></i> Chỉnh sửa yêu cầu
+                        </a>
                     </div>
                 </h1>
             </div>
             <!-- /.col-lg-12 -->
         </div>
+
         <div class="row">
             <div class="col-lg-12">
-
                 <form class="form-horizontal">
-                    <fieldset>
-                        <legend>
-                            Thông tin hợp đồng
-                        </legend>
+                    <c:if test="${empty compensation.resolveDate}">
+                        <div class="alert alert-info">
+                            <p class="bs-example text-center text-uppercase">
+                                Yêu cầu bồi thường này chưa được giải quyết
+                            </p>
+                            <br/>
 
-                        <!-- Text input-->
+                            <p class="text-center">
+                                <button class="btn btn-primary" type="button" data-toggle="modal"
+                                        data-target="#resolve-compensation-modal">
+                                    <i class="fa fa-check"></i> Giải quyết yêu cầu
+                                </button>
+                            </p>
+                        </div>
+                    </c:if>
+
+                    <fieldset>
+                        <legend>Thông tin hợp đồng</legend>
+
                         <div class="form-group">
                             <label class="col-sm-4 control-label">Mã hợp đồng</label>
 
-                            <div class="col-sm-6">
-                                <div class="text-value text-primary">
-                                    <b><a href="detail-contract.html">BHBB374</a></b>
+                            <div class="col-sm-2">
+                                <div class="text-value">
+                                    <a href="${pageContext.request.contextPath}/staff/contract?action=detail&code=${compensation.contractCode}">
+                                        <strong>${compensation.contractCode}</strong>
+                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -39,173 +60,160 @@
                         <div class="form-group">
                             <label class="col-sm-4 control-label">Tên khách hàng</label>
 
-                            <div class="col-sm-6">
+                            <div class="col-sm-4">
                                 <div class="text-value">
-                                    <b><a href="detail-customer.html">Đinh Quang Trung</a></b>
+                                    <a href="detail-customer.html">
+                                        <b>${compensation.micContractByContractCode.micCustomerByCustomerCode.name}</b>
+                                    </a>
                                 </div>
                             </div>
                         </div>
-
                     </fieldset>
-
+                    <%--/Contract information--%>
                     <br/>
-                    <br/>
-
                     <fieldset>
-                        <legend>
-                            Thông tin yêu cầu bồi thường
-                        </legend>
+                        <legend>Thông tin yêu cầu bồi thường</legend>
 
-                        <!-- Text input-->
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">Ngày gởi yêu cầu</label>
+
+                            <div class="col-sm-3">
+                                <div class="text-value">
+                                    <fmt:formatDate value="${compensation.createdDate}" pattern="dd/MM/yyyy"/>
+                                </div>
+                            </div>
+                            <label class="col-sm-2 control-label">Trạng thái</label>
+
+                            <div class="col-sm-3">
+                                <div class="text-value">
+                                    <c:choose>
+                                        <c:when test="${empty compensation.resolveDate}">
+                                            <span class="label label-default">Chưa giải quyết</span>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <span class="label label-success">Đã giải quyết</span>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </div>
+                            </div>
+                        </div>
                         <div class="form-group">
                             <label class="col-sm-4 control-label">Họ tên lái xe</label>
 
                             <div class="col-sm-6">
-                                <div class="text-value">
-                                    Đinh Quang Trung
-                                </div>
+                                <div class="text-value">${compensation.driverName}</div>
                             </div>
                         </div>
-
                         <div class="form-group">
                             <label class="col-sm-4 control-label">Địa chỉ liên hệ</label>
 
-                            <div class="col-sm-6">
-                                <div class="text-value">
-                                    Phường Tân Chánh Hiệp, Q.12, TP HCM
-                                </div>
+                            <div class="col-sm-8">
+                                <div class="text-value">${compensation.driverAddress}</div>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-4 control-label">Biển số xe gây tai nạn</label>
+                            <label class="col-sm-4 control-label">Số điện thoại</label>
 
-                            <div class="col-sm-6">
-                                <div class="text-value">
-                                    93H3-8271
-                                </div>
+                            <div class="col-sm-3">
+                                <div class="text-value">${compensation.driverPhone}</div>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-4 control-label">Giấy phép lái xe số</label>
 
                             <div class="col-sm-3">
-                                <div class="text-value">
-                                    2831 9473 9472
-                                </div>
+                                <div class="text-value">${compensation.licenseNumber}</div>
                             </div>
                             <label class="col-sm-2 control-label">Hạng</label>
 
                             <div class="col-sm-3">
-                                <div class="text-value">
-                                    B2
-                                </div>
+                                <div class="text-value">${compensation.licenseType}</div>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-4 control-label">Trọng tải / số chỗ ngồi</label>
+                            <label class="col-sm-4 control-label">Biển số xe gây tai nạn</label>
 
-                            <div class="col-sm-3">
-                                <div class="text-value">
-                                    50kg
-                                </div>
+                            <div class="col-sm-2">
+                                <div class="text-value">${compensation.plate}</div>
                             </div>
-                            <label class="col-sm-2 control-label">Điện thoại</label>
+                            <label class="col-sm-3 control-label">Trọng tải/số chỗ ngồi</label>
 
-                            <div class="col-sm-3">
-                                <div class="text-value">
-                                    0987010234
-                                </div>
+                            <div class="col-sm-2">
+                                <div class="text-value">${compensation.vehicleCapacity}</div>
                             </div>
                         </div>
-
-
                         <div class="form-group">
-                            <label class="col-sm-4 control-label">Thời gian</label>
+                            <label class="col-sm-4 control-label">Ngày xảy ra tai nạn</label>
 
-                            <div class="col-sm-6">
+                            <div class="col-sm-4">
                                 <div class="text-value">
-                                    10/03/2015 lúc 10 giờ 25 phút
+                                    <fmt:formatDate value="${compensation.accidentDate}" pattern="dd/MM/yyyy"/>
                                 </div>
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label class="col-sm-4 control-label">Địa điểm</label>
+                            <label class="col-sm-4 control-label">Nơi xảy ra tai nạn</label>
 
-                            <div class="col-sm-6">
-                                <div class="text-value">
-                                    Chân cầu vượt Quang Trung, Tô Ký, Q.12, TP HCM
-                                </div>
+                            <div class="col-sm-8">
+                                <div class="text-value">${compensation.accidentPlace}</div>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label class="col-sm-4 control-label">Cơ quan CA giải quyết</label>
 
-                            <div class="col-sm-6">
-                                <div class="text-value">
-                                    Công an Phường Tân Chánh Hiệp
-                                </div>
+                            <div class="col-sm-8">
+                                <div class="text-value">${compensation.controlDepartment}</div>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label class="col-sm-4 control-label">Diễn biến và nguyên nhân</label>
 
-                            <div class="col-sm-6">
-                                <div class="text-value">
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                                    incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-                                    exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute
-                                    irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-                                    pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
-                                    deserunt mollit anim id est laborum.
-                                </div>
+                            <div class="col-sm-8">
+                                <div class="text-value">${compensation.description}</div>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-4 control-label">Thiệt hại về người</label>
 
-                            <div class="col-sm-6">
-                                <div class="text-value">
-                                    <p>- Sed ut perspiciatis unde omnis iste natus error sit.</p>
-
-                                    <p>- Voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
-
-                                    <p>- Eaque ipsa quae ab illo inventore veritatis et quasi.</p>
-                                </div>
+                            <div class="col-sm-8">
+                                <div class="text-value">${compensation.humanDamage}</div>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-4 control-label">Thiệt hại về tài sản</label>
 
-                            <div class="col-sm-6">
-                                <div class="text-value">
-                                    <p>- Sed ut perspiciatis unde omnis iste natus error sit.</p>
-
-                                    <p>- Voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
-
-                                    <p>- Eaque ipsa quae ab illo inventore veritatis et quasi.</p>
-                                </div>
+                            <div class="col-sm-8">
+                                <div class="text-value">${compensation.assetDamage}</div>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-4 control-label">Người làm chứng</label>
 
-                            <div class="col-sm-6">
-                                <div class="text-value">
-                                    Nguyễn Chí Kha
-                                </div>
+                            <div class="col-sm-8">
+                                <div class="text-value">${compensation.observer}</div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">Địa chỉ của người làm chứng</label>
+
+                            <div class="col-sm-8">
+                                <div class="text-value">${compensation.observerAddress}</div>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-4 control-label">Yêu cầu bồi thường</label>
 
-                            <div class="col-sm-6">
+                            <div class="col-sm-8">
                                 <div class="text-value">
-                                    At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis
-                                    praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias
-                                    excepturi sint occaecati cupiditate non provident.
+                                    <c:choose>
+                                        <c:when test="${empty compensation.compensationNote}">
+                                            <span class="empty-value">Không có</span>
+                                        </c:when>
+                                        <c:otherwise>${compensation.compensationNote}</c:otherwise>
+                                    </c:choose>
                                 </div>
                             </div>
                         </div>
@@ -214,73 +222,65 @@
 
                             <div class="col-sm-6">
                                 <div class="text-value">
-                                    <a href="#">BienbanCAPhuongTCH.jpg</a>
+                                    <c:choose>
+                                        <c:when test="${empty compensation.attachment}">
+                                            <span class="empty-value">Không có</span>
+                                        </c:when>
+                                        <c:otherwise>${compensation.attachment}</c:otherwise>
+                                    </c:choose>
                                 </div>
-                            </div>
-                        </div>
-
-                    </fieldset>
-                    <br/>
-                    <br/>
-                    <fieldset>
-                        <legend>
-                            Giải quyết yêu cầu bồi thường
-                        </legend>
-
-                        <!-- Text input-->
-                        <div class="form-group">
-                            <div class="col-sm-1">&nbsp;</div>
-                            <div class="col-sm-10">
-                                <div class="text-value">
-                                    <label for="note">Ghi chú của công ty bảo hiểm</label>
-                                    <textarea id="note" class="form-control" rows="7"></textarea>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label">Quyết định bồi thường</label>
-
-                            <div class="col-sm-6">
-                                <select class="form-control">
-                                    <option>Chưa quyết định</option>
-                                    <option>Chấp nhận bồi thường</option>
-                                    <option>Từ chối bồi thường</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label">Trạng thái</label>
-
-                            <div class="col-sm-6">
-                                <label class="text-value" style="font-weight: normal;">
-                                    <input type="checkbox"/>
-                                    Đã giải quyết xong
-                                </label>
                             </div>
                         </div>
                     </fieldset>
                     <br/>
-                    <br/>
-                    <p class="text-center">
-                        <a href="#" class="btn btn-primary">Lưu thay đổi</a>
-                    </p>
+                    <%--/Compensation information--%>
+                    <c:if test="${not empty compensation.resolveDate}">
+                        <fieldset>
+                            <legend>Thông tin giải quyết yêu cầu bồi thường</legend>
+
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">Ngày giải quyết yêu cầu</label>
+
+                                <div class="col-sm-4">
+                                    <div class="text-value">
+                                        <fmt:formatDate value="${compensation.resolveDate}" pattern="dd/MM/yyyy"/> lúc
+                                        <fmt:formatDate value="${compensation.resolveDate}" type="time"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">Quyết định bồi thường</label>
+
+                                <div class="col-sm-6">
+                                    <div class="text-value">${compensation.decision}</div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">Ghi chú của công ty bảo hiểm</label>
+
+                                <div class="col-sm-8">
+                                    <div class="text-value">
+                                        <c:choose>
+                                            <c:when test="${empty compensation.resolveNote}">
+                                                <span class="empty-value">Không có</span>
+                                            </c:when>
+                                            <c:otherwise>${compensation.resolveNote}</c:otherwise>
+                                        </c:choose>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </c:if>
                 </form>
                 <br/>
-                <br/>
-                <br/>
-                <br/>
-                <br/>
-                <br/>
-                <br/>
-                <br/>
-                <br/>
-                <br/>
-                <br/>
-                <br/>
-                <br/>
-                <br/>
-                <br/>
+
+                <div class="text-center">
+                    <a href="${pageContext.request.contextPath}/staff/compensation" type="button"
+                       class="btn btn-default">
+                        <i class="fa fa-arrow-left"></i> <strong>Danh sách yêu cầu bồi thường</strong>
+                    </a>
+                </div>
+                <br/> <br/>
             </div>
         </div>
     </div>
@@ -288,4 +288,4 @@
 <!-- /#wrapper -->
 
 
-<%@ include file="_shared/footer.jsp"%>
+<%@ include file="_shared/footer.jsp" %>

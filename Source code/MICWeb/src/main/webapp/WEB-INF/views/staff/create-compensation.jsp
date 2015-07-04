@@ -83,32 +83,11 @@
                             </div>
                         </div>
 
-                        <!-- Driver license -->
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label" for="licenseNumber">Giấy phép lái xe số *</label>
-
-                            <div class="col-sm-3">
-                                <input id="licenseNumber" name="compensation:licenseNumber" type="text"
-                                       class="form-control input-md"
-                                       required minlength="10" maxlength="15" placeholder="Ví dụ: 740118000357"
-                                       value="${submitted.licenseNumber}" title="Vui lòng nhập số GPLX">
-                            </div>
-
-                            <label class="col-sm-2 control-label" for="licenseType">Hạng *</label>
-
-                            <div class="col-sm-2">
-                                <input id="licenseType" name="compensation:licenseType"
-                                       class="form-control input-md" type="text"
-                                       required minlength="1" maxlength="15" placeholder="Ví dụ: A1"
-                                       value="${submitted.licenseType}" title="Vui lòng nhập hạng GPLX">
-                            </div>
-                        </div>
-
                         <!-- Address input -->
                         <div class="form-group">
                             <label class="col-sm-4 control-label" for="driverAddress">Địa chỉ *</label>
 
-                            <div class="col-sm-7">
+                            <div class="col-sm-8">
                                 <input id="driverAddress" name="compensation:driverAddress"
                                        class="form-control input-md"
                                        type="text" required minlength="3" maxlength="250"
@@ -127,6 +106,27 @@
                                        type="tel" required minlength="8" maxlength="15"
                                        pattern="[0-9]+" title="Vui lòng chỉ nhập số"
                                        value="${submitted.driverPhone}" placeholder="Ví dụ: 0933270393">
+                            </div>
+                        </div>
+
+                        <!-- Driver license -->
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label" for="licenseNumber">Giấy phép lái xe số *</label>
+
+                            <div class="col-sm-3">
+                                <input id="licenseNumber" name="compensation:licenseNumber" type="text"
+                                       class="form-control input-md"
+                                       required minlength="10" maxlength="15" placeholder="Ví dụ: 740118000357"
+                                       value="${submitted.licenseNumber}" title="Vui lòng nhập số GPLX">
+                            </div>
+
+                            <label class="col-sm-2 control-label" for="licenseType">Hạng *</label>
+
+                            <div class="col-sm-2">
+                                <input id="licenseType" name="compensation:licenseType"
+                                       class="form-control input-md" type="text"
+                                       required minlength="1" maxlength="15" placeholder="Ví dụ: A1"
+                                       value="${submitted.licenseType}" title="Vui lòng nhập hạng GPLX">
                             </div>
                         </div>
 
@@ -159,7 +159,7 @@
 
                         <!-- Accident date -->
                         <div class="form-group">
-                            <label class="col-sm-4 control-label" for="accidentDate">Ngày xảy ra tai nạn</label>
+                            <label class="col-sm-4 control-label" for="accidentDate">Ngày xảy ra tai nạn *</label>
 
                             <div class="col-sm-3">
                                 <input id="accidentDate" name="compensation:accidentDate"
@@ -172,7 +172,7 @@
                         <div class="form-group">
                             <label class="col-sm-4 control-label" for="accidentPlace">Nơi xảy ra tai nạn *</label>
 
-                            <div class="col-sm-7">
+                            <div class="col-sm-8">
                                 <input id="accidentPlace" name="compensation:accidentPlace"
                                        class="form-control input-md"
                                        type="text" required minlength="3" maxlength="250"
@@ -184,11 +184,9 @@
 
                         <!-- Control department -->
                         <div class="form-group">
-                            <label class="col-sm-4 control-label" for="controlDepartment">
-                                Cơ quan công an giải quyết *
-                            </label>
+                            <label class="col-sm-4 control-label" for="controlDepartment">Cơ quan CA giải quyết *</label>
 
-                            <div class="col-sm-6">
+                            <div class="col-sm-7">
                                 <input id="controlDepartment" name="compensation:controlDepartment"
                                        class="form-control input-md"
                                        type="text" required minlength="3" maxlength="250"
@@ -200,9 +198,7 @@
 
                         <!-- Description -->
                         <div class="form-group">
-                            <label class="col-sm-4 control-label" for="description">
-                                Diễn biến, nguyên nhân tai nạn *
-                            </label>
+                            <label class="col-sm-4 control-label" for="description">Diễn biến và nguyên nhân *</label>
 
                             <div class="col-sm-7">
                                 <textarea id="description" name="compensation:description" rows="4"
@@ -213,9 +209,7 @@
 
                         <!-- Human damage -->
                         <div class="form-group">
-                            <label class="col-sm-4 control-label" for="humanDamage">
-                                Tình hình thiệt hại về người *
-                            </label>
+                            <label class="col-sm-4 control-label" for="humanDamage">Thiệt hại về người *</label>
 
                             <div class="col-sm-7">
                                 <textarea id="humanDamage" name="compensation:humanDamage" rows="4"
@@ -226,9 +220,7 @@
 
                         <!-- Asset damage -->
                         <div class="form-group">
-                            <label class="col-sm-4 control-label" for="assetDamage">
-                                Tình hình thiệt hại về tài sản *
-                            </label>
+                            <label class="col-sm-4 control-label" for="assetDamage">Thiệt hại về tài sản *</label>
 
                             <div class="col-sm-7">
                                 <textarea id="assetDamage" name="compensation:assetDamage" rows="4"
@@ -256,7 +248,7 @@
                                 Địa chỉ của người làm chứng *
                             </label>
 
-                            <div class="col-sm-7">
+                            <div class="col-sm-8">
                                 <input id="observerAddress" name="compensation:observerAddress"
                                        class="form-control input-md"
                                        type="text" required minlength="3" maxlength="250"
@@ -269,7 +261,7 @@
                         <!-- Compensation note -->
                         <div class="form-group">
                             <label class="col-sm-4 control-label" for="compensationNote">
-                                Đề xuất bồi thường
+                                Biên bản của cơ quan CA
                             </label>
 
                             <div class="col-sm-7">

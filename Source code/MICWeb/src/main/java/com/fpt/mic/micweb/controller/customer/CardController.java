@@ -34,18 +34,40 @@ public class CardController extends AuthController {
         return new JspPage("/customer/card.jsp");
     }
 
-    public ResponseObject getNewCard(R r) {
+    public ResponseObject postNewCard(R r) {
+
+        String customerCode = ((CustomerEntity) getLoggedInUser()).getCustomerCode();
+        String contractCode = r.equest.getParameter("contractCode");
+        r.equest.setAttribute("contractCode",contractCode);
+        r.equest.setAttribute("customerCode",customerCode);
+        r.equest.setAttribute("newCardFee",50000);// add constant later
+        r.equest.setAttribute("transformFee",10000);
         return new JspPage("/customer/new-card-request.jsp");
     }
 
     public ResponseObject postCreateNewCardRequest(R r) {
         NewCardRequestDto newCardRequestDto = (NewCardRequestDto) r.ead.entity(NewCardRequestDto.class, "request");
-        CustomerBusiness customerBusiness = new CustomerBusiness();
+        String contractCode;
+        // Gọi hàm validate ở đây
+        List errors = r.ead.validate(newCardRequestDto);
+        // Nếu có lỗi khi validate
+        if (errors.size() > 0) {
+            // Gửi lỗi về trang JSP
+            r.equest.setAttribute("validateErrors", errors);
+            contractCode = r.equest.getParameter("contractCode");
+            r.equest.setAttribute("submitted",newCardRequestDto);
+            r.equest.setAttribute("contractCode",newCardRequestDto.getContractCode());
+            r.equest.setAttribute("newCardFee",50000);// add constant later
+            r.equest.setAttribute("transformFee",10000);
+            // Gửi dữ liệu mà người dùng đã nhập về trang JSP, gán vào biết submitted
+
+            return postNewCard(r);
+        }
         String customerCode = ((CustomerEntity) getLoggedInUser()).getCustomerCode();
         newCardRequestDto.setCustomerCode(customerCode);
 
         CardBusiness cardBusiness = new CardBusiness();
-        String contractCode = newCardRequestDto.getContractCode();
+        contractCode = newCardRequestDto.getContractCode();
         String message = "Hợp đồng chưa có thẻ bảo hiểm. Xin vui lòng đợi phát hành";
         if (cardBusiness.getCardByContractIncludeDeactive(contractCode).size() > 0) {
             message = "Bạn đã yêu cầu thẻ mới trước đó. Vui lòng chờ xử lý";
@@ -73,9 +95,9 @@ public class CardController extends AuthController {
 
             }
         }
-
-        r.equest.setAttribute("error",message);
-        return new JspPage("public/error.jsp");
+        errors.add(message);
+        r.equest.setAttribute("validateErrors", errors);
+        return postNewCard(r);
     }
 
     public ResponseObject getActiveNewCardRequest(R r) {

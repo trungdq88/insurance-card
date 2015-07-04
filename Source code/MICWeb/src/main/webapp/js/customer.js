@@ -39,7 +39,8 @@ $(document).ready(function () {
     });
 
 
-    $('#radio_CDO').attr('checked', true);
+    $('.tranformCost').removeClass('hide');
+    $('.newCardCost').removeClass('hide');
     $('#total_Cost').val(parseFloat($('#newCard_Cost').val()) + ' VND');
     $('#radio_Paypal').change(function () {
         $('.tranformCost').removeClass('hide');

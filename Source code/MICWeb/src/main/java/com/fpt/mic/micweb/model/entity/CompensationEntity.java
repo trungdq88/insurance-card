@@ -257,7 +257,15 @@ public class CompensationEntity {
     public void setResolveNote(String resolveNote) {
         this.resolveNote = resolveNote;
     }
+    @Basic
+    @Column(name = "contract_code")
+    public String getContractCode() {
+        return contractCode;
+    }
 
+    public void setContractCode(String contractCode) {
+        this.contractCode = contractCode;
+    }
 
     @Basic
     @Column(name = "last_modified")
@@ -305,7 +313,7 @@ public class CompensationEntity {
         if (resolveDate != null ? !resolveDate.equals(that.resolveDate) : that.resolveDate != null) return false;
         if (decision != null ? !decision.equals(that.decision) : that.decision != null) return false;
         if (resolveNote != null ? !resolveNote.equals(that.resolveNote) : that.resolveNote != null) return false;
-
+        if (contractCode != null ? !contractCode.equals(that.contractCode) : that.contractCode != null) return false;
         return true;
     }
 
@@ -333,18 +341,10 @@ public class CompensationEntity {
         result = 31 * result + (resolveDate != null ? resolveDate.hashCode() : 0);
         result = 31 * result + (decision != null ? decision.hashCode() : 0);
         result = 31 * result + (resolveNote != null ? resolveNote.hashCode() : 0);
+        result = 31 * result + (contractCode != null ? contractCode.hashCode() : 0);
         return result;
     }
 
-    @Basic
-    @Column(name = "contract_code")
-    public String getContractCode() {
-        return contractCode;
-    }
-
-    public void setContractCode(String contractCode) {
-        this.contractCode = contractCode;
-    }
 
     @ManyToOne
     @JoinColumn(name = "contract_code", referencedColumnName = "contract_code", nullable = false, insertable = false, updatable = false)

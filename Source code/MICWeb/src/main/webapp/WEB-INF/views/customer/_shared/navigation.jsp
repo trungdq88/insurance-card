@@ -56,37 +56,35 @@
 
     <div class="navbar-default sidebar" role="navigation">
 
-        <div class="sidebar-nav navbar-collapse">
-            <ul class="nav" id="side-menu">
-                <li>
-                    <a href="${pageContext.request.contextPath}/customer">
-                        <i class="fa fa-user fa-fw"></i> Thông tin cá nhân</a>
-                </li>
-                <li>
-                    <a href="${pageContext.request.contextPath}/customer/contract">
-                        <i class="fa fa-file-text-o fa-fw"></i> Hợp đồng</a>
-                </li>
-                <%--<li>--%>
-                <%--<a href="${pageContext.request.contextPath}/customer/punishment">Lịch Sử Vi Phạm</a>--%>
-                <%--</li>--%>
-                <%--<li>--%>
-                <%--<a href="${pageContext.request.contextPath}/customer/compensation">Lịch Sử Bồi Thường </a>--%>
-                <%--</li>--%>
-                <li>
-                    <a href="${pageContext.request.contextPath}/customer/card">
-                        <i class="fa fa-credit-card fa-fw"></i> Thông tin thẻ</a>
-                </li>
-                <li>
-                    <a href="${pageContext.request.contextPath}/customer/card?action=newCard">
-                        <i class="fa fa-exclamation fa-fw"></i> Yêu cầu thẻ mới</a>
-                </li>
-                <li>
-                    <a href="${pageContext.request.contextPath}/customer/payment">
-                        <i class="fa fa-dollar fa-fw"></i> Lịch sử giao dịch</a>
-                </li>
-            </ul>
-        </div>
-        <!-- /.sidebar-collapse -->
+    <div class="sidebar-nav navbar-collapse">
+      <ul class="nav" id="side-menu">
+        <li>
+          <a href="${pageContext.request.contextPath}/customer">
+            <i class="fa fa-user fa-fw"></i> Thông tin cá nhân</a>
+        </li>
+        <li>
+          <a href="${pageContext.request.contextPath}/customer/contract">
+            <i class="fa fa-file-text-o fa-fw"></i> Hợp đồng</a>
+        </li>
+        <%--<li>--%>
+          <%--<a href="${pageContext.request.contextPath}/customer/punishment">Lịch Sử Vi Phạm</a>--%>
+        <%--</li>--%>
+        <%--<li>--%>
+          <%--<a href="${pageContext.request.contextPath}/customer/compensation">Lịch Sử Bồi Thường </a>--%>
+        <%--</li>--%>
+        <li>
+          <a href="${pageContext.request.contextPath}/customer/card">
+            <i class="fa fa-credit-card fa-fw"></i> Thông tin thẻ</a>
+        </li>
+        <%--<li>--%>
+          <%--<a href="${pageContext.request.contextPath}/customer/card?action=newCard">--%>
+            <%--<i class="fa fa-exclamation fa-fw"></i> Yêu cầu thẻ mới</a>--%>
+        <%--</li>--%>
+        <li>
+          <a href="${pageContext.request.contextPath}/customer/payment">
+            <i class="fa fa-dollar fa-fw"></i> Lịch sử giao dịch</a>
+        </li>
+      </ul>
     </div>
     <!-- /.navbar-static-side -->
 </nav>
