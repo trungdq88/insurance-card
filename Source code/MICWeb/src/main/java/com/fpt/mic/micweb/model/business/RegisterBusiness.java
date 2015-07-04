@@ -10,13 +10,8 @@ import com.fpt.mic.micweb.model.dto.form.PublicRegisterFormDto;
 import com.fpt.mic.micweb.model.entity.ContractEntity;
 import com.fpt.mic.micweb.model.entity.CustomerEntity;
 import com.fpt.mic.micweb.model.entity.PaymentEntity;
-import com.fpt.mic.micweb.utils.Constants;
-import com.fpt.mic.micweb.utils.DateUtils;
-import com.fpt.mic.micweb.utils.EmailUtils;
-import com.fpt.mic.micweb.utils.StringUtils;
+import com.fpt.mic.micweb.utils.*;
 
-import javax.servlet.ServletContext;
-import java.io.InputStream;
 import java.sql.Timestamp;
 import java.util.Date;
 
@@ -72,7 +67,7 @@ public class RegisterBusiness {
 
     // register new contract by guest
     public RegisterInformationDto registerNewContract(
-            PublicRegisterFormDto publicRegisterFormDto, ServletContext context, String loginUrl) {
+            PublicRegisterFormDto publicRegisterFormDto, String loginUrl) {
         CustomerEntity customerEntity = new CustomerEntity();
         ContractEntity contractEntity = new ContractEntity();
 
@@ -125,7 +120,7 @@ public class RegisterBusiness {
             ContractEntity contract = contractDao.create(contractEntity);
             if (contract != null) {
                 // Send email
-                boolean emailSuccess = sendPasswordEmail(context, loginUrl, customerPassword, customer);
+                boolean emailSuccess = sendPasswordEmail(loginUrl, customerPassword, customer);
 
                 // Send notification
                 NotificationBusiness notif = new NotificationBusiness();
@@ -140,18 +135,16 @@ public class RegisterBusiness {
         return null;
     }
 
-    public boolean sendPasswordEmail(ServletContext context, String loginUrl, String customerPassword, CustomerEntity customer) {
+    public boolean sendPasswordEmail(String loginUrl, String customerPassword, CustomerEntity customer) {
         // Send password email
-        InputStream resourceAsStream =
-                context.getResourceAsStream("/WEB-INF/templates/password-email.html");
-        String content = StringUtils.getString(resourceAsStream);
+        String content = EmailTemplate.PASSWORD_EMAIL;
         boolean emailSuccess = false;
         if (content != null) {
             content = content
                     .replaceAll("\\{\\{customerCode\\}\\}", customer.getCustomerCode())
                     .replaceAll("\\{\\{password\\}\\}", customerPassword)
                     .replaceAll("\\{\\{loginUrl\\}\\}", loginUrl);
-            emailSuccess = EmailUtils.sendMail(customer.getEmail(), content);
+            emailSuccess = EmailUtils.sendMail(customer.getEmail(), EmailUtils.SUBJECT_NEW_CONTRACT, content);
         }
         return emailSuccess;
     }

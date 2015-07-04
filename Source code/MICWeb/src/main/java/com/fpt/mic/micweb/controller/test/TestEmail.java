@@ -4,6 +4,7 @@ import com.fpt.mic.micweb.framework.BasicController;
 import com.fpt.mic.micweb.framework.R;
 import com.fpt.mic.micweb.framework.responses.JsonString;
 import com.fpt.mic.micweb.framework.responses.ResponseObject;
+import com.fpt.mic.micweb.utils.EmailTemplate;
 import com.fpt.mic.micweb.utils.EmailUtils;
 import com.fpt.mic.micweb.utils.StringUtils;
 
@@ -17,9 +18,8 @@ import java.io.InputStream;
 @WebServlet(name = "TestEmail", urlPatterns = {"/testemail"})
 public class TestEmail extends BasicController {
     public ResponseObject getView(R r) {
-        InputStream resourceAsStream = getServletContext().getResourceAsStream("/WEB-INF/templates/password-email.html");
-        String content = StringUtils.getString(resourceAsStream);
-        boolean b = EmailUtils.sendMail("trungdq88@gmail.com", content);
+        String content = EmailTemplate.PASSWORD_EMAIL;
+        boolean b = EmailUtils.sendMail("trungdq88@gmail.com", EmailUtils.SUBJECT_NEW_CONTRACT, content);
         return new JsonString(b);
     }
 }
