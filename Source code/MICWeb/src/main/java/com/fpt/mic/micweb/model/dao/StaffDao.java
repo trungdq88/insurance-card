@@ -33,6 +33,13 @@ public class StaffDao extends IncrementDao<StaffEntity, String> {
         entityManager.close();
         return resultList;
     }
+    public List getAllNewCardRequests() {
+        EntityManager entityManager = factory.createEntityManager();
+        Query query = entityManager.createQuery("SELECT s FROM NewCardRequestEntity s");
+        List resultList = query.getResultList();
+        entityManager.close();
+        return resultList;
+    }
 
     /**
      * Get all staffs with offset and count
@@ -50,6 +57,16 @@ public class StaffDao extends IncrementDao<StaffEntity, String> {
         entity.close();
         return resultList;
     }
+    public List getOnePageNewCardRequest(int offset, int count) {
+        EntityManager entity = factory.createEntityManager();
+        String hql = "SELECT co FROM NewCardRequestEntity co ORDER BY co.resolveDate asc";
+        Query query = entity.createQuery(hql);
+        query.setFirstResult(offset);
+        query.setMaxResults(count);
+        List resultList = query.getResultList();
+        entity.close();
+        return resultList;
+    }
 
     public Long getAllStaffCount() {
         EntityManager entity = factory.createEntityManager();
@@ -60,6 +77,24 @@ public class StaffDao extends IncrementDao<StaffEntity, String> {
         return result;
     }
 
+    public Long getAllNewCardRequestCount() {
+        EntityManager entity = factory.createEntityManager();
+        String hql = "SELECT COUNT(co) FROM NewCardRequestEntity co ORDER BY co.id DESC";
+        Query query = entity.createQuery(hql);
+        Long result = (Long) query.getSingleResult();
+        entity.close();
+        return result;
+    }
+
+    public Long getUnresolvedNewCardRequestCount() {
+        EntityManager entity = factory.createEntityManager();
+        String hql = "SELECT COUNT(co) FROM NewCardRequestEntity co " +
+                "WHERE co.resolveDate = NULL ORDER BY co.id DESC";
+        Query query = entity.createQuery(hql);
+        Long result = (Long) query.getSingleResult();
+        entity.close();
+        return result;
+    }
     /**
      * Find staff by name
      * @param keyword

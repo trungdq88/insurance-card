@@ -8,7 +8,9 @@ import com.fpt.mic.micweb.model.entity.NewCardRequestEntity;
 
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by TriPQM on 07/03/2015.
@@ -18,6 +20,15 @@ public class CardBusiness {
         CardDao cardDao = new CardDao();
         CardEntity cardEntity = cardDao.getCardByContract(contractCode);
         return cardEntity;
+    }
+    public Map<Integer,String> getMappingWithNewCardRequest(){
+        Map<Integer,String> map = new HashMap<Integer, String>();
+        CardDao cardDao = new CardDao();
+        List<CardEntity> list = cardDao.getAllCard();
+        for (CardEntity cardEntity : list) {
+            map.put(cardEntity.getNewCardRequestId(),cardEntity.getCardId());
+        }
+        return map;
     }
     public List getCardByContractIncludeDeactive(String contractCode){
         CardDao cardDao = new CardDao();
