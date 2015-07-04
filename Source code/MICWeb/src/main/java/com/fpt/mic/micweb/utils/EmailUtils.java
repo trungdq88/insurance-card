@@ -36,7 +36,7 @@ public class EmailUtils {
             msg.setRecipients(Message.RecipientType.TO,
                     InternetAddress.parse(to, false));
             msg.setSubject(subject);
-            msg.setContent(content, "text/html");
+            msg.setContent(content, "text/html; charset=utf-8");
             msg.setHeader("X-Mailer", EMAIL_MAILER);
             msg.setSentDate(new Date());
             SMTPTransport t =
