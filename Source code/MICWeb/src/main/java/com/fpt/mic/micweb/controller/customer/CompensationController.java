@@ -73,7 +73,8 @@ public class CompensationController extends AuthController {
             return new RedirectTo("compensation?action=Detail&code=" + result.getCompensationCode());
         } else {
             msg = "Tạo yêu cầu bồi thường thất bại, vui lòng thử lại hoặc gởi email tới địa chỉ  hydrangea8604@gmail.com";
-            r.equest.setAttribute("MESSAGE", msg);
+            r.equest.setAttribute("result", msg);
+            r.equest.setAttribute("contractCode", dto.getContractCode());
             return new JspPage("customer/message.jsp");
         }
     }

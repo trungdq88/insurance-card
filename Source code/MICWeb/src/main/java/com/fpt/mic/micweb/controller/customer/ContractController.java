@@ -3,10 +3,7 @@ package com.fpt.mic.micweb.controller.customer;
 import com.fpt.mic.micweb.controller.common.AuthController;
 import com.fpt.mic.micweb.framework.Paginator;
 import com.fpt.mic.micweb.framework.responses.RedirectTo;
-import com.fpt.mic.micweb.model.business.CompensationBusiness;
-import com.fpt.mic.micweb.model.business.ContractBusiness;
-import com.fpt.mic.micweb.model.business.CustomerBusiness;
-import com.fpt.mic.micweb.model.business.RegisterBusiness;
+import com.fpt.mic.micweb.model.business.*;
 import com.fpt.mic.micweb.model.dto.CheckoutRequestDto;
 import com.fpt.mic.micweb.model.dto.RegisterInformationDto;
 import com.fpt.mic.micweb.model.dto.UserDto;
@@ -174,6 +171,7 @@ public class ContractController extends AuthController {
     public ResponseObject getDetail(R r) {
         CustomerBusiness customerBusiness = new CustomerBusiness();
         final CompensationBusiness compensationBusiness = new CompensationBusiness();
+        final PunishmentBusiness punishmentBusiness = new PunishmentBusiness();
         String customerCode = ((CustomerEntity) getLoggedInUser()).getCustomerCode();
         final String code = r.equest.getParameter("code");
         ContractEntity contract = customerBusiness.getContractDetail(code);
@@ -201,8 +199,23 @@ public class ContractController extends AuthController {
                 }
             });
             //
+            //punishment region
+            Paginator punishmentPaginator = new Paginator();
+            punishmentPaginator.setGetItemsCallback(new Paginator.IGetItems() {
+                @Override
+                public List getItems(int offset, int count) {
+                    return punishmentBusiness.getAllPunishmentByContractCode(code, offset, count);
+                }
+            });
+            punishmentPaginator.setGetItemSizeCallback(new Paginator.IGetItemSize() {
+                @Override
+                public Long getItemSize() {
+                    return punishmentBusiness.getAllPunishmentByContractCodeCount(code);
+                }
+            });
             r.equest.setAttribute("contract", contract);
             r.equest.setAttribute("compensationPaginator", compensationPaginator);
+            r.equest.setAttribute("punishmentPaginator", punishmentPaginator);
             return new JspPage("customer/contract-detail.jsp");
         }
     }

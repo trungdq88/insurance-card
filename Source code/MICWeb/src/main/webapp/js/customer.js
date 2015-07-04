@@ -251,4 +251,26 @@ $(document).ready(function () {
         var contractCode = $('#contractCode').val();
         $('#content3').val("Thanh toán cho hợp đồng " + contractCode);
     });
+    /**
+     * ---------------------------------Region add new punishment
+     */
+    $('input[type=file]').change(function(e){
+        var root = $(this).val();
+        var array = root.split('\\');
+        root = array[array.length -1];
+        $('#attch').val(root);
+    });
+    $("#contentPunishment").keydown(function (event) {
+        if ($.trim($('#notifyPunishment').val()) == 0) {
+            $('#notifyPunishment').addClass('hide');
+        }
+    });
+    $('#confirmPunishment').click(function () {
+        if ($.trim($('#contentPunishment').val())== 0) {
+            $('#notifyPunishment').removeClass('hide');
+            return false;
+        }
+        $('#titlePunishment').val($('#contentPunishment').val());
+    });
+
 });

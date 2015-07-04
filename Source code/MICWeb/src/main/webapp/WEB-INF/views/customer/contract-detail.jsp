@@ -752,13 +752,13 @@
                     </table>
                 </div>
             </div>
-
+            <%--------------------------------------COMPENSATION--------------------------------------------------%>
             <div role="tabpane1" class="tab-pane active" id="compensations">
                 <div class="row">
                     <div class="col-lg-12">
                           <span class="pull-right">
                             <form action="${pageContext.request.contextPath}/customer/compensation" method="get">
-                                <input type="hidden"name="action" value="Create">
+                                <input type="hidden" name="action" value="Create">
                                 <input type="hidden" name="contractCode" value="${contract.contractCode}">
                                 <button href="${pageContext.request.contextPath}/customer/compensation?action=create"
                                         type="submit"
@@ -822,20 +822,22 @@
                                                         ${(compensationPaginator.getCurrentPage(param.page) - 1) * compensationPaginator.itemPerPage + counter.count}
                                                 </td>
                                                 <td class="text-center"><a
-                                                href="${pageContext.request.contextPath}/customer/compensation?action=Detail&code=${compensation.compensationCode}">
+                                                        href="${pageContext.request.contextPath}/customer/compensation?action=Detail&code=${compensation.compensationCode}">
                                                         ${compensation.compensationCode}</a>
                                                 </td>
                                                 <td class="text-center">
-                                                    ${compensation.contractCode}
+                                                        ${compensation.contractCode}
                                                 </td>
                                                 <td class="text-center">
-                                                    ${compensation.driverName}
+                                                        ${compensation.driverName}
                                                 </td>
                                                 <td class="text-center">
-                                                        ${compensation.createdDate}
+                                                    <fmt:formatDate value='${compensation.createdDate}'
+                                                                    pattern='dd/MM/yyyy'/>
                                                 </td>
                                                 <td class="text-center">
-                                                        ${compensation.resolveDate}
+                                                    <fmt:formatDate value='${compensation.resolveDate}'
+                                                                    pattern='dd/MM/yyyy'/>
                                                 </td>
                                             </tr>
                                         </c:forEach>
@@ -875,59 +877,139 @@
                     </div>
                 </div>
             </div>
-
+            <%----------------------------------------------------------------------------------------------------%>
+            <%--------------------------------------PUNISHMENT----------------------------------------------------%>
             <div role="tabpane1" class="tab-pane" id="punishments">
 
+                <form action="${pageContext.request.contextPath}/customer/punishment" method="post">
+                    <div class="modal fade punishmentDialog" tabindex="-1" role="dialog"
+                         aria-labelledby="myLargeModalLabel"
+                         aria-hidden="true">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-body">
+                                    <div class="text-center alert alert-danger alert-dismissible hide"
+                                         id="notifyPunishment"
+                                         role="alert">
+                                        Nội dung vi phạm không được để trống
+                                    </div>
+                                    <div class="form-horizontal">
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label">Nội dung vi phạm</label>
+
+                                            <div class="col-sm-5">
+                                                <textarea rows="8" cols="80" id="contentPunishment"
+                                                          autofocus="autofocus">
+
+                                                </textarea>
+                                                <input type="hidden" id="titlePunishment"
+                                                       name="punishment:title">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label">Đính kèm</label>
+
+                                            <div class="col-sm-5" style="padding-top: 5px">
+                                                <input type="file" name="punishment:attachment" required
+                                                       title="Đính kèm ảnh vi phạm không được trống">
+                                                <input type="hidden" id="attch">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <%--Post to server (PersonalController)--%>
+                                    <input type="hidden" name="action" value="Create"/>
+                                    <input type="hidden" name="punishment:contractCode"
+                                           value="${contract.contractCode}"/>
+                                    <%---------------------------------------%>
+                                    <input id="confirmPunishment" type="submit" class="btn btn-primary" name="Xác Nhận"
+                                           value="Xác Nhận"/>
+                                    <input type="button" class="btn btn-danger" id="cancel" data-dismiss="modal"
+                                           value="Hủy Bỏ"/>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </form>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="pull-right">
+                            <button type="button" data-toggle="modal" data-target=".punishmentDialog"
+                                    class="btn btn-primary" title="Thêm vi phạm">
+                                Thêm vị phạm
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
                 <div class="panel panel-default">
+
                     <div class="panel panel-heading">
                         <div class="pull-left">
                             <!--<input type="checkbox" class="check-all"/>-->
-                            <b>Có 10 trường hợp vi phạm</b>
+                            <b>Có ${punishmentPaginator.itemSize} trường hợp vi phạm</b>
                         </div>
+
                         <div class="pull-right ">
                             <input type="text" class="form-control long-text-box"
-                                   placeholder="Tìm kiếm theo tên, mã hợp đồng"/>
+                                   placeholder="Tìm kiếm theo ngày vi phạm"/>
                             <input type="button" class="btn btn-default" value="Tìm kiếm"/>
-
                         </div>
                         <div class="clearfix"></div>
                     </div>
                     <div class="panel panel-body">
-
                         <div class="table table-responsive">
                             <table class="table table-bordered">
-                                <tbody>
+                                <thead>
                                 <tr>
-                                    <th class="col-md-2 text-center">
+                                    <th class="text-center">#
+                                    </th>
+                                    <th class="text-center">
                                         Ngày Vi Phạm
                                     </th>
-                                    <th class="col-md-9 text-center">
+                                    <th class=" text-center">
                                         Nội Dung Vi Phạm
                                     </th>
-                                    <th class="col-md-1 text-center">
+                                    <th class="text-center">
                                         Biên Bản
                                     </th>
                                 </tr>
-                                </tbody>
+                                </thead>
                                 <tbody>
-                                <% for (int i = 1; i <= 10; i++) {
-                                    out.print("   <tr>\n" +
-                                            "                            <td class=\"text-center\">\n" +
-                                            "                                12/02/2015\n" +
-                                            "                            </td>\n" +
-                                            "                            <td class=\"text-left\">\n" +
-                                            "                                Sử dụng Giấy đăng ký xe bị tẩy xóa; Không đúng số khung, số máy hoặc không do cơ quan có\n" +
-                                            "                                thẩm quyền cấp.\n" +
-                                            "                                Phạt tiền từ 300.000 đến 400.000. Đồng thời tịch thu Giấy đăng ký không hợp lệ\n" +
-                                            "                            </td>\n" +
-                                            "                            <td class=\"text-center\">\n" +
-                                            "                                <a href=\"#\" id=\"showPunishment_" + i + "\" class=\"fa-lg\"><i class=\"fa fa-file-image-o\"></i></a>\n" +
-                                            "                            </td>\n" +
-
-                                            "     </tr> ");
-                                }
-
-                                %>
+                                <c:set var="punishments"
+                                       value="${punishmentPaginator.getItemsOnCurrentPage(param.page)}"/>
+                                <c:choose>
+                                    <c:when test="${punishments.size() == 0}">
+                                        <tr>
+                                            <td colspan="5" style="vertical-align: middle; text-align: center;">
+                                                Không có vi phạm nào
+                                            </td>
+                                        </tr>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <c:forEach items="${punishmentPaginator.getItemsOnCurrentPage(param.page)}"
+                                                   var="punishment"
+                                                   varStatus="counter">
+                                            <tr>
+                                                <td class="text-center">
+                                                        ${(punishmentPaginator.getCurrentPage(param.page) - 1) * punishmentPaginator.itemPerPage + counter.count}
+                                                </td>
+                                                <td class="text-center">
+                                                    <fmt:formatDate value='${punishment.createdDate}'
+                                                                    pattern='dd/MM/yyyy'/>
+                                                </td>
+                                                <td class="text-center">
+                                                        ${punishment.title}
+                                                </td>
+                                                <td class="text-center">
+                                                        ${punishment.attachment}
+                                                </td>
+                                            </tr>
+                                        </c:forEach>
+                                    </c:otherwise>
+                                </c:choose>
 
                                 </tbody>
                             </table>
@@ -936,26 +1018,33 @@
                     <div class="panel panel-footer">
                         <nav class="text-right">
                             <ul class="pagination">
-                                <li>
-                                    <a href="#" aria-label="Previous">
-                                        <span aria-hidden="true">&laquo;</span>
-                                    </a>
-                                </li>
-                                <li class="active"><a href="#">1</a></li>
-                                <li><a href="#">2</a></li>
-                                <li><a href="#">3</a></li>
-                                <li><a href="#">4</a></li>
-                                <li><a href="#">5</a></li>
-                                <li>
-                                    <a href="#" aria-label="Next">
-                                        <span aria-hidden="true">&raquo;</span>
-                                    </a>
-                                </li>
+                                <c:if test="${param.page != 1 && not empty param.page}">
+                                    <li>
+                                        <a href="?action=${param.action}&code=${contract.contractCode}&keyword=${param.keyword}&page=1"
+                                           aria-label="Previous">
+                                            <span aria-hidden="true">Đầu</span>
+                                        </a>
+                                    </li>
+                                </c:if>
+                                <c:forEach begin="1" end="${punishmentPaginator.pageSize}" var="pageNumber">
+                                    <li ${param.page == pageNumber ||(pageNumber == 1 && empty param.page) ? "class='active'": ""} >
+                                        <a href="?action=${param.action}&code=${contract.contractCode}&keyword=${param.keyword}&page=${pageNumber}">${pageNumber}</a>
+                                    </li>
+                                </c:forEach>
+                                <c:if test="${param.page != punishmentPaginator.pageSize && compensationPaginator.pageSize != 1}">
+                                    <li>
+                                        <a href="?action=${param.action}&code=${contract.contractCode}&keyword=${param.keyword}&page=${punishmentPaginator.pageSize}"
+                                           aria-label="Next">
+                                            <span aria-hidden="true">Cuối</span>
+                                        </a>
+                                    </li>
+                                </c:if>
                             </ul>
                         </nav>
                     </div>
                 </div>
             </div>
+            <%----------------------------------------------------------------------------------------------------%>
         </div>
 
     </div>
