@@ -10,13 +10,10 @@ import com.fpt.mic.micweb.model.dto.UserDto;
 import com.fpt.mic.micweb.model.dto.form.CancelContractDto;
 import com.fpt.mic.micweb.model.dto.form.ConcurrencyDto;
 import com.fpt.mic.micweb.model.dto.form.CustomerCreateContractDto;
-import com.fpt.mic.micweb.model.entity.CompensationEntity;
-import com.fpt.mic.micweb.model.entity.ContractEntity;
+import com.fpt.mic.micweb.model.entity.*;
 import com.fpt.mic.micweb.framework.responses.JspPage;
 import com.fpt.mic.micweb.framework.R;
 import com.fpt.mic.micweb.framework.responses.ResponseObject;
-import com.fpt.mic.micweb.model.entity.ContractTypeEntity;
-import com.fpt.mic.micweb.model.entity.CustomerEntity;
 import com.fpt.mic.micweb.utils.Constants;
 import com.fpt.mic.micweb.utils.DateUtils;
 
@@ -175,7 +172,6 @@ public class ContractController extends AuthController {
         String customerCode = ((CustomerEntity) getLoggedInUser()).getCustomerCode();
         final String code = r.equest.getParameter("code");
         ContractEntity contract = customerBusiness.getContractDetail(code);
-
         if (contract == null || contract.getCustomerCode().compareToIgnoreCase(customerCode) != 0) {
             return new RedirectTo("/error/404");
         } else {
@@ -213,7 +209,9 @@ public class ContractController extends AuthController {
                     return punishmentBusiness.getAllPunishmentByContractCodeCount(code);
                 }
             });
+            List listPayment = customerBusiness.getAllPaymentByContractCode(code);
             r.equest.setAttribute("contract", contract);
+            r.equest.setAttribute("listPayment", listPayment);
             r.equest.setAttribute("compensationPaginator", compensationPaginator);
             r.equest.setAttribute("punishmentPaginator", punishmentPaginator);
             return new JspPage("customer/contract-detail.jsp");
