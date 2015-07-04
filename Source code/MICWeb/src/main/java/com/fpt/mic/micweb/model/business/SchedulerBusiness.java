@@ -55,14 +55,14 @@ public class SchedulerBusiness {
 
             int type = 0;
 
-            if (DateUtils.dateBetween(currentDate, contractEntity.getExpiredDate()) <= Constants.DueDate.NEARLY_EXCEED_EXPIRED_3) {
-                type = NotificationEntity.Type.CONTRACT_NEARLY_EXPIRED_3;
+            if (DateUtils.dateBetween(currentDate, contractEntity.getExpiredDate()) <= Constants.DueDate.NEARLY_EXCEED_EXPIRED_1) {
+                type = NotificationEntity.Type.CONTRACT_NEARLY_EXPIRED_1;
             }
             if (DateUtils.dateBetween(currentDate, contractEntity.getExpiredDate()) <= Constants.DueDate.NEARLY_EXCEED_EXPIRED_2) {
                 type = NotificationEntity.Type.CONTRACT_NEARLY_EXPIRED_2;
             }
-            if (DateUtils.dateBetween(currentDate, contractEntity.getExpiredDate()) <= Constants.DueDate.NEARLY_EXCEED_EXPIRED_1) {
-                type = NotificationEntity.Type.CONTRACT_NEARLY_EXPIRED_1;
+            if (DateUtils.dateBetween(currentDate, contractEntity.getExpiredDate()) <= Constants.DueDate.NEARLY_EXCEED_EXPIRED_3) {
+                type = NotificationEntity.Type.CONTRACT_NEARLY_EXPIRED_3;
             }
             if (type > 0) {
                 bus.send(NotificationBuilder.contractNearlyExpired(contractEntity, type));
