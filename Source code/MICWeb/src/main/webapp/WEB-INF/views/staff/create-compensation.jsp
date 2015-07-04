@@ -61,7 +61,7 @@
 
                         <!-- Created date -->
                         <div class="form-group">
-                            <label class="col-sm-4 control-label" for="createdDate">Ngày gởi yêu cầu</label>
+                            <label class="col-sm-4 control-label" for="createdDate">Ngày gởi yêu cầu *</label>
 
                             <div class="col-sm-3">
                                 <input id="createdDate" name="compensation:createdDate"
