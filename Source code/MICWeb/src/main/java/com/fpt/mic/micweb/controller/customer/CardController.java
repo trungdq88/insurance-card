@@ -195,7 +195,10 @@ public class CardController extends AuthController {
         CardBusiness cardBusiness = new CardBusiness();
         Map<Integer,String> newCardMapping = new HashMap();
         newCardMapping = cardBusiness.getMappingWithNewCardRequest();
-        r.equest.setAttribute("map",newCardMapping);
+        r.equest.setAttribute("map", newCardMapping);
+        Map<String,String> newCardMappingContract = new HashMap();
+        newCardMappingContract = cardBusiness.getMappingWithContract();
+        r.equest.setAttribute("mapCardContract",newCardMappingContract);
         r.equest.setAttribute("requestPaginator", requestPaginator);
         r.equest.setAttribute("unresolvedRequestCount",customerBusiness.getUnresolvedNewCardRequestCount(customerCode));
         return new JspPage("customer/view-new-card-requests.jsp");

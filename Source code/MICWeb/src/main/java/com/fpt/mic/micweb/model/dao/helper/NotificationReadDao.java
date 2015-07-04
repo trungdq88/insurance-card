@@ -26,7 +26,7 @@ public class NotificationReadDao extends GenericDaoJpaImpl<NotificationReadEntit
         try {
             entity = (NotificationReadEntity) query.getSingleResult();
         } catch (NoResultException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
         }
         entityManager.close();
         return entity;

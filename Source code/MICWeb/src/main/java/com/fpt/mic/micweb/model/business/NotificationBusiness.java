@@ -5,6 +5,8 @@ import com.fpt.mic.micweb.model.dao.helper.NotificationReadDao;
 import com.fpt.mic.micweb.model.dto.NotificationDto;
 import com.fpt.mic.micweb.model.entity.helper.NotificationEntity;
 import com.fpt.mic.micweb.model.entity.helper.NotificationReadEntity;
+import com.fpt.mic.micweb.utils.EmailTemplate;
+import com.fpt.mic.micweb.utils.EmailUtils;
 
 import java.math.BigInteger;
 import java.util.List;
@@ -14,27 +16,51 @@ import java.util.List;
  * Created by dinhquangtrung on 7/3/15.
  */
 public class NotificationBusiness {
-    public NotificationEntity send(NotificationEntity entity) {
+    public boolean send(NotificationEntity entity) {
+        return send(entity, null);
+    }
+
+    public boolean send(NotificationEntity entity, String emailTo) {
         NotificationDao dao = new NotificationDao();
 
         // Need to check if the contract is already notified before
         // Unique constraint: type + extra data
-        // Check types: 4.1, 4.2, 4.3, 5
+        // Check types: 4.1, 4.2, 4.3
         int type41 = NotificationEntity.Type.CONTRACT_NEARLY_EXPIRED_1;
         int type42 = NotificationEntity.Type.CONTRACT_NEARLY_EXPIRED_2;
         int type43 = NotificationEntity.Type.CONTRACT_NEARLY_EXPIRED_3;
-        int type5 = NotificationEntity.Type.CONTRACT_EXPIRED;
-        NotificationEntity existsNotif = dao.isNotified(entity.getExtraData());
-        if ((entity.getType() == type41 ||
+
+        if (entity.getType() == type41 ||
                 entity.getType() == type42 ||
-                entity.getType() == type43 ||
-                entity.getType() == type5) && existsNotif != null) {
-            // No need to do anything;
-            return existsNotif;
+                entity.getType() == type43) {
+
+            NotificationEntity existsNotif = dao.isNotified(entity.getType(),
+                    entity.getExtraData());
+
+            if (existsNotif != null) {
+                // No need to do anything;
+                return true;
+            }
+        }
+        // create the notification
+        NotificationEntity newNotifEntity = dao.create(entity);
+
+
+        // If the notification method is EMAIL
+        if (emailTo != null &&
+                (entity.getMethod() & NotificationEntity.Method.EMAIL) == entity.getMethod()) {
+
+            String content = EmailTemplate.NOTIFY_EMAIL;
+            if (content != null) {
+                content = content
+                        .replaceAll("\\{\\{content\\}\\}", entity.getContent())
+                        .replaceAll("\\{\\{link\\}\\}", entity.generateRelatedLink("customer")); // TODO: where is the generated role?
+                EmailUtils.sendMail(emailTo, entity.getContent(), content);
+            }
         }
 
-        // If reached here, create the notification
-        return dao.create(entity);
+        return newNotifEntity != null;
+
     }
 
     public List getNotifications(String code) {

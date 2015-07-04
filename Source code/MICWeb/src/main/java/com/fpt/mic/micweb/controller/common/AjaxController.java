@@ -48,7 +48,7 @@ public class AjaxController extends AuthController {
                 r.equest.getContextPath() +
                 "/user?action=login";
 
-        boolean b = ajaxBusiness.resendPassword(getServletContext(), customerCode, loginUrl);
+        boolean b = ajaxBusiness.resendPassword(customerCode, loginUrl);
         return new JsonString(b);
     }
 

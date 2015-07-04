@@ -99,7 +99,7 @@ public class NotificationBuilder {
         String content = "Hợp đồng %s sẽ hết hạn trong %s ngày nữa";
         entity.setContent(String.format(content,
                 contractEntity.getContractCode(),
-                DateUtils.dateBetween(new Timestamp(new Date().getTime()),
+                DateUtils.dateBetween(DateUtils.currentDateWithoutTime(),
                         contractEntity.getExpiredDate())));
         entity.setCreatedDate(new Timestamp(new Date().getTime()));
         entity.setType(type);

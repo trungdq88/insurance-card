@@ -32,7 +32,7 @@
             </ul>
           </div>
         </c:if>
-        <form action="${pageContext.request.contextPath}/admin/home"
+        <form action="${pageContext.request.contextPath}/admin"
               method="post" class="form-horizontal">
           <fieldset>
             <!-- Text input-->

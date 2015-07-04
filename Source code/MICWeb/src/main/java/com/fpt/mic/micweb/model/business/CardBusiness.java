@@ -31,6 +31,15 @@ public class CardBusiness {
         }
         return map;
     }
+    public Map<String,String> getMappingWithContract(){
+        Map<String,String> map = new HashMap<String, String>();
+        CardDao cardDao = new CardDao();
+        List<CardEntity> list = cardDao.getAllCard();
+        for (CardEntity cardEntity : list) {
+            map.put(cardEntity.getCardId(),cardEntity.getContractCode());
+        }
+        return map;
+    }
     public List getCardByContractIncludeDeactive(String contractCode){
         CardDao cardDao = new CardDao();
         List list = cardDao.getCardByContractIncludeDeactive(contractCode);

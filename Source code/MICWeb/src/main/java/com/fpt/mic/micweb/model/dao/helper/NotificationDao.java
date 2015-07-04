@@ -98,30 +98,26 @@ public class NotificationDao extends GenericDaoJpaImpl<NotificationEntity, Integ
 
     /**
      * Check if an expired contract notify is exists
+     *
+     * @param type
      * @param extraData
      * @return
      */
-    public NotificationEntity isNotified(String extraData) {
+    public NotificationEntity isNotified(int type, String extraData) {
         int type41 = NotificationEntity.Type.CONTRACT_NEARLY_EXPIRED_1;
         int type42 = NotificationEntity.Type.CONTRACT_NEARLY_EXPIRED_2;
         int type43 = NotificationEntity.Type.CONTRACT_NEARLY_EXPIRED_3;
-        int type5 = NotificationEntity.Type.CONTRACT_EXPIRED;
 
         EntityManager entityManager = factory.createEntityManager();
 
         Query query = entityManager.createQuery("SELECT n FROM NotificationEntity n " +
-                "WHERE (n.type = :notif_type_41 OR n.type = :notif_type_42 OR " +
-                "n.type = :notif_type_43 OR n.type = :notif_type_5) AND n.extraData = :extraData");
-        query.setParameter("notif_type_41", type41);
-        query.setParameter("notif_type_42", type42);
-        query.setParameter("notif_type_43", type43);
-        query.setParameter("notif_type_5", type5);
+                "WHERE n.type = :notif_type AND n.extraData = :extraData");
+        query.setParameter("notif_type", type);
         query.setParameter("extraData", extraData);
         NotificationEntity result;
         try {
             result = (NotificationEntity) query.getSingleResult();
         } catch (NoResultException e) {
-            e.printStackTrace();
             return null;
         }
         entityManager.close();

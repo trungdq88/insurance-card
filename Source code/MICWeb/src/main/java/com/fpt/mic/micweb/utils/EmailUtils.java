@@ -15,14 +15,16 @@ import java.util.Properties;
  * Created by dinhquangtrung on 6/25/15.
  */
 public class EmailUtils {
+    public static final String SUBJECT_NEW_CONTRACT = "Mật khẩu hợp đồng mới với công ty bảo hiểm MIC";
+
+
     private static final String SMTP_HOST = "smtp.mailgun.org";
     // TODO: this is sensitive information and should not be here in the source code
     private static final String SMTP_USERNAME = "mic@sandbox48f01f256473463db6872804212b4bc9.mailgun.org";
     private static final String SMTP_PASSWORD = "micweb";
     private static final String EMAIL_FROM = "no-reply@mic.vn";
-    private static final String EMAIL_SUBJECT = "Mật khẩu hợp đồng mới với công ty bảo hiểm MIC";
     private static final String EMAIL_MAILER = "Công ty bảo hiểm MIC";
-    public static boolean sendMail(String to, String content) {
+    public static boolean sendMail(String to, String subject, String content) {
         boolean response = false;
         try {
             Properties props = System.getProperties();
@@ -33,8 +35,8 @@ public class EmailUtils {
             msg.setFrom(new InternetAddress(EMAIL_FROM));
             msg.setRecipients(Message.RecipientType.TO,
                     InternetAddress.parse(to, false));
-            msg.setSubject(EMAIL_SUBJECT);
-            msg.setContent(content, "text/html");
+            msg.setSubject(subject);
+            msg.setContent(content, "text/html; charset=utf-8");
             msg.setHeader("X-Mailer", EMAIL_MAILER);
             msg.setSentDate(new Date());
             SMTPTransport t =
