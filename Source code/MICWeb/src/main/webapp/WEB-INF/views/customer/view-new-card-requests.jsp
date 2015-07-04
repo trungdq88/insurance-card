@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="_shared/header.jsp"%>
 
@@ -45,6 +46,7 @@
                   <th>Thời gian</th>
                   <th>Ghi chú</th>
                   <th>Mã thẻ cũ</th>
+                  <th>Hợp đồng</th>
                   <th>Ngày cấp mới</th>
                   <th>Thẻ mới cấp</th>
                 </tr>
@@ -63,7 +65,9 @@
                     <c:forEach var="newRequest" items="${requests}" varStatus="counter">
                       <tr>
                         <td>${(requestPaginator.getCurrentPage(param.page) - 1) * requestPaginator.itemPerPage + counter.count}</td>
-                        <td>${newRequest.requestDate}</td>
+                        <td>
+                          <fmt:formatDate value="${newRequest.requestDate}" pattern="dd/MM/yyyy"/>
+                        </td>
                         <td><a tabindex="0" data-trigger="focus" data-toggle="popover" title="Ghi chú từ khách hàng"
                                role="button" data-content="${newRequest.note}"><i class="fa fa-file"></i></a></td>
                         <td>
@@ -72,10 +76,15 @@
                           </a>
                         </td>
                         <td>
+                          <a href="${pageContext.request.contextPath}/customer/contract?action=detail&code=${mapCardContract[newRequest.oldCardId]}">
+                              ${mapCardContract[newRequest.oldCardId]}
+                          </a>
+                        </td>
+                        <td>
                           <c:if test="${empty newRequest.resolveDate}">
                             <span class="label label-danger">Chưa cấp</span>
                           </c:if>
-                            ${newRequest.resolveDate}
+                          <fmt:formatDate value="${newRequest.resolveDate}" pattern="dd/MM/yyyy"/>
                         </td>
                         <td>
                           <a href="#">

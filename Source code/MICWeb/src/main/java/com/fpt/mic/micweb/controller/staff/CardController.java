@@ -43,9 +43,9 @@ public class CardController extends AuthController {
             }
         });
         CardBusiness cardBusiness = new CardBusiness();
-        Map<Integer,String> newCardMapping = new HashMap();
-        newCardMapping = cardBusiness.getMappingWithNewCardRequest();
-        r.equest.setAttribute("map",newCardMapping);
+        Map<Integer,String> newCardMappingRequest = new HashMap();
+        newCardMappingRequest = cardBusiness.getMappingWithNewCardRequest();
+        r.equest.setAttribute("map",newCardMappingRequest);
         r.equest.setAttribute("requestPaginator", requestPaginator);
         r.equest.setAttribute("unresolvedRequestCount",staffBus.getUnresolvedNewCardRequestCount());
         return new JspPage("staff/new-card-requests.jsp");
