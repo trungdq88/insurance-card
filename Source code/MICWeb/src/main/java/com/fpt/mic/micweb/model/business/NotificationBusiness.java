@@ -2,6 +2,7 @@ package com.fpt.mic.micweb.model.business;
 
 import com.fpt.mic.micweb.model.dao.helper.NotificationDao;
 import com.fpt.mic.micweb.model.dao.helper.NotificationReadDao;
+import com.fpt.mic.micweb.model.dto.NotificationDto;
 import com.fpt.mic.micweb.model.entity.helper.NotificationEntity;
 import com.fpt.mic.micweb.model.entity.helper.NotificationReadEntity;
 
@@ -55,7 +56,7 @@ public class NotificationBusiness {
         return dao.get(id, userCode) == null;
     }
 
-    public NotificationEntity get(int id) {
+    public NotificationDto get(int id) {
         NotificationDao dao = new NotificationDao();
         return dao.get(id);
     }

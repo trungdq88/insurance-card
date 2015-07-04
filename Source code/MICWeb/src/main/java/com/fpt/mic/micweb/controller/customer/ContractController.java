@@ -171,7 +171,7 @@ public class ContractController extends AuthController {
         return new JspPage("customer/contract.jsp");
     }
 
-    public ResponseObject getContractDetail(R r) {
+    public ResponseObject getDetail(R r) {
         CustomerBusiness customerBusiness = new CustomerBusiness();
         final CompensationBusiness compensationBusiness = new CompensationBusiness();
         String customerCode = ((CustomerEntity) getLoggedInUser()).getCustomerCode();
@@ -232,7 +232,7 @@ public class ContractController extends AuthController {
                 ContractEntity contract = customerBusiness.cancelContract(cancelDto);
                 if (contract != null) {
                     r.equest.setAttribute("contract", contract);
-                    return new RedirectTo("contract?action=ContractDetail&code=" + cancelDto.getContractCode());
+                    return new RedirectTo("contract?action=detail&code=" + cancelDto.getContractCode());
                 } else {
                     r.equest.setAttribute("result", mesg);
                     r.equest.setAttribute("contractCode", cancelDto.getContractCode());
@@ -250,7 +250,7 @@ public class ContractController extends AuthController {
         session.setAttribute("CONTRACT_CODE", contractCode);
         session.setAttribute("SUCCESS_URL", r.equest.getParameter("successUrl"));
         session.setAttribute("cancel_message", "Bạn đã hủy thanh toán. Xin vui lòng thực hiện lại hoặc đến thanh toán trực tiếp");
-        session.setAttribute("redirectLink", "/customer/contract?action=ContractDetail&code=" + contractCode);
+        session.setAttribute("redirectLink", "/customer/contract?action=detail&code=" + contractCode);
 
         CheckoutRequestDto checkoutRequest = new CheckoutRequestDto();
         checkoutRequest.setPaymentrequest_name(r.equest.getParameter("L_PAYMENTREQUEST_0_NAME0"));
@@ -290,7 +290,7 @@ public class ContractController extends AuthController {
         session.setAttribute("newExpiredDate", newExpiredDate);
         session.setAttribute("SUCCESS_URL", r.equest.getParameter("successUrl"));
         session.setAttribute("cancel_message", "Bạn đã hủy thanh toán. Xin vui lòng thực hiện lại hoặc đến thanh toán trực tiếp");
-        session.setAttribute("redirectLink", "/customer/contract?action=ContractDetail&code=" + contractCode);
+        session.setAttribute("redirectLink", "/customer/contract?action=detail&code=" + contractCode);
 
 
         CheckoutRequestDto checkoutRequest = new CheckoutRequestDto();
@@ -332,7 +332,7 @@ public class ContractController extends AuthController {
             System.out.println("getActivePayContract:" + contractCode);
 
             r.equest.setAttribute("amountVND", session.getAttribute("amountVND"));
-            r.equest.setAttribute("redirectLink", "/customer/contract?action=ContractDetail&code=" + contractCode);
+            r.equest.setAttribute("redirectLink", "/customer/contract?action=detail&code=" + contractCode);
             r.equest.setAttribute("result", results);
             r.equest.setAttribute("ack", session.getAttribute("ACK"));
             //renew contract by customer
@@ -387,7 +387,7 @@ public class ContractController extends AuthController {
 
             Timestamp newExpiredDate = (Timestamp) session.getAttribute("newExpiredDate");
             r.equest.setAttribute("amountVND", session.getAttribute("amountVND"));
-            r.equest.setAttribute("redirectLink", "/customer/contract?action=ContractDetail&code=" + contractCode);
+            r.equest.setAttribute("redirectLink", "/customer/contract?action=detail&code=" + contractCode);
             r.equest.setAttribute("result", results);
             r.equest.setAttribute("ack", session.getAttribute("ACK"));
 
@@ -445,7 +445,7 @@ public class ContractController extends AuthController {
                 mesg = "Không thể gở bỏ yêu cầu hủy hợp đồng";
                 if (contract != null) {
                     r.equest.setAttribute("contract", contract);
-                    return new RedirectTo("contract?action=ContractDetail&code=" + contractCode);
+                    return new RedirectTo("contract?action=detail&code=" + contractCode);
                 }
             }
             r.equest.setAttribute("result", mesg);
@@ -470,7 +470,7 @@ public class ContractController extends AuthController {
             r.equest.setAttribute("ack", (String) session.getAttribute("ACK"));
             Float amount = Float.parseFloat((String) session.getAttribute("amountVND"));
             r.equest.setAttribute("amountVND", amount);
-            r.equest.setAttribute("redirectLink", "/customer/contract?action=ContractDetail&code=" + contractCode);
+            r.equest.setAttribute("redirectLink", "/customer/contract?action=detail&code=" + contractCode);
 
 
             String paypalTransId = results.get("PAYMENTINFO_0_TRANSACTIONID");
