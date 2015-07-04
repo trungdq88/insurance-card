@@ -55,14 +55,8 @@ public class LightboxreturnController extends BasicController {
                 r.equest.setAttribute("error", message);
                 return new JspPage("public/error.jsp");
             }
-        // new card request payment
+        // new card request payment check concurrency
         } else {
-            CardBusiness cardBusiness = new CardBusiness();
-            String result = cardBusiness.requestNewCard(newCardRequestDto);
-            if (result != null){
-                r.equest.setAttribute("error",result);
-                new JspPage("public/error.jsp");
-            }
 
         }
 

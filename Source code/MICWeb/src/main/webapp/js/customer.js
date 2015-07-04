@@ -41,7 +41,7 @@ $(document).ready(function () {
 
     $('.tranformCost').removeClass('hide');
     $('.newCardCost').removeClass('hide');
-    $('#total_Cost').val(parseFloat($('#newCard_Cost').val()) + ' VND');
+    //$('#total_Cost').val(parseFloat($('#newCard_Cost').val()) + ' VND');
     $('#radio_Paypal').change(function () {
         $('.tranformCost').removeClass('hide');
         $('.newCardCost').removeClass('hide');

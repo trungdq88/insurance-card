@@ -11,7 +11,9 @@ import com.fpt.mic.micweb.model.business.PaymentBusiness;
 import com.fpt.mic.micweb.model.dto.CheckoutRequestDto;
 import com.fpt.mic.micweb.model.dto.UserDto;
 import com.fpt.mic.micweb.model.dto.form.NewCardRequestDto;
+import com.fpt.mic.micweb.model.entity.ContractEntity;
 import com.fpt.mic.micweb.model.entity.CustomerEntity;
+import com.fpt.mic.micweb.utils.Constants;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpSession;
@@ -38,27 +40,30 @@ public class CardController extends AuthController {
 
         String customerCode = ((CustomerEntity) getLoggedInUser()).getCustomerCode();
         String contractCode = r.equest.getParameter("contractCode");
-        r.equest.setAttribute("contractCode",contractCode);
-        r.equest.setAttribute("customerCode",customerCode);
-        r.equest.setAttribute("newCardFee",50000);// add constant later
-        r.equest.setAttribute("transformFee",10000);
+        r.equest.setAttribute("contractCode", contractCode);
+        r.equest.setAttribute("customerCode", customerCode);
+        r.equest.setAttribute("newCardFee","" +Constants.PaymentFee.NEW_CARD_REQUEST);
+        r.equest.setAttribute("transformFee", "" +Constants.PaymentFee.DELIVERY);
         return new JspPage("/customer/new-card-request.jsp");
     }
 
+
     public ResponseObject postCreateNewCardRequest(R r) {
         NewCardRequestDto newCardRequestDto = (NewCardRequestDto) r.ead.entity(NewCardRequestDto.class, "request");
+        CustomerBusiness customerBusiness = new CustomerBusiness();
         String contractCode;
         // Gọi hàm validate ở đây
         List errors = r.ead.validate(newCardRequestDto);
+
         // Nếu có lỗi khi validate
         if (errors.size() > 0) {
             // Gửi lỗi về trang JSP
             r.equest.setAttribute("validateErrors", errors);
             contractCode = r.equest.getParameter("contractCode");
-            r.equest.setAttribute("submitted",newCardRequestDto);
-            r.equest.setAttribute("contractCode",newCardRequestDto.getContractCode());
-            r.equest.setAttribute("newCardFee",50000);// add constant later
-            r.equest.setAttribute("transformFee",10000);
+            r.equest.setAttribute("submitted", newCardRequestDto);
+            r.equest.setAttribute("contractCode", newCardRequestDto.getContractCode());
+            r.equest.setAttribute("newCardFee","" +Constants.PaymentFee.NEW_CARD_REQUEST);
+            r.equest.setAttribute("transformFee", "" +Constants.PaymentFee.DELIVERY);
             // Gửi dữ liệu mà người dùng đã nhập về trang JSP, gán vào biết submitted
 
             return postNewCard(r);
@@ -68,30 +73,44 @@ public class CardController extends AuthController {
 
         CardBusiness cardBusiness = new CardBusiness();
         contractCode = newCardRequestDto.getContractCode();
+
         String message = "Hợp đồng chưa có thẻ bảo hiểm. Xin vui lòng đợi phát hành";
         if (cardBusiness.getCardByContractIncludeDeactive(contractCode).size() > 0) {
             message = "Bạn đã yêu cầu thẻ mới trước đó. Vui lòng chờ xử lý";
             if (cardBusiness.getCardByContract(contractCode) != null) {
-                // thanh toan
-                String returnUrl = "public/return.jsp";
                 HttpSession session = r.equest.getSession();
-                session.setAttribute("NEW_CARD_DTO", newCardRequestDto);
-                session.setAttribute("CONTRACT_CODE", contractCode);
-                session.setAttribute("SUCCESS_URL", "/customer/card?action=activeNewCardRequest");
-                session.setAttribute("cancel_message", "Bạn đã hủy thanh toán. Xin vui lòng thực hiện lại hoặc đến thanh toán trực tiếp");
-                session.setAttribute("redirectLink", "/customer/contract?action=detail&code=" + contractCode);
+                // thanh toan truc tien thi chuyen ve trang detail + message
+                if (newCardRequestDto.getPayment().equalsIgnoreCase("direct")) {
+                    String result = cardBusiness.requestNewCard(newCardRequestDto);
+                    if (result != null) {
+                        r.equest.setAttribute("error", result);
+                        new JspPage("public/error.jsp");
+                    }
+                    session.setAttribute("message", "Yêu cầu thẻ mới thành công. Vui lòng đến trực tiếp để thanh toán");
+//                        return new JspPage("customer/contract-detail.jsp");
+                    return new RedirectTo("/customer/contract?action=ContractDetail&code=" + contractCode);
 
-                CheckoutRequestDto checkoutRequest = new CheckoutRequestDto();
-                checkoutRequest.setPaymentrequest_name("Yêu cầu thẻ mới " + newCardRequestDto.getContractCode());
-                checkoutRequest.setPaymentrequest_desc("Yêu cầu thẻ mới " + newCardRequestDto.getContractCode());
-                checkoutRequest.setPaymentrequest_qty("1");
-                checkoutRequest.setPaymentrequest_itemamt("50000");
-                checkoutRequest.setPaymentrequest_taxamt("0");
-                checkoutRequest.setPaymentrequest_amt("50000");
-                checkoutRequest.setCurrencycodetype("USD");
-                checkoutRequest.setPaymenttype("Sale");
-                checkoutRequest.setPaymentrequest_amt_l("50000");
-                return new RedirectTo("/public/checkout?action=checkout&checkout=true&" + checkoutRequest.getQueryString());
+                } else {
+                    // thanh toan paypal
+                    String returnUrl = "public/return.jsp";
+                    session.setAttribute("NEW_CARD_DTO", newCardRequestDto);
+                    session.setAttribute("CONTRACT_CODE", contractCode);
+                    session.setAttribute("SUCCESS_URL", "/customer/card?action=activeNewCardRequest");
+                    session.setAttribute("cancel_message", "Bạn đã hủy thanh toán. Xin vui lòng thực hiện lại hoặc đến thanh toán trực tiếp");
+                    session.setAttribute("redirectLink", "/customer/contract?action=ContractDetail&code=" + contractCode);
+                    float totalAmount = Constants.PaymentFee.NEW_CARD_REQUEST + Constants.PaymentFee.DELIVERY;
+                    CheckoutRequestDto checkoutRequest = new CheckoutRequestDto();
+                    checkoutRequest.setPaymentrequest_name("Yêu cầu thẻ mới " + newCardRequestDto.getContractCode());
+                    checkoutRequest.setPaymentrequest_desc("Yêu cầu thẻ mới " + newCardRequestDto.getContractCode());
+                    checkoutRequest.setPaymentrequest_qty("1");
+                    checkoutRequest.setPaymentrequest_itemamt(""+totalAmount); // add constant later
+                    checkoutRequest.setPaymentrequest_taxamt("0");
+                    checkoutRequest.setPaymentrequest_amt(""+totalAmount);
+                    checkoutRequest.setCurrencycodetype("USD");
+                    checkoutRequest.setPaymenttype("Sale");
+                    checkoutRequest.setPaymentrequest_amt_l(""+totalAmount);
+                    return new RedirectTo("/public/checkout?action=checkout&checkout=true&" + checkoutRequest.getQueryString());
+                }
 
             }
         }
@@ -108,6 +127,13 @@ public class CardController extends AuthController {
         }
         Map<String, String> results = new HashMap<String, String>();
         results.putAll((Map<String, String>) session.getAttribute("RESULT"));
+        NewCardRequestDto newCardRequestDto = (NewCardRequestDto) session.getAttribute("NEW_CARD_DTO");
+        CardBusiness cardBusiness = new CardBusiness();
+        String result = cardBusiness.requestNewCard(newCardRequestDto);
+        if (result != null) {
+            r.equest.setAttribute("error", result);
+            new JspPage("public/error.jsp");
+        }
 
         r.equest.setAttribute("result", results);
         r.equest.setAttribute("ack", (String) session.getAttribute("ACK"));
