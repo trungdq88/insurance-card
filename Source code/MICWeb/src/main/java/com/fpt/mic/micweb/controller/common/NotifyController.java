@@ -25,7 +25,7 @@ public class NotifyController extends AuthController {
     public ResponseObject getMarkAsRead(R r) {
         if (!isLoggedIn()) return null;
 
-        String userCode = ((IUserEntity) getLoggedInUser()).calcUserCode();
+        IUserEntity user = ((IUserEntity) getLoggedInUser());
 
         String idStr = r.equest.getParameter("id");
         String redirect = r.equest.getParameter("redirect");
@@ -37,10 +37,10 @@ public class NotifyController extends AuthController {
 
             NotificationEntity entity = bus.get(id);
 
-            boolean b = bus.markAsRead(id, userCode);
+            boolean b = bus.markAsRead(id, user.calcUserCode());
 
             if (redirect != null) {
-                return new RedirectTo(entity.generateRelatedLink());
+                return new RedirectTo(entity.generateRelatedLink(user.calcRole()));
             } else {
                 return new JsonString(b);
             }
@@ -51,7 +51,7 @@ public class NotifyController extends AuthController {
     public ResponseObject getMarkAsUnread(R r) {
         if (!isLoggedIn()) return null;
 
-        String userCode = ((IUserEntity) getLoggedInUser()).calcUserCode();
+        IUserEntity user = ((IUserEntity) getLoggedInUser());
 
         String idStr = r.equest.getParameter("id");
         String redirect = r.equest.getParameter("redirect");
@@ -63,10 +63,10 @@ public class NotifyController extends AuthController {
 
             NotificationEntity entity = bus.get(id);
 
-            boolean b = bus.markAsUnread(id, userCode);
+            boolean b = bus.markAsUnread(id, user.calcUserCode());
 
             if (redirect != null) {
-                return new RedirectTo(entity.generateRelatedLink());
+                return new RedirectTo(entity.generateRelatedLink(user.calcRole()));
             } else {
                 return new JsonString(b);
             }

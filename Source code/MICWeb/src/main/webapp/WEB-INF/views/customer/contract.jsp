@@ -74,7 +74,7 @@
                                     <tr>
                                         <td>${(contractPaginator.getCurrentPage(param.page) - 1) * contractPaginator.itemPerPage + counter.count}</td>
                                         <td>
-                                            <a href="${pageContext.request.contextPath}/customer/contract?action=ContractDetail&code=${contract.contractCode}">
+                                            <a href="${pageContext.request.contextPath}/customer/contract?action=detail&code=${contract.contractCode}">
                                                     ${contract.contractCode}</a>
                                         </td>
                                         <td><fmt:formatDate value="${contract.startDate}" pattern="dd/MM/yyyy"/></td>

@@ -6,4 +6,5 @@ package com.fpt.mic.micweb.model.entity.helper;
  */
 public interface IUserEntity {
     String calcUserCode();
+    String calcRole();
 }

@@ -29,4 +29,4 @@
   <script src="${pageContext.request.contextPath}/js/notification.js"></script>
 
 </head>
-<body>
+<body data-role="staff">

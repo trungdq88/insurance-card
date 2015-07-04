@@ -142,7 +142,7 @@ public class NotificationEntity {
      * Depend on the notification type, this method will return suitable link
      * @return
      */
-    public String generateRelatedLink() {
+    public String generateRelatedLink(String role) {
         switch (type) {
             case Type.CUSTOMER_CREATE_CONTRACT:
             case Type.CONTRACT_NEARLY_EXPIRED:
@@ -150,11 +150,11 @@ public class NotificationEntity {
             case Type.CUSTOMER_REQUEST_CANCEL:
             case Type.CONTRACT_CANCELLED_NO_PAYMENT:
             case Type.CONTRACT_START_DATE_COME:
-                return "/staff/contract?action=detail&code=" + extraData;
+                return "/" + role + "/contract?action=detail&code=" + extraData;
             case Type.CUSTOMER_SEND_COMPENSATION:
-                return "/staff/compensation?action=detail&code=" + extraData;
+                return "/" + role + "/compensation?action=detail&code=" + extraData;
             case Type.CUSTOMER_SEND_NEW_CARD_REQUEST:
-                return "/staff/card?action=newCardRequest";
+                return "/" + role + "/card?action=newCardRequest";
         }
         return null; // Wrong type
     }

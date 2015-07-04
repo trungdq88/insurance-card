@@ -108,4 +108,9 @@ public class StaffEntity implements IUserEntity {
     public String calcUserCode() {
         return staffCode;
     }
+
+    @Override
+    public String calcRole() {
+        return "staff";
+    }
 }

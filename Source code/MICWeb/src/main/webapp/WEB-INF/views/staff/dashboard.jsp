@@ -11,7 +11,7 @@
     <div id="page-wrapper">
         <div class="row">
             <div class="col-lg-12">
-                <h1 class="page-header">Thông báo (${notifications.size()})</h1>
+                <h1 class="page-header">Thông báo (${unreadCount})</h1>
             </div>
             <!-- /.col-lg-12 -->
         </div>

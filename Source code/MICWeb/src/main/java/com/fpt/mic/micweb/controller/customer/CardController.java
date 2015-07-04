@@ -57,7 +57,7 @@ public class CardController extends AuthController {
                 session.setAttribute("CONTRACT_CODE", contractCode);
                 session.setAttribute("SUCCESS_URL", "/customer/card?action=activeNewCardRequest");
                 session.setAttribute("cancel_message", "Bạn đã hủy thanh toán. Xin vui lòng thực hiện lại hoặc đến thanh toán trực tiếp");
-                session.setAttribute("redirectLink", "/customer/contract?action=ContractDetail&code=" + contractCode);
+                session.setAttribute("redirectLink", "/customer/contract?action=detail&code=" + contractCode);
 
                 CheckoutRequestDto checkoutRequest = new CheckoutRequestDto();
                 checkoutRequest.setPaymentrequest_name("Yêu cầu thẻ mới " + newCardRequestDto.getContractCode());

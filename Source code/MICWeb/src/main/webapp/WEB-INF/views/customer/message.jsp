@@ -14,7 +14,7 @@
                     <div class="well well-lg text-center text-danger form-inline">
                         <input type="hidden" name="code"
                                value="${contractCode}"/>
-                        <input type="hidden" name="action" value="ContractDetail"/>
+                        <input type="hidden" name="action" value="detail"/>
                        <button type="submit" class="btn btn-primary"><i class="fa fa-arrow-left"></i> Quay Về Trang Thông Tin Hợp Đồng </button>
                     </div>
                 </form>
