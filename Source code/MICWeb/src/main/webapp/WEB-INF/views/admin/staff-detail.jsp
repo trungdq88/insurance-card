@@ -16,7 +16,7 @@
       <div class="col-lg-12">
         <h1 class="page-header">Thông tin nhân viên
           <div class="pull-right">
-            <a href="${pageContext.request.contextPath}/admin/home?action=deleteStaff&code=${param.code}" class="btn btn-danger">
+            <a href="${pageContext.request.contextPath}/admin?action=deleteStaff&code=${param.code}" class="btn btn-danger">
               <i class="fa fa-trash"></i>
               Xóa nhân viên này
             </a>
@@ -78,7 +78,7 @@
 
         <div class="text-left">
 
-          <a href="${pageContext.request.contextPath}/admin/home" type="button"
+          <a href="${pageContext.request.contextPath}/admin" type="button"
              class="btn btn-success">
             <i class="fa fa-arrow-left"></i>
             Trở lại

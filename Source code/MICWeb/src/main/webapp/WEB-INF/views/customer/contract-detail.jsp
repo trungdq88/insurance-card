@@ -448,10 +448,13 @@
         <div role="tabpanel">
             <!-- Nav tabs -->
             <ul class="nav nav-tabs" role="tablist">
-                <li role="presentation">
-                    <a href="#commonInfo" aria-controls="profile" role="tab" data-toggle="tab">Thông Tin Chung</a>
-                </li>
                 <li role="presentation" class="active">
+                    <a href="#commonInfo" aria-controls="profile" role="tab" data-toggle="tab">Thông tin chung</a>
+                </li>
+                <li role="presentation">
+                    <a href="#paymentInfo" aria-controls="profile" role="tab" data-toggle="tab">Thông tin giao dịch</a>
+                </li>
+                <li role="presentation" >
                     <a href="#compensations" aria-controls="profile" role="tab" data-toggle="tab">Lịch sử bồi
                         thường</a>
                 </li>
@@ -462,13 +465,13 @@
                 </li>
                 <c:if test="${contract.status.equalsIgnoreCase('Ready') }">
                     <%--<form action="${pageContext.request.contextPath}/customer/card" method="get">--%>
-                        <div class="pull-right">
-                                <a href="${pageContext.request.contextPath}/customer/card?action=newCard&contractCode=${param.code}"
-                                class="btn btn-sm btn-primary">
-                                Yêu cầu thẻ mới
-                                </a>
+                    <div class="pull-right">
+                        <a href="${pageContext.request.contextPath}/customer/card?action=newCard&contractCode=${param.code}"
+                           class="btn btn-sm btn-primary">
+                            Yêu cầu thẻ mới
+                        </a>
 
-                        </div>
+                    </div>
                     <%--</form>--%>
                 </c:if>
             </ul>
@@ -476,7 +479,7 @@
         <br/>
 
         <div class="tab-content">
-            <div role="tabpanel" class="tab-pane " id="commonInfo">
+            <div role="tabpanel" class="tab-pane active" id="commonInfo">
 
                 <%--<div class="col-md-5">--%>
                 <%--<img src="http://finefrugality.files.wordpress.com/2012/06/handshake.jpg" width="100%" height="100%">--%>
@@ -747,8 +750,100 @@
                     </table>
                 </div>
             </div>
+            <%-------------------------------------------PAYMENT--------------------------------------------------%>
+            <div role="tabpane1" class="tab-pane" id="paymentInfo">
+                <div class="panel panel-default">
+                    <div class="panel panel-heading">
+                        <div class="pull-left">
+                            <!--<input type="checkbox" class="check-all"/>-->
+                            <b>Có ${listPayment.size()} giao dịch</b>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="panel panel-body">
+                        <div class="table table-responsive">
+                            <table class="table table-bordered">
+                                <thead>
+                                <tr class="success">
+                                    <th class="text-center ">Mã giao dịch
+                                    </th>
+                                    <th class="text-center ">Thời gian
+                                    </th>
+                                    <th class="text-center ">Hình thức
+                                    </th>
+                                    <th class="text-center ">Dịch vụ
+                                    </th>
+                                    <th class="text-center ">Số tiền
+                                    </th>
+                                    <th class="text-center ">Người nhận
+                                    </th>
+                                    <th class="text-center ">Mã Paypal
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <c:set var="payments"
+                                       value="${listPayment}"/>
+                                <c:choose>
+                                    <c:when test="${payments.size() == 0}">
+                                        <tr>
+                                            <td colspan="5" style="vertical-align: middle; text-align: center;">
+                                                Không có giao dịch nào
+                                            </td>
+                                        </tr>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <c:forEach items="${listPayment}"
+                                                   var="payment"
+                                                   varStatus="counter">
+                                            <tr>
+                                                <td class="text-center">
+                                                    ${payment.id}
+                                                </td>
+                                                <td class="text-center">
+                                                    <fmt:formatDate value='${payment.paidDate}'
+                                                                    pattern='dd/MM/yyyy'/>
+                                                </td>
+                                                <td class="text-center">
+                                                        ${payment.paymentMethod}
+                                                </td>
+                                                <td class="text-center">
+                                                        ${payment.content}
+                                                </td>
+                                                <td class="text-center">
+                                                    <fmt:setLocale value='vi_VN'/>
+                                                    <fmt:formatNumber
+                                                            value='${payment.amount}'
+                                                            type='currency'
+                                                            maxFractionDigits='0'/>
+                                                </td>
+                                                <td class="text-center">
+                                                        ${payment.getMicStaffByReceiver().name}
+                                                </td>
+                                                <td class="text-center">
+                                                        ${payment.paypalTransId}
+                                                </td>
+                                            </tr>
+                                        </c:forEach>
+                                    </c:otherwise>
+                                </c:choose>
+
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="panel panel-footer">
+                            <nav class="text-right">
+                                <ul class="pagination">
+
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <%----------------------------------------------------------------------------------------------------%>
             <%--------------------------------------COMPENSATION--------------------------------------------------%>
-            <div role="tabpane1" class="tab-pane active" id="compensations">
+            <div role="tabpane1" class="tab-pane" id="compensations">
                 <div class="row">
                     <div class="col-lg-12">
                           <span class="pull-right">

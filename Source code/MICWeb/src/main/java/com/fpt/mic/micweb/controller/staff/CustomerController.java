@@ -123,7 +123,7 @@ public class CustomerController extends AuthController {
 
         // Business object
         StaffBusiness staffBus = new StaffBusiness();
-        CreateCustomerInfoDto result = staffBus.createCustomer(dto, getServletContext(), loginUrl);
+        CreateCustomerInfoDto result = staffBus.createCustomer(dto, loginUrl);
 
         if (result != null) {
             // Get created customer information

@@ -19,7 +19,7 @@ public class CompensationDao extends IncrementDao<CompensationEntity, String> {
     public List<CompensationEntity> getAllCompensation(int offset, int count) {
         EntityManager entityManager = factory.createEntityManager();
         String hql = "SELECT cp FROM CompensationEntity AS cp " +
-                "ORDER BY cp.resolveDate, cp.createdDate DESC";
+                "ORDER BY cp.resolveDate, cp.createdDate";
         Query query = entityManager.createQuery(hql);
         query.setFirstResult(offset);
         query.setMaxResults(count);
@@ -42,7 +42,7 @@ public class CompensationDao extends IncrementDao<CompensationEntity, String> {
         EntityManager entityManager = factory.createEntityManager();
         String hql = "SELECT cp FROM CompensationEntity AS cp " +
                 "WHERE cp.contractCode = :code " +
-                "ORDER BY cp.resolveDate, cp.createdDate DESC";
+                "ORDER BY cp.resolveDate, cp.createdDate";
         Query query = entityManager.createQuery(hql);
         query.setParameter("code", contractCode);
         List<CompensationEntity> resultList = query.getResultList();

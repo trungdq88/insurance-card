@@ -90,7 +90,7 @@ public class RegisterController extends BasicController {
         // Call to business object
         RegisterBusiness registerBusiness = new RegisterBusiness();
         RegisterInformationDto register =
-                registerBusiness.registerNewContract(publicRegisterFormDto, getServletContext(), loginUrl);
+                registerBusiness.registerNewContract(publicRegisterFormDto, loginUrl);
 
         if (register != null) {
             HttpSession session = r.equest.getSession();
