@@ -36,7 +36,7 @@ public class CardController extends AuthController {
         return new JspPage("/customer/card.jsp");
     }
 
-    public ResponseObject postNewCard(R r) {
+    public ResponseObject getNewCard(R r) {
 
         String customerCode = ((CustomerEntity) getLoggedInUser()).getCustomerCode();
         String contractCode = r.equest.getParameter("contractCode");
@@ -59,14 +59,13 @@ public class CardController extends AuthController {
         if (errors.size() > 0) {
             // Gửi lỗi về trang JSP
             r.equest.setAttribute("validateErrors", errors);
-            contractCode = r.equest.getParameter("contractCode");
             r.equest.setAttribute("submitted", newCardRequestDto);
             r.equest.setAttribute("contractCode", newCardRequestDto.getContractCode());
             r.equest.setAttribute("newCardFee","" +Constants.PaymentFee.NEW_CARD_REQUEST);
             r.equest.setAttribute("transformFee", "" +Constants.PaymentFee.DELIVERY);
             // Gửi dữ liệu mà người dùng đã nhập về trang JSP, gán vào biết submitted
 
-            return postNewCard(r);
+            return getNewCard(r);
         }
         String customerCode = ((CustomerEntity) getLoggedInUser()).getCustomerCode();
         newCardRequestDto.setCustomerCode(customerCode);
@@ -116,7 +115,7 @@ public class CardController extends AuthController {
         }
         errors.add(message);
         r.equest.setAttribute("validateErrors", errors);
-        return postNewCard(r);
+        return getNewCard(r);
     }
 
     public ResponseObject getActiveNewCardRequest(R r) {

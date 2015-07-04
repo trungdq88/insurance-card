@@ -461,20 +461,16 @@
                         GT</a>
                 </li>
                 <c:if test="${contract.status.equalsIgnoreCase('Ready') }">
-                    <form action="${pageContext.request.contextPath}/customer/card" method="post">
+                    <%--<form action="${pageContext.request.contextPath}/customer/card" method="get">--%>
                         <div class="pull-right">
-                                <%--<a href="${pageContext.request.contextPath}/customer/card?action=newCard&code=${param.code}"--%>
-                                <%--class="btn btn-sm btn-success">--%>
-                                <%--<i class="fa fa-plus"></i>--%>
-                                <%--Yêu cầu thẻ mới--%>
-                                <%--</a>--%>
-                            <button type="submit" class="btn btn-success">
-                                <i class="fa fa-plus"></i> Yêu cầu thẻ mới
-                            </button>
-                            <input type="hidden" name="action" value="newCard">
-                            <input type="hidden" name="contractCode" value="${contract.contractCode}">
+                                <a href="${pageContext.request.contextPath}/customer/card?action=newCard&contractCode=${param.code}"
+                                class="btn btn-sm btn-success">
+                                <i class="fa fa-plus"></i>
+                                Yêu cầu thẻ mới
+                                </a>
+
                         </div>
-                    </form>
+                    <%--</form>--%>
                 </c:if>
             </ul>
         </div>

@@ -53,14 +53,11 @@ public class CardBusiness {
                 newCardRequestEntity.setRequestDate(new Timestamp(new Date().getTime()));
                 // create new card request into database
                 newCardRequestEntity = newCardRequestDao.create(newCardRequestEntity);
-                //newCardRequestEntity ko update dc id, phai get lai tu database
-                newCardRequestEntity = newCardRequestDao.getUnsolvedRequestByCardId(cardEntity.getCardId());
+
                 if (newCardRequestEntity != null){
                     // deactive old card
-                    cardEntity.setDeactivatedDate(new Timestamp(new Date().getTime()));
-                    // add new card request id
-                    cardEntity.setNewCardRequestId(newCardRequestEntity.getId());
-                    cardDao.update(cardEntity);
+                    //cardEntity.setDeactivatedDate(new Timestamp(new Date().getTime()));
+                   // cardDao.update(cardEntity);
                     // thanh cong
                     return null;
                 }
