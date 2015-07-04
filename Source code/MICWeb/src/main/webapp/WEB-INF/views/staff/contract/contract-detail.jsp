@@ -1,5 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ include file="_shared/header.jsp" %>
+<%@ include file="../_shared/header.jsp" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
@@ -13,7 +13,7 @@
     <c:set var="listPunishment" value="${requestScope.PUNISHMENT}" scope="request"/>
     <c:set var="config" value="${requestScope.CONFIG}"/>
 
-    <%@ include file="_shared/navigation.jsp" %>
+    <%@ include file="../_shared/navigation.jsp" %>
     <div id="page-wrapper">
         <div class="row">
             <div class="col-lg-12">
@@ -152,7 +152,7 @@
                     </c:if>
                     <%--/Show cancel contract information --%>
 
-                    <c:import url="contract-detail-general.jsp"/>
+                    <jsp:include page="contract-detail-general.jsp" flush="true"/>
                 </form>
                 <%--/General information--%>
                 <br/>
@@ -188,11 +188,11 @@
                         <br/>
 
                         <form class="form-horizontal">
-                            <c:import url="contract-detail-customer.jsp"/>
+                            <jsp:include page="contract-detail-customer.jsp" flush="true"/>
                             <%--/Customer information--%>
                             <br/>
 
-                            <c:import url="contract-detail-vehicle.jsp"/>
+                            <jsp:include page="contract-detail-vehicle.jsp" flush="true"/>
                             <%--/Vehicle information--%>
                             <br/>
 
@@ -253,19 +253,19 @@
 
                     <div role="tabpanel" class="tab-pane" id="compensations">
                         <br/>
-                        <c:import url="contract-detail-compensation.jsp"/>
+                        <jsp:include page="contract-detail-compensation.jsp" flush="true"/>
                     </div>
                     <%--/Compensation information tab --%>
 
                     <div role="tabpanel" class="tab-pane" id="accidents">
                         <br/>
-                        <c:import url="contract-detail-accident.jsp"/>
+                        <jsp:include page="contract-detail-accident.jsp" flush="true"/>
                     </div>
                     <%--/Accident information tab --%>
 
                     <div role="tabpanel" class="tab-pane" id="punishments">
                         <br/>
-                        <c:import url="contract-detail-punishment.jsp"/>
+                        <jsp:include page="contract-detail-punishment.jsp" flush="true"/>
                     </div>
                     <%--/Punishments information tab --%>
                 </div>
@@ -285,7 +285,7 @@
 </div>
 <!-- /#wrapper -->
 
-<c:import url="contract-detail-modal.jsp"/>
+<jsp:include page="contract-detail-modal.jsp" flush="true"/>
 
 <script type="text/javascript">
     $(document).ready(function () {
@@ -444,4 +444,4 @@
     });
 </script>
 
-<%@ include file="_shared/footer.jsp" %>
+<%@ include file="../_shared/footer.jsp" %>

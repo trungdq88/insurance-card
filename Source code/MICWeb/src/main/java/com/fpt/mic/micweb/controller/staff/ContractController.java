@@ -40,7 +40,6 @@ public class ContractController extends AuthController {
 
     private static String msg = "";
 
-
     public ResponseObject getView(R r) {
         final StaffBusiness staffBus = new StaffBusiness();
         contractPaginator.setGetItemsCallback(new Paginator.IGetItems() {
@@ -56,7 +55,7 @@ public class ContractController extends AuthController {
             }
         });
         r.equest.setAttribute("contractPaginator", contractPaginator);
-        return new JspPage("staff/contracts.jsp");
+        return new JspPage("staff/contract/contracts.jsp");
     }
 
     public ResponseObject getSearch(R r) {
@@ -83,7 +82,7 @@ public class ContractController extends AuthController {
         });
 
         r.equest.setAttribute("contractPaginator", contractPaginator);
-        return new JspPage("staff/contracts.jsp");
+        return new JspPage("staff/contract/contracts.jsp");
     }
 
     public ResponseObject getDetail(R r) {
@@ -127,7 +126,7 @@ public class ContractController extends AuthController {
         r.equest.setAttribute("CONFIG", config);
 
         // Dispatch to JSP page
-        return new JspPage("staff/contract-detail.jsp");
+        return new JspPage("staff/contract/contract-detail.jsp");
     }
 
     public ResponseObject getCreate(R r) {
@@ -136,15 +135,15 @@ public class ContractController extends AuthController {
         ConfigUtils config = new ConfigUtils();
         r.equest.setAttribute("CONTRACTTYPE", listContractType);
         r.equest.setAttribute("CONFIG", config);
-        return new JspPage("staff/create-contract.jsp");
+        return new JspPage("staff/contract/create-contract.jsp");
     }
 
     public ResponseObject getPreview(R r) {
-        return new JspPage("staff/create-contract-preview.jsp");
+        return new JspPage("staff/contract/create-contract-preview.jsp");
     }
 
     public ResponseObject getSuccess(R r) {
-        return new JspPage("staff/create-contract-success.jsp");
+        return new JspPage("staff/contract/create-contract-success.jsp");
     }
 
     public ResponseObject postCreate(R r) {
@@ -173,7 +172,7 @@ public class ContractController extends AuthController {
             ContractEntity createdContract = staffBus.getContractDetail(result.getContractCode());
             r.equest.setAttribute("CONTRACT", createdContract);
             // Return Success JSP Page
-            return new JspPage("staff/create-contract-success.jsp");
+            return new JspPage("staff/contract/create-contract-success.jsp");
         } else {
             msg = "Tạo hợp đồng thất bại, vui lòng thử lại hoặc liên hệ IT";
             r.equest.setAttribute("MESSAGE", msg);

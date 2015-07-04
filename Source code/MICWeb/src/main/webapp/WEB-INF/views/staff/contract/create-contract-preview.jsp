@@ -1,9 +1,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ include file="_shared/header.jsp"%>
+<%@ include file="../_shared/header.jsp"%>
 
 <div id="wrapper">
 
-    <%@ include file="_shared/navigation.jsp" %>
+    <%@ include file="../_shared/navigation.jsp" %>
 
     <div id="page-wrapper">
         <div class="row">
@@ -371,4 +371,4 @@
 </div>
 <!-- /#wrapper -->
 
-<%@ include file="_shared/footer.jsp"%>
+<%@ include file="../_shared/footer.jsp"%>
