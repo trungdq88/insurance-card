@@ -4,14 +4,18 @@ import com.fpt.mic.micweb.controller.common.AuthController;
 import com.fpt.mic.micweb.framework.Paginator;
 import com.fpt.mic.micweb.framework.responses.JspPage;
 import com.fpt.mic.micweb.framework.R;
+import com.fpt.mic.micweb.framework.responses.RedirectTo;
 import com.fpt.mic.micweb.framework.responses.ResponseObject;
 import com.fpt.mic.micweb.model.business.CompensationBusiness;
 import com.fpt.mic.micweb.model.dto.UserDto;
 import com.fpt.mic.micweb.model.dto.form.CreateCompensationDto;
+import com.fpt.mic.micweb.model.dto.form.ResolveCompensationDto;
 import com.fpt.mic.micweb.model.entity.CompensationEntity;
 import com.fpt.mic.micweb.utils.ConfigUtils;
+import com.fpt.mic.micweb.utils.Constants;
 
 import javax.servlet.annotation.WebServlet;
+import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -53,9 +57,24 @@ public class CompensationController extends AuthController {
     public ResponseObject getDetail(R r) {
         String compensationCode = r.equest.getParameter("code");
 
+        // Receive compensationCode from failed validation
+        // @see {@link postResolve}
+        if (compensationCode == null) {
+            compensationCode = (String) r.equest.getAttribute("compensationCode");
+        }
+
         // Get compensation detail information
         CompensationBusiness compenBus = new CompensationBusiness();
         CompensationEntity compenEntity = compenBus.getCompensationDetail(compensationCode);
+
+        // If contract is not exists, show 404 page
+        if (compenEntity == null) {
+            return new RedirectTo("/error/404");
+        }
+
+        // Save last_modified value for concurrency check
+        r.equest.getSession(true).setAttribute(
+                Constants.Session.CONCURRENCY + compensationCode, compenEntity.getLastModified());
 
         r.equest.setAttribute("COMPENSATION", compenEntity);
         return new JspPage("staff/compensation-detail.jsp");
@@ -92,5 +111,35 @@ public class CompensationController extends AuthController {
             r.equest.setAttribute("MESSAGE", msg);
             return new JspPage("staff/message.jsp");
         }
+    }
+
+    public ResponseObject postResolve(R r) {
+        ResolveCompensationDto dto = (ResolveCompensationDto) r.ead.entity(ResolveCompensationDto.class, "resolve");
+
+        // Get concurrency data
+        Timestamp lastModified = (Timestamp) r.equest.getSession(true).getAttribute(
+                Constants.Session.CONCURRENCY + dto.getCompensationCode());
+        dto.setLastModified(lastModified);
+
+        List errors = r.ead.validate(dto);
+
+        // If there is validation errors
+        if (errors.size() > 0) {
+            // Send error messages to JSP page
+            r.equest.setAttribute("validateErrors", errors);
+            // This is a form in a popup, we don't need to display data again since
+            // the popup will not automatically open when the page is reloaded
+            // r.equest.setAttribute("submitted", dto);
+            // Re-call the contract detail page
+            r.equest.setAttribute("compensationCode", dto.getCompensationCode());
+            return getDetail(r);
+        }
+        // If the code reached this line that means there is no validation errors
+
+        // Call to business object
+        CompensationBusiness compenBus = new CompensationBusiness();
+        boolean result = compenBus.resolveCompensation(dto);
+
+        return new RedirectTo("compensation?action=detail&code=" + dto.getCompensationCode());
     }
 }
