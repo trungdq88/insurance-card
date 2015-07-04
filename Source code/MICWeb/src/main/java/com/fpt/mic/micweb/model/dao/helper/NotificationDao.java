@@ -5,6 +5,7 @@ import com.fpt.mic.micweb.model.dto.NotificationDto;
 import com.fpt.mic.micweb.model.entity.helper.NotificationEntity;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import java.math.BigInteger;
 import java.util.List;
@@ -116,7 +117,13 @@ public class NotificationDao extends GenericDaoJpaImpl<NotificationEntity, Integ
         query.setParameter("notif_type_43", type43);
         query.setParameter("notif_type_5", type5);
         query.setParameter("extraData", extraData);
-        NotificationEntity result = (NotificationEntity) query.getSingleResult();
+        NotificationEntity result;
+        try {
+            result = (NotificationEntity) query.getSingleResult();
+        } catch (NoResultException e) {
+            e.printStackTrace();
+            return null;
+        }
         entityManager.close();
         return result;
     }

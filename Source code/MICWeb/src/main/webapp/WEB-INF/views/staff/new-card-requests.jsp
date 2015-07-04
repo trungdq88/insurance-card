@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="_shared/header.jsp"%>
 
@@ -17,7 +18,7 @@
                     <div class="panel-heading">
                         <div class="pull-left center-dropdown-button">
                             <!--<input type="checkbox" class="check-all"/>-->
-                            <b>Có 3 yêu cầu cấp thẻ mới chưa xử lý</b>
+                            <b>Có ${unresolvedRequestCount} yêu cầu cấp thẻ mới chưa xử lý</b>
                         </div>
                         <div class="pull-right no-wrap">
                             <input type="text" class="form-control long-text-box"
@@ -42,128 +43,77 @@
                                     <th>Thẻ mới cấp</th>
                                 </tr>
                                 </thead>
+                                <c:set var="requests" value="${requestPaginator.getItemsOnCurrentPage(param.page)}"/>
                                 <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>12/3/2015</td>
-                                    <td><a tabindex="0" data-trigger="focus" data-toggle="popover" title="Ghi chú từ khách hàng"
-                                           role="button" data-content="Bị mất thẻ"><i class="fa fa-file"></i></a></td>
-                                    <td><a href="detail-card.html">AC7-37F-E8E-DDC</a></td>
-                                    <td><a href="detail-customer.html">Đinh Quang Trung</a></td>
-                                    <td><span class="label label-danger">Chưa cấp</span></td>
-                                    <td>-</td>
-                                </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td>12/3/2015</td>
-                                    <td><a tabindex="0" data-trigger="focus" data-toggle="popover" title="Ghi chú từ khách hàng"
-                                           role="button" data-content="Bị mất thẻ"><i class="fa fa-file"></i></a></td>
-                                    <td><a href="detail-card.html">AC7-37F-E8E-DDC</a></td>
-                                    <td><a href="detail-customer.html">Đinh Quang Trung</a></td>
-                                    <td><span class="label label-danger">Chưa cấp</span></td>
-                                    <td>-</td>
-                                </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td>12/3/2015</td>
-                                    <td><a tabindex="0" data-trigger="focus" data-toggle="popover" title="Ghi chú từ khách hàng"
-                                           role="button" data-content="Bị mất thẻ"><i class="fa fa-file"></i></a></td>
-                                    <td><a href="detail-card.html">AC7-37F-E8E-DDC</a></td>
-                                    <td><a href="detail-customer.html">Đinh Quang Trung</a></td>
-                                    <td><span class="label label-danger">Chưa cấp</span></td>
-                                    <td>-</td>
-                                </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td>12/3/2015</td>
-                                    <td><a tabindex="0" data-trigger="focus" data-toggle="popover" title="Ghi chú từ khách hàng"
-                                           role="button" data-content="Bị mất thẻ"><i class="fa fa-file"></i></a></td>
-                                    <td><a href="detail-card.html">AC7-37F-E8E-DDC</a></td>
-                                    <td><a href="detail-customer.html">Đinh Quang Trung</a></td>
-                                    <td>10/04/2015</td>
-                                    <td><a href="detail-card.html">DA6-43A-0EF-F23</a></td>
-                                </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td>12/3/2015</td>
-                                    <td><a tabindex="0" data-trigger="focus" data-toggle="popover" title="Ghi chú từ khách hàng"
-                                           role="button" data-content="Bị mất thẻ"><i class="fa fa-file"></i></a></td>
-                                    <td><a href="detail-card.html">AC7-37F-E8E-DDC</a></td>
-                                    <td><a href="detail-customer.html">Đinh Quang Trung</a></td>
-                                    <td>10/04/2015</td>
-                                    <td><a href="detail-card.html">DA6-43A-0EF-F23</a></td>
-                                </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td>12/3/2015</td>
-                                    <td><a tabindex="0" data-trigger="focus" data-toggle="popover" title="Ghi chú từ khách hàng"
-                                           role="button" data-content="Bị mất thẻ"><i class="fa fa-file"></i></a></td>
-                                    <td><a href="detail-card.html">AC7-37F-E8E-DDC</a></td>
-                                    <td><a href="detail-customer.html">Đinh Quang Trung</a></td>
-                                    <td>10/04/2015</td>
-                                    <td><a href="detail-card.html">DA6-43A-0EF-F23</a></td>
-                                </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td>12/3/2015</td>
-                                    <td><a tabindex="0" data-trigger="focus" data-toggle="popover" title="Ghi chú từ khách hàng"
-                                           role="button" data-content="Bị mất thẻ"><i class="fa fa-file"></i></a></td>
-                                    <td><a href="detail-card.html">AC7-37F-E8E-DDC</a></td>
-                                    <td><a href="detail-customer.html">Đinh Quang Trung</a></td>
-                                    <td>10/04/2015</td>
-                                    <td><a href="detail-card.html">DA6-43A-0EF-F23</a></td>
-                                </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td>12/3/2015</td>
-                                    <td><a tabindex="0" data-trigger="focus" data-toggle="popover" title="Ghi chú từ khách hàng"
-                                           role="button" data-content="Bị mất thẻ"><i class="fa fa-file"></i></a></td>
-                                    <td><a href="detail-card.html">AC7-37F-E8E-DDC</a></td>
-                                    <td><a href="detail-customer.html">Đinh Quang Trung</a></td>
-                                    <td>10/04/2015</td>
-                                    <td><a href="detail-card.html">DA6-43A-0EF-F23</a></td>
-                                </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td>12/3/2015</td>
-                                    <td><a tabindex="0" data-trigger="focus" data-toggle="popover" title="Ghi chú từ khách hàng"
-                                           role="button" data-content="Bị mất thẻ"><i class="fa fa-file"></i></a></td>
-                                    <td><a href="detail-card.html">AC7-37F-E8E-DDC</a></td>
-                                    <td><a href="detail-customer.html">Đinh Quang Trung</a></td>
-                                    <td>10/04/2015</td>
-                                    <td><a href="detail-card.html">DA6-43A-0EF-F23</a></td>
-                                </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td>12/3/2015</td>
-                                    <td><a tabindex="0" data-trigger="focus" data-toggle="popover" title="Ghi chú từ khách hàng"
-                                           role="button" data-content="Bị mất thẻ"><i class="fa fa-file"></i></a></td>
-                                    <td><a href="detail-card.html">AC7-37F-E8E-DDC</a></td>
-                                    <td><a href="detail-customer.html">Đinh Quang Trung</a></td>
-                                    <td>10/04/2015</td>
-                                    <td><a href="detail-card.html">DA6-43A-0EF-F23</a></td>
-                                </tr>
+                                <c:choose>
+                                    <c:when test="${requests.size() == 0}">
+                                        <tr>
+                                            <td colspan="6" style="vertical-align: middle; text-align: center;">
+                                                Không có yêu cầu thẻ mới nào
+                                            </td>
+                                        </tr>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <c:forEach var="newRequest" items="${requests}" varStatus="counter">
+                                            <tr>
+                                                <td>${(requestPaginator.getCurrentPage(param.page) - 1) * requestPaginator.itemPerPage + counter.count}</td>
+                                                <td>${newRequest.requestDate}</td>
+                                                <td><a tabindex="0" data-trigger="focus" data-toggle="popover" title="Ghi chú từ khách hàng"
+                                                       role="button" data-content="${newRequest.note}"><i class="fa fa-file"></i></a></td>
+                                                <td>
+                                                    <a href="#">
+                                                            ${newRequest.oldCardId}
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <a href="${pageContext.request.contextPath}/staff/customer?action=detail&code=${newRequest.micCustomerByCustomerCode.customerCode}">
+                                                            ${newRequest.micCustomerByCustomerCode.name}
+                                                    </a>
+
+                                                </td>
+                                                <td>
+                                                    <c:if test="${empty newRequest.resolveDate}">
+                                                        <span class="label label-danger">Chưa cấp</span>
+                                                     </c:if>
+                                                        ${newRequest.resolveDate}
+                                                </td>
+                                                <td>
+                                                    <a href="#">
+                                                            ${map[newRequest.id]}
+                                                    </a>
+
+                                                </td>
+                                            </tr>
+                                        </c:forEach>
+                                    </c:otherwise>
+                                </c:choose>
+
                                 </tbody>
                             </table>
                         </div>
                         <!-- /.table-responsive -->
                         <nav class="text-right">
                             <ul class="pagination">
-                                <li>
-                                    <a href="#" aria-label="Previous">
-                                        <span aria-hidden="true">&laquo;</span>
-                                    </a>
-                                </li>
-                                <li class="active"><a href="#">1</a></li>
-                                <li><a href="#">2</a></li>
-                                <li><a href="#">3</a></li>
-                                <li><a href="#">4</a></li>
-                                <li><a href="#">5</a></li>
-                                <li>
-                                    <a href="#" aria-label="Next">
-                                        <span aria-hidden="true">&raquo;</span>
-                                    </a>
-                                </li>
+                                <c:if test="${param.page != 1 && not empty param.page}">
+                                    <li>
+                                        <a href="?action=${param.action}&keyword=${param.keyword}&page=1" aria-label="Previous">
+                                            <span aria-hidden="true">Đầu</span>
+                                        </a>
+                                    </li>
+                                </c:if>
+                                <c:forEach begin="1" end="${requestPaginator.pageSize}" var="pageNumber">
+                                    <li ${param.page == pageNumber ||(pageNumber == 1 && empty param.page) ? "class='active'": ""} >
+                                        <a href="?action=${param.action}&keyword=${param.keyword}&page=${pageNumber}">${pageNumber}</a>
+                                    </li>
+                                </c:forEach>
+                                <c:if test="${param.page != requestPaginator.pageSize && requestPaginator.pageSize != 1}">
+                                    <li>
+                                        <a href="?action=${param.action}&keyword=${param.keyword}&page=${requestPaginator.pageSize}"
+                                           aria-label="Next">
+                                            <span aria-hidden="true">Cuối</span>
+                                        </a>
+                                    </li>
+                                </c:if>
                             </ul>
                         </nav>
                     </div>

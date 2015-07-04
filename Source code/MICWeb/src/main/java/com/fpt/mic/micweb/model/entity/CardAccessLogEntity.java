@@ -19,6 +19,7 @@ public class CardAccessLogEntity {
     private CardEntity micCardByCardId;
 
     @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
     @Column(name = "id")
     public int getId() {
         return id;

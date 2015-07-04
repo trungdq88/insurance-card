@@ -11,7 +11,6 @@ import com.fpt.mic.micweb.model.business.PaymentBusiness;
 import com.fpt.mic.micweb.model.dto.CheckoutRequestDto;
 import com.fpt.mic.micweb.model.dto.UserDto;
 import com.fpt.mic.micweb.model.dto.form.NewCardRequestDto;
-import com.fpt.mic.micweb.model.entity.ContractEntity;
 import com.fpt.mic.micweb.model.entity.CustomerEntity;
 import com.fpt.mic.micweb.utils.Constants;
 
@@ -84,7 +83,7 @@ public class CardController extends AuthController {
                 // thanh toan truc tiep
                 if (newCardRequestDto.getPayment().equalsIgnoreCase("direct")) {
                     // gui yeu cau the moi
-                    if(cardBusiness.requestNewCard(newCardRequestDto) == false){
+                    if(cardBusiness.requestNewCardRequest(newCardRequestDto) == false){
                         message = "Có lỗi xảy ra. Xin thử lại";
                         r.equest.setAttribute("result", message);
                         r.equest.setAttribute("contractCode",newCardRequestDto.getContractCode());
@@ -140,7 +139,7 @@ public class CardController extends AuthController {
         NewCardRequestDto newCardRequestDto = (NewCardRequestDto) session.getAttribute("NEW_CARD_DTO");
         CardBusiness cardBusiness = new CardBusiness();
         String message;
-        if(cardBusiness.requestNewCard(newCardRequestDto) == false){
+        if(cardBusiness.requestNewCardRequest(newCardRequestDto) == false){
             message = "Có lỗi xảy ra. Xin thử lại";
             r.equest.setAttribute("result", message);
             r.equest.setAttribute("contractCode",newCardRequestDto.getContractCode());

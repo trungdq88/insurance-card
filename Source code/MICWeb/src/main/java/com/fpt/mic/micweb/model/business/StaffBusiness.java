@@ -87,10 +87,22 @@ public class StaffBusiness {
         StaffDao staffDao = new StaffDao();
         return staffDao.getAllStaffCount();
     }
+    public Long getAllNewCardRequestCount() {
+        StaffDao staffDao = new StaffDao();
+        return staffDao.getAllNewCardRequestCount();
+    }
+    public Long getUnresolvedNewCardRequestCount(){
+        StaffDao staffDao = new StaffDao();
+        return staffDao.getUnresolvedNewCardRequestCount();
+    }
 
     public List getOnePageStaff(int offset, int count) {
         StaffDao staffDao = new StaffDao();
         return staffDao.getOnePageStaff(offset, count);
+    }
+    public List getOnePageNewCardRequest(int offset, int count) {
+        StaffDao staffDao = new StaffDao();
+        return staffDao.getOnePageNewCardRequest(offset, count);
     }
 
     public List getContractByCustomerCode(String customerCode, int offset, int count) {
