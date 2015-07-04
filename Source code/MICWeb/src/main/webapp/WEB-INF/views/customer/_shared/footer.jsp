@@ -20,6 +20,7 @@
 <script src="${pageContext.request.contextPath}/js/datetimepicker.js"></script>
 <!-- User script -->
 <script src="${pageContext.request.contextPath}/js/customer.js"></script>
+<script src="${pageContext.request.contextPath}/js/main.js"></script>
 
 </body>
 </html>

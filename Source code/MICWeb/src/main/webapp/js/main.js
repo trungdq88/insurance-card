@@ -39,6 +39,14 @@ function getInputDateNextDate(inputDate) {
     return nextDateDisplay;
 }
 
+function getInputDateWithoutTime(inputDate) {
+    var today = inputDate;
+    var nextDate = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+    var withoutTime = ("0000" + nextDate.getFullYear().toString()).slice(-4) + "-"
+        + ("00" + (nextDate.getMonth() + 1).toString()).slice(-2) + "-" + ("00" + nextDate.getDate().toString()).slice(-2);
+    return withoutTime;
+}
+
 function getInputDateInNextYear(inputDate) {
     var curYear = inputDate.getFullYear();
     var curYearMonth = inputDate.getMonth() + 1;
