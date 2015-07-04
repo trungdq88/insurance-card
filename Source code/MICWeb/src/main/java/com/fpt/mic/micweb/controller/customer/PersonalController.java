@@ -70,4 +70,8 @@ public class PersonalController extends AuthController {
             }
         }
     }
+
+//    public ResponseObject postRejectChangePassword(R r){
+//
+//    }
 }
