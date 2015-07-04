@@ -24,6 +24,7 @@ public class PaymentEntity {
     private StaffEntity micStaffByReceiver;
 
     @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
     @Column(name = "id")
     public int getId() {
         return id;

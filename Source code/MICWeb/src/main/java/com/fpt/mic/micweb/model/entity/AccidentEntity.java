@@ -19,6 +19,7 @@ public class AccidentEntity {
     private ContractEntity micContractByContractCode;
 
     @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
     @Column(name = "id")
     public int getId() {
         return id;
