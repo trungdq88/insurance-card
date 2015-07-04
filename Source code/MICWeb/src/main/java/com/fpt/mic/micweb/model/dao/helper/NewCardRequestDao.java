@@ -6,6 +6,7 @@ import com.fpt.mic.micweb.model.entity.NewCardRequestEntity;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
+import java.util.List;
 
 /**
  * Created by TriPQM on 07/03/2015.
@@ -22,5 +23,51 @@ public class NewCardRequestDao extends GenericDaoJpaImpl<NewCardRequestEntity, I
         } catch (NoResultException e) {
             return null;
         }
+    }
+
+    public List getOnePageNewCardRequest(String customerCode, int offset, int count) {
+        EntityManager entityManager = factory.createEntityManager();
+        Query query = entityManager.createQuery(
+                        "SELECT co " +
+                        "FROM NewCardRequestEntity co " +
+                        "WHERE co.customerCode = :customerCode"
+        );
+        query.setParameter("customerCode", customerCode);
+        query.setFirstResult(offset);
+        query.setMaxResults(count);
+        List resultList = query.getResultList();
+        entityManager.close();
+        return resultList;
+    }
+    public Long getAllNewCardRequestCount() {
+        EntityManager entity = factory.createEntityManager();
+        String hql = "SELECT COUNT(co) FROM NewCardRequestEntity co ORDER BY co.id DESC";
+        Query query = entity.createQuery(hql);
+        Long result = (Long) query.getSingleResult();
+        entity.close();
+        return result;
+    }
+    public Long getAllNewCardRequestCount(String customerCode) {
+        EntityManager entityManager = factory.createEntityManager();
+        Query query = entityManager.createQuery(
+                "SELECT COUNT(co) " +
+                        "FROM NewCardRequestEntity co " +
+                        "WHERE co.customerCode = :customerCode " +
+                        "ORDER BY co.resolveDate ASC "
+        );
+        query.setParameter("customerCode", customerCode);
+        Long result = (Long) query.getSingleResult();
+        entityManager.close();
+        return result;
+    }
+    public Long getUnresolvedNewCardRequestCount(String customerCode) {
+        EntityManager entity = factory.createEntityManager();
+        String hql = "SELECT COUNT(co) FROM NewCardRequestEntity co " +
+                "WHERE co.resolveDate = NULL AND co.customerCode = :customerCode ORDER BY co.id DESC";
+        Query query = entity.createQuery(hql);
+        query.setParameter("customerCode",customerCode);
+        Long result = (Long) query.getSingleResult();
+        entity.close();
+        return result;
     }
 }

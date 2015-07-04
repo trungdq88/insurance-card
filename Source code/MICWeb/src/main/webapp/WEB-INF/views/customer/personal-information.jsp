@@ -120,7 +120,7 @@
                         <div class="modal-body">
                             <div class="text-center alert alert-danger alert-dismissible hide" id="notify1"
                                  role="alert">
-                                Mật khẩu hiện tại không đúng
+                                Không được trùng với mật khẩu hiện tại
                             </div>
                             <div class="text-center alert alert-danger alert-dismissible hide" id="notify2"
                                  role="alert">
