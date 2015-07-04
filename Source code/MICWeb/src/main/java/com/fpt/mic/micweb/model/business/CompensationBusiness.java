@@ -3,12 +3,11 @@ package com.fpt.mic.micweb.model.business;
 import com.fpt.mic.micweb.model.dao.CompensationDao;
 import com.fpt.mic.micweb.model.dto.NotificationBuilder;
 import com.fpt.mic.micweb.model.dto.form.CreateCompensationDto;
+import com.fpt.mic.micweb.model.dto.form.EditCompensationDto;
 import com.fpt.mic.micweb.model.dto.form.ResolveCompensationDto;
 import com.fpt.mic.micweb.model.entity.CompensationEntity;
-import com.fpt.mic.micweb.model.entity.StaffEntity;
 import com.fpt.mic.micweb.utils.DateUtils;
 
-import java.sql.Timestamp;
 import java.util.List;
 
 /**
@@ -86,6 +85,44 @@ public class CompensationBusiness {
 
         // Check compensation entity
         if (compensationEntity != null) {
+            compensationEntity.setResolveDate(dto.getResolveDate());
+            compensationEntity.setDecision(dto.getDecision());
+            compensationEntity.setResolveNote(dto.getResolveNote());
+            // Concurrency set value
+            compensationEntity.setLastModified(DateUtils.currentTimeWithoutNanos());
+
+            if (compensationDao.update(compensationEntity) != null) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean editCompensation(EditCompensationDto dto) {
+        CompensationDao compensationDao = new CompensationDao();
+        CompensationEntity compensationEntity = compensationDao.read(dto.getCompensationCode());
+
+        // Check compensation entity
+        if (compensationEntity != null) {
+            compensationEntity.setContractCode(dto.getContractCode());
+            compensationEntity.setCreatedDate(dto.getCreatedDate());
+            compensationEntity.setDriverName(dto.getDriverName());
+            compensationEntity.setLicenseNumber(dto.getLicenseNumber());
+            compensationEntity.setLicenseType(dto.getLicenseType());
+            compensationEntity.setDriverAddress(dto.getDriverAddress());
+            compensationEntity.setDriverPhone(dto.getDriverPhone());
+            compensationEntity.setPlate(dto.getPlate());
+            compensationEntity.setVehicleCapacity(dto.getVehicleCapacity());
+            compensationEntity.setAccidentDate(dto.getAccidentDate());
+            compensationEntity.setAccidentPlace(dto.getAccidentPlace());
+            compensationEntity.setControlDepartment(dto.getControlDepartment());
+            compensationEntity.setDescription(dto.getDescription());
+            compensationEntity.setHumanDamage(dto.getHumanDamage());
+            compensationEntity.setAssetDamage(dto.getAssetDamage());
+            compensationEntity.setObserver(dto.getObserver());
+            compensationEntity.setObserverAddress(dto.getObserverAddress());
+            compensationEntity.setCompensationNote(dto.getCompensationNote());
+            compensationEntity.setAttachment(dto.getAttachment());
             compensationEntity.setResolveDate(dto.getResolveDate());
             compensationEntity.setDecision(dto.getDecision());
             compensationEntity.setResolveNote(dto.getResolveNote());

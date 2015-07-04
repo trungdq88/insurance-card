@@ -37,6 +37,12 @@ public class ChangePasswordDto {
         String encryptedPassword = StringUtils.getMD5Hash(currentPassword);
         return customerDao.read(customerCode).getPassword().equals(encryptedPassword);
     }
+    @AssertTrue(message = "Không được trùng với mật khẩu hiện tại")
+    private boolean isDuplicateOldPass() {
+        CustomerDao customerDao = new CustomerDao();
+        String encryptedPassword = StringUtils.getMD5Hash(newPassword);
+        return !customerDao.read(customerCode).getPassword().equals(encryptedPassword);
+    }
     @AssertTrue(message = "Xác nhận mật khẩu không khớp với mật khẩu mới")
     private boolean isMatchPassword() {
         return newPassword.equals(confirmPassword);
