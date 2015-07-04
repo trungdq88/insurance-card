@@ -5,6 +5,7 @@ import com.fpt.mic.micweb.framework.responses.JsonString;
 import com.fpt.mic.micweb.framework.responses.RedirectTo;
 import com.fpt.mic.micweb.framework.responses.ResponseObject;
 import com.fpt.mic.micweb.model.business.NotificationBusiness;
+import com.fpt.mic.micweb.model.dto.NotificationDto;
 import com.fpt.mic.micweb.model.entity.helper.IUserEntity;
 import com.fpt.mic.micweb.model.entity.helper.NotificationEntity;
 
@@ -35,7 +36,7 @@ public class NotifyController extends AuthController {
 
             NotificationBusiness bus = new NotificationBusiness();
 
-            NotificationEntity entity = bus.get(id);
+            NotificationDto entity = bus.get(id);
 
             boolean b = bus.markAsRead(id, user.calcUserCode());
 
@@ -61,7 +62,7 @@ public class NotifyController extends AuthController {
 
             NotificationBusiness bus = new NotificationBusiness();
 
-            NotificationEntity entity = bus.get(id);
+            NotificationDto entity = bus.get(id);
 
             boolean b = bus.markAsUnread(id, user.calcUserCode());
 

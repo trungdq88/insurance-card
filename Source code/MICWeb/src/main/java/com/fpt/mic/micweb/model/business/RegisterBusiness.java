@@ -4,12 +4,14 @@ import com.fpt.mic.micweb.framework.R;
 import com.fpt.mic.micweb.model.dao.ContractDao;
 import com.fpt.mic.micweb.model.dao.CustomerDao;
 import com.fpt.mic.micweb.model.dao.PaymentDao;
+import com.fpt.mic.micweb.model.dto.NotificationBuilder;
 import com.fpt.mic.micweb.model.dto.RegisterInformationDto;
 import com.fpt.mic.micweb.model.dto.form.CustomerCreateContractDto;
 import com.fpt.mic.micweb.model.dto.form.PublicRegisterFormDto;
 import com.fpt.mic.micweb.model.entity.ContractEntity;
 import com.fpt.mic.micweb.model.entity.CustomerEntity;
 import com.fpt.mic.micweb.model.entity.PaymentEntity;
+import com.fpt.mic.micweb.model.entity.helper.NotificationEntity;
 import com.fpt.mic.micweb.utils.Constants;
 import com.fpt.mic.micweb.utils.DateUtils;
 import com.fpt.mic.micweb.utils.EmailUtils;
@@ -101,7 +103,6 @@ public class RegisterBusiness {
 
         ContractDao contractDao = new ContractDao();
         CustomerDao customerDao = new CustomerDao();
-        // Validate information
 
         // Add customer
         // get next customer code
@@ -119,7 +120,15 @@ public class RegisterBusiness {
         if (customer != null) {
             ContractEntity contract = contractDao.create(contractEntity);
             if (contract != null) {
+                // Send email
                 boolean emailSuccess = sendPasswordEmail(context, loginUrl, customerPassword, customer);
+
+                // Send notification
+                NotificationBusiness notif = new NotificationBusiness();
+                ContractDao dao = new ContractDao();
+                ContractEntity notifContract = dao.read(contract.getContractCode());
+                notif.sendNotification(NotificationBuilder.customerCreateContract(notifContract));
+
                 return new RegisterInformationDto(contract, customer, emailSuccess);
             }
 

@@ -1,6 +1,7 @@
 package com.fpt.mic.micweb.model.dao.helper;
 
 import com.fpt.mic.micweb.model.dao.common.GenericDaoJpaImpl;
+import com.fpt.mic.micweb.model.dto.NotificationDto;
 import com.fpt.mic.micweb.model.entity.helper.NotificationEntity;
 
 import javax.persistence.EntityManager;
@@ -23,7 +24,7 @@ public class NotificationDao extends GenericDaoJpaImpl<NotificationEntity, Integ
                         "ON n.id = nr.notification_id " +
                         "WHERE :user_code REGEXP receiver " +
                         "ORDER BY n.created_date DESC ",
-                NotificationEntity.class);
+                NotificationDto.class);
         query.setParameter("user_code", code);
         List resultList = query.getResultList();
         entityManager.close();
@@ -46,7 +47,7 @@ public class NotificationDao extends GenericDaoJpaImpl<NotificationEntity, Integ
                         "WHERE :user_code REGEXP receiver " +
                         "AND nr.is_read IS NULL " +
                         "ORDER BY n.created_date DESC ",
-                NotificationEntity.class);
+                NotificationDto.class);
         query.setParameter("user_code", code);
         if (size > 0) {
             query.setMaxResults(size);
@@ -72,7 +73,7 @@ public class NotificationDao extends GenericDaoJpaImpl<NotificationEntity, Integ
         return result;
     }
 
-    public NotificationEntity get(int id) {
+    public NotificationDto get(int id) {
         EntityManager entityManager = factory.createEntityManager();
 
         Query query = entityManager.createNativeQuery(
@@ -82,11 +83,11 @@ public class NotificationDao extends GenericDaoJpaImpl<NotificationEntity, Integ
                         "ON n.id = nr.notification_id " +
                         "WHERE n.id = :id " +
                         "ORDER BY n.created_date DESC ",
-                NotificationEntity.class);
+                NotificationDto.class);
         query.setParameter("id", id);
-        NotificationEntity resultList = null;
+        NotificationDto resultList = null;
         try {
-            resultList = (NotificationEntity) query.getSingleResult();
+            resultList = (NotificationDto) query.getSingleResult();
         } catch (Exception e) {
             e.printStackTrace();
         }
