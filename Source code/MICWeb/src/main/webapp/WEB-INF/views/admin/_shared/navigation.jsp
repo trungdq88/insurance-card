@@ -46,8 +46,13 @@
         <div class="sidebar-nav navbar-collapse">
             <ul class="nav" id="side-menu">
                 <li>
-                    <a href="${pageContext.request.contextPath}/admin/home">
+                    <a href="${pageContext.request.contextPath}/admin">
                         <i class="fa fa-key fa-fw"></i> Người quản lý
+                    </a>
+                </li>
+                <li>
+                    <a href="${pageContext.request.contextPath}/admin">
+                        <i class="fa fa-key fa-fw"></i> Thiết lập
                     </a>
                 </li>
             </ul>

@@ -53,19 +53,19 @@ public class SchedulerBusiness {
 
             NotificationBusiness bus = new NotificationBusiness();
 
-            if (DateUtils.dateBetween(currentDate, contractEntity.getExpiredDate()) < Constants.DueDate.NEARLY_EXCEED_EXPIRED_1) {
-                bus.send(NotificationBuilder.contractNearlyExpired(contractEntity,
-                        NotificationEntity.Type.CONTRACT_NEARLY_EXPIRED_1));
-                return true;
+            int type = 0;
+
+            if (DateUtils.dateBetween(currentDate, contractEntity.getExpiredDate()) <= Constants.DueDate.NEARLY_EXCEED_EXPIRED_1) {
+                type = NotificationEntity.Type.CONTRACT_NEARLY_EXPIRED_1;
             }
-            if (DateUtils.dateBetween(currentDate, contractEntity.getExpiredDate()) < Constants.DueDate.NEARLY_EXCEED_EXPIRED_2) {
-                bus.send(NotificationBuilder.contractNearlyExpired(contractEntity,
-                        NotificationEntity.Type.CONTRACT_NEARLY_EXPIRED_2));
-                return true;
+            if (DateUtils.dateBetween(currentDate, contractEntity.getExpiredDate()) <= Constants.DueDate.NEARLY_EXCEED_EXPIRED_2) {
+                type = NotificationEntity.Type.CONTRACT_NEARLY_EXPIRED_2;
             }
-            if (DateUtils.dateBetween(currentDate, contractEntity.getExpiredDate()) < Constants.DueDate.NEARLY_EXCEED_EXPIRED_3) {
-                bus.send(NotificationBuilder.contractNearlyExpired(contractEntity,
-                        NotificationEntity.Type.CONTRACT_NEARLY_EXPIRED_3));
+            if (DateUtils.dateBetween(currentDate, contractEntity.getExpiredDate()) <= Constants.DueDate.NEARLY_EXCEED_EXPIRED_3) {
+                type = NotificationEntity.Type.CONTRACT_NEARLY_EXPIRED_3;
+            }
+            if (type > 0) {
+                bus.send(NotificationBuilder.contractNearlyExpired(contractEntity, type));
                 return true;
             }
         }

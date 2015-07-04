@@ -16,7 +16,7 @@ import java.util.List;
 /**
  * Created by TriPQM on 07/02/2015.
  */
-@WebServlet(name = "ManageController", urlPatterns = {"/admin/home"})
+@WebServlet(name = "ManageController", urlPatterns = {"/admin"})
 public class ManageController extends BasicController{
     /**
      * Paginator for contract

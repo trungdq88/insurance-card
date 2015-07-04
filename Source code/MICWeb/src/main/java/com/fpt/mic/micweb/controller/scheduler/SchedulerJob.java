@@ -13,9 +13,9 @@ public class SchedulerJob implements Job {
     @Override
     public void execute(final JobExecutionContext ctx)
             throws JobExecutionException {
-        //System.out.println("Executing Schedule Job " + (new Date()));
+        System.out.println("Executing Schedule Job " + (new Date()));
         SchedulerBusiness schedulerBusiness = new SchedulerBusiness();
-        //schedulerBusiness.updateContracts();
+        schedulerBusiness.updateContracts();
 
     }
 

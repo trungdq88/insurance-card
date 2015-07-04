@@ -19,18 +19,21 @@ public class NotificationBusiness {
 
         // Need to check if the contract is already notified before
         // Unique constraint: type + extra data
-        // Check types: 4.1, 4.2, 4.3, 5
+        // Check types: 4.1, 4.2, 4.3
         int type41 = NotificationEntity.Type.CONTRACT_NEARLY_EXPIRED_1;
         int type42 = NotificationEntity.Type.CONTRACT_NEARLY_EXPIRED_2;
         int type43 = NotificationEntity.Type.CONTRACT_NEARLY_EXPIRED_3;
-        int type5 = NotificationEntity.Type.CONTRACT_EXPIRED;
-        NotificationEntity existsNotif = dao.isNotified(entity.getExtraData());
-        if ((entity.getType() == type41 ||
+
+        if (entity.getType() == type41 ||
                 entity.getType() == type42 ||
-                entity.getType() == type43 ||
-                entity.getType() == type5) && existsNotif != null) {
-            // No need to do anything;
-            return existsNotif;
+                entity.getType() == type43) {
+
+            NotificationEntity existsNotif = dao.isNotified(entity.getType(),
+                    entity.getExtraData());
+            if (existsNotif != null) {
+                // No need to do anything;
+                return existsNotif;
+            }
         }
 
         // If reached here, create the notification
