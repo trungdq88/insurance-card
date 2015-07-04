@@ -4,6 +4,7 @@ import com.fpt.mic.micweb.model.dao.CardDao;
 import com.fpt.mic.micweb.model.dao.CustomerDao;
 import com.fpt.mic.micweb.model.dao.ContractDao;
 import com.fpt.mic.micweb.model.dao.PaymentDao;
+import com.fpt.mic.micweb.model.dao.helper.NewCardRequestDao;
 import com.fpt.mic.micweb.model.dto.NotificationBuilder;
 import com.fpt.mic.micweb.model.dto.form.CancelContractDto;
 import com.fpt.mic.micweb.model.dto.form.ChangePasswordDto;
@@ -257,4 +258,19 @@ public class CustomerBusiness {
         ContractEntity contractEntity = contractDao.read(contractCode);
         return contractEntity != null && !contractEntity.getLastModified().equals(lastModified);
     }
+
+    public List getOnePageNewCardRequest(String customerCode,int offset, int count) {
+        NewCardRequestDao newCardRequestDao= new NewCardRequestDao();
+        return newCardRequestDao.getOnePageNewCardRequest(customerCode,offset, count);
+    }
+    public Long getAllNewCardRequestCount(String customerCode) {
+        NewCardRequestDao newCardRequestDao= new NewCardRequestDao();
+        return newCardRequestDao.getAllNewCardRequestCount(customerCode);
+    }
+
+    public Long getUnresolvedNewCardRequestCount(String customerCode){
+        NewCardRequestDao newCardRequestDao= new NewCardRequestDao();
+        return newCardRequestDao.getUnresolvedNewCardRequestCount(customerCode);
+    }
+
 }

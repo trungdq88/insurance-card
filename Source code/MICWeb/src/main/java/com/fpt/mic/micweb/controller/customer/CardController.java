@@ -1,6 +1,7 @@
 package com.fpt.mic.micweb.controller.customer;
 
 import com.fpt.mic.micweb.controller.common.AuthController;
+import com.fpt.mic.micweb.framework.Paginator;
 import com.fpt.mic.micweb.framework.responses.JspPage;
 import com.fpt.mic.micweb.framework.R;
 import com.fpt.mic.micweb.framework.responses.RedirectTo;
@@ -26,6 +27,7 @@ import java.util.Map;
  */
 @WebServlet(name = "CustomerCardController", urlPatterns = "/customer/card")
 public class CardController extends AuthController {
+    Paginator requestPaginator = new Paginator();
     @Override
     public List<String> getAllowedRoles() {
         return Collections.singletonList(UserDto.ROLE_CUSTOMER);
@@ -173,5 +175,29 @@ public class CardController extends AuthController {
         session.removeAttribute("cancel_message");
         r.equest.setAttribute("message", "Thanh toán thành công");
         return new JspPage(returnUrl);
+    }
+
+    public ResponseObject getViewNewCardRequests(R r) {
+        final CustomerBusiness customerBusiness = new CustomerBusiness();
+        final String customerCode = ((CustomerEntity) getLoggedInUser()).getCustomerCode();
+        requestPaginator.setGetItemsCallback(new Paginator.IGetItems() {
+            @Override
+            public List getItems(int offset, int count) {
+                return customerBusiness.getOnePageNewCardRequest(customerCode,offset, count);
+            }
+        });
+        requestPaginator.setGetItemSizeCallback(new Paginator.IGetItemSize() {
+            @Override
+            public Long getItemSize() {
+                return customerBusiness.getAllNewCardRequestCount(customerCode);
+            }
+        });
+        CardBusiness cardBusiness = new CardBusiness();
+        Map<Integer,String> newCardMapping = new HashMap();
+        newCardMapping = cardBusiness.getMappingWithNewCardRequest();
+        r.equest.setAttribute("map",newCardMapping);
+        r.equest.setAttribute("requestPaginator", requestPaginator);
+        r.equest.setAttribute("unresolvedRequestCount",customerBusiness.getUnresolvedNewCardRequestCount(customerCode));
+        return new JspPage("customer/view-new-card-requests.jsp");
     }
 }
