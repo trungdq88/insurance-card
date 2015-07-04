@@ -11,6 +11,7 @@ import javax.persistence.*;
 public class NotificationReadEntity {
     private int id;
     private String userCode;
+    private int notificationId;
     private int isRead;
 
     @Id
@@ -42,6 +43,17 @@ public class NotificationReadEntity {
     public void setIsRead(int isRead) {
         this.isRead = isRead;
     }
+
+    @Basic
+    @Column(name = "notification_id")
+    public int getNotificationId() {
+        return notificationId;
+    }
+
+    public void setNotificationId(int notificationId) {
+        this.notificationId = notificationId;
+    }
+
 
     @Override
     public boolean equals(Object o) {

@@ -5,15 +5,13 @@
     <fieldset>
         <legend>
             Lịch sử bồi thường
-            <c:if test="${(contract.status eq 'No card') or (contract.status eq 'Ready')}">
-                <div class="pull-right">
-                    <a href="${pageContext.request.contextPath}/staff/compensation?action=create"
-                       class="btn btn-sm btn-success">
-                        <i class="fa fa-plus"></i>
-                        Thêm bồi thường
-                    </a>
-                </div>
-            </c:if>
+            <div class="pull-right">
+                <a href="${pageContext.request.contextPath}/staff/compensation?action=create"
+                   class="btn btn-sm btn-success">
+                    <i class="fa fa-plus"></i>
+                    Thêm bồi thường
+                </a>
+            </div>
         </legend>
     </fieldset>
     <div class="table-responsive">

@@ -4,10 +4,12 @@ import com.fpt.mic.micweb.controller.common.AuthController;
 import com.fpt.mic.micweb.framework.responses.JspPage;
 import com.fpt.mic.micweb.framework.R;
 import com.fpt.mic.micweb.framework.responses.ResponseObject;
+import com.fpt.mic.micweb.model.business.NotificationBusiness;
 import com.fpt.mic.micweb.model.dto.UserDto;
+import com.fpt.mic.micweb.model.entity.StaffEntity;
+import com.fpt.mic.micweb.model.entity.helper.NotificationEntity;
 
 import javax.servlet.annotation.WebServlet;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -22,6 +24,12 @@ public class DashboardController extends AuthController {
     }
 
     public ResponseObject getView(R r) {
+        NotificationBusiness notificationBusiness = new NotificationBusiness();
+        List notifications = notificationBusiness.getNotifications(
+                ((StaffEntity) getLoggedInUser()).getStaffCode());
+
+        r.equest.setAttribute("notifications", notifications);
+
         return new JspPage("staff/dashboard.jsp");
     }
 }

@@ -1,5 +1,7 @@
 package com.fpt.mic.micweb.model.entity;
 
+import com.fpt.mic.micweb.model.entity.helper.IUserEntity;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Collection;
@@ -10,7 +12,7 @@ import java.util.Collection;
  */
 @Entity
 @Table(name = "mic_customer", schema = "", catalog = "mic_data")
-public class CustomerEntity {
+public class CustomerEntity implements IUserEntity {
     private String customerCode;
     private String name;
     private String address;
@@ -162,5 +164,10 @@ public class CustomerEntity {
 
     public void setMicNewCardRequestsByCustomerCode(Collection<NewCardRequestEntity> micNewCardRequestsByCustomerCode) {
         this.micNewCardRequestsByCustomerCode = micNewCardRequestsByCustomerCode;
+    }
+
+    @Override
+    public String calcUserCode() {
+        return customerCode;
     }
 }

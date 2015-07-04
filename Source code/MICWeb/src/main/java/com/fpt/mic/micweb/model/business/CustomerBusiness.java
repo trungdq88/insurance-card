@@ -114,7 +114,7 @@ public class CustomerBusiness {
             //update payment
             payment.setExpiredDate(neweEpired);
             payment.setPaidDate(DateUtils.currentDateWithoutTime());
-            payment.setPaymentMethod("PayPal payment");
+            payment.setPaymentMethod("PayPal");
             payment.setContent("Gia hạn hợp đồng");
             payment.setAmount(contract.getMicContractTypeByContractTypeId().getPricePerYear());
             payment.setPaypalTransId(paymentTransactionId);
@@ -194,7 +194,7 @@ public class CustomerBusiness {
                 contract.setStatus(Constants.ContractStatus.NO_CARD);
             }
             payment.setPaidDate(new Timestamp(date.getTime()));
-            payment.setPaymentMethod("PayPal payment");
+            payment.setPaymentMethod("PayPal");
             payment.setContent("Đăng ký hợp đồng mới " + contract.getContractCode());
             payment.setAmount(contract.getMicContractTypeByContractTypeId().getPricePerYear());
             payment.setPaypalTransId(paymentTransactionId);

@@ -1,11 +1,16 @@
 package com.fpt.mic.micweb.model.dao;
 
 import com.fpt.mic.micweb.model.dao.common.GenericDaoJpaImpl;
+import com.fpt.mic.micweb.model.dao.helper.NewCardRequestDao;
+import com.fpt.mic.micweb.model.dto.form.NewCardRequestDto;
 import com.fpt.mic.micweb.model.entity.CardEntity;
+import com.fpt.mic.micweb.model.entity.NewCardRequestEntity;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -32,6 +37,19 @@ public class CardDao extends GenericDaoJpaImpl<CardEntity, String> {
             return null;
         }
     }
+    public List<CardEntity> getCardByContractIncludeDeactive(String contractCode) {
+        EntityManager entity = factory.createEntityManager();
+        String hql = "SELECT ca FROM CardEntity ca WHERE ca.contractCode = :contractCode ";
+        Query query = entity.createQuery(hql);
+        query.setParameter("contractCode", contractCode);
+        try {
+            return query.getResultList();
+        } catch (NoResultException e) {
+            return null;
+        }
+    }
+
+
 
     /**
      * Check card status

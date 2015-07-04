@@ -277,40 +277,6 @@ COMMENT = 'Compensation information';
 
 
 -- -----------------------------------------------------
--- Table `mic_data`.`mic_notification`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mic_data`.`mic_notification` (
-  `id` INT(11) NOT NULL AUTO_INCREMENT,
-  `content` VARCHAR(2000) NOT NULL,
-  `related_link` VARCHAR(2000) NULL DEFAULT NULL,
-  `created_date` DATETIME NOT NULL,
-  `resolved_date` DATETIME NULL DEFAULT NULL,
-  `resolved_staff` VARCHAR(10) NULL DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  INDEX `fk_resolved_staff_staff_code_idx` (`resolved_staff` ASC),
-  CONSTRAINT `fk_resolved_staff_staff_code`
-    FOREIGN KEY (`resolved_staff`)
-    REFERENCES `mic_data`.`mic_staff` (`staff_code`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
-
-
--- -----------------------------------------------------
--- Table `mic_data`.`mic_notification_read`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mic_data`.`mic_notification_read` (
-  `id` INT(11) NOT NULL AUTO_INCREMENT,
-  `user_code` VARCHAR(10) NOT NULL,
-  `is_read` INT(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE INDEX `uq_user_code_is_read` (`user_code` ASC, `is_read` ASC))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
-
-
--- -----------------------------------------------------
 -- Table `mic_data`.`mic_payment`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mic_data`.`mic_payment` (
@@ -364,6 +330,46 @@ ENGINE = InnoDB
 AUTO_INCREMENT = 6
 DEFAULT CHARACTER SET = utf8
 COMMENT = 'Punishment information';
+
+CREATE TABLE `mic_data`.`mic_notification` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `content` VARCHAR(2000) NOT NULL,
+  `receiver` VARCHAR(250) NOT NULL,
+  `method` INT NOT NULL,
+  `type` INT NOT NULL,
+  `extra_data` VARCHAR(2000) NULL,
+  `created_date` DATETIME NOT NULL,
+  `resolved_date` DATETIME NULL,
+  `resolved_staff` VARCHAR(10) NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_resolved_staff_staff_code_idx` (`resolved_staff` ASC),
+  CONSTRAINT `fk_resolved_staff_staff_code`
+    FOREIGN KEY (`resolved_staff`)
+    REFERENCES `mic_data`.`mic_staff` (`staff_code`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
+
+CREATE TABLE `mic_data`.`mic_notification_read` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `user_code` VARCHAR(10) NOT NULL,
+  `is_read` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `uq_user_code_is_read` (`user_code` ASC, `is_read` ASC));
+
+ALTER TABLE `mic_data`.`mic_notification_read` 
+ADD COLUMN `notification_id` INT NOT NULL AFTER `user_code`,
+ADD INDEX `fk_notification_id_idx` (`notification_id` ASC);
+ALTER TABLE `mic_data`.`mic_notification_read` 
+ADD CONSTRAINT `fk_notification_id`
+  FOREIGN KEY (`notification_id`)
+  REFERENCES `mic_data`.`mic_notification` (`id`)
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION;
+  
+ALTER TABLE `mic_data`.`mic_notification_read` 
+DROP INDEX `uq_user_code_is_read` ,
+ADD UNIQUE INDEX `uq_user_code_is_read` (`user_code` ASC, `notification_id` ASC);
 
 
 SET SQL_MODE=@OLD_SQL_MODE;

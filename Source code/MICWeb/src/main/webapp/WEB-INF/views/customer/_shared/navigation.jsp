@@ -63,10 +63,10 @@
           <a href="${pageContext.request.contextPath}/customer/card">
             <i class="fa fa-credit-card fa-fw"></i> Thông tin thẻ</a>
         </li>
-        <li>
-          <a href="${pageContext.request.contextPath}/customer/card?action=newCard">
-            <i class="fa fa-exclamation fa-fw"></i> Yêu cầu thẻ mới</a>
-        </li>
+        <%--<li>--%>
+          <%--<a href="${pageContext.request.contextPath}/customer/card?action=newCard">--%>
+            <%--<i class="fa fa-exclamation fa-fw"></i> Yêu cầu thẻ mới</a>--%>
+        <%--</li>--%>
         <li>
           <a href="${pageContext.request.contextPath}/customer/payment">
             <i class="fa fa-dollar fa-fw"></i> Lịch sử giao dịch</a>
