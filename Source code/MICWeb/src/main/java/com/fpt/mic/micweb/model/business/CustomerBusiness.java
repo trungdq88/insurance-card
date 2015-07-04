@@ -4,6 +4,7 @@ import com.fpt.mic.micweb.model.dao.CardDao;
 import com.fpt.mic.micweb.model.dao.CustomerDao;
 import com.fpt.mic.micweb.model.dao.ContractDao;
 import com.fpt.mic.micweb.model.dao.PaymentDao;
+import com.fpt.mic.micweb.model.dto.NotificationBuilder;
 import com.fpt.mic.micweb.model.dto.form.CancelContractDto;
 import com.fpt.mic.micweb.model.dto.form.ChangePasswordDto;
 import com.fpt.mic.micweb.model.entity.CardEntity;
@@ -73,6 +74,10 @@ public class CustomerBusiness {
 
         // Concurrency set value
         contract.setLastModified(new Timestamp(new java.util.Date().getTime()));
+
+        // Send notification
+        NotificationBusiness bus = new NotificationBusiness();
+        bus.send(NotificationBuilder.customerSendRequestCancel(contract));
 
         contractDao.update(contract);
         return contract;
