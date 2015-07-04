@@ -21,7 +21,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <form class="form-horizontal">
-                    <c:import url="contract-detail-customer.jsp"/>
+                    <jsp:include page="contract/contract-detail-customer.jsp" flush="true"/>
                     <%--/Customer information--%>
                     <br/>
 

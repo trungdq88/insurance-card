@@ -184,7 +184,8 @@
 
                         <!-- Control department -->
                         <div class="form-group">
-                            <label class="col-sm-4 control-label" for="controlDepartment">Cơ quan CA giải quyết *</label>
+                            <label class="col-sm-4 control-label" for="controlDepartment">Cơ quan CA giải quyết
+                                *</label>
 
                             <div class="col-sm-7">
                                 <input id="controlDepartment" name="compensation:controlDepartment"
@@ -261,7 +262,7 @@
                         <!-- Compensation note -->
                         <div class="form-group">
                             <label class="col-sm-4 control-label" for="compensationNote">
-                                Biên bản của cơ quan CA
+                                Yêu cầu bồi thường
                             </label>
 
                             <div class="col-sm-7">
@@ -273,7 +274,9 @@
 
                         <!-- Attachment -->
                         <div class="form-group">
-                            <label class="col-sm-4 control-label" for="attachment">Văn bản đính kèm</label>
+                            <label class="col-sm-4 control-label" for="attachment">
+                                Biên bản của cơ quan CA
+                            </label>
 
                             <div class="col-sm-6">
                                 <input id="attachment" name="compensation:attachment" class="form-control input-md"
@@ -318,6 +321,10 @@
             $('#accidentDate').val(getCurrentDate());
         }
         document.getElementById("accidentDate").max = getCurrentDate();
+        $('#createdDate').blur(function () {
+            $('#accidentDate').val($('#createdDate').val());
+            document.getElementById("accidentDate").max = $('#createdDate').val();
+        });
     });
 </script>
 

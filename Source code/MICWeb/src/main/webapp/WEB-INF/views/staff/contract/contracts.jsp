@@ -1,5 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ include file="_shared/header.jsp" %>
+<%@ include file="../_shared/header.jsp" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -8,7 +8,7 @@
 
     <c:set var="contracts" value="${contractPaginator.getItemsOnCurrentPage(param.page)}"/>
 
-    <%@ include file="_shared/navigation.jsp" %>
+    <%@ include file="../_shared/navigation.jsp" %>
     <div id="page-wrapper">
         <div class="row">
             <div class="col-lg-12">
@@ -187,4 +187,4 @@
 </div>
 <!-- /#wrapper -->
 
-<%@ include file="_shared/footer.jsp" %>
+<%@ include file="../_shared/footer.jsp" %>

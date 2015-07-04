@@ -9,6 +9,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <h4 class="page-header text-center text-danger">${result}</h4>
+                <h4 class="page-header text-center text-info">${info}</h4>
 
                 <form action="${pageContext.request.contextPath}/customer/contract" method="get">
                     <div class="well well-lg text-center text-danger form-inline">
