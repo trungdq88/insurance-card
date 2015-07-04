@@ -458,19 +458,19 @@
                         GT</a>
                 </li>
                 <form action="${pageContext.request.contextPath}/customer/card" method="post">
-                <div class="pull-right">
-                    <%--<a href="${pageContext.request.contextPath}/customer/card?action=newCard&code=${param.code}"--%>
-                       <%--class="btn btn-sm btn-success">--%>
+                    <div class="pull-right">
+                        <%--<a href="${pageContext.request.contextPath}/customer/card?action=newCard&code=${param.code}"--%>
+                        <%--class="btn btn-sm btn-success">--%>
                         <%--<i class="fa fa-plus"></i>--%>
                         <%--Yêu cầu thẻ mới--%>
-                    <%--</a>--%>
-                    <button type="submit" class="btn btn-success">
-                        <i class="fa fa-plus"></i> Yêu cầu thẻ mới
-                    </button>
-                    <input type="hidden" name="action" value="newCard">
-                    <input type="hidden" name="contractCode" value="${contract.contractCode}">
-                </div>
-                    </form>
+                        <%--</a>--%>
+                        <button type="submit" class="btn btn-success">
+                            <i class="fa fa-plus"></i> Yêu cầu thẻ mới
+                        </button>
+                        <input type="hidden" name="action" value="newCard">
+                        <input type="hidden" name="contractCode" value="${contract.contractCode}">
+                    </div>
+                </form>
             </ul>
         </div>
         <br/>
@@ -752,8 +752,14 @@
                 <div class="row">
                     <div class="col-lg-12">
                           <span class="pull-right">
-                              <a href="${pageContext.request.contextPath}/customer/compensation?action=create"
-                                 class="btn btn-primary">Yêu Cầu Bồi Thường</a>
+                            <form action="${pageContext.request.contextPath}/customer/compensation" method="get">
+                                <input type="hidden"name="action" value="Create">
+                                <input type="hidden" name="contractCode" value="${contract.contractCode}">
+                                <button href="${pageContext.request.contextPath}/customer/compensation?action=create"
+                                        type="submit"
+                                        class="btn btn-primary">Yêu Cầu Bồi Thường
+                                </button>
+                            </form>
                           </span>
                     </div>
 
@@ -811,14 +817,14 @@
                                                         ${(compensationPaginator.getCurrentPage(param.page) - 1) * compensationPaginator.itemPerPage + counter.count}
                                                 </td>
                                                 <td class="text-center"><a
-                                                        href="${pageContext.request.contextPath}/customer/compensation?action=detail">
+                                                href="${pageContext.request.contextPath}/customer/compensation?action=Detail&code=${compensation.compensationCode}">
                                                         ${compensation.compensationCode}</a>
                                                 </td>
                                                 <td class="text-center">
-                                                    <a href="detail-contract.html">${compensation.contractCode}</a>
+                                                    ${compensation.contractCode}
                                                 </td>
                                                 <td class="text-center">
-                                                    <a href="detail-customer.html">${compensation.driverName}</a>
+                                                    ${compensation.driverName}
                                                 </td>
                                                 <td class="text-center">
                                                         ${compensation.createdDate}
@@ -839,7 +845,7 @@
                                 <ul class="pagination">
                                     <c:if test="${param.page != 1 && not empty param.page}">
                                         <li>
-                                            <a href="?action=${param.action}&keyword=${param.keyword}&page=1"
+                                            <a href="?action=${param.action}&code=${contract.contractCode}&keyword=${param.keyword}&page=1"
                                                aria-label="Previous">
                                                 <span aria-hidden="true">Đầu</span>
                                             </a>
@@ -847,12 +853,12 @@
                                     </c:if>
                                     <c:forEach begin="1" end="${compensationPaginator.pageSize}" var="pageNumber">
                                         <li ${param.page == pageNumber ||(pageNumber == 1 && empty param.page) ? "class='active'": ""} >
-                                            <a href="?action=${param.action}&keyword=${param.keyword}&page=${pageNumber}">${pageNumber}</a>
+                                            <a href="?action=${param.action}&code=${contract.contractCode}&keyword=${param.keyword}&page=${pageNumber}">${pageNumber}</a>
                                         </li>
                                     </c:forEach>
                                     <c:if test="${param.page != compensationPaginator.pageSize && compensationPaginator.pageSize != 1}">
                                         <li>
-                                            <a href="?action=${param.action}&keyword=${param.keyword}&page=${compensationPaginator.pageSize}"
+                                            <a href="?action=${param.action}&code=${contract.contractCode}&keyword=${param.keyword}&page=${compensationPaginator.pageSize}"
                                                aria-label="Next">
                                                 <span aria-hidden="true">Cuối</span>
                                             </a>
