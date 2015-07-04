@@ -6,7 +6,7 @@
 
   <%@ include file="_shared/navigation.jsp" %>
   <div id="page-wrapper">
-    <form action="${pageContext.request.contextPath}/admin/home"
+    <form action="${pageContext.request.contextPath}/admin"
           method="post" class="form-horizontal">
     <div class="row">
       <div class="col-lg-12">
@@ -72,7 +72,7 @@
                   <tr>
                     <td>${(staffPaginator.getCurrentPage(param.page) - 1) * staffPaginator.itemPerPage + counter.count}</td>
                     <td>
-                      <a href="${pageContext.request.contextPath}/admin/home?action=staffDetail&code=${staff.staffCode}">
+                      <a href="${pageContext.request.contextPath}/admin?action=staffDetail&code=${staff.staffCode}">
                           ${staff.staffCode}
                       </a>
                     </td>
