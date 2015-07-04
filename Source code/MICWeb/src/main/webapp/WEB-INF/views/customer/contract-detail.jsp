@@ -464,8 +464,7 @@
                     <%--<form action="${pageContext.request.contextPath}/customer/card" method="get">--%>
                         <div class="pull-right">
                                 <a href="${pageContext.request.contextPath}/customer/card?action=newCard&contractCode=${param.code}"
-                                class="btn btn-sm btn-success">
-                                <i class="fa fa-plus"></i>
+                                class="btn btn-sm btn-primary">
                                 Yêu cầu thẻ mới
                                 </a>
 

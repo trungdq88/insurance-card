@@ -24,9 +24,8 @@ public class CardBusiness {
         List list = cardDao.getCardByContractIncludeDeactive(contractCode);
         return list;
     }
-    public boolean isNewCardRequested(String contractCode){
+    public boolean isNewCardRequested(CardEntity cardEntity){
         NewCardRequestDao newCardRequestDao = new NewCardRequestDao();
-        CardEntity cardEntity = getCardByContract(contractCode);
         if (cardEntity != null){
             NewCardRequestEntity newCardRequestEntity = newCardRequestDao.getUnsolvedRequestByCardId(cardEntity.getCardId());
             if (newCardRequestEntity != null){
@@ -35,36 +34,18 @@ public class CardBusiness {
         }
         return false;
     }
-    public String requestNewCard(NewCardRequestDto newCardRequestDto){
+    public boolean requestNewCard(NewCardRequestDto newCardRequestDto){
         NewCardRequestDao newCardRequestDao = new NewCardRequestDao();
-        NewCardRequestEntity newCardRequestEntity ;
         CardDao cardDao = new CardDao();
-        // kiem tra neu card co hieu luc
+        NewCardRequestEntity newCardRequestEntity  = new NewCardRequestEntity();
         CardEntity cardEntity = cardDao.getCardByContract(newCardRequestDto.getContractCode());
-        if (cardEntity != null){
-            // check neu da yeu cau roi
-            newCardRequestEntity = newCardRequestDao.getUnsolvedRequestByCardId(cardEntity.getCardId());
-            // neu chua yeu cau thi tao yeu cau moi
-            if (newCardRequestEntity == null) {
-                newCardRequestEntity = new NewCardRequestEntity();
-                newCardRequestEntity.setCustomerCode(newCardRequestDto.getCustomerCode());
-                newCardRequestEntity.setOldCardId(cardEntity.getCardId());
-                newCardRequestEntity.setNote(newCardRequestDto.getNote());
-                newCardRequestEntity.setRequestDate(new Timestamp(new Date().getTime()));
-                // create new card request into database
-                newCardRequestEntity = newCardRequestDao.create(newCardRequestEntity);
-
-                if (newCardRequestEntity != null){
-                    // deactive old card
-                    //cardEntity.setDeactivatedDate(new Timestamp(new Date().getTime()));
-                   // cardDao.update(cardEntity);
-                    // thanh cong
-                    return null;
-                }
-
-            }
-            return "Bạn đã yêu cầu thẻ mới trước đó. Vui lòng chờ xử lý";
+        newCardRequestEntity.setCustomerCode(newCardRequestDto.getCustomerCode());
+        newCardRequestEntity.setOldCardId(cardEntity.getCardId());
+        newCardRequestEntity.setNote(newCardRequestDto.getNote());
+        newCardRequestEntity.setRequestDate(new Timestamp(new Date().getTime()));
+        if (newCardRequestDao.create(newCardRequestEntity) != null) {
+            return true;
         }
-        return "Hợp đồng chưa có thẻ bảo hiểm. Xin vui lòng đợi phát hành";
+        return false;
     }
 }
