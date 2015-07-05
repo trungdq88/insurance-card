@@ -6,12 +6,12 @@
 
   <%@ include file="_shared/navigation.jsp" %>
   <div id="page-wrapper">
-    <form action="${pageContext.request.contextPath}/admin"
+    <form action="${pageContext.request.contextPath}/admin/staff"
           method="post" class="form-horizontal">
     <div class="row">
       <div class="col-lg-12">
         <h1 class="page-header">
-          Người quản lý
+          Danh sách nhân viên
           <div class="pull-right">
               <input type="hidden" name="action" value="viewCreateStaff">
               <button type="submit" class="btn btn-success">
@@ -72,7 +72,7 @@
                   <tr>
                     <td>${(staffPaginator.getCurrentPage(param.page) - 1) * staffPaginator.itemPerPage + counter.count}</td>
                     <td>
-                      <a href="${pageContext.request.contextPath}/admin?action=staffDetail&code=${staff.staffCode}">
+                      <a href="${pageContext.request.contextPath}/admin/staff?action=staffDetail&code=${staff.staffCode}">
                           ${staff.staffCode}
                       </a>
                     </td>

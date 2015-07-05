@@ -65,7 +65,8 @@ public class SchedulerBusiness {
                 type = NotificationEntity.Type.CONTRACT_NEARLY_EXPIRED_3;
             }
             if (type > 0) {
-                bus.send(NotificationBuilder.contractNearlyExpired(contractEntity, type));
+                bus.send(NotificationBuilder.contractNearlyExpired(contractEntity, type),
+                        contractEntity.getMicCustomerByCustomerCode().getEmail());
                 return true;
             }
         }
@@ -86,7 +87,8 @@ public class SchedulerBusiness {
 
                 // Send notification to customer
                 NotificationBusiness bus = new NotificationBusiness();
-                bus.send(NotificationBuilder.contractExpired(contractEntity));
+                bus.send(NotificationBuilder.contractExpired(contractEntity),
+                        contractEntity.getMicCustomerByCustomerCode().getEmail());
 
                 return true;
             }
@@ -109,7 +111,8 @@ public class SchedulerBusiness {
 
                     // Send notification to customer
                     NotificationBusiness bus = new NotificationBusiness();
-                    bus.send(NotificationBuilder.contractCancelledNoPayment(contractEntity));
+                    bus.send(NotificationBuilder.contractCancelledNoPayment(contractEntity),
+                            contractEntity.getMicCustomerByCustomerCode().getEmail());
                     return true;
                 }
             }

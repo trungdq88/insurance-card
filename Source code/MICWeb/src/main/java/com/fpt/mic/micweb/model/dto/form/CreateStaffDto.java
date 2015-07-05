@@ -11,10 +11,6 @@ import javax.validation.constraints.Size;
  * Created by TriPQM on 07/03/2015.
  */
 public class CreateStaffDto {
-    @NotEmpty(message = "Mã nhân viên không được để trống")
-    @Pattern(regexp = "^([^0-9`~!@#$%^&*,.<>;':/|{}()=_+-]+)$", message = "Mã nhân viên không hợp lệ")
-    @Size(min = 4, max = 10, message = "Mã nhân viên phải từ {min} đến {max} ký tự")
-    private String staffCode;
     @NotEmpty(message = "Họ tên không được để trống")
     @Pattern(regexp = "^([^0-9`~!@#$%^&*,.<>;':/|{}()=_+-]+)$", message = "Họ tên không hợp lệ")
     @Size(min = 3, max = 80, message = "Họ tên phải từ {min} đến {max} ký tự")
@@ -35,39 +31,23 @@ public class CreateStaffDto {
         StaffDao staffDao= new StaffDao();
         return !staffDao.isExistByEmail(email);
     }
-    @AssertTrue(message = "Mã nhân viên đã tồn tại")
-    private boolean isExistedByCode() {
-        StaffDao staffDao= new StaffDao();
-        return !staffDao.isExistByCode(staffCode);
-    }
+
 
     public CreateStaffDto() {
     }
 
-    public CreateStaffDto(String staffCode, String name, String email, String phone, String password) {
-        this.staffCode = staffCode;
+    public CreateStaffDto(String name, String email, String phone, String password) {
         this.name = name;
         this.email = email;
         this.phone = phone;
         this.password = password;
     }
 
-
-
     public String getPassword() {
         return password;
     }
-
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public String getStaffCode() {
-        return staffCode;
-    }
-
-    public void setStaffCode(String staffCode) {
-        this.staffCode = staffCode;
     }
 
     public String getName() {

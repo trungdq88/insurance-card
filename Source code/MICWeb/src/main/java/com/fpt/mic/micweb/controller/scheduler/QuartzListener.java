@@ -33,7 +33,7 @@ public class QuartzListener extends QuartzInitializerListener {
             scheduler.start();
         } catch (Exception e) {
             e.printStackTrace();
-            ctx.log("There was an error scheduling the job.", e);
+            System.out.println("There was an error scheduling the job." + e.getMessage());
         }
     }
 

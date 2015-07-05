@@ -5,11 +5,10 @@
     <fieldset>
         <legend>
             Lịch sử vi phạm luật ATGT
-            <div class="pull-right">
-                <a href="${pageContext.request.contextPath}/staff/punishment?action=create"
-                   class="btn btn-sm btn-success">
-                    <i class="fa fa-plus"></i>
-                    Thêm vi phạm
+            <div class="pull-right" style="margin-top: -10px;">
+                <a href="${pageContext.request.contextPath}/staff/punishment?action=create&code=${contract.contractCode}"
+                   class="btn btn-success">
+                    <i class="fa fa-plus"></i> Thêm vi phạm luật ATGT
                 </a>
             </div>
         </legend>
@@ -18,23 +17,28 @@
         <table class="table table-striped table-bordered table-hover">
             <thead>
             <tr>
-                <th>#</th>
                 <th>Mã</th>
-                <th>Nội dung</th>
                 <th>Thời gian</th>
-                <th>Biên bản</th>
+                <th>Nội dung</th>
+                <th>Đính kèm</th>
+                <th>Chỉnh sửa</th>
             </tr>
             </thead>
             <tbody>
-            <c:forEach var="punishment" items="${listPunishment}" varStatus="counter">
+            <c:forEach var="punishment" items="${listPunishment}">
                 <tr>
-                    <td>${counter.count}</td>
                     <td>${punishment.id}</td>
-                    <td>${punishment.title}</td>
                     <td>
-                        <%--<fmt:formatDate value="${punishment.createdDate}" pattern="dd/MM/yyyy"/>--%>
+                        <fmt:formatDate value="${punishment.createdDate}" pattern="dd/MM/yyyy"/>
                     </td>
+                    <td>${punishment.title}</td>
                     <td>${punishment.attachment}</td>
+                    <td>
+                        <a href="${pageContext.request.contextPath}/staff/punishment?action=edit&id=${punishment.id}"
+                           type="button" class="btn btn-xs btn-primary">
+                            <i class="fa fa-pencil"></i> Chỉnh sửa
+                        </a>
+                    </td>
                 </tr>
             </c:forEach>
             </tbody>

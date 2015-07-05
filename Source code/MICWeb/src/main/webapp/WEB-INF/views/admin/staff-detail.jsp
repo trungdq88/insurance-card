@@ -16,7 +16,7 @@
       <div class="col-lg-12">
         <h1 class="page-header">Thông tin nhân viên
           <div class="pull-right">
-            <a href="${pageContext.request.contextPath}/admin?action=deleteStaff&code=${param.code}" class="btn btn-danger">
+            <a href="${pageContext.request.contextPath}/admin/staff?action=deleteStaff&code=${param.code}" class="btn btn-danger">
               <i class="fa fa-trash"></i>
               Xóa nhân viên này
             </a>
@@ -37,8 +37,10 @@
 
               <div class="col-sm-6">
               <p class="text-value">
-                ${staff.staffCode}
+                <span class="label label-info"
+                      style="font-size: 16px">${staff.staffCode}</span>
               </p>
+
               </div>
             </div>
             <!-- Text input-->
@@ -78,7 +80,7 @@
 
         <div class="text-left">
 
-          <a href="${pageContext.request.contextPath}/admin" type="button"
+          <a href="${pageContext.request.contextPath}/admin/staff" type="button"
              class="btn btn-success">
             <i class="fa fa-arrow-left"></i>
             Trở lại

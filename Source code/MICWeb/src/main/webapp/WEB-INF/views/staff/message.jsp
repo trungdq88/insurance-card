@@ -14,17 +14,14 @@
                     <br/>
                     <br/>
                     <div class="text-center alert alert-info">
-                        <p class="bs-example">
-                            ${requestScope.MESSAGE}
-                        </p>
+                        <p class="bs-example">${requestScope.MESSAGE}</p>
                     </div>
 
                     <br/>
                     <div class="text-center">
                         <a href="${pageContext.request.contextPath}/staff/contract?action=detail&code=${requestScope.CODE}"
                            type="button" class="btn btn-success">
-                            <i class="fa fa-arrow-left"></i>
-                            Quay về trang thông tin khách hàng
+                            <i class="fa fa-arrow-left"></i> Quay về trang chi tiết hợp đồng
                         </a>
                     </div>
                 </div>

@@ -32,8 +32,6 @@ public class DateUtils {
         if (timeStamp == null) {
             return timeStamp = new Timestamp(new Date().getTime());
         }
-        System.out.println(timeStamp.toString());
-
         return timeStamp;
     }
 

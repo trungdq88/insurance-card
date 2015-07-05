@@ -4,13 +4,8 @@ import com.fpt.mic.micweb.model.dao.*;
 import com.fpt.mic.micweb.model.dto.CreateCustomerInfoDto;
 import com.fpt.mic.micweb.model.dto.form.*;
 import com.fpt.mic.micweb.model.entity.*;
-import com.fpt.mic.micweb.utils.Constants;
-import com.fpt.mic.micweb.utils.DateUtils;
-import com.fpt.mic.micweb.utils.EmailUtils;
-import com.fpt.mic.micweb.utils.StringUtils;
+import com.fpt.mic.micweb.utils.*;
 
-import javax.servlet.ServletContext;
-import java.io.InputStream;
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -29,7 +24,7 @@ public class StaffBusiness {
         return customerDao.read(customerCode);
     }
 
-    public CreateCustomerInfoDto createCustomer(CreateCustomerDto dto, ServletContext context, String loginUrl) {
+    public CreateCustomerInfoDto createCustomer(CreateCustomerDto dto, String loginUrl) {
         CustomerDao customerDao = new CustomerDao();
         CustomerEntity customerEntity = new CustomerEntity();
         // get next customer code
@@ -52,16 +47,14 @@ public class StaffBusiness {
         CustomerEntity newCustomer = customerDao.create(customerEntity);
         if (newCustomer != null) {
             // Send password email
-            InputStream resourceAsStream =
-                    context.getResourceAsStream("WEB-INF/templates/password-email.html");
-            String content = StringUtils.getString(resourceAsStream);
+            String content = EmailTemplate.PASSWORD_EMAIL;
             boolean emailSuccess = false;
             if (content != null) {
                 content = content
                         .replaceAll("\\{\\{customerCode\\}\\}", newCustomer.getCustomerCode())
                         .replaceAll("\\{\\{password\\}\\}", customerPassword)
                         .replaceAll("\\{\\{loginUrl\\}\\}", loginUrl);
-                emailSuccess = EmailUtils.sendMail(newCustomer.getEmail(), content);
+                emailSuccess = EmailUtils.sendMail(newCustomer.getEmail(), EmailUtils.SUBJECT_NEW_CONTRACT, content);
             }
             return new CreateCustomerInfoDto(newCustomer, emailSuccess);
         }

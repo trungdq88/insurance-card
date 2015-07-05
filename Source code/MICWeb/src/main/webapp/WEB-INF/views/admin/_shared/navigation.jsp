@@ -46,12 +46,12 @@
         <div class="sidebar-nav navbar-collapse">
             <ul class="nav" id="side-menu">
                 <li>
-                    <a href="${pageContext.request.contextPath}/admin">
-                        <i class="fa fa-key fa-fw"></i> Người quản lý
+                    <a href="${pageContext.request.contextPath}/admin/staff">
+                        <i class="fa fa-key fa-fw"></i> Nhân viên
                     </a>
                 </li>
                 <li>
-                    <a href="${pageContext.request.contextPath}/admin">
+                    <a href="${pageContext.request.contextPath}/admin/config">
                         <i class="fa fa-key fa-fw"></i> Thiết lập
                     </a>
                 </li>

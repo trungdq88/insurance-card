@@ -93,24 +93,7 @@ public class CreateCompensationDto {
         return false;
     }
 
-    /*@AssertTrue(message = "Thời điểm xảy ra tai nạn, hợp đồng không có giá trị")
-    private boolean isAccidentDateInTerm() {
-        if (accidentDate != null) {
-            ContractDao contractDao = new ContractDao();
-            ContractEntity contractEntity = contractDao.read(contractCode);
-            if (contractEntity != null) {
-                Timestamp stDate = contractEntity.getStartDate();
-                Timestamp expDate = contractEntity.getExpiredDate();
-                return !accidentDate.before(stDate) && !accidentDate.after(expDate);
-            } else {
-                return false;
-            }
-        } else {
-            return false;
-        }
-    }*/
-
-    @AssertTrue(message = "Yêu cầu bồi thường và đề xuất khác phải có độ dài từ 1 đến 2000 ký tự")
+    @AssertTrue(message = "Yêu cầu bồi thường phải có độ dài từ 1 đến 2000 ký tự")
     private boolean isCompensationNoteValid() {
         if (compensationNote == null || compensationNote.isEmpty()) {
             return true; // Vẫn chấp nhận null hoặc rỗng
@@ -120,7 +103,7 @@ public class CreateCompensationDto {
         }
     }
 
-    @AssertTrue(message = "Đường dẫn tới văn bản đính kèm phải có độ dài từ 1 đến 255 ký tự")
+    @AssertTrue(message = "Đường dẫn tới biên bản của cơ quan CA phải có độ dài từ 1 đến 255 ký tự")
     private boolean isAttachmentValid() {
         if (attachment == null || attachment.isEmpty()) {
             return true; // Vẫn chấp nhận null hoặc rỗng

@@ -33,8 +33,8 @@ public class Constants {
         public static final int CANCEL_DATE_AFTER = 30;
     }
     public static class PaymentFee {
-        public static final float NEW_CARD_REQUEST = 50000;
-        public static final float DELIVERY = 10000;
+        public static final float NEW_CARD_REQUEST_FEE = 50000;
+        public static final float DELIVERY_FEE = 10000;
     }
 
     public static class Session {
