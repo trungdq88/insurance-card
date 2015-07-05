@@ -902,7 +902,7 @@
                                     </div>
                                     <div class="form-horizontal">
                                         <div class="form-group">
-                                            <label class="col-sm-3 control-label">Nội dung vi phạm</label>
+                                            <label class="col-sm-3 control-label">Nội dung vi phạm *</label>
 
                                             <div class="col-sm-5">
                                                 <textarea rows="8" cols="80" id="contentPunishment"
@@ -914,7 +914,7 @@
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="col-sm-3 control-label">Đính kèm</label>
+                                            <label class="col-sm-3 control-label">Đính kèm *</label>
 
                                             <div class="col-sm-5" style="padding-top: 5px">
                                                 <input type="file" name="punishment:attachment" required
@@ -970,11 +970,11 @@
                         <div class="table table-responsive">
                             <table class="table table-bordered">
                                 <thead>
-                                <tr>
-                                    <th class="text-center">#
+                                <tr class="success">
+                                    <th class="text-center">Mã vi phạm
                                     </th>
                                     <th class="text-center">
-                                        Ngày gởi thông tin
+                                        Ngày gởi đi
                                     </th>
                                     <th class=" text-center">
                                         Nội dung vi phạm
@@ -1001,7 +1001,7 @@
                                                    varStatus="counter">
                                             <tr>
                                                 <td class="text-center">
-                                                        ${(punishmentPaginator.getCurrentPage(param.page) - 1) * punishmentPaginator.itemPerPage + counter.count}
+                                                        ${punishment.id}
                                                 </td>
                                                 <td class="text-center">
                                                     <fmt:formatDate value='${punishment.createdDate}'
