@@ -34,24 +34,23 @@
                         </ul>
                     </div>
                 </c:if>
-                <form action="${pageContext.request.contextPath}/admin"
-                      method="get" class="form-horizontal">
+                <form action="${pageContext.request.contextPath}/admin/config"
+                      method="post" class="form-horizontal">
 
                     <fieldset>
                         <legend>Thời gian tạo hợp đồng
                         </legend>
                         <div class="form-group">
-                            <div class="col-sm-3 ">
-                                <label>Trước ngày hiện tại:</label>
-                                <input  name="config:startDateBefore" type="number" class="form-control input-md" required min="0" value="${submitted.startDateBefore}" > ngày
+                            <label class="col-sm-3 control-label" for="startDateBefore">Trước ngày hiện tại:</label>
+                            <div class="input-group col-sm-2">
+                                <input id="startDateBefore"  name="config:startDateBefore" type="number" class="form-control input-md" required min="0" value="${submitted.startDateBefore}" >
+                                <div class="input-group-addon">ngày</div>
                             </div>
-                            <div class="col-sm-1 col-sm-offset-0.5">
-                                <p class="text-center">Đến</p>
-                                <p class="text-value text-center">-</p>
-                            </div>
-                            <div class="col-sm-3 col-sm-offset-0.5">
-                                <label>Sau ngày hiện tại:</label>
-                                <input  name="config:startDateAfter" type="number" class="form-control input-md" required min="0" value="${submitted.startDateAfter}"> ngày
+
+                            <label class="col-sm-3 control-label" for="startDateAfter">Trước ngày hiện tại:</label>
+                            <div class="input-group col-sm-2">
+                                <input id="startDateAfter"  name="config:startDateAfter" type="number" class="form-control input-md" required min="0" value="${submitted.startDateBefore}" >
+                                <div class="input-group-addon">ngày</div>
                             </div>
                         </div>
                     </fieldset>
@@ -98,8 +97,10 @@
                             </div>
                             <div class="col-sm-3 col-sm-offset-0.5">
                                 <label>Sau ngày hiện tại:</label>
-                                <input  name="config:cancelDateAfter" type="number" class="form-control input-md" required min="0" value="${submitted.cancelDateAfter}" >ngày
+                                <input  name="config:cancelDateAfter" type="number" class="form-control input-md" required min="0" value="${submitted.cancelDateAfter}" >
+                                <div class="col-sm-offset-0.5">ngày</div>
                             </div>
+
                         </div>
                         <fieldset>
                             <legend>

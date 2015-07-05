@@ -11,7 +11,7 @@
     <div class="row">
       <div class="col-lg-12">
         <h1 class="page-header">
-          Người quản lý
+          Danh sách nhân viên
           <div class="pull-right">
               <input type="hidden" name="action" value="viewCreateStaff">
               <button type="submit" class="btn btn-success">

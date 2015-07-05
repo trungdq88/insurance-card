@@ -9,44 +9,44 @@ import javax.validation.constraints.NotNull;
  * Created by TriPQM on 07/05/2015.
  */
 public class BusinessRulesDto {
-    @NotNull(message = "Xin điền đầy đủ giá trị")
-    @Range(min = 0, message = "Giá trị phải lớn hơn hoặc bằng 0")
+    @NotNull(message = "Giới hạn thời gian tạo hợp đồng không được bỏ trống")
+    @Range(min = 0, message = "Giới hạn thời gian tạo hợp đồng phải lớn hơn hoặc bằng 0")
     private Integer startDateBefore;
-    @NotNull(message = "Xin điền đầy đủ giá trị")
+    @NotNull(message = "Giới hạn thời gian tạo hợp đồng không được bỏ trống")
     @Range(min = 0, message = "Giá trị phải lớn hơn hoặc bằng 0")
     private Integer startDateAfter;
-    @NotNull(message = "Xin điền đầy đủ giá trị")
-    @Range(min = 0, message = "Giá trị phải lớn hơn hoặc bằng 0")
+    @NotNull(message = "Kỳ hạn hợp đồng mặc định không được bỏ trống")
+    @Range(min = 0, message = "Kỳ hạn hợp đồng mặc định phải lớn hơn hoặc bằng 0")
     private Integer contractDefaultTerm;
-    @NotNull(message = "Xin điền đầy đủ giá trị")
-    @Range(min = 0, message = "Giá trị phải lớn hơn hoặc bằng 0")
+    @NotNull(message = "Giới hạn ngày thanh toán không được bỏ trống")
+    @Range(min = 0, message = "Giới hạn ngày thanh toán không được để trống phải lớn hơn hoặc bằng 0")
     private Integer paidDaterBefore;
-    @NotNull(message = "Xin điền đầy đủ giá trị")
-    @Range(min = 0, message = "Giá trị phải lớn hơn hoặc bằng 0")
+    @NotNull(message = "Giới hạn ngày thanh toán không được bỏ trống")
+    @Range(min = 0, message = "Giới hạn ngày thanh toán không được để trống phải lớn hơn hoặc bằng 0")
     private Integer paidDateAfter;
-    @NotNull(message = "Xin điền đầy đủ giá trị")
-    @Range(min = 0, message = "Giá trị phải lớn hơn hoặc bằng 0")
+    @NotNull(message = "Giới hạn ngày hủy hợp đồng không được bỏ trống")
+    @Range(min = 0, message = "Giới hạn ngày hủy hợp đồng phải lớn hơn hoặc bằng 0")
     private Integer cancelDateBefore;
-    @NotNull(message = "Xin điền đầy đủ giá trị")
-    @Range(min = 0, message = "Giá trị phải lớn hơn hoặc bằng 0")
+    @NotNull(message = "Giới hạn ngày hủy hợp đồng không được bỏ trống")
+    @Range(min = 0, message = "Giới hạn ngày hủy hợp đồng phải lớn hơn hoặc bằng 0")
     private Integer cancelDateAfter;
-    @NotNull(message = "Xin điền đầy đủ giá trị")
-    @Range(min = 0, message = "Giá trị phải lớn hơn hoặc bằng 0")
+    @NotNull(message = "Ngày thông báo hợp đồng sắp hết hạn lần 1 không được bỏ trống")
+    @Range(min = 0, message = "Ngày thông báo hợp đồng sắp hết hạn lần 1 phải lớn hơn hoặc bằng 0")
     private Integer nearlyExceedExpiredOne;
-    @NotNull(message = "Xin điền đầy đủ giá trị")
-    @Range(min = 0, message = "Giá trị phải lớn hơn hoặc bằng 0")
+    @NotNull(message = "Ngày thông báo hợp đồng sắp hết hạn lần 2 không được bỏ trống")
+    @Range(min = 0, message = "Ngày thông báo hợp đồng sắp hết hạn lần 2 phải lớn hơn hoặc bằng 0")
     private Integer nearlyExceedExpiredTwo;
-    @NotNull(message = "Xin điền đầy đủ giá trị")
-    @Range(min = 0, message = "Giá trị phải lớn hơn hoặc bằng 0")
+    @NotNull(message = "Ngày thông báo hợp đồng sắp hết hạn lần 3 không được bỏ trống")
+    @Range(min = 0, message = "Ngày thông báo hợp đồng sắp hết hạn lần 3 phải lớn hơn hoặc bằng 0")
     private Integer nearlyExceedExpiredThree;
-    @NotNull(message = "Xin điền đầy đủ giá trị")
-    @Range(min = 0, message = "Giá trị phải lớn hơn hoặc bằng 0")
+    @NotNull(message = "Thời hạn thanh toán hợp đồng không được bỏ trống")
+    @Range(min = 0, message = "Thời hạn thanh toán hợp đồng phải lớn hơn hoặc bằng 0")
     private Integer paymentDueDate;
-    @NotNull(message = "Xin điền đầy đủ giá trị")
-    @Range(min = 0, message = "Giá trị phải lớn hơn hoặc bằng 0")
+    @NotNull(message = "Phí làm lại thẻ")
+    @Range(min = 0, message = "Phí làm lại thẻ phải lớn hơn hoặc bằng 0")
     private Float newCardRequestFee;
-    @NotNull(message = "Xin điền đầy đủ giá trị")
-    @Range(min = 0, message = "Giá trị phải lớn hơn hoặc bằng 0")
+    @NotNull(message = "Phí vận chuyển không được bỏ trống")
+    @Range(min = 0, message = "Phí vận chuyển phải lớn hơn hoặc bằng 0")
     private Float deliveryFee;
 
     public BusinessRulesDto() {
