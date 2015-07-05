@@ -37,8 +37,8 @@ public class AdminBusiness {
     }
     public void setBusinessRules(BusinessRulesDto businessRulesDto){
         BusinessRulesDao businessRulesDao = new BusinessRulesDao();
-        BusinessRulesEntity businessRulesEntity = businessRulesDao.read(1);
-        //businessRulesEntity.setId(1);
+        BusinessRulesEntity businessRulesEntity = new BusinessRulesEntity();
+        businessRulesEntity.setId(1);
         businessRulesEntity.setStartDateBefore(businessRulesDto.getStartDateBefore());
         businessRulesEntity.setStartDateAfter(businessRulesDto.getStartDateAfter());
         businessRulesEntity.setContractDefaultTerm(businessRulesDto.getContractDefaultTerm());
