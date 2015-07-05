@@ -6,6 +6,7 @@ import com.fpt.mic.micweb.framework.R;
 import com.fpt.mic.micweb.framework.responses.JspPage;
 import com.fpt.mic.micweb.framework.responses.RedirectTo;
 import com.fpt.mic.micweb.framework.responses.ResponseObject;
+import com.fpt.mic.micweb.model.business.AccidentBusiness;
 import com.fpt.mic.micweb.model.business.CompensationBusiness;
 import com.fpt.mic.micweb.model.business.ContractBusiness;
 import com.fpt.mic.micweb.model.business.StaffBusiness;
@@ -88,6 +89,7 @@ public class ContractController extends AuthController {
     public ResponseObject getDetail(R r) {
         StaffBusiness staffBus = new StaffBusiness();
         CompensationBusiness compenBus = new CompensationBusiness();
+        AccidentBusiness accidentBusiness = new AccidentBusiness();
         String contractCode = r.equest.getParameter("code");
 
         // Receive contractCode from failed validation
@@ -116,6 +118,8 @@ public class ContractController extends AuthController {
         List<CompensationEntity> listCompensation =
                 compenBus.getCompensationByContractCode(contractDetail.getContractCode());
         // Get contract accident
+        List<AccidentEntity> listAccident =
+                accidentBusiness.getAccidentByContractCode(contractDetail.getContractCode());
         // Get contract punishment
         ConfigUtils config = new ConfigUtils();
 
@@ -123,6 +127,7 @@ public class ContractController extends AuthController {
         r.equest.setAttribute("CONTRACT", contractDetail);
         r.equest.setAttribute("PAYMENT", listPayment);
         r.equest.setAttribute("COMPENSATION", listCompensation);
+        r.equest.setAttribute("ACCIDENT", listAccident);
         r.equest.setAttribute("CONFIG", config);
 
         // Dispatch to JSP page
