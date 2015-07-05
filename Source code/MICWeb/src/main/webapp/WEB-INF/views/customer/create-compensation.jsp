@@ -11,10 +11,8 @@
     <div id="page-wrapper">
         <div class="row">
             <div class="col-lg-12">
-                <h1 class="page-header">Yêu cầu bồi thường COM384
-                    <div class="pull-right">
-                        <span style="font-size: 40%" class="label label-warning">Đang giải quyết</span>
-                    </div>
+                <h1 class="page-header">Yêu cầu bồi thường cho hợp đồng ${contractCode}
+
                 </h1>
             </div>
             <!-- /.col-lg-12 -->
@@ -31,8 +29,8 @@
                             <label class="col-sm-4 control-label">Mã hợp đồng</label>
 
                             <div class="col-sm-6">
-                                <div class="text-value text-primary">
-                                    <b><a href="detail-contract.html">${contractCode}</a></b>
+                                <div class="text-value">
+                                    <b>${contractCode}</b>
                                 </div>
                             </div>
                         </div>
@@ -42,7 +40,7 @@
 
                             <div class="col-sm-6">
                                 <div class="text-value">
-                                    <b><a href="detail-customer.html">${sessionScope.userDto.userEntity.name}</a></b>
+                                    <b>${sessionScope.userDto.userEntity.name}</b>
                                 </div>
                             </div>
                         </div>
@@ -50,7 +48,10 @@
                     </fieldset>
                 </form>
             </div>
+
             <div class="col-lg-12">
+                <legend>Thông tin yêu cầu bồi thường
+                </legend>
                 <c:if test="${not empty validateErrors}">
                     <div class="text-danger">
                         <ul>
@@ -280,6 +281,16 @@
                     <div class="text-center">
                         <input type="hidden" name="action" value="create"/>
                         <input type="hidden" name="compensation:contractCode" value="${contractCode}">
+                        <div class="form-group hide">
+                            <div class="col-sm-3">
+                                <input id="createdDate" name="compensation:createdDate"
+                                       class="form-control input-md" type="date" required>
+                            </div>
+                            <div class="col-sm-3">
+                                <input id="accidentDate" name="compensation:accidentDate"
+                                       class="form-control input-md" type="date" required>
+                            </div>
+                        </div>
                         <button type="submit" class="btn btn-success">
                             <i class="fa fa-arrow-right"></i>
                             Gởi yêu cầu bồi thường
