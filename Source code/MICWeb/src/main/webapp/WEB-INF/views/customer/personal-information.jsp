@@ -108,7 +108,7 @@
             <div id="change-password-model" class="modal fade bs-example-modal-md" tabindex="-1" role="dialog"
                  aria-labelledby="myLargeModalLabel"
                  aria-hidden="true">
-                <div class="modal-dialog modal-md">
+                <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
@@ -136,7 +136,7 @@
                                 <div class="form-group">
                                     <label class="col-sm-5 control-label">Xác nhận mật khẩu hiện tại *</label>
 
-                                    <div class="col-sm-5">
+                                    <div class="col-sm-3">
                                         <input type="password" class="form-control"
                                                required
                                                title="Nhập mật khẩu hiện tại"
