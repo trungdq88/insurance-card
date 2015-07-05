@@ -49,8 +49,6 @@ public class CompensationController extends AuthController {
     public ResponseObject postCreate(R r) {
         String msg = "";
         CreateCompensationDto dto = (CreateCompensationDto) r.ead.entity(CreateCompensationDto.class, "compensation");
-        dto.setCreatedDate(DateUtils.currentDateWithoutTime());
-        dto.setAccidentDate(DateUtils.currentDateWithoutTime());
         List errors = r.ead.validate(dto);
 
         // If there is validation errors

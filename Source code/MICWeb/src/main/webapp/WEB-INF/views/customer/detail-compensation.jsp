@@ -8,7 +8,29 @@
     <div id="page-wrapper">
         <div class="row">
             <div class="col-lg-12">
+                <h1 class="page-header">Yêu cầu bồi thường cho hợp đồng ${compensation.contractCode}
+                    <div class="pull-right">
+                        <span style="font-size: 50%" class="label label-warning">  <c:choose>
+                            <c:when test="${empty compensation.resolveDate}">
+                                <span class="label label-warning">Đang giải quyết</span>
+                            </c:when>
+                            <c:otherwise>Giải quyết ngày
+                                <fmt:formatDate value='${compensation.resolveDate}'
+                                                pattern='dd/MM/yyyy'/>
+                            </c:otherwise>
+                        </c:choose></span>
+
+                    </div>
+                </h1>
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
                 <form class="form-horizontal">
+                    <div class="text-center alert alert-success alert-dismissible">
+                        Yêu cầu bồi thường của bạn đã được gửi đi, vui lòng chờ giải quyết từ nhân viên công ty
+                    </div>
                     <fieldset>
                         <legend style="border-bottom: none">Thông tin hợp đồng</legend>
 
@@ -17,8 +39,7 @@
 
                             <div class="col-sm-2">
                                 <div class="text-value">
-                                    <a href="${pageContext.request.contextPath}/staff/contract?action=detail&code=${compensation.contractCode}">
-                                        <strong>${compensation.contractCode}</strong>
+                                    ${compensation.contractCode}
                                     </a>
                                 </div>
                             </div>
@@ -29,9 +50,7 @@
 
                             <div class="col-sm-4">
                                 <div class="text-value">
-                                    <a href="detail-customer.html">
-                                        <b>${compensation.micContractByContractCode.micCustomerByCustomerCode.name}</b>
-                                    </a>
+                                    ${compensation.micContractByContractCode.micCustomerByCustomerCode.name}
                                 </div>
                             </div>
                         </div>
@@ -242,7 +261,8 @@
                 <br/>
 
                 <div class="text-center">
-                    <a href="${pageContext.request.contextPath}/customer/contract?action=detail&code=${compensation.contractCode}" type="button"
+                    <a href="${pageContext.request.contextPath}/customer/contract?action=detail&code=${compensation.contractCode}"
+                       type="button"
                        class="btn btn-default">
                         <i class="fa fa-arrow-left"></i> <strong>Quay về trang thông tin hợp đồng</strong>
                     </a>
