@@ -290,5 +290,33 @@ $(document).ready(function () {
         }
         $('#titlePunishment').val($('#contentPunishment').val());
     });
+    /**
+     * ---------------------------------Add new accident
+     * **/
+    $('#addAccident').click(function () {
+        $('#saveAccident').removeClass('hide');
+        $('#addMore').removeClass('hide');
+        $('#accidentDate').val(getDateNow());
+        var title = $('#').val();
+        $.ajax({
+            url: '/ajax',
+            method: 'post',
+            data: {
+                action: 'AddAccident',
+                customerCode: cutomerCode
+            },
+            dataType: 'json'
+        }).done(function (msg) {
 
+        });
+    });
+    function getDateNow() {
+        var myDate = new Date();
+        var year = myDate.getFullYear() ;
+        var month = (1 + myDate.getMonth()).toString();
+        month = month.length > 1 ? month : '0' + month;
+        var day = myDate.getDate().toString();
+        day = day.length > 1 ? day : '0' + day;
+        return day + '/' + month + '/' + year;
+    }
 });

@@ -210,8 +210,10 @@ public class ContractController extends AuthController {
                 }
             });
             List listPayment = customerBusiness.getAllPaymentByContractCode(code);
+            List listAccident = customerBusiness.getAllAccidentByContractCode(code);
             r.equest.setAttribute("contract", contract);
             r.equest.setAttribute("listPayment", listPayment);
+            r.equest.setAttribute("listAccident", listAccident);
             r.equest.setAttribute("compensationPaginator", compensationPaginator);
             r.equest.setAttribute("punishmentPaginator", punishmentPaginator);
             return new JspPage("customer/contract-detail.jsp");

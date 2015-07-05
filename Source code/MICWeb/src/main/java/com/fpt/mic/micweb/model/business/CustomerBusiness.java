@@ -1,17 +1,11 @@
 package com.fpt.mic.micweb.model.business;
 
-import com.fpt.mic.micweb.model.dao.CardDao;
-import com.fpt.mic.micweb.model.dao.CustomerDao;
-import com.fpt.mic.micweb.model.dao.ContractDao;
-import com.fpt.mic.micweb.model.dao.PaymentDao;
+import com.fpt.mic.micweb.model.dao.*;
 import com.fpt.mic.micweb.model.dao.helper.NewCardRequestDao;
 import com.fpt.mic.micweb.model.dto.NotificationBuilder;
 import com.fpt.mic.micweb.model.dto.form.CancelContractDto;
 import com.fpt.mic.micweb.model.dto.form.ChangePasswordDto;
-import com.fpt.mic.micweb.model.entity.CardEntity;
-import com.fpt.mic.micweb.model.entity.CustomerEntity;
-import com.fpt.mic.micweb.model.entity.ContractEntity;
-import com.fpt.mic.micweb.model.entity.PaymentEntity;
+import com.fpt.mic.micweb.model.entity.*;
 import com.fpt.mic.micweb.utils.Constants;
 import com.fpt.mic.micweb.utils.DateUtils;
 import com.fpt.mic.micweb.utils.StringUtils;
@@ -51,6 +45,15 @@ public class CustomerBusiness {
     public List<PaymentEntity> getAllPaymentByContractCode(String contractCode){
         PaymentDao paymentDao = new PaymentDao();
         return paymentDao.getPaymentByContractCode(contractCode);
+    }
+    /**
+     * get all accident by contractCode
+     *
+     * @return list accident
+     */
+    public List<AccidentEntity> getAllAccidentByContractCode(String contractCode){
+        AccidentDao accidentDao = new AccidentDao();
+        return accidentDao.getAllAccidentByContractCode(contractCode);
     }
     public Long getAllContractByCustomerCount(String customerCode) {
         ContractDao contractDao = new ContractDao();

@@ -18,7 +18,12 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="_shared/header.jsp" %>
 <style type="text/css">
-
+    .handleInput {
+        border:none ;
+        background-color: white;
+        width: 100%;
+        padding-top: 6px ;
+    }
     .tooltip-inner {
         font-size: 13px;
         background-color: #3D6199;
@@ -454,7 +459,7 @@
                 <li role="presentation">
                     <a href="#paymentInfo" aria-controls="profile" role="tab" data-toggle="tab">Thông tin giao dịch</a>
                 </li>
-                <li role="presentation" >
+                <li role="presentation">
                     <a href="#compensations" aria-controls="profile" role="tab" data-toggle="tab">Lịch sử bồi
                         thường</a>
                 </li>
@@ -462,6 +467,10 @@
                     <a href="#punishments" aria-controls="messages" role="tab" data-toggle="tab">Lịch sử vi phạm
                         luật
                         GT</a>
+                </li>
+                <li role="presentation">
+                    <a href="#accidents" aria-controls="messages" role="tab" data-toggle="tab">Lịch sử tai nạn
+                    </a>
                 </li>
                 <c:if test="${contract.status.equalsIgnoreCase('Ready') }">
                     <%--<form action="${pageContext.request.contextPath}/customer/card" method="get">--%>
@@ -798,7 +807,7 @@
                                                    varStatus="counter">
                                             <tr>
                                                 <td class="text-center">
-                                                    ${payment.id}
+                                                        ${payment.id}
                                                 </td>
                                                 <td class="text-center">
                                                     <fmt:formatDate value='${payment.paidDate}'
@@ -842,7 +851,7 @@
                 </div>
             </div>
             <%----------------------------------------------------------------------------------------------------%>
-            <%--------------------------------------COMPENSATION--------------------------------------------------%>
+            <%------------------------------------------COMPENSATION----------------------------------------------%>
             <div role="tabpane1" class="tab-pane" id="compensations">
                 <div class="row">
                     <div class="col-lg-12">
@@ -968,7 +977,7 @@
                 </div>
             </div>
             <%----------------------------------------------------------------------------------------------------%>
-            <%--------------------------------------PUNISHMENT----------------------------------------------------%>
+            <%------------------------------------------PUNISHMENT------------------------------------------------%>
             <div role="tabpane1" class="tab-pane" id="punishments">
 
                 <form action="${pageContext.request.contextPath}/customer/punishment" method="post">
@@ -1129,6 +1138,105 @@
                                         </a>
                                     </li>
                                 </c:if>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <%----------------------------------------------------------------------------------------------------%>
+            <%------------------------------------------Accident------------------------------------------------%>
+            <div role="tabpane1" class="tab-pane" id="accidents">
+
+                <div class="panel panel-default">
+                    <div class="panel panel-heading">
+                        <div class="pull-left">
+                            <!--<input type="checkbox" class="check-all"/>-->
+                            <b>Có ${listAccident.size()} tai nạn</b>
+                        </div>
+                        <div class="pull-right">
+                            <i id="addAccident" class="fa fa-plus-square-o fa-lg" style="cursor: pointer" title="Thêm tai nạn">
+                            </i>
+                            <i id="saveAccident" class="fa fa-check-square fa-lg hide" style="cursor: pointer" title="Lưu thông tin"></i>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+
+                    <div class="panel panel-body">
+
+                        <div class="table table-responsive">
+                            <table class="table table-bordered">
+                                <thead>
+                                <tr class="success">
+                                    <th class="text-center">
+                                        Mã
+                                    </th>
+                                    <th class="text-center">
+                                        Nội dung
+                                    </th>
+                                    <th class=" text-center">
+                                        Thời gian
+                                    </th>
+                                    <th class="text-center">
+                                        Biên Bản
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <c:choose>
+                                    <c:when test="${listAccident.size() == 0}">
+                                        <tr>
+                                            <td colspan="5" style="vertical-align: middle; text-align: center;">
+                                                Không có tai nạn nào
+                                            </td>
+                                        </tr>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <c:forEach items="${listAccident}"
+                                                   var="accident"
+                                                   varStatus="counter">
+                                            <tr>
+                                                <td class="text-center">
+                                                        ${accident.id}
+                                                </td>
+                                                <td class="text-center">
+                                                        ${accident.title}
+                                                </td>
+                                                <td class="text-center">
+                                                    <fmt:formatDate value='${accident.createdDate}'
+                                                                    pattern='dd/MM/yyyy'/>
+                                                </td>
+                                                <td class="text-center">
+                                                        ${accident.attachment}
+                                                </td>
+                                            </tr>
+
+                                        </c:forEach>
+                                        <tr id="addMore" class="hide">
+                                            <td class="text-center">
+
+                                            </td>
+                                            <td class="text-center">
+                                                <input type="text" class="form-control" id="accidentContent">
+                                            </td>
+                                            <td class="text-center">
+                                                <input type="text" class="text-center handleInput form-control"
+                                                       disabled="disabled"
+                                                       id="accidentDate">
+                                            </td>
+                                            <td class="text-center">
+                                                <input type="file" class="text-center" id="accidentAtt">
+                                            </td>
+                                        </tr>
+                                    </c:otherwise>
+                                </c:choose>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="panel panel-footer">
+                        <nav class="text-right">
+
                             </ul>
                         </nav>
                     </div>
