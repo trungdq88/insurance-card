@@ -8,6 +8,7 @@ import com.fpt.mic.micweb.framework.responses.RedirectTo;
 import com.fpt.mic.micweb.framework.responses.ResponseObject;
 import com.fpt.mic.micweb.model.business.AdminBusiness;
 import com.fpt.mic.micweb.model.business.StaffBusiness;
+import com.fpt.mic.micweb.model.dto.form.BusinessRulesDto;
 import com.fpt.mic.micweb.model.dto.form.CreateStaffDto;
 
 import javax.servlet.annotation.WebServlet;
@@ -63,9 +64,8 @@ public class ManageController extends BasicController{
             return postViewCreateStaff(r);
         }
         AdminBusiness adminBusiness = new AdminBusiness();
-        adminBusiness.createStaff(createStaffDto);
-        r.equest.setAttribute("message","Đã thêm nhân viên "+createStaffDto.getStaffCode());
-        return getView(r);
+        String staffCode = adminBusiness.createStaff(createStaffDto).getStaffCode();
+        return new RedirectTo("/admin?action=staffDetail&code="+staffCode);
     }
     public ResponseObject getDeleteStaff(R r){
         AdminBusiness adminBusiness = new AdminBusiness();
@@ -76,5 +76,17 @@ public class ManageController extends BasicController{
           r.equest.setAttribute("message","Xóa không thành công");
         }
         return getView(r);
+    }
+    public ResponseObject getSettingConfig(R r){
+        AdminBusiness adminBusiness = new AdminBusiness();
+        r.equest.setAttribute("submitted",adminBusiness.getBusinessRules());
+        return new JspPage("admin/business-config-rules.jsp");
+    }
+    public ResponseObject getEditConfig(R r){
+        BusinessRulesDto businessRulesDto = (BusinessRulesDto) r.ead.entity(BusinessRulesDto.class,"config");
+        AdminBusiness adminBusiness = new AdminBusiness();
+        adminBusiness.setBusinessRules(businessRulesDto);
+        r.equest.setAttribute("info","Cập nhật thành công");
+        return getSettingConfig(r);
     }
 }

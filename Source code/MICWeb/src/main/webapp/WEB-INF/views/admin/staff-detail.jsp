@@ -37,8 +37,10 @@
 
               <div class="col-sm-6">
               <p class="text-value">
-                ${staff.staffCode}
+                <span class="label label-info"
+                      style="font-size: 16px">${staff.staffCode}</span>
               </p>
+
               </div>
             </div>
             <!-- Text input-->

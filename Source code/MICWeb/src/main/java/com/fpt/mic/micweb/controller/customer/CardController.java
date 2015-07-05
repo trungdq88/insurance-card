@@ -43,8 +43,8 @@ public class CardController extends AuthController {
         String contractCode = r.equest.getParameter("contractCode");
         r.equest.setAttribute("contractCode", contractCode);
         r.equest.setAttribute("customerCode", customerCode);
-        r.equest.setAttribute("newCardFee", "" + Constants.PaymentFee.NEW_CARD_REQUEST);
-        r.equest.setAttribute("transformFee", "" + Constants.PaymentFee.DELIVERY);
+        r.equest.setAttribute("newCardFee", "" + Constants.PaymentFee.NEW_CARD_REQUEST_FEE);
+        r.equest.setAttribute("transformFee", "" + Constants.PaymentFee.DELIVERY_FEE);
         return new JspPage("/customer/new-card-request.jsp");
     }
 
@@ -62,8 +62,8 @@ public class CardController extends AuthController {
             r.equest.setAttribute("validateErrors", errors);
             r.equest.setAttribute("submitted", newCardRequestDto);
             r.equest.setAttribute("contractCode", newCardRequestDto.getContractCode());
-            r.equest.setAttribute("newCardFee", "" + Constants.PaymentFee.NEW_CARD_REQUEST);
-            r.equest.setAttribute("transformFee", "" + Constants.PaymentFee.DELIVERY);
+            r.equest.setAttribute("newCardFee", "" + Constants.PaymentFee.NEW_CARD_REQUEST_FEE);
+            r.equest.setAttribute("transformFee", "" + Constants.PaymentFee.DELIVERY_FEE);
             // Gửi dữ liệu mà người dùng đã nhập về trang JSP, gán vào biết submitted
 
             return getNewCard(r);
@@ -104,7 +104,7 @@ public class CardController extends AuthController {
                     session.setAttribute("SUCCESS_URL", "/customer/card?action=activeNewCardRequest");
                     session.setAttribute("cancel_message", "Bạn đã hủy thanh toán. Xin vui lòng thực hiện lại hoặc đến thanh toán trực tiếp");
                     session.setAttribute("redirectLink", "/customer/contract?action=detail&code=" + contractCode);
-                    float totalAmount = Constants.PaymentFee.NEW_CARD_REQUEST + Constants.PaymentFee.DELIVERY;
+                    float totalAmount = Constants.PaymentFee.NEW_CARD_REQUEST_FEE + Constants.PaymentFee.DELIVERY_FEE;
                     CheckoutRequestDto checkoutRequest = new CheckoutRequestDto();
                     checkoutRequest.setPaymentrequest_name("Yêu cầu thẻ mới " + newCardRequestDto.getContractCode());
                     checkoutRequest.setPaymentrequest_desc("Yêu cầu thẻ mới " + newCardRequestDto.getContractCode());

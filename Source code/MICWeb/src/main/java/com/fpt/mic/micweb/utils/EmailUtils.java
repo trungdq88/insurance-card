@@ -31,11 +31,11 @@ public class EmailUtils {
             props.put("mail.smtps.host", SMTP_HOST);
             props.put("mail.smtps.auth", "true");
             Session session = Session.getInstance(props, null);
-            Message msg = new MimeMessage(session);
+            MimeMessage msg = new MimeMessage(session);
             msg.setFrom(new InternetAddress(EMAIL_FROM));
             msg.setRecipients(Message.RecipientType.TO,
                     InternetAddress.parse(to, false));
-            msg.setSubject(subject);
+            msg.setSubject(subject, "utf-8");
             msg.setContent(content, "text/html; charset=utf-8");
             msg.setHeader("X-Mailer", EMAIL_MAILER);
             msg.setSentDate(new Date());

@@ -51,7 +51,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="${pageContext.request.contextPath}/admin">
+                    <a href="${pageContext.request.contextPath}/admin?action=settingConfig">
                         <i class="fa fa-key fa-fw"></i> Thiết lập
                     </a>
                 </li>
