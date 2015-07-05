@@ -12,6 +12,7 @@ public class BusinessRulesEntity {
     private int startDateBefore;
     private int startDateAfter;
     private int contractDefaultTerm;
+    private int contractMinTerm;
     private int paidDaterBefore;
     private int paidDateAfter;
     private int cancelDateBefore;
@@ -20,8 +21,8 @@ public class BusinessRulesEntity {
     private int nearlyExceedExpiredTwo;
     private int nearlyExceedExpiredThree;
     private int paymentDueDate;
-    private Float newCardRequestFee;
-    private Float deliveryFee;
+    private int newCardRequestFee;
+    private int deliveryFee;
 
     @Id
     @Column(name = "id")
@@ -61,6 +62,15 @@ public class BusinessRulesEntity {
 
     public void setContractDefaultTerm(int contractDefaultTerm) {
         this.contractDefaultTerm = contractDefaultTerm;
+    }
+    @Basic
+    @Column(name = "contract_min_term")
+    public int getContractMinTerm() {
+        return contractMinTerm;
+    }
+
+    public void setContractMinTerm(int contractMinTerm) {
+        this.contractMinTerm = contractMinTerm;
     }
 
     @Basic
@@ -145,21 +155,21 @@ public class BusinessRulesEntity {
 
     @Basic
     @Column(name = "new_card_request_fee")
-    public Float getNewCardRequestFee() {
+    public int getNewCardRequestFee() {
         return newCardRequestFee;
     }
 
-    public void setNewCardRequestFee(Float newCardRequestFee) {
+    public void setNewCardRequestFee(int newCardRequestFee) {
         this.newCardRequestFee = newCardRequestFee;
     }
 
     @Basic
     @Column(name = "delivery_fee")
-    public Float getDeliveryFee() {
+    public int getDeliveryFee() {
         return deliveryFee;
     }
 
-    public void setDeliveryFee(Float deliveryFee) {
+    public void setDeliveryFee(int deliveryFee) {
         this.deliveryFee = deliveryFee;
     }
 
@@ -202,8 +212,8 @@ public class BusinessRulesEntity {
         result = 31 * result + nearlyExceedExpiredTwo;
         result = 31 * result + nearlyExceedExpiredThree;
         result = 31 * result + paymentDueDate;
-        result = 31 * result + (newCardRequestFee != null ? newCardRequestFee.hashCode() : 0);
-        result = 31 * result + (deliveryFee != null ? deliveryFee.hashCode() : 0);
+        result = 31 * result + newCardRequestFee;
+        result = 31 * result + deliveryFee;
         return result;
     }
 }
