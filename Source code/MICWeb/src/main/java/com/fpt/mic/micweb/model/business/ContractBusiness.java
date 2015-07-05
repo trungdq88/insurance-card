@@ -2,6 +2,7 @@ package com.fpt.mic.micweb.model.business;
 
 import com.fpt.mic.micweb.model.dao.ContractDao;
 import com.fpt.mic.micweb.model.dao.ContractTypeDao;
+import com.fpt.mic.micweb.model.dao.helper.NewCardRequestDao;
 import com.fpt.mic.micweb.model.dto.ContractSearchResultDto;
 import com.fpt.mic.micweb.model.entity.ContractEntity;
 import com.fpt.mic.micweb.model.entity.ContractTypeEntity;
@@ -89,5 +90,13 @@ public class ContractBusiness {
     public ContractTypeEntity getContractType(int contractTypeId) {
         ContractTypeDao contractTypeDao = new ContractTypeDao();
         return contractTypeDao.read(contractTypeId);
+    }
+    // kierm tra hop dong da co yeu cau the moi chua giai quyet chua
+    public boolean isNewCardRequestedByContractCode(String contractCode){
+        NewCardRequestDao newCardRequestDao = new NewCardRequestDao();
+        if(newCardRequestDao.getUnresolveRequestByContractCode(contractCode) == null){
+            return false;
+        }
+        return true;
     }
 }

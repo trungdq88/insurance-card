@@ -212,6 +212,8 @@ public class ContractController extends AuthController {
 
             List listAccident = customerBusiness.getAllAccidentByContractCode(code);
             r.equest.setAttribute("contract", contract);
+            ContractBusiness contractBusiness = new ContractBusiness();
+            r.equest.setAttribute("isNewCardRequested",contractBusiness.isNewCardRequestedByContractCode(code));
 
             r.equest.setAttribute("listAccident", listAccident);
             r.equest.setAttribute("compensationPaginator", compensationPaginator);

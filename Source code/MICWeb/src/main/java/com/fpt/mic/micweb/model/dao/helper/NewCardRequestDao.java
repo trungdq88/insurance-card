@@ -1,6 +1,7 @@
 package com.fpt.mic.micweb.model.dao.helper;
 
 import com.fpt.mic.micweb.model.dao.common.GenericDaoJpaImpl;
+import com.fpt.mic.micweb.model.entity.ContractEntity;
 import com.fpt.mic.micweb.model.entity.NewCardRequestEntity;
 
 import javax.persistence.EntityManager;
@@ -39,6 +40,25 @@ public class NewCardRequestDao extends GenericDaoJpaImpl<NewCardRequestEntity, I
         List resultList = query.getResultList();
         entityManager.close();
         return resultList;
+    }
+
+    public NewCardRequestEntity getUnresolveRequestByContractCode(String contractCode) {
+        EntityManager entityManager = factory.createEntityManager();
+        Query query = entityManager.createQuery(
+                "SELECT co " +
+                        "FROM NewCardRequestEntity co " +
+                        "WHERE co.micCardByOldCardId.micContractByContractCode.contractCode = :contractCode" +
+                        " AND co.resolveDate = NULL"
+        );
+        query.setParameter("contractCode", contractCode);
+
+        try {
+            return (NewCardRequestEntity) query.getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        } finally {
+            entityManager.close();
+        }
     }
 
     public Long getAllNewCardRequestCount() {
