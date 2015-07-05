@@ -2,10 +2,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <style type="text/css">
     .handleInput {
-        border:none ;
+        border: none;
         background-color: white;
         width: 100%;
-        padding-top: 6px ;
+        padding-top: 6px;
     }
 </style>
 <div id="wrapper">
@@ -126,23 +126,28 @@
                                  role="alert">
                                 Xác nhận mật khẩu không khớp với mật khẩu mới
                             </div>
+                            <div class="text-center fa-lg">
+                                Để đảm bảo tính bảo mật yêu cầu người dùng nhập giá để thay đởi mật khẩu
+                            </div>
+                            <br/>
                             <div class="form-horizontal">
                                 <div class="form-group">
                                     <label class="col-sm-4 control-label">Xác nhận mật khẩu hiện tại</label>
 
-                                    <div class="col-sm-5">
+                                    <div class="col-sm-4">
                                         <input type="password" class="form-control"
                                                required
                                                title="Nhập mật khẩu hiện tại"
                                                id="currentPass"
                                                name="newPass:currentPassword"
+                                               placeholder="******"
                                                 >
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-sm-4 control-label">Mật khẩu mới</label>
 
-                                    <div class="col-sm-5">
+                                    <div class="col-sm-4">
                                         <input type="password" class="form-control"
                                                required
                                                title="Nhập mật khẩu mới"
@@ -150,6 +155,7 @@
                                                maxlength="32"
                                                id="newPass"
                                                name="newPass:newPassword"
+                                               placeholder="******"
                                                 >
                                     </div>
                                 </div>
@@ -158,7 +164,7 @@
 
                                     </label>
 
-                                    <div class="col-sm-5">
+                                    <div class="col-sm-4">
                                         <input type="password" class="form-control"
                                                required
                                                title="Xác nhận lại mật khẩu"
@@ -166,6 +172,7 @@
                                                maxlength="32"
                                                id="confirmPass"
                                                name="newPass:confirmPassword"
+                                               placeholder="******"
                                                 >
                                     </div>
                                 </div>
