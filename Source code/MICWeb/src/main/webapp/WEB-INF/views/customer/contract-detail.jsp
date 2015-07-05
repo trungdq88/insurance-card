@@ -1055,19 +1055,24 @@
             <%------------------------------------------Accident------------------------------------------------%>
             <div role="tabpane1" class="tab-pane" id="accidents">
 
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="pull-right">
+                            <a href="${pageContext.request.contextPath}/customer/accident?action=create&code=${contract.contractCode}"
+                               class="btn btn-success">
+                                <i class="fa fa-plus"></i> Thông báo tai nạn mới
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <br/>
                 <div class="panel panel-default">
                     <div class="panel panel-heading">
                         <div class="pull-left">
                             <!--<input type="checkbox" class="check-all"/>-->
                             <b>Có ${listAccident.size()} tai nạn</b>
                         </div>
-                        <div class="pull-right">
-                            <i id="addAccident" class="fa fa-plus-square-o fa-lg" style="cursor: pointer"
-                               title="Thêm tai nạn">
-                            </i>
-                            <i id="saveAccident" class="fa fa-check-square fa-lg hide" style="cursor: pointer"
-                               title="Lưu thông tin"></i>
-                        </div>
+
                         <div class="clearfix"></div>
                     </div>
 
@@ -1108,7 +1113,7 @@
                                                 <td class="text-center">
                                                         ${accident.id}
                                                 </td>
-                                                <td class="text-center">
+                                                <td>
                                                         ${accident.title}
                                                 </td>
                                                 <td class="text-center">
@@ -1121,22 +1126,22 @@
                                             </tr>
 
                                         </c:forEach>
-                                        <tr id="addMore" class="hide">
-                                            <td class="text-center">
+                                        <%--<tr id="addMore" class="hide">--%>
+                                            <%--<td class="text-center">--%>
 
-                                            </td>
-                                            <td class="text-center">
-                                                <input type="text" class="form-control" id="accidentContent">
-                                            </td>
-                                            <td class="text-center">
-                                                <input type="text" class="text-center handleInput form-control"
-                                                       disabled="disabled"
-                                                       id="accidentDate">
-                                            </td>
-                                            <td class="text-center">
-                                                <input type="file" class="text-center" id="accidentAtt">
-                                            </td>
-                                        </tr>
+                                            <%--</td>--%>
+                                            <%--<td class="text-center">--%>
+                                                <%--<input type="text" class="form-control" id="accidentContent">--%>
+                                            <%--</td>--%>
+                                            <%--<td class="text-center">--%>
+                                                <%--<input type="text" class="text-center handleInput form-control"--%>
+                                                       <%--disabled="disabled"--%>
+                                                       <%--id="accidentDate">--%>
+                                            <%--</td>--%>
+                                            <%--<td class="text-center">--%>
+                                                <%--<input type="file" class="text-center" id="accidentAtt">--%>
+                                            <%--</td>--%>
+                                        <%--</tr>--%>
                                     </c:otherwise>
                                 </c:choose>
 

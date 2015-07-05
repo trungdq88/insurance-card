@@ -127,7 +127,7 @@
                                 Xác nhận mật khẩu không khớp với mật khẩu mới
                             </div>
                             <div class="text-center fa-lg">
-                                Để đảm bảo tính bảo mật yêu cầu người dùng nhập giá để thay đởi mật khẩu
+                                Để đảm bảo tính bảo mật yêu cầu người dùng nhập giá để thay đổi mật khẩu
                             </div>
                             <br/>
                             <div class="form-horizontal">
