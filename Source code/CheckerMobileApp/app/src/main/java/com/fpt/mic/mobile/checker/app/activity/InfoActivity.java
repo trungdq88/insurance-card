@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import com.fpt.mic.mobile.checker.app.R;
@@ -68,6 +69,11 @@ public class InfoActivity extends Activity {
         return true;
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        return super.onOptionsItemSelected(item);
+        //if (item.getItemId())
+    }
 
     public void showInfo(CardEntity card) {
 

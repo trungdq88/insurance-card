@@ -15,7 +15,7 @@ import java.util.List;
  * @author dinhquangtrung
  */
 
-@WebServlet(name = "HomeController", urlPatterns = {"/public/home"})
+@WebServlet(name = "HomeController", urlPatterns = {"/public/home", "/public"})
 public class HomeController extends BasicController {
     public ResponseObject getView(R r) {
         ContractBusiness contractBusiness = new ContractBusiness();

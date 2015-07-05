@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:padding="10dp"
+    android:weightSum="1">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Mô tả ngắn lỗi vi phạm:"
+        android:id="@+id/textView25"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtTitle"
+        android:hint="VD: lái xe qua tốc độ"
+        android:layout_below="@+id/textView25"
+        android:layout_alignParentRight="true" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnCamera"
+        android:layout_below="@+id/txtTitle"
+        android:layout_alignRight="@+id/txtTitle"
+        android:layout_alignParentLeft="true"
+        android:background="#ffe5e5e5"
+        android:scaleType="fitCenter"
+        android:layout_above="@+id/btnSend" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Nhấn để chụp hình biên bản phạt"
+        android:id="@+id/txtClickToCamera"
+        android:textColor="#ff878787"
+        android:gravity="center"
+        android:padding="20dp"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Gửi vi phạm"
+        android:id="@+id/btnSend"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignRight="@+id/btnCamera" />
+
+</RelativeLayout>
