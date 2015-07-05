@@ -1,5 +1,6 @@
 -- 20150705 Changes:
 -- Add table mic_business_rules
+-- Change mic_new_card_request table: remove customer_code
 -- MySQL Workbench Forward Engineering
 
 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
@@ -189,18 +190,11 @@ CREATE TABLE IF NOT EXISTS `mic_data`.`mic_new_card_request` (
   `resolve_date` DATETIME NULL DEFAULT NULL,
   `note` VARCHAR(2000) NULL DEFAULT NULL,
   `old_card_id` VARCHAR(20) NOT NULL,
-  `customer_code` VARCHAR(10) NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_mic_new_card_request_mic_card1_idx` (`old_card_id` ASC),
-  INDEX `fk_mic_new_card_request_mic_customer1_idx` (`customer_code` ASC),
   CONSTRAINT `fk_mic_new_card_request_mic_card1`
     FOREIGN KEY (`old_card_id`)
     REFERENCES `mic_data`.`mic_card` (`card_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_mic_new_card_request_mic_customer1`
-    FOREIGN KEY (`customer_code`)
-    REFERENCES `mic_data`.`mic_customer` (`customer_code`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
