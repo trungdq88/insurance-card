@@ -15,7 +15,7 @@
   <div id="page-wrapper">
     <div class="row">
       <div class="col-lg-12">
-        <h1 class="page-header">Thêm nhân viên mới</h1>
+        <h1 class="page-header">Thiết lập cấu hình</h1>
       </div>
       <!-- /.col-lg-12 -->
     </div>
@@ -37,20 +37,20 @@
           <fieldset>
             <!-- Text input-->
             <%--<div class="form-group">--%>
-              <%--<label class="col-sm-4 control-label" for="name">Tên đăng nhập *</label>--%>
+            <%--<label class="col-sm-4 control-label" for="name">Tên đăng nhập *</label>--%>
 
-              <%--<div class="col-sm-6">--%>
-                <%--<input id="code" name="staff:staffCode" type="text" class="form-control input-md"--%>
-                       <%--type="text" required minlength="4" maxlength="10"--%>
-                       <%--pattern="[0-9a-zA-Z]+"--%>
-                       <%--value="${submitted.staffCode}" title="Vui lòng nhập mã nhân viên">--%>
-              <%--</div>--%>
+            <%--<div class="col-sm-6">--%>
+            <%--<input id="code" name="staff:staffCode" type="text" class="form-control input-md"--%>
+            <%--type="text" required minlength="4" maxlength="10"--%>
+            <%--pattern="[0-9a-zA-Z]+"--%>
+            <%--value="${submitted.staffCode}" title="Vui lòng nhập mã nhân viên">--%>
+            <%--</div>--%>
             <%--</div>--%>
             <!-- Text input-->
             <div class="form-group">
               <label class="col-sm-4 control-label" for="email">Email *</label>
 
-              <div class="col-sm-6">
+              <div class="col-sm-6 ">
                 <input id="email" name="staff:email" type="text" class="form-control input-md"
                        type="text" required minlength="3" maxlength="250"
                        pattern="^([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3})$"
@@ -80,11 +80,11 @@
             </div>
             <!-- Text input-->
             <%--<div class="form-group">--%>
-              <%--<label class="col-sm-4 control-label" for="passwordConfirm">Nhập lại mật khẩu*</label>--%>
+            <%--<label class="col-sm-4 control-label" for="passwordConfirm">Nhập lại mật khẩu*</label>--%>
 
-              <%--<div class="col-sm-6">--%>
-                <%--<input id="passwordConfirm" name="staff:passwordConfirm" type="password" class="form-control input-md">--%>
-              <%--</div>--%>
+            <%--<div class="col-sm-6">--%>
+            <%--<input id="passwordConfirm" name="staff:passwordConfirm" type="password" class="form-control input-md">--%>
+            <%--</div>--%>
             <%--</div>--%>
             <!-- Text input-->
             <div class="form-group">
@@ -95,7 +95,7 @@
                        type="text" required minlength="3" maxlength="80"
                        pattern="^([^0-9`~!@#$%^&*,.<>;':/|{}()=_+-]+)$"
                        value="${submitted.name}" title="Vui lòng nhập họ tên"
-                       >
+                        >
               </div>
             </div>
 
@@ -122,9 +122,9 @@
         </form>
 
 
-  </div>
-</div>
-<!-- /#wrapper -->
+      </div>
+    </div>
+    <!-- /#wrapper -->
 
 
-<%@ include file="_shared/footer.jsp" %>
+    <%@ include file="_shared/footer.jsp" %>

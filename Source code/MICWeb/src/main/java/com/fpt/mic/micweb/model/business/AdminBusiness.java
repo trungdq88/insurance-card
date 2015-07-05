@@ -1,8 +1,11 @@
 package com.fpt.mic.micweb.model.business;
 
 import com.fpt.mic.micweb.model.dao.StaffDao;
+import com.fpt.mic.micweb.model.dao.helper.BusinessRulesDao;
+import com.fpt.mic.micweb.model.dto.form.BusinessRulesDto;
 import com.fpt.mic.micweb.model.dto.form.CreateStaffDto;
 import com.fpt.mic.micweb.model.entity.StaffEntity;
+import com.fpt.mic.micweb.model.entity.helper.BusinessRulesEntity;
 import com.fpt.mic.micweb.utils.StringUtils;
 
 /**
@@ -27,5 +30,28 @@ public class AdminBusiness {
         } catch (Exception e){
             return false;
         }
+    }
+    public BusinessRulesEntity getBusinessRules(){
+        BusinessRulesDao businessRulesDao = new BusinessRulesDao();
+        return businessRulesDao.read(1);
+    }
+    public void setBusinessRules(BusinessRulesDto businessRulesDto){
+        BusinessRulesDao businessRulesDao = new BusinessRulesDao();
+        BusinessRulesEntity businessRulesEntity = businessRulesDao.read(1);
+        //businessRulesEntity.setId(1);
+        businessRulesEntity.setStartDateBefore(businessRulesDto.getStartDateBefore());
+        businessRulesEntity.setStartDateAfter(businessRulesDto.getStartDateAfter());
+        businessRulesEntity.setContractDefaultTerm(businessRulesDto.getContractDefaultTerm());
+        businessRulesEntity.setPaidDaterBefore(businessRulesDto.getPaidDaterBefore());
+        businessRulesEntity.setPaidDateAfter(businessRulesDto.getPaidDateAfter());
+        businessRulesEntity.setCancelDateBefore(businessRulesDto.getCancelDateBefore());
+        businessRulesEntity.setCancelDateAfter(businessRulesDto.getCancelDateAfter());
+        businessRulesEntity.setPaymentDueDate(businessRulesDto.getPaymentDueDate());
+        businessRulesEntity.setNearlyExceedExpiredOne(businessRulesDto.getNearlyExceedExpiredOne());
+        businessRulesEntity.setNearlyExceedExpiredTwo(businessRulesDto.getNearlyExceedExpiredTwo());
+        businessRulesEntity.setNearlyExceedExpiredThree(businessRulesDto.getNearlyExceedExpiredThree());
+        businessRulesEntity.setNewCardRequestFee(businessRulesDto.getNewCardRequestFee());
+        businessRulesEntity.setDeliveryFee(businessRulesDto.getDeliveryFee());
+        businessRulesDao.update(businessRulesEntity);
     }
 }
