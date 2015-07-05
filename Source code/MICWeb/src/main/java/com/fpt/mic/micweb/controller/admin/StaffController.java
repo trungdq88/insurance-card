@@ -17,8 +17,8 @@ import java.util.List;
 /**
  * Created by TriPQM on 07/02/2015.
  */
-@WebServlet(name = "ManageController", urlPatterns = {"/admin"})
-public class ManageController extends BasicController{
+@WebServlet(name = "StaffController", urlPatterns = {"/admin/staff"})
+public class StaffController extends BasicController{
     /**
      * Paginator for contract
      */
@@ -77,16 +77,5 @@ public class ManageController extends BasicController{
         }
         return getView(r);
     }
-    public ResponseObject getSettingConfig(R r){
-        AdminBusiness adminBusiness = new AdminBusiness();
-        r.equest.setAttribute("submitted",adminBusiness.getBusinessRules());
-        return new JspPage("admin/business-config-rules.jsp");
-    }
-    public ResponseObject getEditConfig(R r){
-        BusinessRulesDto businessRulesDto = (BusinessRulesDto) r.ead.entity(BusinessRulesDto.class,"config");
-        AdminBusiness adminBusiness = new AdminBusiness();
-        adminBusiness.setBusinessRules(businessRulesDto);
-        r.equest.setAttribute("info","Cập nhật thành công");
-        return getSettingConfig(r);
-    }
+
 }
