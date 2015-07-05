@@ -84,6 +84,8 @@ public class InfoActivity extends Activity {
                 Toast.makeText(this, "Thẻ không hợp lệ!", Toast.LENGTH_SHORT).show();
             }
             return true;
+        } else if (item.getItemId() == R.id.close) {
+            finish();
         }
 
         return super.onOptionsItemSelected(item);
