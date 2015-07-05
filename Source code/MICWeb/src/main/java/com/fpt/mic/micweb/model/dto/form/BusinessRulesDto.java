@@ -18,6 +18,9 @@ public class BusinessRulesDto {
     @NotNull(message = "Kỳ hạn hợp đồng mặc định không được bỏ trống")
     @Range(min = 0, message = "Kỳ hạn hợp đồng mặc định phải lớn hơn hoặc bằng 0")
     private Integer contractDefaultTerm;
+    @NotNull(message = "Kỳ hạn hợp đồng tối thiểu không được bỏ trống")
+    @Range(min = 0, message = "Kỳ hạn hợp đồng tối thiểu phải lớn hơn hoặc bằng 0")
+    private Integer contractMinTerm;
     @NotNull(message = "Giới hạn ngày thanh toán không được bỏ trống")
     @Range(min = 0, message = "Giới hạn ngày thanh toán không được để trống phải lớn hơn hoặc bằng 0")
     private Integer paidDaterBefore;
@@ -44,12 +47,20 @@ public class BusinessRulesDto {
     private Integer paymentDueDate;
     @NotNull(message = "Phí làm lại thẻ")
     @Range(min = 0, message = "Phí làm lại thẻ phải lớn hơn hoặc bằng 0")
-    private Float newCardRequestFee;
+    private Integer newCardRequestFee;
     @NotNull(message = "Phí vận chuyển không được bỏ trống")
     @Range(min = 0, message = "Phí vận chuyển phải lớn hơn hoặc bằng 0")
-    private Float deliveryFee;
+    private Integer deliveryFee;
 
     public BusinessRulesDto() {
+    }
+
+    public Integer getContractMinTerm() {
+        return contractMinTerm;
+    }
+
+    public void setContractMinTerm(Integer contractMinTerm) {
+        this.contractMinTerm = contractMinTerm;
     }
 
     public Integer getStartDateBefore() {
@@ -140,19 +151,19 @@ public class BusinessRulesDto {
         this.paymentDueDate = paymentDueDate;
     }
 
-    public Float getNewCardRequestFee() {
+    public Integer getNewCardRequestFee() {
         return newCardRequestFee;
     }
 
-    public void setNewCardRequestFee(Float newCardRequestFee) {
+    public void setNewCardRequestFee(Integer newCardRequestFee) {
         this.newCardRequestFee = newCardRequestFee;
     }
 
-    public Float getDeliveryFee() {
+    public Integer getDeliveryFee() {
         return deliveryFee;
     }
 
-    public void setDeliveryFee(Float deliveryFee) {
+    public void setDeliveryFee(Integer deliveryFee) {
         this.deliveryFee = deliveryFee;
     }
 }

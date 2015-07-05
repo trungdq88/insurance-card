@@ -42,6 +42,7 @@ public class AdminBusiness {
         businessRulesEntity.setStartDateBefore(businessRulesDto.getStartDateBefore());
         businessRulesEntity.setStartDateAfter(businessRulesDto.getStartDateAfter());
         businessRulesEntity.setContractDefaultTerm(businessRulesDto.getContractDefaultTerm());
+        businessRulesEntity.setContractMinTerm(businessRulesDto.getContractMinTerm());
         businessRulesEntity.setPaidDaterBefore(businessRulesDto.getPaidDaterBefore());
         businessRulesEntity.setPaidDateAfter(businessRulesDto.getPaidDateAfter());
         businessRulesEntity.setCancelDateBefore(businessRulesDto.getCancelDateBefore());

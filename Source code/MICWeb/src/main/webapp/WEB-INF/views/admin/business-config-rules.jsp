@@ -35,122 +35,96 @@
                     </div>
                 </c:if>
                 <form action="${pageContext.request.contextPath}/admin/config"
-                      method="post" class="form-horizontal">
-
-                    <fieldset>
-                        <legend>Thời gian tạo hợp đồng
-                        </legend>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label" for="startDateBefore">Trước ngày hiện tại:</label>
-                            <div class="input-group col-sm-2">
-                                <input id="startDateBefore"  name="config:startDateBefore" type="number" class="form-control input-md" required min="0" value="${submitted.startDateBefore}" >
-                                <div class="input-group-addon">ngày</div>
-                            </div>
-
-                            <label class="col-sm-3 control-label" for="startDateAfter">Trước ngày hiện tại:</label>
-                            <div class="input-group col-sm-2">
-                                <input id="startDateAfter"  name="config:startDateAfter" type="number" class="form-control input-md" required min="0" value="${submitted.startDateBefore}" >
-                                <div class="input-group-addon">ngày</div>
-                            </div>
-                        </div>
-                    </fieldset>
-                    <fieldset>
-                        <legend>Kỳ hạn hợp đồng mặc định</legend>
-                        <div class="form-group">
-                            <div class="col-sm-3 ">
-                                <label>Thời gian:</label>
-                                <input  name="config:contractDefaultTerm" type="number" class="form-control input-md" required min="0" value="${submitted.contractDefaultTerm}"> tháng
-                            </div>
-                        </div>
-                    </fieldset>
-                    <fieldset>
-                        <legend>Ngày thanh toán</legend>
-                        <div class="form-group">
-                            <div class="col-sm-3">
-                                <label>Trước ngày tạo hợp đồng:</label>
-                                <input  name="config:paidDaterBefore" type="number" class="form-control input-md" required min="0" value="${submitted.paidDaterBefore}"> ngày
-                            </div>
-                            <div class="col-sm-1 col-sm-offset-0.5">
-                                <p class="text-center">Đến</p>
-                                <p class="text-value text-center">-</p>
-                            </div>
-                            <div class="col-sm-3 col-sm-offset-0.5">
-                                <label>Sau ngày tạo hợp đồng: </label>
-                                <input  name="config:paidDateAfter" type="number" class="form-control input-md" required min="0" value="${submitted.paidDateAfter}"> ngày
-                            </div>
-                        </div>
-
-                    </fieldset>
-                        <!-- Text input-->
-
-                    <fieldset>
-                        <legend>Ngày hủy hợp đồng</legend>
-                    </fieldset>
-                        <div class="form-group">
-                            <div class="col-sm-3 ">
-                                <label>Trước ngày hiện tại:</label>
-                                <input  name="config:cancelDateBefore" type="number" class="form-control input-md" required min="0" value="${submitted.cancelDateBefore}" >ngày
-                            </div>
-                            <div class="col-sm-1 col-sm-offset-0.5">
-                                <p class="text-center">Đến</p>
-                                <p class="text-value text-center">-</p>
-                            </div>
-                            <div class="col-sm-3 col-sm-offset-0.5">
-                                <label>Sau ngày hiện tại:</label>
-                                <input  name="config:cancelDateAfter" type="number" class="form-control input-md" required min="0" value="${submitted.cancelDateAfter}" >
-                                <div class="col-sm-offset-0.5">ngày</div>
-                            </div>
-
-                        </div>
-                        <fieldset>
-                            <legend>
-                                Thông báo hợp đồng sắp hết hạn khi hợp đồng còn:
-                            </legend>
-                        </fieldset>
-                        <!-- Text input-->
-                        <div class="form-group">
-                            <div class="col-sm-3 ">
-                                <label>Lần 1:</label>
-                                <input  name="config:nearlyExceedExpiredOne" type="number" class="form-control input-md" required min="0" value="${submitted.nearlyExceedExpiredOne}"> ngày
-                            </div>
-                            <div class="col-sm-3 col-sm-offset-1">
-                                <label>Lần 2</label>
-                                <input  name="config:nearlyExceedExpiredTwo" type="number" class="form-control input-md" required min="0" value="${submitted.nearlyExceedExpiredTwo}"> ngày
-                            </div>
-                            <div class="col-sm-3 col-sm-offset-1">
-                                <label>Lần 3</label>
-                                <input  name="config:nearlyExceedExpiredThree" type="number" class="form-control input-md" required min="0" value="${submitted.nearlyExceedExpiredThree}"> ngày
-                            </div>
-
-                        </div>
-                    <fieldset>
-                        <legend>Thời hạn thanh toán hợp đồng</legend>
-                        <div class="form-group">
-                            <div class="col-sm-4">
-                                <label class="text-value">Sau ngày đăng ký hợp đồng:</label>
-
-                            </div>
-                            <div class="col-sm-3">
-                                <input  name="config:paymentDueDate" type="number" class="form-control input-md" required min="0" value="${submitted.paymentDueDate}"> ngày
-                            </div>
-                        </div>
-                    </fieldset>
-                    <fieldset>
-                        <legend>
-                            Các khoản phí
-                        </legend>
-                        <div class="form-group">
-
-                            <div class="col-sm-5 ">
-                                <label>Phí làm lại thẻ:</label>
-                                <input id="newCardRequestFee"  name="config:newCardRequestFee" type="text" class="form-control input-md" required  value="${submitted.newCardRequestFee}"> VND
-                            </div>
-                            <div class="col-sm-5 col-sm-offset-1">
-                                <label>Phí vận chuyển:</label>
-                                <input id="deliveryFee"  name="config:deliveryFee" type="text" class="form-control input-md" required  value="${submitted.deliveryFee}"> VND
-                            </div>
-                        </div>
-                    </fieldset>
+                      method="post" class="form-horizontal" novalidate>
+                    <table class="table table-striped table-bordered table-condensed">
+                        <tbody>
+                        <tr>
+                            <td><strong>Các giới hạn ngày theo chính sách của công ty</strong></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Thời hạn thanh toán hợp đồng mới:</td>
+                            <td><input  name="config:paymentDueDate" type="number" class="form-control input-md" required min="0" value="${submitted.paymentDueDate}"></td>
+                            <td> ngày</td>
+                        </tr>
+                        <tr>
+                            <td>Thời gian thông báo hợp đồng sắp hết hạn lần 1: Trước</td>
+                            <td><input  name="config:nearlyExceedExpiredOne" type="number" class="form-control input-md" required min="0" value="${submitted.nearlyExceedExpiredOne}"></td>
+                            <td> ngày</td>
+                        </tr>
+                        <tr>
+                            <td>Thời gian thông báo hợp đồng sắp hết hạn lần 2: Trước</td>
+                            <td><input  name="config:nearlyExceedExpiredTwo" type="number" class="form-control input-md" required min="0" value="${submitted.nearlyExceedExpiredTwo}"></td>
+                            <td>ngày</td>
+                        </tr>
+                        <tr>
+                            <td>Thời gian thông báo hợp đồng sắp hết hạn lần 3: Trước</td>
+                            <td><input  name="config:nearlyExceedExpiredThree" type="number" class="form-control input-md" required min="0" value="${submitted.nearlyExceedExpiredThree}"></td>
+                            <td>ngày</td>
+                        </tr>
+                        <tr>
+                            <td>Thời hạn mặc định của hợp đồng:</td>
+                            <td><input  name="config:contractDefaultTerm" type="number" class="form-control input-md" required min="0" value="${submitted.contractDefaultTerm}"></td>
+                            <td> tháng</td>
+                        </tr>
+                        <tr>
+                            <td>Thời hạn tối thiểu của hợp đồng:</td>
+                            <td><input  name="config:contractMinTerm" type="number" class="form-control input-md" required min="0" value="${submitted.contractMinTerm}"></td>
+                            <td> tháng</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Giới hạn chỉnh sửa ngày cho nhân viên</strong></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Ngày bắt đầu hợp đồng trước ngày hiện tại:</td>
+                            <td><input id="startDateBefore"  name="config:startDateBefore" type="number" class="form-control input-md" required min="0" value="${submitted.startDateBefore}" ></td>
+                            <td> ngày </td>
+                        </tr>
+                        <tr>
+                            <td>Ngày bắt đầu hợp đồng sau ngày hiện tại:</td>
+                            <td><input id="startDateAfter"  name="config:startDateAfter" type="number" class="form-control input-md" required min="0" value="${submitted.startDateAfter}"></td>
+                            <td> ngày </td>
+                        </tr>
+                        <tr>
+                            <td>Ngày thanh toán hợp đồng trước ngày hiện tại:</td>
+                            <td><input  name="config:paidDaterBefore" type="number" class="form-control input-md" required min="0" value="${submitted.paidDaterBefore}"></td>
+                            <td> ngày </td>
+                        </tr>
+                        <tr>
+                            <td>Ngày thanh toán hợp đồng sau ngày hiện tại:</td>
+                            <td><input  name="config:paidDateAfter" type="number" class="form-control input-md" required min="0" value="${submitted.paidDateAfter}"></td>
+                            <td> ngày </td>
+                        </tr>
+                        <tr>
+                            <td>Ngày huỷ hợp đồng trước ngày hiện tại:</td>
+                            <td><input  name="config:cancelDateBefore" type="number" class="form-control input-md" required min="0" value="${submitted.cancelDateBefore}" ></td>
+                            <td> ngày </td>
+                        </tr>
+                        <tr>
+                            <td>Ngày huỷ hợp đồng sau ngày hiện tại:</td>
+                            <td><input  name="config:cancelDateAfter" type="number" class="form-control input-md" required min="0" value="${submitted.cancelDateAfter}" ></td>
+                            <td> ngày </td>
+                        </tr>
+                        <tr>
+                            <td><strong>Các loại chi phí</strong></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Phí làm thẻ mới:</td>
+                            <td><input id="newCardRequestFee"  name="config:newCardRequestFee" type="number" class="form-control input-md" required  value="${submitted.newCardRequestFee}"></td>
+                            <td>VNĐ</td>
+                        </tr>
+                        <tr>
+                            <td>Phí vận chuyển thẻ:</td>
+                            <td><input id="deliveryFee"  name="config:deliveryFee" type="number" class="form-control input-md" required  value="${submitted.deliveryFee}"></td>
+                            <td>VNĐ</td>
+                        </tr>
+                        </tbody>
+                    </table>
                     <div class="text-center">
                         <input type="hidden" name="action" value="editConfig">
                         <button type="submit" class="btn btn-success">

@@ -65,7 +65,7 @@ public class StaffController extends BasicController{
         }
         AdminBusiness adminBusiness = new AdminBusiness();
         String staffCode = adminBusiness.createStaff(createStaffDto).getStaffCode();
-        return new RedirectTo("/admin?action=staffDetail&code="+staffCode);
+        return new RedirectTo("/admin/staff?action=staffDetail&code="+staffCode);
     }
     public ResponseObject getDeleteStaff(R r){
         AdminBusiness adminBusiness = new AdminBusiness();
