@@ -22,6 +22,7 @@ public class AccidentDto {
     @NotNull(message = "Ngày gởi thông báo không được để trống")
     private Timestamp createdDate;
     @NotEmpty(message = "Nội dung thông báo không được để trống")
+    @NotNull(message = "Nội dung thông báo không được để trống")
     @Size(min = 1, max = 250, message = "Nội dung thông báo phải từ {min} đến {max} ký tự")
     private String title;
     @NotEmpty(message = "Đường dẫn tới văn bản đính kèm không được để trống")

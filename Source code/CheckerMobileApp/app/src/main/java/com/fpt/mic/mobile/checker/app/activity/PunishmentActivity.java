@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 import com.fpt.mic.mobile.checker.app.R;
 import com.fpt.mic.mobile.checker.app.business.ApiBusiness;
+import com.fpt.mic.mobile.checker.app.utils.DialogUtils;
 
 /**
  * FPT University - Capstone Project - Summer 2015 - Checker Mobile App
@@ -63,7 +64,20 @@ public class PunishmentActivity extends Activity {
                 }
                 ApiBusiness apiBusiness = new ApiBusiness();
 
-                apiBusiness.sendPunishment(contractCode, title, photo);
+                apiBusiness.sendPunishment(contractCode, title, photo, new ApiBusiness.IOnPunishmentResult() {
+                    @Override
+                    public void onPunishmentResult(final boolean result) {
+                        String message = result ? "Đã thêm thông tin vi phạm thành công" : "Không thể thêm thông tin vi phạm, vui lòng thử lại.";
+                        DialogUtils.showAlert(PunishmentActivity.this, message, new DialogUtils.IOnOkClicked() {
+                            @Override
+                            public void onClick() {
+                                if (result) {
+                                    finish();
+                                }
+                            }
+                        });
+                    }
+                });
 
             }
         });

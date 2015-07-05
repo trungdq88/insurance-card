@@ -458,9 +458,6 @@
                     <a href="#commonInfo" aria-controls="profile" role="tab" data-toggle="tab">Thông tin chung</a>
                 </li>
                 <li role="presentation">
-                    <a href="#paymentInfo" aria-controls="profile" role="tab" data-toggle="tab">Thông tin giao dịch</a>
-                </li>
-                <li role="presentation">
                     <a href="#compensations" aria-controls="profile" role="tab" data-toggle="tab">Lịch sử bồi
                         thường</a>
                 </li>
@@ -760,97 +757,7 @@
                     </table>
                 </div>
             </div>
-            <%-------------------------------------------PAYMENT--------------------------------------------------%>
-            <div role="tabpane1" class="tab-pane" id="paymentInfo">
-                <div class="panel panel-default">
-                    <div class="panel panel-heading">
-                        <div class="pull-left">
-                            <!--<input type="checkbox" class="check-all"/>-->
-                            <b>Có ${listPayment.size()} giao dịch</b>
-                        </div>
-                        <div class="clearfix"></div>
-                    </div>
-                    <div class="panel panel-body">
-                        <div class="table table-responsive">
-                            <table class="table table-bordered">
-                                <thead>
-                                <tr class="success">
-                                    <th class="text-center ">Mã giao dịch
-                                    </th>
-                                    <th class="text-center ">Thời gian
-                                    </th>
-                                    <th class="text-center ">Hình thức
-                                    </th>
-                                    <th class="text-center ">Dịch vụ
-                                    </th>
-                                    <th class="text-center ">Số tiền
-                                    </th>
-                                    <th class="text-center ">Người nhận
-                                    </th>
-                                    <th class="text-center ">Mã Paypal
-                                    </th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <c:set var="payments"
-                                       value="${listPayment}"/>
-                                <c:choose>
-                                    <c:when test="${payments.size() == 0}">
-                                        <tr>
-                                            <td colspan="5" style="vertical-align: middle; text-align: center;">
-                                                Không có giao dịch nào
-                                            </td>
-                                        </tr>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <c:forEach items="${listPayment}"
-                                                   var="payment"
-                                                   varStatus="counter">
-                                            <tr>
-                                                <td class="text-center">
-                                                        ${payment.id}
-                                                </td>
-                                                <td class="text-center">
-                                                    <fmt:formatDate value='${payment.paidDate}'
-                                                                    pattern='dd/MM/yyyy'/>
-                                                </td>
-                                                <td class="text-center">
-                                                        ${payment.paymentMethod}
-                                                </td>
-                                                <td class="text-center">
-                                                        ${payment.content}
-                                                </td>
-                                                <td class="text-center">
-                                                    <fmt:setLocale value='vi_VN'/>
-                                                    <fmt:formatNumber
-                                                            value='${payment.amount}'
-                                                            type='currency'
-                                                            maxFractionDigits='0'/>
-                                                </td>
-                                                <td class="text-center">
-                                                        ${payment.getMicStaffByReceiver().name}
-                                                </td>
-                                                <td class="text-center">
-                                                        ${payment.paypalTransId}
-                                                </td>
-                                            </tr>
-                                        </c:forEach>
-                                    </c:otherwise>
-                                </c:choose>
 
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="panel panel-footer">
-                            <nav class="text-right">
-                                <ul class="pagination">
-
-                                </ul>
-                            </nav>
-                        </div>
-                    </div>
-                </div>
-            </div>
             <%----------------------------------------------------------------------------------------------------%>
             <%------------------------------------------COMPENSATION----------------------------------------------%>
             <div role="tabpane1" class="tab-pane" id="compensations">
@@ -995,7 +902,7 @@
                                     </div>
                                     <div class="form-horizontal">
                                         <div class="form-group">
-                                            <label class="col-sm-3 control-label">Nội dung vi phạm</label>
+                                            <label class="col-sm-3 control-label">Nội dung vi phạm *</label>
 
                                             <div class="col-sm-5">
                                                 <textarea rows="8" cols="80" id="contentPunishment"
@@ -1007,7 +914,7 @@
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="col-sm-3 control-label">Đính kèm</label>
+                                            <label class="col-sm-3 control-label">Đính kèm *</label>
 
                                             <div class="col-sm-5" style="padding-top: 5px">
                                                 <input type="file" name="punishment:attachment" required
@@ -1063,11 +970,11 @@
                         <div class="table table-responsive">
                             <table class="table table-bordered">
                                 <thead>
-                                <tr>
-                                    <th class="text-center">#
+                                <tr class="success">
+                                    <th class="text-center">Mã vi phạm
                                     </th>
                                     <th class="text-center">
-                                        Ngày gởi thông tin
+                                        Ngày gởi đi
                                     </th>
                                     <th class=" text-center">
                                         Nội dung vi phạm
@@ -1094,7 +1001,7 @@
                                                    varStatus="counter">
                                             <tr>
                                                 <td class="text-center">
-                                                        ${(punishmentPaginator.getCurrentPage(param.page) - 1) * punishmentPaginator.itemPerPage + counter.count}
+                                                        ${punishment.id}
                                                 </td>
                                                 <td class="text-center">
                                                     <fmt:formatDate value='${punishment.createdDate}'
@@ -1148,19 +1055,24 @@
             <%------------------------------------------Accident------------------------------------------------%>
             <div role="tabpane1" class="tab-pane" id="accidents">
 
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="pull-right">
+                            <a href="${pageContext.request.contextPath}/customer/accident?action=create&code=${contract.contractCode}"
+                               class="btn btn-success">
+                                <i class="fa fa-plus"></i> Thông báo tai nạn mới
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <br/>
                 <div class="panel panel-default">
                     <div class="panel panel-heading">
                         <div class="pull-left">
                             <!--<input type="checkbox" class="check-all"/>-->
                             <b>Có ${listAccident.size()} tai nạn</b>
                         </div>
-                        <div class="pull-right">
-                            <i id="addAccident" class="fa fa-plus-square-o fa-lg" style="cursor: pointer"
-                               title="Thêm tai nạn">
-                            </i>
-                            <i id="saveAccident" class="fa fa-check-square fa-lg hide" style="cursor: pointer"
-                               title="Lưu thông tin"></i>
-                        </div>
+
                         <div class="clearfix"></div>
                     </div>
 
@@ -1201,7 +1113,7 @@
                                                 <td class="text-center">
                                                         ${accident.id}
                                                 </td>
-                                                <td class="text-center">
+                                                <td>
                                                         ${accident.title}
                                                 </td>
                                                 <td class="text-center">
@@ -1214,22 +1126,22 @@
                                             </tr>
 
                                         </c:forEach>
-                                        <tr id="addMore" class="hide">
-                                            <td class="text-center">
+                                        <%--<tr id="addMore" class="hide">--%>
+                                            <%--<td class="text-center">--%>
 
-                                            </td>
-                                            <td class="text-center">
-                                                <input type="text" class="form-control" id="accidentContent">
-                                            </td>
-                                            <td class="text-center">
-                                                <input type="text" class="text-center handleInput form-control"
-                                                       disabled="disabled"
-                                                       id="accidentDate">
-                                            </td>
-                                            <td class="text-center">
-                                                <input type="file" class="text-center" id="accidentAtt">
-                                            </td>
-                                        </tr>
+                                            <%--</td>--%>
+                                            <%--<td class="text-center">--%>
+                                                <%--<input type="text" class="form-control" id="accidentContent">--%>
+                                            <%--</td>--%>
+                                            <%--<td class="text-center">--%>
+                                                <%--<input type="text" class="text-center handleInput form-control"--%>
+                                                       <%--disabled="disabled"--%>
+                                                       <%--id="accidentDate">--%>
+                                            <%--</td>--%>
+                                            <%--<td class="text-center">--%>
+                                                <%--<input type="file" class="text-center" id="accidentAtt">--%>
+                                            <%--</td>--%>
+                                        <%--</tr>--%>
                                     </c:otherwise>
                                 </c:choose>
 

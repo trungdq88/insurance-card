@@ -17,48 +17,69 @@ import java.util.Map;
  * Created by TriPQM on 07/03/2015.
  */
 public class CardBusiness {
-    public CardEntity getCardByContract(String contractCode){
+
+    public List<CardEntity> getIssuedCard(int offset, int count) {
+        CardDao cardDao = new CardDao();
+        return cardDao.getIssuedCard(offset, count);
+    }
+
+    public Long getIssuedCardCount() {
+        CardDao cardDao = new CardDao();
+        return cardDao.getIssuedCardCount();
+    }
+
+    public CardEntity getCardDetail(String cardId) {
+        CardDao cardDao = new CardDao();
+        return cardDao.read(cardId);
+    }
+
+    public CardEntity getCardByContract(String contractCode) {
         CardDao cardDao = new CardDao();
         CardEntity cardEntity = cardDao.getCardByContract(contractCode);
         return cardEntity;
     }
-    public Map<Integer,String> getMappingWithNewCardRequest(){
-        Map<Integer,String> map = new HashMap<Integer, String>();
+
+    public Map<Integer, String> getMappingWithNewCardRequest() {
+        Map<Integer, String> map = new HashMap<Integer, String>();
         CardDao cardDao = new CardDao();
         List<CardEntity> list = cardDao.getAllCard();
         for (CardEntity cardEntity : list) {
-            map.put(cardEntity.getNewCardRequestId(),cardEntity.getCardId());
+            map.put(cardEntity.getNewCardRequestId(), cardEntity.getCardId());
         }
         return map;
     }
-    public Map<String,String> getMappingWithContract(){
-        Map<String,String> map = new HashMap<String, String>();
+
+    public Map<String, String> getMappingWithContract() {
+        Map<String, String> map = new HashMap<String, String>();
         CardDao cardDao = new CardDao();
         List<CardEntity> list = cardDao.getAllCard();
         for (CardEntity cardEntity : list) {
-            map.put(cardEntity.getCardId(),cardEntity.getContractCode());
+            map.put(cardEntity.getCardId(), cardEntity.getContractCode());
         }
         return map;
     }
-    public List getCardByContractIncludeDeactive(String contractCode){
+
+    public List getCardByContractIncludeDeactive(String contractCode) {
         CardDao cardDao = new CardDao();
         List list = cardDao.getCardByContractIncludeDeactive(contractCode);
         return list;
     }
-    public boolean isNewCardRequested(CardEntity cardEntity){
+
+    public boolean isNewCardRequested(CardEntity cardEntity) {
         NewCardRequestDao newCardRequestDao = new NewCardRequestDao();
-        if (cardEntity != null){
+        if (cardEntity != null) {
             NewCardRequestEntity newCardRequestEntity = newCardRequestDao.getUnsolvedRequestByCardId(cardEntity.getCardId());
-            if (newCardRequestEntity != null){
+            if (newCardRequestEntity != null) {
                 return true;
             }
         }
         return false;
     }
-    public boolean requestNewCardRequest(NewCardRequestDto newCardRequestDto){
+
+    public boolean requestNewCardRequest(NewCardRequestDto newCardRequestDto) {
         NewCardRequestDao newCardRequestDao = new NewCardRequestDao();
         CardDao cardDao = new CardDao();
-        NewCardRequestEntity newCardRequestEntity  = new NewCardRequestEntity();
+        NewCardRequestEntity newCardRequestEntity = new NewCardRequestEntity();
         CardEntity cardEntity = cardDao.getCardByContract(newCardRequestDto.getContractCode());
         newCardRequestEntity.setOldCardId(cardEntity.getCardId());
         newCardRequestEntity.setNote(newCardRequestDto.getNote());

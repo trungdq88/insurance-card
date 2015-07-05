@@ -75,7 +75,9 @@
                         android:textAppearance="?android:attr/textAppearanceMedium"
                         android:text="Đinh Quang Trung"
                         android:id="@+id/txtName"
-                        android:theme="@style/text_highlight"
+
+                        android:textColor="#ff3156ff"
+                        android:textStyle="bold"
                         android:maxLines="1"
                         android:ellipsize="end" />
 
@@ -190,7 +192,9 @@
                         android:textAppearance="?android:attr/textAppearanceMedium"
                         android:text="93H3 - 7987"
                         android:id="@+id/txtPlate"
-                        android:theme="@style/text_highlight"
+
+                        android:textColor="#ff3156ff"
+                        android:textStyle="bold"
                         android:maxLines="1"
                         android:ellipsize="end" />
 
@@ -247,7 +251,9 @@
                         android:textAppearance="?android:attr/textAppearanceMedium"
                         android:text="00 giờ ngày 08/10/2014"
                         android:id="@+id/textView27"
-                        android:theme="@style/text_highlight"
+
+                        android:textColor="#ff3156ff"
+                        android:textStyle="bold"
                         android:maxLines="1"
                         android:ellipsize="end" />
 
@@ -257,7 +263,9 @@
                         android:textAppearance="?android:attr/textAppearanceMedium"
                         android:text="00 giờ ngày 08/10/2014"
                         android:id="@+id/textView28"
-                        android:theme="@style/text_highlight"
+
+                        android:textColor="#ff3156ff"
+                        android:textStyle="bold"
                         android:maxLines="1"
                         android:ellipsize="end" />
                 </LinearLayout>
