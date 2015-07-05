@@ -97,9 +97,9 @@
                             <i class="fa fa-pencil"></i> Cập nhật thông báo tai nạn
                         </button>
                         <br/><br/>
-                        <a href="${pageContext.request.contextPath}/staff/contract?action=detail&id=${accident.contractCode}"
+                        <a href="${pageContext.request.contextPath}/staff/contract?action=detail&code=${accident.contractCode}"
                            type="button" class="btn btn-default">
-                            <i class="fa fa-arrow-left"></i> <strong>Xem chi tiết hợp đồng này</strong>
+                            <i class="fa fa-arrow-left"></i> <strong>Xem chi tiết hợp đồng hiện tại</strong>
                         </a>
                     </div>
                 </form>
