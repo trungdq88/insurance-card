@@ -472,13 +472,25 @@
                 </li>
                 <c:if test="${contract.status.equalsIgnoreCase('Ready') }">
                     <%--<form action="${pageContext.request.contextPath}/customer/card" method="get">--%>
-                    <div class="pull-right">
-                        <a href="${pageContext.request.contextPath}/customer/card?action=newCard&contractCode=${param.code}"
-                           class="btn btn-sm btn-primary">
-                            Yêu cầu thẻ mới
-                        </a>
+                    <c:if test="${isNewCardRequested == false}">
+                        <div class="pull-right">
+                            <a href="${pageContext.request.contextPath}/customer/card?action=newCard&contractCode=${param.code}"
+                               class="btn btn-sm btn-primary">
+                                Yêu cầu thẻ mới
+                            </a>
 
+                        </div>
+                    </c:if>
+                    <c:if test="${isNewCardRequested == true}">
+                    <div class="pull-right">
+                        <p class="text-value">
+                        <span class="label label-info"
+                              style="font-size: 16px">Đang yêu cầu thẻ mới</span>
+                        </p>
                     </div>
+                    </c:if>
+
+
                     <%--</form>--%>
                 </c:if>
             </ul>
