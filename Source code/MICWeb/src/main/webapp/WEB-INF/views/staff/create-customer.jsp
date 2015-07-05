@@ -33,9 +33,7 @@
                     <fieldset>
                         <!-- Customer full name input-->
                         <div class="form-group">
-                            <label class="col-sm-4 control-label" for="name">
-                                Tên khách hàng *
-                            </label>
+                            <label class="col-sm-4 control-label" for="name">Tên khách hàng *</label>
                             <div class="col-sm-4">
                                 <input id="name" name="customer:name" class="form-control input-md"
                                        type="text" required minlength="3" maxlength="80"
@@ -47,9 +45,7 @@
 
                         <!-- Address input-->
                         <div class="form-group">
-                            <label class="col-sm-4 control-label" for="txtAddress">
-                                Địa chỉ *
-                            </label>
+                            <label class="col-sm-4 control-label" for="txtAddress">Địa chỉ *</label>
                             <div class="col-sm-7">
                                 <input id="txtAddress" name="customer:address" class="form-control input-md"
                                        type="text" required minlength="3" maxlength="250"
@@ -61,9 +57,7 @@
 
                         <!-- Email address input-->
                         <div class="form-group">
-                            <label class="col-sm-4 control-label" for="email">
-                                Email *
-                            </label>
+                            <label class="col-sm-4 control-label" for="email">Email *</label>
                             <div class="col-sm-5">
                                 <input id="email" name="customer:email" class="form-control input-md"
                                        type="text" required minlength="3" maxlength="250"
@@ -75,12 +69,10 @@
 
                         <!-- Phone number input-->
                         <div class="form-group">
-                            <label class="col-sm-4 control-label" for="phone">
-                                Số điện thoại *
-                            </label>
+                            <label class="col-sm-4 control-label" for="phone">Số điện thoại *</label>
                             <div class="col-sm-3">
                                 <input id="phone" name="customer:phone" class="form-control input-md"
-                                       type="tel" minlength="8" maxlength="15"
+                                       type="tel" required minlength="8" maxlength="15"
                                        pattern="[0-9]+" title="Vui lòng chỉ nhập số"
                                        placeholder="Ví dụ: 0933270393"
                                        value="${submitted.phone}">
@@ -89,9 +81,7 @@
 
                         <!-- Personal ID input-->
                         <div class="form-group">
-                            <label class="col-sm-4 control-label" for="personalID">
-                                Số CMND / Hộ chiếu
-                            </label>
+                            <label class="col-sm-4 control-label" for="personalID">Số CMND / Hộ chiếu</label>
                             <div class="col-sm-3">
                                 <input id="personalID" name="customer:personalID"class="form-control input-md"
                                        type="text" minlength="8" maxlength="15"
