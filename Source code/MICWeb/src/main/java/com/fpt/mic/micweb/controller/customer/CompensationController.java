@@ -71,9 +71,8 @@ public class CompensationController extends AuthController {
         CompensationEntity result = compensationBusiness.createCompensation(dto);
 
         if (result != null) {
-            msg = "Yêu cầu bồi thường của bạn đã được gửi đi, vui lòng chờ giải quyết từ nhân viên công ty";
             r.equest.setAttribute("compensation", result);
-            return new RedirectTo("compensation?action=Detail&code=" + result.getCompensationCode() + "&result=" + msg);
+            return new RedirectTo("compensation?action=Detail&code=" + result.getCompensationCode() + "&result=true");
         } else {
             msg = "Tạo yêu cầu bồi thường thất bại, vui lòng thử lại hoặc gởi email tới địa chỉ  hydrangea8604@gmail.com";
             r.equest.setAttribute("result", msg);
