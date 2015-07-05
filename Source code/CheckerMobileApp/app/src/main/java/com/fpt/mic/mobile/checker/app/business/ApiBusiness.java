@@ -1,6 +1,7 @@
 package com.fpt.mic.mobile.checker.app.business;
 
 
+import android.graphics.Bitmap;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fpt.mic.mobile.checker.app.ApiRequest.ApiRequest;
 import com.fpt.mic.mobile.checker.app.entity.CardEntity;
@@ -56,6 +57,29 @@ public class ApiBusiness {
                 }
             }
         });
+    }
+
+    /**
+     * Send punishment information to server
+     * @param title
+     * @param photo
+     */
+    public void sendPunishment(String contractCode, String title, Bitmap photo) {
+//        ApiRequest apiRequest = new ApiRequest(Settings.getApiBase());
+//        apiRequest.setParam("action", "checkCard");
+//        apiRequest.setParam("cardID", cardID);
+//        apiRequest.get(new ApiRequest.IOnApiResponse() {
+//            @Override
+//            public void onResponse(String response) {
+//                try {
+//                    CardEntity card = mapper.readValue(response, CardEntity.class);
+//                    cb.onCheckCardResult(card);
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                    cb.onCheckCardResult(null);
+//                }
+//            }
+//        });
     }
 
     public interface IOnCheckContract {
