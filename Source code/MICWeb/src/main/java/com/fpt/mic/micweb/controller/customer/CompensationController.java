@@ -12,6 +12,7 @@ import com.fpt.mic.micweb.model.entity.CompensationEntity;
 import com.fpt.mic.micweb.utils.DateUtils;
 
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpSession;
 import java.util.Collections;
 import java.util.List;
 
@@ -31,12 +32,15 @@ public class CompensationController extends AuthController {
 
     public ResponseObject getDetail(R r) {
         String compensationCode = r.equest.getParameter("code");
+        String result = r.equest.getParameter("result");
+
 
         // Get compensation detail information
         CompensationBusiness compensationBusiness = new CompensationBusiness();
         CompensationEntity compensationEntity = compensationBusiness.getCompensationDetail(compensationCode);
-
+        r.equest.setAttribute("result", result);
         r.equest.setAttribute("compensation", compensationEntity);
+
         return new JspPage("customer/detail-compensation.jsp");
     }
 
@@ -67,8 +71,9 @@ public class CompensationController extends AuthController {
         CompensationEntity result = compensationBusiness.createCompensation(dto);
 
         if (result != null) {
+            msg = "Yêu cầu bồi thường của bạn đã được gửi đi, vui lòng chờ giải quyết từ nhân viên công ty";
             r.equest.setAttribute("compensation", result);
-            return new RedirectTo("compensation?action=Detail&code=" + result.getCompensationCode());
+            return new RedirectTo("compensation?action=Detail&code=" + result.getCompensationCode() + "&result=" + msg);
         } else {
             msg = "Tạo yêu cầu bồi thường thất bại, vui lòng thử lại hoặc gởi email tới địa chỉ  hydrangea8604@gmail.com";
             r.equest.setAttribute("result", msg);

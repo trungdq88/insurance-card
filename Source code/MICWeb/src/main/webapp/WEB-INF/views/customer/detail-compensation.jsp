@@ -28,9 +28,13 @@
         <div class="row">
             <div class="col-lg-12">
                 <form class="form-horizontal">
-                    <div class="text-center alert alert-success alert-dismissible">
-                        Yêu cầu bồi thường của bạn đã được gửi đi, vui lòng chờ giải quyết từ nhân viên công ty
-                    </div>
+                    <c:if test="${not empty result}">
+                        <div class="text-center alert alert-success alert-dismissible">
+                                ${result}
+                        </div>
+                    </c:if>
+
+
                     <fieldset>
                         <legend style="border-bottom: none">Thông tin hợp đồng</legend>
 
