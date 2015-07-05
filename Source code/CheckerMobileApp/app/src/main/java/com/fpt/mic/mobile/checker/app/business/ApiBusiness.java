@@ -1,6 +1,7 @@
 package com.fpt.mic.mobile.checker.app.business;
 
 
+import android.graphics.Bitmap;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fpt.mic.mobile.checker.app.ApiRequest.ApiRequest;
 import com.fpt.mic.mobile.checker.app.entity.CardEntity;
@@ -58,11 +59,40 @@ public class ApiBusiness {
         });
     }
 
+    /**
+     * Send punishment information to server
+     * @param title
+     * @param photo
+     */
+    public void sendPunishment(String contractCode, String title, Bitmap photo, final IOnPunishmentResult cb) {
+        ApiRequest apiRequest = new ApiRequest(Settings.getApiBase());
+        apiRequest.setParam("action", "updatePunishment");
+        apiRequest.setParam("contractCode", contractCode);
+        apiRequest.setParam("title", title);
+        apiRequest.setParam("photo", photo.toString());
+        apiRequest.get(new ApiRequest.IOnApiResponse() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    Boolean result = mapper.readValue(response, Boolean.class);
+                    cb.onPunishmentResult(result);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    cb.onPunishmentResult(false);
+                }
+            }
+        });
+    }
+
     public interface IOnCheckContract {
         void onCheckCardResult(CardEntity result);
     }
 
     public interface IOnConnectionResult {
         void onConnectionResult(boolean result);
+    }
+
+    public interface IOnPunishmentResult {
+        void onPunishmentResult(boolean result);
     }
 }

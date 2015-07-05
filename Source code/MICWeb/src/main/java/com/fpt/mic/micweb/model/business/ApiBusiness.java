@@ -2,11 +2,13 @@ package com.fpt.mic.micweb.model.business;
 
 import com.fpt.mic.micweb.model.dao.CardDao;
 import com.fpt.mic.micweb.model.dao.ContractDao;
+import com.fpt.mic.micweb.model.dao.PunishmentDao;
 import com.fpt.mic.micweb.model.dao.helper.NewCardRequestDao;
 import com.fpt.mic.micweb.model.dto.ContractSearchResultDto;
 import com.fpt.mic.micweb.model.entity.CardEntity;
 import com.fpt.mic.micweb.model.entity.ContractEntity;
 import com.fpt.mic.micweb.model.entity.NewCardRequestEntity;
+import com.fpt.mic.micweb.model.entity.PunishmentEntity;
 import com.fpt.mic.micweb.utils.Constants;
 
 import java.sql.Timestamp;
@@ -89,5 +91,32 @@ public class ApiBusiness {
         CardDao cardDao = new CardDao();
         return cardDao.checkCard(cardID);
 
+    }
+
+    /**
+     * Update punishment information for contract
+     * @param contractCode
+     * @param title
+     * @param photo
+     * @return
+     */
+    public boolean updatePunishment(String contractCode, String title, String photo) {
+        ContractDao contractDao = new ContractDao();
+        PunishmentDao punishmentDao = new PunishmentDao();
+
+        ContractEntity contract = contractDao.read(contractCode);
+        if (contract == null) {
+            return false;
+        }
+
+        PunishmentEntity entity = new PunishmentEntity();
+        entity.setContractCode(contractCode);
+        entity.setTitle(title);
+        entity.setAttachment(photo);
+        entity.setLastModified(new Timestamp(new Date().getTime()));
+        entity.setCreatedDate(new Timestamp(new Date().getTime()));
+        punishmentDao.create(entity);
+
+        return true;
     }
 }

@@ -81,4 +81,27 @@ public class ApiController extends BasicController {
         // Return json result
         return new JsonString(card);
     }
+
+    public ResponseObject getUpdatePunishment(R r) {
+        String contractCode = r.equest.getParameter("contractCode");
+        String title = r.equest.getParameter("title");
+        String photo = r.equest.getParameter("photo");
+
+
+        if (contractCode == null || contractCode.isEmpty()) {
+            return new JsonString(false);
+        }
+        if (title == null || title.isEmpty()) {
+            return new JsonString(false);
+        }
+        if (photo == null || photo.isEmpty()) {
+            return new JsonString(false);
+        }
+
+        // Call to business
+        Boolean result = apiBusiness.updatePunishment(contractCode, title, photo);
+
+        return new JsonString(result);
+
+    }
 }
