@@ -13,7 +13,7 @@ import java.util.List;
 public class AccidentBusiness {
     public List<AccidentEntity> getAccidentByContractCode(String contractCode) {
         AccidentDao accidentDao = new AccidentDao();
-        return accidentDao.getAccidentByContractCode(contractCode);
+        return accidentDao.getAllAccidentByContractCode(contractCode);
     }
 
     public AccidentEntity getAccidentDetail(Integer id) {

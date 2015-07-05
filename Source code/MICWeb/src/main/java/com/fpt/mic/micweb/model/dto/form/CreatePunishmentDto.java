@@ -34,7 +34,7 @@ public class CreatePunishmentDto {
     }
 
     public void setCreateDate(Timestamp createDate) {
-        this.createDate = createDate;
+        this.createDate =  DateUtils.currentDateWithoutTime();
     }
 
     public void setTitle(String title) {

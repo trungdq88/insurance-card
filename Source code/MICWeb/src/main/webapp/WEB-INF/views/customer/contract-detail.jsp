@@ -19,11 +19,12 @@
 <%@ include file="_shared/header.jsp" %>
 <style type="text/css">
     .handleInput {
-        border:none ;
+        border: none;
         background-color: white;
         width: 100%;
-        padding-top: 6px ;
+        padding-top: 6px;
     }
+
     .tooltip-inner {
         font-size: 13px;
         background-color: #3D6199;
@@ -861,18 +862,18 @@
                                 <input type="hidden" name="contractCode" value="${contract.contractCode}">
                                 <button href="${pageContext.request.contextPath}/customer/compensation?action=create"
                                         type="submit"
-                                        class="btn btn-primary">Yêu Cầu Bồi Thường
+                                        class="btn btn-success ">Yêu cầu bồi thường
                                 </button>
                             </form>
                           </span>
                     </div>
-
                 </div>
+                <br/>
                 <div class="panel panel-default">
                     <div class="panel panel-heading">
                         <div class="pull-left">
                             <!--<input type="checkbox" class="check-all"/>-->
-                            <b>Có ${compensationPaginator.itemSize} Vụ Bồi Thường</b>
+                            <b>Có ${compensationPaginator.itemSize} Vụ bồi thường</b>
                         </div>
                         <div class="pull-right ">
                             <input type="text" class="form-control long-text-box"
@@ -889,15 +890,15 @@
                                 <tr class="success">
                                     <th class="text-center ">#
                                     </th>
-                                    <th class="text-center ">Mã yêu Cầu
+                                    <th class="text-center ">Mã yêu cầu
                                     </th>
-                                    <th class="text-center ">Mã Hợp Đồng
+                                    <th class="text-center ">Mã hợp đồng
                                     </th>
-                                    <th class="text-center ">Tên Khách Hàng
+                                    <th class="text-center ">Tên khách hàng
                                     </th>
-                                    <th class="text-center ">Ngày Yêu Cầu
+                                    <th class="text-center ">Ngày yêu cầu
                                     </th>
-                                    <th class="text-center ">Ngày Giải Quyết
+                                    <th class="text-center ">Ngày giải quyết
                                     </th>
                                 </tr>
                                 </thead>
@@ -1036,13 +1037,13 @@
                     <div class="col-lg-12">
                         <div class="pull-right">
                             <button type="button" data-toggle="modal" data-target=".punishmentDialog"
-                                    class="btn btn-primary" title="Thêm vi phạm">
-                                Thêm vị phạm
+                                    class="btn btn-success" title="Thêm vi phạm">
+                                Thêm vi phạm
                             </button>
                         </div>
                     </div>
-
                 </div>
+                <br/>
                 <div class="panel panel-default">
 
                     <div class="panel panel-heading">
@@ -1066,13 +1067,13 @@
                                     <th class="text-center">#
                                     </th>
                                     <th class="text-center">
-                                        Ngày Vi Phạm
+                                        Ngày gởi thông tin
                                     </th>
                                     <th class=" text-center">
-                                        Nội Dung Vi Phạm
+                                        Nội dung vi phạm
                                     </th>
                                     <th class="text-center">
-                                        Biên Bản
+                                        Biên bản
                                     </th>
                                 </tr>
                                 </thead>
@@ -1099,7 +1100,7 @@
                                                     <fmt:formatDate value='${punishment.createdDate}'
                                                                     pattern='dd/MM/yyyy'/>
                                                 </td>
-                                                <td class="text-center">
+                                                <td>
                                                         ${punishment.title}
                                                 </td>
                                                 <td class="text-center">
@@ -1154,9 +1155,11 @@
                             <b>Có ${listAccident.size()} tai nạn</b>
                         </div>
                         <div class="pull-right">
-                            <i id="addAccident" class="fa fa-plus-square-o fa-lg" style="cursor: pointer" title="Thêm tai nạn">
+                            <i id="addAccident" class="fa fa-plus-square-o fa-lg" style="cursor: pointer"
+                               title="Thêm tai nạn">
                             </i>
-                            <i id="saveAccident" class="fa fa-check-square fa-lg hide" style="cursor: pointer" title="Lưu thông tin"></i>
+                            <i id="saveAccident" class="fa fa-check-square fa-lg hide" style="cursor: pointer"
+                               title="Lưu thông tin"></i>
                         </div>
                         <div class="clearfix"></div>
                     </div>

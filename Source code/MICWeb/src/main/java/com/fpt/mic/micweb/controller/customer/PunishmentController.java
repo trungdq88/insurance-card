@@ -36,7 +36,6 @@ public class PunishmentController extends AuthController {
         CustomerBusiness customerBusiness = new CustomerBusiness();
         PunishmentBusiness punishmentBusiness = new PunishmentBusiness();
         CreatePunishmentDto dto = (CreatePunishmentDto) r.ead.entity(CreatePunishmentDto.class, "punishment");
-        dto.setCreateDate(DateUtils.currentDateWithoutTime());
         List errors = r.ead.validate(dto);
 
         // If there is validation errors
