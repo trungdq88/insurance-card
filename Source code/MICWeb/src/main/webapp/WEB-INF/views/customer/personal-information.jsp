@@ -107,7 +107,7 @@
         <form action="${pageContext.request.contextPath}/customer" method="post">
             <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog"
                  aria-labelledby="myLargeModalLabel"
-                 aria-hidden="true">
+                 aria-hidden="true" style="width:800px; padding: 0">
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -127,14 +127,14 @@
                                 Xác nhận mật khẩu không khớp với mật khẩu mới
                             </div>
                             <div class="text-center fa-lg">
-                                Để đảm bảo tính bảo mật yêu cầu người dùng nhập giá để thay đổi mật khẩu
+                                Để đảm bảo tính bảo mật yêu cầu người dùng nhập mật khẩu mới để thay đổi mật khẩu cũ đã cấp
                             </div>
                             <br/>
                             <div class="form-horizontal">
                                 <div class="form-group">
                                     <label class="col-sm-4 control-label">Xác nhận mật khẩu hiện tại *</label>
 
-                                    <div class="col-sm-3">
+                                    <div class="col-sm-4">
                                         <input type="password" class="form-control"
                                                required
                                                title="Nhập mật khẩu hiện tại"
@@ -146,7 +146,7 @@
                                 <div class="form-group">
                                     <label class="col-sm-4 control-label">Mật khẩu mới *</label>
 
-                                    <div class="col-sm-3">
+                                    <div class="col-sm-4">
                                         <input type="password" class="form-control"
                                                required
                                                title="Nhập mật khẩu mới"
@@ -162,7 +162,7 @@
 
                                     </label>
 
-                                    <div class="col-sm-3">
+                                    <div class="col-sm-4">
                                         <input type="password" class="form-control"
                                                required
                                                title="Xác nhận lại mật khẩu"

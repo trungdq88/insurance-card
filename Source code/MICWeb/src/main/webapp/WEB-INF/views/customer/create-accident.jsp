@@ -36,7 +36,7 @@
                         <input type="hidden" name="accident:contractCode" value="${param.code}">
 
                         <!-- Created date -->
-                        <div class="form-group">
+                        <div class="form-group hide">
                             <label class="col-sm-4 control-label" for="createdDate">Ngày gởi thông báo *</label>
 
                             <div class="col-sm-3">
