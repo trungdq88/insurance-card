@@ -1,5 +1,6 @@
 package com.fpt.mic.mobile.checker.app.entity;
 
+import java.sql.Timestamp;
 import java.util.Collection;
 
 /**
@@ -16,5 +17,7 @@ public class CustomerEntity {
     public String password;
     public Collection<Object> micContractsByCustomerCode;
     public Collection<Object> micNewCardRequestsByCustomerCode;
+    public int isDefaultPassword;
+    public Timestamp lastModified;
 
 }

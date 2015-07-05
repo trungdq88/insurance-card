@@ -31,6 +31,8 @@ public class ContractEntity {
     public String staffCode;
     public int contractTypeId;
     public String customerCode;
+    public Timestamp lastModified;
+    public Timestamp createdDate;
     public Collection<Object> micAccidentsByContractCode;
     public Collection<Object> micCardsByContractCode;
     public Collection<Object> micCompensationsByContractCode;
