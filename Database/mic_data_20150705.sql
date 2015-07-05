@@ -163,6 +163,7 @@ CREATE TABLE IF NOT EXISTS `mic_data`.`mic_business_rules` (
   `id` INT(10) UNSIGNED NOT NULL,
   `start_date_before` INT(10) UNSIGNED NOT NULL,
   `start_date_after` INT(10) UNSIGNED NOT NULL,
+  `contract_min_term` INT(11) UNSIGNED NOT NULL,
   `contract_default_term` INT(10) UNSIGNED NOT NULL,
   `paid_date_before` INT(10) UNSIGNED NOT NULL,
   `paid_date_after` INT(10) UNSIGNED NOT NULL,
@@ -172,8 +173,8 @@ CREATE TABLE IF NOT EXISTS `mic_data`.`mic_business_rules` (
   `nearly_exceed_expired_one` INT(10) UNSIGNED NOT NULL,
   `nearly_exceed_expired_two` INT(10) UNSIGNED NOT NULL,
   `nearly_exceed_expired_three` INT(10) UNSIGNED NOT NULL,
-  `new_card_request_fee` FLOAT UNSIGNED NOT NULL,
-  `delivery_fee` FLOAT UNSIGNED NOT NULL,
+  `new_card_request_fee` INT(10) UNSIGNED NOT NULL,
+  `delivery_fee` INT(10) UNSIGNED NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
@@ -319,7 +320,7 @@ CREATE TABLE IF NOT EXISTS `mic_data`.`mic_notification` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
-AUTO_INCREMENT = 3
+AUTO_INCREMENT = 6
 DEFAULT CHARACTER SET = utf8;
 
 
