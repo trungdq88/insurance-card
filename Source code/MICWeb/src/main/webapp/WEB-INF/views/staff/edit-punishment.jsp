@@ -96,9 +96,9 @@
                             <i class="fa fa-pencil"></i> Cập nhật vi phạm luật ATGT
                         </button>
                         <br/><br/>
-                        <a href="${pageContext.request.contextPath}/staff/contract?action=detail&id=${punishment.contractCode}"
+                        <a href="${pageContext.request.contextPath}/staff/contract?action=detail&code=${punishment.contractCode}"
                            type="button" class="btn btn-default">
-                            <i class="fa fa-arrow-left"></i> <strong>Xem chi tiết hợp đồng này</strong>
+                            <i class="fa fa-arrow-left"></i> <strong>Xem chi tiết hợp đồng hiện tại</strong>
                         </a>
                     </div>
                 </form>
