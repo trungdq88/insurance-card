@@ -64,22 +64,24 @@ public class ApiBusiness {
      * @param title
      * @param photo
      */
-    public void sendPunishment(String contractCode, String title, Bitmap photo) {
-//        ApiRequest apiRequest = new ApiRequest(Settings.getApiBase());
-//        apiRequest.setParam("action", "checkCard");
-//        apiRequest.setParam("cardID", cardID);
-//        apiRequest.get(new ApiRequest.IOnApiResponse() {
-//            @Override
-//            public void onResponse(String response) {
-//                try {
-//                    CardEntity card = mapper.readValue(response, CardEntity.class);
-//                    cb.onCheckCardResult(card);
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                    cb.onCheckCardResult(null);
-//                }
-//            }
-//        });
+    public void sendPunishment(String contractCode, String title, Bitmap photo, final IOnPunishmentResult cb) {
+        ApiRequest apiRequest = new ApiRequest(Settings.getApiBase());
+        apiRequest.setParam("action", "updatePunishment");
+        apiRequest.setParam("contractCode", contractCode);
+        apiRequest.setParam("title", title);
+        apiRequest.setParam("photo", photo.toString());
+        apiRequest.get(new ApiRequest.IOnApiResponse() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    Boolean result = mapper.readValue(response, Boolean.class);
+                    cb.onPunishmentResult(result);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    cb.onPunishmentResult(false);
+                }
+            }
+        });
     }
 
     public interface IOnCheckContract {
@@ -88,5 +90,9 @@ public class ApiBusiness {
 
     public interface IOnConnectionResult {
         void onConnectionResult(boolean result);
+    }
+
+    public interface IOnPunishmentResult {
+        void onPunishmentResult(boolean result);
     }
 }

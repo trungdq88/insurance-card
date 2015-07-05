@@ -1,6 +1,7 @@
 package com.fpt.mic.mobile.checker.app.activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
@@ -8,6 +9,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 import com.fpt.mic.mobile.checker.app.R;
 import com.fpt.mic.mobile.checker.app.entity.CardEntity;
 import com.fpt.mic.mobile.checker.app.utils.Constants;
@@ -33,6 +35,8 @@ public class InfoActivity extends Activity {
     TextView txtContractStaff;
     TextView txtDatePublish;
     TextView txtHotline;
+    private CardEntity card;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,11 +75,23 @@ public class InfoActivity extends Activity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.add_punishment) {
+            if (card != null) {
+                Intent intent = new Intent(this, PunishmentActivity.class);
+                intent.putExtra("contractCode", card.contractCode);
+                startActivity(intent);
+            } else {
+                Toast.makeText(this, "Thẻ không hợp lệ!", Toast.LENGTH_SHORT).show();
+            }
+            return true;
+        }
+
         return super.onOptionsItemSelected(item);
-        //if (item.getItemId())
     }
 
     public void showInfo(CardEntity card) {
+
+        this.card = card;
 
         if (card == null) {
             showInvalidCard();
