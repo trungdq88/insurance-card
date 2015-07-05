@@ -39,7 +39,7 @@
                                     <th>Thời gian</th>
                                     <th>Ghi chú</th>
                                     <th>Mã thẻ cũ</th>
-                                    <th>Chủ thẻ</th>
+                                    <th>Hợp đồng</th>
                                     <th>Ngày cấp mới</th>
                                     <th>Thẻ mới cấp</th>
                                 </tr>
@@ -69,8 +69,8 @@
                                                     </a>
                                                 </td>
                                                 <td>
-                                                    <a href="${pageContext.request.contextPath}/staff/customer?action=detail&code=${newRequest.micCustomerByCustomerCode.customerCode}">
-                                                            ${newRequest.micCustomerByCustomerCode.name}
+                                                    <a href="${pageContext.request.contextPath}/staff/contract?action=detail&code=${newRequest.micCardByOldCardId.contractCode}">
+                                                            ${newRequest.micCardByOldCardId.contractCode}
                                                     </a>
 
                                                 </td>

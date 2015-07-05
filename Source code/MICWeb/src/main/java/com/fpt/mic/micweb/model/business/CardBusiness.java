@@ -60,7 +60,6 @@ public class CardBusiness {
         CardDao cardDao = new CardDao();
         NewCardRequestEntity newCardRequestEntity  = new NewCardRequestEntity();
         CardEntity cardEntity = cardDao.getCardByContract(newCardRequestDto.getContractCode());
-        newCardRequestEntity.setCustomerCode(newCardRequestDto.getCustomerCode());
         newCardRequestEntity.setOldCardId(cardEntity.getCardId());
         newCardRequestEntity.setNote(newCardRequestDto.getNote());
         newCardRequestEntity.setRequestDate(new Timestamp(new Date().getTime()));

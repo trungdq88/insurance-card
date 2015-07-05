@@ -28,9 +28,10 @@ public class NewCardRequestDao extends GenericDaoJpaImpl<NewCardRequestEntity, I
     public List getOnePageNewCardRequest(String customerCode, int offset, int count) {
         EntityManager entityManager = factory.createEntityManager();
         Query query = entityManager.createQuery(
-                        "SELECT co " +
+                "SELECT co " +
                         "FROM NewCardRequestEntity co " +
-                        "WHERE co.customerCode = :customerCode"
+                        "WHERE co.micCardByOldCardId.micContractByContractCode" +
+                        ".micCustomerByCustomerCode.customerCode = :customerCode ORDER BY co.resolveDate ASC"
         );
         query.setParameter("customerCode", customerCode);
         query.setFirstResult(offset);
@@ -39,6 +40,7 @@ public class NewCardRequestDao extends GenericDaoJpaImpl<NewCardRequestEntity, I
         entityManager.close();
         return resultList;
     }
+
     public Long getAllNewCardRequestCount() {
         EntityManager entity = factory.createEntityManager();
         String hql = "SELECT COUNT(co) FROM NewCardRequestEntity co ORDER BY co.id DESC";
@@ -47,25 +49,30 @@ public class NewCardRequestDao extends GenericDaoJpaImpl<NewCardRequestEntity, I
         entity.close();
         return result;
     }
+
     public Long getAllNewCardRequestCount(String customerCode) {
         EntityManager entityManager = factory.createEntityManager();
         Query query = entityManager.createQuery(
-                "SELECT COUNT(co) " +
+                "SELECT COUNT (co) " +
                         "FROM NewCardRequestEntity co " +
-                        "WHERE co.customerCode = :customerCode " +
-                        "ORDER BY co.resolveDate ASC "
+                        "WHERE co.micCardByOldCardId.micContractByContractCode" +
+                        ".micCustomerByCustomerCode.customerCode = :customerCode ORDER BY co.resolveDate ASC"
         );
         query.setParameter("customerCode", customerCode);
         Long result = (Long) query.getSingleResult();
         entityManager.close();
         return result;
     }
+
     public Long getUnresolvedNewCardRequestCount(String customerCode) {
         EntityManager entity = factory.createEntityManager();
-        String hql = "SELECT COUNT(co) FROM NewCardRequestEntity co " +
-                "WHERE co.resolveDate = NULL AND co.customerCode = :customerCode ORDER BY co.id DESC";
+        String hql = "SELECT COUNT (co) " +
+                "FROM NewCardRequestEntity co " +
+                "WHERE co.micCardByOldCardId.micContractByContractCode" +
+                ".micCustomerByCustomerCode.customerCode = :customerCode AND co.resolveDate = NULL ORDER BY co.resolveDate ASC";
+
         Query query = entity.createQuery(hql);
-        query.setParameter("customerCode",customerCode);
+        query.setParameter("customerCode", customerCode);
         Long result = (Long) query.getSingleResult();
         entity.close();
         return result;
