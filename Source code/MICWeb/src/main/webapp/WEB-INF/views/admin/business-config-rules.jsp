@@ -35,7 +35,7 @@
                     </div>
                 </c:if>
                 <form action="${pageContext.request.contextPath}/admin/config"
-                      method="post" class="form-horizontal" novalidate>
+                      method="post" class="form-horizontal">
                     <table class="table table-striped table-bordered table-condensed">
                         <tbody>
                         <tr>
@@ -45,7 +45,7 @@
                         </tr>
                         <tr>
                             <td>Thời hạn thanh toán hợp đồng mới:</td>
-                            <td><input  name="config:paymentDueDate" type="number" class="form-control input-md" required min="0" value="${submitted.paymentDueDate}"></td>
+                            <td><input  name="config:paymentDueDate" type="number" class="form-control input-md" required value="${submitted.paymentDueDate}"></td>
                             <td> ngày</td>
                         </tr>
                         <tr>
@@ -136,6 +136,7 @@
 
 
             </div>
+        </div>
         </div>
         <!-- /#wrapper -->
 
