@@ -59,7 +59,10 @@ public class CustomerBusiness {
         ContractDao contractDao = new ContractDao();
         return contractDao.getContractByCustomerCodeCount(customerCode);
     }
-
+    public List<PaymentEntity> getAllPaymentByCustomerCode(String customerCode){
+        PaymentDao paymentDao = new PaymentDao();
+        return paymentDao.getAllPaymentByCustomerCode(customerCode);
+    }
     // get contract detail
     public ContractEntity getContractDetail(String code) {
         ContractDao contractDao = new ContractDao();

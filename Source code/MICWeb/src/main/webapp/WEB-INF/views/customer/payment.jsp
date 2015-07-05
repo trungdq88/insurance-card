@@ -1,9 +1,16 @@
 ﻿<%@ include file="_shared/header.jsp" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page import="java.util.Date" %>
+<%@ page import="java.text.DateFormat" %>
+<%@ page import="java.sql.Timestamp" %>
+<%@ page import="java.util.Calendar" %>
+<%@ page import="com.fpt.mic.micweb.utils.DateUtils" %>
+<%@ page import="javax.rmi.CORBA.Util" %>
 
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <div id="wrapper">
 
     <%@ include file="_shared/navigation.jsp" %>
-
 
     <div id="page-wrapper">
         <div class="row">
@@ -12,167 +19,92 @@
                 </h2>
             </div>
         </div>
-
         <div class="panel panel-default">
             <div class="panel panel-heading">
                 <div class="pull-left">
                     <!--<input type="checkbox" class="check-all"/>-->
-                    <b>Có 200 Giao Dịch</b>
-                </div>
-                <div class="pull-right ">
-                    <input type="text" class="form-control long-text-box"
-                           placeholder="Tìm kiếm theo tên, mã hợp đồng"/>
-                    <input type="button" class="btn btn-default" value="Tìm kiếm"/>
-
+                    <b>Có ${listPayment.size()} giao dịch</b>
                 </div>
                 <div class="clearfix"></div>
             </div>
-            <div class="panel-body">
-                <div class="table-responsive">
+            <div class="panel panel-body">
+                <div class="table table-responsive">
                     <table class="table table-bordered">
                         <thead>
                         <tr class="success">
-                            <th class="text-center">Thời Gian
+                            <th class="text-center ">Mã giao dịch
                             </th>
-                            <th class="text-center">Mã Giao Dịch
+                            <th class="text-center ">Thời gian
                             </th>
-                            <th class="text-center">Hình Thức Thanh Toán
+                            <th class="text-center ">Hình thức
                             </th>
-                            <th class="text-center">Dịch Vụ Thanh Toán
+                            <th class="text-center ">Dịch vụ
                             </th>
-                            <th class="text-center">Số Tiền
+                            <th class="text-center ">Số tiền
                             </th>
-                            <th class="text-center">Người Nhận
+                            <th class="text-center ">Người nhận
                             </th>
-                            <th class="text-center">Mã Giao Dịch Của PayPal
+                            <th class="text-center ">Mã Paypal
                             </th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr class="active">
-                            <td class="text-center">10/5/2015</td>
-                            <td class="text-center">TTTHUD679</td>
-                            <td class="text-center">PayPal</td>
-                            <td class="text-center">Đổi Thẻ</td>
-                            <td class="text-center">50000 VND</td>
-                            <td class="text-center">Nguyễn Hữu Phúc</td>
-                            <td class="text-center">TTTY89</td>
-
-                        </tr>
-                        <tr class="">
-                            <td class="text-center">10/5/2015</td>
-                            <td class="text-center">TTTHUD679</td>
-                            <td class="text-center">PayPal</td>
-                            <td class="text-center">Đổi Thẻ</td>
-                            <td class="text-center">50000 VND</td>
-                            <td class="text-center">Nguyễn Hữu Phúc</td>
-                            <td class="text-center">TTTY89</td>
-
-                        </tr>
-                        <tr class="active">
-                            <td class="text-center">10/5/2015</td>
-                            <td class="text-center">TTTHUD679</td>
-                            <td class="text-center">PayPal</td>
-                            <td class="text-center">Đổi Thẻ</td>
-                            <td class="text-center">50000 VND</td>
-                            <td class="text-center">Nguyễn Hữu Phúc</td>
-                            <td class="text-center">TTTY89</td>
-
-                        </tr>
-                        <tr class="">
-                            <td class="text-center">10/5/2015</td>
-                            <td class="text-center">TTTHUD679</td>
-                            <td class="text-center">PayPal</td>
-                            <td class="text-center">Đổi Thẻ</td>
-                            <td class="text-center">50000 VND</td>
-                            <td class="text-center">Nguyễn Hữu Phúc</td>
-                            <td class="text-center">TTTY89</td>
-
-                        </tr>
-                        <tr class="active">
-                            <td class="text-center">10/5/2015</td>
-                            <td class="text-center">TTTHUD679</td>
-                            <td class="text-center">PayPal</td>
-                            <td class="text-center">Đổi Thẻ</td>
-                            <td class="text-center">50000 VND</td>
-                            <td class="text-center">Nguyễn Hữu Phúc</td>
-                            <td class="text-center">TTTY89</td>
-
-                        </tr>
-                        <tr class="">
-                            <td class="text-center">10/5/2015</td>
-                            <td class="text-center">TTTHUD679</td>
-                            <td class="text-center">PayPal</td>
-                            <td class="text-center">Đổi Thẻ</td>
-                            <td class="text-center">50000 VND</td>
-                            <td class="text-center">Nguyễn Hữu Phúc</td>
-                            <td class="text-center">TTTY89</td>
-
-                        </tr>
-                        <tr class="active">
-                            <td class="text-center">10/5/2015</td>
-                            <td class="text-center">TTTHUD679</td>
-                            <td class="text-center">PayPal</td>
-                            <td class="text-center">Đổi Thẻ</td>
-                            <td class="text-center">50000 VND</td>
-                            <td class="text-center">Nguyễn Hữu Phúc</td>
-                            <td class="text-center">TTTY89</td>
-
-                        </tr>
-                        <tr class="">
-                            <td class="text-center">10/5/2015</td>
-                            <td class="text-center">TTTHUD679</td>
-                            <td class="text-center">PayPal</td>
-                            <td class="text-center">Đổi Thẻ</td>
-                            <td class="text-center">50000 VND</td>
-                            <td class="text-center">Nguyễn Hữu Phúc</td>
-                            <td class="text-center">TTTY89</td>
-
-                        </tr>
-                        <tr class="active">
-                            <td class="text-center">10/5/2015</td>
-                            <td class="text-center">TTTHUD679</td>
-                            <td class="text-center">PayPal</td>
-                            <td class="text-center">Đổi Thẻ</td>
-                            <td class="text-center">50000 VND</td>
-                            <td class="text-center">Nguyễn Hữu Phúc</td>
-                            <td class="text-center">TTTY89</td>
-                        </tr>
-                        <tr class="">
-                            <td class="text-center">10/5/2015</td>
-                            <td class="text-center">TTTHUD679</td>
-                            <td class="text-center">PayPal</td>
-                            <td class="text-center">Đổi Thẻ</td>
-                            <td class="text-center">50000 VND</td>
-                            <td class="text-center">Nguyễn Hữu Phúc</td>
-                            <td class="text-center">TTTY89</td>
-
-                        </tr>
+                        <c:set var="payments"
+                               value="${listPayment}"/>
+                        <c:choose>
+                            <c:when test="${payments.size() == 0}">
+                                <tr>
+                                    <td colspan="5" style="vertical-align: middle; text-align: center;">
+                                        Không có giao dịch nào
+                                    </td>
+                                </tr>
+                            </c:when>
+                            <c:otherwise>
+                                <c:forEach items="${listPayment}"
+                                           var="payment"
+                                           varStatus="counter">
+                                    <tr>
+                                        <td class="text-center">
+                                                ${payment.id}
+                                        </td>
+                                        <td>
+                                            <fmt:formatDate value='${payment.paidDate}'
+                                                            pattern='dd/MM/yyyy'/>
+                                        </td>
+                                        <td >
+                                                ${payment.paymentMethod}
+                                        </td>
+                                        <td >
+                                                ${payment.content}
+                                        </td>
+                                        <td >
+                                            <fmt:setLocale value='vi_VN'/>
+                                            <fmt:formatNumber
+                                                    value='${payment.amount}'
+                                                    type='currency'
+                                                    maxFractionDigits='0'/>
+                                        </td>
+                                        <td >
+                                                ${payment.getMicStaffByReceiver().name}
+                                        </td>
+                                        <td >
+                                                ${payment.paypalTransId}
+                                        </td>
+                                    </tr>
+                                </c:forEach>
+                            </c:otherwise>
+                        </c:choose>
 
                         </tbody>
                     </table>
                 </div>
+                <div class="panel panel-footer">
+                    <nav class="text-right">
+                        <ul class="pagination">
 
-                <nav class="text-right">
-                    <ul class="pagination">
-                        <li>
-                            <a href="#" aria-label="Previous">
-                                <span aria-hidden="true">&laquo;</span>
-                            </a>
-                        </li>
-                        <li class="active"><a href="#">1</a></li>
-                        <li><a href="#">2</a></li>
-                        <li><a href="#">3</a></li>
-                        <li><a href="#">4</a></li>
-                        <li><a href="#">5</a></li>
-                        <li>
-                            <a href="#" aria-label="Next">
-                                <span aria-hidden="true">&raquo;</span>
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
-
+                        </ul>
+                    </nav>
+                </div>
             </div>
         </div>
 
