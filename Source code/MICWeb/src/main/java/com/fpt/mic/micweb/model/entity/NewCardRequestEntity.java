@@ -16,10 +16,8 @@ public class NewCardRequestEntity {
     private Timestamp resolveDate;
     private String note;
     private String oldCardId;
-    private String customerCode;
     private Collection<CardEntity> micCardsById;
     private CardEntity micCardByOldCardId;
-    private CustomerEntity micCustomerByCustomerCode;
 
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
@@ -72,16 +70,6 @@ public class NewCardRequestEntity {
         this.oldCardId = oldCardId;
     }
 
-    @Basic
-    @Column(name = "customer_code")
-    public String getCustomerCode() {
-        return customerCode;
-    }
-
-    public void setCustomerCode(String customerCode) {
-        this.customerCode = customerCode;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -94,7 +82,6 @@ public class NewCardRequestEntity {
         if (resolveDate != null ? !resolveDate.equals(that.resolveDate) : that.resolveDate != null) return false;
         if (note != null ? !note.equals(that.note) : that.note != null) return false;
         if (oldCardId != null ? !oldCardId.equals(that.oldCardId) : that.oldCardId != null) return false;
-        if (customerCode != null ? !customerCode.equals(that.customerCode) : that.customerCode != null) return false;
 
         return true;
     }
@@ -106,7 +93,6 @@ public class NewCardRequestEntity {
         result = 31 * result + (resolveDate != null ? resolveDate.hashCode() : 0);
         result = 31 * result + (note != null ? note.hashCode() : 0);
         result = 31 * result + (oldCardId != null ? oldCardId.hashCode() : 0);
-        result = 31 * result + (customerCode != null ? customerCode.hashCode() : 0);
         return result;
     }
 
@@ -129,13 +115,4 @@ public class NewCardRequestEntity {
         this.micCardByOldCardId = micCardByOldCardId;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "customer_code", referencedColumnName = "customer_code", nullable = false, insertable = false, updatable = false)
-    public CustomerEntity getMicCustomerByCustomerCode() {
-        return micCustomerByCustomerCode;
-    }
-
-    public void setMicCustomerByCustomerCode(CustomerEntity micCustomerByCustomerCode) {
-        this.micCustomerByCustomerCode = micCustomerByCustomerCode;
-    }
 }
