@@ -788,11 +788,12 @@
                     </div>
                 </div>
                 <br/>
+
                 <div class="panel panel-default">
                     <div class="panel panel-heading">
                         <div class="pull-left">
                             <!--<input type="checkbox" class="check-all"/>-->
-                            <b>Có ${compensationPaginator.itemSize} Vụ bồi thường</b>
+                            <b>Có ${compensationPaginator.itemSize} vụ bồi thường</b>
                         </div>
                         <div class="pull-right ">
                             <input type="text" class="form-control long-text-box"
@@ -812,8 +813,6 @@
                                     <th class="text-center ">Mã yêu cầu
                                     </th>
                                     <th class="text-center ">Mã hợp đồng
-                                    </th>
-                                    <th class="text-center ">Tên khách hàng
                                     </th>
                                     <th class="text-center ">Ngày yêu cầu
                                     </th>
@@ -844,19 +843,25 @@
                                                         href="${pageContext.request.contextPath}/customer/compensation?action=Detail&code=${compensation.compensationCode}">
                                                         ${compensation.compensationCode}</a>
                                                 </td>
-                                                <td class="text-center">
-                                                        ${compensation.contractCode}
+                                                <td class="text-center"><a
+                                                        href="${pageContext.request.contextPath}/customer/contract?action=Detail&code=${compensation.contractCode}">
+                                                        ${compensation.contractCode}</a>
                                                 </td>
-                                                <td class="text-center">
-                                                        ${compensation.driverName}
-                                                </td>
+
                                                 <td class="text-center">
                                                     <fmt:formatDate value='${compensation.createdDate}'
                                                                     pattern='dd/MM/yyyy'/>
                                                 </td>
                                                 <td class="text-center">
-                                                    <fmt:formatDate value='${compensation.resolveDate}'
-                                                                    pattern='dd/MM/yyyy'/>
+                                                    <c:choose>
+                                                        <c:when test="${empty compensation.resolveDate}">
+                                                            <span class="label label-warning">Đang giải quyết</span>
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            <fmt:formatDate value='${compensation.resolveDate}'
+                                                                            pattern='dd/MM/yyyy'/>
+                                                        </c:otherwise>
+                                                    </c:choose>
                                                 </td>
                                             </tr>
                                         </c:forEach>
@@ -963,6 +968,7 @@
                     </div>
                 </div>
                 <br/>
+
                 <div class="panel panel-default">
 
                     <div class="panel panel-heading">
@@ -1078,6 +1084,7 @@
                     </div>
                 </div>
                 <br/>
+
                 <div class="panel panel-default">
                     <div class="panel panel-heading">
                         <div class="pull-left">
@@ -1139,20 +1146,20 @@
 
                                         </c:forEach>
                                         <%--<tr id="addMore" class="hide">--%>
-                                            <%--<td class="text-center">--%>
+                                        <%--<td class="text-center">--%>
 
-                                            <%--</td>--%>
-                                            <%--<td class="text-center">--%>
-                                                <%--<input type="text" class="form-control" id="accidentContent">--%>
-                                            <%--</td>--%>
-                                            <%--<td class="text-center">--%>
-                                                <%--<input type="text" class="text-center handleInput form-control"--%>
-                                                       <%--disabled="disabled"--%>
-                                                       <%--id="accidentDate">--%>
-                                            <%--</td>--%>
-                                            <%--<td class="text-center">--%>
-                                                <%--<input type="file" class="text-center" id="accidentAtt">--%>
-                                            <%--</td>--%>
+                                        <%--</td>--%>
+                                        <%--<td class="text-center">--%>
+                                        <%--<input type="text" class="form-control" id="accidentContent">--%>
+                                        <%--</td>--%>
+                                        <%--<td class="text-center">--%>
+                                        <%--<input type="text" class="text-center handleInput form-control"--%>
+                                        <%--disabled="disabled"--%>
+                                        <%--id="accidentDate">--%>
+                                        <%--</td>--%>
+                                        <%--<td class="text-center">--%>
+                                        <%--<input type="file" class="text-center" id="accidentAtt">--%>
+                                        <%--</td>--%>
                                         <%--</tr>--%>
                                     </c:otherwise>
                                 </c:choose>
