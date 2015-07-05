@@ -6,7 +6,7 @@
         <legend>
             Lịch sử vi phạm luật ATGT
             <div class="pull-right" style="margin-top: -10px;">
-                <a href="${pageContext.request.contextPath}/staff/punishment?action=create"
+                <a href="${pageContext.request.contextPath}/staff/punishment?action=create&code=${contract.contractCode}"
                    class="btn btn-success">
                     <i class="fa fa-plus"></i> Thêm vi phạm luật ATGT
                 </a>
@@ -20,7 +20,7 @@
                 <th>Mã</th>
                 <th>Thời gian</th>
                 <th>Nội dung</th>
-                <th>Biên bản</th>
+                <th>Đính kèm</th>
                 <th>Chỉnh sửa</th>
             </tr>
             </thead>
@@ -28,11 +28,13 @@
             <c:forEach var="punishment" items="${listPunishment}">
                 <tr>
                     <td>${punishment.id}</td>
-                    <td><%--<fmt:formatDate value="${punishment.createdDate}" pattern="dd/MM/yyyy"/>--%></td>
+                    <td>
+                        <fmt:formatDate value="${punishment.createdDate}" pattern="dd/MM/yyyy"/>
+                    </td>
                     <td>${punishment.title}</td>
                     <td>${punishment.attachment}</td>
                     <td>
-                        <a href="${pageContext.request.contextPath}/staff/accident?action=edit&id=${punishment.id}"
+                        <a href="${pageContext.request.contextPath}/staff/punishment?action=edit&id=${punishment.id}"
                            type="button" class="btn btn-xs btn-primary">
                             <i class="fa fa-pencil"></i> Chỉnh sửa
                         </a>
