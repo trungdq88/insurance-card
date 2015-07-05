@@ -1,22 +1,39 @@
 package com.fpt.mic.micweb.model.dao;
 
 import com.fpt.mic.micweb.model.dao.common.GenericDaoJpaImpl;
-import com.fpt.mic.micweb.model.dao.helper.NewCardRequestDao;
-import com.fpt.mic.micweb.model.dto.form.NewCardRequestDto;
 import com.fpt.mic.micweb.model.entity.CardEntity;
-import com.fpt.mic.micweb.model.entity.NewCardRequestEntity;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
-import java.sql.Timestamp;
-import java.util.Date;
 import java.util.List;
 
 /**
  * Created by dinhquangtrung on 6/2/15.
  */
 public class CardDao extends GenericDaoJpaImpl<CardEntity, String> {
+
+    public List<CardEntity> getIssuedCard(int offset, int count) {
+        EntityManager entityManager = factory.createEntityManager();
+        String hql = "SELECT ca FROM CardEntity AS ca " +
+                "ORDER BY ca.deactivatedDate, ca.activatedDate DESC";
+        Query query = entityManager.createQuery(hql);
+        query.setFirstResult(offset);
+        query.setMaxResults(count);
+        List<CardEntity> resultList = query.getResultList();
+        entityManager.close();
+        return resultList;
+    }
+
+    public Long getIssuedCardCount() {
+        EntityManager entityManager = factory.createEntityManager();
+        String hql = "SELECT COUNT(ca) FROM CardEntity AS ca " +
+                "ORDER BY ca.deactivatedDate, ca.activatedDate DESC";
+        Query query = entityManager.createQuery(hql);
+        Long singleResult = (Long) query.getSingleResult();
+        entityManager.close();
+        return singleResult;
+    }
 
     public List<CardEntity> getAllCard() {
         EntityManager entity = factory.createEntityManager();
@@ -37,6 +54,7 @@ public class CardDao extends GenericDaoJpaImpl<CardEntity, String> {
             return null;
         }
     }
+
     public List<CardEntity> getCardByContractIncludeDeactive(String contractCode) {
         EntityManager entity = factory.createEntityManager();
         String hql = "SELECT ca FROM CardEntity ca WHERE ca.contractCode = :contractCode ";
@@ -49,11 +67,10 @@ public class CardDao extends GenericDaoJpaImpl<CardEntity, String> {
         }
     }
 
-
-
     /**
      * Check card status
      * If card is deactivated, returns null
+     *
      * @param cardID
      * @return
      */
