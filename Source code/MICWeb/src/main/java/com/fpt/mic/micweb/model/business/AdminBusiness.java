@@ -3,6 +3,7 @@ package com.fpt.mic.micweb.model.business;
 import com.fpt.mic.micweb.model.dao.StaffDao;
 import com.fpt.mic.micweb.model.dto.form.CreateStaffDto;
 import com.fpt.mic.micweb.model.entity.StaffEntity;
+import com.fpt.mic.micweb.utils.StringUtils;
 
 /**
  * Created by TriPQM on 07/03/2015.
@@ -11,10 +12,10 @@ public class AdminBusiness {
     public StaffEntity createStaff(CreateStaffDto createStaffDto) {
         StaffDao staffDao = new StaffDao();
         StaffEntity staffEntity = new StaffEntity();
-        staffEntity.setStaffCode(createStaffDto.getStaffCode());
+        staffEntity.setStaffCode(staffDao.getIncrementId());
         staffEntity.setName(createStaffDto.getName());
         staffEntity.setEmail(createStaffDto.getEmail());
-        staffEntity.setPassword(createStaffDto.getPassword());
+        staffEntity.setPassword(StringUtils.getMD5Hash(createStaffDto.getPassword()));
         staffEntity.setPhone(createStaffDto.getPhone());
         return staffDao.create(staffEntity);
     }

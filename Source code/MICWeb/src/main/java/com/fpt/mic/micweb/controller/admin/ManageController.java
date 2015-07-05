@@ -63,9 +63,8 @@ public class ManageController extends BasicController{
             return postViewCreateStaff(r);
         }
         AdminBusiness adminBusiness = new AdminBusiness();
-        adminBusiness.createStaff(createStaffDto);
-        r.equest.setAttribute("message","Đã thêm nhân viên "+createStaffDto.getStaffCode());
-        return getView(r);
+        String staffCode = adminBusiness.createStaff(createStaffDto).getStaffCode();
+        return new RedirectTo("/admin?action=staffDetail&code="+staffCode);
     }
     public ResponseObject getDeleteStaff(R r){
         AdminBusiness adminBusiness = new AdminBusiness();

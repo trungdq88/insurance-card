@@ -36,14 +36,26 @@
               method="post" class="form-horizontal">
           <fieldset>
             <!-- Text input-->
+            <%--<div class="form-group">--%>
+              <%--<label class="col-sm-4 control-label" for="name">Tên đăng nhập *</label>--%>
+
+              <%--<div class="col-sm-6">--%>
+                <%--<input id="code" name="staff:staffCode" type="text" class="form-control input-md"--%>
+                       <%--type="text" required minlength="4" maxlength="10"--%>
+                       <%--pattern="[0-9a-zA-Z]+"--%>
+                       <%--value="${submitted.staffCode}" title="Vui lòng nhập mã nhân viên">--%>
+              <%--</div>--%>
+            <%--</div>--%>
+            <!-- Text input-->
             <div class="form-group">
-              <label class="col-sm-4 control-label" for="name">Tên đăng nhập *</label>
+              <label class="col-sm-4 control-label" for="email">Email *</label>
 
               <div class="col-sm-6">
-                <input id="code" name="staff:staffCode" type="text" class="form-control input-md"
-                       type="text" required minlength="4" maxlength="10"
-                       pattern="[0-9a-zA-Z]+"
-                       value="${submitted.staffCode}" title="Vui lòng nhập mã nhân viên">
+                <input id="email" name="staff:email" type="text" class="form-control input-md"
+                       type="text" required minlength="3" maxlength="250"
+                       pattern="^([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3})$"
+                       value="${submitted.email}" title="Vui lòng nhập một email đúng"
+                        >
               </div>
             </div>
             <!-- Text input-->
@@ -51,9 +63,19 @@
               <label class="col-sm-4 control-label" for="password">Mật khẩu*</label>
 
               <div class="col-sm-6">
-                <input id="password" name="staff:password" type="text" class="form-control input-md"
-                       type="text" required minlength="6" maxlength="80"
+                <input id="password" name="staff:password" class="form-control input-md"
+                       type="password" required minlength="6" maxlength="80"
                        value="${submitted.password}" title="Vui lòng nhập mật khẩu cho nhân viên">
+
+              </div>
+              <div class="text-value">
+                <input type="checkbox" id="showPass" value="false" onclick="{
+                        if ( $('#password').attr('type') == 'password'){
+                          $('#password').attr('type','text');
+                        } else {
+                          $('#password').attr('type','password');
+                        }
+                }">Hiện mật khẩu
               </div>
             </div>
             <!-- Text input-->
@@ -74,19 +96,6 @@
                        pattern="^([^0-9`~!@#$%^&*,.<>;':/|{}()=_+-]+)$"
                        value="${submitted.name}" title="Vui lòng nhập họ tên"
                        >
-              </div>
-            </div>
-
-            <!-- Text input-->
-            <div class="form-group">
-              <label class="col-sm-4 control-label" for="email">Email *</label>
-
-              <div class="col-sm-6">
-                <input id="email" name="staff:email" type="text" class="form-control input-md"
-                       type="text" required minlength="3" maxlength="250"
-                       pattern="^([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3})$"
-                       value="${submitted.email}" title="Vui lòng nhập một email đúng"
-                        >
               </div>
             </div>
 
