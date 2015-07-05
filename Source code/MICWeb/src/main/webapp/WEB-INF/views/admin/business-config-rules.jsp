@@ -82,7 +82,7 @@
 
                     </div>
                     <div class="col-sm-2">
-                        <p class="text-value"> ngày</p>
+                        <p class="text-value"> tháng</p>
                     </div>
                     <label class="col-sm-7 control-label">Thời hạn tối thiểu của hợp đồng:</label>
 
@@ -267,6 +267,7 @@
                     <%--</tr>--%>
                     <%--</tbody>--%>
                     <%--</table>--%>
+                    <br>
                     <div class="text-center">
                         <input type="hidden" name="action" value="editConfig">
                         <button type="submit" class="btn btn-success">
