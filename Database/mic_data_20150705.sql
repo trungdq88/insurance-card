@@ -160,20 +160,21 @@ COMMENT = 'Accident information';
 -- Table `mic_data`.`mic_business_rules`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mic_data`.`mic_business_rules` (
+  `id` INT(10) UNSIGNED NOT NULL,
   `start_date_before` INT(10) UNSIGNED NOT NULL,
-  `start_date_after` INT(10) UNSIGNED NULL DEFAULT NULL,
-  `contract_default_term` INT(10) UNSIGNED NULL DEFAULT NULL,
-  `paid_date_before` INT(10) UNSIGNED NULL DEFAULT NULL,
-  `paid_date_after` INT(10) UNSIGNED NULL DEFAULT NULL,
-  `cancel_date_before` INT(10) UNSIGNED NULL DEFAULT NULL,
-  `cancel_date_after` INT(10) UNSIGNED NULL DEFAULT NULL,
-  `payment_due_date` INT(10) UNSIGNED NULL DEFAULT NULL,
-  `nearly_exceed_expired_one` INT(10) UNSIGNED NULL DEFAULT NULL,
-  `nearly_exceed_expired_two` INT(10) UNSIGNED NULL DEFAULT NULL,
-  `nearly_exceed_expired_three` INT(10) UNSIGNED NULL DEFAULT NULL,
-  `new_card_request_fee` FLOAT UNSIGNED NULL DEFAULT NULL,
-  `delivery_fee` FLOAT UNSIGNED NULL DEFAULT NULL,
-  PRIMARY KEY (`start_date_before`))
+  `start_date_after` INT(10) UNSIGNED NOT NULL,
+  `contract_default_term` INT(10) UNSIGNED NOT NULL,
+  `paid_date_before` INT(10) UNSIGNED NOT NULL,
+  `paid_date_after` INT(10) UNSIGNED NOT NULL,
+  `cancel_date_before` INT(10) UNSIGNED NOT NULL,
+  `cancel_date_after` INT(10) UNSIGNED NOT NULL,
+  `payment_due_date` INT(10) UNSIGNED NOT NULL,
+  `nearly_exceed_expired_one` INT(10) UNSIGNED NOT NULL,
+  `nearly_exceed_expired_two` INT(10) UNSIGNED NOT NULL,
+  `nearly_exceed_expired_three` INT(10) UNSIGNED NOT NULL,
+  `new_card_request_fee` FLOAT UNSIGNED NOT NULL,
+  `delivery_fee` FLOAT UNSIGNED NOT NULL,
+  PRIMARY KEY (`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
