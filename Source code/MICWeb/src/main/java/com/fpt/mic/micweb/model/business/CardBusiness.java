@@ -1,9 +1,11 @@
 package com.fpt.mic.micweb.model.business;
 
+import com.fpt.mic.micweb.model.dao.CardAccessLogDao;
 import com.fpt.mic.micweb.model.dao.CardDao;
 import com.fpt.mic.micweb.model.dao.helper.NewCardRequestDao;
 import com.fpt.mic.micweb.model.dto.NotificationBuilder;
 import com.fpt.mic.micweb.model.dto.form.NewCardRequestDto;
+import com.fpt.mic.micweb.model.entity.CardAccessLogEntity;
 import com.fpt.mic.micweb.model.entity.CardEntity;
 import com.fpt.mic.micweb.model.entity.NewCardRequestEntity;
 
@@ -95,5 +97,15 @@ public class CardBusiness {
             return true;
         }
         return false;
+    }
+
+    public List<CardAccessLogEntity> getCardAccessLog(String cardId, int offset, int count) {
+        CardAccessLogDao cardAccessLogDao = new CardAccessLogDao();
+        return cardAccessLogDao.getCardAccessLog(cardId, offset, count);
+    }
+
+    public Long getCardAccessLogCount(String cardId) {
+        CardAccessLogDao cardAccessLogDao = new CardAccessLogDao();
+        return cardAccessLogDao.getCardAccessLogCount(cardId);
     }
 }
