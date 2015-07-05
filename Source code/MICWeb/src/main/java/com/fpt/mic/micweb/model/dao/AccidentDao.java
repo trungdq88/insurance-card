@@ -15,7 +15,7 @@ public class AccidentDao extends GenericDaoJpaImpl<AccidentEntity, Integer> {
         EntityManager entityManager = factory.createEntityManager();
         String hql = "SELECT a FROM AccidentEntity AS a " +
                 "WHERE a.contractCode = :code " +
-                "ORDER BY a.createdDate DESC";
+                "ORDER BY a.id DESC";
         Query query = entityManager.createQuery(hql);
         query.setParameter("code", contractCode);
         List<AccidentEntity> resultList = query.getResultList();
