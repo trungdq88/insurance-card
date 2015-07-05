@@ -8,6 +8,7 @@ import com.fpt.mic.micweb.framework.responses.ResponseObject;
 import com.fpt.mic.micweb.model.business.CardBusiness;
 import com.fpt.mic.micweb.model.business.StaffBusiness;
 import com.fpt.mic.micweb.model.dto.UserDto;
+import com.fpt.mic.micweb.model.entity.CardEntity;
 
 import javax.servlet.annotation.WebServlet;
 import java.util.Collections;
@@ -22,6 +23,8 @@ import java.util.Map;
 public class CardController extends AuthController {
     Paginator requestPaginator = new Paginator();
     Paginator cardPaginator = new Paginator();
+    /* Card acess log pagination */
+    Paginator calPaginator = new Paginator();
 
     @Override
     public List<String> getAllowedRoles() {
@@ -48,6 +51,27 @@ public class CardController extends AuthController {
     }
 
     public ResponseObject getDetail(R r) {
+        final String cardId = r.equest.getParameter("cardId");
+
+        // Call to business
+        final CardBusiness cardBusiness = new CardBusiness();
+        CardEntity cardEntity = cardBusiness.getCardDetail(cardId);
+
+        calPaginator.setGetItemsCallback(new Paginator.IGetItems() {
+            @Override
+            public List getItems(int offset, int count) {
+                return cardBusiness.getCardAccessLog(cardId, offset, count);
+            }
+        });
+        calPaginator.setGetItemSizeCallback(new Paginator.IGetItemSize() {
+            @Override
+            public Long getItemSize() {
+                return cardBusiness.getCardAccessLogCount(cardId);
+            }
+        });
+
+        r.equest.setAttribute("calPaginator", calPaginator);
+        r.equest.setAttribute("CARD", cardEntity);
         return new JspPage("staff/card-detail.jsp");
     }
 
