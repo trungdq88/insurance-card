@@ -91,11 +91,6 @@
                         <i class="fa fa-gavel fa-fw"></i> Bồi thường
                     </a>
                 </li>
-                <li>
-                    <a href="${pageContext.request.contextPath}/staff/member">
-                        <i class="fa fa-key fa-fw"></i> Người quản lý
-                    </a>
-                </li>
             </ul>
         </div>
         <!-- /.sidebar-collapse -->
