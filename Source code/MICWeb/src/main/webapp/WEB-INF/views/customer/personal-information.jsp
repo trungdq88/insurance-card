@@ -20,7 +20,7 @@
                             <button type="submit" class="btn btn-primary" id="btn_Modify">Chỉnh Sửa Thông Tin</button>
                             <button type="submit" class="btn btn-primary hide" id="btn_Save">Lưu Thay Đổi</button>
                             <button type="button" class="btn btn-primary" data-toggle="modal" id="changePass"
-                                    data-target=".bs-example-modal-lg">
+                                    data-target="#change-password-model">
                                 Đổi Mật Khẩu
                             </button>
                         </span>
@@ -105,10 +105,10 @@
         </form>
 
         <form action="${pageContext.request.contextPath}/customer" method="post">
-            <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog"
+            <div id="change-password-model" class="modal fade bs-example-modal-md" tabindex="-1" role="dialog"
                  aria-labelledby="myLargeModalLabel"
                  aria-hidden="true">
-                <div class="modal-dialog modal-lg">
+                <div class="modal-dialog modal-md">
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
@@ -120,21 +120,23 @@
                         <div class="modal-body">
                             <div class="text-center alert alert-danger alert-dismissible hide" id="notify1"
                                  role="alert">
-                                Không được trùng với mật khẩu hiện tại
+                                Mật khẩu mới không được trùng với mật khẩu hiện tại
                             </div>
                             <div class="text-center alert alert-danger alert-dismissible hide" id="notify2"
                                  role="alert">
                                 Xác nhận mật khẩu không khớp với mật khẩu mới
                             </div>
-                            <div class="text-center fa-lg">
-                                Để đảm bảo tính bảo mật yêu cầu người dùng nhập giá để thay đổi mật khẩu
-                            </div>
+                            <c:if test="${customer.isDefaultPassword == 0}">
+                                <div class="text-center" style="color: red">
+                                    Mật khẩu của bạn chưa được đổi, vui lòng đổi mật khẩu để bảo mật tài khoản của bạn.
+                                </div>
+                            </c:if>
                             <br/>
                             <div class="form-horizontal">
                                 <div class="form-group">
-                                    <label class="col-sm-4 control-label">Xác nhận mật khẩu hiện tại *</label>
+                                    <label class="col-sm-5 control-label">Xác nhận mật khẩu hiện tại *</label>
 
-                                    <div class="col-sm-3">
+                                    <div class="col-sm-5">
                                         <input type="password" class="form-control"
                                                required
                                                title="Nhập mật khẩu hiện tại"
@@ -144,9 +146,9 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-4 control-label">Mật khẩu mới *</label>
+                                    <label class="col-sm-5 control-label">Mật khẩu mới *</label>
 
-                                    <div class="col-sm-3">
+                                    <div class="col-sm-5">
                                         <input type="password" class="form-control"
                                                required
                                                title="Nhập mật khẩu mới"
@@ -158,11 +160,11 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-4 control-label">Xác nhận mật khẩu mới *
+                                    <label class="col-sm-5 control-label">Xác nhận mật khẩu mới *
 
                                     </label>
 
-                                    <div class="col-sm-3">
+                                    <div class="col-sm-5">
                                         <input type="password" class="form-control"
                                                required
                                                title="Xác nhận lại mật khẩu"
