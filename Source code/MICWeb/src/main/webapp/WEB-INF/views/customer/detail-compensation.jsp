@@ -30,7 +30,7 @@
                 <form class="form-horizontal">
                     <c:if test="${not empty result}">
                         <div class="text-center alert alert-success alert-dismissible">
-                                ${result}
+                            Yêu cầu bồi thường của bạn đã được gửi đi, vui lòng chờ giải quyết từ nhân viên công ty
                         </div>
                     </c:if>
 
