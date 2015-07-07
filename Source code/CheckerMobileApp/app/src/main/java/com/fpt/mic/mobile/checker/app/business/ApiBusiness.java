@@ -64,12 +64,12 @@ public class ApiBusiness {
      * @param title
      * @param photo
      */
-    public void sendPunishment(String contractCode, String title, Bitmap photo, final IOnPunishmentResult cb) {
+    public void sendPunishment(String contractCode, String title, String photo, final IOnPunishmentResult cb) {
         ApiRequest apiRequest = new ApiRequest(Settings.getApiBase());
         apiRequest.setParam("action", "updatePunishment");
         apiRequest.setParam("contractCode", contractCode);
         apiRequest.setParam("title", title);
-        apiRequest.setParam("photo", photo.toString());
+        apiRequest.setParam("photo", photo);
         apiRequest.get(new ApiRequest.IOnApiResponse() {
             @Override
             public void onResponse(String response) {

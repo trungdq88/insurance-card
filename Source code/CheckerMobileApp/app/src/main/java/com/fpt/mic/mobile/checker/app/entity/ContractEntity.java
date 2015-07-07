@@ -33,6 +33,7 @@ public class ContractEntity {
     public String customerCode;
     public Timestamp lastModified;
     public Timestamp createdDate;
+    public Integer needRenewPayment;
     public Collection<Object> micAccidentsByContractCode;
     public Collection<Object> micCardsByContractCode;
     public Collection<Object> micCompensationsByContractCode;
