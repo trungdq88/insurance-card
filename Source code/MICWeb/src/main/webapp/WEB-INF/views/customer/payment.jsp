@@ -184,8 +184,8 @@
                                 <div class="form-group">
                                     <label class="col-md-3 control-label ">Hình thức</label>
 
-                                    <div class="col-md-2" >
-                                        <input  disabled="disabled"
+                                    <div class="col-md-2">
+                                        <input disabled="disabled"
                                                class="handleInput" id="payment-method-value"/>
                                     </div>
 
@@ -235,7 +235,8 @@
 
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-danger" data-dismiss="modal">Đóng</button>
+                            <button type="button" id="closeModal" class="btn btn-danger" data-dismiss="modal">Đóng
+                            </button>
                         </div>
                     </div>
                     <!-- /.modal-content -->
@@ -255,7 +256,8 @@
 <script>
     $(document).ready(function () {
 
-        $('.detail').click(function () {
+        $('.detail').mouseover(function () {
+            $(this).trigger("click");
             var index1 = $(this).attr('payment-id-value');
             var index2 = $(this).attr('contract-code-value');
             var index3 = $(this).attr('amount-value');
@@ -304,9 +306,7 @@
                 $('#expDateCtrl').addClass('hide');
             }
 
-
-        })
-
+        });
 
     });
 </script>
