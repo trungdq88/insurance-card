@@ -272,7 +272,13 @@
 
                             <div class="col-sm-6">
                                 <input id="attachment" name="compensation:attachment" class="form-control input-md"
-                                       type="file" maxlength="255">
+                                       type="hidden" maxlength="255">
+
+                                <img id="imgAttachment" height="100px" src=""/>
+                                <script type="text/javascript" src="//api.filepicker.io/v2/filepicker.js"></script>
+
+                                <input type="filepicker" data-fp-apikey="AEbPPQfPfRHqODjEl5AZ2z"
+                                       onchange="$('#imgAttachment').attr('src', event.fpfile.url);$('#attachment').val(event.fpfile.url);">
                             </div>
                         </div>
                     </fieldset>
