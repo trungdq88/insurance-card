@@ -1,6 +1,123 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
+<!-- model for add new payment -->
+<div class="modal fade" id="add-payment-modal">
+    <div class="modal-dialog">
+        <form action="${pageContext.request.contextPath}/staff/contract" method="post" class="form-horizontal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Thêm thông tin thanh toán</h4>
+                </div>
+                <div class="modal-body">
+                    <jsp:include page="contract-detail-general.jsp" flush="true"/>
+                    <%--/Contract information--%>
+                    <br/>
+                    <fieldset>
+                        <legend>Thông tin thanh toán</legend>
+                        <!-- Paid date -->
+                        <div class=" form-group">
+                            <label class="col-sm-4 control-label" for="addPaidDate">Ngày nộp phí *</label>
+
+                            <div class="col-sm-4">
+                                <input id="addPaidDate" name="createPayment:paidDate" class="form-control input-md"
+                                       type="date" required>
+                            </div>
+                        </div>
+
+                        <!-- Content -->
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label" for="addContent">Dịch vụ *</label>
+
+                            <div class="col-sm-7">
+                                <input id="addContent" name="createPayment:content" class="form-control input-md"
+                                       type="text" required maxlength="250" pattern="^\w.+$"
+                                       title="Vui lòng nhập dịch vụ cần thanh toán"
+                                       placeholder="Ví dụ: Đăng ký hợp đồng mới KH0001">
+                            </div>
+                        </div>
+
+                        <!-- Amount -->
+                        <div class=" form-group">
+                            <label class="col-sm-4 control-label" for="addAmount">Số tiền *</label>
+
+                            <div class="col-sm-5">
+                                <div class="input-group">
+                                    <input id="addAmount" name="createPayment:amount" class="form-control input-md"
+                                           type="number" required min="0" max="1000000000"
+                                           title="Vui lòng nhập số tiền" placeholder="Ví dụ: 80000">
+
+                                    <div class="input-group-addon">VNĐ</div>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <%--/Payment information--%>
+                </div>
+                <div class="modal-footer">
+                    <input type="hidden" name="createPayment:contractCode" value="${contract.contractCode}"/>
+                    <input type="hidden" name="action" value="createPayment"/>
+                    <button type="submit" class="btn btn-success">
+                        <i class="fa fa-arrow-right"></i> Thêm thông tin thanh toán
+                    </button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Đóng</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </form>
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+<!-- model for complete payment -->
+<div class="modal fade" id="complete-payment-modal">
+    <div class="modal-dialog">
+        <form action="${pageContext.request.contextPath}/staff/contract" method="post" class="form-horizontal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Hoàn tất thông tin thanh toán</h4>
+                </div>
+                <div class="modal-body">
+                    <jsp:include page="contract-detail-general.jsp" flush="true"/>
+                    <%--/Contract information--%>
+                    <br/>
+                    <fieldset>
+                        <legend>Thông tin thanh toán</legend>
+
+                        <!-- Paid date -->
+                        <div class=" form-group">
+                            <label class="col-sm-5 control-label" for="paidDate">Ngày nộp phí *</label>
+
+                            <div class="col-sm-4">
+                                <input id="paymentDate" name="completePayment:paidDate" class="form-control input-md"
+                                       type="date" required>
+                                <input type="hidden" name="completePayment:amount" value="${contract.contractFee}"/>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <%--/Payment information--%>
+                </div>
+                <div class="modal-footer">
+                    <input type="hidden" name="completePayment:contractCode" value="${contract.contractCode}"/>
+                    <input type="hidden" name="action" value="completePayment"/>
+                    <button type="submit" class="btn btn-success">
+                        <i class="fa fa-arrow-right"></i> Hoàn tất thanh toán
+                    </button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Đóng</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </form>
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
 <!-- model for detail payment -->
 <div class="modal fade" id="detail-payment-modal">
     <div class="modal-dialog">
@@ -109,107 +226,6 @@
 </div>
 <!-- /.modal -->
 
-<!-- model for complete payment -->
-<div class="modal fade" id="complete-payment-modal">
-    <div class="modal-dialog">
-        <form action="${pageContext.request.contextPath}/staff/contract" method="post" class="form-horizontal">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                            aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Hoàn tất thông tin thanh toán</h4>
-                </div>
-                <div class="modal-body">
-                    <fieldset>
-                        <legend>Thông tin hợp đồng bảo hiểm</legend>
-
-                        <!-- Contract code -->
-                        <input type="hidden" name="payment:contractCode" value="${contract.contractCode}"/>
-
-                        <!-- Contract type -->
-                        <div class="form-group">
-                            <label class="col-sm-5 control-label">Loại hợp đồng</label>
-
-                            <div class="col-sm-6">
-                                <div class="text-value">
-                                    ${contract.micContractTypeByContractTypeId.name}
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Start date -->
-                        <div class="form-group">
-                            <label class="col-sm-5 control-label">Thời điểm có hiệu lực</label>
-
-                            <div class="col-sm-4">
-                                <div class="text-value">
-                                    <fmt:formatDate value="${contract.startDate}" pattern="dd/MM/yyyy"/>
-                                    lúc
-                                    <fmt:formatDate value="${contract.startDate}" type="time"/>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Expired date -->
-                        <div class="form-group">
-                            <label class="col-sm-5 control-label">Thời điểm hết hiệu lực</label>
-
-                            <div class="col-sm-4">
-                                <div class="text-value">
-                                    <fmt:formatDate value="${contract.expiredDate}" pattern="dd/MM/yyyy"/>
-                                    lúc
-                                    <fmt:formatDate value="${contract.expiredDate}" type="time"/>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Contract fee -->
-                        <div class="form-group">
-                            <label class="col-sm-5 control-label">Phí bảo hiểm</label>
-
-                            <div class="col-sm-4">
-                                <div class="text-value">
-                                    <fmt:setLocale value="vi_VN"/>
-                                    <fmt:formatNumber value="${contract.contractFee}" type="currency"
-                                                      maxFractionDigits="0"/>
-                                </div>
-                            </div>
-                        </div>
-                    </fieldset>
-                    <%--/Contract information--%>
-                    <br/>
-
-                    <fieldset>
-                        <legend>Thông tin thanh toán</legend>
-
-                        <!-- Paid date -->
-                        <div class=" form-group">
-                            <label class="col-sm-5 control-label" for="paidDate">Ngày nộp phí *</label>
-
-                            <div class="col-sm-4">
-                                <input id="paymentDate" name="payment:paidDate" class="form-control input-md"
-                                       type="date" required>
-                                <input type="hidden" name="payment:amount" value="${contract.contractFee}"/>
-                            </div>
-                        </div>
-                    </fieldset>
-                    <%--/Payment information--%>
-                </div>
-                <div class="modal-footer">
-                    <input type="hidden" name="action" value="completePayment"/>
-                    <button type="submit" class="btn btn-success">
-                        <i class="fa fa-arrow-right"></i> Hoàn tất thanh toán
-                    </button>
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Đóng</button>
-                </div>
-            </div>
-            <!-- /.modal-content -->
-        </form>
-    </div>
-    <!-- /.modal-dialog -->
-</div>
-<!-- /.modal -->
-
 <!-- model for renew contract -->
 <div class="modal fade" id="renew-contract-modal">
     <div class="modal-dialog">
@@ -221,47 +237,7 @@
                     <h4 class="modal-title">Gia hạn hợp đồng</h4>
                 </div>
                 <div class="modal-body">
-
-                    <!-- Contract code -->
-                    <input type="hidden" name="renew:contractCode" value="${contract.contractCode}"/>
-
-                    <!-- Contract type -->
-                    <div class="form-group">
-                        <label class="col-sm-5 control-label">Loại hợp đồng</label>
-
-                        <div class="col-sm-7">
-                            <div class="text-value">
-                                ${contract.micContractTypeByContractTypeId.name}
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Start date -->
-                    <div class="form-group">
-                        <label class="col-sm-5 control-label">Bắt đầu có hiệu lực từ</label>
-
-                        <div class="col-sm-4">
-                            <div class="text-value">
-                                <fmt:formatDate value="${contract.startDate}" pattern="dd/MM/yyyy"/>
-                                lúc
-                                <fmt:formatDate value="${contract.startDate}" type="time"/>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Expired date -->
-                    <div class="form-group">
-                        <label class="col-sm-5 control-label">Thời điểm hết hiệu lực</label>
-
-                        <div class="col-sm-4">
-                            <div class="text-value">
-                                <fmt:formatDate value="${contract.expiredDate}" pattern="dd/MM/yyyy"/>
-                                lúc
-                                <fmt:formatDate value="${contract.expiredDate}" type="time"/>
-                            </div>
-                        </div>
-                    </div>
-
+                    <jsp:include page="contract-detail-general.jsp" flush="true"/>
                     <!-- New expired date -->
                     <div class="form-group">
                         <label class="col-sm-5 control-label" for="expiredDate">Gia hạn đến *</label>
@@ -271,7 +247,6 @@
                                    type="date" required>
                         </div>
                     </div>
-
                     <!-- Renew fee -->
                     <div class="form-group">
                         <label class="col-sm-5 control-label">Phí gia hạn</label>
@@ -284,7 +259,6 @@
                             </div>
                         </div>
                     </div>
-
                     <!-- New card -->
                     <div class="form-group">
                         <label class="col-sm-5 control-label">Cấp thẻ mới</label>
@@ -325,7 +299,6 @@
                         </div>
                     </div>
 
-
                     <!-- Paid date -->
                     <div class=" form-group">
                         <label class="col-sm-5 control-label" for="paidDate">Ngày nộp phí *</label>
@@ -337,6 +310,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
+                    <input type="hidden" name="renew:contractCode" value="${contract.contractCode}"/>
                     <input type="hidden" name="action" value="renew"/>
                     <button type="submit" class="btn btn-primary">
                         <i class="fa fa-arrow-right"></i> Gia hạn hợp đồng

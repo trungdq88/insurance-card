@@ -161,8 +161,28 @@
                         </div>
                     </c:if>
                     <%--/Show cancel contract information --%>
-
                     <jsp:include page="contract-detail-general.jsp" flush="true"/>
+                    <!-- Remaining days -->
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Thời gian đến ngày hết hạn</label>
+
+                        <div class="col-sm-2">
+                            <div class="text-value">
+                                <span id="remain" style="color:deepskyblue; font-weight: bolder; font-size: large"></span> ngày
+                            </div>
+                        </div>
+
+                        <label class="col-sm-2 control-label">Phí bảo hiểm</label>
+
+                        <div class="col-sm-2">
+                            <div class="text-value">
+                                <span style="color:hotpink; font-weight: bolder; font-size: large">
+                                    <fmt:setLocale value="vi_VN"/>
+                                    <fmt:formatNumber value="${contract.contractFee}" type="currency" maxFractionDigits="0"/>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
                 </form>
                 <%--/General information--%>
                 <br/>
@@ -196,7 +216,6 @@
                 <div class="tab-content">
                     <div role="tabpanel" class="tab-pane active" id="contractInfo">
                         <br/>
-
                         <form class="form-horizontal">
                             <jsp:include page="contract-detail-customer.jsp" flush="true"/>
                             <%--/Customer information--%>
@@ -209,6 +228,13 @@
                             <fieldset>
                                 <legend>
                                     Thông tin thanh toán
+
+                                    <div class="pull-right" style="margin-top: -10px">
+                                        <button id="btnPayment" type="button" class="btn btn-success hide"
+                                                data-toggle="modal" data-target="#add-payment-modal">
+                                            <i class="fa fa-plus"></i> Thêm thông tin thanh toán
+                                        </button>
+                                    </div>
                                 </legend>
 
                                 <div class="table-responsive">
@@ -220,7 +246,6 @@
                                             <th>Hình thức</th>
                                             <th>Dịch vụ</th>
                                             <th>Số tiền</th>
-                                            <th>Người nhận</th>
                                             <th>Chi tiết</th>
                                         </tr>
                                         </thead>
@@ -239,11 +264,6 @@
                                                     <fmt:setLocale value="vi_VN"/>
                                                     <fmt:formatNumber value="${payment.amount}"
                                                                       type="currency" maxFractionDigits="0"/>
-                                                </td>
-                                                <td>
-                                                    <a href="${pageContext.request.contextPath}/staff/member?action=detail&code=${payment.micStaffByReceiver.staffCode}">
-                                                            ${payment.micStaffByReceiver.name}
-                                                    </a>
                                                 </td>
                                                 <td>
                                                     <a href="javascript:;"
@@ -302,6 +322,7 @@
 <script type="text/javascript">
     $(document).ready(function () {
         $('#expiredDate').val(getCurrentDateInNextYear());
+        $('#addPaidDate').val(getCurrentDate());
         $('#paymentDate').val(getCurrentDate());
         document.getElementById("paymentDate").min = '${config.paidDateMin}';
         document.getElementById("paymentDate").max = '${config.paidDateMax}';
@@ -361,6 +382,7 @@
 
         if (contractStatus.toLowerCase() == 'Pending'.toLowerCase()) {
             $('#btnCancel').removeClass('hide');
+            $('#btnPayment').removeClass('hide');
         }
 
         if (contractStatus.toLowerCase() == 'No card'.toLowerCase()) {
@@ -368,6 +390,7 @@
                 $('#btnRenew').removeClass('hide');
             }
             $('#btnCancel').removeClass('hide');
+            $('#btnPayment').removeClass('hide');
         }
 
         if (contractStatus.toLowerCase() == 'Ready'.toLowerCase()) {
@@ -375,10 +398,12 @@
                 $('#btnRenew').removeClass('hide');
             }
             $('#btnCancel').removeClass('hide');
+            $('#btnPayment').removeClass('hide');
         }
 
         if (contractStatus.toLowerCase() == 'Expired'.toLowerCase()) {
             $('#btnRenew').removeClass('hide');
+            $('#btnPayment').removeClass('hide');
             $('#startDate').val(getCurrentDate());
             document.getElementById("expiredDate").min = '${config.expiredDateMin}';
             document.getElementById("expiredDate").max = '${config.expiredDateMax}';
@@ -395,7 +420,7 @@
         }
 
         if (contractStatus.toLowerCase() == 'Cancelled'.toLowerCase()) {
-            $('button[type=button]').not('#btnRenew, #btnCancel').addClass('hide');
+            $('button[type=button]').not('#btnRenew, #btnCancel, #btnPayment').addClass('hide');
             $('#remain').text(0);
         }
 
