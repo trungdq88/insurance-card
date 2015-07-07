@@ -25,7 +25,7 @@
             </c:if>
 
             <div class="form-group">
-                <label for="password" class="col-sm-3 control-label">Xác nhân mật khẩu</label>
+                <label for="password" class="col-sm-3 control-label">Xác nhận mật khẩu*</label>
 
                 <div class="col-sm-5">
                     <input type="password" class="form-control" name="request:password" id="password"
@@ -33,7 +33,7 @@
                 </div>
             </div>
             <div class="form-group">
-                <label for="note" class="col-sm-3 control-label">Ghi chú</label>
+                <label for="note" class="col-sm-3 control-label">Ghi chú*</label>
 
                 <div class="col-sm-5">
                     <textarea name="request:note" id="note" class="form-control" cols="3"
@@ -47,25 +47,33 @@
 
             <div class="form-group">
                 <div class="col-sm-3 control-label">
-                    <input type="radio" name="request:payment" value="paypal" onclick="{
+                    <input id="paypal" type="radio" name="request:payment" value="paypal" onclick="{
                         $('.tranformCost').removeClass('hide');
                         $('.newCardCost').removeClass('hide');
-                        $('#total_Cost').text((parseFloat($('#newCard_Cost').val()) + parseFloat($('#transform_Cost').val())).formatMoney(0));
+
+                        if($('#delivery').attr('value') =='false'){
+                            $('#total_Cost').text(parseFloat($('#newCard_Cost').val()).formatMoney(0));
+                            $('#transform_Cost1').text(0);
+                        } else{
+                            $('#transform_Cost1').text(parseFloat($('#transform_Cost').val()).formatMoney(0));
+                            $('#total_Cost').text((parseFloat($('#newCard_Cost').val()) + parseFloat($('#transform_Cost').val())).formatMoney(0));
+                        }
+
                     }" checked>
                 </div>
                 <div class="col-sm-5">
-                    <p class="form-control-static">Thanh toán qua PayPal</p>
+                    <label for="paypal">Thanh toán qua PayPal</label>
                 </div>
             </div>
             <div class="form-group">
                 <div class="col-sm-3 control-label">
-                    <input type="radio" name="request:payment" value="direct" onclick="{
+                    <input id="direct" type="radio" name="request:payment" value="direct" onclick="{
                     $('#total_Cost').text(parseFloat($('#newCard_Cost').val()).formatMoney(0));
                     $('.tranformCost').addClass('hide');
                     }">
                 </div>
                 <div class="col-sm-5">
-                    <p class="form-control-static">Thanh toán trực tiếp (tại công ty)</p>
+                    <label for="direct">Thanh toán trực tiếp (tại công ty)</label>
                 </div>
             </div>
 
@@ -79,8 +87,7 @@
                 </div>
                 <div class="col-sm-3">
                     <p class="text-value">
-                        <input id="deactiveCard" type="hidden" name="request:deactiveCardRequested" value="${empty submitted.deactiveCardRequested?false:submitted.deactiveCardRequested}">
-                        <input id="deactiveCardChk" type="checkbox"  onclick="{
+                        <input id="deactiveCard" name="request:deactiveCardRequested" value="true" type="checkbox"  onclick="{
                     if( this.checked){
                         $('#deactiveCard').attr('value','true');
                     } else {
@@ -88,7 +95,7 @@
                     };
                     }"
                         <c:if test="${submitted.deactiveCardRequested == true}"> checked</c:if> >
-                        <label for="deactiveCardChk">Hủy bỏ thẻ cũ</label>
+                        <label for="deactiveCard">Hủy bỏ thẻ cũ</label>
                     </p>
 
                 </div>
@@ -103,18 +110,20 @@
                 </div>
                 <div class="col-sm-3">
                     <p class="text-value">
-                        <input id="delivery" type="hidden" name="request:deliveryRequested" value="${empty submitted.deliveryRequested?true:submitted.deliveryRequested}">
-                        <input id="deliveryChk" type="checkbox" onclick="{
+
+                        <input id="delivery" name="request:deliveryRequested" type="checkbox" value="true" onclick="{
                     if( this.checked){
                         $('#delivery').attr('value','false');
+                        $('#transform_Cost1').text(0);
                         $('#total_Cost').text(parseFloat($('#newCard_Cost').val()).formatMoney(0));
                     } else {
+                        $('#transform_Cost1').text(parseFloat($('#transform_Cost').val()).formatMoney(0));
                         $('#delivery').attr('value','true');
                         $('#total_Cost').text((parseFloat($('#newCard_Cost').val()) + parseFloat($('#transform_Cost').val())).formatMoney(0));
                     };
                     }"
-                        <c:if test="${submitted.deliveryRequested == true}"> checked</c:if> >
-                        <label for="deliveryChk">Nhận thẻ tại công ty</label>
+                        <c:if test="${submitted.deliveryRequested == false}"> checked</c:if> >
+                        <label for="delivery">Nhận thẻ tại công ty</label>
                     </p>
 
                 </div>
@@ -165,12 +174,12 @@
     $('.tranformCost').removeClass('hide');
     $('.newCardCost').removeClass('hide');
     if ($('#deactiveCard').attr('value') == true) {
-        $('#deactiveCardChk').checked;
+        $('#deactiveCard').checked;
     }
 
     if($('#delivery').attr('value') == false) {
         $('#total_Cost').text(parseFloat($('#newCard_Cost').val()).formatMoney(0));
-        $('#deliveryChk').checked;
+        $('#delivery').checked;
     } else {
         $('#total_Cost').text((parseFloat($('#newCard_Cost').val()) + parseFloat($('#transform_Cost').val())).formatMoney(0));
     }
