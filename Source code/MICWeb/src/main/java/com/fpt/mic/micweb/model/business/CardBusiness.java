@@ -67,18 +67,18 @@ public class CardBusiness {
         return list;
     }
 
-    public boolean isNewCardRequested(CardEntity cardEntity) {
-        NewCardRequestDao newCardRequestDao = new NewCardRequestDao();
-        if (cardEntity != null) {
-            NewCardRequestEntity newCardRequestEntity = newCardRequestDao.getUnsolvedRequestByCardId(cardEntity.getCardId());
-            if (newCardRequestEntity != null) {
-                return true;
-            }
-        }
-        return false;
-    }
 
-    public boolean requestNewCardRequest(NewCardRequestDto newCardRequestDto) {
+    // kiem tra hop dong da co yeu cau the moi chua giai quyet chua
+    public boolean isNewCardRequestedByContractCode(String contractCode){
+        NewCardRequestDao newCardRequestDao = new NewCardRequestDao();
+
+        if(newCardRequestDao.getUnresolveRequestByContractCode(contractCode) == null){
+            return false;
+        }
+        return true;
+    }
+    // dang ky the moi
+    public boolean requestNewCardRequest(NewCardRequestDto newCardRequestDto, boolean isDeliveryRequested, boolean isPaid) {
         NewCardRequestDao newCardRequestDao = new NewCardRequestDao();
         CardDao cardDao = new CardDao();
         NewCardRequestEntity newCardRequestEntity = new NewCardRequestEntity();
@@ -86,6 +86,12 @@ public class CardBusiness {
         newCardRequestEntity.setOldCardId(cardEntity.getCardId());
         newCardRequestEntity.setNote(newCardRequestDto.getNote());
         newCardRequestEntity.setRequestDate(new Timestamp(new Date().getTime()));
+        if (isDeliveryRequested == true) {
+            newCardRequestEntity.setIsDeliveryRequested(1);
+        }
+        if (isPaid == true) {
+            newCardRequestEntity.setIsPaid(1);
+        }
         NewCardRequestEntity entity = newCardRequestDao.create(newCardRequestEntity);
         if (entity != null) {
 
@@ -97,6 +103,12 @@ public class CardBusiness {
             return true;
         }
         return false;
+    }
+    public void deactiveCardByContractCode(String contractCode) {
+        CardDao cardDao = new CardDao();
+        CardEntity cardEntity = cardDao.getCardByContract(contractCode);
+        cardEntity.setDeactivatedDate(new Timestamp(new Date().getTime()));
+        cardDao.update(cardEntity);
     }
 
     public List<CardAccessLogEntity> getCardAccessLog(String cardId, int offset, int count) {
