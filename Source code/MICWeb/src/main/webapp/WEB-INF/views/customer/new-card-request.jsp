@@ -73,18 +73,50 @@
             <div class="form-group newCardCost hide">
                 <label class="col-sm-3 control-label">Phí Làm Thẻ Mới:</label>
 
-                <div class="col-sm-5">
+                <div class="col-sm-2">
                     <p class="form-control-static"><span id="newCard_Cost1"></span> VND <input class="hide" id="newCard_Cost" name="newCardFee"
                                                                     value="${newCardFee}"/></p>
+                </div>
+                <div class="col-sm-3">
+                    <p class="text-value">
+                        <input id="deactiveCard" type="hidden" name="request:deactiveCardRequested" value="${empty submitted.deactiveCardRequested?false:submitted.deactiveCardRequested}">
+                        <input id="deactiveCardChk" type="checkbox"  onclick="{
+                    if( this.checked){
+                        $('#deactiveCard').attr('value','true');
+                    } else {
+                        $('#deactiveCard').attr('value','false');
+                    };
+                    }"
+                        <c:if test="${submitted.deactiveCardRequested == true}"> checked</c:if> >Hủy bỏ thẻ cũ
+                    </p>
+
                 </div>
             </div>
             <div class="form-group tranformCost hide">
                 <label class="col-sm-3 control-label">Phí Vận Chuyển: </label>
 
-                <div class="col-sm-5">
+                <div class="col-sm-2">
                     <p class="form-control-static"><span id="transform_Cost1"></span> VND <input class="hide" id="transform_Cost" name="transformFee"
                                                                     value="${transformFee}"/></p>
+
                 </div>
+                <div class="col-sm-3">
+                    <p class="text-value">
+                        <input id="delivery" type="hidden" name="request:deliveryRequested" value="${empty submitted.deliveryRequested?true:submitted.deliveryRequested}">
+                        <input id="deliveryChk" type="checkbox" onclick="{
+                    if( this.checked){
+                        $('#delivery').attr('value','false');
+                        $('#total_Cost').text(parseFloat($('#newCard_Cost').val()).formatMoney(0));
+                    } else {
+                        $('#delivery').attr('value','true');
+                        $('#total_Cost').text((parseFloat($('#newCard_Cost').val()) + parseFloat($('#transform_Cost').val())).formatMoney(0));
+                    };
+                    }"
+                        <c:if test="${submitted.deliveryRequested == true}"> checked</c:if> >Nhận thẻ tại công ty
+                    </p>
+
+                </div>
+
             </div>
             <div class="form-group">
                 <label class="col-sm-3 control-label">Thành Tiền: </label>
@@ -130,7 +162,17 @@
     };
     $('.tranformCost').removeClass('hide');
     $('.newCardCost').removeClass('hide');
-    $('#total_Cost').text((parseFloat($('#newCard_Cost').val()) + parseFloat($('#transform_Cost').val())).formatMoney(0));
+    if ($('#deactiveCard').attr('value') == true) {
+        $('#deactiveCardChk').checked;
+    }
+
+    if($('#delivery').attr('value') == false) {
+        $('#total_Cost').text(parseFloat($('#newCard_Cost').val()).formatMoney(0));
+        $('#deliveryChk').checked;
+    } else {
+        $('#total_Cost').text((parseFloat($('#newCard_Cost').val()) + parseFloat($('#transform_Cost').val())).formatMoney(0));
+    }
+
     $('#newCard_Cost1').text(parseFloat($('#newCard_Cost').val()).formatMoney(0));
     $('#transform_Cost1').text(parseFloat($('#transform_Cost').val()).formatMoney(0));
 </script>

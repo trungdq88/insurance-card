@@ -91,14 +91,6 @@ public class ContractBusiness {
         ContractTypeDao contractTypeDao = new ContractTypeDao();
         return contractTypeDao.read(contractTypeId);
     }
-    // kierm tra hop dong da co yeu cau the moi chua giai quyet chua
-    public boolean isNewCardRequestedByContractCode(String contractCode){
-        NewCardRequestDao newCardRequestDao = new NewCardRequestDao();
-        if(newCardRequestDao.getUnresolveRequestByContractCode(contractCode) == null){
-            return false;
-        }
-        return true;
-    }
 
     /**
      * Set need_renew_payment variable to true when user renew and payment direct

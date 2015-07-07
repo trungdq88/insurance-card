@@ -15,6 +15,8 @@ public class NewCardRequestEntity {
     private Timestamp requestDate;
     private Timestamp resolveDate;
     private String note;
+    private int isDeliveryRequested;
+    private int isPaid;
     private String oldCardId;
     private Collection<CardEntity> micCardsById;
     private CardEntity micCardByOldCardId;
@@ -61,6 +63,26 @@ public class NewCardRequestEntity {
     }
 
     @Basic
+    @Column(name = "is_delivery_requested")
+    public int getIsDeliveryRequested() {
+        return isDeliveryRequested;
+    }
+
+    public void setIsDeliveryRequested(int isDeliveryRequested) {
+        this.isDeliveryRequested = isDeliveryRequested;
+    }
+
+    @Basic
+    @Column(name = "is_paid")
+    public int getIsPaid() {
+        return isPaid;
+    }
+
+    public void setIsPaid(int isPaid) {
+        this.isPaid = isPaid;
+    }
+
+    @Basic
     @Column(name = "old_card_id")
     public String getOldCardId() {
         return oldCardId;
@@ -81,6 +103,8 @@ public class NewCardRequestEntity {
         if (requestDate != null ? !requestDate.equals(that.requestDate) : that.requestDate != null) return false;
         if (resolveDate != null ? !resolveDate.equals(that.resolveDate) : that.resolveDate != null) return false;
         if (note != null ? !note.equals(that.note) : that.note != null) return false;
+        if(isDeliveryRequested != that.isDeliveryRequested) return false;
+        if(isPaid != that.isPaid) return false;
         if (oldCardId != null ? !oldCardId.equals(that.oldCardId) : that.oldCardId != null) return false;
 
         return true;
@@ -92,6 +116,8 @@ public class NewCardRequestEntity {
         result = 31 * result + (requestDate != null ? requestDate.hashCode() : 0);
         result = 31 * result + (resolveDate != null ? resolveDate.hashCode() : 0);
         result = 31 * result + (note != null ? note.hashCode() : 0);
+        result = 31 * result + isDeliveryRequested;
+        result = 31 * result + isPaid;
         result = 31 * result + (oldCardId != null ? oldCardId.hashCode() : 0);
         return result;
     }

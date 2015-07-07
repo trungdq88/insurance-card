@@ -51,7 +51,6 @@ public class CardController extends AuthController {
 
     public ResponseObject postCreateNewCardRequest(R r) {
         NewCardRequestDto newCardRequestDto = (NewCardRequestDto) r.ead.entity(NewCardRequestDto.class, "request");
-        CustomerBusiness customerBusiness = new CustomerBusiness();
         String contractCode;
         // Gọi hàm validate ở đây
         List errors = r.ead.validate(newCardRequestDto);
@@ -79,17 +78,21 @@ public class CardController extends AuthController {
         if (cardBusiness.getCardByContractIncludeDeactive(contractCode).size() > 0) {
 
             // neu hop dong da dc phat hanh the, kiem tra xem co yeu cau truoc do chua
-            if (cardBusiness.isNewCardRequested(cardBusiness.getCardByContract(contractCode)) == false) {
+            if (cardBusiness.isNewCardRequestedByContractCode(contractCode) == false) {
                 // neu chua thi tien hanh thanh toan
                 HttpSession session = r.equest.getSession();
                 // thanh toan truc tiep
                 if (newCardRequestDto.getPayment().equalsIgnoreCase("direct")) {
                     // gui yeu cau the moi
-                    if(cardBusiness.requestNewCardRequest(newCardRequestDto) == false){
+                    if(cardBusiness.requestNewCardRequest(newCardRequestDto,false,false) == false){
                         message = "Có lỗi xảy ra. Xin thử lại";
                         r.equest.setAttribute("result", message);
                         r.equest.setAttribute("contractCode",newCardRequestDto.getContractCode());
                         new JspPage("customer/message.jsp");
+                    }
+                    // huy the cu neu yeu cau
+                    if (newCardRequestDto.isDeactiveCardRequested() == true){
+                        cardBusiness.deactiveCardByContractCode(newCardRequestDto.getContractCode());
                     }
 
                     message = "Yêu cầu thẻ mới thành công. Vui lòng đến trực tiếp để thanh toán";
@@ -104,7 +107,13 @@ public class CardController extends AuthController {
                     session.setAttribute("SUCCESS_URL", "/customer/card?action=activeNewCardRequest");
                     session.setAttribute("cancel_message", "Bạn đã hủy thanh toán. Xin vui lòng thực hiện lại hoặc đến thanh toán trực tiếp");
                     session.setAttribute("redirectLink", "/customer/contract?action=detail&code=" + contractCode);
-                    float totalAmount = Constants.PaymentFee.NEW_CARD_REQUEST_FEE + Constants.PaymentFee.DELIVERY_FEE;
+                    float totalAmount;
+                    // neu yeu cau delivery thi + them phi
+                    if(newCardRequestDto.isDeliveryRequested()){
+                        totalAmount = Constants.PaymentFee.NEW_CARD_REQUEST_FEE + Constants.PaymentFee.DELIVERY_FEE;
+                    } else {
+                        totalAmount = Constants.PaymentFee.NEW_CARD_REQUEST_FEE;
+                    }
                     CheckoutRequestDto checkoutRequest = new CheckoutRequestDto();
                     checkoutRequest.setPaymentrequest_name("Yêu cầu thẻ mới " + newCardRequestDto.getContractCode());
                     checkoutRequest.setPaymentrequest_desc("Yêu cầu thẻ mới " + newCardRequestDto.getContractCode());
@@ -141,12 +150,17 @@ public class CardController extends AuthController {
         NewCardRequestDto newCardRequestDto = (NewCardRequestDto) session.getAttribute("NEW_CARD_DTO");
         CardBusiness cardBusiness = new CardBusiness();
         String message;
-        if(cardBusiness.requestNewCardRequest(newCardRequestDto) == false){
+        if(cardBusiness.requestNewCardRequest(newCardRequestDto,newCardRequestDto.isDeliveryRequested(),true) == false){
             message = "Có lỗi xảy ra. Xin thử lại";
             r.equest.setAttribute("result", message);
             r.equest.setAttribute("contractCode",newCardRequestDto.getContractCode());
             return new JspPage("customer/message.jsp");
         }
+        // huy the cu neu yeu cau
+        if (newCardRequestDto.isDeactiveCardRequested() == true){
+            cardBusiness.deactiveCardByContractCode(newCardRequestDto.getContractCode());
+        }
+
 
         r.equest.setAttribute("result", results);
         r.equest.setAttribute("ack", (String) session.getAttribute("ACK"));
