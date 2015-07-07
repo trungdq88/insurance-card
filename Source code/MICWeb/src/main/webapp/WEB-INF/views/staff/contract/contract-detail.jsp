@@ -20,10 +20,20 @@
                 <h1 class="page-header">
                     ${contract.contractCode}
                     <div class="pull-right">
-                        <button id="btnRenew" type="button" class="btn btn-primary hide"
-                                data-toggle="modal" data-target="#renew-contract-modal">
-                            <i class="fa fa-refresh"></i> Gia hạn
-                        </button>
+                        <c:choose>
+                            <c:when test="${not empty contract.needRenewPayment}">
+                                <button id="btnRenew" type="button" class="btn btn-primary hide"
+                                        data-toggle="modal" data-target="#renew-contract-modal">
+                                    <i class="fa fa-refresh"></i> Thanh toán gia hạn
+                                </button>
+                            </c:when>
+                            <c:otherwise>
+                                <button id="btnRenew" type="button" class="btn btn-primary hide"
+                                        data-toggle="modal" data-target="#renew-contract-modal">
+                                    <i class="fa fa-refresh"></i> Gia hạn
+                                </button>
+                            </c:otherwise>
+                        </c:choose>
                         <button id="btnCancel" type="button" class="btn btn-danger hide"
                                 data-toggle="modal" data-target="#cancel-contract-modal">
                             <i class="fa fa-times"></i> Hủy hợp đồng
@@ -197,7 +207,9 @@
                             <br/>
 
                             <fieldset>
-                                <legend>Thông tin thanh toán</legend>
+                                <legend>
+                                    Thông tin thanh toán
+                                </legend>
 
                                 <div class="table-responsive">
                                     <table class="table table-striped table-bordered table-hover">
