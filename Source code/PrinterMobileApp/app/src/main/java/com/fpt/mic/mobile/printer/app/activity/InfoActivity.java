@@ -103,22 +103,22 @@ public class InfoActivity extends Activity {
                     "in thẻ cho hợp đồng đã bị huỷ!");
         } else {
             // READY / EXPIRED / REQUEST_CANCEL
-            DialogUtils.showAlert(InfoActivity.this, "Hợp đồng này đã có 1 thẻ đang được sử dụng." +
-                    " Bạn có muốn in thẻ mới cho hợp đồng này không? (Thẻ cũ sẽ bị vô hiệu hoá)", new DialogUtils.IOnOkClicked() {
-                @Override
-                public void onClick() {
+            // DialogUtils.showAlert(InfoActivity.this, "Hợp đồng này đã có 1 thẻ đang được sử dụng." +
+            //         " Bạn có muốn in thẻ mới cho hợp đồng này không? (Thẻ cũ sẽ bị vô hiệu hoá)", new DialogUtils.IOnOkClicked() {
+            //     @Override
+            //     public void onClick() {
                     // Override card
                     Intent intent = new Intent(InfoActivity.this, WriteActivity.class);
                     intent.putExtra("contract", contractSearchResult);
                     intent.putExtra("ignoreNFC", ignoreNFC);
                     startActivityForResult(intent, SELF_CLOSE);
-                }
-            }, new DialogUtils.IOnCancelClicked() {
-                @Override
-                public void onClick() {
-                    // Do nothing
-                }
-            });
+            //     }
+            // }, new DialogUtils.IOnCancelClicked() {
+            //     @Override
+            //     public void onClick() {
+            //         // Do nothing
+            //     }
+            // });
         }
     }
 
