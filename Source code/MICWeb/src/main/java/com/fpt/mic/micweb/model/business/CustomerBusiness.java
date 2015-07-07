@@ -120,6 +120,9 @@ public class CustomerBusiness {
             // Concurrency set value
             contract.setLastModified(new Timestamp(new java.util.Date().getTime()));
 
+            // Mark payment done
+            contract.setNeedRenewPayment(null);
+
             if (contract.getStatus().equalsIgnoreCase(Constants.ContractStatus.EXPIRED)) {
                 payment.setStartDate(DateUtils.currentDateWithoutTime());
             } else {

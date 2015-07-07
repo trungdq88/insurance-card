@@ -35,6 +35,7 @@ public class ContractEntity {
     private String staffCode;
     private int contractTypeId;
     private String customerCode;
+    private Integer needRenewPayment;
     private Timestamp lastModified;
     private Timestamp createdDate;
 
@@ -288,6 +289,16 @@ public class ContractEntity {
         this.lastModified = lastModified;
     }
 
+    @Basic
+    @Column(name = "need_renew_payment")
+    public Integer getNeedRenewPayment() {
+        return needRenewPayment;
+    }
+
+    public void setNeedRenewPayment(Integer needRenewPayment) {
+        this.needRenewPayment = needRenewPayment;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -338,9 +349,7 @@ public class ContractEntity {
         result = 31 * result + (capacity != null ? capacity.hashCode() : 0);
         result = 31 * result + (yearOfManufacture != null ? yearOfManufacture.hashCode() : 0);
         result = 31 * result + (weight != null ? weight.hashCode() : 0);
-        ;
         result = 31 * result + (seatCapacity != null ? seatCapacity.hashCode() : 0);
-        ;
         result = 31 * result + (cancelDate != null ? cancelDate.hashCode() : 0);
         result = 31 * result + (cancelReason != null ? cancelReason.hashCode() : 0);
         result = 31 * result + (cancelNote != null ? cancelNote.hashCode() : 0);

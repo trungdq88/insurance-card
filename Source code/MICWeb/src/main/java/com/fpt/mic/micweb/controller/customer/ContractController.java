@@ -299,6 +299,9 @@ public class ContractController extends AuthController {
             return showCustomError(r, contractCode, contractBusiness, "Hợp đồng không tồn tại hoặc trạng thái không hợp lệ");
         }
 
+        // Set need_renew_payment variable
+        contractBusiness.setContractNeedRenewPayment(contractCode, true);
+
         HttpSession session = r.equest.getSession();
 
         session.setAttribute("CONTRACT_CODE", contractCode);

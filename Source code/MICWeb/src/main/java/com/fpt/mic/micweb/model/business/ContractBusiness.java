@@ -99,4 +99,15 @@ public class ContractBusiness {
         }
         return true;
     }
+
+    /**
+     * Set need_renew_payment variable to true when user renew and payment direct
+     * @param contractCode
+     */
+    public void setContractNeedRenewPayment(String contractCode, boolean flag) {
+        ContractDao contractDao = new ContractDao();
+        ContractEntity contractEntity = contractDao.read(contractCode);
+        contractEntity.setNeedRenewPayment(flag ? 1 : null);
+        contractDao.update(contractEntity);
+    }
 }
