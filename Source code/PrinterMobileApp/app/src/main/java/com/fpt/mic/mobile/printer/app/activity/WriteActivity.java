@@ -22,6 +22,7 @@ public class WriteActivity extends Activity {
 
     ContractSearchResult contractSearchResult;
     boolean ignoreNFC = false;
+    private int SELF_CLOSE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,10 +117,9 @@ public class WriteActivity extends Activity {
                     public void onApiResult(CardEntity result) {
                         if (result != null) {
                             // Show result
-                            finish();
                             Intent intent = new Intent(WriteActivity.this, SuccessActivity.class);
                             intent.putExtra("card", result);
-                            startActivity(intent);
+                            startActivityForResult(intent, SELF_CLOSE);
                         } else {
                             // This card ID is already exists in the system
                             //      => Tell user that this card is no longer usable.
@@ -143,6 +143,19 @@ public class WriteActivity extends Activity {
             e.printStackTrace();
         } catch (FormatException e) {
             e.printStackTrace();
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == SELF_CLOSE || resultCode == Activity.RESULT_OK) {
+
+            if (getParent() == null) {
+                setResult(Activity.RESULT_OK);
+            } else {
+                getParent().setResult(Activity.RESULT_OK);
+            }
+            finish();
         }
     }
 }

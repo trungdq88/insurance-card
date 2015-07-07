@@ -71,6 +71,11 @@ public class MainActivity extends Activity {
                 return false;
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
 
         // Show 'No card' contracts first
         searchContracts();

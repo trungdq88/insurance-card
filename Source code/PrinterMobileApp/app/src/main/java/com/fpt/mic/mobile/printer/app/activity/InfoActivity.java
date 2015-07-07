@@ -31,6 +31,8 @@ public class InfoActivity extends Activity {
     TextView txtContractStaff;
     TextView txtDatePublish;
     TextView txtHotline;
+    private int SELF_CLOSE = 1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,7 +92,7 @@ public class InfoActivity extends Activity {
             Intent intent = new Intent(InfoActivity.this, WriteActivity.class);
             intent.putExtra("contract", contractSearchResult);
             intent.putExtra("ignoreNFC", ignoreNFC);
-            startActivity(intent);
+            startActivityForResult(intent, SELF_CLOSE);
         } else if (contractSearchResult.contractEntity.status
                 .equals(Constants.ContractStatus.PENDING)) {
             DialogUtils.showAlert(InfoActivity.this, "Hợp đồng này chưa được thanh toán! " +
@@ -101,23 +103,29 @@ public class InfoActivity extends Activity {
                     "in thẻ cho hợp đồng đã bị huỷ!");
         } else {
             // READY / EXPIRED / REQUEST_CANCEL
-            DialogUtils.showAlert(InfoActivity.this, "Hợp đồng này đã có 1 thẻ đang được sử dụng." +
-                    " Bạn có muốn in thẻ mới cho hợp đồng này không? (Thẻ cũ sẽ bị vô hiệu hoá)", new DialogUtils.IOnOkClicked() {
-                @Override
-                public void onClick() {
+            // DialogUtils.showAlert(InfoActivity.this, "Hợp đồng này đã có 1 thẻ đang được sử dụng." +
+            //         " Bạn có muốn in thẻ mới cho hợp đồng này không? (Thẻ cũ sẽ bị vô hiệu hoá)", new DialogUtils.IOnOkClicked() {
+            //     @Override
+            //     public void onClick() {
                     // Override card
                     Intent intent = new Intent(InfoActivity.this, WriteActivity.class);
                     intent.putExtra("contract", contractSearchResult);
                     intent.putExtra("ignoreNFC", ignoreNFC);
-                    startActivity(intent);
-                }
-            }, new DialogUtils.IOnCancelClicked() {
-                @Override
-                public void onClick() {
-                    // Do nothing
-                }
-            });
+                    startActivityForResult(intent, SELF_CLOSE);
+            //     }
+            // }, new DialogUtils.IOnCancelClicked() {
+            //     @Override
+            //     public void onClick() {
+            //         // Do nothing
+            //     }
+            // });
         }
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == SELF_CLOSE && resultCode == Activity.RESULT_OK) {
+            finish();
+        }
+    }
 }
