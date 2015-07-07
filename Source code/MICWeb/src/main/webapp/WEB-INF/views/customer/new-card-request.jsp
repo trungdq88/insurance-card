@@ -87,7 +87,8 @@
                         $('#deactiveCard').attr('value','false');
                     };
                     }"
-                        <c:if test="${submitted.deactiveCardRequested == true}"> checked</c:if> >Hủy bỏ thẻ cũ
+                        <c:if test="${submitted.deactiveCardRequested == true}"> checked</c:if> >
+                        <label for="deactiveCardChk">Hủy bỏ thẻ cũ</label>
                     </p>
 
                 </div>
@@ -112,7 +113,8 @@
                         $('#total_Cost').text((parseFloat($('#newCard_Cost').val()) + parseFloat($('#transform_Cost').val())).formatMoney(0));
                     };
                     }"
-                        <c:if test="${submitted.deliveryRequested == true}"> checked</c:if> >Nhận thẻ tại công ty
+                        <c:if test="${submitted.deliveryRequested == true}"> checked</c:if> >
+                        <label for="deliveryChk">Nhận thẻ tại công ty</label>
                     </p>
 
                 </div>
