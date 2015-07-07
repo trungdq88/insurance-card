@@ -31,6 +31,8 @@ public class InfoActivity extends Activity {
     TextView txtContractStaff;
     TextView txtDatePublish;
     TextView txtHotline;
+    private int SELF_CLOSE = 1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,7 +92,7 @@ public class InfoActivity extends Activity {
             Intent intent = new Intent(InfoActivity.this, WriteActivity.class);
             intent.putExtra("contract", contractSearchResult);
             intent.putExtra("ignoreNFC", ignoreNFC);
-            startActivity(intent);
+            startActivityForResult(intent, SELF_CLOSE);
         } else if (contractSearchResult.contractEntity.status
                 .equals(Constants.ContractStatus.PENDING)) {
             DialogUtils.showAlert(InfoActivity.this, "Hợp đồng này chưa được thanh toán! " +
@@ -109,7 +111,7 @@ public class InfoActivity extends Activity {
                     Intent intent = new Intent(InfoActivity.this, WriteActivity.class);
                     intent.putExtra("contract", contractSearchResult);
                     intent.putExtra("ignoreNFC", ignoreNFC);
-                    startActivity(intent);
+                    startActivityForResult(intent, SELF_CLOSE);
                 }
             }, new DialogUtils.IOnCancelClicked() {
                 @Override
@@ -120,4 +122,10 @@ public class InfoActivity extends Activity {
         }
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == SELF_CLOSE && resultCode == Activity.RESULT_OK) {
+            finish();
+        }
+    }
 }

@@ -31,6 +31,11 @@ public class SuccessActivity extends Activity {
             @Override
             public void onClick(View view) {
                 finish();
+                if (getParent() == null) {
+                    setResult(Activity.RESULT_OK);
+                } else {
+                    getParent().setResult(Activity.RESULT_OK);
+                }
             }
         });
     }
