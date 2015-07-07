@@ -20,7 +20,9 @@
       </c:if>
     Tài khoản:         <input type="text" name="register:username"/><br/>
     Mật khẩu:         <input type="password" name="register:password"/><br/>
-    Xác nhận mật khẩu: <input type="password" name="register:confirmPassword"/><br/>
+    Xác nhận mật khẩu: <input type="password" name="register:confirmPassword"/>
+      <input type="checkbox" name="register:remember" value="1"/>
+      <br/>
     <input type="submit" value="Register"/>
     <input type="hidden" name="action" value="register"/>
   </form>

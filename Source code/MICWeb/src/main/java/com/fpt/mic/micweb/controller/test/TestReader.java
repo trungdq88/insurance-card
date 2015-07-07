@@ -2,6 +2,7 @@ package com.fpt.mic.micweb.controller.test;
 
 import com.fpt.mic.micweb.framework.BasicController;
 import com.fpt.mic.micweb.framework.R;
+import com.fpt.mic.micweb.framework.responses.JsonString;
 import com.fpt.mic.micweb.framework.responses.JspPage;
 import com.fpt.mic.micweb.framework.responses.ResponseObject;
 import com.fpt.mic.micweb.model.dto.form.RegisterFormDto;
@@ -40,6 +41,6 @@ public class TestReader extends BasicController {
             r.equest.setAttribute("success", true);
         }
 
-        return new JspPage("/test/reader/view.jsp");
+        return new JsonString(dto);
     }
 }

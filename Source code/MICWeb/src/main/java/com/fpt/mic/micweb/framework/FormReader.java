@@ -85,6 +85,12 @@ public class FormReader<T> {
         String className = parameterType.getName();
         String valueString = request.getParameter(formPrefix + ":" + fieldName);
 
+        // Parsing boolean (checkbox input) is an exception where the input may be null
+        if (className.equals(Boolean.class.getName())
+                || className.equals(boolean.class.getName())) {
+            return valueString != null;
+        }
+
         if (valueString == null) {
             System.out.println("FormReader: WARNING: " + formPrefix + ":" + fieldName + " not found!");
             return null;
@@ -101,10 +107,6 @@ public class FormReader<T> {
         if (className.equals(Integer.class.getName())
                 || className.equals(int.class.getName())) {
             return Integer.parseInt(valueString);
-        }
-        if (className.equals(Boolean.class.getName())
-                || className.equals(boolean.class.getName())) {
-            return Boolean.parseBoolean(valueString);
         }
         if (className.equals(Float.class.getName())
                 || className.equals(float.class.getName())) {

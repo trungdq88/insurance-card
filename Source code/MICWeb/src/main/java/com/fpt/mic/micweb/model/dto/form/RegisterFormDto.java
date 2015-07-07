@@ -18,6 +18,7 @@ public class RegisterFormDto {
     String password;
     @NotEmpty(message = "Xác nhận mật khẩu không được bỏ trống!")
     String confirmPassword;
+    Boolean remember;
 
     @AssertTrue(message="Mật khẩu xác nhận không giống")
     private boolean isValid() {
@@ -46,5 +47,13 @@ public class RegisterFormDto {
 
     public void setConfirmPassword(String confirmPassword) {
         this.confirmPassword = confirmPassword;
+    }
+
+    public Boolean getRemember() {
+        return remember;
+    }
+
+    public void setRemember(Boolean remember) {
+        this.remember = remember;
     }
 }
