@@ -1,6 +1,6 @@
--- 20150705 Changes:
--- Add table mic_business_rules
--- Change mic_new_card_request table: remove customer_code
+-- 20150707 Changes:
+-- Add column mic_contract.need_renew_payment
+-- Add columns mic_new_card_request.is_delivery_requested and mic_new_card_request.is_paid
 -- MySQL Workbench Forward Engineering
 
 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
@@ -11,7 +11,7 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 -- Schema mydb
 -- -----------------------------------------------------
 -- -----------------------------------------------------
--- Schema mic_data
+-- Schema mic_datai
 -- -----------------------------------------------------
 
 -- -----------------------------------------------------
@@ -42,7 +42,7 @@ CREATE TABLE IF NOT EXISTS `mic_data`.`mic_contract_type` (
   `price_per_year` FLOAT UNSIGNED NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 7
+AUTO_INCREMENT = 6
 DEFAULT CHARACTER SET = utf8
 COMMENT = 'Contract type information';
 
@@ -107,10 +107,10 @@ CREATE TABLE IF NOT EXISTS `mic_data`.`mic_contract` (
   `cancel_reason` VARCHAR(250) NULL DEFAULT NULL,
   `cancel_note` VARCHAR(2000) NULL DEFAULT NULL,
   `last_modified` DATETIME NOT NULL,
+  `need_renew_payment` INT(11) UNSIGNED NULL DEFAULT NULL,
   `staff_code` VARCHAR(10) NULL DEFAULT NULL,
   `contract_type_id` INT(11) UNSIGNED NOT NULL,
   `customer_code` VARCHAR(10) NOT NULL,
-  `need_renew_payment` INT(11) UNSIGNED NULL DEFAULT NULL,
   PRIMARY KEY (`contract_code`),
   INDEX `fk_mic_contract_mic_staff_idx` (`staff_code` ASC),
   INDEX `fk_mic_contract_mic_contract_type1_idx` (`contract_type_id` ASC),
@@ -190,6 +190,8 @@ CREATE TABLE IF NOT EXISTS `mic_data`.`mic_new_card_request` (
   `request_date` DATETIME NOT NULL,
   `resolve_date` DATETIME NULL DEFAULT NULL,
   `note` VARCHAR(2000) NULL DEFAULT NULL,
+  `is_delivery_requested` INT(1) UNSIGNED NOT NULL DEFAULT '0',
+  `is_paid` INT(1) UNSIGNED NOT NULL DEFAULT '0',
   `old_card_id` VARCHAR(20) NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_mic_new_card_request_mic_card1_idx` (`old_card_id` ASC),
@@ -199,7 +201,7 @@ CREATE TABLE IF NOT EXISTS `mic_data`.`mic_new_card_request` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
-AUTO_INCREMENT = 28
+AUTO_INCREMENT = 33
 DEFAULT CHARACTER SET = utf8
 COMMENT = 'New card request information';
 
@@ -315,7 +317,7 @@ CREATE TABLE IF NOT EXISTS `mic_data`.`mic_notification` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
-AUTO_INCREMENT = 6
+AUTO_INCREMENT = 16
 DEFAULT CHARACTER SET = utf8;
 
 
@@ -336,7 +338,7 @@ CREATE TABLE IF NOT EXISTS `mic_data`.`mic_notification_read` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
-AUTO_INCREMENT = 2
+AUTO_INCREMENT = 30
 DEFAULT CHARACTER SET = utf8;
 
 
@@ -368,7 +370,7 @@ CREATE TABLE IF NOT EXISTS `mic_data`.`mic_payment` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
-AUTO_INCREMENT = 86
+AUTO_INCREMENT = 88
 DEFAULT CHARACTER SET = utf8
 COMMENT = 'Payment information';
 
