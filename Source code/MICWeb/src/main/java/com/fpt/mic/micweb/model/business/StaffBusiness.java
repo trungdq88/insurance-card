@@ -179,7 +179,8 @@ public class StaffBusiness {
             // Update contract information
             contractEntity.setExpiredDate(dto.getExpiredDate());
             contractEntity.setContractFee(dto.getContractFee());
-
+            // Set check renew contract request to false (null)
+            contractEntity.setNeedRenewPayment(null);
             // Concurrency set value
             contractEntity.setLastModified(DateUtils.currentTimeWithoutNanos());
 
