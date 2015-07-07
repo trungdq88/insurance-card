@@ -80,11 +80,13 @@ public class StaffBusiness {
         StaffDao staffDao = new StaffDao();
         return staffDao.getAllStaffCount();
     }
+
     public Long getAllNewCardRequestCount() {
         StaffDao staffDao = new StaffDao();
         return staffDao.getAllNewCardRequestCount();
     }
-    public Long getUnresolvedNewCardRequestCount(){
+
+    public Long getUnresolvedNewCardRequestCount() {
         StaffDao staffDao = new StaffDao();
         return staffDao.getUnresolvedNewCardRequestCount();
     }
@@ -93,6 +95,7 @@ public class StaffBusiness {
         StaffDao staffDao = new StaffDao();
         return staffDao.getOnePageStaff(offset, count);
     }
+
     public List getOnePageNewCardRequest(int offset, int count) {
         StaffDao staffDao = new StaffDao();
         return staffDao.getOnePageNewCardRequest(offset, count);
@@ -245,6 +248,25 @@ public class StaffBusiness {
     public PaymentEntity getPaymentDetail(Integer id) {
         PaymentDao paymentDao = new PaymentDao();
         return paymentDao.read(id);
+    }
+
+    public boolean createPayment(CreatePaymentDto dto, StaffEntity receiver) {
+        PaymentDao paymentDao = new PaymentDao();
+        PaymentEntity paymentEntity = new PaymentEntity();
+
+        // Set payment information from dto to entity
+        paymentEntity.setContractCode(dto.getContractCode());
+        paymentEntity.setPaidDate(dto.getPaidDate());
+        paymentEntity.setContent(dto.getContent());
+        paymentEntity.setAmount(dto.getAmount());
+        // Set others payment information
+        paymentEntity.setPaymentMethod("Trực tiếp");
+        paymentEntity.setReceiver(receiver.getStaffCode());
+
+        if (paymentDao.create(paymentEntity) != null) {
+            return true;
+        }
+        return false;
     }
 
     public boolean completePayment(CompletePaymentDto dto, StaffEntity receiver) {
