@@ -39,8 +39,19 @@ public class ApiBusiness {
         List cards = cardInstanceDao.getCardInstancesByCardID(cardID);
         if (cards.size() > 0) {
             // The card is already exists in the system,
-            // do not allow print this card to a new contract
-            return null;
+            // check if the card status is AVAILABLE so we can recycle the old card
+            CardEntity card = cardDao.read(cardID);
+            if (card.getStatus() == CardEntity.STATUS_AVAILABLE) {
+                // Recycle the card
+                card.setStatus(CardEntity.STATUS_BUSY);
+                cardDao.update(card);
+
+                // Let the code continue to run.
+
+            } else {
+                // Sorry the card is being used.
+                return null;
+            }
         } else {
             // The card is not exists in the system, create new one.
             CardEntity cardEntity = new CardEntity();
@@ -77,13 +88,13 @@ public class ApiBusiness {
         }
 
         // Insert new card to database
-        CardInstanceEntity cardEntity = new CardInstanceEntity();
-        cardEntity.setContractCode(contractCode);
-        cardEntity.setCardId(cardID);
-        cardEntity.setActivatedDate(new Timestamp(new Date().getTime()));
-        cardEntity.setNewCardRequestId(requestId);
+        CardInstanceEntity cardInstanceEntity = new CardInstanceEntity();
+        cardInstanceEntity.setContractCode(contractCode);
+        cardInstanceEntity.setCardId(cardID);
+        cardInstanceEntity.setActivatedDate(new Timestamp(new Date().getTime()));
+        cardInstanceEntity.setNewCardRequestId(requestId);
 
-        CardInstanceEntity result = cardInstanceDao.create(cardEntity);
+        CardInstanceEntity result = cardInstanceDao.create(cardInstanceEntity);
 
         if (result != null) {
             // Change contract status
