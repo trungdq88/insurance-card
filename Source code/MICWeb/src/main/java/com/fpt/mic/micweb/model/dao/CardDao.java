@@ -111,4 +111,19 @@ public class CardDao extends GenericDaoJpaImpl<CardEntity, String> {
             return null;
         }
     }
+
+    public CardEntity getLastCardByContract(String contractCode) {
+        EntityManager entity = factory.createEntityManager();
+        String hql = "SELECT ca FROM CardEntity ca WHERE ca.contractCode = :contractCode " +
+                " ORDER BY ca.activatedDate DESC";
+        Query query = entity.createQuery(hql);
+        query.setMaxResults(1);
+        query.setParameter("contractCode", contractCode);
+        try {
+            return (CardEntity) query.getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
+
+    }
 }
