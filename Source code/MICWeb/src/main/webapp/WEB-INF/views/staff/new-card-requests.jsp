@@ -74,7 +74,7 @@
                                                 <td><a tabindex="0" data-trigger="focus" data-toggle="popover" title="Ghi chú từ khách hàng"
                                                        role="button" data-content="${newRequest.note}"><i class="fa fa-file"></i></a></td>
                                                 <td>
-                                                    <a href="#">
+                                                    <a href="${pageContext.request.contextPath}/staff/card?action=detail&cardId=${newRequest.micCardInstanceByOldCardInstanceId.cardId}">
                                                             ${newRequest.micCardInstanceByOldCardInstanceId.cardId}
                                                     </a>
                                                 </td>
@@ -91,7 +91,7 @@
                                                     <c:if test="${newRequest.isPaid == 0}">
                                                         <%--<span class="label label-danger">Chưa thanh toán</span>--%>
 
-                                                            <button  delivery="${newRequest.isDeliveryRequested}" contractCode="${newRequest.micCardByOldCardId.contractCode}"
+                                                            <button  delivery="${newRequest.isDeliveryRequested}" contractCode="${newRequest.micCardInstanceByOldCardInstanceId.contractCode}"
                                                                      type="button" class="btn btn-success btn-xs"
                                                                     data-toggle="modal" data-target="#add-payment-modal" onclick="{
 //                                                            var rowNumber = $(this).attr('value');

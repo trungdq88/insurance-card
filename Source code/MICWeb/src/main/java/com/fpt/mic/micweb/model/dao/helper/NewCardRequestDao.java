@@ -54,7 +54,6 @@ public class NewCardRequestDao extends GenericDaoJpaImpl<NewCardRequestEntity, I
         return resultList;
     }
 
-    public NewCardRequestEntity getUnresolveRequestByContractCode(String contractCode) {
     public NewCardRequestEntity getUnresolveRequest(String contractCode) {
         EntityManager entityManager = factory.createEntityManager();
         Query query = entityManager.createQuery(
@@ -78,7 +77,8 @@ public class NewCardRequestDao extends GenericDaoJpaImpl<NewCardRequestEntity, I
         Query query = entityManager.createQuery(
                 "SELECT co " +
                         "FROM NewCardRequestEntity co " +
-                        "WHERE co.micCardByOldCardId.micContractByContractCode.contractCode = :contractCode" +
+                        "WHERE co.micCardInstanceByOldCardInstanceId" +
+                        ".micContractByContractCode.contractCode = :contractCode" +
                         " AND co.isPaid = 0"
         );
         query.setParameter("contractCode", contractCode);
