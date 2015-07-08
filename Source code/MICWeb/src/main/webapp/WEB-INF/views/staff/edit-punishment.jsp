@@ -81,9 +81,11 @@
                             <label class="col-sm-4 control-label" for="attachment">Văn bản đính kèm *</label>
 
                             <div class="col-sm-6">
-                                <input id="attachment" name="edit:attachment" class="form-control input-md"
-                                       type="file" required maxlength="255"
-                                       value="${punishment.attachment}" title="Vui lòng tải lên văn bản đính kèm">
+                                <input id="attachment" name="edit:attachment" type="hidden" required maxlength="255">
+                                <img id="imgAttachment" height="100px" src="${punishment.attachment}"/>
+                                <script type="text/javascript" src="//api.filepicker.io/v2/filepicker.js"></script>
+                                <input type="filepicker" data-fp-apikey="AEbPPQfPfRHqODjEl5AZ2z"
+                                       onchange="$('#imgAttachment').attr('src', event.fpfile.url);$('#attachment').val(event.fpfile.url);">
                             </div>
                         </div>
                     </fieldset>
