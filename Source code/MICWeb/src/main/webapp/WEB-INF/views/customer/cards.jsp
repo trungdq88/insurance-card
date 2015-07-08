@@ -16,7 +16,7 @@
   <div id="page-wrapper">
     <div class="row">
       <div class="col-lg-12">
-        <h1 class="page-header">Thẻ đã phát hành</h1>
+        <h1 class="page-header">Các thẻ đang sở hữu</h1>
       </div>
       <!-- /.col-lg-12 -->
     </div>
@@ -28,7 +28,7 @@
 
         <div class="panel-heading">
           <div class="pull-left center-dropdown-button">
-            <b>Có ${cardPaginator.itemSize} thẻ đã phát hành</b>
+            <b>Có ${cardPaginator.itemSize} thẻ đang sở hữu</b>
           </div>
           <div class="pull-right no-wrap">
             <form action="${pageContext.request.contextPath}/customer/card" method="get">

@@ -45,6 +45,8 @@
 
               <div class="col-sm-5">
                 <div class="input-group">
+                  <input type="hidden" id="newCardFee" value="${newCardFee}">
+                  <input type="hidden" id="deliveryFee" value="${deliveryFee}">
                   <input id="addAmount" name="createNewCardPayment:amount" class="form-control input-md"
                          type="number" required min="0" max="1000000000"
                          title="Vui lòng nhập số tiền" placeholder="Ví dụ: 80000">
@@ -58,7 +60,7 @@
         </div>
         <div class="modal-footer">
           <input id="contractCode" type="hidden" name="createNewCardPayment:contractCode" />
-          <input id="delivery" name="createNewCardPayment:delivery">
+          <input id="delivery" type="hidden" name="createNewCardPayment:delivery">
           <input type="hidden" name="action" value="createNewCardPayment"/>
           <button type="submit" class="btn btn-success">
             <i class="fa fa-arrow-right"></i> Thêm thông tin thanh toán
