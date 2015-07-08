@@ -80,8 +80,35 @@
                                                         <span class="label label-info">Đã thanh toán</span>
                                                     </c:if>
                                                     <c:if test="${newRequest.isPaid == 0}">
-                                                        <span class="label label-danger">Chưa thanh toán</span>
+                                                        <%--<span class="label label-danger">Chưa thanh toán</span>--%>
+
+                                                            <button  delivery="${newRequest.isDeliveryRequested}" contractCode="${newRequest.micCardByOldCardId.contractCode}"
+                                                                     type="button" class="btn btn-success "
+                                                                    data-toggle="modal" data-target="#add-payment-modal" onclick="{
+//                                                            var rowNumber = $(this).attr('value');
+                                                                    var delivery = $(this).attr('delivery');
+                                                                    var contractCode = $(this).attr('contractCode');
+                                                                    var content;
+                                                                    var fee;
+                                                                    if (delivery == 1){
+                                                                        content = 'Đăng ký thẻ mới hợp đồng ' +contractCode +' + giao thẻ';
+                                                                        fee = 60000; // fix later
+                                                                    } else {
+                                                                        fee = 50000;
+                                                                        content = 'Đăng ký thẻ mới hợp đồng ' +contractCode;
+                                                                    }
+
+                                                                    $('#addContent').val(content);
+                                                                    $('#addAmount').val(fee);
+                                                                    $('#contractCode').val(contractCode);
+                                                                    $('#delivery').val(delivery);
+
+                                                            }">
+                                                                <i class="fa fa-plus"></i> Thanh toán
+                                                            </button>
+
                                                     </c:if>
+
                                                 </td>
                                                 <td>
                                                     <c:if test="${empty newRequest.resolveDate}">
@@ -156,5 +183,5 @@
     </div>
 </div>
 <!-- /#wrapper -->
-
+<jsp:include page="new-card-requests-modal.jsp" flush="true"/>
 <%@ include file="_shared/footer.jsp"%>

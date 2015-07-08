@@ -205,8 +205,49 @@ public class ContractController extends AuthController {
             r.equest.setAttribute("contractCode", dto.getContractCode());
             return getDetail(r);
         }
-
         // If the code reached this line that means there is no validation errors
+
+        // Handle request new card
+        if (dto.isNewCard()) {
+            CardBusiness cardBusiness = new CardBusiness();
+            NewCardRequestDto newCardRequestDto = new NewCardRequestDto();
+            newCardRequestDto.setContractCode(dto.getContractCode());
+
+            // kiem tra neu hop dong da duoc cap the ( bao gom the cu va moi)
+            if (cardBusiness.getCardByContractIncludeDeactive(dto.getContractCode()).size() > 0) {
+                // neu hop dong da dc phat hanh the, kiem tra xem co yeu cau truoc do chua
+                if (!cardBusiness.isNewCardRequestedByContractCode(dto.getContractCode())) {
+                    if (cardBusiness.getCardByContract(dto.getContractCode()) != null) {
+                        // Deactivate current card
+                        cardBusiness.deactiveCardByContractCode(dto.getContractCode());
+                        // Send new card request
+                        if (dto.isDeliveryNewCard()) {
+                            cardBusiness.requestNewCardRequest(newCardRequestDto, true, true);
+                        } else {
+                            cardBusiness.requestNewCardRequest(newCardRequestDto, false, true);
+                        }
+                    } else {
+                        msg = "Hợp đồng này không có thẻ đang hoạt động. Vui lòng xử lý";
+                        // Set contract code to request scope. Use it in message page.
+                        r.equest.setAttribute("CODE", dto.getContractCode());
+                        r.equest.setAttribute("MESSAGE", msg);
+                        return new JspPage("staff/message.jsp");
+                    }
+                } else {
+                    msg = "Hợp đồng đã yêu cầu thẻ mới trước đó. Vui lòng xử lý";
+                    // Set contract code to request scope. Use it in message page.
+                    r.equest.setAttribute("CODE", dto.getContractCode());
+                    r.equest.setAttribute("MESSAGE", msg);
+                    return new JspPage("staff/message.jsp");
+                }
+            } else {
+                msg = "Hợp đồng chưa có thẻ bảo hiểm. Xin vui lòng phát hành";
+                // Set contract code to request scope. Use it in message page.
+                r.equest.setAttribute("CODE", dto.getContractCode());
+                r.equest.setAttribute("MESSAGE", msg);
+                return new JspPage("staff/message.jsp");
+            }
+        }
 
         // Call to business object
         StaffBusiness staffBus = new StaffBusiness();
@@ -245,7 +286,6 @@ public class ContractController extends AuthController {
             r.equest.setAttribute("contractCode", dto.getContractCode());
             return getDetail(r);
         }
-
         // If the code reached this line that means there is no validation errors
 
         // Call to business object
