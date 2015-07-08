@@ -10,8 +10,8 @@ import java.util.Collection;
 @Entity
 @Table(name = "mic_card", schema = "", catalog = "mic_data")
 public class CardEntity {
-    public static final int STATUS_READY = 1;
-    public static final int STATUS_DEACTIVATED = 0;
+    public static final int STATUS_BUSY = 1;
+    public static final int STATUS_AVAILABLE = 0;
     private String cardId;
     private int status;
     private Collection<CardInstanceEntity> micCardInstancesByCardId;

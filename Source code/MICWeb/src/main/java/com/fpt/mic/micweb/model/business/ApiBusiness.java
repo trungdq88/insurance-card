@@ -45,7 +45,7 @@ public class ApiBusiness {
             // The card is not exists in the system, create new one.
             CardEntity cardEntity = new CardEntity();
             cardEntity.setCardId(cardID);
-            cardEntity.setStatus(CardEntity.STATUS_READY);
+            cardEntity.setStatus(CardEntity.STATUS_BUSY);
             cardDao.create(cardEntity);
         }
 
@@ -60,7 +60,7 @@ public class ApiBusiness {
             cardInstanceDao.update(oldCard);
             // Set status for the card
             CardEntity cardEntity = cardDao.read(cardID);
-            cardEntity.setStatus(CardEntity.STATUS_DEACTIVATED);
+            // cardEntity.setStatus(CardEntity.STATUS_AVAILABLE); // Uncomment this if accept auto-recycle cards
             cardDao.update(cardEntity);
         }
 
