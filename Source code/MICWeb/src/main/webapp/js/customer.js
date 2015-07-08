@@ -224,9 +224,19 @@ $(document).ready(function () {
     }
 
 
-    DayDiff($('#expiredDate').val()) > 0 ? $('#dateAvailable').val("Còn hạn: " + Math.abs(DayDiff($('#expiredDate').val())) + ' ngày')
-        : $('#dateAvailable').val("Quá hạn: " + Math.abs(DayDiff($('#expiredDate').val())) + ' ngày');
+    //DayDiff($('#expiredDate').val()) > 0 ? $('#dateAvailable').val("Còn hạn: " + Math.abs(DayDiff($('#expiredDate').val())) + ' ngày')
+    //    : $('#dateAvailable').val("Quá hạn: " + Math.abs(DayDiff($('#expiredDate').val())) + ' ngày');
+    CheckDayAvailable();
+    function CheckDayAvailable(){
+        var expiredDate = $('#expiredDate').val();
 
+        if(DayDiff(expiredDate) > 0){
+            $('#dateAvailable').val("Còn hạn: " + Math.abs(DayDiff($('#expiredDate').val())) + ' ngày');
+        }
+        else {
+            $('#dateAvailable').val("Quá hạn: " + Math.abs(DayDiff($('#expiredDate').val())) + ' ngày');
+        }
+    }
     $('#renew').click(function () {
         if (DayDiff($('#expiredDate').val()) > 60) {
             $('#acceptRenew').prop('disabled', true);

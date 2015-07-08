@@ -162,7 +162,16 @@
                                        value="${submitted.vehicleCapacity}">
                             </div>
                         </div>
+                        <!-- Accident date -->
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label" for="accidentDate">Ngày xảy ra tai nạn *</label>
 
+                            <div class="col-sm-3">
+                                <input id="accidentDate" name="compensation:accidentDate"
+                                       value="<fmt:formatDate value="${submitted.accidentDate}" pattern="yyyy-MM-dd" />"
+                                       class="form-control input-md" type="date" required>
+                            </div>
+                        </div>
                         <!-- Accident place -->
                         <div class="form-group">
                             <label class="col-sm-4 control-label" for="accidentPlace">Nơi xảy ra tai nạn *</label>
@@ -256,7 +265,7 @@
                         <!-- Compensation note -->
                         <div class="form-group">
                             <label class="col-sm-4 control-label" for="compensationNote">
-                                Biên bản của cơ quan CA
+                                Yêu cầu bồi thường
                             </label>
 
                             <div class="col-sm-7">
@@ -268,7 +277,7 @@
 
                         <!-- Attachment -->
                         <div class="form-group">
-                            <label class="col-sm-4 control-label" for="attachment">Văn bản đính kèm</label>
+                            <label class="col-sm-4 control-label" for="attachment">Biên bản của cơ quan CA</label>
 
                             <div class="col-sm-6">
                                 <input id="attachment" name="compensation:attachment" class="form-control input-md"
@@ -292,17 +301,17 @@
                                 <input id="createdDate" name="compensation:createdDate"
                                        class="form-control input-md" type="date" required>
                             </div>
-                            <div class="col-sm-3">
-                                <input id="accidentDate" name="compensation:accidentDate"
-                                       class="form-control input-md" type="date" required>
-                            </div>
+
                         </div>
+
                         <button type="submit" class="btn btn-success">
                             <i class="fa fa-arrow-right"></i>
                             Gởi yêu cầu bồi thường
                         </button>
+
                     </div>
                 </form>
+                <br/>
             </div>
         </div>
 
