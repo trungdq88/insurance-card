@@ -14,6 +14,7 @@ import java.util.Collection;
  * Created by dinhquangtrung on 6/5/15.
  */
 public class CardInstanceEntity implements Parcelable {
+    public int id;
     public String cardId;
     public Timestamp activatedDate;
     public Timestamp deactivatedDate;
@@ -37,6 +38,7 @@ public class CardInstanceEntity implements Parcelable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        this.id = cardEntity.id;
         this.cardId = cardEntity.cardId;
         this.activatedDate = cardEntity.activatedDate;
         this.deactivatedDate = cardEntity.deactivatedDate;

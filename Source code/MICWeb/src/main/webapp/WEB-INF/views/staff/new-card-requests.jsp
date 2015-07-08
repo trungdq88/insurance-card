@@ -65,12 +65,12 @@
                                                        role="button" data-content="${newRequest.note}"><i class="fa fa-file"></i></a></td>
                                                 <td>
                                                     <a href="#">
-                                                            ${newRequest.oldCardId}
+                                                            ${newRequest.oldCardInstanceId}
                                                     </a>
                                                 </td>
                                                 <td>
-                                                    <a href="${pageContext.request.contextPath}/staff/contract?action=detail&code=${newRequest.micCardByOldCardId.contractCode}">
-                                                            ${newRequest.micCardByOldCardId.contractCode}
+                                                    <a href="${pageContext.request.contextPath}/staff/contract?action=detail&code=${newRequest.micCardInstanceByOldCardInstanceId.contractCode}">
+                                                            ${newRequest.micCardInstanceByOldCardInstanceId.contractCode}
                                                     </a>
 
                                                 </td>

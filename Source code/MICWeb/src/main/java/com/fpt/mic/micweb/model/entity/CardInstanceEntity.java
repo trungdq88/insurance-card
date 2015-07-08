@@ -1,6 +1,7 @@
 package com.fpt.mic.micweb.model.entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Collection;
 
@@ -10,7 +11,7 @@ import java.util.Collection;
  */
 @Entity
 @Table(name = "mic_card_instance", schema = "", catalog = "mic_data")
-public class CardInstanceEntity {
+public class CardInstanceEntity implements Serializable {
     private int id;
     private String cardId;
     private Timestamp activatedDate;

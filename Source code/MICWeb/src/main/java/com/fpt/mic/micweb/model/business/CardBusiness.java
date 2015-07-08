@@ -79,7 +79,7 @@ public class CardBusiness {
         CardInstanceDao cardInstanceDao = new CardInstanceDao();
         NewCardRequestEntity newCardRequestEntity = new NewCardRequestEntity();
         CardInstanceEntity cardEntity = cardInstanceDao.getActiveCardInstanceByContract(newCardRequestDto.getContractCode());
-        newCardRequestEntity.setOldCardInstanceId(cardEntity.getCardId());
+        newCardRequestEntity.setOldCardInstanceId(cardEntity.getId());
         newCardRequestEntity.setNote(newCardRequestDto.getNote());
         newCardRequestEntity.setRequestDate(new Timestamp(new Date().getTime()));
         if (isDeliveryRequested == true) {

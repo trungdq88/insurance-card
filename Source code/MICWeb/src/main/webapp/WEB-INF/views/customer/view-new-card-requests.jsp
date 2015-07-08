@@ -72,7 +72,7 @@
                                role="button" data-content="${newRequest.note}"><i class="fa fa-file"></i></a></td>
                         <td>
                           <a href="#">
-                              ${newRequest.oldCardId}
+                              ${newRequest.oldCardInstanceId}
                           </a>
                         </td>
                         <td>
