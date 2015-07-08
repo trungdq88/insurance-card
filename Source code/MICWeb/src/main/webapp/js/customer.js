@@ -272,6 +272,17 @@ $(document).ready(function () {
     /**
      * ---------------------------------Region add new punishment
      */
+    $('.fp__btn').click(function () {
+        $('#cancel').trigger("click");
+    });
+
+    $('#attImage').change(function () {
+        $('#showPunishment').addClass('active');
+        $('#punishments').addClass('active');
+        $('#addPunishment').trigger("click");
+
+    });
+
     $('input[type=file]').change(function (e) {
         var root = $(this).val();
         var array = root.split('\\');
@@ -288,7 +299,12 @@ $(document).ready(function () {
             $('#notifyPunishment').removeClass('hide');
             return false;
         }
+        if($('#attachment').val() == ''){
+            $('#notifyPunishment1').removeClass('hide');
+            return false;
+        }
         $('#titlePunishment').val($('#contentPunishment').val());
+
     });
     /**
      * ---------------------------------Add new accident
@@ -312,7 +328,7 @@ $(document).ready(function () {
     });
     function getDateNow() {
         var myDate = new Date();
-        var year = myDate.getFullYear() ;
+        var year = myDate.getFullYear();
         var month = (1 + myDate.getMonth()).toString();
         month = month.length > 1 ? month : '0' + month;
         var day = myDate.getDate().toString();

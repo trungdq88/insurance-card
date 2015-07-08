@@ -216,7 +216,10 @@
                                         <c:when test="${empty compensation.attachment}">
                                             <span class="empty-value">Không có</span>
                                         </c:when>
-                                        <c:otherwise>${compensation.attachment}</c:otherwise>
+                                        <c:otherwise>
+                                            <a href="${compensation.attachment}"
+                                               target="_newtab"><i class="fa fa-file-text-o"></i></a>
+                                        </c:otherwise>
                                     </c:choose>
                                 </div>
                             </div>
