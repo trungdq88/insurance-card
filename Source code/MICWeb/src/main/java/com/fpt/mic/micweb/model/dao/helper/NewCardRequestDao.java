@@ -42,6 +42,17 @@ public class NewCardRequestDao extends GenericDaoJpaImpl<NewCardRequestEntity, I
         return resultList;
     }
 
+    public List getAllNewCardRequest() {
+        EntityManager entityManager = factory.createEntityManager();
+        Query query = entityManager.createQuery(
+                "SELECT co " +
+                        "FROM NewCardRequestEntity co "
+        );
+        List resultList = query.getResultList();
+        entityManager.close();
+        return resultList;
+    }
+
     public NewCardRequestEntity getUnresolveRequestByContractCode(String contractCode) {
         EntityManager entityManager = factory.createEntityManager();
         Query query = entityManager.createQuery(

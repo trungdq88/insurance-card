@@ -33,7 +33,7 @@
 
                             <div class="col-sm-7">
                                 <input id="addContent" name="createPayment:content" class="form-control input-md"
-                                       type="text" required maxlength="250"
+                                       type="text" required maxlength="250" pattern="\S"
                                        title="Vui lòng nhập dịch vụ cần thanh toán"
                                        placeholder="Ví dụ: Đăng ký hợp đồng mới KH0001">
                             </div>
