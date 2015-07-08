@@ -5,10 +5,10 @@ import com.fpt.mic.micweb.framework.responses.JsonString;
 import com.fpt.mic.micweb.framework.responses.JspPage;
 import com.fpt.mic.micweb.framework.R;
 import com.fpt.mic.micweb.framework.responses.ResponseObject;
-import com.fpt.mic.micweb.model.dao.CardDao;
+import com.fpt.mic.micweb.model.dao.CardInstanceDao;
 import com.fpt.mic.micweb.model.dao.ContractDao;
 import com.fpt.mic.micweb.model.dao.StaffDao;
-import com.fpt.mic.micweb.model.entity.CardEntity;
+import com.fpt.mic.micweb.model.entity.CardInstanceEntity;
 import com.fpt.mic.micweb.model.entity.ContractEntity;
 import com.fpt.mic.micweb.model.entity.StaffEntity;
 
@@ -90,17 +90,17 @@ public class TestDaoController extends BasicController {
      * @return
      */
     public ResponseObject getCreateNewCard(R r) {
-        CardDao cardDao = new CardDao();
+        CardInstanceDao cardInstanceDao = new CardInstanceDao();
 
         // Create card entity
-        CardEntity cardEntity = new CardEntity();
+        CardInstanceEntity cardEntity = new CardInstanceEntity();
         cardEntity.setCardId("123123");
         cardEntity.setActivatedDate(new Timestamp(123123123));
         // cardEntity.setDeactivatedDate(); // Don't have this value yet
         // cardEntity.setNewCardRequestId(); // Don't have this value yet
         cardEntity.setContractCode("CON001"); // Contract CON001 must be exists or there will be errors
 
-        CardEntity result = cardDao.create(cardEntity);
+        CardInstanceEntity result = cardInstanceDao.create(cardEntity);
         return new JspPage("test/testdao/newcard.jsp");
 
     }

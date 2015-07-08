@@ -1,8 +1,6 @@
 package com.fpt.mic.micweb.model.entity;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.sql.Timestamp;
 import java.util.Collection;
 
@@ -40,7 +38,7 @@ public class ContractEntity {
     private Timestamp createdDate;
 
     private Collection<AccidentEntity> micAccidentsByContractCode;
-    private Collection<CardEntity> micCardsByContractCode;
+    private Collection<CardInstanceEntity> micCardInstancesByContractCode;
     private Collection<CompensationEntity> micCompensationsByContractCode;
     private ContractTypeEntity micContractTypeByContractTypeId;
     private CustomerEntity micCustomerByCustomerCode;
@@ -369,12 +367,12 @@ public class ContractEntity {
     }
 
     @OneToMany(mappedBy = "micContractByContractCode")
-    public Collection<CardEntity> getMicCardsByContractCode() {
-        return micCardsByContractCode;
+    public Collection<CardInstanceEntity> getMicCardInstancesByContractCode() {
+        return micCardInstancesByContractCode;
     }
 
-    public void setMicCardsByContractCode(Collection<CardEntity> micCardsByContractCode) {
-        this.micCardsByContractCode = micCardsByContractCode;
+    public void setMicCardInstancesByContractCode(Collection<CardInstanceEntity> micCardsByContractCode) {
+        this.micCardInstancesByContractCode = micCardsByContractCode;
     }
 
     @OneToMany(mappedBy = "micContractByContractCode")

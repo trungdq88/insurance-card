@@ -11,7 +11,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.fpt.mic.mobile.checker.app.R;
-import com.fpt.mic.mobile.checker.app.entity.CardEntity;
+import com.fpt.mic.mobile.checker.app.entity.CardInstanceEntity;
 import com.fpt.mic.mobile.checker.app.utils.Constants;
 
 import java.util.Date;
@@ -35,7 +35,7 @@ public class InfoActivity extends Activity {
     TextView txtContractStaff;
     TextView txtDatePublish;
     TextView txtHotline;
-    private CardEntity card;
+    private CardInstanceEntity card;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +63,7 @@ public class InfoActivity extends Activity {
         txtDatePublish = (TextView) findViewById(R.id.txtDatePublish);
         txtHotline = (TextView) findViewById(R.id.txtHotline);
 
-        showInfo((CardEntity) getIntent().getParcelableExtra("card"));
+        showInfo((CardInstanceEntity) getIntent().getParcelableExtra("card"));
     }
 
     @Override
@@ -91,7 +91,7 @@ public class InfoActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void showInfo(CardEntity card) {
+    public void showInfo(CardInstanceEntity card) {
 
         this.card = card;
 

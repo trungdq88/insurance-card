@@ -125,16 +125,16 @@ public class CardController extends AuthController {
 
         String message;
         // kiem tra neu hop dong da duoc cap the ( bao gom the cu va moi)
-        if (cardBusiness.getCardByContractIncludeDeactive(contractCode).size() > 0) {
+        if (cardBusiness.getCardInstancesIncludeDeactive(contractCode).size() > 0) {
 
             // neu hop dong da dc phat hanh the, kiem tra xem co yeu cau truoc do chua
-            if (cardBusiness.isNewCardRequestedByContractCode(contractCode) == false) {
+            if (cardBusiness.isNewCardRequested(contractCode) == false) {
                 // neu chua thi tien hanh thanh toan
                 HttpSession session = r.equest.getSession();
                 // thanh toan truc tiep
                 if (newCardRequestDto.getPayment().equalsIgnoreCase("direct")) {
                     // gui yeu cau the moi
-                    if(cardBusiness.requestNewCardRequest(newCardRequestDto,false,false) == false){
+                    if(cardBusiness.requestNewCardRequest(newCardRequestDto, false, false) == false){
                         message = "Có lỗi xảy ra. Xin thử lại";
                         r.equest.setAttribute("result", message);
                         r.equest.setAttribute("contractCode",newCardRequestDto.getContractCode());

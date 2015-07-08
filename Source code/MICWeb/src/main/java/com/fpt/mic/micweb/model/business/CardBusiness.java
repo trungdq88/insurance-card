@@ -2,11 +2,14 @@ package com.fpt.mic.micweb.model.business;
 
 import com.fpt.mic.micweb.model.dao.CardAccessLogDao;
 import com.fpt.mic.micweb.model.dao.CardDao;
+import com.fpt.mic.micweb.model.dao.CardInstanceDao;
 import com.fpt.mic.micweb.model.dao.helper.NewCardRequestDao;
 import com.fpt.mic.micweb.model.dto.NotificationBuilder;
 import com.fpt.mic.micweb.model.dto.form.NewCardRequestDto;
+import com.fpt.mic.micweb.model.dto.form.RecycleCardDto;
 import com.fpt.mic.micweb.model.entity.CardAccessLogEntity;
 import com.fpt.mic.micweb.model.entity.CardEntity;
+import com.fpt.mic.micweb.model.entity.CardInstanceEntity;
 import com.fpt.mic.micweb.model.entity.NewCardRequestEntity;
 
 import java.sql.Timestamp;
@@ -21,40 +24,35 @@ import java.util.Map;
 public class CardBusiness {
 
     public List<CardEntity> getIssuedCard(int offset, int count) {
-        CardDao cardDao = new CardDao();
-        return cardDao.getIssuedCard(offset, count);
+        CardInstanceDao cardInstanceDao = new CardInstanceDao();
+        return cardInstanceDao.getIssuedCard(offset, count);
     }
     public List<CardEntity> getIssuedCard(String customerCode, int offset, int count) {
-        CardDao cardDao = new CardDao();
+        CardInstanceDao cardDao = new CardInstanceDao();
         return cardDao.getIssuedCard(customerCode, offset, count);
     }
 
     public Long getIssuedCardCount() {
-        CardDao cardDao = new CardDao();
-        return cardDao.getIssuedCardCount();
+        CardInstanceDao cardInstanceDao = new CardInstanceDao();
+        return cardInstanceDao.getIssuedCardCount();
     }
 
-    public Long getIssuedCardCount(String customerCode) {
-        CardDao cardDao = new CardDao();
-        return cardDao.getIssuedCardCount(customerCode);
+    public CardInstanceEntity getLastActiveCardInnstance(String cardId) {
+        CardInstanceDao cardInstanceDao = new CardInstanceDao();
+        return cardInstanceDao.getLastActiveCardInstanceByCardId(cardId);
     }
 
-    public CardEntity getCardDetail(String cardId) {
-        CardDao cardDao = new CardDao();
-        return cardDao.read(cardId);
-    }
-
-    public CardEntity getCardByContract(String contractCode) {
-        CardDao cardDao = new CardDao();
-        CardEntity cardEntity = cardDao.getCardByContract(contractCode);
+    public CardInstanceEntity getCardByContract(String contractCode) {
+        CardInstanceDao cardInstanceDao = new CardInstanceDao();
+        CardInstanceEntity cardEntity = cardInstanceDao.getActiveCardInstanceByContract(contractCode);
         return cardEntity;
     }
     // return map: key = newCardRequestId, value: new CardId
     public Map<Integer, String> getMappingWithNewCardRequest() {
         Map<Integer, String> map = new HashMap<Integer, String>();
-        CardDao cardDao = new CardDao();
-        List<CardEntity> list = cardDao.getAllCard();
-        for (CardEntity cardEntity : list) {
+        CardInstanceDao cardInstanceDao = new CardInstanceDao();
+        List<CardInstanceEntity> list = cardInstanceDao.getAllCard();
+        for (CardInstanceEntity cardEntity : list) {
             map.put(cardEntity.getNewCardRequestId(), cardEntity.getCardId());
         }
         return map;
@@ -73,37 +71,33 @@ public class CardBusiness {
 
     public Map<String, String> getMappingWithContract() {
         Map<String, String> map = new HashMap<String, String>();
-        CardDao cardDao = new CardDao();
-        List<CardEntity> list = cardDao.getAllCard();
-        for (CardEntity cardEntity : list) {
+        CardInstanceDao cardInstanceDao = new CardInstanceDao();
+        List<CardInstanceEntity> list = cardInstanceDao.getAllCard();
+        for (CardInstanceEntity cardEntity : list) {
             map.put(cardEntity.getCardId(), cardEntity.getContractCode());
         }
         return map;
     }
 
-    public List getCardByContractIncludeDeactive(String contractCode) {
-        CardDao cardDao = new CardDao();
-        List list = cardDao.getCardByContractIncludeDeactive(contractCode);
+    public List getCardInstancesIncludeDeactive(String contractCode) {
+        CardInstanceDao cardInstanceDao = new CardInstanceDao();
+        List list = cardInstanceDao.getCardInstancesByContractIncludeDeactive(contractCode);
         return list;
     }
 
 
     // kiem tra hop dong da co yeu cau the moi chua giai quyet chua
-    public boolean isNewCardRequestedByContractCode(String contractCode){
+    public boolean isNewCardRequested(String contractCode){
         NewCardRequestDao newCardRequestDao = new NewCardRequestDao();
-
-        if(newCardRequestDao.getUnresolveRequestByContractCode(contractCode) == null){
-            return false;
-        }
-        return true;
+        return newCardRequestDao.getUnresolveRequest(contractCode) != null;
     }
     // dang ky the moi
     public boolean requestNewCardRequest(NewCardRequestDto newCardRequestDto, boolean isDeliveryRequested, boolean isPaid) {
         NewCardRequestDao newCardRequestDao = new NewCardRequestDao();
-        CardDao cardDao = new CardDao();
+        CardInstanceDao cardInstanceDao = new CardInstanceDao();
         NewCardRequestEntity newCardRequestEntity = new NewCardRequestEntity();
-        CardEntity cardEntity = cardDao.getLastCardByContract(newCardRequestDto.getContractCode());
-        newCardRequestEntity.setOldCardId(cardEntity.getCardId());
+        CardInstanceEntity cardEntity = cardInstanceDao.getActiveCardInstanceByContract(newCardRequestDto.getContractCode());
+        newCardRequestEntity.setOldCardInstanceId(cardEntity.getId());
         newCardRequestEntity.setNote(newCardRequestDto.getNote());
         newCardRequestEntity.setRequestDate(new Timestamp(new Date().getTime()));
         if (isDeliveryRequested == true) {
@@ -125,10 +119,10 @@ public class CardBusiness {
         return false;
     }
     public void deactiveCardByContractCode(String contractCode) {
-        CardDao cardDao = new CardDao();
-        CardEntity cardEntity = cardDao.getCardByContract(contractCode);
+        CardInstanceDao cardInstanceDao = new CardInstanceDao();
+        CardInstanceEntity cardEntity = cardInstanceDao.getActiveCardInstanceByContract(contractCode);
         cardEntity.setDeactivatedDate(new Timestamp(new Date().getTime()));
-        cardDao.update(cardEntity);
+        cardInstanceDao.update(cardEntity);
     }
 
     public List<CardAccessLogEntity> getCardAccessLog(String cardId, int offset, int count) {
@@ -139,6 +133,17 @@ public class CardBusiness {
     public Long getCardAccessLogCount(String cardId) {
         CardAccessLogDao cardAccessLogDao = new CardAccessLogDao();
         return cardAccessLogDao.getCardAccessLogCount(cardId);
+    }
+
+    /**
+     * Set status for card to AVAILABLE and ready to be use for other contract
+     * @param dto
+     */
+    public void recycleCard(RecycleCardDto dto) {
+        CardDao cardDao = new CardDao();
+        CardEntity card = cardDao.read(dto.getCardId());
+        card.setStatus(CardEntity.STATUS_AVAILABLE);
+        cardDao.update(card);
     }
     public NewCardRequestEntity updatePaidNewCardRequest(String contractCode){
         NewCardRequestEntity newCardRequestEntity;

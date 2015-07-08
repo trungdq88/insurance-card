@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 import com.fpt.mic.mobile.printer.app.R;
-import com.fpt.mic.mobile.printer.app.entity.CardEntity;
+import com.fpt.mic.mobile.printer.app.entity.CardInstanceEntity;
 
 /**
  * FPT University - Capstone Project - Summer 2015 - PrinterMobileApp
@@ -17,7 +17,7 @@ public class SuccessActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_success);
 
-        CardEntity cardEntity = getIntent().getParcelableExtra("card");
+        CardInstanceEntity cardEntity = getIntent().getParcelableExtra("card");
 
         TextView txtCardID = (TextView) findViewById(R.id.txtCardID);
         TextView txtContractCode = (TextView) findViewById(R.id.txtContractCode);

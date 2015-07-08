@@ -15,7 +15,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 import com.fpt.mic.mobile.checker.app.R;
 import com.fpt.mic.mobile.checker.app.business.ApiBusiness;
-import com.fpt.mic.mobile.checker.app.entity.CardEntity;
+import com.fpt.mic.mobile.checker.app.entity.CardInstanceEntity;
 
 
 public class MainActivity extends Activity {
@@ -113,7 +113,7 @@ public class MainActivity extends Activity {
         ApiBusiness apiBusiness = new ApiBusiness();
         apiBusiness.checkCard(tagID, new ApiBusiness.IOnCheckContract() {
             @Override
-            public void onCheckCardResult(CardEntity result) {
+            public void onCheckCardResult(CardInstanceEntity result) {
                 Intent intent = new Intent(MainActivity.this, InfoActivity.class);
                 intent.putExtra("card", result);
                 startActivity(intent);

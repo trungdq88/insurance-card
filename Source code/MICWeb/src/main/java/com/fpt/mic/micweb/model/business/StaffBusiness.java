@@ -171,10 +171,10 @@ public class StaffBusiness {
     public boolean renewContract(RenewContractDto dto, StaffEntity receiver) {
         ContractDao contractDao = new ContractDao();
         PaymentDao paymentDao = new PaymentDao();
-        CardDao cardDao = new CardDao();
+        CardInstanceDao cardInstanceDao = new CardInstanceDao();
         ContractEntity contractEntity = contractDao.read(dto.getContractCode());
         PaymentEntity paymentEntity = new PaymentEntity();
-        CardEntity cardEntity = cardDao.getCardByContract(dto.getContractCode());
+        CardInstanceEntity cardEntity = cardInstanceDao.getActiveCardInstanceByContract(dto.getContractCode());
         Timestamp startDate = dto.getStartDate();
 
         // Check contract
@@ -282,10 +282,10 @@ public class StaffBusiness {
     public boolean completePayment(CompletePaymentDto dto, StaffEntity receiver) {
         ContractDao contractDao = new ContractDao();
         PaymentDao paymentDao = new PaymentDao();
-        CardDao cardDao = new CardDao();
+        CardInstanceDao cardInstanceDao = new CardInstanceDao();
         ContractEntity contractEntity = contractDao.read(dto.getContractCode());
         PaymentEntity paymentEntity = new PaymentEntity();
-        CardEntity cardEntity = cardDao.getCardByContract(dto.getContractCode());
+        CardInstanceEntity cardEntity = cardInstanceDao.getActiveCardInstanceByContract(dto.getContractCode());
 
         // Check contract
         if (contractEntity != null) {

@@ -71,13 +71,13 @@
                         <td><a tabindex="0" data-trigger="focus" data-toggle="popover" title="Ghi chú từ khách hàng"
                                role="button" data-content="${newRequest.note}"><i class="fa fa-file"></i></a></td>
                         <td>
-                          <a href="${pageContext.request.contextPath}/customer/card?action=detail&cardId=${newRequest.oldCardId}">
-                              ${newRequest.oldCardId}
+                          <a href="#">
+                              ${newRequest.micCardInstanceByOldCardInstanceId.cardId}
                           </a>
                         </td>
                         <td>
-                          <a href="${pageContext.request.contextPath}/customer/contract?action=detail&code=${mapCardContract[newRequest.oldCardId]}">
-                              ${mapCardContract[newRequest.oldCardId]}
+                          <a href="${pageContext.request.contextPath}/customer/contract?action=detail&code=${mapCardContract[newRequest.micCardInstanceByOldCardInstanceId.cardId]}">
+                              ${mapCardContract[newRequest.micCardInstanceByOldCardInstanceId.cardId]}
                           </a>
                         </td>
                         <td>
