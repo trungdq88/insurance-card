@@ -102,11 +102,6 @@
                                                                     $('#addAmount').val(fee);
                                                                     $('#contractCode').val(contractCode);
                                                                     $('#delivery').val(delivery);
-                                                                    alert(content);
-                                                                $('#count').val( rowNumber );
-                                                                var fee = '${requests}';
-
-                                                                $('#addContent').val('');
 
                                                             }">
                                                                 <i class="fa fa-plus"></i> Thanh toán
