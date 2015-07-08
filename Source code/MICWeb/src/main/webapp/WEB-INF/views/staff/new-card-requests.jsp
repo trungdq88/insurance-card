@@ -188,6 +188,9 @@
 <jsp:include page="new-card-requests-modal.jsp" flush="true"/>
 <%@ include file="_shared/footer.jsp"%>
 <script language="JavaScript">
+    document.getElementById("addPaidDate").min = '${config.paidDateMin}';
+    document.getElementById("addPaidDate").max = '${config.paidDateMax}';
+
     function setInputDate(_id){
         var _dat = document.querySelector(_id);
         var hoy = new Date(),
