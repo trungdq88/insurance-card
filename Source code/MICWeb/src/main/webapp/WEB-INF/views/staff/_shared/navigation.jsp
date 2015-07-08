@@ -19,7 +19,9 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="${pageContext.request.contextPath}/staff">Insurance Card</a>
+        <a href="${pageContext.request.contextPath}/staff">
+            <img src="${pageContext.request.contextPath}/img/logoCompany.png"/>
+        </a>
     </div>
     <!-- /.navbar-header -->
 

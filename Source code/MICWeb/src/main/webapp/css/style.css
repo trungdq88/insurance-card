@@ -101,3 +101,40 @@ th {
 .notif-item:hover .mark-as-unread:not(.dont-show) {
     visibility: visible;
 }
+.navbar-header img {
+    margin: 7px;
+    height: 50px;
+}
+.sidebar {
+    margin-top: 64px;
+}
+.navbar-top-links li a {
+    padding: 22px;
+}
+.navbar-static-top {
+    background-color: #4A7CE7;
+}
+.navbar-top-links > li > a:focus,
+.navbar-top-links > li > a:hover,
+.navbar-top-links .open > a,
+.navbar-top-links .open > a:focus,
+.navbar-top-links .open > a:hover {
+    background-color: #5F92FF;
+}
+.navbar-top-links a {
+    color: #ffffff;
+}
+
+.navbar-static-top .navbar-brand {
+    color: #fff;
+}
+
+#page-footer {
+    background-color: rgb(49, 74, 128);
+    color: white;
+    padding: 30px;
+}
+
+#page-footer a {
+    color: #fff;
+}
