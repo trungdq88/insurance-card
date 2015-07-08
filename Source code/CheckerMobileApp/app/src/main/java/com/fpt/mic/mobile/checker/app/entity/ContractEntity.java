@@ -35,7 +35,7 @@ public class ContractEntity {
     public Timestamp createdDate;
     public Integer needRenewPayment;
     public Collection<Object> micAccidentsByContractCode;
-    public Collection<Object> micCardsByContractCode;
+    public Collection<Object> micCardInstancesByContractCode;
     public Collection<Object> micCompensationsByContractCode;
     public ContractTypeEntity micContractTypeByContractTypeId;
     public CustomerEntity micCustomerByCustomerCode;

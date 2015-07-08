@@ -75,8 +75,8 @@ public class NotificationBuilder {
         NotificationEntity entity = new NotificationEntity();
         String content = "Khách hàng %s gửi yêu cầu cấp thẻ mới cho hợp đồng %s";
         entity.setContent(String.format(content,
-                newCardRequestEntity.getMicCardByOldCardId().getMicContractByContractCode().getMicCustomerByCustomerCode().getName(),
-                newCardRequestEntity.getMicCardByOldCardId().getMicContractByContractCode().getContractCode()));
+                newCardRequestEntity.getMicCardInstanceByOldCardInstanceId().getMicContractByContractCode().getMicCustomerByCustomerCode().getName(),
+                newCardRequestEntity.getMicCardInstanceByOldCardInstanceId().getMicContractByContractCode().getContractCode()));
         entity.setCreatedDate(new Timestamp(new Date().getTime()));
         entity.setType(NotificationEntity.Type.CUSTOMER_SEND_NEW_CARD_REQUEST);
         entity.setExtraData(newCardRequestEntity.getId() + "");

@@ -1,6 +1,6 @@
 package com.fpt.mic.micweb.model.business;
 
-import com.fpt.mic.micweb.model.dao.CardDao;
+import com.fpt.mic.micweb.model.dao.CardInstanceDao;
 import com.fpt.mic.micweb.model.dao.ContractDao;
 import com.fpt.mic.micweb.model.dto.NotificationBuilder;
 import com.fpt.mic.micweb.model.entity.ContractEntity;
@@ -128,8 +128,8 @@ public class SchedulerBusiness {
             if (!(contractEntity.getStartDate().after(currentDate)) // If the date has come
                     && !contractEntity.getStartDate().equals(contractEntity.getExpiredDate()) // And the contract is paid
                     ) {
-                CardDao cardDao = new CardDao();
-                if (null == cardDao.getCardByContract(contractEntity.getContractCode())) {
+                CardInstanceDao cardInstanceDao = new CardInstanceDao();
+                if (null == cardInstanceDao.getActiveCardInstanceByContract(contractEntity.getContractCode())) {
                     contractEntity.setStatus(Constants.ContractStatus.NO_CARD);
                     contractEntity.setLastModified(new Timestamp(new Date().getTime()));
                     contractDao.update(contractEntity);

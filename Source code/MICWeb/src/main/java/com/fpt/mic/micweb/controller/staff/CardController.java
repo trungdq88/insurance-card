@@ -8,7 +8,7 @@ import com.fpt.mic.micweb.framework.responses.ResponseObject;
 import com.fpt.mic.micweb.model.business.CardBusiness;
 import com.fpt.mic.micweb.model.business.StaffBusiness;
 import com.fpt.mic.micweb.model.dto.UserDto;
-import com.fpt.mic.micweb.model.entity.CardEntity;
+import com.fpt.mic.micweb.model.entity.CardInstanceEntity;
 
 import javax.servlet.annotation.WebServlet;
 import java.util.Collections;
@@ -55,7 +55,7 @@ public class CardController extends AuthController {
 
         // Call to business
         final CardBusiness cardBusiness = new CardBusiness();
-        CardEntity cardEntity = cardBusiness.getCardDetail(cardId);
+        CardInstanceEntity cardEntity = cardBusiness.getActiveCardInstnace(cardId);
 
         calPaginator.setGetItemsCallback(new Paginator.IGetItems() {
             @Override

@@ -3,9 +3,8 @@ package com.fpt.mic.mobile.printer.app.business;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fpt.mic.mobile.printer.app.dto.ContractSearchResult;
-import com.fpt.mic.mobile.printer.app.entity.CardEntity;
+import com.fpt.mic.mobile.printer.app.entity.CardInstanceEntity;
 import com.fpt.mic.mobile.printer.app.ApiRequest.ApiRequest;
-import com.fpt.mic.mobile.printer.app.utils.Constants;
 import com.fpt.mic.mobile.printer.app.utils.Settings;
 
 import java.io.IOException;
@@ -48,7 +47,7 @@ public class ContractBusiness {
             @Override
             public void onResponse(String response) {
                 try {
-                    cb.onApiResult(mapper.readValue(response, CardEntity.class));
+                    cb.onApiResult(mapper.readValue(response, CardInstanceEntity.class));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -60,6 +59,6 @@ public class ContractBusiness {
         void onSearchResult(List<ContractSearchResult> results);
     }
     public interface IOnApiResult {
-        void onApiResult(CardEntity result);
+        void onApiResult(CardInstanceEntity result);
     }
 }

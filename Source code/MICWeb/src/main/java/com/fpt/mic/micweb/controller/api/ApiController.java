@@ -6,7 +6,7 @@ import com.fpt.mic.micweb.framework.responses.JsonString;
 import com.fpt.mic.micweb.framework.responses.ResponseObject;
 import com.fpt.mic.micweb.model.business.ApiBusiness;
 import com.fpt.mic.micweb.model.dto.ContractSearchResultDto;
-import com.fpt.mic.micweb.model.entity.CardEntity;
+import com.fpt.mic.micweb.model.entity.CardInstanceEntity;
 
 import javax.servlet.annotation.WebServlet;
 import java.util.List;
@@ -63,7 +63,7 @@ public class ApiController extends BasicController {
         }
 
         // Call to business
-        CardEntity result = apiBusiness.updateCardID(contractCode, cardID);
+        CardInstanceEntity result = apiBusiness.updateCardID(contractCode, cardID);
 
         // Return json result
         return new JsonString(result);
@@ -76,7 +76,7 @@ public class ApiController extends BasicController {
         }
 
         // Call to business
-        CardEntity card = apiBusiness.checkCard(cardID);
+        CardInstanceEntity card = apiBusiness.checkCard(cardID);
 
         // Return json result
         return new JsonString(card);

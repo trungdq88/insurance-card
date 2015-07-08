@@ -15,8 +15,8 @@ public class CardAccessLogEntity {
     private String device;
     private String requestService;
     private String responseContent;
-    private String cardId;
-    private CardEntity micCardByCardId;
+    private String cardInstanceId;
+    private CardInstanceEntity micCardInstanceByCardInstanceId;
 
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
@@ -70,13 +70,13 @@ public class CardAccessLogEntity {
     }
 
     @Basic
-    @Column(name = "card_id")
-    public String getCardId() {
-        return cardId;
+    @Column(name = "card_instance_id")
+    public String getCardInstanceId() {
+        return cardInstanceId;
     }
 
-    public void setCardId(String cardId) {
-        this.cardId = cardId;
+    public void setCardInstanceId(String cardId) {
+        this.cardInstanceId = cardId;
     }
 
     @Override
@@ -93,7 +93,7 @@ public class CardAccessLogEntity {
             return false;
         if (responseContent != null ? !responseContent.equals(that.responseContent) : that.responseContent != null)
             return false;
-        if (cardId != null ? !cardId.equals(that.cardId) : that.cardId != null) return false;
+        if (cardInstanceId != null ? !cardInstanceId.equals(that.cardInstanceId) : that.cardInstanceId != null) return false;
 
         return true;
     }
@@ -105,17 +105,17 @@ public class CardAccessLogEntity {
         result = 31 * result + (device != null ? device.hashCode() : 0);
         result = 31 * result + (requestService != null ? requestService.hashCode() : 0);
         result = 31 * result + (responseContent != null ? responseContent.hashCode() : 0);
-        result = 31 * result + (cardId != null ? cardId.hashCode() : 0);
+        result = 31 * result + (cardInstanceId != null ? cardInstanceId.hashCode() : 0);
         return result;
     }
 
     @ManyToOne
-    @JoinColumn(name = "card_id", referencedColumnName = "card_id", nullable = false, insertable = false, updatable = false)
-    public CardEntity getMicCardByCardId() {
-        return micCardByCardId;
+    @JoinColumn(name = "card_instance_id", referencedColumnName = "card_id", nullable = false, insertable = false, updatable = false)
+    public CardInstanceEntity getMicCardInstanceByCardInstanceId() {
+        return micCardInstanceByCardInstanceId;
     }
 
-    public void setMicCardByCardId(CardEntity micCardByCardId) {
-        this.micCardByCardId = micCardByCardId;
+    public void setMicCardInstanceByCardInstanceId(CardInstanceEntity micCardByCardId) {
+        this.micCardInstanceByCardInstanceId = micCardByCardId;
     }
 }

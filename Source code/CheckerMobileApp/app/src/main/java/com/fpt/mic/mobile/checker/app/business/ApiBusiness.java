@@ -1,11 +1,9 @@
 package com.fpt.mic.mobile.checker.app.business;
 
 
-import android.graphics.Bitmap;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fpt.mic.mobile.checker.app.ApiRequest.ApiRequest;
-import com.fpt.mic.mobile.checker.app.entity.CardEntity;
-import com.fpt.mic.mobile.checker.app.utils.Constants;
+import com.fpt.mic.mobile.checker.app.entity.CardInstanceEntity;
 import com.fpt.mic.mobile.checker.app.utils.Settings;
 
 import java.io.IOException;
@@ -49,7 +47,7 @@ public class ApiBusiness {
             @Override
             public void onResponse(String response) {
                 try {
-                    CardEntity card = mapper.readValue(response, CardEntity.class);
+                    CardInstanceEntity card = mapper.readValue(response, CardInstanceEntity.class);
                     cb.onCheckCardResult(card);
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -85,7 +83,7 @@ public class ApiBusiness {
     }
 
     public interface IOnCheckContract {
-        void onCheckCardResult(CardEntity result);
+        void onCheckCardResult(CardInstanceEntity result);
     }
 
     public interface IOnConnectionResult {

@@ -17,9 +17,9 @@ public class NewCardRequestEntity {
     private String note;
     private int isDeliveryRequested;
     private int isPaid;
-    private String oldCardId;
-    private Collection<CardEntity> micCardsById;
-    private CardEntity micCardByOldCardId;
+    private String oldCardInstanceId;
+    private Collection<CardInstanceEntity> micCardInstancesById;
+    private CardInstanceEntity micCardInstanceByOldCardInstanceId;
 
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
@@ -83,13 +83,13 @@ public class NewCardRequestEntity {
     }
 
     @Basic
-    @Column(name = "old_card_id")
-    public String getOldCardId() {
-        return oldCardId;
+    @Column(name = "old_card_instance_id")
+    public String getOldCardInstanceId() {
+        return oldCardInstanceId;
     }
 
-    public void setOldCardId(String oldCardId) {
-        this.oldCardId = oldCardId;
+    public void setOldCardInstanceId(String oldCardId) {
+        this.oldCardInstanceId = oldCardId;
     }
 
     @Override
@@ -105,7 +105,7 @@ public class NewCardRequestEntity {
         if (note != null ? !note.equals(that.note) : that.note != null) return false;
         if(isDeliveryRequested != that.isDeliveryRequested) return false;
         if(isPaid != that.isPaid) return false;
-        if (oldCardId != null ? !oldCardId.equals(that.oldCardId) : that.oldCardId != null) return false;
+        if (oldCardInstanceId != null ? !oldCardInstanceId.equals(that.oldCardInstanceId) : that.oldCardInstanceId != null) return false;
 
         return true;
     }
@@ -118,27 +118,27 @@ public class NewCardRequestEntity {
         result = 31 * result + (note != null ? note.hashCode() : 0);
         result = 31 * result + isDeliveryRequested;
         result = 31 * result + isPaid;
-        result = 31 * result + (oldCardId != null ? oldCardId.hashCode() : 0);
+        result = 31 * result + (oldCardInstanceId != null ? oldCardInstanceId.hashCode() : 0);
         return result;
     }
 
     @OneToMany(mappedBy = "micNewCardRequestByNewCardRequestId")
-    public Collection<CardEntity> getMicCardsById() {
-        return micCardsById;
+    public Collection<CardInstanceEntity> getMicCardInstancesById() {
+        return micCardInstancesById;
     }
 
-    public void setMicCardsById(Collection<CardEntity> micCardsById) {
-        this.micCardsById = micCardsById;
+    public void setMicCardInstancesById(Collection<CardInstanceEntity> micCardsById) {
+        this.micCardInstancesById = micCardsById;
     }
 
     @ManyToOne
-    @JoinColumn(name = "old_card_id", referencedColumnName = "card_id", nullable = false, insertable = false, updatable = false)
-    public CardEntity getMicCardByOldCardId() {
-        return micCardByOldCardId;
+    @JoinColumn(name = "old_card_instance_id", referencedColumnName = "card_id", nullable = false, insertable = false, updatable = false)
+    public CardInstanceEntity getMicCardInstanceByOldCardInstanceId() {
+        return micCardInstanceByOldCardInstanceId;
     }
 
-    public void setMicCardByOldCardId(CardEntity micCardByOldCardId) {
-        this.micCardByOldCardId = micCardByOldCardId;
+    public void setMicCardInstanceByOldCardInstanceId(CardInstanceEntity micCardByOldCardId) {
+        this.micCardInstanceByOldCardInstanceId = micCardByOldCardId;
     }
 
 }

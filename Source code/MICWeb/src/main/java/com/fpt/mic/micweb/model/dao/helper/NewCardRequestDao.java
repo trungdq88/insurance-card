@@ -6,6 +6,7 @@ import com.fpt.mic.micweb.model.entity.NewCardRequestEntity;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
+import javax.persistence.NonUniqueResultException;
 import javax.persistence.Query;
 import java.util.List;
 
@@ -15,7 +16,7 @@ import java.util.List;
 public class NewCardRequestDao extends GenericDaoJpaImpl<NewCardRequestEntity, Integer> {
     public NewCardRequestEntity getUnsolvedRequestByCardId(String cardId) {
         EntityManager entity = factory.createEntityManager();
-        String hql = "SELECT ca FROM NewCardRequestEntity ca WHERE ca.oldCardId = :oldCardId " +
+        String hql = "SELECT ca FROM NewCardRequestEntity ca WHERE ca.oldCardInstanceId = :oldCardId " +
                 "AND ca.resolveDate = NULL";
         Query query = entity.createQuery(hql);
         query.setParameter("oldCardId", cardId);
@@ -31,7 +32,7 @@ public class NewCardRequestDao extends GenericDaoJpaImpl<NewCardRequestEntity, I
         Query query = entityManager.createQuery(
                 "SELECT co " +
                         "FROM NewCardRequestEntity co " +
-                        "WHERE co.micCardByOldCardId.micContractByContractCode" +
+                        "WHERE co.micCardInstanceByOldCardInstanceId.micContractByContractCode" +
                         ".micCustomerByCustomerCode.customerCode = :customerCode ORDER BY co.resolveDate ASC"
         );
         query.setParameter("customerCode", customerCode);
@@ -42,18 +43,23 @@ public class NewCardRequestDao extends GenericDaoJpaImpl<NewCardRequestEntity, I
         return resultList;
     }
 
-    public NewCardRequestEntity getUnresolveRequestByContractCode(String contractCode) {
+    public NewCardRequestEntity getUnresolveRequest(String contractCode) {
         EntityManager entityManager = factory.createEntityManager();
         Query query = entityManager.createQuery(
                 "SELECT co " +
                         "FROM NewCardRequestEntity co " +
-                        "WHERE co.micCardByOldCardId.micContractByContractCode.contractCode = :contractCode" +
+                        "WHERE co.micCardInstanceByOldCardInstanceId.micContractByContractCode.contractCode = :contractCode" +
                         " AND co.resolveDate = NULL"
         );
         query.setParameter("contractCode", contractCode);
 
         try {
             return (NewCardRequestEntity) query.getSingleResult();
+        } catch (NonUniqueResultException e) {
+            e.printStackTrace();
+            System.out.println("getUnresolveRequest returns multiple results," +
+                    " possibility database inconsistency due to handy modification");
+            return null;
         } catch (NoResultException e) {
             return null;
         } finally {
@@ -75,7 +81,7 @@ public class NewCardRequestDao extends GenericDaoJpaImpl<NewCardRequestEntity, I
         Query query = entityManager.createQuery(
                 "SELECT COUNT (co) " +
                         "FROM NewCardRequestEntity co " +
-                        "WHERE co.micCardByOldCardId.micContractByContractCode" +
+                        "WHERE co.micCardInstanceByOldCardInstanceId.micContractByContractCode" +
                         ".micCustomerByCustomerCode.customerCode = :customerCode ORDER BY co.resolveDate ASC"
         );
         query.setParameter("customerCode", customerCode);
@@ -88,7 +94,7 @@ public class NewCardRequestDao extends GenericDaoJpaImpl<NewCardRequestEntity, I
         EntityManager entity = factory.createEntityManager();
         String hql = "SELECT COUNT (co) " +
                 "FROM NewCardRequestEntity co " +
-                "WHERE co.micCardByOldCardId.micContractByContractCode" +
+                "WHERE co.micCardInstanceByOldCardInstanceId.micContractByContractCode" +
                 ".micCustomerByCustomerCode.customerCode = :customerCode AND co.resolveDate = NULL ORDER BY co.resolveDate ASC";
 
         Query query = entity.createQuery(hql);

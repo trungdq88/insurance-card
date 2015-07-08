@@ -9,18 +9,9 @@ import com.fpt.mic.micweb.model.entity.*;
 import com.fpt.mic.micweb.utils.Constants;
 import com.fpt.mic.micweb.utils.DateUtils;
 import com.fpt.mic.micweb.utils.StringUtils;
-import sun.util.calendar.BaseCalendar;
-import sun.util.calendar.LocalGregorianCalendar;
 
-import java.awt.*;
-import java.sql.Date;
-import java.sql.Time;
 import java.sql.Timestamp;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.List;
-import java.lang.Thread;
 
 /**
  * Created by PhucNguyen on 05/06/2015.
@@ -110,10 +101,10 @@ public class CustomerBusiness {
         boolean result = false;
         ContractDao contractDao = new ContractDao();
         PaymentDao paymentDao = new PaymentDao();
-        CardDao cardDao = new CardDao();
+        CardInstanceDao cardInstanceDao = new CardInstanceDao();
         ContractEntity contract = contractDao.read(contractCode);
         PaymentEntity payment = new PaymentEntity();
-        CardEntity card = cardDao.getCardByContract(contractCode);
+        CardInstanceEntity card = cardInstanceDao.getActiveCardInstanceByContract(contractCode);
         java.util.Date date = new java.util.Date();
         /////////////////////////
         if (contract != null) {
@@ -158,9 +149,9 @@ public class CustomerBusiness {
      * @return contract
      */
     public ContractEntity rejectCancelContract(String contractCode) {
-        CardDao cardDao = new CardDao();
+        CardInstanceDao cardInstanceDao = new CardInstanceDao();
         ContractDao contractDao = new ContractDao();
-        CardEntity card = cardDao.getCardByContract(contractCode);
+        CardInstanceEntity card = cardInstanceDao.getActiveCardInstanceByContract(contractCode);
         ContractEntity contract = contractDao.read(contractCode);
         java.util.Date date = new java.util.Date();
         // no card

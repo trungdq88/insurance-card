@@ -7,12 +7,11 @@ import android.content.IntentFilter;
 import android.nfc.*;
 import android.nfc.tech.Ndef;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Toast;
 import com.fpt.mic.mobile.printer.app.R;
 import com.fpt.mic.mobile.printer.app.business.ContractBusiness;
 import com.fpt.mic.mobile.printer.app.dto.ContractSearchResult;
-import com.fpt.mic.mobile.printer.app.entity.CardEntity;
+import com.fpt.mic.mobile.printer.app.entity.CardInstanceEntity;
 import com.fpt.mic.mobile.printer.app.utils.DialogUtils;
 
 import java.io.IOException;
@@ -114,7 +113,7 @@ public class WriteActivity extends Activity {
         contractBusiness.updateCardForContract(
                 contractSearchResult.contractEntity.contractCode, tagID, new ContractBusiness.IOnApiResult() {
                     @Override
-                    public void onApiResult(CardEntity result) {
+                    public void onApiResult(CardInstanceEntity result) {
                         if (result != null) {
                             // Show result
                             Intent intent = new Intent(WriteActivity.this, SuccessActivity.class);

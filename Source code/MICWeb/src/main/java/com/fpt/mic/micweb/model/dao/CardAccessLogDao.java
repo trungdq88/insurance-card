@@ -14,7 +14,7 @@ public class CardAccessLogDao extends GenericDaoJpaImpl<CardAccessLogEntity, Int
     public List<CardAccessLogEntity> getCardAccessLog(String cardId, int offset, int count) {
         EntityManager entityManager = factory.createEntityManager();
         String hql = "SELECT cal FROM CardAccessLogEntity AS cal " +
-                "WHERE cal.cardId = :id " +
+                "WHERE cal.cardInstanceId = :id " +
                 "ORDER BY cal.accessDate DESC";
         Query query = entityManager.createQuery(hql);
         query.setParameter("id", cardId);
@@ -28,7 +28,7 @@ public class CardAccessLogDao extends GenericDaoJpaImpl<CardAccessLogEntity, Int
     public Long getCardAccessLogCount(String cardId) {
         EntityManager entityManager = factory.createEntityManager();
         String hql = "SELECT COUNT(cal) FROM CardAccessLogEntity AS cal " +
-                "WHERE cal.cardId = :id " +
+                "WHERE cal.cardInstanceId = :id " +
                 "ORDER BY cal.accessDate DESC";
         Query query = entityManager.createQuery(hql);
         query.setParameter("id", cardId);
