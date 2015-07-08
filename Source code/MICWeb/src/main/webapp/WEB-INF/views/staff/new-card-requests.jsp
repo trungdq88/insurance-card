@@ -40,6 +40,7 @@
                                     <th>Ghi chú</th>
                                     <th>Mã thẻ cũ</th>
                                     <th>Hợp đồng</th>
+                                    <th>Thanh toán</th>
                                     <th>Ngày cấp mới</th>
                                     <th>Thẻ mới cấp</th>
                                 </tr>
@@ -64,7 +65,7 @@
                                                 <td><a tabindex="0" data-trigger="focus" data-toggle="popover" title="Ghi chú từ khách hàng"
                                                        role="button" data-content="${newRequest.note}"><i class="fa fa-file"></i></a></td>
                                                 <td>
-                                                    <a href="#">
+                                                    <a href="${pageContext.request.contextPath}/staff/card?action=detail&cardId=${newRequest.oldCardId}">
                                                             ${newRequest.oldCardId}
                                                     </a>
                                                 </td>
@@ -75,6 +76,14 @@
 
                                                 </td>
                                                 <td>
+                                                    <c:if test="${newRequest.isPaid == 1}">
+                                                        <span class="label label-info">Đã thanh toán</span>
+                                                    </c:if>
+                                                    <c:if test="${newRequest.isPaid == 0}">
+                                                        <span class="label label-danger">Chưa thanh toán</span>
+                                                    </c:if>
+                                                </td>
+                                                <td>
                                                     <c:if test="${empty newRequest.resolveDate}">
                                                         <span class="label label-danger">Chưa cấp</span>
                                                      </c:if>
@@ -82,7 +91,7 @@
 
                                                 </td>
                                                 <td>
-                                                    <a href="#">
+                                                    <a href="${pageContext.request.contextPath}/staff/card?action=detail&cardId=${map[newRequest.id]}">
                                                             ${map[newRequest.id]}
                                                     </a>
 
