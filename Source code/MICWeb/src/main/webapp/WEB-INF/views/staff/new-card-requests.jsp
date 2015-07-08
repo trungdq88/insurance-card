@@ -65,7 +65,7 @@
                                                        role="button" data-content="${newRequest.note}"><i class="fa fa-file"></i></a></td>
                                                 <td>
                                                     <a href="#">
-                                                            ${newRequest.oldCardInstanceId}
+                                                            ${newRequest.micCardInstanceByOldCardInstanceId.cardId}
                                                     </a>
                                                 </td>
                                                 <td>
