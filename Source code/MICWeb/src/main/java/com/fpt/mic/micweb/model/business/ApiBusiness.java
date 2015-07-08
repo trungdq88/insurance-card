@@ -48,22 +48,20 @@ public class ApiBusiness {
         // If there is a card assigned to the contract before, deactivate it
         CardEntity oldCard = cardDao.getCardByContract(contractCode);
         if (oldCard != null) {
-
-            // If there is a new card request for the old card, resolve it.
-            NewCardRequestEntity request = newCardRequestDao.getUnsolvedRequestByCardId(oldCard.getCardId());
-            if (request != null) {
-                // Resolve the request
-                request.setResolveDate(new Timestamp(new Date().getTime()));
-                newCardRequestDao.update(request);
-                // Set request ID to the card
-                requestId = request.getId();
-
-                // TODO: Notify?
-            }
-
-
             oldCard.setDeactivatedDate(new Timestamp((new Date()).getTime()));
             cardDao.update(oldCard);
+        }
+
+        // If there is a new card request for the old card, resolve it.
+        NewCardRequestEntity request = newCardRequestDao.getUnresolveRequestByContractCode(contractCode);
+        if (request != null) {
+            // Resolve the request
+            request.setResolveDate(new Timestamp(new Date().getTime()));
+            newCardRequestDao.update(request);
+            // Set request ID to the card
+            requestId = request.getId();
+
+            // TODO: Notify?
         }
 
         // Insert new card to database
