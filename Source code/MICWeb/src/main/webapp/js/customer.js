@@ -3,6 +3,8 @@
  */
 
 $(document).ready(function () {
+
+    CheckDayAvailable();
     $('[data-toggle="tooltip"]').tooltip();
     if ($('#isFirstLogin').val() == 0) {
         $('#changePass').trigger("click");
@@ -226,11 +228,11 @@ $(document).ready(function () {
 
     //DayDiff($('#expiredDate').val()) > 0 ? $('#dateAvailable').val("Còn hạn: " + Math.abs(DayDiff($('#expiredDate').val())) + ' ngày')
     //    : $('#dateAvailable').val("Quá hạn: " + Math.abs(DayDiff($('#expiredDate').val())) + ' ngày');
-    CheckDayAvailable();
+
     function CheckDayAvailable() {
         var expiredDate = $('#expiredDate').val();
-        //alert(DayDiff(expiredDate));
-        if (DayDiff(expiredDate) > 0) {
+
+        if (DayDiff(expiredDate) >= 0) {
             $('#dateAvailable').val("Còn hạn: " + Math.abs(DayDiff($('#expiredDate').val())) + ' ngày');
         }
         else {
