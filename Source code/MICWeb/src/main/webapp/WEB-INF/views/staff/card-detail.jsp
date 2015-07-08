@@ -106,6 +106,7 @@
                     </fieldset>
                     <br/>
                     <br/>
+
                     <fieldset>
                         <legend id="card-access-history">Lịch sử truy cập</legend>
 
@@ -201,6 +202,22 @@
                             </ul>
                         </nav>
                     </fieldset>
+                    <fieldset>
+                        <legend id="card-recycle-history">Các lần cấp phát thẻ</legend>
+
+                        <div class="panel-heading">
+                            <div class="pull-left center-dropdown-button">
+                                <b>Thẻ này đã được cấp phát 2 lần</b>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="panel-body">
+                            <div class="table-responsive">
+                            </div>
+                            <!-- /.table-responsive -->
+                        </div>
+                    </fieldset>
+
                 </form>
                 <br/>
                 <div class="text-center">
