@@ -340,21 +340,23 @@
         var pricePerYear = '${contract.micContractTypeByContractTypeId.pricePerYear}';
         var contractTerm = 365;
         var renewFee = pricePerYear;
-        var newCardFee = 10000;
+        var newCardFee = parseFloat('${config.newCardFee}');
+        var deliveryFee = parseFloat('${config.deliveryFee}');
         var totalFee = parseFloat(renewFee) + newCardFee;
         $('#contractFee').val(pricePerYear);
         $('#amount').val(pricePerYear);
         $('#renewFee').text(parseFloat(pricePerYear).formatMoney(0));
-        $('#newCardFee').text(parseFloat(newCardFee).formatMoney(0));
+        $('#newCardFee').text(newCardFee.formatMoney(0));
+        $('#deliveryFee').text(deliveryFee.formatMoney(0));
         $('#totalFee').text(parseFloat(totalFee).formatMoney(0));
 
         $('.collapse').collapse();
-        $('#newCard').on('click', function (e) {
+        $('#newCard, #deliveryNewCard').on('click', function (e) {
             e.stopPropagation();
             $(this).parent().trigger('click');
         })
-        $('#collapseNewCard').on('show.bs.collapse', function (e) {
-            if (!$('#newCard').is(':checked')) {
+        $('#collapseNewCard, #collapseDelivery').on('show.bs.collapse', function (e) {
+            if (!$('#newCard, #deliveryNewCard').is(':checked')) {
                 return false;
             }
         });
@@ -375,7 +377,18 @@
             $('#amount').val(renewFee);
             $('#renewFee').text(parseFloat(renewFee).formatMoney(0));
             $('#totalFee').text(parseFloat(renewFee).formatMoney(0));
-            if (document.getElementById("newCard").checked) {
+            if ($("newCard:checked")) {
+                totalFee = parseFloat(renewFee) + newCardFee;
+                $('#amount').val(totalFee);
+                $('#totalFee').text(parseFloat(totalFee).formatMoney(0));
+            } else {
+                $('#amount').val(renewFee);
+            }
+            if ($("deliveryNewCard:checked")) {
+                totalFee = parseFloat(renewFee) + newCardFee + deliveryFee;
+                $('#amount').val(totalFee);
+                $('#totalFee').text(parseFloat(totalFee).formatMoney(0));
+            } else {
                 totalFee = parseFloat(renewFee) + newCardFee;
                 $('#amount').val(totalFee);
                 $('#totalFee').text(parseFloat(totalFee).formatMoney(0));
