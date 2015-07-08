@@ -461,7 +461,7 @@
                     <a href="#compensations" aria-controls="profile" role="tab" data-toggle="tab">Lịch sử bồi
                         thường</a>
                 </li>
-                <li role="presentation">
+                <li role="presentation" id="showPunishment">
                     <a href="#punishments" aria-controls="messages" role="tab" data-toggle="tab">Lịch sử vi phạm
                         luật
                         GT</a>
@@ -482,12 +482,12 @@
                         </div>
                     </c:if>
                     <c:if test="${isNewCardRequested == true}">
-                    <div class="pull-right">
-                        <p class="text-value">
+                        <div class="pull-right">
+                            <p class="text-value">
                         <span class="label label-info"
                               style="font-size: 16px">Đang yêu cầu thẻ mới</span>
-                        </p>
-                    </div>
+                            </p>
+                        </div>
                     </c:if>
 
 
@@ -917,6 +917,11 @@
                                          role="alert">
                                         Nội dung vi phạm không được để trống
                                     </div>
+                                    <div class="text-center alert alert-danger alert-dismissible hide"
+                                         id="notifyPunishment1"
+                                         role="alert">
+                                        Văn bản vi phạm không được để trống
+                                    </div>
                                     <div class="form-horizontal">
                                         <div class="form-group">
                                             <label class="col-sm-3 control-label">Nội dung vi phạm *</label>
@@ -934,10 +939,21 @@
                                             <label class="col-sm-3 control-label">Đính kèm *</label>
 
                                             <div class="col-sm-5" style="padding-top: 5px">
-                                                <input type="file" name="punishment:attachment" required
-                                                       title="Đính kèm ảnh vi phạm không được trống">
-                                                <input type="hidden" id="attch">
+                                                <img id="imgAttachment" height="100px" src=""/>
+                                                <input id="attachment" name="punishment:attachment"
+                                                       class="form-control input-md"
+                                                       type="hidden" maxlength="255">
+
+
+                                                <script type="text/javascript"
+                                                        src="//api.filepicker.io/v2/filepicker.js"></script>
+
+                                                <input type="filepicker" data-fp-apikey="AEbPPQfPfRHqODjEl5AZ2z"
+                                                       required id="attImage"
+                                                       title="Đính kèm ảnh vi phạm không được trống"
+                                                       onchange="$('#imgAttachment').attr('src', event.fpfile.url);$('#attachment').val(event.fpfile.url);">
                                             </div>
+
                                         </div>
                                     </div>
                                 </div>
@@ -961,7 +977,7 @@
                     <div class="col-lg-12">
                         <div class="pull-right">
                             <button type="button" data-toggle="modal" data-target=".punishmentDialog"
-                                    class="btn btn-success" title="Thêm vi phạm">
+                                    class="btn btn-success" title="Thêm vi phạm" id="addPunishment">
                                 Thêm vi phạm
                             </button>
                         </div>
@@ -979,7 +995,7 @@
 
                         <div class="pull-right ">
                             <input type="text" class="form-control long-text-box"
-                                   placeholder="Tìm kiếm theo ngày vi phạm"/>
+                                   placeholder="Tìm kiếm theo mã vi phạm"/>
                             <input type="button" class="btn btn-default" value="Tìm kiếm"/>
                         </div>
                         <div class="clearfix"></div>
@@ -989,15 +1005,15 @@
                             <table class="table table-bordered">
                                 <thead>
                                 <tr class="success">
-                                    <th class="text-center">Mã vi phạm
-                                    </th>
-                                    <th class="text-center">
-                                        Ngày gởi đi
+                                    <th class="text-center " style="width: 10% !important;">Mã vi phạm
                                     </th>
                                     <th class=" text-center">
                                         Nội dung vi phạm
                                     </th>
                                     <th class="text-center">
+                                        Ngày gởi đi
+                                    </th>
+                                    <th class="text-center col-md-1">
                                         Biên bản
                                     </th>
                                 </tr>
@@ -1021,15 +1037,16 @@
                                                 <td class="text-center">
                                                         ${punishment.id}
                                                 </td>
-                                                <td class="text-center">
-                                                    <fmt:formatDate value='${punishment.createdDate}'
-                                                                    pattern='dd/MM/yyyy'/>
-                                                </td>
                                                 <td>
                                                         ${punishment.title}
                                                 </td>
                                                 <td class="text-center">
-                                                        ${punishment.attachment}
+                                                    <fmt:formatDate value='${punishment.createdDate}'
+                                                                    pattern='dd/MM/yyyy'/>
+                                                </td>
+                                                <td class="text-center">
+                                                    <a href="${punishment.attachment}"
+                                                       target="_newtab"><i class="fa fa-file-text-o"></i></a>
                                                 </td>
                                             </tr>
                                         </c:forEach>
@@ -1091,7 +1108,11 @@
                             <!--<input type="checkbox" class="check-all"/>-->
                             <b>Có ${listAccident.size()} tai nạn</b>
                         </div>
-
+                        <div class="pull-right ">
+                            <input type="text" class="form-control long-text-box"
+                                   placeholder="Tìm kiếm theo mã tai nạn"/>
+                            <input type="button" class="btn btn-default" value="Tìm kiếm"/>
+                        </div>
                         <div class="clearfix"></div>
                     </div>
 
@@ -1101,17 +1122,17 @@
                             <table class="table table-bordered">
                                 <thead>
                                 <tr class="success">
-                                    <th class="text-center">
-                                        Mã
+                                    <th class="text-center col-md-1">
+                                        Mã tai nạn
                                     </th>
                                     <th class="text-center">
                                         Nội dung
                                     </th>
-                                    <th class=" text-center">
+                                    <th class=" text-center" style="width: 14% !important;">
                                         Thời gian
                                     </th>
-                                    <th class="text-center">
-                                        Biên Bản
+                                    <th class="text-center col-md-1">
+                                        Mô tả
                                     </th>
                                 </tr>
                                 </thead>
@@ -1140,7 +1161,8 @@
                                                                     pattern='dd/MM/yyyy'/>
                                                 </td>
                                                 <td class="text-center">
-                                                        ${accident.attachment}
+                                                    <a href="${accident.attachment}"
+                                                       target="_newtab"><i class="fa fa-file-text-o"></i></a>
                                                 </td>
                                             </tr>
 

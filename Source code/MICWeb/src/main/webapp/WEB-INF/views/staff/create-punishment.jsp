@@ -33,7 +33,14 @@
                 <form action="${pageContext.request.contextPath}/staff/punishment" method="post" class="form-horizontal">
                     <fieldset>
                         <!-- Contract code -->
-                        <input type="hidden" name="punishment:contractCode" value="${param.code}">
+                        <c:choose>
+                            <c:when test="${not empty param.code}">
+                                <input type="hidden" name="punishment:contractCode" value="${param.code}">
+                            </c:when>
+                            <c:otherwise>
+                                <input type="hidden" name="punishment:contractCode" value="${submitted.contractCode}">
+                            </c:otherwise>
+                        </c:choose>
 
                         <!-- Created date -->
                         <div class="form-group">
@@ -53,7 +60,7 @@
                             <div class="col-sm-7">
                                 <textarea id="title" name="punishment:title" class="form-control input-md"
                                           placeholder="Ví dụ: Vượt đèn đỏ, lấn tuyến, vượt quá tốc độ 5%"
-                                          rows="4" maxlength="250"
+                                          rows="4" maxlength="250" required
                                           title="Vui lòng nhập nội dung thông báo">${submitted.title}</textarea>
                             </div>
                         </div>
@@ -63,9 +70,11 @@
                             <label class="col-sm-4 control-label" for="attachment">Văn bản đính kèm *</label>
 
                             <div class="col-sm-6">
-                                <input id="attachment" name="punishment:attachment" class="form-control input-md"
-                                       type="file" required maxlength="255"
-                                       value="${submitted.file}" title="Vui lòng tải lên văn bản đính kèm">
+                                <input id="attachment" name="punishment:attachment" type="hidden" required maxlength="255">
+                                <img id="imgAttachment" height="100px" src=""/>
+                                <script type="text/javascript" src="//api.filepicker.io/v2/filepicker.js"></script>
+                                <input type="filepicker" data-fp-apikey="AEbPPQfPfRHqODjEl5AZ2z"
+                                       onchange="$('#imgAttachment').attr('src', event.fpfile.url);$('#attachment').val(event.fpfile.url);">
                             </div>
                         </div>
                     </fieldset>

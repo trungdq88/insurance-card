@@ -30,7 +30,11 @@
                     <td>${accident.id}</td>
                     <td><fmt:formatDate value="${accident.createdDate}" pattern="dd/MM/yyyy"/></td>
                     <td>${accident.title}</td>
-                    <td>${accident.attachment}</td>
+                    <td>
+                        <a href="${accident.attachment}">
+                            Xem chi tiết
+                        </a>
+                    </td>
                     <td>
                         <a href="${pageContext.request.contextPath}/staff/accident?action=edit&id=${accident.id}"
                            type="button" class="btn btn-xs btn-primary">

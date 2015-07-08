@@ -43,6 +43,18 @@ public class NewCardRequestDao extends GenericDaoJpaImpl<NewCardRequestEntity, I
         return resultList;
     }
 
+    public List getAllNewCardRequest() {
+        EntityManager entityManager = factory.createEntityManager();
+        Query query = entityManager.createQuery(
+                "SELECT co " +
+                        "FROM NewCardRequestEntity co "
+        );
+        List resultList = query.getResultList();
+        entityManager.close();
+        return resultList;
+    }
+
+    public NewCardRequestEntity getUnresolveRequestByContractCode(String contractCode) {
     public NewCardRequestEntity getUnresolveRequest(String contractCode) {
         EntityManager entityManager = factory.createEntityManager();
         Query query = entityManager.createQuery(
@@ -50,6 +62,24 @@ public class NewCardRequestDao extends GenericDaoJpaImpl<NewCardRequestEntity, I
                         "FROM NewCardRequestEntity co " +
                         "WHERE co.micCardInstanceByOldCardInstanceId.micContractByContractCode.contractCode = :contractCode" +
                         " AND co.resolveDate = NULL"
+        );
+        query.setParameter("contractCode", contractCode);
+
+        try {
+            return (NewCardRequestEntity) query.getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        } finally {
+            entityManager.close();
+        }
+    }
+    public NewCardRequestEntity getUnpaidRequestByContractCode(String contractCode) {
+        EntityManager entityManager = factory.createEntityManager();
+        Query query = entityManager.createQuery(
+                "SELECT co " +
+                        "FROM NewCardRequestEntity co " +
+                        "WHERE co.micCardByOldCardId.micContractByContractCode.contractCode = :contractCode" +
+                        " AND co.isPaid = 0"
         );
         query.setParameter("contractCode", contractCode);
 

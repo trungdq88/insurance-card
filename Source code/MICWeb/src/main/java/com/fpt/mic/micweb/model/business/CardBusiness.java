@@ -27,6 +27,10 @@ public class CardBusiness {
         CardInstanceDao cardInstanceDao = new CardInstanceDao();
         return cardInstanceDao.getIssuedCard(offset, count);
     }
+    public List<CardEntity> getIssuedCard(String customerCode, int offset, int count) {
+        CardInstanceDao cardDao = new CardInstanceDao();
+        return cardDao.getIssuedCard(customerCode, offset, count);
+    }
 
     public Long getIssuedCardCount() {
         CardInstanceDao cardInstanceDao = new CardInstanceDao();
@@ -43,13 +47,24 @@ public class CardBusiness {
         CardInstanceEntity cardEntity = cardInstanceDao.getActiveCardInstanceByContract(contractCode);
         return cardEntity;
     }
-
+    // return map: key = newCardRequestId, value: new CardId
     public Map<Integer, String> getMappingWithNewCardRequest() {
         Map<Integer, String> map = new HashMap<Integer, String>();
         CardInstanceDao cardInstanceDao = new CardInstanceDao();
         List<CardInstanceEntity> list = cardInstanceDao.getAllCard();
         for (CardInstanceEntity cardEntity : list) {
             map.put(cardEntity.getNewCardRequestId(), cardEntity.getCardId());
+        }
+        return map;
+    }
+
+    // return map: key = old cardId, value: newCardRequestId
+    public Map<String, Integer> getMappingOldCardIdAndNewCardRequestId() {
+        Map<String, Integer> map = new HashMap<String, Integer>();
+        NewCardRequestDao newCardRequestDao = new NewCardRequestDao();
+        List<NewCardRequestEntity> list = newCardRequestDao.getAllNewCardRequest();
+        for (NewCardRequestEntity newCardRequestEntity : list) {
+            map.put(newCardRequestEntity.getOldCardId(),newCardRequestEntity.getId());
         }
         return map;
     }
@@ -129,5 +144,12 @@ public class CardBusiness {
         CardEntity card = cardDao.read(dto.getCardId());
         card.setStatus(CardEntity.STATUS_AVAILABLE);
         cardDao.update(card);
+    }
+    public NewCardRequestEntity updatePaidNewCardRequest(String contractCode){
+        NewCardRequestEntity newCardRequestEntity;
+        NewCardRequestDao newCardRequestDao = new NewCardRequestDao();
+        newCardRequestEntity = newCardRequestDao.getUnpaidRequestByContractCode(contractCode);
+        newCardRequestEntity.setIsPaid(1);
+        return newCardRequestDao.update(newCardRequestEntity);
     }
 }

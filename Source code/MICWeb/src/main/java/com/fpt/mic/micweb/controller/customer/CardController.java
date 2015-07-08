@@ -12,6 +12,7 @@ import com.fpt.mic.micweb.model.business.PaymentBusiness;
 import com.fpt.mic.micweb.model.dto.CheckoutRequestDto;
 import com.fpt.mic.micweb.model.dto.UserDto;
 import com.fpt.mic.micweb.model.dto.form.NewCardRequestDto;
+import com.fpt.mic.micweb.model.entity.CardEntity;
 import com.fpt.mic.micweb.model.entity.CustomerEntity;
 import com.fpt.mic.micweb.utils.Constants;
 
@@ -28,13 +29,62 @@ import java.util.Map;
 @WebServlet(name = "CustomerCardController", urlPatterns = "/customer/card")
 public class CardController extends AuthController {
     Paginator requestPaginator = new Paginator();
+    Paginator cardPaginator = new Paginator();
+    /* Card acess log pagination */
+    Paginator calPaginator = new Paginator();
     @Override
     public List<String> getAllowedRoles() {
         return Collections.singletonList(UserDto.ROLE_CUSTOMER);
     }
 
     public ResponseObject getView(R r) {
-        return new JspPage("/customer/card.jsp");
+        final CardBusiness cardBusiness = new CardBusiness();
+        final String customerCode = ((CustomerEntity) getLoggedInUser()).getCustomerCode();
+        cardPaginator.setGetItemsCallback(new Paginator.IGetItems() {
+            @Override
+            public List getItems(int offset, int count) {
+                return cardBusiness.getIssuedCard(customerCode,offset, count);
+            }
+        });
+        cardPaginator.setGetItemSizeCallback(new Paginator.IGetItemSize() {
+            @Override
+            public Long getItemSize() {
+                return cardBusiness.getIssuedCardCount(customerCode);
+            }
+        });
+        r.equest.setAttribute("cardPaginator", cardPaginator);
+
+        return new JspPage("/customer/cards.jsp");
+    }
+
+    public ResponseObject getDetail(R r) {
+        final String cardId = r.equest.getParameter("cardId");
+
+        // Call to business
+        final CardBusiness cardBusiness = new CardBusiness();
+        CardEntity cardEntity = cardBusiness.getCardDetail(cardId);
+
+        calPaginator.setGetItemsCallback(new Paginator.IGetItems() {
+            @Override
+            public List getItems(int offset, int count) {
+                return cardBusiness.getCardAccessLog(cardId, offset, count);
+            }
+        });
+        calPaginator.setGetItemSizeCallback(new Paginator.IGetItemSize() {
+            @Override
+            public Long getItemSize() {
+                return cardBusiness.getCardAccessLogCount(cardId);
+            }
+        });
+        Map<Integer, String> newCardMappingRequest = new HashMap();
+        newCardMappingRequest = cardBusiness.getMappingWithNewCardRequest();
+        Map<String,Integer> newOldCardMappingRequest = new HashMap<String, Integer>();
+        newOldCardMappingRequest = cardBusiness.getMappingOldCardIdAndNewCardRequestId();
+        r.equest.setAttribute("map", newCardMappingRequest);
+        r.equest.setAttribute("mapOldCardAndRequestId", newOldCardMappingRequest);
+        r.equest.setAttribute("calPaginator", calPaginator);
+        r.equest.setAttribute("CARD", cardEntity);
+        return new JspPage("customer/card-detail.jsp");
     }
 
     public ResponseObject getNewCard(R r) {

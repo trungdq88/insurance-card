@@ -256,8 +256,8 @@
 <script>
     $(document).ready(function () {
 
-        $('.detail').mouseover(function () {
-            $(this).trigger("click");
+        $('.detail').click(function () {
+
             var index1 = $(this).attr('payment-id-value');
             var index2 = $(this).attr('contract-code-value');
             var index3 = $(this).attr('amount-value');

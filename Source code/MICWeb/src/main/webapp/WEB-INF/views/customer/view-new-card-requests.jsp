@@ -87,7 +87,7 @@
                           <fmt:formatDate value="${newRequest.resolveDate}" pattern="dd/MM/yyyy"/>
                         </td>
                         <td>
-                          <a href="#">
+                          <a href="${pageContext.request.contextPath}/customer/card?action=detail&cardId=${map[newRequest.id]}">
                               ${map[newRequest.id]}
                           </a>
 

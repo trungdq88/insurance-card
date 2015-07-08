@@ -202,7 +202,13 @@ public class StaffBusiness {
                 paymentEntity.setContractCode(dto.getContractCode());
                 // Set payment information when renew
                 paymentEntity.setPaymentMethod("Trực tiếp");
-                paymentEntity.setContent("Gia hạn hợp đồng");
+                if (dto.isNewCard()) {
+                    paymentEntity.setContent("Gia hạn hợp đồng, đổi thẻ mới");
+                } else if (dto.isDeliveryNewCard()) {
+                    paymentEntity.setContent("Gia hạn hợp đồng, đổi thẻ mới, vận chuyển thẻ");
+                } else {
+                    paymentEntity.setContent("Gia hạn hợp đồng");
+                }
                 if (paymentDao.create(paymentEntity) != null) {
                     return true;
                 }
@@ -256,7 +262,11 @@ public class StaffBusiness {
 
         // Set payment information from dto to entity
         paymentEntity.setContractCode(dto.getContractCode());
-        paymentEntity.setPaidDate(dto.getPaidDate());
+        Timestamp currentDate = DateUtils.currentDateWithoutTime();
+        if (currentDate.equals(dto.getPaidDate())) {
+            paymentEntity.setPaidDate(DateUtils.currentTimeWithoutNanos());
+        } else {
+            paymentEntity.setPaidDate(dto.getPaidDate());}
         paymentEntity.setContent(dto.getContent());
         paymentEntity.setAmount(dto.getAmount());
         // Set others payment information

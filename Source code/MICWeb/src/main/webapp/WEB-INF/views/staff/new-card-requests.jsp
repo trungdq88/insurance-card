@@ -15,6 +15,15 @@
         </div>
         <div class="row">
             <div class="col-lg-12">
+                <c:if test="${not empty validateErrors}">
+                    <div class="well well-lg text-danger ">
+                        <ul>
+                            <c:forEach var="error" items="${validateErrors}">
+                                <li>${error}</li>
+                            </c:forEach>
+                        </ul>
+                    </div>
+                </c:if>
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <div class="pull-left center-dropdown-button">
@@ -40,6 +49,7 @@
                                     <th>Ghi chú</th>
                                     <th>Mã thẻ cũ</th>
                                     <th>Hợp đồng</th>
+                                    <th>Thanh toán</th>
                                     <th>Ngày cấp mới</th>
                                     <th>Thẻ mới cấp</th>
                                 </tr>
@@ -75,6 +85,46 @@
 
                                                 </td>
                                                 <td>
+                                                    <c:if test="${newRequest.isPaid == 1}">
+                                                        <span class="label label-info">Đã thanh toán</span>
+                                                    </c:if>
+                                                    <c:if test="${newRequest.isPaid == 0}">
+                                                        <%--<span class="label label-danger">Chưa thanh toán</span>--%>
+
+                                                            <button  delivery="${newRequest.isDeliveryRequested}" contractCode="${newRequest.micCardByOldCardId.contractCode}"
+                                                                     type="button" class="btn btn-success btn-xs"
+                                                                    data-toggle="modal" data-target="#add-payment-modal" onclick="{
+//                                                            var rowNumber = $(this).attr('value');
+                                                                    var delivery = $(this).attr('delivery');
+                                                                    var contractCode = $(this).attr('contractCode');
+                                                                    var content;
+                                                                    var fee;
+                                                                    var newCardFee =parseInt( $('#newCardFee').val());
+                                                                    var deliveryFee = parseInt( $('#deliveryFee').val());
+                                                                    if (delivery == 1){
+                                                                        content = 'Đăng ký thẻ mới ' +contractCode +' + giao thẻ';
+                                                                        fee = newCardFee + deliveryFee; // fix later
+                                                                    } else {
+                                                                        fee = newCardFee;
+                                                                        content = 'Đăng ký thẻ mới ' +contractCode;
+                                                                    }
+
+
+                                                                    $('#addContent').text(content);
+                                                                    $('#content').val(content);
+                                                                    $('#amount').val(fee);
+                                                                    $('#addAmount').text(fee);
+                                                                    $('#contractCode').val(contractCode);
+                                                                    $('#delivery').val(delivery);
+
+                                                            }">
+                                                                <i class="fa fa-plus"></i> Thanh toán
+                                                            </button>
+
+                                                    </c:if>
+
+                                                </td>
+                                                <td>
                                                     <c:if test="${empty newRequest.resolveDate}">
                                                         <span class="label label-danger">Chưa cấp</span>
                                                      </c:if>
@@ -82,7 +132,7 @@
 
                                                 </td>
                                                 <td>
-                                                    <a href="#">
+                                                    <a href="${pageContext.request.contextPath}/staff/card?action=detail&cardId=${map[newRequest.id]}">
                                                             ${map[newRequest.id]}
                                                     </a>
 
@@ -147,5 +197,32 @@
     </div>
 </div>
 <!-- /#wrapper -->
-
+<jsp:include page="new-card-requests-modal.jsp" flush="true"/>
 <%@ include file="_shared/footer.jsp"%>
+<script language="JavaScript">
+    document.getElementById("addPaidDate").min = '${config.paidDateMin}';
+    document.getElementById("addPaidDate").max = '${config.paidDateMax}';
+
+    function setInputDate(_id){
+        var _dat = document.querySelector(_id);
+        var hoy = new Date(),
+                d = hoy.getDate(),
+                m = hoy.getMonth()+1,
+                y = hoy.getFullYear(),
+                data;
+
+        if(d < 10){
+            d = "0"+d;
+        };
+        if(m < 10){
+            m = "0"+m;
+        };
+
+        data = y+"-"+m+"-"+d;
+        console.log(data);
+        _dat.value = data;
+    };
+    if($('#addPaidDate').val() == "") {
+        setInputDate("#addPaidDate");
+    }
+</script>

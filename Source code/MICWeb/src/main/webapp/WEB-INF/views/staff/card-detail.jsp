@@ -111,16 +111,6 @@
                                     </div>
                                 </div>
                             </div>
-
-                            <div class="form-group">
-                                <label class="col-sm-4 control-label">Mã thẻ mới được cấp</label>
-
-                                <div class="col-sm-3">
-                                    <div class="text-value">
-                                        <strong>Chưa có</strong>
-                                    </div>
-                                </div>
-                            </div>
                         </c:if>
                     </fieldset>
                     <br/>

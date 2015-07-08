@@ -7,10 +7,16 @@ import com.fpt.mic.micweb.framework.responses.JspPage;
 import com.fpt.mic.micweb.framework.responses.RedirectTo;
 import com.fpt.mic.micweb.framework.responses.ResponseObject;
 import com.fpt.mic.micweb.model.business.CardBusiness;
+import com.fpt.mic.micweb.model.business.PaymentBusiness;
 import com.fpt.mic.micweb.model.business.StaffBusiness;
 import com.fpt.mic.micweb.model.dto.UserDto;
 import com.fpt.mic.micweb.model.dto.form.RecycleCardDto;
 import com.fpt.mic.micweb.model.entity.CardInstanceEntity;
+import com.fpt.mic.micweb.model.dto.form.CreateNewCardPaymentDto;
+import com.fpt.mic.micweb.model.entity.CardEntity;
+import com.fpt.mic.micweb.model.entity.StaffEntity;
+import com.fpt.mic.micweb.utils.ConfigUtils;
+import com.fpt.mic.micweb.utils.Constants;
 
 import javax.servlet.annotation.WebServlet;
 import java.util.Collections;
@@ -100,6 +106,11 @@ public class CardController extends AuthController {
         CardBusiness cardBusiness = new CardBusiness();
         Map<Integer, String> newCardMappingRequest = new HashMap();
         newCardMappingRequest = cardBusiness.getMappingWithNewCardRequest();
+        ConfigUtils configUtils = new ConfigUtils();
+        r.equest.setAttribute("config",configUtils);
+        r.equest.setAttribute("newCardFee", Constants.PaymentFee.NEW_CARD_REQUEST_FEE);
+        r.equest.setAttribute("deliveryFee", Constants.PaymentFee.DELIVERY_FEE);
+
         r.equest.setAttribute("map", newCardMappingRequest);
         r.equest.setAttribute("requestPaginator", requestPaginator);
         r.equest.setAttribute("unresolvedRequestCount", staffBus.getUnresolvedNewCardRequestCount());
@@ -124,5 +135,42 @@ public class CardController extends AuthController {
         cardBusiness.recycleCard(dto);
 
         return new RedirectTo("/staff/card?action=detail&cardId=" + dto.getCardId());
+    }
+
+    public ResponseObject postCreateNewCardPayment(R r) {
+        CreateNewCardPaymentDto createNewCardPaymentDto =(CreateNewCardPaymentDto) r.ead.entity(CreateNewCardPaymentDto.class,"createNewCardPayment");
+        List errors = r.ead.validate(createNewCardPaymentDto);
+        // If there is validation errors
+        if (errors.size() > 0) {
+            // Send error messages to JSP page
+            r.equest.setAttribute("validateErrors", errors);
+            // This is a form in a popup, we don't need to display data again since
+            // the popup will not automatically open when the page is reloaded
+            r.equest.setAttribute("content",r.equest.getParameter("content"));
+            r.equest.setAttribute("amount",r.equest.getParameter("amount"));
+            r.equest.setAttribute("submitted", createNewCardPaymentDto);
+            // Re-call the contract detail page
+            return getNewCardRequest(r);
+        }
+        PaymentBusiness paymentBusiness = new PaymentBusiness();
+        String contractCode = createNewCardPaymentDto.getContractCode();
+        String msg = null;
+        // neu thanh toan thanh cong
+        if( null != paymentBusiness.createNewCardRequestPayment(createNewCardPaymentDto, ((StaffEntity) getLoggedInUser()).getStaffCode())) {
+            // cap nhat request da paid
+            CardBusiness cardBusiness = new CardBusiness();
+            if (null != cardBusiness.updatePaidNewCardRequest(contractCode)){
+                msg = "Đã thêm thông tin thanh toán thành công";
+            } else  {
+                msg = "Thêm thông tin thanh toán thất bại";
+            }
+        } else {
+            msg = "Thêm thông tin thanh toán thất bại";
+        }
+        // Set contract code to request scope. Use it in message page.
+        r.equest.setAttribute("CODE", contractCode);
+        r.equest.setAttribute("MESSAGE", msg);
+        return new JspPage("staff/message.jsp");
+        //return new RedirectTo("/staff/card?action=newCardRequest");
     }
 }

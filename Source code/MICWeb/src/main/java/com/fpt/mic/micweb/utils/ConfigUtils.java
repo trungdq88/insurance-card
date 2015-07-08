@@ -15,6 +15,8 @@ public class ConfigUtils {
     private LocalDate paidDateMax;
     private LocalDate cancelDateMin;
     private LocalDate cancelDateMax;
+    private float newCardFee;
+    private float deliveryFee;
 
     public ConfigUtils() {
     }
@@ -81,5 +83,21 @@ public class ConfigUtils {
 
     public void setCancelDateMax(LocalDate cancelDateMax) {
         this.cancelDateMax = cancelDateMax;
+    }
+
+    public float getNewCardFee() {
+        return newCardFee = Constants.PaymentFee.NEW_CARD_REQUEST_FEE;
+    }
+
+    public void setNewCardFee(float newCardFee) {
+        this.newCardFee = newCardFee;
+    }
+
+    public float getDeliveryFee() {
+        return deliveryFee = Constants.PaymentFee.DELIVERY_FEE;
+    }
+
+    public void setDeliveryFee(float deliveryFee) {
+        this.deliveryFee = deliveryFee;
     }
 }
