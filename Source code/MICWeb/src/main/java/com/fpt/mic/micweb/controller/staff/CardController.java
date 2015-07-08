@@ -4,10 +4,12 @@ import com.fpt.mic.micweb.controller.common.AuthController;
 import com.fpt.mic.micweb.framework.Paginator;
 import com.fpt.mic.micweb.framework.R;
 import com.fpt.mic.micweb.framework.responses.JspPage;
+import com.fpt.mic.micweb.framework.responses.RedirectTo;
 import com.fpt.mic.micweb.framework.responses.ResponseObject;
 import com.fpt.mic.micweb.model.business.CardBusiness;
 import com.fpt.mic.micweb.model.business.StaffBusiness;
 import com.fpt.mic.micweb.model.dto.UserDto;
+import com.fpt.mic.micweb.model.dto.form.RecycleCardDto;
 import com.fpt.mic.micweb.model.entity.CardInstanceEntity;
 
 import javax.servlet.annotation.WebServlet;
@@ -51,22 +53,28 @@ public class CardController extends AuthController {
     }
 
     public ResponseObject getDetail(R r) {
-        final String cardId = r.equest.getParameter("cardId");
+        String cardId = r.equest.getParameter("cardId");
+
+        // Get id from fail validation
+        if (cardId == null) {
+            cardId = (String) r.equest.getAttribute("cardId");
+        }
 
         // Call to business
         final CardBusiness cardBusiness = new CardBusiness();
         CardInstanceEntity cardEntity = cardBusiness.getLastActiveCardInnstance(cardId);
 
+        final String finalCardId = cardId;
         calPaginator.setGetItemsCallback(new Paginator.IGetItems() {
             @Override
             public List getItems(int offset, int count) {
-                return cardBusiness.getCardAccessLog(cardId, offset, count);
+                return cardBusiness.getCardAccessLog(finalCardId, offset, count);
             }
         });
         calPaginator.setGetItemSizeCallback(new Paginator.IGetItemSize() {
             @Override
             public Long getItemSize() {
-                return cardBusiness.getCardAccessLogCount(cardId);
+                return cardBusiness.getCardAccessLogCount(finalCardId);
             }
         });
 
@@ -96,5 +104,25 @@ public class CardController extends AuthController {
         r.equest.setAttribute("requestPaginator", requestPaginator);
         r.equest.setAttribute("unresolvedRequestCount", staffBus.getUnresolvedNewCardRequestCount());
         return new JspPage("staff/new-card-requests.jsp");
+    }
+
+    public ResponseObject postRecycle(R r) {
+        RecycleCardDto dto = (RecycleCardDto)
+                r.ead.entity(RecycleCardDto.class, "recycle");
+        List errors = r.ead.validate(dto);
+
+        // If there is validation errors
+        if (errors.size() > 0) {
+            // Send error messages to JSP page
+            r.equest.setAttribute("validateErrors", errors);
+            r.equest.setAttribute("cardId", dto.getCardId());
+            // Re-call the create page
+            return getDetail(r);
+        }
+
+        CardBusiness cardBusiness = new CardBusiness();
+        cardBusiness.recycleCard(dto);
+
+        return new RedirectTo("/staff/card?action=detail&cardId=" + dto.getCardId());
     }
 }

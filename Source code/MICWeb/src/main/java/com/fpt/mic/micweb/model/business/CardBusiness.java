@@ -1,10 +1,12 @@
 package com.fpt.mic.micweb.model.business;
 
 import com.fpt.mic.micweb.model.dao.CardAccessLogDao;
+import com.fpt.mic.micweb.model.dao.CardDao;
 import com.fpt.mic.micweb.model.dao.CardInstanceDao;
 import com.fpt.mic.micweb.model.dao.helper.NewCardRequestDao;
 import com.fpt.mic.micweb.model.dto.NotificationBuilder;
 import com.fpt.mic.micweb.model.dto.form.NewCardRequestDto;
+import com.fpt.mic.micweb.model.dto.form.RecycleCardDto;
 import com.fpt.mic.micweb.model.entity.CardAccessLogEntity;
 import com.fpt.mic.micweb.model.entity.CardEntity;
 import com.fpt.mic.micweb.model.entity.CardInstanceEntity;
@@ -116,5 +118,16 @@ public class CardBusiness {
     public Long getCardAccessLogCount(String cardId) {
         CardAccessLogDao cardAccessLogDao = new CardAccessLogDao();
         return cardAccessLogDao.getCardAccessLogCount(cardId);
+    }
+
+    /**
+     * Set status for card to AVAILABLE and ready to be use for other contract
+     * @param dto
+     */
+    public void recycleCard(RecycleCardDto dto) {
+        CardDao cardDao = new CardDao();
+        CardEntity card = cardDao.read(dto.getCardId());
+        card.setStatus(CardEntity.STATUS_AVAILABLE);
+        cardDao.update(card);
     }
 }

@@ -17,7 +17,7 @@
         </div>
         <div class="row">
             <div class="col-lg-12">
-                <form class="form-horizontal">
+                <div class="form-horizontal">
                     <fieldset>
                         <legend>Thông tin chi tiết thẻ</legend>
 
@@ -31,15 +31,23 @@
                             </div>
 
                             <label class="col-sm-2 control-label">Trạng thái</label>
-
+                            <c:set var="canRecycle" value="${false}"/>
                             <div class="col-sm-3">
                                 <div class="text-value">
                                     <c:choose>
-                                        <c:when test="${empty card.deactivatedDate}">
-                                            <span class="label label-success">Hoạt động</span>
+                                        <c:when test="${card.micCardByCardId.status == 0}">
+                                            <span class="label label-info">Có thể cấp lại</span>
                                         </c:when>
                                         <c:otherwise>
-                                            <span class="label label-danger">Ngưng hoạt động</span>
+                                            <c:choose>
+                                                <c:when test="${empty card.deactivatedDate}">
+                                                    <span class="label label-success">Hoạt động</span>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <span class="label label-danger">Ngưng hoạt động</span>
+                                                    <c:set var="canRecycle" value="${true}"/>
+                                                </c:otherwise>
+                                            </c:choose>
                                         </c:otherwise>
                                     </c:choose>
                                 </div>
@@ -49,12 +57,23 @@
                         <div class="form-group">
                             <label class="col-sm-4 control-label">Khách hàng sở hữu</label>
 
-                            <div class="col-sm-6">
+                            <div class="col-sm-4">
                                 <div class="text-value">
                                     <a href="${pageContext.request.contextPath}/staff/customer?action=detail&code=${card.micContractByContractCode.micCustomerByCustomerCode.customerCode}">
                                         <strong>${card.micContractByContractCode.micCustomerByCustomerCode.name}</strong>
                                     </a>
                                 </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <c:if test="${canRecycle}">
+                                    <form action="${pageContext.request.contextPath}/staff/card" method="post">
+                                        <button type="submit" class="btn btn-info">
+                                            <i class="fa fa-refresh"></i>
+                                            Cấp lại thẻ này</button>
+                                        <input type="hidden" name="action" value="recycle"/>
+                                        <input type="hidden" name="recycle:cardId" value="${param.cardId}"/>
+                                    </form>
+                                </c:if>
                             </div>
                         </div>
 
@@ -218,7 +237,7 @@
                         </div>
                     </fieldset>
 
-                </form>
+                </div>
                 <br/>
                 <div class="text-center">
                     <a href="${pageContext.request.contextPath}/staff/card" type="button" class="btn btn-default">

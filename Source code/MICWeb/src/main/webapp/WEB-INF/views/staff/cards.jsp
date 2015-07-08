@@ -81,11 +81,19 @@
                                             </td>
                                             <td>
                                                 <c:choose>
-                                                    <c:when test="${empty card.deactivatedDate}">
-                                                        <span class="label label-success">Hoạt động</span>
+                                                    <c:when test="${card.micCardByCardId.status == 0}">
+                                                        <span class="label label-info">Có thể cấp lại</span>
                                                     </c:when>
                                                     <c:otherwise>
-                                                        <span class="label label-danger">Ngưng hoạt động</span>
+                                                        <c:choose>
+                                                            <c:when test="${empty card.deactivatedDate}">
+                                                                <span class="label label-success">Hoạt động</span>
+                                                            </c:when>
+                                                            <c:otherwise>
+                                                                <span class="label label-danger">Ngưng hoạt động</span>
+                                                                <c:set var="canRecycle" value="${true}"/>
+                                                            </c:otherwise>
+                                                        </c:choose>
                                                     </c:otherwise>
                                                 </c:choose>
                                             </td>
