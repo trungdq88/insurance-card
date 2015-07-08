@@ -353,10 +353,10 @@
         var calculatedDeliveryFee = isNewCard ? (isDeliveryNewCard ? deliveryFee : 0) : 0;
 
         // Data to display to user
-        $('#renewFee').text(calculatedRenewFee);
+        $('#renewFee').text(calculatedRenewFee.formatMoney(0));
         $('#newCardFee').text(calculatedNewCardFee);
         $('#deliveryFee').text(calculatedDeliveryFee);
-        $('#totalFee').text(calculatedRenewFee + calculatedNewCardFee + calculatedDeliveryFee);
+        $('#totalFee').text((calculatedRenewFee + calculatedNewCardFee + calculatedDeliveryFee).formatMoney(0));
 
         // Data to send to server
         $('#contractFee').val(calculatedRenewFee);
