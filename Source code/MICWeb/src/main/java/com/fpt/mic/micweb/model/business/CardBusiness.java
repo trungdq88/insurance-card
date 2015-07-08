@@ -6,6 +6,7 @@ import com.fpt.mic.micweb.model.dao.helper.NewCardRequestDao;
 import com.fpt.mic.micweb.model.dto.NotificationBuilder;
 import com.fpt.mic.micweb.model.dto.form.NewCardRequestDto;
 import com.fpt.mic.micweb.model.entity.CardAccessLogEntity;
+import com.fpt.mic.micweb.model.entity.CardEntity;
 import com.fpt.mic.micweb.model.entity.CardInstanceEntity;
 import com.fpt.mic.micweb.model.entity.NewCardRequestEntity;
 
@@ -20,7 +21,7 @@ import java.util.Map;
  */
 public class CardBusiness {
 
-    public List<CardInstanceEntity> getIssuedCard(int offset, int count) {
+    public List<CardEntity> getIssuedCard(int offset, int count) {
         CardInstanceDao cardInstanceDao = new CardInstanceDao();
         return cardInstanceDao.getIssuedCard(offset, count);
     }
@@ -30,9 +31,9 @@ public class CardBusiness {
         return cardInstanceDao.getIssuedCardCount();
     }
 
-    public CardInstanceEntity getActiveCardInstnace(String cardId) {
+    public CardInstanceEntity getLastActiveCardInnstance(String cardId) {
         CardInstanceDao cardInstanceDao = new CardInstanceDao();
-        return cardInstanceDao.getActiveCardInstanceByContract(cardId);
+        return cardInstanceDao.getLastActiveCardInstanceByCardId(cardId);
     }
 
     public CardInstanceEntity getCardByContract(String contractCode) {

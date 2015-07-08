@@ -55,7 +55,7 @@ public class CardController extends AuthController {
 
         // Call to business
         final CardBusiness cardBusiness = new CardBusiness();
-        CardInstanceEntity cardEntity = cardBusiness.getActiveCardInstnace(cardId);
+        CardInstanceEntity cardEntity = cardBusiness.getLastActiveCardInnstance(cardId);
 
         calPaginator.setGetItemsCallback(new Paginator.IGetItems() {
             @Override

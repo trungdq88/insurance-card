@@ -52,12 +52,13 @@
                                 <c:when test="${cards.size() eq 0}">
                                     <tr>
                                         <td colspan="6" style="vertical-align: middle; text-align: center;">
-                                            Không có thẻ nào đã được phát hành
+                                            Không có thẻ nào
                                         </td>
                                     </tr>
                                 </c:when>
                                 <c:otherwise>
-                                    <c:forEach var="card" items="${cards}" varStatus="counter">
+                                    <c:forEach var="cardEntity" items="${cards}" varStatus="counter">
+                                        <c:set var="card" value="${cardEntity.micCardInstancesByCardId.get(0)}"/>
                                         <tr>
                                             <td>${counter.count}</td>
                                             <td>

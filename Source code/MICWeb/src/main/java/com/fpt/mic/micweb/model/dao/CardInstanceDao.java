@@ -1,6 +1,7 @@
 package com.fpt.mic.micweb.model.dao;
 
 import com.fpt.mic.micweb.model.dao.common.GenericDaoJpaImpl;
+import com.fpt.mic.micweb.model.entity.CardEntity;
 import com.fpt.mic.micweb.model.entity.CardInstanceEntity;
 
 import javax.persistence.EntityManager;
@@ -14,22 +15,29 @@ import java.util.List;
  */
 public class CardInstanceDao extends GenericDaoJpaImpl<CardInstanceEntity, Integer> {
 
-    public List<CardInstanceEntity> getIssuedCard(int offset, int count) {
+    /**
+     * Return list of CardEntity with all the instance assigned with the card,
+     * the card instances are order by activated date
+     * @param offset
+     * @param count
+     * @return
+     */
+    public List<CardEntity> getIssuedCard(int offset, int count) {
         EntityManager entityManager = factory.createEntityManager();
-        String hql = "SELECT ca FROM CardInstanceEntity AS ca " +
-                "ORDER BY ca.deactivatedDate, ca.activatedDate DESC";
+        String hql = "SELECT c FROM CardEntity c " +
+                "JOIN FETCH c.micCardInstancesByCardId AS cardInstances " +
+                "ORDER BY cardInstances.activatedDate DESC";
         Query query = entityManager.createQuery(hql);
         query.setFirstResult(offset);
         query.setMaxResults(count);
-        List<CardInstanceEntity> resultList = query.getResultList();
+        List<CardEntity> resultList = query.getResultList();
         entityManager.close();
         return resultList;
     }
 
     public Long getIssuedCardCount() {
         EntityManager entityManager = factory.createEntityManager();
-        String hql = "SELECT COUNT(ca) FROM CardInstanceEntity AS ca " +
-                "ORDER BY ca.deactivatedDate, ca.activatedDate DESC";
+        String hql = "SELECT COUNT(c) FROM CardEntity c";
         Query query = entityManager.createQuery(hql);
         Long singleResult = (Long) query.getSingleResult();
         entityManager.close();
@@ -51,6 +59,11 @@ public class CardInstanceDao extends GenericDaoJpaImpl<CardInstanceEntity, Integ
         query.setParameter("contractCode", contractCode);
         try {
             return (CardInstanceEntity) query.getSingleResult();
+        } catch (NonUniqueResultException e) {
+            e.printStackTrace();
+            System.out.println("checkCard NonUniqueResultException: " +
+                    "possibility database inconsistency due to handy modification");
+            return null;
         } catch (NoResultException e) {
             return null;
         }
@@ -104,5 +117,24 @@ public class CardInstanceDao extends GenericDaoJpaImpl<CardInstanceEntity, Integ
         Query query = entity.createQuery(hql);
         query.setParameter("cardID", cardID);
         return query.getResultList();
+    }
+
+    public CardInstanceEntity getLastActiveCardInstanceByCardId(String cardId) {
+        EntityManager entity = factory.createEntityManager();
+        String hql = "SELECT ca FROM CardInstanceEntity ca WHERE ca.cardId = :cardId " +
+                " ORDER BY ca.activatedDate DESC";
+        Query query = entity.createQuery(hql);
+        query.setMaxResults(1);
+        query.setParameter("cardId", cardId);
+        try {
+            return (CardInstanceEntity) query.getSingleResult();
+        } catch (NonUniqueResultException e) {
+            e.printStackTrace();
+            System.out.println("checkCard NonUniqueResultException: " +
+                    "possibility database inconsistency due to handy modification");
+            return null;
+        } catch (NoResultException e) {
+            return null;
+        }
     }
 }
