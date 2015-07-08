@@ -1,6 +1,7 @@
 package com.fpt.mic.micweb.model.dto.form;
 
 import com.fpt.mic.micweb.model.dao.ContractDao;
+import com.fpt.mic.micweb.utils.ConfigUtils;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.hibernate.validator.constraints.Range;
 
@@ -23,7 +24,7 @@ public class CreatePaymentDto {
     @NotEmpty(message = "Dịch vụ không được để trống")
     @Size(min = 1, max = 250, message = "Dịch vụ phải từ {min} đến {max} ký tự")
     private String content;
-    @NotEmpty(message = "Số tiền không được để trống")
+    @NotNull(message = "Số tiền không được để trống")
     @Range(min = 0, max = 1000000000, message = "Số tiền phải từ 0 tới 1.000.000.000")
     private Float amount;
 
@@ -31,6 +32,26 @@ public class CreatePaymentDto {
     private boolean isNotExisted() {
         ContractDao contractDao = new ContractDao();
         return contractCode != null && contractDao.read(contractCode) != null;
+    }
+
+    @AssertTrue(message = "Ngày nộp phí không được trước thời gian quy định")
+    private boolean isValidPaidDateMin() {
+        if (paidDate != null) {
+            ConfigUtils configUtils = new ConfigUtils();
+            Timestamp paidDateMin = new Timestamp(configUtils.getPaidDateMin().toDateTimeAtStartOfDay().getMillis());
+            return !paidDate.before(paidDateMin);
+        }
+        return false;
+    }
+
+    @AssertTrue(message = "Ngày nộp phí không được sau thời gian quy định")
+    private boolean isValidPaidDateMax() {
+        if (paidDate != null) {
+            ConfigUtils configUtils = new ConfigUtils();
+            Timestamp paidDateMax = new Timestamp(configUtils.getPaidDateMax().toDateTimeAtStartOfDay().getMillis());
+            return !paidDate.after(paidDateMax);
+        }
+        return false;
     }
 
     public CreatePaymentDto() {

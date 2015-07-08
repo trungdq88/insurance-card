@@ -323,6 +323,8 @@
     $(document).ready(function () {
         $('#expiredDate').val(getCurrentDateInNextYear());
         $('#addPaidDate').val(getCurrentDate());
+        document.getElementById("addPaidDate").min = '${config.paidDateMin}';
+        document.getElementById("addPaidDate").max = '${config.paidDateMax}';
         $('#paymentDate').val(getCurrentDate());
         document.getElementById("paymentDate").min = '${config.paidDateMin}';
         document.getElementById("paymentDate").max = '${config.paidDateMax}';

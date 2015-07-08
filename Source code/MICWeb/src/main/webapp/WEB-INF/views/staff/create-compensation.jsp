@@ -44,9 +44,18 @@
                             <label class="col-sm-4 control-label" for="contractCode">Mã hợp đồng *</label>
 
                             <div class="col-sm-2">
-                                <input id="contractCode" name="compensation:contractCode" class="form-control input-md"
-                                       type="text" required pattern="^HD([0-9A-Z]{4,8})$"
-                                       title="Ví dụ: HD1024" value="${submitted.contractCode}">
+                                <c:choose>
+                                    <c:when test="${not empty param.code}">
+                                        <input id="contractCode" name="compensation:contractCode" class="form-control input-md"
+                                               type="text" required pattern="^HD([0-9A-Z]{4,8})$"
+                                               title="Ví dụ: HD1024" value="${param.code}">
+                                    </c:when>
+                                    <c:otherwise>
+                                        <input id="contractCode" name="compensation:contractCode" class="form-control input-md"
+                                               type="text" required pattern="^HD([0-9A-Z]{4,8})$"
+                                               title="Ví dụ: HD1024" value="${submitted.contractCode}">
+                                    </c:otherwise>
+                                </c:choose>
                             </div>
 
                             <div class="col-sm-2" data-toggle="modal" data-target="#select-customer-modal">
@@ -279,8 +288,11 @@
                             </label>
 
                             <div class="col-sm-6">
-                                <input id="attachment" name="compensation:attachment" class="form-control input-md"
-                                       type="file" maxlength="255">
+                                <input id="attachment" name="compensation:attachment" type="hidden" maxlength="255">
+                                <img id="imgAttachment" height="100px" src=""/>
+                                <script type="text/javascript" src="//api.filepicker.io/v2/filepicker.js"></script>
+                                <input type="filepicker" data-fp-apikey="AEbPPQfPfRHqODjEl5AZ2z"
+                                       onchange="$('#imgAttachment').attr('src', event.fpfile.url);$('#attachment').val(event.fpfile.url);">
                             </div>
                         </div>
                     </fieldset>

@@ -19,7 +19,7 @@ import java.util.List;
 /**
  * Created by Kha on 05/07/2015.
  */
-@WebServlet(name = "AccidentController", urlPatterns = {"/staff/accident"})
+@WebServlet(name = "StaffAccidentController", urlPatterns = {"/staff/accident"})
 public class AccidentController extends AuthController {
     @Override
     public List<String> getAllowedRoles() {

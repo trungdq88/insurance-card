@@ -256,7 +256,11 @@ public class StaffBusiness {
 
         // Set payment information from dto to entity
         paymentEntity.setContractCode(dto.getContractCode());
-        paymentEntity.setPaidDate(dto.getPaidDate());
+        Timestamp currentDate = DateUtils.currentDateWithoutTime();
+        if (currentDate.equals(dto.getPaidDate())) {
+            paymentEntity.setPaidDate(DateUtils.currentTimeWithoutNanos());
+        } else {
+            paymentEntity.setPaidDate(dto.getPaidDate());}
         paymentEntity.setContent(dto.getContent());
         paymentEntity.setAmount(dto.getAmount());
         // Set others payment information
