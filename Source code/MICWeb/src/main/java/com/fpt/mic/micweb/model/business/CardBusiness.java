@@ -24,10 +24,19 @@ public class CardBusiness {
         CardDao cardDao = new CardDao();
         return cardDao.getIssuedCard(offset, count);
     }
+    public List<CardEntity> getIssuedCard(String customerCode, int offset, int count) {
+        CardDao cardDao = new CardDao();
+        return cardDao.getIssuedCard(customerCode, offset, count);
+    }
 
     public Long getIssuedCardCount() {
         CardDao cardDao = new CardDao();
         return cardDao.getIssuedCardCount();
+    }
+
+    public Long getIssuedCardCount(String customerCode) {
+        CardDao cardDao = new CardDao();
+        return cardDao.getIssuedCardCount(customerCode);
     }
 
     public CardEntity getCardDetail(String cardId) {
@@ -40,13 +49,24 @@ public class CardBusiness {
         CardEntity cardEntity = cardDao.getCardByContract(contractCode);
         return cardEntity;
     }
-
+    // return map: key = newCardRequestId, value: new CardId
     public Map<Integer, String> getMappingWithNewCardRequest() {
         Map<Integer, String> map = new HashMap<Integer, String>();
         CardDao cardDao = new CardDao();
         List<CardEntity> list = cardDao.getAllCard();
         for (CardEntity cardEntity : list) {
             map.put(cardEntity.getNewCardRequestId(), cardEntity.getCardId());
+        }
+        return map;
+    }
+
+    // return map: key = old cardId, value: newCardRequestId
+    public Map<String, Integer> getMappingOldCardIdAndNewCardRequestId() {
+        Map<String, Integer> map = new HashMap<String, Integer>();
+        NewCardRequestDao newCardRequestDao = new NewCardRequestDao();
+        List<NewCardRequestEntity> list = newCardRequestDao.getAllNewCardRequest();
+        for (NewCardRequestEntity newCardRequestEntity : list) {
+            map.put(newCardRequestEntity.getOldCardId(),newCardRequestEntity.getId());
         }
         return map;
     }
