@@ -214,9 +214,9 @@ public class ContractController extends AuthController {
             newCardRequestDto.setContractCode(dto.getContractCode());
 
             // kiem tra neu hop dong da duoc cap the ( bao gom the cu va moi)
-            if (cardBusiness.getCardByContractIncludeDeactive(dto.getContractCode()).size() > 0) {
+            if (cardBusiness.getCardInstancesIncludeDeactive(dto.getContractCode()).size() > 0) {
                 // neu hop dong da dc phat hanh the, kiem tra xem co yeu cau truoc do chua
-                if (!cardBusiness.isNewCardRequestedByContractCode(dto.getContractCode())) {
+                if (!cardBusiness.isNewCardRequested(dto.getContractCode())) {
                     if (cardBusiness.getCardByContract(dto.getContractCode()) != null) {
                         // Deactivate current card
                         cardBusiness.deactiveCardByContractCode(dto.getContractCode());

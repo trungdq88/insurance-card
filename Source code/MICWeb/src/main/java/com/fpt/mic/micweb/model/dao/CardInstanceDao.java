@@ -35,6 +35,37 @@ public class CardInstanceDao extends GenericDaoJpaImpl<CardInstanceEntity, Integ
         return resultList;
     }
 
+    /**
+     * Return all card instances of the contract of the customer
+     * @param customerCode
+     * @param offset
+     * @param count
+     * @return
+     */
+    public List<CardInstanceEntity> getIssuedCard(String customerCode, int offset, int count) {
+        EntityManager entityManager = factory.createEntityManager();
+        String hql = "SELECT ci FROM CardInstanceEntity ci " +
+                "WHERE ci.micContractByContractCode.customerCode = :customerCode " +
+                "AND ci.deactivatedDate = NULL";
+        Query query = entityManager.createQuery(hql);
+        query.setParameter("customerCode",customerCode);
+        query.setFirstResult(offset);
+        query.setMaxResults(count);
+        List<CardInstanceEntity> resultList = query.getResultList();
+        entityManager.close();
+        return resultList;
+    }
+    public Long getIssuedCardCount(String customerCode) {
+        EntityManager entityManager = factory.createEntityManager();
+        String hql = "SELECT COUNT(ci) FROM CardInstanceEntity ci " +
+                "WHERE ci.micContractByContractCode.customerCode = :customerCode " +
+                "AND ci.deactivatedDate = NULL";
+        Query query = entityManager.createQuery(hql);
+        query.setParameter("customerCode", customerCode);
+        Long singleResult = (Long) query.getSingleResult();
+        entityManager.close();
+        return singleResult;
+    }
     public Long getIssuedCardCount() {
         EntityManager entityManager = factory.createEntityManager();
         String hql = "SELECT COUNT(c) FROM CardEntity c";

@@ -27,11 +27,15 @@ public class CardBusiness {
         CardInstanceDao cardInstanceDao = new CardInstanceDao();
         return cardInstanceDao.getIssuedCard(offset, count);
     }
-    public List<CardEntity> getIssuedCard(String customerCode, int offset, int count) {
+    public List<CardInstanceEntity> getIssuedCard(String customerCode, int offset, int count) {
         CardInstanceDao cardDao = new CardInstanceDao();
         return cardDao.getIssuedCard(customerCode, offset, count);
     }
 
+    public Long getIssuedCardCount(String customerCode) {
+        CardInstanceDao cardInstanceDao = new CardInstanceDao();
+        return cardInstanceDao.getIssuedCardCount(customerCode);
+    }
     public Long getIssuedCardCount() {
         CardInstanceDao cardInstanceDao = new CardInstanceDao();
         return cardInstanceDao.getIssuedCardCount();
@@ -64,7 +68,8 @@ public class CardBusiness {
         NewCardRequestDao newCardRequestDao = new NewCardRequestDao();
         List<NewCardRequestEntity> list = newCardRequestDao.getAllNewCardRequest();
         for (NewCardRequestEntity newCardRequestEntity : list) {
-            map.put(newCardRequestEntity.getOldCardId(),newCardRequestEntity.getId());
+            map.put(newCardRequestEntity.getMicCardInstanceByOldCardInstanceId().getCardId(),
+                    newCardRequestEntity.getId());
         }
         return map;
     }

@@ -13,6 +13,7 @@ import com.fpt.mic.micweb.model.dto.CheckoutRequestDto;
 import com.fpt.mic.micweb.model.dto.UserDto;
 import com.fpt.mic.micweb.model.dto.form.NewCardRequestDto;
 import com.fpt.mic.micweb.model.entity.CardEntity;
+import com.fpt.mic.micweb.model.entity.CardInstanceEntity;
 import com.fpt.mic.micweb.model.entity.CustomerEntity;
 import com.fpt.mic.micweb.utils.Constants;
 
@@ -62,7 +63,7 @@ public class CardController extends AuthController {
 
         // Call to business
         final CardBusiness cardBusiness = new CardBusiness();
-        CardEntity cardEntity = cardBusiness.getCardDetail(cardId);
+        CardInstanceEntity cardEntity = cardBusiness.getLastActiveCardInnstance(cardId);
 
         calPaginator.setGetItemsCallback(new Paginator.IGetItems() {
             @Override
