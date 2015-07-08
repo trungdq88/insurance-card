@@ -320,6 +320,60 @@
 <jsp:include page="contract-detail-modal.jsp" flush="true"/>
 
 <script type="text/javascript">
+
+    // Constants from server business config
+    var contractStatus = '${contract.status}';
+    var expDate = new Date("${contract.expiredDate}");
+    var pricePerYear = '${contract.micContractTypeByContractTypeId.pricePerYear}';
+    var contractTerm = 365;
+    var renewFee = pricePerYear;
+    var newCardFee = parseFloat('${config.newCardFee}');
+    var deliveryFee = parseFloat('${config.deliveryFee}');
+    var totalFee = parseFloat(renewFee) + newCardFee;
+
+    // State variables
+    var isNewCard = false;
+    var isDeliveryNewCard = false;
+
+    function calcRenewFee() {
+        var inputDate = new Date($('#expiredDate').val());
+        if (contractStatus != 'Expired') {
+            contractTerm = daysBetween(expDate, inputDate);
+        } else {
+            contractTerm = daysBetween(new Date(getCurrentDate()), inputDate);
+        }
+        return calculateContractFee(contractTerm, pricePerYear);
+    }
+
+
+    // Calculate fees
+    function refreshFees() {
+        var calculatedRenewFee = calcRenewFee();
+        var calculatedNewCardFee = isNewCard ? newCardFee : 0;
+        var calculatedDeliveryFee = isNewCard ? (isDeliveryNewCard ? deliveryFee : 0) : 0;
+
+        // Data to display to user
+        $('#renewFee').text(calculatedRenewFee);
+        $('#newCardFee').text(calculatedNewCardFee);
+        $('#deliveryFee').text(calculatedDeliveryFee);
+        $('#totalFee').text(calculatedRenewFee + calculatedNewCardFee + calculatedDeliveryFee);
+
+        // Data to send to server
+        $('#contractFee').val(calculatedRenewFee);
+        $('#amount').val(calculatedRenewFee + calculatedNewCardFee + calculatedDeliveryFee)
+
+        refreshFeeUI();
+    }
+
+    function refreshFeeUI() {
+        if (isNewCard) {
+            $('.control-delivery').slideDown();
+        } else {
+            // turn off the delivery checkbox
+            $('.control-delivery').slideUp();
+        }
+    }
+
     $(document).ready(function () {
         $('#expiredDate').val(getCurrentDateInNextYear());
         $('#addPaidDate').val(getCurrentDate());
@@ -335,66 +389,31 @@
         document.getElementById("cancelDate").min = '${config.cancelDateMin}';
         document.getElementById("cancelDate").max = '${config.cancelDateMax}';
 
-        var contractStatus = '${contract.status}';
-        var expDate = new Date("${contract.expiredDate}");
-        var pricePerYear = '${contract.micContractTypeByContractTypeId.pricePerYear}';
-        var contractTerm = 365;
-        var renewFee = pricePerYear;
-        var newCardFee = parseFloat('${config.newCardFee}');
-        var deliveryFee = parseFloat('${config.deliveryFee}');
-        var totalFee = parseFloat(renewFee) + newCardFee;
-        $('#contractFee').val(pricePerYear);
-        $('#amount').val(pricePerYear);
-        $('#renewFee').text(parseFloat(pricePerYear).formatMoney(0));
-        $('#newCardFee').text(newCardFee.formatMoney(0));
-        $('#deliveryFee').text(deliveryFee.formatMoney(0));
-        $('#totalFee').text(parseFloat(totalFee).formatMoney(0));
 
-        $('.collapse').collapse();
-        $('#newCard, #deliveryNewCard').on('click', function (e) {
-            e.stopPropagation();
-            $(this).parent().trigger('click');
-        })
-        $('#collapseNewCard, #collapseDelivery').on('show.bs.collapse', function (e) {
-            if (!$('#newCard, #deliveryNewCard').is(':checked')) {
-                return false;
-            }
+        // Bind events to refresh fees
+        $('#expiredDate').blur(function() {
+            refreshFees();
         });
 
+        $('#newCard').click(function () {
+            var isChecked = $(this).is(':checked');
+            isNewCard = isChecked;
+            refreshFees();
+        });
+        $('#deliveryNewCard').click(function () {
+            var isChecked = $(this).is(':checked');
+            isDeliveryNewCard = isChecked;
+            refreshFees();
+        });
+
+        refreshFees();
+
+        // Handle remaining days to display
         var remainDays = daysBetween(new Date(), expDate);
         $('#remain').text(remainDays);
         $('#remain2').text(remainDays);
 
-        $('input[type="date"]').not('#paidDate').blur(function () {
-            var inputDate = new Date(this.value);
-            if (contractStatus != 'Expired') {
-                contractTerm = daysBetween(expDate, inputDate);
-            } else {
-                contractTerm = daysBetween(new Date(getCurrentDate()), inputDate);
-            }
-            renewFee = calculateContractFee(contractTerm, pricePerYear);
-            $('#contractFee').val(renewFee);
-            $('#amount').val(renewFee);
-            $('#renewFee').text(parseFloat(renewFee).formatMoney(0));
-            $('#totalFee').text(parseFloat(renewFee).formatMoney(0));
-            if ($("newCard:checked")) {
-                totalFee = parseFloat(renewFee) + newCardFee;
-                $('#amount').val(totalFee);
-                $('#totalFee').text(parseFloat(totalFee).formatMoney(0));
-            } else {
-                $('#amount').val(renewFee);
-            }
-            if ($("deliveryNewCard:checked")) {
-                totalFee = parseFloat(renewFee) + newCardFee + deliveryFee;
-                $('#amount').val(totalFee);
-                $('#totalFee').text(parseFloat(totalFee).formatMoney(0));
-            } else {
-                totalFee = parseFloat(renewFee) + newCardFee;
-                $('#amount').val(totalFee);
-                $('#totalFee').text(parseFloat(totalFee).formatMoney(0));
-            }
-        });
-
+        // Handle button renew & cancel, disable or enable
         if (contractStatus.toLowerCase() == 'Pending'.toLowerCase()) {
             $('#btnCancel').removeClass('hide');
             $('#btnPayment').removeClass('hide');

@@ -259,21 +259,19 @@
                             </div>
                         </div>
 
-                        <label class="col-sm-3 control-label">Cấp thẻ mới
+                        <label class="col-sm-3 control-label control-newcard" for="newCard">Cấp thẻ mới
                             <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="bottom" title=""
                                data-original-title="Thẻ cũ sẽ bị vô hiệu hóa, yêu cầu cấp thẻ mới sẽ được tạo."></i>
                         </label>
 
                         <div class="col-sm-1">
                             <div class="text-value">
-                                <a data-toggle="collapse" href="#collapseNewCard" data-parent="#accordion">
-                                    <input type="checkbox" id="newCard" name="renew:newCard" value="true">
-                                </a>
+                                <input type="checkbox" id="newCard" class="control-newcard" name="renew:newCard" value="true">
                             </div>
                         </div>
                     </div>
 
-                    <div id="collapseNewCard" class="panel-collapse collapse in">
+                    <div id="collapseNewCard" class="panel-collapse collapse in control-delivery">
                         <!-- New card fee -->
                         <div class="form-group">
                             <label class="col-sm-4 control-label">Phí thẻ mới</label>
@@ -285,18 +283,18 @@
                                 </div>
                             </div>
 
-                            <label class="col-sm-3 control-label">Vận chuyển thẻ</label>
+                            <label class="col-sm-3 control-label control-delivery" for="deliveryNewCard">Vận chuyển thẻ</label>
 
                             <div class="col-sm-1">
                                 <div class="text-value">
-                                    <a data-toggle="collapse" href="#collapseDelivery" data-parent="#accordion">
-                                        <input type="checkbox" id="deliveryNewCard" name="renew:deliveryNewCard" value="true">
-                                    </a>
+                                    <input type="checkbox" id="deliveryNewCard" class="control-delivery"
+                                           name="renew:deliveryNewCard" value="true">
+
                                 </div>
                             </div>
                         </div>
 
-                        <div id="collapseDelivery" class="panel-collapse collapse in">
+                        <div id="collapseDelivery" class="panel-collapse collapse in ">
                             <div class="form-group">
                                 <label class="col-sm-4 control-label">Phí vận chuyển</label>
 
