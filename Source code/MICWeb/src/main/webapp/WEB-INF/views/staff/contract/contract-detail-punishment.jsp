@@ -32,7 +32,11 @@
                         <fmt:formatDate value="${punishment.createdDate}" pattern="dd/MM/yyyy"/>
                     </td>
                     <td>${punishment.title}</td>
-                    <td>${punishment.attachment}</td>
+                    <td>
+                        <a href="${punishment.attachment}">
+                            Xem chi tiết
+                        </a>
+                    </td>
                     <td>
                         <a href="${pageContext.request.contextPath}/staff/punishment?action=edit&id=${punishment.id}"
                            type="button" class="btn btn-xs btn-primary">

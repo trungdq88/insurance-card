@@ -24,12 +24,37 @@ public class CardDao extends GenericDaoJpaImpl<CardEntity, String> {
         entityManager.close();
         return resultList;
     }
+    public List<CardEntity> getIssuedCard(String customerCode, int offset, int count) {
+        EntityManager entityManager = factory.createEntityManager();
+        String hql = "SELECT ca FROM CardEntity AS ca " +
+                "WHERE ca.micContractByContractCode.micCustomerByCustomerCode.customerCode = :customerCode" +
+                " ORDER BY ca.deactivatedDate, ca.activatedDate DESC";
+        Query query = entityManager.createQuery(hql);
+        query.setParameter("customerCode",customerCode);
+        query.setFirstResult(offset);
+        query.setMaxResults(count);
+        List<CardEntity> resultList = query.getResultList();
+        entityManager.close();
+        return resultList;
+    }
 
     public Long getIssuedCardCount() {
         EntityManager entityManager = factory.createEntityManager();
         String hql = "SELECT COUNT(ca) FROM CardEntity AS ca " +
                 "ORDER BY ca.deactivatedDate, ca.activatedDate DESC";
         Query query = entityManager.createQuery(hql);
+        Long singleResult = (Long) query.getSingleResult();
+        entityManager.close();
+        return singleResult;
+    }
+
+    public Long getIssuedCardCount(String customerCode) {
+        EntityManager entityManager = factory.createEntityManager();
+        String hql = "SELECT COUNT(ca) FROM CardEntity AS ca " +
+                "WHERE ca.micContractByContractCode.micCustomerByCustomerCode.customerCode = :customerCode" +
+                " ORDER BY ca.deactivatedDate, ca.activatedDate DESC";
+        Query query = entityManager.createQuery(hql);
+        query.setParameter("customerCode",customerCode);
         Long singleResult = (Long) query.getSingleResult();
         entityManager.close();
         return singleResult;

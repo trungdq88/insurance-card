@@ -28,7 +28,7 @@ public class Constants {
         public static final int EXPIRED_DATE_AFTER = 1;
         public static final int CONTRACT_DEFAULT_TERM = 1;
         public static final int PAID_DATE_BEFORE = 7;
-        public static final int PAID_DATE_AFTER = 30;
+        public static final int PAID_DATE_AFTER = 7;
         public static final int CANCEL_DATE_BEFORE = 7;
         public static final int CANCEL_DATE_AFTER = 30;
     }

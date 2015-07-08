@@ -238,7 +238,11 @@
                                         <c:when test="${empty compensation.attachment}">
                                             <span class="empty-value">Không có</span>
                                         </c:when>
-                                        <c:otherwise>${compensation.attachment}</c:otherwise>
+                                        <c:otherwise>
+                                            <a href="${compensation.attachment}">
+                                                Xem chi tiết
+                                            </a>
+                                        </c:otherwise>
                                     </c:choose>
                                 </div>
                             </div>
