@@ -140,4 +140,11 @@ public class CardBusiness {
         CardAccessLogDao cardAccessLogDao = new CardAccessLogDao();
         return cardAccessLogDao.getCardAccessLogCount(cardId);
     }
+    public NewCardRequestEntity updatePaidNewCardRequest(String contractCode){
+        NewCardRequestEntity newCardRequestEntity;
+        NewCardRequestDao newCardRequestDao = new NewCardRequestDao();
+        newCardRequestEntity = newCardRequestDao.getUnresolveRequestByContractCode(contractCode);
+        newCardRequestEntity.setIsPaid(1);
+        return newCardRequestDao.update(newCardRequestEntity);
+    }
 }
