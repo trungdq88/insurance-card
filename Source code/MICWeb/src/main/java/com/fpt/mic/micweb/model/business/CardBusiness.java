@@ -143,7 +143,7 @@ public class CardBusiness {
     public NewCardRequestEntity updatePaidNewCardRequest(String contractCode){
         NewCardRequestEntity newCardRequestEntity;
         NewCardRequestDao newCardRequestDao = new NewCardRequestDao();
-        newCardRequestEntity = newCardRequestDao.getUnresolveRequestByContractCode(contractCode);
+        newCardRequestEntity = newCardRequestDao.getUnpaidRequestByContractCode(contractCode);
         newCardRequestEntity.setIsPaid(1);
         return newCardRequestDao.update(newCardRequestEntity);
     }

@@ -111,6 +111,19 @@ public class CardController extends AuthController {
 
     public ResponseObject postCreateNewCardPayment(R r) {
         CreateNewCardPaymentDto createNewCardPaymentDto =(CreateNewCardPaymentDto) r.ead.entity(CreateNewCardPaymentDto.class,"createNewCardPayment");
+        List errors = r.ead.validate(createNewCardPaymentDto);
+        // If there is validation errors
+        if (errors.size() > 0) {
+            // Send error messages to JSP page
+            r.equest.setAttribute("validateErrors", errors);
+            // This is a form in a popup, we don't need to display data again since
+            // the popup will not automatically open when the page is reloaded
+            r.equest.setAttribute("content",r.equest.getParameter("content"));
+            r.equest.setAttribute("amount",r.equest.getParameter("amount"));
+            r.equest.setAttribute("submitted", createNewCardPaymentDto);
+            // Re-call the contract detail page
+            return getNewCardRequest(r);
+        }
         PaymentBusiness paymentBusiness = new PaymentBusiness();
         String contractCode = createNewCardPaymentDto.getContractCode();
         String msg = null;

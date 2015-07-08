@@ -29,7 +29,7 @@ public class PaymentBusiness {
         PaymentEntity paymentEntity = new PaymentEntity();
         paymentEntity.setContractCode(createNewCardPaymentDto.getContractCode());
         paymentEntity.setPaymentMethod("Trực tiếp");
-
+        // kiem tra neu isDeliveryRequested
         if(createNewCardPaymentDto.getDelivery() == 1) {
             paymentEntity.setContent("Đăng ký thẻ mới "+createNewCardPaymentDto.getContractCode() +" + giao thẻ trực tiếp");
             paymentEntity.setAmount(Constants.PaymentFee.NEW_CARD_REQUEST_FEE + Constants.PaymentFee.DELIVERY_FEE);

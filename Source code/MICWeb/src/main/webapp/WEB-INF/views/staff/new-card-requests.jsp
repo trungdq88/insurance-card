@@ -15,6 +15,15 @@
         </div>
         <div class="row">
             <div class="col-lg-12">
+                <c:if test="${not empty validateErrors}">
+                    <div class="well well-lg text-danger ">
+                        <ul>
+                            <c:forEach var="error" items="${validateErrors}">
+                                <li>${error}</li>
+                            </c:forEach>
+                        </ul>
+                    </div>
+                </c:if>
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <div class="pull-left center-dropdown-button">
@@ -83,7 +92,7 @@
                                                         <%--<span class="label label-danger">Chưa thanh toán</span>--%>
 
                                                             <button  delivery="${newRequest.isDeliveryRequested}" contractCode="${newRequest.micCardByOldCardId.contractCode}"
-                                                                     type="button" class="btn btn-success "
+                                                                     type="button" class="btn btn-success btn-xs"
                                                                     data-toggle="modal" data-target="#add-payment-modal" onclick="{
 //                                                            var rowNumber = $(this).attr('value');
                                                                     var delivery = $(this).attr('delivery');
@@ -100,8 +109,11 @@
                                                                         content = 'Đăng ký thẻ mới ' +contractCode;
                                                                     }
 
-                                                                    $('#addContent').val(content);
-                                                                    $('#addAmount').val(fee);
+
+                                                                    $('#addContent').text(content);
+                                                                    $('#content').val(content);
+                                                                    $('#amount').val(fee);
+                                                                    $('#addAmount').text(fee);
                                                                     $('#contractCode').val(contractCode);
                                                                     $('#delivery').val(delivery);
 

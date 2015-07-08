@@ -23,7 +23,7 @@
 
               <div class="col-sm-4">
                 <input id="addPaidDate" name="createNewCardPayment:paidDate" class="form-control input-md"
-                       type="date" required>
+                       type="date" required value="${submitted.paidDate}">
               </div>
             </div>
 
@@ -32,10 +32,8 @@
               <label class="col-sm-4 control-label" for="addContent">Dịch vụ *</label>
 
               <div class="col-sm-7">
-                <input id="addContent" name="createNewCardPayment:content" class="form-control input-md"
-                       type="text" required maxlength="250"
-                       title="Vui lòng nhập dịch vụ cần thanh toán"
-                       placeholder="Ví dụ: Đăng ký hợp đồng mới KH0001">
+                <p class="text-value"><span id="addContent"></span></p>
+                <input id="content" name="content" type="hidden">
               </div>
             </div>
 
@@ -47,11 +45,8 @@
                 <div class="input-group">
                   <input type="hidden" id="newCardFee" value="${newCardFee}">
                   <input type="hidden" id="deliveryFee" value="${deliveryFee}">
-                  <input id="addAmount" name="createNewCardPayment:amount" class="form-control input-md"
-                         type="number" required min="0" max="1000000000"
-                         title="Vui lòng nhập số tiền" placeholder="Ví dụ: 80000">
-
-                  <div class="input-group-addon">VNĐ</div>
+                  <p class="text-value"><span id="addAmount"></span> VNĐ</p>
+                  <input id="amount" value="amount" type="hidden">
                 </div>
               </div>
             </div>
@@ -59,8 +54,8 @@
           <%--/Payment information--%>
         </div>
         <div class="modal-footer">
-          <input id="contractCode" type="hidden" name="createNewCardPayment:contractCode" />
-          <input id="delivery" type="hidden" name="createNewCardPayment:delivery">
+          <input id="contractCode" type="hidden" name="createNewCardPayment:contractCode" value="${submitted.contractCode}"/>
+          <input id="delivery" type="hidden" name="createNewCardPayment:delivery" value="${submitted.delivery}">
           <input type="hidden" name="action" value="createNewCardPayment"/>
           <button type="submit" class="btn btn-success">
             <i class="fa fa-arrow-right"></i> Thêm thông tin thanh toán

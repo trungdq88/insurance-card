@@ -71,6 +71,24 @@ public class NewCardRequestDao extends GenericDaoJpaImpl<NewCardRequestEntity, I
             entityManager.close();
         }
     }
+    public NewCardRequestEntity getUnpaidRequestByContractCode(String contractCode) {
+        EntityManager entityManager = factory.createEntityManager();
+        Query query = entityManager.createQuery(
+                "SELECT co " +
+                        "FROM NewCardRequestEntity co " +
+                        "WHERE co.micCardByOldCardId.micContractByContractCode.contractCode = :contractCode" +
+                        " AND co.isPaid = 0"
+        );
+        query.setParameter("contractCode", contractCode);
+
+        try {
+            return (NewCardRequestEntity) query.getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        } finally {
+            entityManager.close();
+        }
+    }
 
     public Long getAllNewCardRequestCount() {
         EntityManager entity = factory.createEntityManager();
