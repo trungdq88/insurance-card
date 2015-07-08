@@ -33,7 +33,14 @@
                 <form action="${pageContext.request.contextPath}/staff/accident" method="post" class="form-horizontal">
                     <fieldset>
                         <!-- Contract code -->
-                        <input type="hidden" name="accident:contractCode" value="${param.code}">
+                        <c:choose>
+                            <c:when test="${not empty param.code}">
+                                <input type="hidden" name="accident:contractCode" value="${param.code}">
+                            </c:when>
+                            <c:otherwise>
+                                <input type="hidden" name="accident:contractCode" value="${submitted.contractCode}">
+                            </c:otherwise>
+                        </c:choose>
 
                         <!-- Created date -->
                         <div class="form-group">
@@ -53,7 +60,7 @@
                             <div class="col-sm-7">
                                 <textarea id="title" name="accident:title" class="form-control input-md"
                                           placeholder="Ví dụ: Gãy tay trái, chấn thương mô mềm"
-                                          rows="4" maxlength="250"
+                                          rows="4" maxlength="250" required
                                           title="Vui lòng nhập nội dung thông báo">${submitted.title}</textarea>
                             </div>
                         </div>
@@ -63,7 +70,7 @@
                             <label class="col-sm-4 control-label" for="attachment">Văn bản đính kèm *</label>
 
                             <div class="col-sm-6">
-                                <input id="attachment" name="accident:attachment" type="hidden" required maxlength="255">
+                                <input id="attachment" name="accident:attachment" type="hidden" maxlength="255">
                                 <img id="imgAttachment" height="100px" src=""/>
                                 <script type="text/javascript" src="//api.filepicker.io/v2/filepicker.js"></script>
                                 <input type="filepicker" data-fp-apikey="AEbPPQfPfRHqODjEl5AZ2z"

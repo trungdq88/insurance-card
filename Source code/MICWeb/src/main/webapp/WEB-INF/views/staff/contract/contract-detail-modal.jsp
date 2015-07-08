@@ -240,7 +240,7 @@
                     <jsp:include page="contract-detail-general.jsp" flush="true"/>
                     <!-- New expired date -->
                     <div class="form-group">
-                        <label class="col-sm-5 control-label" for="expiredDate">Gia hạn đến *</label>
+                        <label class="col-sm-4 control-label" for="expiredDate">Gia hạn đến *</label>
 
                         <div class="col-sm-4">
                             <input id="expiredDate" name="renew:expiredDate" class="form-control input-md"
@@ -249,24 +249,25 @@
                     </div>
                     <!-- Renew fee -->
                     <div class="form-group">
-                        <label class="col-sm-5 control-label">Phí gia hạn</label>
+                        <label class="col-sm-4 control-label">Phí gia hạn</label>
 
-                        <div class="col-sm-4">
+                        <div class="col-sm-3">
                             <div class="text-value">
                                     <span id="renewFee"
                                           style="color:deepskyblue; font-weight: bolder; font-size: large"></span> đ
                                 <input type="hidden" id="contractFee" name="renew:contractFee"/>
                             </div>
                         </div>
-                    </div>
-                    <!-- New card -->
-                    <div class="form-group">
-                        <label class="col-sm-5 control-label">Cấp thẻ mới</label>
 
-                        <div class="col-sm-4">
+                        <label class="col-sm-3 control-label">Cấp thẻ mới
+                            <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="bottom" title=""
+                               data-original-title="Thẻ cũ sẽ bị vô hiệu hóa, yêu cầu cấp thẻ mới sẽ được tạo."></i>
+                        </label>
+
+                        <div class="col-sm-1">
                             <div class="text-value">
                                 <a data-toggle="collapse" href="#collapseNewCard" data-parent="#accordion">
-                                    <input type="checkbox" id="newCard" name="renew:newCard">
+                                    <input type="checkbox" id="newCard" name="renew:newCard" value="true">
                                 </a>
                             </div>
                         </div>
@@ -275,21 +276,44 @@
                     <div id="collapseNewCard" class="panel-collapse collapse in">
                         <!-- New card fee -->
                         <div class="form-group">
-                            <label class="col-sm-5 control-label">Phí thẻ mới</label>
+                            <label class="col-sm-4 control-label">Phí thẻ mới</label>
 
-                            <div class="col-sm-4">
+                            <div class="col-sm-3">
                                 <div class="text-value">
                                     <span id="newCardFee"
                                           style="color:navy; font-weight: bolder; font-size: large"></span> đ
+                                </div>
+                            </div>
+
+                            <label class="col-sm-3 control-label">Vận chuyển thẻ</label>
+
+                            <div class="col-sm-1">
+                                <div class="text-value">
+                                    <a data-toggle="collapse" href="#collapseDelivery" data-parent="#accordion">
+                                        <input type="checkbox" id="deliveryNewCard" name="renew:deliveryNewCard" value="true">
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="collapseDelivery" class="panel-collapse collapse in">
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">Phí vận chuyển</label>
+
+                                <div class="col-sm-3">
+                                    <div class="text-value">
+                                    <span id="deliveryFee"
+                                          style="font-weight: bolder; font-size: large"></span> đ
+                                    </div>
                                 </div>
                             </div>
                         </div>
 
                         <!-- Total fee -->
                         <div class="form-group">
-                            <label class="col-sm-5 control-label">Tổng chi phí</label>
+                            <label class="col-sm-4 control-label">Tổng chi phí</label>
 
-                            <div class="col-sm-4">
+                            <div class="col-sm-3">
                                 <div class="text-value">
                                     <span id="totalFee"
                                           style="color:red; font-weight: bolder; font-size: large"></span> đ
@@ -301,7 +325,7 @@
 
                     <!-- Paid date -->
                     <div class=" form-group">
-                        <label class="col-sm-5 control-label" for="paidDate">Ngày nộp phí *</label>
+                        <label class="col-sm-4 control-label" for="paidDate">Ngày nộp phí *</label>
 
                         <div class="col-sm-4">
                             <input id="paidDate" name="renew:paidDate" class="form-control input-md"

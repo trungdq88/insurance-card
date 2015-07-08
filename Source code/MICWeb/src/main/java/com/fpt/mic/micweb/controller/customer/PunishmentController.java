@@ -51,7 +51,10 @@ public class PunishmentController extends AuthController {
         // If the code reached this line that means there is no validation errors
         PunishmentEntity result = punishmentBusiness.createPunishment(dto);
         if (result != null) {
-            return new RedirectTo("contract?action=detail&code=" + dto.getContractCode());
+            msg ="Thêm vi phạm mới thành công";
+            r.equest.setAttribute("contractCode", dto.getContractCode());
+            r.equest.setAttribute("info", msg);
+            return new JspPage("/customer/message.jsp");
         } else {
             msg = "Tạo vi phạm mới thất bại, thử lại hay gởi email về hydrangea8604@gmail.com";
             r.equest.setAttribute("result", msg);

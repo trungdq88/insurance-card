@@ -14,6 +14,16 @@
             <!-- /.col-lg-12 -->
         </div>
         <div class="row">
+            <div class="text-center alert alert-danger alert-dismissible hide"
+                 id="notifyAccident"
+                 role="alert">
+                Nội dung thông báo không được để trống
+            </div>
+            <div class="text-center alert alert-danger alert-dismissible hide"
+                 id="notifyAccident1"
+                 role="alert">
+                Văn bản đính kèm không được để trống
+            </div>
             <div class="col-lg-12">
 
                 <c:if test="${not empty validateErrors}">
@@ -30,7 +40,8 @@
                 <br/>
 
                 <!-- Form to create new customer -->
-                <form action="${pageContext.request.contextPath}/customer/accident" method="post" class="form-horizontal">
+                <form action="${pageContext.request.contextPath}/customer/accident" method="post"
+                      class="form-horizontal">
                     <fieldset>
                         <!-- Contract code -->
                         <input type="hidden" name="accident:contractCode" value="${param.code}">
@@ -41,8 +52,8 @@
 
                             <div class="col-sm-3">
                                 <input id="createdDate" name="accident:createdDate"
-                                       value="<fmt:formatDate value="${submitted.createdDate}" pattern="yyyy-MM-dd" />"
-                                       class="form-control input-md" type="date" required>
+                                       pattern="yyyy-MM-dd"
+                                       class="form-control input-md" type="date" required/>
                             </div>
                         </div>
 
@@ -51,10 +62,10 @@
                             <label class="col-sm-4 control-label" for="title">Nội dung thông báo *</label>
 
                             <div class="col-sm-7">
-                                <textarea id="title" name="accident:title" class="form-control input-md"
+                                <textarea id="title" name="accident:title" class="form-control"
                                           placeholder="Ví dụ: Gãy tay trái, chấn thương mô mềm"
                                           rows="4" maxlength="250"
-                                          title="Vui lòng nhập nội dung thông báo">${submitted.title}</textarea>
+                                          title="Vui lòng nhập nội dung thông báo"></textarea>
                             </div>
                         </div>
 
@@ -63,9 +74,16 @@
                             <label class="col-sm-4 control-label" for="attachment">Văn bản đính kèm *</label>
 
                             <div class="col-sm-6">
-                                <input id="attachment" name="accident:attachment" class="form-control input-md"
-                                       type="file" required maxlength="255"
-                                       title="Vui lòng tải lên văn bản đính kèm">
+                                <img id="imgAttachment" height="100px" src=""/>
+                                <input id="attachment" name="accident:attachment" class="form-control"
+                                       type="hidden" maxlength="255">
+
+                                <script type="text/javascript" src="//api.filepicker.io/v2/filepicker.js"></script>
+
+                                <input type="filepicker" data-fp-apikey="AEbPPQfPfRHqODjEl5AZ2z"
+                                       required id="attImage"
+                                       title="Vui lòng tải lên văn bản đính kèm"
+                                       onchange="$('#imgAttachment').attr('src', event.fpfile.url);$('#attachment').val(event.fpfile.url);">
                             </div>
                         </div>
                     </fieldset>
@@ -73,7 +91,7 @@
                     <!-- Create new customer button -->
                     <div class="text-center">
                         <input type="hidden" name="action" value="create"/>
-                        <button type="submit" class="btn btn-success">
+                        <button id="create" type="submit" class="btn btn-success">
                             <i class="fa fa-arrow-right"></i> Gởi thông báo tai nạn
                         </button>
                     </div>
@@ -94,6 +112,27 @@
             $('#createdDate').val(getCurrentDate());
         }
         document.getElementById("createdDate").max = getCurrentDate();
+        $("#title").keydown(function (event) {
+            if ($.trim($('#title').val()) == 0) {
+                $('#notifyAccident').addClass('hide');
+            }
+        });
+        $('#create').click(function(){
+            if ($.trim($('#title').val()) == 0) {
+                $('#notifyAccident').removeClass('hide');
+                return false;
+            }
+            else{
+                $('#notifyAccident').addClass('hide');
+            }
+            if($('#attachment').val() == ''){
+                $('#notifyAccident1').removeClass('hide');
+                return false;
+            }
+            else{
+                $('#notifyAccident1').addClass('hide');
+            }
+        });
     });
 </script>
 

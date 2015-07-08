@@ -224,8 +224,19 @@ $(document).ready(function () {
     }
 
 
-    DayDiff($('#expiredDate').val()) > 0 ? $('#dateAvailable').val("Còn hạn: " + Math.abs(DayDiff($('#expiredDate').val())) + ' ngày')
-        : $('#dateAvailable').val("Quá hạn: " + Math.abs(DayDiff($('#expiredDate').val())) + ' ngày');
+    //DayDiff($('#expiredDate').val()) > 0 ? $('#dateAvailable').val("Còn hạn: " + Math.abs(DayDiff($('#expiredDate').val())) + ' ngày')
+    //    : $('#dateAvailable').val("Quá hạn: " + Math.abs(DayDiff($('#expiredDate').val())) + ' ngày');
+    CheckDayAvailable();
+    function CheckDayAvailable() {
+        var expiredDate = $('#expiredDate').val();
+        //alert(DayDiff(expiredDate));
+        if (DayDiff(expiredDate) > 0) {
+            $('#dateAvailable').val("Còn hạn: " + Math.abs(DayDiff($('#expiredDate').val())) + ' ngày');
+        }
+        else {
+            $('#dateAvailable').val("Quá hạn: " + Math.abs(DayDiff($('#expiredDate').val())) + ' ngày');
+        }
+    }
 
     $('#renew').click(function () {
         if (DayDiff($('#expiredDate').val()) > 60) {
@@ -272,6 +283,17 @@ $(document).ready(function () {
     /**
      * ---------------------------------Region add new punishment
      */
+    $('.fp__btn').click(function () {
+        $('#cancel').trigger("click");
+    });
+
+    $('#attImage').change(function () {
+        $('#showPunishment').addClass('active');
+        $('#punishments').addClass('active');
+        $('#addPunishment').trigger("click");
+
+    });
+
     $('input[type=file]').change(function (e) {
         var root = $(this).val();
         var array = root.split('\\');
@@ -288,7 +310,12 @@ $(document).ready(function () {
             $('#notifyPunishment').removeClass('hide');
             return false;
         }
+        if ($('#attachment').val() == '') {
+            $('#notifyPunishment1').removeClass('hide');
+            return false;
+        }
         $('#titlePunishment').val($('#contentPunishment').val());
+
     });
     /**
      * ---------------------------------Add new accident
@@ -312,7 +339,7 @@ $(document).ready(function () {
     });
     function getDateNow() {
         var myDate = new Date();
-        var year = myDate.getFullYear() ;
+        var year = myDate.getFullYear();
         var month = (1 + myDate.getMonth()).toString();
         month = month.length > 1 ? month : '0' + month;
         var day = myDate.getDate().toString();

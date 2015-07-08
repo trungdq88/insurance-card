@@ -32,6 +32,10 @@ public class RenewContractDto {
     private Timestamp paidDate;
     @NotNull(message = "Phí bảo hiểm không được để trống")
     private Float amount;
+    @NotNull(message = "Yêu cầu thẻ mới không có giá trị")
+    private boolean newCard;
+    @NotNull(message = "Yêu cầu giao thẻ không có giá trị")
+    private boolean deliveryNewCard;
     private Timestamp lastModified;
 
     public Timestamp getLastModified() {
@@ -111,13 +115,16 @@ public class RenewContractDto {
     public RenewContractDto() {
     }
 
-    public RenewContractDto(String contractCode, Timestamp expiredDate, float contractFee,
-                            Timestamp paidDate, Float amount) {
+    public RenewContractDto(String contractCode, Timestamp expiredDate, float contractFee, Timestamp paidDate,
+                            Float amount, boolean newCard, boolean deliveryNewCard, Timestamp lastModified) {
         this.contractCode = contractCode;
         this.expiredDate = expiredDate;
         this.contractFee = contractFee;
         this.paidDate = paidDate;
         this.amount = amount;
+        this.newCard = newCard;
+        this.deliveryNewCard = deliveryNewCard;
+        this.lastModified = lastModified;
     }
 
     public Timestamp getStartDate() {
@@ -130,6 +137,14 @@ public class RenewContractDto {
             startDate = contractEntity.getExpiredDate();
         }
         return startDate;
+    }
+
+    public String getContractCode() {
+        return contractCode;
+    }
+
+    public void setContractCode(String contractCode) {
+        this.contractCode = contractCode;
     }
 
     public Timestamp getExpiredDate() {
@@ -164,11 +179,19 @@ public class RenewContractDto {
         this.amount = amount;
     }
 
-    public String getContractCode() {
-        return contractCode;
+    public boolean isNewCard() {
+        return newCard;
     }
 
-    public void setContractCode(String contractCode) {
-        this.contractCode = contractCode;
+    public void setNewCard(boolean newCard) {
+        this.newCard = newCard;
+    }
+
+    public boolean isDeliveryNewCard() {
+        return deliveryNewCard;
+    }
+
+    public void setDeliveryNewCard(boolean deliveryNewCard) {
+        this.deliveryNewCard = deliveryNewCard;
     }
 }
