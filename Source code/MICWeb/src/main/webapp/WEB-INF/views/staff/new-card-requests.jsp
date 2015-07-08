@@ -90,12 +90,14 @@
                                                                     var contractCode = $(this).attr('contractCode');
                                                                     var content;
                                                                     var fee;
+                                                                    var newCardFee =parseInt( $('#newCardFee').val());
+                                                                    var deliveryFee = parseInt( $('#deliveryFee').val());
                                                                     if (delivery == 1){
-                                                                        content = 'Đăng ký thẻ mới hợp đồng ' +contractCode +' + giao thẻ';
-                                                                        fee = 60000; // fix later
+                                                                        content = 'Đăng ký thẻ mới ' +contractCode +' + giao thẻ';
+                                                                        fee = newCardFee + deliveryFee; // fix later
                                                                     } else {
-                                                                        fee = 50000;
-                                                                        content = 'Đăng ký thẻ mới hợp đồng ' +contractCode;
+                                                                        fee = newCardFee;
+                                                                        content = 'Đăng ký thẻ mới ' +contractCode;
                                                                     }
 
                                                                     $('#addContent').val(content);
@@ -185,3 +187,27 @@
 <!-- /#wrapper -->
 <jsp:include page="new-card-requests-modal.jsp" flush="true"/>
 <%@ include file="_shared/footer.jsp"%>
+<script language="JavaScript">
+    function setInputDate(_id){
+        var _dat = document.querySelector(_id);
+        var hoy = new Date(),
+                d = hoy.getDate(),
+                m = hoy.getMonth()+1,
+                y = hoy.getFullYear(),
+                data;
+
+        if(d < 10){
+            d = "0"+d;
+        };
+        if(m < 10){
+            m = "0"+m;
+        };
+
+        data = y+"-"+m+"-"+d;
+        console.log(data);
+        _dat.value = data;
+    };
+    if($('#addPaidDate').val() == "") {
+        setInputDate("#addPaidDate");
+    }
+</script>

@@ -13,6 +13,7 @@ import com.fpt.mic.micweb.model.dto.UserDto;
 import com.fpt.mic.micweb.model.dto.form.CreateNewCardPaymentDto;
 import com.fpt.mic.micweb.model.entity.CardEntity;
 import com.fpt.mic.micweb.model.entity.StaffEntity;
+import com.fpt.mic.micweb.utils.Constants;
 
 import javax.servlet.annotation.WebServlet;
 import java.util.Collections;
@@ -96,6 +97,8 @@ public class CardController extends AuthController {
         CardBusiness cardBusiness = new CardBusiness();
         Map<Integer, String> newCardMappingRequest = new HashMap();
         newCardMappingRequest = cardBusiness.getMappingWithNewCardRequest();
+        r.equest.setAttribute("newCardFee", Constants.PaymentFee.NEW_CARD_REQUEST_FEE);
+        r.equest.setAttribute("deliveryFee", Constants.PaymentFee.DELIVERY_FEE);
         r.equest.setAttribute("map", newCardMappingRequest);
         r.equest.setAttribute("requestPaginator", requestPaginator);
         r.equest.setAttribute("unresolvedRequestCount", staffBus.getUnresolvedNewCardRequestCount());
