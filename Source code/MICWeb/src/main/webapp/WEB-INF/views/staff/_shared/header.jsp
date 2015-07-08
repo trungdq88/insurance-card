@@ -17,6 +17,7 @@
 
   <!-- Custom CSS -->
   <link href="${pageContext.request.contextPath}/css/sb-admin-2.css" rel="stylesheet">
+  <link href="${pageContext.request.contextPath}/css/footer-distributed-with-address-and-phones.css" rel="stylesheet">
   <!-- Custom CSS -->
   <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet">
 
