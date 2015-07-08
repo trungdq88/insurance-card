@@ -354,8 +354,8 @@
 
         // Data to display to user
         $('#renewFee').text(calculatedRenewFee.formatMoney(0));
-        $('#newCardFee').text(calculatedNewCardFee);
-        $('#deliveryFee').text(calculatedDeliveryFee);
+        $('#newCardFee').text(calculatedNewCardFee.formatMoney(0));
+        $('#deliveryFee').text(calculatedDeliveryFee.formatMoney(0));
         $('#totalFee').text((calculatedRenewFee + calculatedNewCardFee + calculatedDeliveryFee).formatMoney(0));
 
         // Data to send to server
