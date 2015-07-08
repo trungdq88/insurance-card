@@ -351,9 +351,29 @@
         $('#totalFee').text(parseFloat(totalFee).formatMoney(0));
 
         $('.collapse').collapse();
-        $('#newCard, #deliveryNewCard').on('click', function (e) {
+        $('#newCard').on('click', function (e) {
             e.stopPropagation();
             $(this).parent().trigger('click');
+            if(this.checked){
+                totalFee = parseFloat(renewFee) + newCardFee;
+                $('#amount').val(totalFee);
+                $('#totalFee').text(parseFloat(totalFee).formatMoney(0));
+            } else {
+                $('#amount').val(renewFee);
+            };
+        })
+        $('#deliveryNewCard').on('click', function (e) {
+            e.stopPropagation();
+            $(this).parent().trigger('click');
+            if (this.checked) {
+                totalFee = parseFloat(renewFee) + newCardFee + deliveryFee;
+                $('#amount').val(totalFee);
+                $('#totalFee').text(parseFloat(totalFee).formatMoney(0));
+            } else {
+                totalFee = parseFloat(renewFee) + newCardFee;
+                $('#amount').val(totalFee);
+                $('#totalFee').text(parseFloat(totalFee).formatMoney(0));
+            }
         })
         $('#collapseNewCard, #collapseDelivery').on('show.bs.collapse', function (e) {
             if (!$('#newCard, #deliveryNewCard').is(':checked')) {
@@ -377,22 +397,6 @@
             $('#amount').val(renewFee);
             $('#renewFee').text(parseFloat(renewFee).formatMoney(0));
             $('#totalFee').text(parseFloat(renewFee).formatMoney(0));
-            if ($("newCard:checked")) {
-                totalFee = parseFloat(renewFee) + newCardFee;
-                $('#amount').val(totalFee);
-                $('#totalFee').text(parseFloat(totalFee).formatMoney(0));
-            } else {
-                $('#amount').val(renewFee);
-            }
-            if ($("deliveryNewCard:checked")) {
-                totalFee = parseFloat(renewFee) + newCardFee + deliveryFee;
-                $('#amount').val(totalFee);
-                $('#totalFee').text(parseFloat(totalFee).formatMoney(0));
-            } else {
-                totalFee = parseFloat(renewFee) + newCardFee;
-                $('#amount').val(totalFee);
-                $('#totalFee').text(parseFloat(totalFee).formatMoney(0));
-            }
         });
 
         if (contractStatus.toLowerCase() == 'Pending'.toLowerCase()) {
