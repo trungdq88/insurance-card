@@ -92,25 +92,6 @@
                                     </div>
                                 </div>
                             </div>
-
-                            <div class="form-group">
-                                <label class="col-sm-4 control-label">Mã thẻ mới được cấp</label>
-
-                                <div class="col-sm-3">
-                                    <c:if test="${not empty map[mapOldCardAndRequestId[card.cardId]]}">
-                                        <div class="text-value">
-                                            <a href="${pageContext.request.contextPath}/staff/card?action=detail&cardId=${map[mapOldCardAndRequestId[card.cardId]]}">
-                                                    ${map[mapOldCardAndRequestId[card.cardId]]}
-                                            </a>
-                                        </div>
-                                    </c:if>
-                                    <c:if test="${empty map[mapOldCardAndRequestId[card.cardId]]}">
-                                        <div class="text-value">
-                                            <strong>Chưa có</strong>
-                                        </div>
-                                    </c:if>
-                                </div>
-                            </div>
                         </c:if>
                     </fieldset>
                     <br/>
