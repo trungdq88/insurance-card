@@ -296,6 +296,7 @@
                     <div class="text-center">
                         <input type="hidden" name="action" value="create"/>
                         <input type="hidden" name="compensation:contractCode" value="${contractCode}">
+                        <input type="hidden" name="contractCode" value="${contractCode}">
                         <div class="form-group hide">
                             <div class="col-sm-3">
                                 <input id="createdDate" name="compensation:createdDate"

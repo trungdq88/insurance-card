@@ -52,6 +52,7 @@ public class CompensationController extends AuthController {
 
     public ResponseObject postCreate(R r) {
         String msg = "";
+        String contractCode = r.equest.getParameter("contractCode");
         CreateCompensationDto dto = (CreateCompensationDto) r.ead.entity(CreateCompensationDto.class, "compensation");
         List errors = r.ead.validate(dto);
 
@@ -59,6 +60,7 @@ public class CompensationController extends AuthController {
         if (errors.size() > 0) {
             // Send error messages to JSP page
             r.equest.setAttribute("validateErrors", errors);
+            r.equest.setAttribute("contractCode", contractCode);
             // Send submitted data to JSP page
             r.equest.setAttribute("submitted", dto);
             // Re-call the create page
