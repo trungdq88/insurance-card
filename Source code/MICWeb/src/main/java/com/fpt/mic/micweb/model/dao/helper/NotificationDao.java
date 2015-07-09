@@ -23,6 +23,7 @@ public class NotificationDao extends GenericDaoJpaImpl<NotificationEntity, Integ
                         "FROM mic_notification n " +
                         "LEFT JOIN mic_notification_read nr " +
                         "ON n.id = nr.notification_id " +
+                        "AND nr.user_code = :user_code " +
                         "WHERE :user_code REGEXP receiver " +
                         "ORDER BY n.created_date DESC ",
                 NotificationDto.class);
@@ -45,6 +46,7 @@ public class NotificationDao extends GenericDaoJpaImpl<NotificationEntity, Integ
                         "FROM mic_notification n " +
                         "LEFT JOIN mic_notification_read nr " +
                         "ON n.id = nr.notification_id " +
+                        "AND nr.user_code = :user_code " +
                         "WHERE :user_code REGEXP receiver " +
                         "AND nr.is_read IS NULL " +
                         "ORDER BY n.created_date DESC ",
@@ -66,6 +68,7 @@ public class NotificationDao extends GenericDaoJpaImpl<NotificationEntity, Integ
                         "FROM mic_notification n " +
                         "LEFT JOIN mic_notification_read nr " +
                         "ON n.id = nr.notification_id " +
+                        "AND nr.user_code = :user_code " +
                         "WHERE :user_code REGEXP receiver " +
                         "AND nr.is_read IS NULL ");
         query.setParameter("user_code", code);
