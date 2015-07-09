@@ -7,6 +7,7 @@ import com.fpt.mic.micweb.framework.R;
 import com.fpt.mic.micweb.framework.responses.RedirectTo;
 import com.fpt.mic.micweb.framework.responses.ResponseObject;
 import com.fpt.mic.micweb.model.business.CardBusiness;
+import com.fpt.mic.micweb.model.business.ContractBusiness;
 import com.fpt.mic.micweb.model.business.CustomerBusiness;
 import com.fpt.mic.micweb.model.business.PaymentBusiness;
 import com.fpt.mic.micweb.model.dto.CheckoutRequestDto;
@@ -144,6 +145,9 @@ public class CardController extends AuthController {
                     // huy the cu neu yeu cau
                     if (newCardRequestDto.isDeactiveCardRequested() == true){
                         cardBusiness.deactiveCardByContractCode(newCardRequestDto.getContractCode());
+                        ContractBusiness contractBusiness = new ContractBusiness();
+                        // cap nhat contract status: no card
+                        contractBusiness.updateContractStatus(newCardRequestDto.getContractCode(), Constants.ContractStatus.NO_CARD);
                     }
 
                     message = "Yêu cầu thẻ mới thành công. Vui lòng đến trực tiếp để thanh toán";
@@ -210,6 +214,10 @@ public class CardController extends AuthController {
         // huy the cu neu yeu cau
         if (newCardRequestDto.isDeactiveCardRequested() == true){
             cardBusiness.deactiveCardByContractCode(newCardRequestDto.getContractCode());
+            ContractBusiness contractBusiness = new ContractBusiness();
+            // cap nhat contract status: no card
+            contractBusiness.updateContractStatus(newCardRequestDto.getContractCode(),Constants.ContractStatus.NO_CARD);
+
         }
 
 
