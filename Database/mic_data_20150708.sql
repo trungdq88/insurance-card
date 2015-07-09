@@ -1,3 +1,8 @@
+-- 20150708 Changes:
+-- Add mic_card_instance
+-- Modify mic_card
+-- Modify mic_new_card_request
+-- See detail in issue #276 https://github.com/trungdq88/insurance-card/issues/276
 -- MySQL Workbench Forward Engineering
 
 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
