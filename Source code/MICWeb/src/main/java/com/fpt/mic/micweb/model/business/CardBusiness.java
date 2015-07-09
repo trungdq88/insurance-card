@@ -89,10 +89,9 @@ public class CardBusiness {
         return map;
     }
 
-    public List getCardInstancesIncludeDeactive(String contractCode) {
+    public List<CardInstanceEntity> getCardInstancesIncludeDeactive(String contractCode) {
         CardInstanceDao cardInstanceDao = new CardInstanceDao();
-        List list = cardInstanceDao.getCardInstancesByContractIncludeDeactive(contractCode);
-        return list;
+        return cardInstanceDao.getCardInstancesByContractIncludeDeactive(contractCode);
     }
 
 

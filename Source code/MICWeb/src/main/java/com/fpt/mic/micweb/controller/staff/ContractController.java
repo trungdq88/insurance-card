@@ -118,6 +118,9 @@ public class ContractController extends AuthController {
         PunishmentBusiness punishmentBusiness = new PunishmentBusiness();
         List<PunishmentEntity> listPunishment =
                 punishmentBusiness.getPunishmentByContractCode(contractDetail.getContractCode());
+        // Get contract card instance
+        CardBusiness cardBusiness = new CardBusiness();
+        List<CardInstanceEntity> listCard = cardBusiness.getCardInstancesIncludeDeactive(contractDetail.getContractCode());
         ConfigUtils config = new ConfigUtils();
 
         r.equest.setAttribute("CUSTOMER", customerDetail);
@@ -126,6 +129,7 @@ public class ContractController extends AuthController {
         r.equest.setAttribute("COMPENSATION", listCompensation);
         r.equest.setAttribute("ACCIDENT", listAccident);
         r.equest.setAttribute("PUNISHMENT", listPunishment);
+        r.equest.setAttribute("CARD", listCard);
         r.equest.setAttribute("CONFIG", config);
 
         // Dispatch to JSP page
@@ -342,7 +346,7 @@ public class ContractController extends AuthController {
         Timestamp lastModified = (Timestamp) r.equest.getSession(true).getAttribute(
                 Constants.Session.CONCURRENCY + dto.getContractCode());
         dto.setLastModified(lastModified);
-        System.out.println("postCompletePayment"+dto.getContractCode());
+        System.out.println("postCompletePayment" + dto.getContractCode());
 
 
         List errors = r.ead.validate(dto);
