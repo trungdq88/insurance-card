@@ -150,6 +150,17 @@ public class CardInstanceDao extends GenericDaoJpaImpl<CardInstanceEntity, Integ
         return query.getResultList();
     }
 
+    public List<CardInstanceEntity> getAllCardInstancesByCardID(String cardID) {
+        EntityManager entity = factory.createEntityManager();
+        String hql = "SELECT ca FROM CardInstanceEntity AS ca WHERE ca.cardId = :cardID " +
+                "ORDER BY ca.activatedDate DESC";
+        Query query = entity.createQuery(hql);
+        query.setParameter("cardID", cardID);
+        List<CardInstanceEntity> resultList = query.getResultList();
+        entity.close();
+        return resultList;
+    }
+
     public CardInstanceEntity getLastActiveCardInstanceByCardId(String cardId) {
         EntityManager entity = factory.createEntityManager();
         String hql = "SELECT ca FROM CardInstanceEntity ca WHERE ca.cardId = :cardId " +

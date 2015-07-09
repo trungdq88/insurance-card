@@ -41,6 +41,11 @@ public class CardBusiness {
         return cardInstanceDao.getIssuedCardCount();
     }
 
+    public List<CardInstanceEntity> getAllCardInstancesByCardID(String cardId) {
+        CardInstanceDao cardInstanceDao = new CardInstanceDao();
+        return cardInstanceDao.getAllCardInstancesByCardID(cardId);
+    }
+
     public CardInstanceEntity getLastActiveCardInnstance(String cardId) {
         CardInstanceDao cardInstanceDao = new CardInstanceDao();
         return cardInstanceDao.getLastActiveCardInstanceByCardId(cardId);

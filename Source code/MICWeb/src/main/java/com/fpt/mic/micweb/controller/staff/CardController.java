@@ -84,8 +84,11 @@ public class CardController extends AuthController {
             }
         });
 
+        List<CardInstanceEntity> listInstance = cardBusiness.getAllCardInstancesByCardID(cardId);
+
         r.equest.setAttribute("calPaginator", calPaginator);
         r.equest.setAttribute("CARD", cardEntity);
+        r.equest.setAttribute("INSTANCES", listInstance);
         return new JspPage("staff/card-detail.jsp");
     }
 
