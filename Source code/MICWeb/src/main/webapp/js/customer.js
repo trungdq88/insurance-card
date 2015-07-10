@@ -3,6 +3,7 @@
  */
 
 $(document).ready(function () {
+    initialize();
 
     CheckDayAvailable();
     $('[data-toggle="tooltip"]').tooltip();
@@ -39,8 +40,6 @@ $(document).ready(function () {
                 return false;
             }
         }
-
-
     });
     $('.textInFormation').removeClass('form-control')
     $('#btn_Modify').click(function () {
@@ -48,16 +47,9 @@ $(document).ready(function () {
         $(this).addClass('hide');
         $('.textInFormation').removeClass('handleInput');
         $('.textInFormation').addClass('form-control')
-        $('#btn_Save').removeClass('hide');
+        //$('#btn_Save').removeClass('hide');
+        $('.saveInformation').removeClass('hide');
     });
-    $('#btn_Save').click(function () {
-        $('.textInFormation').prop('disabled', true);
-        $('.textInFormation').addClass('handleInput');
-        $('.textInFormation').removeClass('form-control')
-        $(this).addClass('hide');
-        $('#btn_Modify').removeClass('hide');
-    });
-
 
     $('.tranformCost').removeClass('hide');
     $('.newCardCost').removeClass('hide');

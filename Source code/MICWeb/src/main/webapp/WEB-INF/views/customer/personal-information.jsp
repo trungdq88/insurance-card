@@ -8,20 +8,22 @@
         padding-top: 6px;
     }
 </style>
+
 <div id="wrapper">
 
     <%@ include file="_shared/navigation.jsp" %>
 
     <div id="page-wrapper">
+
         <div class="row">
             <div class="col-lg-12">
                 <h1 class="page-header">Thông Tin Cá Nhân
                         <span class="pull-right">
-                            <button type="submit" class="btn btn-primary" id="btn_Modify">Chỉnh Sửa Thông Tin</button>
-                            <button type="submit" class="btn btn-primary hide" id="btn_Save">Lưu Thay Đổi</button>
+                            <button type="submit" class="btn btn-primary" id="btn_Modify">Chỉnh sữa thông tin</button>
+
                             <button type="button" class="btn btn-primary" data-toggle="modal" id="changePass"
                                     data-target="#change-password-model">
-                                Đổi Mật Khẩu
+                                Đổi mật khẩu
                             </button>
                         </span>
                 </h1>
@@ -41,68 +43,82 @@
 
             </c:if>
         </div>
+        <form class="form-horizontal" action="${pageContext.request.contextPath}/customer" method="post" >
 
-        <form class="form-horizontal">
             <div class="form-group">
-                <label for="inputEmail3" class="col-sm-4 control-label">Tên đăng nhập</label>
+                <label class="col-sm-4 control-label">Tên đăng nhập</label>
 
                 <div class="col-sm-7">
                     <p class="form-control-static">${customer.customerCode}</p>
                 </div>
             </div>
             <div class="form-group">
-                <label for="inputPassword3" class="col-sm-4 control-label">Họ và tên</label>
+                <label class="col-sm-4 control-label">Họ và tên</label>
 
                 <div class="col-sm-7">
                     <p class="form-control-static">${customer.name}</p>
                 </div>
             </div>
             <div class="form-group">
-                <label for="inputPassword3" class="col-sm-4 control-label">Địa chỉ</label>
+                <label class="col-sm-4 control-label">Địa chỉ</label>
 
                 <div class="col-sm-7">
                     <input type="text" class="form-control handleInput textInFormation"
+                           id="txtAddress"
+                           name="editCustomer:address"
                            required
                            maxlength="250"
                            placeholder="Địa Chỉ" disabled="disabled"
+                           onFocus="geolocate()"
                            value="${customer.address}">
                 </div>
             </div>
             <div class="form-group">
-                <label for="inputPassword3" class="col-sm-4 control-label">Email</label>
+                <label class="col-sm-4 control-label">Email</label>
 
                 <div class="col-sm-7">
                     <input type="email" class="form-control handleInput textInFormation"
                            required
-                           maxlength="50"
-                           placeholder="Email" disabled="disabled"
+                           name="editCustomer:email"
+                           maxlength="50" disabled="disabled"
+                           placeholder="Email"
                            value="${customer.email}">
                 </div>
             </div>
             <div class="form-group">
-                <label for="inputPassword3" class="col-sm-4 control-label">Số đện thoại</label>
+                <label class="col-sm-4 control-label">Số đện thoại</label>
 
                 <div class="col-sm-7">
                     <input type="text" class="form-control handleInput textInFormation"
                            required
+                           name="editCustomer:phone"
                            maxlength="15"
                            disabled="disabled"
+                           placeholder="Số điện thoại"
                            value="${customer.phone}">
                 </div>
             </div>
             <div class="form-group">
-                <label for="inputPassword3" class="col-sm-4 control-label">CMND/Hộ chiếu</label>
+                <label class="col-sm-4 control-label">CMND/Hộ chiếu</label>
 
                 <div class="col-sm-7">
                     <input type="text" class="form-control handleInput textInFormation"
                            required
+                           name="editCustomer:personalID"
                            maxlength="15"
                            disabled="disabled"
+                           placeholder="CMND/Hộ chiếu"
                            value="${customer.personalId}">
                 </div>
             </div>
 
+            <div class="text-center saveInformation hide">
+                <input type="hidden" name="action" value="EditProfile"/>
+                <input type="hidden" name="customerCode" value="${customer.customerCode}"/>
+                <input id="btn_Save" type="submit" class="btn btn-primary" value="Lưu thay đổi" name="save">
+            </div>
         </form>
+
 
         <form action="${pageContext.request.contextPath}/customer" method="post">
             <div id="change-password-model" class="modal fade bs-example-modal-md" tabindex="-1" role="dialog"
@@ -132,6 +148,7 @@
                                 </div>
                             </c:if>
                             <br/>
+
                             <div class="form-horizontal">
                                 <div class="form-group">
                                     <label class="col-sm-5 control-label">Xác nhận mật khẩu hiện tại *</label>
@@ -203,3 +220,8 @@
 
 
 <%@ include file="_shared/footer.jsp" %>
+
+<script src="${pageContext.request.contextPath}/js/geolocation.js" type="text/javascript"></script>
+<!-- Google API Autocomplete for address-->
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places"></script>
+
