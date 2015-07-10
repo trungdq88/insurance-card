@@ -141,6 +141,7 @@ th {
 
 .form-control {
     border: 1px solid #868686;
+    color: #000;
 }
 
 .form-control::-moz-placeholder {
