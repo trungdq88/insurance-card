@@ -12,8 +12,10 @@ import com.fpt.mic.micweb.model.dto.form.ChangePasswordDto;
 import com.fpt.mic.micweb.model.dto.form.CreateCustomerDto;
 import com.fpt.mic.micweb.model.dto.form.EditCustomerProfileDto;
 import com.fpt.mic.micweb.model.entity.CustomerEntity;
+import com.fpt.mic.micweb.utils.Constants;
 
 import javax.servlet.annotation.WebServlet;
+import java.sql.Timestamp;
 import java.util.Collections;
 import java.util.List;
 
@@ -44,6 +46,10 @@ public class PersonalController extends AuthController {
         String customerCode = r.equest.getParameter("customerCode");
         CustomerBusiness customerBusiness = new CustomerBusiness();
         EditCustomerProfileDto dto = (EditCustomerProfileDto)r.ead.entity(EditCustomerProfileDto.class ,"editCustomer");
+        // Get concurrency data
+        Timestamp lastModified = (Timestamp) r.equest.getSession(true).getAttribute(
+                Constants.Session.CONCURRENCY + dto.getCustomerCode());
+        dto.setLastModified(lastModified);
         List errors = r.ead.validate(dto);
 
         if (errors.size() > 0) {
