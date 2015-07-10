@@ -9,6 +9,8 @@ import com.fpt.mic.micweb.model.business.CustomerBusiness;
 import com.fpt.mic.micweb.model.dto.UserDto;
 import com.fpt.mic.micweb.model.dto.form.CancelContractDto;
 import com.fpt.mic.micweb.model.dto.form.ChangePasswordDto;
+import com.fpt.mic.micweb.model.dto.form.CreateCustomerDto;
+import com.fpt.mic.micweb.model.dto.form.EditCustomerProfileDto;
 import com.fpt.mic.micweb.model.entity.CustomerEntity;
 
 import javax.servlet.annotation.WebServlet;
@@ -34,6 +36,37 @@ public class PersonalController extends AuthController {
         }
         r.equest.setAttribute("customer", customerEntity);
         return new JspPage("customer/personal-information.jsp");
+
+    }
+    public ResponseObject postEditProfile(R r){
+        String mess = "";
+        boolean result = false;
+        String customerCode = r.equest.getParameter("customerCode");
+        CustomerBusiness customerBusiness = new CustomerBusiness();
+        EditCustomerProfileDto dto = (EditCustomerProfileDto)r.ead.entity(EditCustomerProfileDto.class ,"editCustomer");
+        List errors = r.ead.validate(dto);
+
+        if (errors.size() > 0) {
+            r.equest.setAttribute("validateErrors", errors);
+            r.equest.setAttribute("submitted", dto);
+            r.equest.setAttribute("customer", customerBusiness.getCustomer(customerCode));
+            return new JspPage("customer/personal-information.jsp");
+        }
+        else {
+            result = customerBusiness.editCustomerProfile(customerCode, dto);
+            if(result == true){
+                mess = "Bạn đã thay đổi thông tin cá nhân thành công";
+                r.equest.setAttribute("message", mess);
+                r.equest.setAttribute("customer", customerBusiness.getCustomer(customerCode));
+                return new JspPage("customer/personal-information.jsp");
+            }
+            else {
+                mess = "Thay đổi thông tin cá nhân thất bại";
+                r.equest.setAttribute("message", mess);
+                r.equest.setAttribute("customer", customerBusiness.getCustomer(customerCode));
+                return new JspPage("customer/personal-information.jsp");
+            }
+        }
 
     }
     public ResponseObject postChangePassword(R r){
