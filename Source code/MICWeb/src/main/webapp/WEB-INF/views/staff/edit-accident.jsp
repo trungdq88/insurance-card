@@ -82,7 +82,8 @@
                             <label class="col-sm-4 control-label" for="attachment">Văn bản đính kèm *</label>
 
                             <div class="col-sm-6">
-                                <input id="attachment" name="edit:attachment" type="hidden" required maxlength="255">
+                                <input id="attachment" name="edit:attachment" type="hidden" required maxlength="255"
+                                       value="${accident.attachment}">
                                 <img id="imgAttachment" height="100px" src="${accident.attachment}" />
                                 <script type="text/javascript" src="//api.filepicker.io/v2/filepicker.js"></script>
                                 <input type="filepicker" data-fp-apikey="AEbPPQfPfRHqODjEl5AZ2z"
