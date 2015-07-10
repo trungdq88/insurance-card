@@ -198,7 +198,7 @@ public class CardController extends AuthController {
         r.equest.setAttribute("contractCode", newCardRequestDto.getContractCode());
         return new JspPage("customer/message.jsp");
     }
-
+    // if payment succeed, create new card request and payment record
     public ResponseObject getActiveNewCardRequest(R r) {
         String returnUrl = "public/return.jsp";
         HttpSession session = r.equest.getSession(false);
@@ -207,9 +207,19 @@ public class CardController extends AuthController {
         }
         Map<String, String> results = new HashMap<String, String>();
         results.putAll((Map<String, String>) session.getAttribute("RESULT"));
+        String contractCode = (String) session.getAttribute("CONTRACT_CODE");
+        String paypalTransId = results.get("PAYMENTINFO_0_TRANSACTIONID");
+        String paymentMethod = "PayPal";
+        String paymentContent = (String) session.getAttribute("descVN");
+
+        PaymentBusiness paymentBusiness = new PaymentBusiness();
+        Float amount = Float.parseFloat((String) session.getAttribute("amountVND"));
+        // create payment record
+        paymentBusiness.updateNewCardRequestPayment(contractCode, paymentMethod, paymentContent, amount, paypalTransId);
         NewCardRequestDto newCardRequestDto = (NewCardRequestDto) session.getAttribute("NEW_CARD_DTO");
         CardBusiness cardBusiness = new CardBusiness();
         String message;
+        // create new card request
         if(cardBusiness.requestNewCardRequest(newCardRequestDto,newCardRequestDto.isDeliveryRequested(),true) == false){
             message = "Có lỗi xảy ra. Xin thử lại";
             r.equest.setAttribute("result", message);
@@ -228,17 +238,10 @@ public class CardController extends AuthController {
 
         r.equest.setAttribute("result", results);
         r.equest.setAttribute("ack", (String) session.getAttribute("ACK"));
-        Float amount = Float.parseFloat((String) session.getAttribute("amountVND"));
+
         r.equest.setAttribute("amountVND", amount);
         r.equest.setAttribute("redirectLink", (String) session.getAttribute("redirectLink"));
-        String contractCode = (String) session.getAttribute("CONTRACT_CODE");
-        String paypalTransId = results.get("PAYMENTINFO_0_TRANSACTIONID");
-        String paymentMethod = "PayPal";
-        String paymentContent = (String) session.getAttribute("descVN");
 
-        PaymentBusiness paymentBusiness = new PaymentBusiness();
-        paymentBusiness.updateNewCardRequestPayment(contractCode, paymentMethod, paymentContent, amount, paypalTransId);
-        // TODO notify new card request
         session.removeAttribute("RESULT");
         session.removeAttribute("CONTRACT_CODE");
         session.removeAttribute("amountVND");
