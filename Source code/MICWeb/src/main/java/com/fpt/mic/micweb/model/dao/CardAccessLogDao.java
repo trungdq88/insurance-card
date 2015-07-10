@@ -11,7 +11,7 @@ import java.util.List;
  * Created by Kha on 05/07/2015.
  */
 public class CardAccessLogDao extends GenericDaoJpaImpl<CardAccessLogEntity, Integer> {
-    public List<CardAccessLogEntity> getCardAccessLog(String cardId, int offset, int count) {
+    public List<CardAccessLogEntity> getCardAccessLog(int cardId, int offset, int count) {
         EntityManager entityManager = factory.createEntityManager();
         String hql = "SELECT cal FROM CardAccessLogEntity AS cal " +
                 "WHERE cal.cardInstanceId = :id " +
@@ -25,7 +25,7 @@ public class CardAccessLogDao extends GenericDaoJpaImpl<CardAccessLogEntity, Int
         return resultList;
     }
 
-    public Long getCardAccessLogCount(String cardId) {
+    public Long getCardAccessLogCount(int cardId) {
         EntityManager entityManager = factory.createEntityManager();
         String hql = "SELECT COUNT(cal) FROM CardAccessLogEntity AS cal " +
                 "WHERE cal.cardInstanceId = :id " +

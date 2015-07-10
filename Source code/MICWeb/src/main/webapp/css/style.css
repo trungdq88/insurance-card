@@ -138,3 +138,20 @@ th {
 #page-footer a {
     color: #fff;
 }
+
+.form-control {
+    border: 1px solid #868686;
+}
+
+.form-control::-moz-placeholder {
+    color: #717171;
+    opacity: 1
+}
+
+.form-control:-ms-input-placeholder {
+    color: #717171
+}
+
+.form-control::-webkit-input-placeholder {
+    color: #717171
+}

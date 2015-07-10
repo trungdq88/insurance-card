@@ -25,7 +25,7 @@ a, a:hover, a:focus {
 h1, h2 {
     margin-top: 10px;
     font-size: 38px;
-    font-weight: 100;
+    font-weight: 300;
     color: #555;
     line-height: 50px;
 }
@@ -335,4 +335,29 @@ ul.navbar-nav {
 
 .navbar.navbar-no-bg {
     margin-bottom: 0;
+}
+
+
+.form-control {
+    background-color: #FFFFFF;
+    border: 1px solid #717171;
+    border-radius: 4px;
+    box-shadow: none;
+    color: #444444;
+    height: 38px;
+    padding: 6px 16px;
+}
+
+
+.form-control::-moz-placeholder {
+    color: #717171;
+    opacity: 1
+}
+
+.form-control:-ms-input-placeholder {
+    color: #717171
+}
+
+.form-control::-webkit-input-placeholder {
+    color: #717171
 }

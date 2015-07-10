@@ -10,12 +10,14 @@ import java.sql.Timestamp;
 @Entity
 @Table(name = "mic_card_access_log", schema = "", catalog = "mic_data")
 public class CardAccessLogEntity {
+    public static final String SERVICE_CHECK_CARD = "Kiểm tra thẻ";
+    public static final String SERVICE_ADD_PUNISHMENT = "Thêm thông tin vi phạm";
     private int id;
     private Timestamp accessDate;
     private String device;
     private String requestService;
     private String responseContent;
-    private String cardInstanceId;
+    private int cardInstanceId;
     private CardInstanceEntity micCardInstanceByCardInstanceId;
 
     @Id
@@ -71,12 +73,12 @@ public class CardAccessLogEntity {
 
     @Basic
     @Column(name = "card_instance_id")
-    public String getCardInstanceId() {
+    public int getCardInstanceId() {
         return cardInstanceId;
     }
 
-    public void setCardInstanceId(String cardId) {
-        this.cardInstanceId = cardId;
+    public void setCardInstanceId(int cardInstanceId) {
+        this.cardInstanceId = cardInstanceId;
     }
 
     @Override
@@ -93,7 +95,6 @@ public class CardAccessLogEntity {
             return false;
         if (responseContent != null ? !responseContent.equals(that.responseContent) : that.responseContent != null)
             return false;
-        if (cardInstanceId != null ? !cardInstanceId.equals(that.cardInstanceId) : that.cardInstanceId != null) return false;
 
         return true;
     }
@@ -105,7 +106,6 @@ public class CardAccessLogEntity {
         result = 31 * result + (device != null ? device.hashCode() : 0);
         result = 31 * result + (requestService != null ? requestService.hashCode() : 0);
         result = 31 * result + (responseContent != null ? responseContent.hashCode() : 0);
-        result = 31 * result + (cardInstanceId != null ? cardInstanceId.hashCode() : 0);
         return result;
     }
 
