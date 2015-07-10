@@ -129,8 +129,10 @@
                   </tr>
                   </thead>
                   <tbody>
+                  <c:set var="cards"
+                         value="${calPaginator.getItemsOnCurrentPage(param.page)}"/>
                   <c:choose>
-                    <c:when test="${cards.size() eq 0}">
+                    <c:when test="${cards.size()== 0}">
                       <tr>
                         <td colspan="6" style="vertical-align: middle; text-align: center;">
                           Không có lượt truy cập nào
@@ -138,12 +140,12 @@
                       </tr>
                     </c:when>
                     <c:otherwise>
-                      <c:forEach var="log" items="${logs}" varStatus="counter">
+                      <c:forEach var="log" items="${calPaginator.getItemsOnCurrentPage(param.page)}" varStatus="counter">
                         <tr>
-                          <td>${counter.count}</td>
+                          <td class="text-center">${log.id}</td>
                           <td>
-                            <fmt:formatDate value="${log.accessDate}" pattern="dd/MM/yyyy"/> lúc
-                            <fmt:formatDate value="${log.accessDate}" type="time"/>
+                            <fmt:formatDate value="${log.accessDate}" pattern="dd/MM/yyyy"/>
+
                           </td>
                           <td>${log.device}</td>
                           <td>${log.requestService}</td>
@@ -171,19 +173,19 @@
               <ul class="pagination">
                 <c:if test="${param.page != 1 && not empty param.page}">
                   <li>
-                    <a href="?action=${param.action}&keyword=${param.keyword}&page=1" aria-label="Previous">
+                    <a href="?action=${param.action}&cardId=${card.cardId}&keyword=${param.keyword}&page=1" aria-label="Previous">
                       <span aria-hidden="true">Đầu</span>
                     </a>
                   </li>
                 </c:if>
                 <c:forEach begin="1" end="${calPaginator.pageSize}" var="pageNumber">
                   <li ${param.page == pageNumber ||(pageNumber == 1 && empty param.page) ? "class='active'": ""} >
-                    <a href="?action=${param.action}&keyword=${param.keyword}&page=${pageNumber}">${pageNumber}</a>
+                    <a href="?action=${param.action}&cardId=${card.cardId}&keyword=${param.keyword}&page=${pageNumber}">${pageNumber}</a>
                   </li>
                 </c:forEach>
                 <c:if test="${param.page != calPaginator.pageSize && calPaginator.pageSize != 1}">
                   <li>
-                    <a href="?action=${param.action}&keyword=${param.keyword}&page=${calPaginator.pageSize}"
+                    <a href="?action=${param.action}&cardId=${card.cardId}&keyword=${param.keyword}&page=${calPaginator.pageSize}"
                        aria-label="Next">
                       <span aria-hidden="true">Cuối</span>
                     </a>
