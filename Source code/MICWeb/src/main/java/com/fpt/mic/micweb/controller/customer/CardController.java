@@ -45,7 +45,7 @@ public class CardController extends AuthController {
         cardPaginator.setGetItemsCallback(new Paginator.IGetItems() {
             @Override
             public List getItems(int offset, int count) {
-                return cardBusiness.getIssuedCard(customerCode,offset, count);
+                return cardBusiness.getIssuedCard(customerCode, offset, count);
             }
         });
         cardPaginator.setGetItemSizeCallback(new Paginator.IGetItemSize() {
@@ -64,7 +64,12 @@ public class CardController extends AuthController {
 
         // Call to business
         final CardBusiness cardBusiness = new CardBusiness();
+        String customerCode = ((CustomerEntity) getLoggedInUser()).getCustomerCode();
         CardInstanceEntity cardEntity = cardBusiness.getLastActiveCardInnstance(cardId);
+        // check if the card is active and belong to customer
+        if(cardBusiness.isActiveCardByCustomerCode(cardId,customerCode) == null){
+            return new RedirectTo("/error/404");
+        }
 
         calPaginator.setGetItemsCallback(new Paginator.IGetItems() {
             @Override
