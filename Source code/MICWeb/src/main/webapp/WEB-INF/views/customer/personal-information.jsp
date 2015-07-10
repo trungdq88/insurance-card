@@ -106,6 +106,7 @@
                            maxlength="15"
                            disabled="disabled"
                            placeholder="Ví dụ : 01228847857"
+                           minlength="8"
                            value="${customer.phone}">
                 </div>
             </div>
@@ -127,6 +128,7 @@
                            name="editCustomer:personalID"
                            maxlength="15"
                            placeholder="Ví dụ : 272147450"
+                           minlength="8"
                            value="${customer.personalId}">
                 </div>
             </div>

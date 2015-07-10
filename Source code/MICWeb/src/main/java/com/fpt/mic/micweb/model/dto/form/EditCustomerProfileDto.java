@@ -24,6 +24,12 @@ public class EditCustomerProfileDto {
 
     private String personalID;
 
+    @AssertTrue(message = "Email này đã được sử dụng")
+    private boolean isExistedByEmail() {
+        CustomerDao customerDao = new CustomerDao();
+        return !customerDao.isExistByEmail(email);
+    }
+
     @AssertTrue(message = "Số CMND/Hộ chiếu phải có độ dài từ 8 tới 15 ký tự")
     private boolean isPersonalIDValid() {
         if (personalID == null || personalID.isEmpty()) {
