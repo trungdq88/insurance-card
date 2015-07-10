@@ -292,6 +292,15 @@ public class ContractController extends AuthController {
         }
         // If the code reached this line that means there is no validation errors
 
+        // Deactivate current card
+        CardBusiness cardBusiness = new CardBusiness();
+        // If there's a card belongs to this contract
+        if (cardBusiness.getCardByContract(dto.getContractCode()) != null) {
+            // deactivate is
+            cardBusiness.deactiveCardByContractCode(dto.getContractCode());
+        }
+        // if not, its mean does not have to do anything
+
         // Call to business object
         StaffBusiness staffBus = new StaffBusiness();
         boolean result = staffBus.cancelContract(dto);
