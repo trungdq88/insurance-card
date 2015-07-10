@@ -26,13 +26,14 @@ public class PunishmentController extends AuthController {
     public List<String> getAllowedRoles() {
         return Collections.singletonList(UserDto.ROLE_CUSTOMER);
     }
-
-    public ResponseObject getView(R r) {
-        return new JspPage("/customer/punishment.jsp");
+    public ResponseObject getCreate(R r) {
+        String contractCode = r.equest.getParameter("contractCode");
+        r.equest.setAttribute("contractCode", contractCode);
+        return new JspPage("/customer/create-punishment.jsp");
     }
-
     public ResponseObject postCreate(R r) {
         String msg = "";
+        String contractCode = r.equest.getParameter("contractCode");
         CustomerBusiness customerBusiness = new CustomerBusiness();
         PunishmentBusiness punishmentBusiness = new PunishmentBusiness();
         CreatePunishmentDto dto = (CreatePunishmentDto) r.ead.entity(CreatePunishmentDto.class, "punishment");
@@ -42,11 +43,11 @@ public class PunishmentController extends AuthController {
         if (errors.size() > 0) {
             // Send error messages to JSP page
             r.equest.setAttribute("validateErrors", errors);
+            r.equest.setAttribute("contractCode", contractCode);
             // Send submitted data to JSP page
             r.equest.setAttribute("submitted", dto);
             // Re-call the create page
-            r.equest.setAttribute("contract", customerBusiness.getContractDetail(dto.getContractCode()));
-            return new JspPage("customer/contract-detail.jsp");
+            return getCreate(r);
         }
         // If the code reached this line that means there is no validation errors
         PunishmentEntity result = punishmentBusiness.createPunishment(dto);

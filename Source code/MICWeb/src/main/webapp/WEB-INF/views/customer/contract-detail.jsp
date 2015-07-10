@@ -980,10 +980,10 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="pull-right">
-                            <button type="button" data-toggle="modal" data-target=".punishmentDialog"
-                                    class="btn btn-success" title="Thêm vi phạm" id="addPunishment">
-                                Thêm vi phạm
-                            </button>
+                            <a href="${pageContext.request.contextPath}/customer/punishment?action=create&contractCode=${contract.contractCode}"
+                               class="btn btn-success">
+                                <i class="fa fa-plus"></i>Thêm vi phạm
+                            </a>
                         </div>
                     </div>
                 </div>

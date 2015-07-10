@@ -18,7 +18,7 @@ public class CreatePunishmentDto {
     private Timestamp createDate;
     @NotEmpty(message = "Nội dung vi phạm không được để trống")
     private String title;
-    @NotEmpty(message = "Văn bản vi phạm không được để trống")
+    @NotEmpty(message = "Văn bản đính kèm không được để trống")
     private String attachment;
     @NotEmpty (message = "Mã hợp đồng không được trống")
     private String contractCode;
@@ -38,7 +38,7 @@ public class CreatePunishmentDto {
     }
 
     public void setTitle(String title) {
-        this.title = title;
+        this.title = title.trim();
     }
 
     public void setAttachment(String attachment) {
