@@ -17,9 +17,9 @@
 
         <div class="row">
             <div class="col-lg-12">
-                <h1 class="page-header">Thông Tin Cá Nhân
+                <h1 class="page-header">Thông tin cá nhân
                         <span class="pull-right">
-                            <button type="submit" class="btn btn-primary" id="btn_Modify">Chỉnh sữa thông tin</button>
+                            <button type="submit" class="btn btn-primary" id="btn_Modify">Chỉnh sửa thông tin</button>
 
                             <button type="button" class="btn btn-primary" data-toggle="modal" id="changePass"
                                     data-target="#change-password-model">
@@ -43,7 +43,7 @@
 
             </c:if>
         </div>
-        <form class="form-horizontal" action="${pageContext.request.contextPath}/customer" method="post" >
+        <form class="form-horizontal" action="${pageContext.request.contextPath}/customer" method="post">
 
             <div class="form-group">
                 <label class="col-sm-4 control-label">Tên đăng nhập</label>
@@ -60,41 +60,52 @@
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-4 control-label">Địa chỉ</label>
+                <label class="col-sm-4 control-label">Địa chỉ <span class="hide x">*</span></label>
 
                 <div class="col-sm-7">
-                    <input type="text" class="form-control handleInput textInFormation"
+                    <label id="viewAddress"
+                           style="padding-top: 7px;  border: none; font-weight: inherit !important;">${customer.address}
+                    </label>
+                    <input type="text" class="form-control hide textInFormation"
                            id="txtAddress"
                            name="editCustomer:address"
                            required
                            maxlength="250"
-                           placeholder="Địa Chỉ" disabled="disabled"
+                           placeholder="Ví dụ : An Phú, Ho Chi Minh City, Ho Chi Minh, Vietnam" disabled="disabled"
                            onFocus="geolocate()"
                            value="${customer.address}">
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-4 control-label">Email</label>
+                <label class="col-sm-4 control-label">Email <span class="hide x">*</span></label>
 
                 <div class="col-sm-7">
-                    <input type="email" class="form-control handleInput textInFormation"
+                    <label id="viewEmail"
+                           style="padding-top: 7px;  border: none; font-weight: inherit !important;">${customer.email}
+                    </label>
+                    <input type="email" class="form-control hide textInFormation"
+                           id="email"
                            required
                            name="editCustomer:email"
                            maxlength="50" disabled="disabled"
-                           placeholder="Email"
+                           placeholder="Ví dụ : MIC@gmail.com"
                            value="${customer.email}">
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-4 control-label">Số đện thoại</label>
+                <label class="col-sm-4 control-label">Số điện thoại <span class="hide x">*</span></label>
 
                 <div class="col-sm-7">
-                    <input type="text" class="form-control handleInput textInFormation"
+                    <label id="viewPhone"
+                           style="padding-top: 7px;  border: none; font-weight: inherit !important;">${customer.phone}
+                    </label>
+                    <input type="text" class="form-control hide textInFormation"
+                           id="phone"
                            required
                            name="editCustomer:phone"
                            maxlength="15"
                            disabled="disabled"
-                           placeholder="Số điện thoại"
+                           placeholder="Ví dụ : 01228847857"
                            value="${customer.phone}">
                 </div>
             </div>
@@ -102,12 +113,20 @@
                 <label class="col-sm-4 control-label">CMND/Hộ chiếu</label>
 
                 <div class="col-sm-7">
-                    <input type="text" class="form-control handleInput textInFormation"
-                           required
+                    <c:choose>
+                        <c:when test="${empty customer.personalId}">
+                            <label class="empty-value emptyInfo" style="padding-top: 7px">Không có</label>
+                        </c:when>
+                        <c:otherwise>
+                            <label id="viewPersonalId"
+                                   style="padding-top: 7px;  border: none; font-weight: inherit !important;">${customer.personalId}</label>
+                        </c:otherwise>
+                    </c:choose>
+                    <input type="text" class="form-control hide textInFormation"
+                           id="personalid"
                            name="editCustomer:personalID"
                            maxlength="15"
-                           disabled="disabled"
-                           placeholder="CMND/Hộ chiếu"
+                           placeholder="Ví dụ : 272147450"
                            value="${customer.personalId}">
                 </div>
             </div>
@@ -225,6 +244,59 @@
 
     $(document).ready(function () {
         initialize();
+        $('#cancel').click(function () {
+            var cutomerCode = $('#customerCode').val();
+            $.ajax({
+                url: '/ajax',
+                method: 'post',
+                data: {
+                    action: 'RejectChangePassword',
+                    customerCode: cutomerCode
+                },
+                dataType: 'json'
+            }).done(function (msg) {
+
+            });
+        });
+        $('#confirm').click(function () {
+            var currentPass = $('#currentPass').val();
+            var newPass = $('#newPass').val();
+            var confirmPass = $('#confirmPass').val();
+            $('#notify1').addClass('hide');
+            $('#notify2').addClass('hide');
+            if (currentPass != null && newPass != null && confirmPass != null) {
+                if (confirmPass != newPass) {
+                    $('#notify2').removeClass('hide');
+                    return false;
+                }
+                if (currentPass == newPass) {
+                    $('#notify1').removeClass('hide');
+                    return false;
+                }
+            }
+        });
+        $('.textInFormation').removeClass('form-control')
+        $('#btn_Modify').click(function () {
+            $('.textInFormation').prop('disabled', false);
+            $(this).addClass('hide');
+            $('.textInFormation').removeClass('handleInput');
+            $('.textInFormation').addClass('form-control')
+            //$('#btn_Save').removeClass('hide');
+            $('.x').removeClass('hide');
+            $('.saveInformation').removeClass('hide');
+            $('#viewAddress').addClass('hide');
+            $('#viewEmail').addClass('hide');
+            $('#viewPhone').addClass('hide');
+
+            $('#txtAddress').removeClass('hide');
+            $('#email').removeClass('hide');
+            $('#phone').removeClass('hide');
+            $('.emptyInfo').addClass('hide');
+            if ($('#personalid').val() != '') {
+                $('#viewPersonalId').addClass('hide');
+            }
+            $('#personalid').removeClass('hide');
+        });
     });
 </script>
 

@@ -21,9 +21,7 @@ public class EditCustomerProfileDto {
     @Pattern(regexp = "[0-9]+", message = "Số điện thoại không hợp lệ")
     @Size(min = 8, max = 15, message = "Số điện thoại phải từ {min} đến {max} ký tự")
     private String phone;
-    @NotEmpty(message = "Số chứng minh không được để trống")
-    @Pattern(regexp = "[0-9]+", message = "Số chứng minh không hợp lệ")
-    @Size(min = 8, max = 15, message = "Số chứng minh phải từ {min} đến {max} ký tự")
+
     private String personalID;
 
     @AssertTrue(message = "Số CMND/Hộ chiếu phải có độ dài từ 8 tới 15 ký tự")

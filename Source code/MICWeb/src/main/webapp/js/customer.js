@@ -10,46 +10,6 @@ $(document).ready(function () {
     if ($('#isFirstLogin').val() == 0) {
         $('#changePass').trigger("click");
     }
-    $('#cancel').click(function () {
-        var cutomerCode = $('#customerCode').val();
-        $.ajax({
-            url: '/ajax',
-            method: 'post',
-            data: {
-                action: 'RejectChangePassword',
-                customerCode: cutomerCode
-            },
-            dataType: 'json'
-        }).done(function (msg) {
-
-        });
-    });
-    $('#confirm').click(function () {
-        var currentPass = $('#currentPass').val();
-        var newPass = $('#newPass').val();
-        var confirmPass = $('#confirmPass').val();
-        $('#notify1').addClass('hide');
-        $('#notify2').addClass('hide');
-        if (currentPass != null && newPass != null && confirmPass != null) {
-            if (confirmPass != newPass) {
-                $('#notify2').removeClass('hide');
-                return false;
-            }
-            if (currentPass == newPass) {
-                $('#notify1').removeClass('hide');
-                return false;
-            }
-        }
-    });
-    $('.textInFormation').removeClass('form-control')
-    $('#btn_Modify').click(function () {
-        $('.textInFormation').prop('disabled', false);
-        $(this).addClass('hide');
-        $('.textInFormation').removeClass('handleInput');
-        $('.textInFormation').addClass('form-control')
-        //$('#btn_Save').removeClass('hide');
-        $('.saveInformation').removeClass('hide');
-    });
 
     $('.tranformCost').removeClass('hide');
     $('.newCardCost').removeClass('hide');
