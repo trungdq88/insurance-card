@@ -171,7 +171,16 @@
                                                     <td>${log.device}</td>
                                                     <td>${log.requestService}</td>
                                                     <td>
-                                                            ${log.responseContent}
+                                                        <c:choose>
+                                                            <c:when test="${log.requestService == 'Thêm thông tin vi phạm'}">
+                                                                <a href="${pageContext.request.contextPath}/staff/punishment?action=edit&id=${log.responseContent}">
+                                                                        Mã vi phạm ${log.responseContent}
+                                                                </a>
+                                                            </c:when>
+                                                            <c:otherwise>
+                                                                ${log.responseContent}
+                                                            </c:otherwise>
+                                                        </c:choose>
                                                     </td>
                                                 </tr>
                                             </c:forEach>

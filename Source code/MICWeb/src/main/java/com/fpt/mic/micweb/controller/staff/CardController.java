@@ -65,6 +65,10 @@ public class CardController extends AuthController {
             cardId = (String) r.equest.getAttribute("cardId");
         }
 
+        if (cardId == null) {
+            return new RedirectTo("/error/404");
+        }
+
         // Call to business
         final CardBusiness cardBusiness = new CardBusiness();
         final CardInstanceEntity cardInstance = cardBusiness.getLastActiveCardInnstance(cardId);

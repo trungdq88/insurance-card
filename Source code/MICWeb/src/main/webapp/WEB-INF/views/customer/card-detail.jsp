@@ -148,7 +148,15 @@
                           <td>${log.device}</td>
                           <td>${log.requestService}</td>
                           <td>
-                              ${log.responseContent}
+                            <c:choose>
+                              <c:when test="${log.requestService == 'Thêm thông tin vi phạm'}">
+                                Mã vi phạm ${log.responseContent}
+                              </c:when>
+                              <c:otherwise>
+                                ${log.responseContent}
+                              </c:otherwise>
+                            </c:choose>
+
                           </td>
                         </tr>
                       </c:forEach>
