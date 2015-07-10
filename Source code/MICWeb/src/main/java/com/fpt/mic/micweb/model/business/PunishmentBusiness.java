@@ -51,6 +51,7 @@ public class PunishmentBusiness {
         PunishmentEntity punishmentEntity = punishmentDao.read(dto.getId());
 
         if (punishmentEntity != null) {
+            punishmentEntity.setContractCode(dto.getContractCode());
             punishmentEntity.setCreatedDate(dto.getCreatedDate());
             punishmentEntity.setTitle(dto.getTitle());
             punishmentEntity.setAttachment(dto.getAttachment());
