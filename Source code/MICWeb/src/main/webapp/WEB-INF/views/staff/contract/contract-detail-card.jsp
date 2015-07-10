@@ -20,7 +20,7 @@
                 <tr>
                     <td>${counter.count}</td>
                     <td>
-                        <a href="${pageContext.request.contextPath}/staff/card?action=detail&id=${instance.cardId}">
+                        <a href="${pageContext.request.contextPath}/staff/card?action=detail&cardId=${instance.cardId}">
                                 ${instance.cardId}
                         </a>
                     </td>

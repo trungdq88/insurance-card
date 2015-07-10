@@ -394,7 +394,7 @@
 
                             <div class="col-sm-7">
                                 <textarea id="cancelNote" name="cancel:cancelNote" rows="4" maxlength="2000"
-                                          class="form-control input-lg"></textarea>
+                                          class="form-control input-md"></textarea>
                             </div>
                         </div>
                     </fieldset>

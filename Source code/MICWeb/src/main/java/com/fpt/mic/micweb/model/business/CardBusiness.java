@@ -95,6 +95,26 @@ public class CardBusiness {
         return cardInstanceDao.getCardInstancesByContractIncludeDeactive(contractCode);
     }
 
+    public CardInstanceEntity isActive(String cardId){
+        CardInstanceDao cardInstanceDao = new CardInstanceDao();
+        CardInstanceEntity cardInstanceEntity = cardInstanceDao.isActive(cardId);
+        if(cardInstanceEntity != null){
+            return cardInstanceEntity;
+        }
+        return null;
+    }
+
+    public CardInstanceEntity isActiveCardByCustomerCode(String cardId, String customerCode){
+        CardInstanceDao cardInstanceDao = new CardInstanceDao();
+        CardInstanceEntity cardInstanceEntity = cardInstanceDao.isActive(cardId);
+        if(cardInstanceEntity != null){
+            if(customerCode.equalsIgnoreCase(cardInstanceEntity.getMicContractByContractCode().getCustomerCode())){
+                return cardInstanceEntity;
+            }
+        }
+        return null;
+    }
+
 
     // kiem tra hop dong da co yeu cau the moi chua giai quyet chua
     public boolean isNewCardRequested(String contractCode){

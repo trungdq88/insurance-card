@@ -180,4 +180,23 @@ public class CardInstanceDao extends GenericDaoJpaImpl<CardInstanceEntity, Integ
             return null;
         }
     }
+
+    public CardInstanceEntity isActive(String cardId){
+        EntityManager entity = factory.createEntityManager();
+        String hql = "SELECT ca FROM CardInstanceEntity ca WHERE ca.cardId = :cardId " +
+                "AND ca.deactivatedDate = NULL ORDER BY ca.activatedDate DESC";
+        Query query = entity.createQuery(hql);
+        query.setMaxResults(1);
+        query.setParameter("cardId", cardId);
+        try {
+            return (CardInstanceEntity) query.getSingleResult();
+        } catch (NonUniqueResultException e) {
+            e.printStackTrace();
+            System.out.println("checkCard NonUniqueResultException: " +
+                    "possibility database inconsistency due to handy modification");
+            return null;
+        } catch (NoResultException e) {
+            return null;
+        }
+    }
 }

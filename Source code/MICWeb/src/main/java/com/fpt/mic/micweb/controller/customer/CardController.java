@@ -63,6 +63,12 @@ public class CardController extends AuthController {
 
         // Call to business
         final CardBusiness cardBusiness = new CardBusiness();
+        String customerCode = ((CustomerEntity) getLoggedInUser()).getCustomerCode();
+        CardInstanceEntity cardEntity = cardBusiness.getLastActiveCardInnstance(cardId);
+        // check if the card is active and belong to customer
+        if(cardBusiness.isActiveCardByCustomerCode(cardId,customerCode) == null){
+            return new RedirectTo("/error/404");
+        }
         final CardInstanceEntity cardInstance = cardBusiness.getLastActiveCardInnstance(cardId);
 
         calPaginator.setGetItemsCallback(new Paginator.IGetItems() {

@@ -5,6 +5,8 @@ import com.fpt.mic.micweb.model.dao.helper.NewCardRequestDao;
 import com.fpt.mic.micweb.model.dto.NotificationBuilder;
 import com.fpt.mic.micweb.model.dto.form.CancelContractDto;
 import com.fpt.mic.micweb.model.dto.form.ChangePasswordDto;
+import com.fpt.mic.micweb.model.dto.form.CreateCustomerDto;
+import com.fpt.mic.micweb.model.dto.form.EditCustomerProfileDto;
 import com.fpt.mic.micweb.model.entity.*;
 import com.fpt.mic.micweb.utils.Constants;
 import com.fpt.mic.micweb.utils.DateUtils;
@@ -28,32 +30,37 @@ public class CustomerBusiness {
         ContractDao contractDao = new ContractDao();
         return contractDao.getContractByCustomerCode(customerCode, offset, count);
     }
+
     /**
      * get all payment by contractCode
      *
      * @return list payment
      */
-    public List<PaymentEntity> getAllPaymentByContractCode(String contractCode){
+    public List<PaymentEntity> getAllPaymentByContractCode(String contractCode) {
         PaymentDao paymentDao = new PaymentDao();
         return paymentDao.getPaymentByContractCode(contractCode);
     }
+
     /**
      * get all accident by contractCode
      *
      * @return list accident
      */
-    public List<AccidentEntity> getAllAccidentByContractCode(String contractCode){
+    public List<AccidentEntity> getAllAccidentByContractCode(String contractCode) {
         AccidentDao accidentDao = new AccidentDao();
         return accidentDao.getAllAccidentByContractCode(contractCode);
     }
+
     public Long getAllContractByCustomerCount(String customerCode) {
         ContractDao contractDao = new ContractDao();
         return contractDao.getContractByCustomerCodeCount(customerCode);
     }
-    public List<PaymentEntity> getAllPaymentByCustomerCode(String customerCode){
+
+    public List<PaymentEntity> getAllPaymentByCustomerCode(String customerCode) {
         PaymentDao paymentDao = new PaymentDao();
         return paymentDao.getAllPaymentByCustomerCode(customerCode);
     }
+
     // get contract detail
     public ContractEntity getContractDetail(String code) {
         ContractDao contractDao = new ContractDao();
@@ -252,6 +259,7 @@ public class CustomerBusiness {
         }
         return result;
     }
+
     /**
      * reject change password
      *
@@ -263,11 +271,12 @@ public class CustomerBusiness {
         CustomerDao customerDao = new CustomerDao();
         CustomerEntity customerEntity = customerDao.read(customerCode);
         customerEntity.setIsDefaultPassword(1);
-        if(customerDao.update(customerEntity) != null){
+        if (customerDao.update(customerEntity) != null) {
             result = true;
         }
         return result;
     }
+
     /**
      * Returns true if the contract has changed
      * Returns false if the contract is not changed or the contract code is not exists
@@ -282,18 +291,37 @@ public class CustomerBusiness {
         return contractEntity != null && !contractEntity.getLastModified().equals(lastModified);
     }
 
-    public List getOnePageNewCardRequest(String customerCode,int offset, int count) {
-        NewCardRequestDao newCardRequestDao= new NewCardRequestDao();
-        return newCardRequestDao.getOnePageNewCardRequest(customerCode,offset, count);
+    public List getOnePageNewCardRequest(String customerCode, int offset, int count) {
+        NewCardRequestDao newCardRequestDao = new NewCardRequestDao();
+        return newCardRequestDao.getOnePageNewCardRequest(customerCode, offset, count);
     }
+
     public Long getAllNewCardRequestCount(String customerCode) {
-        NewCardRequestDao newCardRequestDao= new NewCardRequestDao();
+        NewCardRequestDao newCardRequestDao = new NewCardRequestDao();
         return newCardRequestDao.getAllNewCardRequestCount(customerCode);
     }
 
-    public Long getUnresolvedNewCardRequestCount(String customerCode){
-        NewCardRequestDao newCardRequestDao= new NewCardRequestDao();
+    public Long getUnresolvedNewCardRequestCount(String customerCode) {
+        NewCardRequestDao newCardRequestDao = new NewCardRequestDao();
         return newCardRequestDao.getUnresolvedNewCardRequestCount(customerCode);
     }
+    /**
+     * Edit Profile
+     * */
+    public Boolean editCustomerProfile(String customerCode, EditCustomerProfileDto dto){
+        boolean result = false;
+        CustomerDao customerDao = new CustomerDao();
+        CustomerEntity customerEntity = customerDao.read(customerCode);
+        if(customerEntity != null){
+            customerEntity.setAddress(dto.getAddress());
+            customerEntity.setEmail(dto.getEmail());
+            customerEntity.setPhone(dto.getPhone());
+            customerEntity.setPersonalId(dto.getPersonalID());
+            if(customerDao.update(customerEntity) != null){
+                result = true;
+            }
+        }
+        return result;
 
+    }
 }
