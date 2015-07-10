@@ -222,16 +222,9 @@
 <%@ include file="_shared/footer.jsp" %>
 
 <script type="text/javascript">
-    initialize();
+
     $(document).ready(function () {
-        if ($('#createdDate').val() == "") {
-            $('#createdDate').val(getCurrentDate());
-        }
-        document.getElementById("createdDate").max = getCurrentDate();
-        if ($('#accidentDate').val() == "") {
-            $('#accidentDate').val(getCurrentDate());
-        }
-        document.getElementById("accidentDate").max = getCurrentDate();
+        initialize();
     });
 </script>
 
