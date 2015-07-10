@@ -45,6 +45,7 @@ public class AccidentBusiness {
         AccidentEntity accidentEntity = accidentDao.read(dto.getId());
 
         if (accidentEntity != null) {
+            accidentEntity.setContractCode(dto.getContractCode());
             accidentEntity.setCreatedDate(dto.getCreatedDate());
             accidentEntity.setTitle(dto.getTitle());
             accidentEntity.setAttachment(dto.getAttachment());
