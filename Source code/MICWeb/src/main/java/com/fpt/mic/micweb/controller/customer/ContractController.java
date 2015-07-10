@@ -167,8 +167,10 @@ public class ContractController extends AuthController {
 
     public ResponseObject getDetail(R r) {
         CustomerBusiness customerBusiness = new CustomerBusiness();
+        CardBusiness cardBusiness = new CardBusiness();
         final CompensationBusiness compensationBusiness = new CompensationBusiness();
         final PunishmentBusiness punishmentBusiness = new PunishmentBusiness();
+
         String customerCode = ((CustomerEntity) getLoggedInUser()).getCustomerCode();
         final String code = r.equest.getParameter("code");
         ContractEntity contract = customerBusiness.getContractDetail(code);
@@ -212,9 +214,9 @@ public class ContractController extends AuthController {
 
             List listAccident = customerBusiness.getAllAccidentByContractCode(code);
             r.equest.setAttribute("contract", contract);
-            CardBusiness cardBusiness = new CardBusiness();
-            r.equest.setAttribute("isNewCardRequested",cardBusiness.isNewCardRequested(code));
 
+            r.equest.setAttribute("isNewCardRequested",cardBusiness.isNewCardRequested(code));
+            r.equest.setAttribute("card", cardBusiness.getCardByContract(code));
             r.equest.setAttribute("listAccident", listAccident);
             r.equest.setAttribute("compensationPaginator", compensationPaginator);
             r.equest.setAttribute("punishmentPaginator", punishmentPaginator);
