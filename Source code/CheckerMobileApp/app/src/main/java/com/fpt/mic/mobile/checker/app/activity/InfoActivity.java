@@ -117,7 +117,9 @@ public class InfoActivity extends Activity {
         }
 
         if (card.micContractByContractCode.status
-                .equalsIgnoreCase(Constants.ContractStatus.READY)) {
+                .equalsIgnoreCase(Constants.ContractStatus.READY) ||
+                card.micContractByContractCode.status
+                .equalsIgnoreCase(Constants.ContractStatus.REQUEST_CANCEL)) {
             // Check if nearly expired
             if (card.micContractByContractCode.expiredDate.getTime() - (new Date()).getTime() <
                     Constants.CONTRACT_NEARLY_EXPIRED_RANGE) {

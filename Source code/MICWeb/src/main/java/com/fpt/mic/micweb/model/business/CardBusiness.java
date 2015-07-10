@@ -11,6 +11,7 @@ import com.fpt.mic.micweb.model.entity.CardAccessLogEntity;
 import com.fpt.mic.micweb.model.entity.CardEntity;
 import com.fpt.mic.micweb.model.entity.CardInstanceEntity;
 import com.fpt.mic.micweb.model.entity.NewCardRequestEntity;
+import com.fpt.mic.micweb.utils.Constants;
 
 import java.sql.Timestamp;
 import java.util.Date;
@@ -134,14 +135,14 @@ public class CardBusiness {
         cardInstanceDao.update(cardEntity);
     }
 
-    public List<CardAccessLogEntity> getCardAccessLog(String cardId, int offset, int count) {
+    public List<CardAccessLogEntity> getCardInstanceAccessLog(int cardInstanceId, int offset, int count) {
         CardAccessLogDao cardAccessLogDao = new CardAccessLogDao();
-        return cardAccessLogDao.getCardAccessLog(cardId, offset, count);
+        return cardAccessLogDao.getCardAccessLog(cardInstanceId, offset, count);
     }
 
-    public Long getCardAccessLogCount(String cardId) {
+    public Long getCardInstanceAccessLogCount(int cardInstanceId) {
         CardAccessLogDao cardAccessLogDao = new CardAccessLogDao();
-        return cardAccessLogDao.getCardAccessLogCount(cardId);
+        return cardAccessLogDao.getCardAccessLogCount(cardInstanceId);
     }
 
     /**
@@ -161,4 +162,37 @@ public class CardBusiness {
         newCardRequestEntity.setIsPaid(1);
         return newCardRequestDao.update(newCardRequestEntity);
     }
+
+    public String getCardValidation(CardInstanceEntity card) {
+
+        if (card.getDeactivatedDate() != null ||
+                card.getMicContractByContractCode().getStatus()
+                        .equalsIgnoreCase(Constants.ContractStatus.CANCELLED) ||
+                card.getMicContractByContractCode().getStatus()
+                        .equalsIgnoreCase(Constants.ContractStatus.PENDING) ||
+                card.getMicContractByContractCode().getStatus()
+                        .equalsIgnoreCase(Constants.ContractStatus.NO_CARD)) {
+            return "Thẻ không hợp lệ";
+        }
+
+        if (card.getMicContractByContractCode().getStatus()
+                .equalsIgnoreCase(Constants.ContractStatus.EXPIRED)) {
+            return "Thẻ hết hạn";
+        }
+
+        if (card.getMicContractByContractCode().getStatus()
+                .equalsIgnoreCase(Constants.ContractStatus.READY) ||
+                card.getMicContractByContractCode().getStatus()
+                        .equalsIgnoreCase(Constants.ContractStatus.REQUEST_CANCEL)) {
+            // Check if nearly expired
+            if (card.getMicContractByContractCode().getExpiredDate().getTime() - (new Date()).getTime() <
+                    Constants.StaffConfiguration.EXPIRED_DATE_AFTER) {
+                return "Thẻ sắp hết hạn";
+            } else {
+                return "Thẻ hợp lệ";
+            }
+        }
+        return "Thẻ không hợp lệ";
+    }
+
 }

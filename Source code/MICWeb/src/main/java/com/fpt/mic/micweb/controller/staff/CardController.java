@@ -13,7 +13,6 @@ import com.fpt.mic.micweb.model.dto.UserDto;
 import com.fpt.mic.micweb.model.dto.form.RecycleCardDto;
 import com.fpt.mic.micweb.model.entity.CardInstanceEntity;
 import com.fpt.mic.micweb.model.dto.form.CreateNewCardPaymentDto;
-import com.fpt.mic.micweb.model.entity.CardEntity;
 import com.fpt.mic.micweb.model.entity.StaffEntity;
 import com.fpt.mic.micweb.utils.ConfigUtils;
 import com.fpt.mic.micweb.utils.Constants;
@@ -68,26 +67,26 @@ public class CardController extends AuthController {
 
         // Call to business
         final CardBusiness cardBusiness = new CardBusiness();
-        CardInstanceEntity cardEntity = cardBusiness.getLastActiveCardInnstance(cardId);
+        final CardInstanceEntity cardInstance = cardBusiness.getLastActiveCardInnstance(cardId);
 
         final String finalCardId = cardId;
         calPaginator.setGetItemsCallback(new Paginator.IGetItems() {
             @Override
             public List getItems(int offset, int count) {
-                return cardBusiness.getCardAccessLog(finalCardId, offset, count);
+                return cardBusiness.getCardInstanceAccessLog(cardInstance.getId(), offset, count);
             }
         });
         calPaginator.setGetItemSizeCallback(new Paginator.IGetItemSize() {
             @Override
             public Long getItemSize() {
-                return cardBusiness.getCardAccessLogCount(finalCardId);
+                return cardBusiness.getCardInstanceAccessLogCount(cardInstance.getId());
             }
         });
 
         List<CardInstanceEntity> listInstance = cardBusiness.getAllCardInstancesByCardID(cardId);
 
         r.equest.setAttribute("calPaginator", calPaginator);
-        r.equest.setAttribute("CARD", cardEntity);
+        r.equest.setAttribute("CARD", cardInstance);
         r.equest.setAttribute("INSTANCES", listInstance);
         return new JspPage("staff/card-detail.jsp");
     }

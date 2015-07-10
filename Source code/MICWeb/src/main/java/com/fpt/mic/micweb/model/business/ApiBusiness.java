@@ -1,9 +1,7 @@
 package com.fpt.mic.micweb.model.business;
 
-import com.fpt.mic.micweb.model.dao.CardDao;
-import com.fpt.mic.micweb.model.dao.CardInstanceDao;
-import com.fpt.mic.micweb.model.dao.ContractDao;
-import com.fpt.mic.micweb.model.dao.PunishmentDao;
+import com.fpt.mic.micweb.framework.responses.JsonString;
+import com.fpt.mic.micweb.model.dao.*;
 import com.fpt.mic.micweb.model.dao.helper.NewCardRequestDao;
 import com.fpt.mic.micweb.model.dto.ContractSearchResultDto;
 import com.fpt.mic.micweb.model.entity.*;
@@ -108,9 +106,27 @@ public class ApiBusiness {
         return result;
     }
 
-    public CardInstanceEntity checkCard(String cardID) {
+    public CardInstanceEntity checkCard(String deviceID, String cardID) {
         CardInstanceDao cardInstanceDao = new CardInstanceDao();
-        return cardInstanceDao.checkCard(cardID);
+        CardAccessLogDao cardAccessLogDao = new CardAccessLogDao();
+        CardBusiness cardBusiness = new CardBusiness();
+
+        CardInstanceEntity result = cardInstanceDao.checkCard(cardID);
+
+        if (result != null) {
+            // Log down the access activity
+            CardAccessLogEntity cardAccessLogEntity = new CardAccessLogEntity();
+            cardAccessLogEntity.setAccessDate(new Timestamp(new Date().getTime()));
+            cardAccessLogEntity.setCardInstanceId(result.getId());
+            cardAccessLogEntity.setDevice(deviceID);
+            cardAccessLogEntity.setRequestService(CardAccessLogEntity.SERVICE_CHECK_CARD);
+            cardAccessLogEntity.setResponseContent(cardBusiness.getCardValidation(result));
+
+            cardAccessLogDao.create(cardAccessLogEntity);
+        }
+
+        // Return check card result
+        return result;
 
     }
 
@@ -121,7 +137,9 @@ public class ApiBusiness {
      * @param photo
      * @return
      */
-    public boolean updatePunishment(String contractCode, String title, String photo) {
+    public boolean updatePunishment(String deviceID, String contractCode, String title, String photo) {
+        CardInstanceDao cardInstanceDao = new CardInstanceDao();
+        CardAccessLogDao cardAccessLogDao = new CardAccessLogDao();
         ContractDao contractDao = new ContractDao();
         PunishmentDao punishmentDao = new PunishmentDao();
 
@@ -136,7 +154,22 @@ public class ApiBusiness {
         entity.setAttachment(photo);
         entity.setLastModified(new Timestamp(new Date().getTime()));
         entity.setCreatedDate(new Timestamp(new Date().getTime()));
-        punishmentDao.create(entity);
+        PunishmentEntity result = punishmentDao.create(entity);
+
+        CardInstanceEntity cardInstance = cardInstanceDao.getActiveCardInstanceByContract(contractCode);
+
+        if (result != null) {
+            // Log down the access activity
+            CardAccessLogEntity cardAccessLogEntity = new CardAccessLogEntity();
+            cardAccessLogEntity.setAccessDate(new Timestamp(new Date().getTime()));
+            cardAccessLogEntity.setCardInstanceId(cardInstance.getId());
+            cardAccessLogEntity.setDevice(deviceID);
+            cardAccessLogEntity.setRequestService(CardAccessLogEntity.SERVICE_ADD_PUNISHMENT);
+            cardAccessLogEntity.setResponseContent(result.getId() + "");
+
+            cardAccessLogDao.create(cardAccessLogEntity);
+        }
+
 
         return true;
     }

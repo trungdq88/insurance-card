@@ -13,7 +13,6 @@ import com.fpt.mic.micweb.model.business.PaymentBusiness;
 import com.fpt.mic.micweb.model.dto.CheckoutRequestDto;
 import com.fpt.mic.micweb.model.dto.UserDto;
 import com.fpt.mic.micweb.model.dto.form.NewCardRequestDto;
-import com.fpt.mic.micweb.model.entity.CardEntity;
 import com.fpt.mic.micweb.model.entity.CardInstanceEntity;
 import com.fpt.mic.micweb.model.entity.CustomerEntity;
 import com.fpt.mic.micweb.utils.Constants;
@@ -64,18 +63,18 @@ public class CardController extends AuthController {
 
         // Call to business
         final CardBusiness cardBusiness = new CardBusiness();
-        CardInstanceEntity cardEntity = cardBusiness.getLastActiveCardInnstance(cardId);
+        final CardInstanceEntity cardInstance = cardBusiness.getLastActiveCardInnstance(cardId);
 
         calPaginator.setGetItemsCallback(new Paginator.IGetItems() {
             @Override
             public List getItems(int offset, int count) {
-                return cardBusiness.getCardAccessLog(cardId, offset, count);
+                return cardBusiness.getCardInstanceAccessLog(cardInstance.getId(), offset, count);
             }
         });
         calPaginator.setGetItemSizeCallback(new Paginator.IGetItemSize() {
             @Override
             public Long getItemSize() {
-                return cardBusiness.getCardAccessLogCount(cardId);
+                return cardBusiness.getCardInstanceAccessLogCount(cardInstance.getId());
             }
         });
         Map<Integer, String> newCardMappingRequest = new HashMap();
@@ -85,7 +84,7 @@ public class CardController extends AuthController {
         r.equest.setAttribute("map", newCardMappingRequest);
         r.equest.setAttribute("mapOldCardAndRequestId", newOldCardMappingRequest);
         r.equest.setAttribute("calPaginator", calPaginator);
-        r.equest.setAttribute("CARD", cardEntity);
+        r.equest.setAttribute("CARD", cardInstance);
         return new JspPage("customer/card-detail.jsp");
     }
 
@@ -216,7 +215,7 @@ public class CardController extends AuthController {
             cardBusiness.deactiveCardByContractCode(newCardRequestDto.getContractCode());
             ContractBusiness contractBusiness = new ContractBusiness();
             // cap nhat contract status: no card
-            contractBusiness.updateContractStatus(newCardRequestDto.getContractCode(),Constants.ContractStatus.NO_CARD);
+            contractBusiness.updateContractStatus(newCardRequestDto.getContractCode(), Constants.ContractStatus.NO_CARD);
 
         }
 

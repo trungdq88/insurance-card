@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fpt.mic.mobile.checker.app.ApiRequest.ApiRequest;
 import com.fpt.mic.mobile.checker.app.entity.CardInstanceEntity;
 import com.fpt.mic.mobile.checker.app.utils.Settings;
+import com.fpt.mic.mobile.checker.app.utils.SystemUtils;
 
 import java.io.IOException;
 
@@ -43,6 +44,7 @@ public class ApiBusiness {
         ApiRequest apiRequest = new ApiRequest(Settings.getApiBase());
         apiRequest.setParam("action", "checkCard");
         apiRequest.setParam("cardID", cardID);
+        apiRequest.setParam("deviceID", SystemUtils.getDeviceID());
         apiRequest.get(new ApiRequest.IOnApiResponse() {
             @Override
             public void onResponse(String response) {
@@ -68,6 +70,7 @@ public class ApiBusiness {
         apiRequest.setParam("contractCode", contractCode);
         apiRequest.setParam("title", title);
         apiRequest.setParam("photo", photo);
+        apiRequest.setParam("deviceID", SystemUtils.getDeviceID());
         apiRequest.get(new ApiRequest.IOnApiResponse() {
             @Override
             public void onResponse(String response) {

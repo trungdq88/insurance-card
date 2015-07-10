@@ -171,15 +171,7 @@
                                                     <td>${log.device}</td>
                                                     <td>${log.requestService}</td>
                                                     <td>
-                                                        <c:set var="result" value="${log.responseContent}"/>
-                                                        <c:choose>
-                                                            <c:when test="${result.toLowerCase().contains('valid')}">
-                                                                <span class="label label-success">Hợp lệ</span>
-                                                            </c:when>
-                                                            <c:otherwise>
-                                                                <span class="label label-danger">Không hợp lệ</span>
-                                                            </c:otherwise>
-                                                        </c:choose>
+                                                            ${log.responseContent}
                                                     </td>
                                                 </tr>
                                             </c:forEach>
