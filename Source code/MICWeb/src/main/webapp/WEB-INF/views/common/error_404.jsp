@@ -35,6 +35,8 @@
               </h3>
             </div>
             <div style="padding: 30px; text-align: center">
+                <img src="/img/404.png" width="300px"/>
+                <br/>
               Trang bạn yêu cầu không tồn tại.<br/>
                 <a href="${pageContext.request.contextPath}/public/home">Quay về trang chủ</a>
             </div>
