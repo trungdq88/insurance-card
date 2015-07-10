@@ -3,7 +3,7 @@
  */
 
 $(document).ready(function () {
-    initialize();
+
 
     CheckDayAvailable();
     $('[data-toggle="tooltip"]').tooltip();

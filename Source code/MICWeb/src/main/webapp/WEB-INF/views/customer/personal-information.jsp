@@ -221,6 +221,20 @@
 
 <%@ include file="_shared/footer.jsp" %>
 
+<script type="text/javascript">
+    initialize();
+    $(document).ready(function () {
+        if ($('#createdDate').val() == "") {
+            $('#createdDate').val(getCurrentDate());
+        }
+        document.getElementById("createdDate").max = getCurrentDate();
+        if ($('#accidentDate').val() == "") {
+            $('#accidentDate').val(getCurrentDate());
+        }
+        document.getElementById("accidentDate").max = getCurrentDate();
+    });
+</script>
+
 <script src="${pageContext.request.contextPath}/js/geolocation.js" type="text/javascript"></script>
 <!-- Google API Autocomplete for address-->
 <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places"></script>
