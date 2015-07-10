@@ -1,15 +1,17 @@
 package com.fpt.mic.micweb.model.dto.form;
+
 import com.fpt.mic.micweb.model.dao.CustomerDao;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+
 /**
  * Created by PhucNguyen on 10/07/2015.
  */
 public class EditCustomerProfileDto {
-
+    private String customerCode;
     @NotEmpty(message = "Địa chỉ không được để trống")
     @Size(min = 3, max = 250, message = "Địa chỉ phải từ {min} đến {max} ký tự")
     private String address;
@@ -27,7 +29,7 @@ public class EditCustomerProfileDto {
     @AssertTrue(message = "Email này đã được sử dụng")
     private boolean isExistedByEmail() {
         CustomerDao customerDao = new CustomerDao();
-        return !customerDao.isExistByEmail(email);
+        return !customerDao.isExistByEmailCustomer(email ,customerCode);
     }
 
     @AssertTrue(message = "Số CMND/Hộ chiếu phải có độ dài từ 8 tới 15 ký tự")
@@ -42,11 +44,21 @@ public class EditCustomerProfileDto {
     public EditCustomerProfileDto() {
     }
 
-    public EditCustomerProfileDto(String address, String email, String phone, String personalID) {
+
+    public EditCustomerProfileDto(String address, String email, String phone, String personalID, String customerCode) {
+        this.customerCode = customerCode;
         this.address = address;
         this.email = email;
         this.phone = phone;
         this.personalID = personalID;
+    }
+    public void setCustomerCode(String customerCode) {
+        this.customerCode = customerCode;
+    }
+
+    public String getCustomerCode() {
+
+        return customerCode;
     }
 
     public String getAddress() {

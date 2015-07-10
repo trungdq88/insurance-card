@@ -73,6 +73,19 @@ public class CustomerDao extends IncrementDao<CustomerEntity, String> {
         entityManager.close();
         return true;
     }
+    public boolean isExistByEmailCustomer(String email, String customerCode) {
+        EntityManager entityManager = factory.createEntityManager();
+        String hql = "SELECT c FROM CustomerEntity c WHERE c.email= :email and c.customerCode <> :customerCode";
+        Query query = entityManager.createQuery(hql);
+        query.setParameter("email", email);
+        query.setParameter("customerCode", customerCode);
+        if (query.getResultList().size() == 0) {
+            entityManager.close();
+            return false;
+        }
+        entityManager.close();
+        return true;
+    }
 
     /**
      * Return customers with name or code that contains keyword

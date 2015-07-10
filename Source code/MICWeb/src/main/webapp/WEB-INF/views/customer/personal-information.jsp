@@ -136,6 +136,7 @@
             <div class="text-center saveInformation hide">
                 <input type="hidden" name="action" value="EditProfile"/>
                 <input type="hidden" name="customerCode" value="${customer.customerCode}"/>
+                <input type="hidden" name="editCustomer:customerCode" value="${customer.customerCode}"/>
                 <input id="btn_Save" type="submit" class="btn btn-primary" value="Lưu thay đổi" name="save">
             </div>
         </form>

@@ -317,6 +317,7 @@ public class CustomerBusiness {
             customerEntity.setEmail(dto.getEmail());
             customerEntity.setPhone(dto.getPhone());
             customerEntity.setPersonalId(dto.getPersonalID());
+            customerEntity.setLastModified(new Timestamp(new java.util.Date().getTime()));
             if(customerDao.update(customerEntity) != null){
                 result = true;
             }
