@@ -102,4 +102,15 @@ public class ContractBusiness {
         contractEntity.setNeedRenewPayment(flag ? 1 : null);
         contractDao.update(contractEntity);
     }
+
+    public boolean updateContractStatus(String contractCode,String status){
+        ContractDao contractDao = new ContractDao();
+        ContractEntity contractEntity = contractDao.read(contractCode);
+        if (contractEntity != null){
+            contractEntity.setStatus(status);
+            contractDao.update(contractEntity);
+            return true;
+        }
+        return false;
+    }
 }

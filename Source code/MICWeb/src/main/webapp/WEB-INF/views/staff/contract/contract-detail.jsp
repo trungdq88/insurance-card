@@ -11,6 +11,7 @@
     <c:set var="listCompensation" value="${requestScope.COMPENSATION}" scope="request"/>
     <c:set var="listAccident" value="${requestScope.ACCIDENT}" scope="request"/>
     <c:set var="listPunishment" value="${requestScope.PUNISHMENT}" scope="request"/>
+    <c:set var="listCard" value="${requestScope.CARD}" scope="request"/>
     <c:set var="config" value="${requestScope.CONFIG}"/>
 
     <%@ include file="../_shared/navigation.jsp" %>
@@ -224,7 +225,48 @@
                             <jsp:include page="contract-detail-vehicle.jsp" flush="true"/>
                             <%--/Vehicle information--%>
                             <br/>
+                        </form>
+                    </div>
+                    <%--/Contract information tab --%>
 
+                    <div role="tabpanel" class="tab-pane" id="compensations">
+                        <br/>
+                        <jsp:include page="contract-detail-compensation.jsp" flush="true"/>
+                    </div>
+                    <%--/Compensation information tab --%>
+
+                    <div role="tabpanel" class="tab-pane" id="accidents">
+                        <br/>
+                        <jsp:include page="contract-detail-accident.jsp" flush="true"/>
+                    </div>
+                    <%--/Accident information tab --%>
+
+                    <div role="tabpanel" class="tab-pane" id="punishments">
+                        <br/>
+                        <jsp:include page="contract-detail-punishment.jsp" flush="true"/>
+                    </div>
+                    <%--/Punishments information tab --%>
+                </div>
+                <%--/Tab content --%>
+                <div role="tabpanel">
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li role="presentation" class="active">
+                            <a href="#paymentInfo" aria-controls="home" role="tab" data-toggle="tab">
+                                <strong>Lịch sử giao dịch</strong>
+                            </a>
+                        </li>
+                        <li role="presentation">
+                            <a href="#cards" aria-controls="cards" role="tab" data-toggle="tab">
+                                <strong>Lịch sử thẻ</strong>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane active" id="paymentInfo">
+                        <br/>
+                        <form class="form-horizontal">
                             <fieldset>
                                 <legend>
                                     Thông tin thanh toán
@@ -253,7 +295,7 @@
                                         <c:forEach var="payment" items="${listPayment}" varStatus="counter">
                                             <tr>
                                                 <td>
-                                                    ${payment.id}
+                                                        ${payment.id}
                                                 </td>
                                                 <td>
                                                     <fmt:formatDate value="${payment.paidDate}" pattern="dd/MM/yyyy"/>
@@ -281,25 +323,13 @@
                             <%--/Payment information--%>
                         </form>
                     </div>
-                    <%--/Contract information tab --%>
+                    <%--/Payment information tab --%>
 
-                    <div role="tabpanel" class="tab-pane" id="compensations">
+                    <div role="tabpanel" class="tab-pane" id="cards">
                         <br/>
-                        <jsp:include page="contract-detail-compensation.jsp" flush="true"/>
+                        <jsp:include page="contract-detail-card.jsp" flush="true"/>
                     </div>
-                    <%--/Compensation information tab --%>
-
-                    <div role="tabpanel" class="tab-pane" id="accidents">
-                        <br/>
-                        <jsp:include page="contract-detail-accident.jsp" flush="true"/>
-                    </div>
-                    <%--/Accident information tab --%>
-
-                    <div role="tabpanel" class="tab-pane" id="punishments">
-                        <br/>
-                        <jsp:include page="contract-detail-punishment.jsp" flush="true"/>
-                    </div>
-                    <%--/Punishments information tab --%>
+                    <%--/Card information tab --%>
                 </div>
                 <%--/Tab content --%>
                 <br/>

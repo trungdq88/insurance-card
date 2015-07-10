@@ -112,8 +112,13 @@
                         <div class="form-group">
                             <label class="col-sm-4 control-label">Họ tên lái xe</label>
 
-                            <div class="col-sm-6">
+                            <div class="col-sm-3">
                                 <div class="text-value">${compensation.driverName}</div>
+                            </div>
+                            <label class="col-sm-2 control-label">Điện thoại</label>
+
+                            <div class="col-sm-3">
+                                <div class="text-value">${compensation.driverPhone}</div>
                             </div>
                         </div>
                         <div class="form-group">
@@ -121,13 +126,6 @@
 
                             <div class="col-sm-8">
                                 <div class="text-value">${compensation.driverAddress}</div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label">Số điện thoại</label>
-
-                            <div class="col-sm-3">
-                                <div class="text-value">${compensation.driverPhone}</div>
                             </div>
                         </div>
                         <div class="form-group">

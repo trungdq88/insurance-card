@@ -1,11 +1,13 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="_shared/header.jsp" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <div id="wrapper">
 
     <c:set var="card" value="${requestScope.CARD}"/>
+    <c:set var="instances" value="${requestScope.INSTANCES}"/>
 
     <%@ include file="_shared/navigation.jsp" %>
     <div id="page-wrapper">
@@ -69,7 +71,8 @@
                                     <form action="${pageContext.request.contextPath}/staff/card" method="post">
                                         <button type="submit" class="btn btn-info">
                                             <i class="fa fa-refresh"></i>
-                                            Cấp lại thẻ này</button>
+                                            Cấp lại thẻ này
+                                        </button>
                                         <input type="hidden" name="action" value="recycle"/>
                                         <input type="hidden" name="recycle:cardId" value="${param.cardId}"/>
                                     </form>
@@ -161,7 +164,8 @@
                                                 <tr>
                                                     <td>${counter.count}</td>
                                                     <td>
-                                                        <fmt:formatDate value="${log.accessDate}" pattern="dd/MM/yyyy"/> lúc
+                                                        <fmt:formatDate value="${log.accessDate}" pattern="dd/MM/yyyy"/>
+                                                        lúc
                                                         <fmt:formatDate value="${log.accessDate}" type="time"/>
                                                     </td>
                                                     <td>${log.device}</td>
@@ -190,7 +194,8 @@
                             <ul class="pagination">
                                 <c:if test="${param.page != 1 && not empty param.page}">
                                     <li>
-                                        <a href="?action=${param.action}&keyword=${param.keyword}&page=1" aria-label="Previous">
+                                        <a href="?action=${param.action}&keyword=${param.keyword}&page=1"
+                                           aria-label="Previous">
                                             <span aria-hidden="true">Đầu</span>
                                         </a>
                                     </li>
@@ -216,12 +221,45 @@
 
                         <div class="panel-heading">
                             <div class="pull-left center-dropdown-button">
-                                <b>Thẻ này đã được cấp phát 2 lần</b>
+                                <b>Thẻ này đã được cấp phát ${fn:length(instances)} lần</b>
                             </div>
                             <div class="clearfix"></div>
                         </div>
                         <div class="panel-body">
                             <div class="table-responsive">
+                                <table class="table table-striped table-bordered table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Mã hợp đồng</th>
+                                        <th>Bắt đầu có hiệu lực từ</th>
+                                        <th>Thời điểm hết hiệu lực</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <c:forEach var="instance" items="${instances}" varStatus="counter">
+                                        <tr>
+                                            <td>${counter.count}</td>
+                                            <td>${instance.contractCode}</td>
+                                            <td>
+                                                <fmt:formatDate value="${instance.activatedDate}" pattern="dd/MM/yyyy"/> lúc
+                                                <fmt:formatDate value="${instance.activatedDate}" type="time"/>
+                                            </td>
+                                            <td>
+                                                <c:choose>
+                                                    <c:when test="${empty instance.deactivatedDate}">
+                                                        <span class="label label-success">Đang hoạt động</span>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <fmt:formatDate value="${instance.deactivatedDate}" pattern="dd/MM/yyyy"/> lúc
+                                                        <fmt:formatDate value="${instance.deactivatedDate}" type="time"/>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                            </td>
+                                        </tr>
+                                    </c:forEach>
+                                    </tbody>
+                                </table>
                             </div>
                             <!-- /.table-responsive -->
                         </div>
@@ -229,6 +267,7 @@
 
                 </div>
                 <br/>
+
                 <div class="text-center">
                     <a href="${pageContext.request.contextPath}/staff/card" type="button" class="btn btn-default">
                         <i class="fa fa-arrow-left"></i> <strong>Danh sách thẻ đã phát hành</strong>

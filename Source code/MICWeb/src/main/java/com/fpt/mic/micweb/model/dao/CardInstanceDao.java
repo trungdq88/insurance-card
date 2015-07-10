@@ -102,7 +102,8 @@ public class CardInstanceDao extends GenericDaoJpaImpl<CardInstanceEntity, Integ
 
     public List<CardInstanceEntity> getCardInstancesByContractIncludeDeactive(String contractCode) {
         EntityManager entity = factory.createEntityManager();
-        String hql = "SELECT ca FROM CardInstanceEntity ca WHERE ca.contractCode = :contractCode ";
+        String hql = "SELECT ca FROM CardInstanceEntity AS ca WHERE ca.contractCode = :contractCode " +
+                "ORDER BY ca.activatedDate DESC";
         Query query = entity.createQuery(hql);
         query.setParameter("contractCode", contractCode);
         try {
@@ -148,6 +149,17 @@ public class CardInstanceDao extends GenericDaoJpaImpl<CardInstanceEntity, Integ
         Query query = entity.createQuery(hql);
         query.setParameter("cardID", cardID);
         return query.getResultList();
+    }
+
+    public List<CardInstanceEntity> getAllCardInstancesByCardID(String cardID) {
+        EntityManager entity = factory.createEntityManager();
+        String hql = "SELECT ca FROM CardInstanceEntity AS ca WHERE ca.cardId = :cardID " +
+                "ORDER BY ca.activatedDate DESC";
+        Query query = entity.createQuery(hql);
+        query.setParameter("cardID", cardID);
+        List<CardInstanceEntity> resultList = query.getResultList();
+        entity.close();
+        return resultList;
     }
 
     public CardInstanceEntity getLastActiveCardInstanceByCardId(String cardId) {

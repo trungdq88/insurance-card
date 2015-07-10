@@ -187,7 +187,7 @@ public class StaffBusiness {
             // Concurrency set value
             contractEntity.setLastModified(DateUtils.currentTimeWithoutNanos());
 
-            if (cardEntity == null) {
+            if (cardEntity == null || dto.isNewCard()) {
                 contractEntity.setStatus(Constants.ContractStatus.NO_CARD);
             } else {
                 contractEntity.setStatus(Constants.ContractStatus.READY);
