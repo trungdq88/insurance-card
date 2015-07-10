@@ -71,12 +71,17 @@ public class ApiController extends BasicController {
 
     public ResponseObject getCheckCard(R r) {
         String cardID = r.equest.getParameter("cardID");
+        String deviceID = r.equest.getParameter("deviceID");
+
         if (cardID == null || cardID.isEmpty()) {
+            return new JsonString(null);
+        }
+        if (deviceID == null || deviceID.isEmpty()) {
             return new JsonString(null);
         }
 
         // Call to business
-        CardInstanceEntity card = apiBusiness.checkCard(cardID);
+        CardInstanceEntity card = apiBusiness.checkCard(deviceID, cardID);
 
         // Return json result
         return new JsonString(card);
@@ -86,6 +91,7 @@ public class ApiController extends BasicController {
         String contractCode = r.equest.getParameter("contractCode");
         String title = r.equest.getParameter("title");
         String photo = r.equest.getParameter("photo");
+        String deviceID = r.equest.getParameter("deviceID");
 
 
         if (contractCode == null || contractCode.isEmpty()) {
@@ -97,9 +103,12 @@ public class ApiController extends BasicController {
         if (photo == null || photo.isEmpty()) {
             return new JsonString(false);
         }
+        if (deviceID == null || deviceID.isEmpty()) {
+            return new JsonString(null);
+        }
 
         // Call to business
-        Boolean result = apiBusiness.updatePunishment(contractCode, title, photo);
+        Boolean result = apiBusiness.updatePunishment(deviceID, contractCode, title, photo);
 
         return new JsonString(result);
 

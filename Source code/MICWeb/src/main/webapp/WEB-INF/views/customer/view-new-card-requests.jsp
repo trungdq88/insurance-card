@@ -71,9 +71,7 @@
                         <td><a tabindex="0" data-trigger="focus" data-toggle="popover" title="Ghi chú từ khách hàng"
                                role="button" data-content="${newRequest.note}"><i class="fa fa-file"></i></a></td>
                         <td>
-                          <a href="#">
-                              ${newRequest.micCardInstanceByOldCardInstanceId.cardId}
-                          </a>
+                            ${newRequest.micCardInstanceByOldCardInstanceId.cardId}
                         </td>
                         <td>
                           <a href="${pageContext.request.contextPath}/customer/contract?action=detail&code=${mapCardContract[newRequest.micCardInstanceByOldCardInstanceId.cardId]}">
@@ -87,10 +85,7 @@
                           <fmt:formatDate value="${newRequest.resolveDate}" pattern="dd/MM/yyyy"/>
                         </td>
                         <td>
-                          <a href="${pageContext.request.contextPath}/customer/card?action=detail&cardId=${map[newRequest.id]}">
-                              ${map[newRequest.id]}
-                          </a>
-
+                            ${map[newRequest.id]}
                         </td>
                       </tr>
                     </c:forEach>
