@@ -20,7 +20,7 @@ import java.util.List;
 @WebServlet(name = "StaffController", urlPatterns = {"/admin/staff", "/admin"})
 public class StaffController extends BasicController{
     /**
-     * Paginator for contract
+     * Paginator for staff
      */
     Paginator staffPaginator = new Paginator();
     public ResponseObject getView(R r) {

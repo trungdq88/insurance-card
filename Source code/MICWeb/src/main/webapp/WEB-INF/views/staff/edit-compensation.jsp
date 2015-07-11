@@ -332,7 +332,7 @@
                     <div class="text-center">
                         <input type="hidden" name="edit:compensationCode" value="${compensation.compensationCode}"/>
                         <input type="hidden" name="action" value="edit"/>
-                        <button type="submit" id="btnEdit" class="btn btn-primary hide">
+                        <button type="submit" id="btnEdit" class="btn btn-primary">
                             <i class="fa fa-pencil"></i> Cập nhật yêu cầu bồi thường
                         </button>
                         <br/> <br/>
@@ -370,15 +370,6 @@
         if (decision != null) {
             $('#decision').val(decision)
         }
-        $('input').change(function () {
-            $('#btnEdit').removeClass('hide');
-        });
-        $('select').change(function () {
-            $('#btnEdit').removeClass('hide');
-        });
-        $('textarea').change(function () {
-            $('#btnEdit').removeClass('hide');
-        });
     });
 </script>
 

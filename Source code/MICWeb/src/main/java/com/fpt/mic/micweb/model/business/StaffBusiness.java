@@ -217,6 +217,40 @@ public class StaffBusiness {
         return false;
     }
 
+    public boolean rejectCancelContract(String contractCode) {
+        ContractDao contractDao = new ContractDao();
+        CardInstanceDao cardInstanceDao = new CardInstanceDao();
+        PaymentDao paymentDao = new PaymentDao();
+        ContractEntity contractEntity = contractDao.read(contractCode);
+        CardInstanceEntity card = cardInstanceDao.getActiveCardInstanceByContract(contractCode);
+        boolean isPaidContract = paymentDao.isPaidContract(contractCode);
+        Timestamp currentTime = DateUtils.currentTimeWithoutNanos();
+
+        // Check contract
+        if (contractEntity != null) {
+            // Update contract information
+            contractEntity.setCancelDate(null);
+            contractEntity.setCancelReason(null);
+            contractEntity.setCancelNote(null);
+            // Concurrency set value
+            contractEntity.setLastModified(currentTime);
+            if (!isPaidContract) {
+                contractEntity.setStatus(Constants.ContractStatus.PENDING);
+            } else if (card == null) {
+                contractEntity.setStatus(Constants.ContractStatus.NO_CARD);
+            } else if (currentTime.after(contractEntity.getExpiredDate())) {
+                contractEntity.setStatus(Constants.ContractStatus.EXPIRED);
+            } else {
+                contractEntity.setStatus(Constants.ContractStatus.READY);
+            }
+
+            if (contractDao.update(contractEntity) != null) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public boolean cancelContract(CancelContractDto dto) {
         ContractDao contractDao = new ContractDao();
         ContractEntity contractEntity = contractDao.read(dto.getContractCode());
@@ -341,5 +375,19 @@ public class StaffBusiness {
     public Long searchCustomerByNameOrCodeCount(String keyword) {
         CustomerDao customerDao = new CustomerDao();
         return customerDao.searchCustomerByNameOrCodeCount(keyword);
+    }
+
+    /**
+     * Returns true if the contract has changed
+     * Returns false if the contract is not changed or the contract code is not exists
+     *
+     * @param contractCode
+     * @param lastModified
+     * @return boolean, true is changed, false is not change yet
+     */
+    public boolean isContractChanged(String contractCode, Timestamp lastModified) {
+        ContractDao contractDao = new ContractDao();
+        ContractEntity contractEntity = contractDao.read(contractCode);
+        return contractEntity != null && !contractEntity.getLastModified().equals(lastModified);
     }
 }

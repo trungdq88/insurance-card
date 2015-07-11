@@ -1,6 +1,7 @@
 package com.fpt.mic.micweb.model.entity.helper;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 
 /**
  * Created by TriPQM on 07/05/2015.
@@ -9,6 +10,7 @@ import javax.persistence.*;
 @Table(name = "mic_business_rules", schema = "", catalog = "mic_data")
 public class BusinessRulesEntity {
     private int id;
+    private Timestamp startDate;
     private int startDateBefore;
     private int startDateAfter;
     private int contractDefaultTerm;
@@ -25,6 +27,7 @@ public class BusinessRulesEntity {
     private int deliveryFee;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     public int getId() {
         return id;
@@ -32,6 +35,16 @@ public class BusinessRulesEntity {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    @Basic
+    @Column(name = "start_date",insertable = false)
+    public Timestamp getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(Timestamp startDate) {
+        this.startDate = startDate;
     }
 
     @Basic

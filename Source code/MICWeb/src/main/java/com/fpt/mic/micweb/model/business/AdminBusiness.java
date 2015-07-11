@@ -8,6 +8,9 @@ import com.fpt.mic.micweb.model.entity.StaffEntity;
 import com.fpt.mic.micweb.model.entity.helper.BusinessRulesEntity;
 import com.fpt.mic.micweb.utils.StringUtils;
 
+import java.sql.Timestamp;
+import java.util.List;
+
 /**
  * Created by TriPQM on 07/03/2015.
  */
@@ -31,14 +34,30 @@ public class AdminBusiness {
             return false;
         }
     }
-    public BusinessRulesEntity getBusinessRules(){
+    // get last active business rules
+    public BusinessRulesEntity getLastActiveBusinessRule(){
         BusinessRulesDao businessRulesDao = new BusinessRulesDao();
-        return businessRulesDao.read(1);
+        return businessRulesDao.getLastActiveBusinessRule();
     }
-    public void setBusinessRules(BusinessRulesDto businessRulesDto){
+
+    public BusinessRulesEntity getBusinessRules(int configId){
+        BusinessRulesDao businessRulesDao = new BusinessRulesDao();
+        return businessRulesDao.read(configId);
+    }
+
+    public Timestamp getExpiredDate(int configId){
+        BusinessRulesDao businessRulesDao = new BusinessRulesDao();
+        BusinessRulesEntity businessRulesEntity = businessRulesDao.getNextBusinessRules(configId);
+        if (businessRulesEntity == null){
+            return null;
+        }
+        return businessRulesEntity.getStartDate();
+    }
+
+    // create new business config rules
+    public void createBusinessRules(BusinessRulesDto businessRulesDto){
         BusinessRulesDao businessRulesDao = new BusinessRulesDao();
         BusinessRulesEntity businessRulesEntity = new BusinessRulesEntity();
-        businessRulesEntity.setId(1);
         businessRulesEntity.setStartDateBefore(businessRulesDto.getStartDateBefore());
         businessRulesEntity.setStartDateAfter(businessRulesDto.getStartDateAfter());
         businessRulesEntity.setContractDefaultTerm(businessRulesDto.getContractDefaultTerm());
@@ -53,6 +72,16 @@ public class AdminBusiness {
         businessRulesEntity.setNearlyExceedExpiredThree(businessRulesDto.getNearlyExceedExpiredThree());
         businessRulesEntity.setNewCardRequestFee(businessRulesDto.getNewCardRequestFee());
         businessRulesEntity.setDeliveryFee(businessRulesDto.getDeliveryFee());
-        businessRulesDao.update(businessRulesEntity);
+        businessRulesDao.create(businessRulesEntity);
+    }
+
+    public List getOnePageBusinessRules(int offset, int count) {
+        BusinessRulesDao businessRulesDao = new BusinessRulesDao();
+        return businessRulesDao.getOnePageBusinessRules(offset, count);
+    }
+
+    public Long getAllBusinessRulesCount() {
+        BusinessRulesDao businessRulesDao = new BusinessRulesDao();
+        return businessRulesDao.getAllBusinessRulesCount();
     }
 }

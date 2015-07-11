@@ -106,7 +106,7 @@
 
                             <p class="text-center">
                                 <button class="btn btn-primary" type="button" data-toggle="modal"
-                                        data-target="#cancel-contract-modal">
+                                        data-target="#handle-request-cancel-modal">
                                     <i class="fa fa-check"></i> Giải quyết
                                 </button>
                             </p>
@@ -169,7 +169,8 @@
 
                         <div class="col-sm-2">
                             <div class="text-value">
-                                <span id="remain" style="color:deepskyblue; font-weight: bolder; font-size: large"></span> ngày
+                                <span id="remain"
+                                      style="color:deepskyblue; font-weight: bolder; font-size: large"></span> ngày
                             </div>
                         </div>
 
@@ -179,7 +180,8 @@
                             <div class="text-value">
                                 <span style="color:hotpink; font-weight: bolder; font-size: large">
                                     <fmt:setLocale value="vi_VN"/>
-                                    <fmt:formatNumber value="${contract.contractFee}" type="currency" maxFractionDigits="0"/>
+                                    <fmt:formatNumber value="${contract.contractFee}" type="currency"
+                                                      maxFractionDigits="0"/>
                                 </span>
                             </div>
                         </div>
@@ -217,6 +219,7 @@
                 <div class="tab-content">
                     <div role="tabpanel" class="tab-pane active" id="contractInfo">
                         <br/>
+
                         <form class="form-horizontal">
                             <jsp:include page="contract-detail-customer.jsp" flush="true"/>
                             <%--/Customer information--%>
@@ -266,6 +269,7 @@
                 <div class="tab-content">
                     <div role="tabpanel" class="tab-pane active" id="paymentInfo">
                         <br/>
+
                         <form class="form-horizontal">
                             <fieldset>
                                 <legend>
@@ -375,7 +379,6 @@
         return calculateContractFee(contractTerm, pricePerYear);
     }
 
-
     // Calculate fees
     function refreshFees() {
         var calculatedRenewFee = calcRenewFee();
@@ -419,9 +422,8 @@
         document.getElementById("cancelDate").min = '${config.cancelDateMin}';
         document.getElementById("cancelDate").max = '${config.cancelDateMax}';
 
-
         // Bind events to refresh fees
-        $('#expiredDate').blur(function() {
+        $('#expiredDate').blur(function () {
             refreshFees();
         });
 
@@ -442,6 +444,22 @@
         var remainDays = daysBetween(new Date(), expDate);
         $('#remain').text(remainDays);
         $('#remain2').text(remainDays);
+
+        // Handle request cancel contract
+        $('input[type=radio]').click(function () {
+            if ($('input[name=rdbSolution]:checked').val() == "cancelContract") {
+                $('#cancelContract').removeClass('hide');
+                $('#rejectRequest').addClass('hide');
+            } else if ($('input[name=rdbSolution]:checked').val() == "rejectRequest") {
+                $('#cancelContract').addClass('hide');
+                $('#rejectRequest').removeClass('hide');
+            }
+        });
+
+        // Close modal after click button to open another modal
+        $('#cancelContract').click(function () {
+            $('#handle-request-cancel-modal').modal('toggle');
+        });
 
         // Handle button renew & cancel, disable or enable
         if (contractStatus.toLowerCase() == 'Pending'.toLowerCase()) {

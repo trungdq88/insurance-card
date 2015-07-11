@@ -266,7 +266,8 @@
 
                         <div class="col-sm-1">
                             <div class="text-value">
-                                <input type="checkbox" id="newCard" class="control-newcard" name="renew:newCard" value="true">
+                                <input type="checkbox" id="newCard" class="control-newcard" name="renew:newCard"
+                                       value="true">
                             </div>
                         </div>
                     </div>
@@ -283,7 +284,8 @@
                                 </div>
                             </div>
 
-                            <label class="col-sm-3 control-label control-delivery" for="deliveryNewCard">Vận chuyển thẻ</label>
+                            <label class="col-sm-3 control-label control-delivery" for="deliveryNewCard">Vận chuyển
+                                thẻ</label>
 
                             <div class="col-sm-1">
                                 <div class="text-value">
@@ -337,6 +339,55 @@
                     <button type="submit" class="btn btn-primary">
                         <i class="fa fa-arrow-right"></i> Gia hạn hợp đồng
                     </button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Đóng</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </form>
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+<!-- model for handle request cancel contract -->
+<div class="modal fade" id="handle-request-cancel-modal">
+    <div class="modal-dialog">
+        <form action="${pageContext.request.contextPath}/staff/contract" method="post" class="form-horizontal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Giải quyết yêu cầu hủy hợp đồng</h4>
+                </div>
+                <div class="modal-body">
+                    <fieldset>
+                        <!-- Selection -->
+                        <div class="menu-item-radio">
+                            <div class="text-center">
+                                <label class="control-label">
+                                    Phương án giải quyết yêu cầu hủy hợp đồng này là?
+                                </label>
+                            </div>
+                            <label class="radio col-sm-offset-4">
+                                <input value="cancelContract" name="rdbSolution" type="radio">
+                                Hủy hợp đồng này
+                            </label>
+                            <label class="radio col-sm-offset-4">
+                                <input value="rejectRequest" name="rdbSolution" type="radio">
+                                Tiếp tục duy trì hợp đồng
+                            </label>
+                        </div>
+                    </fieldset>
+                </div>
+                <div class="modal-footer">
+                    <button id="cancelContract" class="btn btn-primary hide" type="button" data-toggle="modal"
+                            data-target="#cancel-contract-modal">
+                        <i class="fa fa-check"></i> Xác nhận
+                    </button>
+                    <a href="${pageContext.request.contextPath}/staff/contract?action=rejectCancelRequest&code=${contract.contractCode}"
+                       id="rejectRequest" type="button" class="btn btn-primary hide">
+                        <i class="fa fa-check"></i> Xác nhận
+                    </a>
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Đóng</button>
                 </div>
             </div>
