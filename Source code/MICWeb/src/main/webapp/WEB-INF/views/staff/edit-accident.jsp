@@ -96,7 +96,7 @@
                     <div class="text-center">
                         <input type="hidden" name="edit:id" value="${accident.id}"/>
                         <input type="hidden" name="action" value="edit"/>
-                        <button type="submit" id="btnEdit" class="btn btn-primary hide">
+                        <button type="submit" id="btnEdit" class="btn btn-primary">
                             <i class="fa fa-pencil"></i> Cập nhật thông báo tai nạn
                         </button>
                         <br/><br/>
@@ -122,15 +122,6 @@
             $('#createdDate').val(getCurrentDate());
         }
         document.getElementById("createdDate").max = getCurrentDate();
-        $('input').change(function () {
-            $('#btnEdit').removeClass('hide');
-        });
-        $('select').change(function () {
-            $('#btnEdit').removeClass('hide');
-        });
-        $('textarea').change(function () {
-            $('#btnEdit').removeClass('hide');
-        });
     });
 </script>
 
