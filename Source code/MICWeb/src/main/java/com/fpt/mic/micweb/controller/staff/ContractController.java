@@ -268,6 +268,37 @@ public class ContractController extends AuthController {
         return new JspPage("staff/message.jsp");
     }
 
+    public ResponseObject getRejectCancelRequest(R r) {
+        StaffBusiness staffBus = new StaffBusiness();
+        String contractCode = r.equest.getParameter("code");
+
+        // Get contract detail
+        ContractEntity contractDetail = staffBus.getContractDetail(contractCode);
+
+        if (contractDetail == null) {
+            return new RedirectTo("/error/404");
+        }
+
+        // Get concurrency data
+        Timestamp lastModified = (Timestamp) r.equest.getSession(true).getAttribute(
+                Constants.Session.CONCURRENCY + contractCode);
+
+        if (staffBus.isContractChanged(contractCode, lastModified)) {
+            msg = "Thông tin hợp đồng đã bị sửa đổi trước đó bởi một người khác, vui lòng kiểm tra lại";
+        } else {
+            boolean result = staffBus.rejectCancelContract(contractCode);
+
+            if (result) {
+                msg = "Đã tiếp tục duy trì hợp đồng thành công";
+            } else {
+                msg = "Tiếp tục duy trì hợp đồng thất bại";
+            }
+        }
+        r.equest.setAttribute("CODE", contractDetail.getContractCode());
+        r.equest.setAttribute("MESSAGE", msg);
+        return new JspPage("staff/message.jsp");
+    }
+
     public ResponseObject postCancel(R r) {
         // Get cancel contract information
         CancelContractDto dto = (CancelContractDto) r.ead.entity(CancelContractDto.class, "cancel");
