@@ -258,11 +258,14 @@ public class StaffBusiness {
         // Check contract
         if (contractEntity != null) {
             // Update contract information
-            contractEntity.setCancelDate(dto.getCancelDate());
-            contractEntity.setCancelReason(dto.getCancelReason());
+            if (dto.getCancelDate() != null) {
+                contractEntity.setCancelDate(dto.getCancelDate());
+            }
+            if (dto.getCancelReason() != null) {
+                contractEntity.setCancelReason(dto.getCancelReason());
+            }
             contractEntity.setCancelNote(dto.getCancelNote());
             contractEntity.setStatus(Constants.ContractStatus.CANCELLED);
-
             // Concurrency set value
             contractEntity.setLastModified(DateUtils.currentTimeWithoutNanos());
 
@@ -300,7 +303,8 @@ public class StaffBusiness {
         if (currentDate.equals(dto.getPaidDate())) {
             paymentEntity.setPaidDate(DateUtils.currentTimeWithoutNanos());
         } else {
-            paymentEntity.setPaidDate(dto.getPaidDate());}
+            paymentEntity.setPaidDate(dto.getPaidDate());
+        }
         paymentEntity.setContent(dto.getContent());
         paymentEntity.setAmount(dto.getAmount());
         // Set others payment information

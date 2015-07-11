@@ -268,33 +268,59 @@ public class ContractController extends AuthController {
         return new JspPage("staff/message.jsp");
     }
 
-    public ResponseObject getRejectCancelRequest(R r) {
-        StaffBusiness staffBus = new StaffBusiness();
-        String contractCode = r.equest.getParameter("code");
-
-        // Get contract detail
-        ContractEntity contractDetail = staffBus.getContractDetail(contractCode);
-
-        if (contractDetail == null) {
-            return new RedirectTo("/error/404");
-        }
+    public ResponseObject postHandleCancelRequest(R r) {
+        // Get cancel contract information
+        HandleCancelRequestDto dto = (HandleCancelRequestDto) r.ead.entity(HandleCancelRequestDto.class, "handleRequest");
 
         // Get concurrency data
         Timestamp lastModified = (Timestamp) r.equest.getSession(true).getAttribute(
-                Constants.Session.CONCURRENCY + contractCode);
+                Constants.Session.CONCURRENCY + dto.getContractCode());
+        dto.setLastModified(lastModified);
 
-        if (staffBus.isContractChanged(contractCode, lastModified)) {
-            msg = "Thông tin hợp đồng đã bị sửa đổi trước đó bởi một người khác, vui lòng kiểm tra lại";
-        } else {
-            boolean result = staffBus.rejectCancelContract(contractCode);
+        List errors = r.ead.validate(dto);
 
-            if (result) {
-                msg = "Đã tiếp tục duy trì hợp đồng thành công";
-            } else {
-                msg = "Tiếp tục duy trì hợp đồng thất bại";
-            }
+        // If there is validation errors
+        if (errors.size() > 0) {
+            // Send error messages to JSP page
+            r.equest.setAttribute("validateErrors", errors);
+            // This is a form in a popup, we don't need to display data again since
+            // the popup will not automatically open when the page is reloaded
+            // r.equest.setAttribute("submitted", dto);
+            // Re-call the contract detail page
+            r.equest.setAttribute("contractCode", dto.getContractCode());
+            return getDetail(r);
         }
-        r.equest.setAttribute("CODE", contractDetail.getContractCode());
+        // If the code reached this line that means there is no validation errors
+        // Call to business object
+        StaffBusiness staffBus = new StaffBusiness();
+        boolean result = false;
+        // Decision for this cancel request
+        String decision = dto.getDecision();
+        if (decision.equalsIgnoreCase("cancelContract")) {
+            // Deactivate current card
+            CardBusiness cardBusiness = new CardBusiness();
+            // If there's a card belongs to this contract
+            if (cardBusiness.getCardByContract(dto.getContractCode()) != null) {
+                // deactivate it
+                cardBusiness.deactiveCardByContractCode(dto.getContractCode());
+            }
+            // if not, its mean does not have to do anything
+            CancelContractDto cancelContractDto = new CancelContractDto();
+            cancelContractDto.setContractCode(dto.getContractCode());
+            cancelContractDto.setCancelNote(dto.getCancelNote());
+
+            result = staffBus.cancelContract(cancelContractDto);
+        } else if (decision.equalsIgnoreCase("rejectRequest")) {
+            result = staffBus.rejectCancelContract(dto.getContractCode());
+        }
+
+        if (result) {
+            msg = "Đã giải quyết yêu cầu hủy hợp đồng thành công";
+        } else {
+            msg = "Giải quyết yêu cầu hủy hợp đồng thất bại";
+        }
+        // Set contract code to request scope. Use it in message page.
+        r.equest.setAttribute("CODE", dto.getContractCode());
         r.equest.setAttribute("MESSAGE", msg);
         return new JspPage("staff/message.jsp");
     }
@@ -327,7 +353,7 @@ public class ContractController extends AuthController {
         CardBusiness cardBusiness = new CardBusiness();
         // If there's a card belongs to this contract
         if (cardBusiness.getCardByContract(dto.getContractCode()) != null) {
-            // deactivate is
+            // deactivate it
             cardBusiness.deactiveCardByContractCode(dto.getContractCode());
         }
         // if not, its mean does not have to do anything

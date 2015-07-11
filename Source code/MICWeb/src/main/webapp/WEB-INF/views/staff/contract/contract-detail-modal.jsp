@@ -62,7 +62,7 @@
                     <button type="submit" class="btn btn-success">
                         <i class="fa fa-arrow-right"></i> Thêm thông tin thanh toán
                     </button>
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Đóng</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
                 </div>
             </div>
             <!-- /.modal-content -->
@@ -108,7 +108,7 @@
                     <button type="submit" class="btn btn-success">
                         <i class="fa fa-arrow-right"></i> Hoàn tất thanh toán
                     </button>
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Đóng</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
                 </div>
             </div>
             <!-- /.modal-content -->
@@ -216,7 +216,7 @@
                     <%--/Payment information--%>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Đóng</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
                 </div>
             </div>
             <!-- /.modal-content -->
@@ -284,8 +284,9 @@
                                 </div>
                             </div>
 
-                            <label class="col-sm-3 control-label control-delivery" for="deliveryNewCard">Vận chuyển
-                                thẻ</label>
+                            <label class="col-sm-3 control-label control-delivery" for="deliveryNewCard">
+                                Vận chuyển thẻ
+                            </label>
 
                             <div class="col-sm-1">
                                 <div class="text-value">
@@ -339,7 +340,7 @@
                     <button type="submit" class="btn btn-primary">
                         <i class="fa fa-arrow-right"></i> Gia hạn hợp đồng
                     </button>
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Đóng</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
                 </div>
             </div>
             <!-- /.modal-content -->
@@ -361,34 +362,57 @@
                 </div>
                 <div class="modal-body">
                     <fieldset>
-                        <!-- Selection -->
-                        <div class="menu-item-radio">
-                            <div class="text-center">
-                                <label class="control-label">
-                                    Phương án giải quyết yêu cầu hủy hợp đồng này là?
-                                </label>
+                        <!-- Cancel date -->
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">Thời điểm gởi yêu cầu</label>
+
+                            <div class="col-sm-4">
+                                <div class="text-value">
+                                    <fmt:formatDate value="${contract.cancelDate}" pattern="dd/MM/yyyy"/> lúc
+                                    <fmt:formatDate value="${contract.cancelDate}" type="time"/>
+                                </div>
                             </div>
-                            <label class="radio col-sm-offset-4">
-                                <input value="cancelContract" name="rdbSolution" type="radio">
-                                Hủy hợp đồng này
-                            </label>
-                            <label class="radio col-sm-offset-4">
-                                <input value="rejectRequest" name="rdbSolution" type="radio">
-                                Tiếp tục duy trì hợp đồng
-                            </label>
+                        </div>
+
+                        <!-- Cancel reason -->
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">Lý do hủy hợp đồng</label>
+
+                            <div class="col-sm-7">
+                                <div class="text-value">${contract.cancelReason}</div>
+                            </div>
+                        </div>
+
+                        <!-- Decision -->
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label" for="decision">Quyết định của công ty *</label>
+
+                            <div class="col-sm-5">
+                                <select class="form-control" id="decision" name="handleRequest:decision" required>
+                                    <option value="cancelContract">Hủy hợp đồng này</option>
+                                    <option value="rejectRequest">Tiếp tục duy trì hợp đồng</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Cancel note -->
+                        <div class="form-group control-cancel-note">
+                            <label class="col-sm-4 control-label" for="handleNote">Ghi chú</label>
+
+                            <div class="col-sm-7">
+                                <textarea id="handleNote" name="handleRequest:cancelNote" rows="2" maxlength="2000"
+                                          class="form-control input-md"></textarea>
+                            </div>
                         </div>
                     </fieldset>
                 </div>
                 <div class="modal-footer">
-                    <button id="cancelContract" class="btn btn-primary hide" type="button" data-toggle="modal"
-                            data-target="#cancel-contract-modal">
+                    <input type="hidden" name="handleRequest:contractCode" value="${contract.contractCode}"/>
+                    <input type="hidden" name="action" value="handleCancelRequest"/>
+                    <button type="submit" class="btn btn-primary">
                         <i class="fa fa-check"></i> Xác nhận
                     </button>
-                    <a href="${pageContext.request.contextPath}/staff/contract?action=rejectCancelRequest&code=${contract.contractCode}"
-                       id="rejectRequest" type="button" class="btn btn-primary hide">
-                        <i class="fa fa-check"></i> Xác nhận
-                    </a>
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Đóng</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
                 </div>
             </div>
             <!-- /.modal-content -->
@@ -429,13 +453,8 @@
                             <label class="col-sm-4 control-label" for="cancelReason">Lý do hủy hợp đồng *</label>
 
                             <div class="col-sm-7">
-                                <c:if test="${contract.status eq 'Request cancel'}">
-                                    <input type="hidden" name="cancel:cancelReason" value="${contract.cancelReason}"/>
-                                </c:if>
-                                <input id="cancelReason" name="cancel:cancelReason" class="form-control input-md"
-                                       type="text" required maxlength="250" pattern="^\w.+$"
-                                       title="Vui lòng nhập lý do hủy hợp đồng" placeholder="Ví dụ: Mất xe"
-                                       value="${contract.cancelReason}">
+                                <textarea id="cancelReason" name="cancel:cancelReason" class="form-control input-md"
+                                          rows="2" required maxlength="250">${contract.cancelReason}</textarea>
                             </div>
                         </div>
 
@@ -444,7 +463,7 @@
                             <label class="col-sm-4 control-label" for="cancelNote">Ghi chú</label>
 
                             <div class="col-sm-7">
-                                <textarea id="cancelNote" name="cancel:cancelNote" rows="4" maxlength="2000"
+                                <textarea id="cancelNote" name="cancel:cancelNote" rows="2" maxlength="2000"
                                           class="form-control input-md"></textarea>
                             </div>
                         </div>
@@ -455,7 +474,7 @@
                     <button type="submit" class="btn btn-primary">
                         <i class="fa fa-check"></i> Đồng ý hủy
                     </button>
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Đóng</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
                 </div>
             </div>
             <!-- /.modal-content -->

@@ -84,7 +84,7 @@
                             <br/>
                             <!-- Cancel date -->
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">Thời điểm hủy</label>
+                                <label class="col-sm-3 control-label">Thời điểm gởi yêu cầu</label>
 
                                 <div class="col-sm-4">
                                     <div class="text-value">
@@ -97,9 +97,9 @@
 
                             <!-- Cancel reason -->
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">Lý do hủy</label>
+                                <label class="col-sm-3 control-label">Lý do hủy hợp đồng</label>
 
-                                <div class="col-sm-7">
+                                <div class="col-sm-8">
                                     <div class="text-value">${contract.cancelReason}</div>
                                 </div>
                             </div>
@@ -368,6 +368,7 @@
     // State variables
     var isNewCard = false;
     var isDeliveryNewCard = false;
+    var isCancel = false;
 
     function calcRenewFee() {
         var inputDate = new Date($('#expiredDate').val());
@@ -407,6 +408,14 @@
         }
     }
 
+    function refreshCancelUI() {
+        if (isCancel) {
+            $('.control-cancel-note').slideDown();
+        } else {
+            $('.control-cancel-note').slideUp();
+        }
+    }
+
     $(document).ready(function () {
         $('#expiredDate').val(getCurrentDateInNextYear());
         $('#addPaidDate').val(getCurrentDate());
@@ -432,6 +441,7 @@
             isNewCard = isChecked;
             refreshFees();
         });
+
         $('#deliveryNewCard').click(function () {
             var isChecked = $(this).is(':checked');
             isDeliveryNewCard = isChecked;
@@ -446,19 +456,14 @@
         $('#remain2').text(remainDays);
 
         // Handle request cancel contract
-        $('input[type=radio]').click(function () {
-            if ($('input[name=rdbSolution]:checked').val() == "cancelContract") {
-                $('#cancelContract').removeClass('hide');
-                $('#rejectRequest').addClass('hide');
-            } else if ($('input[name=rdbSolution]:checked').val() == "rejectRequest") {
-                $('#cancelContract').addClass('hide');
-                $('#rejectRequest').removeClass('hide');
+        $('#decision').change(function () {
+            var decision = $('#decision option:selected').val();
+            if (decision == "cancelContract") {
+                isCancel = true;
+            } else {
+                isCancel = false;
             }
-        });
-
-        // Close modal after click button to open another modal
-        $('#cancelContract').click(function () {
-            $('#handle-request-cancel-modal').modal('toggle');
+            refreshCancelUI();
         });
 
         // Handle button renew & cancel, disable or enable
@@ -496,16 +501,12 @@
             document.getElementById("expiredDate").max = getInputDateInNextYear(expDate);
         }
 
-        if (contractStatus.toLowerCase() == 'Request cancel'.toLowerCase()) {
-            $('#btnCancel').removeClass('hide');
-            $('#cancelReason').attr('disabled', true);
-        }
-
         if (contractStatus.toLowerCase() == 'Cancelled'.toLowerCase()) {
             $('button[type=button]').not('#btnRenew, #btnCancel, #btnPayment').addClass('hide');
             $('#remain').text(0);
         }
 
+        // Ajax load data to modal
         $(".payment-id-clicker").on("click", function () {
             var that = this;
             var paymentId = that.getAttribute("payment-id");
@@ -544,6 +545,7 @@
             });
         });
 
+        // Clear modal value after close
         $('#detail-payment-modal').on('hidden.bs.modal', function () {
             $("#payment-id-value").html("");
             $("#contract-code-value").html("");
