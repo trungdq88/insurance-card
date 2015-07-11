@@ -368,14 +368,14 @@
                                     Phương án giải quyết yêu cầu hủy hợp đồng này là?
                                 </label>
                             </div>
-                            <div class="radio col-sm-offset-4">
+                            <label class="radio col-sm-offset-4">
                                 <input value="cancelContract" name="rdbSolution" type="radio">
                                 Hủy hợp đồng này
-                            </div>
-                            <div class="radio col-sm-offset-4">
+                            </label>
+                            <label class="radio col-sm-offset-4">
                                 <input value="rejectRequest" name="rdbSolution" type="radio">
                                 Tiếp tục duy trì hợp đồng
-                            </div>
+                            </label>
                         </div>
                     </fieldset>
                 </div>
