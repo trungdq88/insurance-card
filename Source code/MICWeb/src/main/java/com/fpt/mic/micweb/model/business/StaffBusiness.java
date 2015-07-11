@@ -238,6 +238,8 @@ public class StaffBusiness {
                 contractEntity.setStatus(Constants.ContractStatus.PENDING);
             } else if (card == null) {
                 contractEntity.setStatus(Constants.ContractStatus.NO_CARD);
+            } else if (currentTime.after(contractEntity.getExpiredDate())) {
+                contractEntity.setStatus(Constants.ContractStatus.EXPIRED);
             } else {
                 contractEntity.setStatus(Constants.ContractStatus.READY);
             }
