@@ -33,9 +33,14 @@ public class PersonalController extends AuthController {
         final CustomerBusiness customerBusiness = new CustomerBusiness();
         final String customerCode = ((CustomerEntity) getLoggedInUser()).getCustomerCode();
         CustomerEntity customerEntity = customerBusiness.getCustomer(customerCode);
+
         if (customerEntity == null) {
             return new RedirectTo("/error/404");
         }
+        // Save last_modified value for concurrency check
+        r.equest.getSession(true).setAttribute(
+                Constants.Session.CONCURRENCY + customerEntity.getCustomerCode(),
+                customerEntity.getLastModified());
         r.equest.setAttribute("customer", customerEntity);
         return new JspPage("customer/personal-information.jsp");
 
