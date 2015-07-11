@@ -48,4 +48,21 @@ public class BusinessRulesDao extends GenericDaoJpaImpl<BusinessRulesEntity, Int
         entity.close();
         return rulesEntity;
     }
+
+    public BusinessRulesEntity getNextBusinessRules(int configId){
+        EntityManager entity = factory.createEntityManager();
+        String hql = "SELECT b FROM BusinessRulesEntity b " +
+                        "WHERE b.startDate = (SELECT MIN(bb.startDate) FROM BusinessRulesEntity bb " +
+                                                                "WHERE bb.startDate > (SELECT bbb.startDate FROM BusinessRulesEntity bbb " +
+                                                                                                            "WHERE bbb.id = :id))";
+        Query query = entity.createQuery(hql);
+        query.setParameter("id",configId);
+        BusinessRulesEntity rulesEntity = null;
+        try {
+            rulesEntity =(BusinessRulesEntity) query.getSingleResult();
+        } catch (NoResultException e) {
+        }
+        entity.close();
+        return rulesEntity;
+    }
 }

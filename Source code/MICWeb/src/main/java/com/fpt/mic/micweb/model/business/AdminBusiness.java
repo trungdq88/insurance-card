@@ -8,6 +8,7 @@ import com.fpt.mic.micweb.model.entity.StaffEntity;
 import com.fpt.mic.micweb.model.entity.helper.BusinessRulesEntity;
 import com.fpt.mic.micweb.utils.StringUtils;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 /**
@@ -43,6 +44,16 @@ public class AdminBusiness {
         BusinessRulesDao businessRulesDao = new BusinessRulesDao();
         return businessRulesDao.read(configId);
     }
+
+    public Timestamp getExpiredDate(int configId){
+        BusinessRulesDao businessRulesDao = new BusinessRulesDao();
+        BusinessRulesEntity businessRulesEntity = businessRulesDao.getNextBusinessRules(configId);
+        if (businessRulesEntity == null){
+            return null;
+        }
+        return businessRulesEntity.getStartDate();
+    }
+
     // create new business config rules
     public void createBusinessRules(BusinessRulesDto businessRulesDto){
         BusinessRulesDao businessRulesDao = new BusinessRulesDao();

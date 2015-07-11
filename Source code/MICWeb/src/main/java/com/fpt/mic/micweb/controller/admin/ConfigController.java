@@ -10,6 +10,7 @@ import com.fpt.mic.micweb.model.business.StaffBusiness;
 import com.fpt.mic.micweb.model.dto.form.BusinessRulesDto;
 
 import javax.servlet.annotation.WebServlet;
+import java.sql.Timestamp;
 import java.util.List;
 
 /**
@@ -41,7 +42,10 @@ public class ConfigController extends BasicController{
     public ResponseObject getDetail(R r){
         Integer configId =Integer.parseInt(r.equest.getParameter("configId"));
         AdminBusiness adminBusiness = new AdminBusiness();
+        Timestamp expiredDate = adminBusiness.getExpiredDate(configId);
+        r.equest.setAttribute("expiredDate",expiredDate);
         r.equest.setAttribute("submitted",adminBusiness.getBusinessRules(configId));
+
         return new JspPage("admin/business-config-rules-detail.jsp");
     }
     public ResponseObject postEditConfig(R r){

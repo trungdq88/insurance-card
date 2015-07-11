@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%--
   Created by IntelliJ IDEA.
   User: TriPQM
@@ -19,14 +20,29 @@
             </div>
             <!-- /.col-lg-12 -->
         </div>
-        <div class="text-info">
-            ${info}
-        </div>
+
         <div class="row">
             <div class="col-lg-12">
                 <br/>
                 <form action="${pageContext.request.contextPath}/admin/config"
-                      method="post" class="form-horizontal">
+                      method="get" class="form-horizontal">
+                    <fieldset>
+                        <legend>Thời gian hoạt động của cấu hình</legend>
+                    <label class="col-sm-7 control-label">Thời điểm bắt đầu cấu hình:</label>
+                    <div class="col-sm-3">
+                        <p class="text-value"><fmt:formatDate type="both" dateStyle="short" timeStyle="short" value="${submitted.startDate}" /></p>
+                    </div>
+                    <label class="col-sm-7 control-label">Thời điểm kết thúc cấu hình:</label>
+                    <div class="col-sm-3">
+                        <c:if test="${empty expiredDate}">
+                            <div class="text-value">
+                                <span class="label label-success">Đang có hiệu lực</span>
+                            </div>
+
+                        </c:if>
+                        <p class="text-value"><fmt:formatDate type="both" dateStyle="short" timeStyle="short" value="${expiredDate}" /></p>
+                    </div>
+                    </fieldset>
                     <fieldset>
                         <legend>Các giới hạn ngày theo chính sách của công ty</legend>
 
@@ -168,6 +184,13 @@
                             <p class="text-value"> VNĐ</p>
                         </div>
                     </fieldset>
+                    <br>
+
+                    <div class="pull-left">
+                        <button type="submit" class="btn btn-success">
+                            Quay lại
+                        </button>
+                    </div>
                     <br>
 
 

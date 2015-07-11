@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%--
   Created by IntelliJ IDEA.
   User: TriPQM
@@ -215,7 +216,6 @@
                                 <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Mã cấu hình</th>
                                     <th>Ngày bắt đầu</th>
                                 </tr>
                                 </thead>
@@ -236,11 +236,8 @@
                                                 <td>${(businessRulesPaginator.getCurrentPage(param.page) - 1) * businessRulesPaginator.itemPerPage + counter.count}</td>
                                                 <td>
                                                     <a href="${pageContext.request.contextPath}/admin/config?action=detail&configId=${row.id}">
-                                                            ${row.id}
+                                                        <fmt:formatDate type="both" dateStyle="short" timeStyle="short" value="${row.startDate}" />
                                                     </a>
-                                                </td>
-                                                <td>
-                                                        ${row.startDate}
                                                 </td>
                                             </tr>
                                         </c:forEach>
