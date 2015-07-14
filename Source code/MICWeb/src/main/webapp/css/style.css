@@ -156,3 +156,15 @@ th {
 .form-control::-webkit-input-placeholder {
     color: #717171
 }
+
+body {
+    background-color: #e8e8e8;
+}
+.navbar-default.sidebar {
+    background-color: #e8e8e8;
+    border-color: #e7e7e7;
+}
+.sidebar ul li a.active {
+    background-color: #6897FC;
+    color: white;
+}

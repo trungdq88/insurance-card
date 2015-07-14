@@ -89,3 +89,15 @@
         <!-- /.navbar-static-side -->
     </div>
 </nav>
+
+<script>
+    $(function () {
+        var shouldContinueCheck = true;
+        $($('#side-menu').find('a').get().reverse()).each(function () {
+            if (shouldContinueCheck && location.href.indexOf($(this).attr('href')) > -1) {
+                $(this).addClass('active');
+                shouldContinueCheck = false;
+            }
+        });
+    });
+</script>
