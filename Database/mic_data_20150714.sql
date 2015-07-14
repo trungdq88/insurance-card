@@ -1,10 +1,10 @@
--- MySQL Workbench Forward Engineering
 -- 20150714 Changes:
--- - Remove mic_notification.resolved_staff
+-- Remove mic_notification.resolved_staff
+-- MySQL Workbench Forward Engineering
 
 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
-SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ALLOW_INVALID_DATES';
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 
 -- -----------------------------------------------------
 -- Schema mydb
@@ -161,7 +161,8 @@ COMMENT = 'Accident information';
 -- Table `mic_data`.`mic_business_rules`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mic_data`.`mic_business_rules` (
-  `id` INT(10) UNSIGNED NOT NULL,
+  `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `start_date` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `start_date_before` INT(10) UNSIGNED NOT NULL,
   `start_date_after` INT(10) UNSIGNED NOT NULL,
   `contract_min_term` INT(11) UNSIGNED NOT NULL,
@@ -178,6 +179,7 @@ CREATE TABLE IF NOT EXISTS `mic_data`.`mic_business_rules` (
   `delivery_fee` INT(10) UNSIGNED NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
+AUTO_INCREMENT = 4
 DEFAULT CHARACTER SET = utf8;
 
 
@@ -211,7 +213,7 @@ CREATE TABLE IF NOT EXISTS `mic_data`.`mic_new_card_request` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
-AUTO_INCREMENT = 19
+AUTO_INCREMENT = 21
 DEFAULT CHARACTER SET = utf8
 COMMENT = 'New card request information';
 
@@ -246,7 +248,7 @@ CREATE TABLE IF NOT EXISTS `mic_data`.`mic_card_instance` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
-AUTO_INCREMENT = 22
+AUTO_INCREMENT = 1112
 DEFAULT CHARACTER SET = utf8
 COMMENT = 'Card information';
 
@@ -269,7 +271,6 @@ CREATE TABLE IF NOT EXISTS `mic_data`.`mic_card_access_log` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
-AUTO_INCREMENT = 12
 DEFAULT CHARACTER SET = utf8
 COMMENT = 'Card access log';
 
@@ -349,7 +350,7 @@ CREATE TABLE IF NOT EXISTS `mic_data`.`mic_notification_read` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
-AUTO_INCREMENT = 77
+AUTO_INCREMENT = 42
 DEFAULT CHARACTER SET = utf8;
 
 
@@ -381,7 +382,7 @@ CREATE TABLE IF NOT EXISTS `mic_data`.`mic_payment` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
-AUTO_INCREMENT = 105
+AUTO_INCREMENT = 107
 DEFAULT CHARACTER SET = utf8
 COMMENT = 'Payment information';
 
@@ -404,7 +405,7 @@ CREATE TABLE IF NOT EXISTS `mic_data`.`mic_punishment` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
-AUTO_INCREMENT = 26
+AUTO_INCREMENT = 25
 DEFAULT CHARACTER SET = utf8
 COMMENT = 'Punishment information';
 
