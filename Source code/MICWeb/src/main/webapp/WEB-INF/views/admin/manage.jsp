@@ -7,7 +7,7 @@
   <%@ include file="_shared/navigation.jsp" %>
   <div id="page-wrapper">
     <form action="${pageContext.request.contextPath}/admin/staff"
-          method="post" class="form-horizontal">
+          method="get" class="form-horizontal">
     <div class="row">
       <div class="col-lg-12">
         <h1 class="page-header">
