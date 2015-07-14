@@ -1,7 +1,5 @@
 package com.fpt.mic.micweb.model.entity.helper;
 
-import com.fpt.mic.micweb.model.entity.StaffEntity;
-
 import javax.persistence.*;
 import java.sql.Timestamp;
 
@@ -36,8 +34,6 @@ public class NotificationEntity {
     private String extraData;
     private Timestamp createdDate;
     private Timestamp resolvedDate;
-    private String resolvedStaff;
-    private StaffEntity micStaffByResolvedStaff;
 
     @Id
     @Column(name = "id")
@@ -117,26 +113,6 @@ public class NotificationEntity {
 
     public void setResolvedDate(Timestamp resolvedDate) {
         this.resolvedDate = resolvedDate;
-    }
-
-    @Basic
-    @Column(name = "resolved_staff")
-    public String getResolvedStaff() {
-        return resolvedStaff;
-    }
-
-    public void setResolvedStaff(String resolvedStaff) {
-        this.resolvedStaff = resolvedStaff;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "resolved_staff", referencedColumnName = "staff_code", insertable = false, updatable = false)
-    public StaffEntity getMicStaffByResolvedStaff() {
-        return micStaffByResolvedStaff;
-    }
-
-    public void setMicStaffByResolvedStaff(StaffEntity resolvedStaff) {
-        this.micStaffByResolvedStaff = resolvedStaff;
     }
 
     /**
