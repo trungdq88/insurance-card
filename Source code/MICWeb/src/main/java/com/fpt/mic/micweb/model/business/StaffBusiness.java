@@ -36,7 +36,7 @@ public class StaffBusiness {
         customerEntity.setEmail(dto.getEmail());
         customerEntity.setPhone(dto.getPhone());
         customerEntity.setPersonalId(dto.getPersonalID());
-        // Set lastModifed is current date
+        // Set lastModified is current date
         customerEntity.setLastModified(DateUtils.currentTimeWithoutNanos());
         // get customer password
         String customerPassword = StringUtils.randomString();
