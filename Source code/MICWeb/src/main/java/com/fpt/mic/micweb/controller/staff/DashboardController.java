@@ -4,6 +4,9 @@ import com.fpt.mic.micweb.controller.common.AuthController;
 import com.fpt.mic.micweb.framework.responses.JspPage;
 import com.fpt.mic.micweb.framework.R;
 import com.fpt.mic.micweb.framework.responses.ResponseObject;
+import com.fpt.mic.micweb.model.business.CardBusiness;
+import com.fpt.mic.micweb.model.business.CompensationBusiness;
+import com.fpt.mic.micweb.model.business.ContractBusiness;
 import com.fpt.mic.micweb.model.business.NotificationBusiness;
 import com.fpt.mic.micweb.model.dto.UserDto;
 import com.fpt.mic.micweb.model.entity.StaffEntity;
@@ -28,8 +31,17 @@ public class DashboardController extends AuthController {
         NotificationBusiness notificationBusiness = new NotificationBusiness();
         String staffCode = ((StaffEntity) getLoggedInUser()).getStaffCode();
         List notifications = notificationBusiness.getUnreadNotifications(staffCode, 10);
+        CompensationBusiness compensationBusiness = new CompensationBusiness();
+        CardBusiness cardBusiness = new CardBusiness();
+        ContractBusiness contractBusiness = new ContractBusiness();
 
         BigInteger unreadCount = notificationBusiness.getUnreadNotificationsCount(staffCode);
+
+        r.equest.setAttribute("activeContractCount",contractBusiness.getAllActiveContractCount());
+        r.equest.setAttribute("compensationCount",compensationBusiness.getAllUnresolvedCompensationCount());
+        r.equest.setAttribute("newCardRequestCount",cardBusiness.getAllUnresolvedNewCardRequestCount());
+        r.equest.setAttribute("requestCancelContractCount",contractBusiness.getAllRequestCancelContractCount());
+
         r.equest.setAttribute("notifications", notifications);
         r.equest.setAttribute("unreadCount", unreadCount);
 

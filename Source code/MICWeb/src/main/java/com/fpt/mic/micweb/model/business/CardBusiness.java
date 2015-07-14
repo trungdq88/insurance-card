@@ -215,4 +215,9 @@ public class CardBusiness {
         return "Thẻ không hợp lệ";
     }
 
+    public Long getAllUnresolvedNewCardRequestCount(){
+        NewCardRequestDao newCardRequestDao = new NewCardRequestDao();
+        return newCardRequestDao.getAllUnresolvedNewCardRequestCount();
+    }
+
 }

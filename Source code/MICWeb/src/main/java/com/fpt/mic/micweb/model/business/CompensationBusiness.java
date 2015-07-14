@@ -24,6 +24,10 @@ public class CompensationBusiness {
         CompensationDao compensationDao = new CompensationDao();
         return compensationDao.getAllCompensationCount();
     }
+    public Long getAllUnresolvedCompensationCount() {
+        CompensationDao compensationDao = new CompensationDao();
+        return compensationDao.getAllUnresolvedCompensationCount();
+    }
 
     public CompensationEntity getCompensationDetail(String code) {
         CompensationDao compensationDao = new CompensationDao();

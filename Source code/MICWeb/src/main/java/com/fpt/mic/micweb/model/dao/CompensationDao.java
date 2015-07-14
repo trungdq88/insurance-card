@@ -38,6 +38,16 @@ public class CompensationDao extends IncrementDao<CompensationEntity, String> {
         return singleResult;
     }
 
+    public Long getAllUnresolvedCompensationCount() {
+        EntityManager entityManager = factory.createEntityManager();
+        String hql = "SELECT COUNT(cp) FROM CompensationEntity AS cp " +
+                "WHERE cp.resolveDate = NULL";
+        Query query = entityManager.createQuery(hql);
+        Long singleResult = (Long) query.getSingleResult();
+        entityManager.close();
+        return singleResult;
+    }
+
     public List<CompensationEntity> getCompensationByContractCode(String contractCode) {
         EntityManager entityManager = factory.createEntityManager();
         String hql = "SELECT cp FROM CompensationEntity AS cp " +

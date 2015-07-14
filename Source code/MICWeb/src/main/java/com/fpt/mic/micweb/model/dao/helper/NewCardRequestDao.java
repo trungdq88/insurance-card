@@ -99,7 +99,16 @@ public class NewCardRequestDao extends GenericDaoJpaImpl<NewCardRequestEntity, I
 
     public Long getAllNewCardRequestCount() {
         EntityManager entity = factory.createEntityManager();
-        String hql = "SELECT COUNT(co) FROM NewCardRequestEntity co ORDER BY co.id DESC";
+        String hql = "SELECT COUNT(co) FROM NewCardRequestEntity co";
+        Query query = entity.createQuery(hql);
+        Long result = (Long) query.getSingleResult();
+        entity.close();
+        return result;
+    }
+
+    public Long getAllUnresolvedNewCardRequestCount() {
+        EntityManager entity = factory.createEntityManager();
+        String hql = "SELECT COUNT(co) FROM NewCardRequestEntity co WHERE co.resolveDate = NULL";
         Query query = entity.createQuery(hql);
         Long result = (Long) query.getSingleResult();
         entity.close();

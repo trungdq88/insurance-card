@@ -40,6 +40,29 @@ public class ContractDao extends IncrementDao<ContractEntity, String> {
         return result;
     }
 
+    public Long getAllRequestCancelContractCount() {
+        EntityManager entity = factory.createEntityManager();
+        String hql = "SELECT COUNT(co) FROM ContractEntity co WHERE co.status = :requestCancel";
+        Query query = entity.createQuery(hql);
+        query.setParameter("requestCancel",Constants.ContractStatus.REQUEST_CANCEL);
+        Long result = (Long) query.getSingleResult();
+        entity.close();
+        return result;
+    }
+
+    public Long getAllActiveContractCount() {
+        EntityManager entity = factory.createEntityManager();
+        String hql = "SELECT COUNT(co) FROM ContractEntity co WHERE co.status = :requestCancel" +
+                " OR co.status = :noCard OR co.status = :ready";
+        Query query = entity.createQuery(hql);
+        query.setParameter("requestCancel",Constants.ContractStatus.REQUEST_CANCEL);
+        query.setParameter("noCard",Constants.ContractStatus.NO_CARD);
+        query.setParameter("ready",Constants.ContractStatus.READY);
+        Long result = (Long) query.getSingleResult();
+        entity.close();
+        return result;
+    }
+
     /**
      * Get all contract with offset and count
      * @param offset
