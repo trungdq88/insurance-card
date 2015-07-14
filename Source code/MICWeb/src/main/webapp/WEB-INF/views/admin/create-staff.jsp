@@ -125,6 +125,8 @@
       </div>
     </div>
     <!-- /#wrapper -->
+</div>
+    </div>
 
 
     <%@ include file="_shared/footer.jsp" %>

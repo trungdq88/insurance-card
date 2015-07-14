@@ -47,7 +47,7 @@ public class StaffController extends BasicController{
         return new JspPage("admin/staff-detail.jsp");
 
     }
-    public ResponseObject postViewCreateStaff(R r){
+    public ResponseObject getViewCreateStaff(R r){
         return  new JspPage("admin/create-staff.jsp");
     }
     public ResponseObject postCreateStaff(R r) {
@@ -61,7 +61,7 @@ public class StaffController extends BasicController{
             r.equest.setAttribute("validateErrors", errors);
             // Gửi dữ liệu mà người dùng đã nhập về trang JSP, gán vào biến submitted
             r.equest.setAttribute("submitted", createStaffDto);
-            return postViewCreateStaff(r);
+            return getViewCreateStaff(r);
         }
         AdminBusiness adminBusiness = new AdminBusiness();
         String staffCode = adminBusiness.createStaff(createStaffDto).getStaffCode();
