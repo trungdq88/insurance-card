@@ -74,7 +74,7 @@
 
                             <div class="col-sm-4">
                                 <div class="text-value">
-                                    <a href="detail-customer.html">
+                                    <a href="${pageContext.request.contextPath}/staff/customer?action=detail&code=${compensation.micContractByContractCode.micCustomerByCustomerCode.customerCode}">
                                         <b>${compensation.micContractByContractCode.micCustomerByCustomerCode.name}</b>
                                     </a>
                                 </div>
