@@ -7,7 +7,7 @@
             Lịch sử vi phạm luật ATGT
             <div class="pull-right" style="margin-top: -10px;">
                 <a href="${pageContext.request.contextPath}/staff/punishment?action=create&code=${contract.contractCode}"
-                   class="btn btn-success">
+                   type="button" class="btn btn-success">
                     <i class="fa fa-plus"></i> Thêm vi phạm luật ATGT
                 </a>
             </div>

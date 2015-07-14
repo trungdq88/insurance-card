@@ -276,7 +276,7 @@
                                     Thông tin thanh toán
 
                                     <div class="pull-right" style="margin-top: -10px">
-                                        <button id="btnPayment" type="button" class="btn btn-success hide"
+                                        <button id="btnPayment" type="button" class="btn btn-success"
                                                 data-toggle="modal" data-target="#add-payment-modal">
                                             <i class="fa fa-plus"></i> Thêm thông tin thanh toán
                                         </button>
@@ -339,7 +339,7 @@
                 <br/>
 
                 <div class="text-center">
-                    <a href="${pageContext.request.contextPath}/staff/contract" type="button" class="btn btn-default">
+                    <a href="${pageContext.request.contextPath}/staff/contract" class="btn btn-default">
                         <i class="fa fa-arrow-left"></i> <strong>Danh sách hợp đồng</strong>
                     </a>
                 </div>
@@ -469,7 +469,6 @@
         // Handle button renew & cancel, disable or enable
         if (contractStatus.toLowerCase() == 'Pending'.toLowerCase()) {
             $('#btnCancel').removeClass('hide');
-            $('#btnPayment').removeClass('hide');
         }
 
         if (contractStatus.toLowerCase() == 'No card'.toLowerCase()) {
@@ -477,7 +476,6 @@
                 $('#btnRenew').removeClass('hide');
             }
             $('#btnCancel').removeClass('hide');
-            $('#btnPayment').removeClass('hide');
         }
 
         if (contractStatus.toLowerCase() == 'Ready'.toLowerCase()) {
@@ -485,12 +483,10 @@
                 $('#btnRenew').removeClass('hide');
             }
             $('#btnCancel').removeClass('hide');
-            $('#btnPayment').removeClass('hide');
         }
 
         if (contractStatus.toLowerCase() == 'Expired'.toLowerCase()) {
             $('#btnRenew').removeClass('hide');
-            $('#btnPayment').removeClass('hide');
             $('#startDate').val(getCurrentDate());
             document.getElementById("expiredDate").min = '${config.expiredDateMin}';
             document.getElementById("expiredDate").max = '${config.expiredDateMax}';
@@ -502,7 +498,8 @@
         }
 
         if (contractStatus.toLowerCase() == 'Cancelled'.toLowerCase()) {
-            $('button[type=button]').not('#btnRenew, #btnCancel, #btnPayment').addClass('hide');
+            $('button[type=button]').not('#btnRenew, #btnCancel').addClass('hide');
+            $('a[type=button]').addClass('hide');
             $('#remain').text(0);
         }
 

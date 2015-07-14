@@ -7,7 +7,7 @@
             Lịch sử bồi thường
             <div class="pull-right" style="margin-top: -10px;">
                 <a href="${pageContext.request.contextPath}/staff/compensation?action=create&code=${contract.contractCode}"
-                   class="btn btn-success">
+                   type="button" class="btn btn-success">
                     <i class="fa fa-plus"></i> Gởi yêu cầu bồi thường
                 </a>
             </div>
