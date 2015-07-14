@@ -24,5 +24,6 @@
   <!--   plugins 	 -->
   <script src="${pageContext.request.contextPath}/js/jquery.bootstrap.wizard.js" type="text/javascript"></script>
   <script src="${pageContext.request.contextPath}/js/wizard.js"></script>
+  <script src="${pageContext.request.contextPath}/js/global-utils.js"></script>
 
 </head>

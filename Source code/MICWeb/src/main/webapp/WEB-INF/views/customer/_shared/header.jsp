@@ -27,6 +27,7 @@
     <script src="${pageContext.request.contextPath}/js/jquery.min.js"></script>
     <script src="${pageContext.request.contextPath}/js/moment-with-locales.js"></script>
     <script src="${pageContext.request.contextPath}/js/notification.js"></script>
+    <script src="${pageContext.request.contextPath}/js/global-utils.js"></script>
 
 </head>
 <body data-role="customer">

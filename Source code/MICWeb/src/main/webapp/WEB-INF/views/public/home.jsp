@@ -29,6 +29,7 @@
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/jssor.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/jssor.slider.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/slider.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/global-utils.js"></script>
 
 </head>
 
