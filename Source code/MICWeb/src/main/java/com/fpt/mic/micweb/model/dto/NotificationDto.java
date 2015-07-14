@@ -22,9 +22,7 @@ public class NotificationDto {
     private String extraData;
     private Timestamp createdDate;
     private Timestamp resolvedDate;
-    private String resolvedStaff;
     private Integer isRead;
-    private StaffEntity micStaffByResolvedStaff;
 
     @Id
     @Column(name = "id")
@@ -106,25 +104,8 @@ public class NotificationDto {
         this.resolvedDate = resolvedDate;
     }
 
-    @Basic
-    @Column(name = "resolved_staff")
-    public String getResolvedStaff() {
-        return resolvedStaff;
-    }
 
-    public void setResolvedStaff(String resolvedStaff) {
-        this.resolvedStaff = resolvedStaff;
-    }
 
-    @ManyToOne
-    @JoinColumn(name = "resolved_staff", referencedColumnName = "staff_code", insertable = false, updatable = false)
-    public StaffEntity getMicStaffByResolvedStaff() {
-        return micStaffByResolvedStaff;
-    }
-
-    public void setMicStaffByResolvedStaff(StaffEntity resolvedStaff) {
-        this.micStaffByResolvedStaff = resolvedStaff;
-    }
 
     /**
      * Depend on the notification type, this method will return suitable link
