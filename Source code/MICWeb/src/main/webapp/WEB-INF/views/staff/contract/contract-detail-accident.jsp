@@ -7,7 +7,7 @@
             Lịch sử tai nạn
             <div class="pull-right" style="margin-top: -10px;">
                 <a href="${pageContext.request.contextPath}/staff/accident?action=create&code=${contract.contractCode}"
-                   class="btn btn-success">
+                   type="button" class="btn btn-success">
                     <i class="fa fa-plus"></i> Thông báo tai nạn mới
                 </a>
             </div>

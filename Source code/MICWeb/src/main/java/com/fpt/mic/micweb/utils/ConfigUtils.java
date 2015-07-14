@@ -1,5 +1,7 @@
 package com.fpt.mic.micweb.utils;
 
+import com.fpt.mic.micweb.model.dao.helper.BusinessRulesDao;
+import com.fpt.mic.micweb.model.entity.helper.BusinessRulesEntity;
 import org.joda.time.LocalDate;
 
 /**
@@ -21,8 +23,11 @@ public class ConfigUtils {
     public ConfigUtils() {
     }
 
+    BusinessRulesDao dao = new BusinessRulesDao();
+    BusinessRulesEntity entity = dao.getLastActiveBusinessRule();
+
     public LocalDate getStartDateMin() {
-        return startDateMin = new LocalDate().minusDays(Constants.StaffConfiguration.START_DATE_BEFORE);
+        return startDateMin = new LocalDate().minusDays(entity.getStartDateBefore());
     }
 
     public void setStartDateMin(LocalDate startDateMin) {
@@ -30,7 +35,7 @@ public class ConfigUtils {
     }
 
     public LocalDate getStartDateMax() {
-        return startDateMax = new LocalDate().plusDays(Constants.StaffConfiguration.START_DATE_AFTER);
+        return startDateMax = new LocalDate().plusDays(entity.getStartDateAfter());
     }
 
     public void setStartDateMax(LocalDate startDateMax) {
@@ -38,7 +43,7 @@ public class ConfigUtils {
     }
 
     public LocalDate getExpiredDateMin() {
-        return expiredDateMin = new LocalDate().plusDays(Constants.StaffConfiguration.EXPIRED_DATE_AFTER);
+        return expiredDateMin = new LocalDate().plusMonths(entity.getContractMinTerm());
     }
 
     public void setExpiredDateMin(LocalDate expiredDateMin) {
@@ -46,7 +51,7 @@ public class ConfigUtils {
     }
 
     public LocalDate getExpiredDateMax() {
-        return expiredDateMax = new LocalDate().plusYears(Constants.StaffConfiguration.CONTRACT_DEFAULT_TERM);
+        return expiredDateMax = new LocalDate().plusMonths(entity.getContractDefaultTerm());
     }
 
     public void setExpiredDateMax(LocalDate expiredDateMax) {
@@ -54,7 +59,7 @@ public class ConfigUtils {
     }
 
     public LocalDate getPaidDateMin() {
-        return paidDateMin = new LocalDate().minusDays(Constants.StaffConfiguration.PAID_DATE_BEFORE);
+        return paidDateMin = new LocalDate().minusDays(entity.getPaidDaterBefore());
     }
 
     public void setPaidDateMin(LocalDate paidDateMin) {
@@ -62,7 +67,7 @@ public class ConfigUtils {
     }
 
     public LocalDate getPaidDateMax() {
-        return paidDateMax = new LocalDate().plusDays(Constants.StaffConfiguration.PAID_DATE_AFTER);
+        return paidDateMax = new LocalDate().plusDays(entity.getPaidDateAfter());
     }
 
     public void setPaidDateMax(LocalDate paidDateMax) {
@@ -70,7 +75,7 @@ public class ConfigUtils {
     }
 
     public LocalDate getCancelDateMin() {
-        return cancelDateMin = new LocalDate().minusDays(Constants.StaffConfiguration.CANCEL_DATE_BEFORE);
+        return cancelDateMin = new LocalDate().minusDays(entity.getCancelDateBefore());
     }
 
     public void setCancelDateMin(LocalDate cancelDateMin) {
@@ -78,7 +83,7 @@ public class ConfigUtils {
     }
 
     public LocalDate getCancelDateMax() {
-        return cancelDateMax = new LocalDate().plusDays(Constants.StaffConfiguration.CANCEL_DATE_AFTER);
+        return cancelDateMax = new LocalDate().plusDays(entity.getCancelDateAfter());
     }
 
     public void setCancelDateMax(LocalDate cancelDateMax) {
@@ -86,7 +91,7 @@ public class ConfigUtils {
     }
 
     public float getNewCardFee() {
-        return newCardFee = Constants.PaymentFee.NEW_CARD_REQUEST_FEE;
+        return newCardFee = entity.getNewCardRequestFee();
     }
 
     public void setNewCardFee(float newCardFee) {
@@ -94,7 +99,7 @@ public class ConfigUtils {
     }
 
     public float getDeliveryFee() {
-        return deliveryFee = Constants.PaymentFee.DELIVERY_FEE;
+        return deliveryFee = entity.getDeliveryFee();
     }
 
     public void setDeliveryFee(float deliveryFee) {
