@@ -15,7 +15,7 @@ public class Paginator {
     /**
      * Number of item displayed per page
      */
-    int itemPerPage = 1;
+    int itemPerPage = 10;
 
 
     /**
