@@ -1,10 +1,15 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ include file="../_shared/header.jsp"%>
+<%@ include file="../_shared/header.jsp" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <div id="wrapper">
 
-    <%@ include file="../_shared/navigation.jsp" %>
+    <c:set var="contract" value="${requestScope.CONTRACT}" scope="request"/>
+    <c:set var="customer" value="${requestScope.CUSTOMER}" scope="request"/>
+    <c:set var="type" value="${requestScope.TYPE}"/>
 
+    <%@ include file="../_shared/navigation.jsp" %>
     <div id="page-wrapper">
         <div class="row">
             <div class="col-lg-12">
@@ -19,356 +24,117 @@
                     Nhấn nút <b>Hoàn tất hợp đồng</b> ở cuối trang để hoàn tất hợp đồng
                 </div>
 
-                <form class="form-horizontal">
-                    <fieldset>
-                        <legend>Thông tin khách hàng</legend>
-
-                        <!-- Text input-->
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label">Tên khách hàng</label>
-
-                            <div class="col-sm-6">
-                                <div class="text-value">
-                                    Đinh Quang Trung
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Text input-->
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label">Địa chỉ</label>
-
-                            <div class="col-sm-6">
-                                <div class="text-value">
-                                    Phường Tân Chánh Hiệp, Q.12, TPHCM
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Text input-->
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label">Email</label>
-
-                            <div class="col-sm-6">
-                                <div class="text-value">
-                                    trungdq88@gmail.com
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Text input-->
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label">Số điện thoại</label>
-
-                            <div class="col-sm-6">
-                                <div class="text-value">
-                                    0987.654.321
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Text input-->
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label">Số CMND / Hộ chiếu</label>
-
-                            <div class="col-sm-6">
-                                <div class="text-value">
-                                    191919911
-                                </div>
-                            </div>
-                        </div>
-                    </fieldset>
-
-                    <br/>
-                    <br/>
-                    <fieldset>
-                        <legend>Thông tin về xe cơ giới</legend>
-                        <!-- Text input-->
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label">Biển số đăng ký</label>
-
-                            <div class="col-sm-6">
-                                <div class="text-value">
-                                    93H3-6868
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Text input-->
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label">Nhãn hiệu</label>
-
-                            <div class="col-sm-6">
-                                <div class="text-value">
-                                    YAHAMA
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Text input-->
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label">Loại xe</label>
-
-                            <div class="col-sm-6">
-                                <div class="text-value">
-                                    Xe máy YAMAHA Wave Alpha
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Text input-->
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label">Dung tích</label>
-
-                            <div class="col-sm-6">
-                                <div class="text-value">
-                                    150cc
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Text input-->
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label">Màu sơn</label>
-
-                            <div class="col-sm-6">
-                                <div class="text-value">
-                                    Đỏ
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Text input-->
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label">Năm sản xuất</label>
-
-                            <div class="col-sm-6">
-                                <div class="text-value">
-                                    2000
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Text input-->
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label">Số máy</label>
-
-                            <div class="col-sm-6">
-                                <div class="text-value">
-                                    1204852
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Text input-->
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label">Số khung</label>
-
-                            <div class="col-sm-6">
-                                <div class="text-value">
-                                    8452952
-                                </div>
-                            </div>
-                        </div>
-
-
-                        <!-- Text input-->
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label">Trong tải</label>
-
-                            <div class="col-sm-6">
-                                <div class="text-value">
-                                    1,5 tấn
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Text input-->
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label">Số chỗ ngồi</label>
-
-                            <div class="col-sm-6">
-                                <div class="text-value">
-                                    3
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Text input-->
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label">Mục đích sử dụng xe</label>
-
-                            <div class="col-sm-6">
-                                <div class="text-value">
-                                    Chở hàng
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Text input-->
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label">Ảnh chụp cà-vẹt xe</label>
-
-                            <div class="col-sm-6">
-                                <img src=""/>
-                            </div>
-                        </div>
-                    </fieldset>
-
-                    <br/>
+                <form action="${pageContext.request.contextPath}/staff/contract" id="reviewForm"
+                      method="post" class="form-horizontal">
+                    <jsp:include page="contract-detail-customer.jsp" flush="true"/>
                     <br/>
                     <fieldset>
                         <legend>Thông tin về dịch vụ bảo hiểm</legend>
-
-                        <!-- Text input-->
+                        <!-- Contract type -->
                         <div class="form-group">
-                            <label class="col-sm-4 control-label">Loại hình bảo hiểm</label>
+                            <label class="col-sm-3 control-label">Loại hợp đồng</label>
 
-                            <div class="col-sm-6">
+                            <div class="col-sm-7">
+                                <div class="text-value">${type.name}</div>
+                            </div>
+                        </div>
+                        <!-- Start date -->
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Bắt đầu có hiệu lực từ</label>
+
+                            <div class="col-sm-5">
                                 <div class="text-value">
-                                    Bảo hiểm bắt buộc trách nhiệm dân sự của chủ xe cơ giới
+                                    <fmt:formatDate value="${contract.startDate}" pattern="dd/MM/yyyy"/> lúc
+                                    <fmt:formatDate value="${contract.startDate}" type="time"/>
                                 </div>
                             </div>
                         </div>
-                        <!-- Text input-->
+                        <!-- Expired date -->
                         <div class="form-group">
-                            <label class="col-sm-4 control-label">Thời điểm có hiệu lực</label>
+                            <label class="col-sm-3 control-label">Thời điểm hết hiệu lực</label>
 
-                            <div class="col-sm-6">
+                            <div class="col-sm-5">
                                 <div class="text-value">
-                                    12/02/2015 lúc 12:00:00
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Text input-->
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label">Thời hạn hợp đồng</label>
-
-                            <div class="col-sm-6">
-                                <div class="text-value">
-                                    1 năm
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Text input-->
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label">Thời điểm hết hiệu lực</label>
-
-                            <div class="col-sm-6">
-                                <div class="text-value">
-                                    12/02/2016 lúc 12:00:00
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Text input-->
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label">Phí bảo hiểm (VNĐ)</label>
-
-                            <div class="col-sm-6">
-                                <div class="text-value">
-                                    600.000
+                                    <fmt:formatDate value="${contract.expiredDate}" pattern="dd/MM/yyyy"/> lúc
+                                    <fmt:formatDate value="${contract.expiredDate}" type="time"/>
                                 </div>
                             </div>
                         </div>
                     </fieldset>
-
-                    <br/>
+                    <jsp:include page="contract-detail-vehicle.jsp" flush="true"/>
                     <br/>
                     <fieldset>
                         <legend>Thông tin thanh toán</legend>
-
-                        <!-- Text input-->
                         <div class="form-group">
-                            <label class="col-sm-4 control-label">Số tiền phí đã trả</label>
+                            <label class="col-sm-3 control-label">Số tiền phí đã trả</label>
 
-                            <div class="col-sm-6">
+                            <div class="col-sm-3">
                                 <div class="text-value">
-                                    600.000
+                                    <fmt:setLocale value="vi_VN"/>
+                                    <fmt:formatNumber value="${contract.amount}" type="currency"
+                                                      maxFractionDigits="0"/>
+                                </div>
+                            </div>
+
+                            <label class="col-sm-2 control-label">Ngày nộp phí</label>
+
+                            <div class="col-sm-3">
+                                <div class="text-value">
+                                    <fmt:formatDate value="${contract.paidDate}" pattern="dd/MM/yyyy"/>
                                 </div>
                             </div>
                         </div>
-                        <!-- Text input-->
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label">Ngày nộp phí</label>
-
-                            <div class="col-sm-6">
-                                <div class="text-value">
-                                    11/06/2015
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Text input-->
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label">Ghi chú</label>
-
-                            <div class="col-sm-6">
-                                <div class="text-value">
-
-                                </div>
-                            </div>
-                        </div>
-
                     </fieldset>
-
                     <br/>
-                    <br/>
-                    <fieldset>
-                        <legend>Thông tin khác</legend>
 
-                        <!-- Text input-->
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label">Ngày cấp đơn</label>
+                    <%-- Set submitted dto to hidden input --%>
+                    <input type="hidden" name="contract:customerCode" value="${contract.customerCode}"/>
+                    <input type="hidden" name="contract:contractTypeId" value="${contract.contractTypeId}"/>
+                    <input type="hidden" name="contract:startDate" value="${contract.startDate}"/>
+                    <input type="hidden" name="contract:expiredDate" value="${contract.expiredDate}"/>
+                    <input type="hidden" name="contract:contractFee" value="${contract.contractFee}"/>
+                    <input type="hidden" name="contract:amount" value="${contract.amount}"/>
+                    <input type="hidden" name="contract:plate" value="${contract.plate}"/>
+                    <input type="hidden" name="contract:brand" value="${contract.brand}"/>
+                    <input type="hidden" name="contract:chassis" value="${contract.chassis}"/>
+                    <input type="hidden" name="contract:engine" value="${contract.engine}"/>
+                    <input type="hidden" name="contract:capacity" value="${contract.capacity}"/>
+                    <input type="hidden" name="contract:color" value="${contract.color}"/>
+                    <input type="hidden" name="contract:modelCode" value="${contract.modelCode}"/>
+                    <input type="hidden" name="contract:vehicleType" value="${contract.vehicleType}"/>
+                    <input type="hidden" name="contract:yearOfManufacture" value="${contract.yearOfManufacture}"/>
+                    <input type="hidden" name="contract:weight" value="${contract.weight}"/>
+                    <input type="hidden" name="contract:seatCapacity" value="${contract.seatCapacity}"/>
+                    <input type="hidden" name="contract:paidDate" value="${contract.paidDate}"/>
 
-                            <div class="col-sm-6">
-                                <div class="text-value">
-                                    11/06/2015
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Text input-->
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label">Nơi cấp đơn</label>
-
-                            <div class="col-sm-6">
-                                <div class="text-value">
-                                    TP Hồ Chí Minh
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Text input-->
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label">Người cấp đơn</label>
-
-                            <div class="col-sm-6">
-                                <div class="text-value">
-                                    Nguyễn Văn A
-                                </div>
-                            </div>
-                        </div>
-
-                    </fieldset>
+                    <div class="text-center">
+                        <input type="hidden" id="action-value" name="action" value="returnToEdit" />
+                        <button type="button" class="btn btn-default submitButtonOnClick" value="returnToEdit">
+                            <i class="fa fa-arrow-left"></i> Quay lại chỉnh sửa
+                        </button>
+                        <br/> <br/>
+                        <button type="button" class="btn btn-success submitButtonOnClick" value="create">
+                            <i class="fa fa-arrow-right"></i> Hoàn tất hợp đồng
+                        </button>
+                    </div>
+                    <br/> <br/>
                 </form>
-                <br/>
-
-                <div class="text-center">
-
-                    <a href="${pageContext.request.contextPath}/staff/contract?action=create" type="button" class="btn btn-default">
-                        <i class="fa fa-arrow-left"></i>
-                        Quay lại chỉnh sửa
-                    </a>
-                    <a href="${pageContext.request.contextPath}/staff/contract?action=success" type="button" class="btn btn-success">
-                        <i class="fa fa-check"></i>
-                        Hoàn tất hợp đồng
-                    </a>
-                </div>
-                <br/>
-                <br/>
-                <br/>
-                <br/>
-                <br/>
-                <br/>
-                <br/>
-                <br/>
-                <br/>
-                <br/>
-                <br/>
-                <br/>
             </div>
         </div>
     </div>
 </div>
 <!-- /#wrapper -->
 
-<%@ include file="../_shared/footer.jsp"%>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".editBtn").addClass('hide');
+
+        $(".submitButtonOnClick").on("click", function(){
+            var valueAction = this.getAttribute("value");
+            $("#action-value").val(valueAction);
+            $("#reviewForm").submit();
+        });
+    });
+</script>
+
+<%@ include file="../_shared/footer.jsp" %>

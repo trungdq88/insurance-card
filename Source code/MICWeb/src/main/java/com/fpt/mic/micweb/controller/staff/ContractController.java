@@ -145,8 +145,37 @@ public class ContractController extends AuthController {
         return new JspPage("staff/contract/create-contract.jsp");
     }
 
-    public ResponseObject getPreview(R r) {
+    public ResponseObject postPreview(R r) {
+        // Get contract information
+        CreateContractDto dto = (CreateContractDto) r.ead.entity(CreateContractDto.class, "contract");
+        List errors = r.ead.validate(dto);
+
+        // If there is validation errors
+        if (errors.size() > 0) {
+            // Send error messages to JSP page
+            r.equest.setAttribute("validateErrors", errors);
+            // Send submitted data to JSP page
+            r.equest.setAttribute("submitted", dto);
+            // Re-call the create page
+            return getCreate(r);
+        }
+        // If the code reached this line that means there is no validation errors
+
+        // Get customer detail
+        StaffBusiness staffBusiness = new StaffBusiness();
+        CustomerEntity customerDetail = staffBusiness.getCustomerDetail(dto.getCustomerCode());
+        ContractTypeEntity contractType = staffBusiness.getContractType(dto.getContractTypeId());
+        r.equest.setAttribute("CONTRACT", dto);
+        r.equest.setAttribute("CUSTOMER", customerDetail);
+        r.equest.setAttribute("TYPE", contractType);
         return new JspPage("staff/contract/create-contract-preview.jsp");
+    }
+    public ResponseObject postReturnToEdit(R r) {
+        // Get contract information
+        CreateContractDto dto = (CreateContractDto) r.ead.entity(CreateContractDto.class, "contract");
+        r.equest.setAttribute("submitted", dto);
+        // Re-call the create page
+        return getCreate(r);
     }
 
     public ResponseObject getSuccess(R r) {
@@ -167,7 +196,6 @@ public class ContractController extends AuthController {
             // Re-call the create page
             return getCreate(r);
         }
-
         // If the code reached this line that means there is no validation errors
 
         // Call to business object
