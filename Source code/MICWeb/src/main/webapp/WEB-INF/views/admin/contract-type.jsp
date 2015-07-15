@@ -28,7 +28,18 @@
       <!-- /.col-lg-12 -->
     </div>
     <div class="text-info">
-      ${param.info}
+      <c:if test="${param.info eq 1}">
+        Xóa thành công
+      </c:if>
+      <c:if test="${param.info eq 0}">
+        Không thể xóa vì đang có hợp đồng với loại hợp đồng này
+      </c:if>
+      <c:if test="${param.info eq 2}">
+        Thêm loại hợp đồng thành công
+      </c:if>
+      <c:if test="${param.info eq 3}">
+        Có lỗi xảy ra. Xin thử lại
+      </c:if>
     </div>
     <div class="row">
       <div class="col-lg-12">
@@ -46,29 +57,35 @@
               method="post" class="form-horizontal">
           <fieldset>
             <legend>Thêm loại hợp đồng mới</legend>
+            <div>
+              <label class="col-sm-4 control-label">Tên loại hợp đồng</label>
 
-            <label class="col-sm-4 control-label">Tên loại hợp đồng</label>
+              <div class="col-sm-7">
+                <p class="text-value"><input name="contractType:name" type="text" class="form-control input-md" required
+                      placeholder="Ví dụ: Xe trên 50cc có BH cho người trên xe" value="${submitted.name}"></p>
 
-            <div class="col-sm-7">
-              <input name="contractType:name" type="text" class="form-control input-md" required
-                      value="${submitted.name}">
-
+              </div>
             </div>
-            <label class="col-sm-4 control-label">Miêu tả</label>
+            <div>
+              <label class="col-sm-4 control-label">Miêu tả</label>
 
-            <div class="col-sm-7">
-              <textarea name="contractType:description" cols="2" class="form-control input-md"
-                     required>${submitted.description}</textarea>
+              <div class="col-sm-7">
+                <p class="text-value"><textarea name="contractType:description" cols="2" class="form-control input-md"
+                       placeholder="Ví dụ: Bảo hiểm cho xe trên 50cc và có BH cho người ngồi trên xe" required>${submitted.description}</textarea></p>
 
+              </div>
             </div>
-            <label class="col-sm-4 control-label">Phí hằng năm(VNĐ)</label>
+            <div>
+              <label class="col-sm-4 control-label">Phí hằng năm (VNĐ)</label>
 
-            <div class="col-sm-7">
-              <input name="contractType:pricePerYear" type="number" class="form-control input-md"
-                     required min="0" max="1000000000"
-                     value="${submitted.pricePerYear}">
+              <div class="col-sm-7">
+                <p class="text-value"><input name="contractType:pricePerYear" type="number" class="form-control input-md"
+                       required min="0" max="1000000000" placeholder="Ví dụ: 86000"
+                       value="${submitted.pricePerYear}"></p>
 
+              </div>
             </div>
+
           </fieldset>
           <br>
 
@@ -118,14 +135,25 @@
                           <fmt:formatNumber
                                   value="${row.pricePerYear}"
                                   type="currency"
+                                  currencyCode="VND"
                                   maxFractionDigits="0"/>
                         </td>
                         <td>
-                          <a href="${pageContext.request.contextPath}/admin/contractType?action=deleteContractType&contractTypeId=${row.id}&page=${param.page}"
-                             class="btn btn-danger">
-                            <i class="fa fa-trash"></i>
-                            Xóa
-                          </a>
+
+                          <button  contractTypeId ="${row.id}" page ="${param.page}" contractName ="${row.name}"
+                                   type="button" class="btn btn-danger"
+                                   data-toggle="modal" data-target="#delete-contract-type" onclick="{
+                                      var contractTypeId = $(this).attr('contractTypeId');
+                                      var page = $(this).attr('page');
+                                      var contractName = $(this).attr('contractName');
+                                      $('#contractTypeId').val(contractTypeId);
+                                      $('#page').val(page);
+                                      $('#contractTypeId1').text(contractTypeId);
+                                      $('#page1').text(page);
+                                      $('#contractName').text(contractName);
+                                   }">
+                            <i class="fa fa-trash"></i> Xóa
+                          </button>
                         </td>
                       </tr>
                     </c:forEach>
@@ -168,6 +196,5 @@
     </div>
   </div>
   <!-- /#wrapper -->
-
-
+    <jsp:include page="contract-type-modal.jsp" flush="true"/>
   <%@ include file="_shared/footer.jsp" %>
