@@ -3,7 +3,7 @@
 <fieldset>
     <legend>Thông tin khách hàng
         <div class="pull-right" style="margin-top: -5px;">
-            <button type="button" class="btn btn-xs btn-primary"
+            <button type="button" class="btn btn-xs btn-primary editBtn"
                     data-toggle="modal" data-target="#edit-contract-modal">
                 <i class="fa fa-pencil"></i> Chỉnh sửa
             </button>
@@ -28,9 +28,7 @@
         <label class="col-sm-3 control-label">Địa chỉ</label>
 
         <div class="col-sm-8">
-            <div class="text-value">
-                ${customer.address}
-            </div>
+            <div class="text-value">${customer.address}</div>
         </div>
     </div>
 
@@ -39,9 +37,7 @@
         <label class="col-sm-3 control-label">Email</label>
 
         <div class="col-sm-8">
-            <div class="text-value">
-                ${customer.email}
-            </div>
+            <div class="text-value">${customer.email}</div>
         </div>
     </div>
 
@@ -50,9 +46,7 @@
         <label class="col-sm-3 control-label">Số điện thoại</label>
 
         <div class="col-sm-2">
-            <div class="text-value">
-                ${customer.phone}
-            </div>
+            <div class="text-value">${customer.phone}</div>
         </div>
 
         <label class="col-sm-3 control-label">Số CMND / Hộ chiếu</label>
@@ -63,9 +57,7 @@
                     <c:when test="${empty customer.personalId}">
                         <span class="empty-value">Không có</span>
                     </c:when>
-                    <c:otherwise>
-                        ${customer.personalId}
-                    </c:otherwise>
+                    <c:otherwise>${customer.personalId}</c:otherwise>
                 </c:choose>
             </div>
         </div>

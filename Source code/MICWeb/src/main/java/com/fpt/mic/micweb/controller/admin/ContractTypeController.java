@@ -51,22 +51,22 @@ public class ContractTypeController extends BasicController {
         }
         ContractBusiness contractBusiness = new ContractBusiness();
         if (contractBusiness.addContractType(contractTypeDto)){
-            return new RedirectTo("/admin/contractType?info=Thêm loại hợp đồng thành công");
+            return new RedirectTo("/admin/contractType?info=2");
         } else {
-            return new RedirectTo("/admin/contractType?info=Có lỗi xảy ra. Xin thử lại");
+            return new RedirectTo("/admin/contractType?info=3");
         }
         //return new RedirectTo("/admin/contractType?info=Thêm loại hợp đồng thành công");*
     }
 
-    public ResponseObject getDeleteContractType(R r){
+    public ResponseObject postDeleteContractType(R r){
         ContractBusiness contractBusiness = new ContractBusiness();
         int contractTypeId = Integer.parseInt(r.equest.getParameter("contractTypeId"));
         // check if contractTypeId is used
         if (contractBusiness.getCountOfContractByContractType(contractTypeId) == 0){
             contractBusiness.deleteContractType(contractTypeId);
-            return new RedirectTo("/admin/contractType?action=view&info=Xóa thành công&page="+r.equest.getParameter("page"));
+            return new RedirectTo("/admin/contractType?action=view&info=1&page="+r.equest.getParameter("page"));
         } else {
-            return new RedirectTo("/admin/contractType?action=view&info=Không thể xóa vì đang có hợp đồng với loại hợp đồng này&page="+r.equest.getParameter("page"));
+            return new RedirectTo("/admin/contractType?action=view&info=0&page="+r.equest.getParameter("page"));
         }
 
     }
