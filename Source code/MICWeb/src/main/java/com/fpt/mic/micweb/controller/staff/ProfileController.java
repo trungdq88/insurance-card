@@ -5,6 +5,7 @@ import com.fpt.mic.micweb.framework.R;
 import com.fpt.mic.micweb.framework.responses.JspPage;
 import com.fpt.mic.micweb.framework.responses.RedirectTo;
 import com.fpt.mic.micweb.framework.responses.ResponseObject;
+import com.fpt.mic.micweb.model.business.StaffBusiness;
 import com.fpt.mic.micweb.model.dto.UserDto;
 import com.fpt.mic.micweb.model.dto.form.EditStaffProfileDto;
 import com.fpt.mic.micweb.model.entity.StaffEntity;
@@ -45,7 +46,13 @@ public class ProfileController extends AuthController {
             r.equest.setAttribute("submitted", editStaffProfileDto);
             return new JspPage("staff/profile-edit.jsp");
         }
+        StaffBusiness staffBusiness= new StaffBusiness();
+        if (staffBusiness.updateStaffProfile(editStaffProfileDto, ((StaffEntity) getLoggedInUser()).getStaffCode())){
+            return new RedirectTo("/staff/profile?action=view&info=success");
+        }
+        else {
+            return new RedirectTo("/staff/profile?action=view&info=fail");
+        }
 
-        return new RedirectTo("/staff/profile");
     }
 }

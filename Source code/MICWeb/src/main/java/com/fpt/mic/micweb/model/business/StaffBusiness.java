@@ -397,4 +397,17 @@ public class StaffBusiness {
         ContractEntity contractEntity = contractDao.read(contractCode);
         return contractEntity != null && !contractEntity.getLastModified().equals(lastModified);
     }
+
+    public boolean updateStaffProfile(EditStaffProfileDto editStaffProfileDto, String staffCode){
+        StaffDao staffDao = new StaffDao();
+        StaffEntity staffEntity = staffDao.read(staffCode);
+        if (staffEntity != null){
+            staffEntity.setEmail(editStaffProfileDto.getEmail());
+            staffEntity.setName(editStaffProfileDto.getName());
+            staffEntity.setPhone(editStaffProfileDto.getPhone());
+            staffDao.update(staffEntity);
+            return true;
+        }
+        return false;
+    }
 }
