@@ -89,7 +89,7 @@
                   <th>Tên</th>
                   <th>Miêu tả</th>
                   <th>Phí hằng năm (VNĐ)</th>
-                  <%--<th></th>--%>
+                  <th></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -120,13 +120,13 @@
                                   type="currency"
                                   maxFractionDigits="0"/>
                         </td>
-                        <%--<td>--%>
-                          <%--<a href="${pageContext.request.contextPath}/admin/contractType?action=deleteContractType&contractTypeId=${row.id}&page=${param.page}"--%>
-                             <%--class="btn btn-danger">--%>
-                            <%--<i class="fa fa-trash"></i>--%>
-                            <%--Xóa--%>
-                          <%--</a>--%>
-                        <%--</td>--%>
+                        <td>
+                          <a href="${pageContext.request.contextPath}/admin/contractType?action=deleteContractType&contractTypeId=${row.id}&page=${param.page}"
+                             class="btn btn-danger">
+                            <i class="fa fa-trash"></i>
+                            Xóa
+                          </a>
+                        </td>
                       </tr>
                     </c:forEach>
                   </c:otherwise>

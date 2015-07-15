@@ -40,6 +40,16 @@ public class ContractDao extends IncrementDao<ContractEntity, String> {
         return result;
     }
 
+    public Long getCountOfContractByContractType(int contractTypeId) {
+        EntityManager entity = factory.createEntityManager();
+        String hql = "SELECT COUNT(co) FROM ContractEntity co WHERE co.contractTypeId = :contractTypeId";
+        Query query = entity.createQuery(hql);
+        query.setParameter("contractTypeId",contractTypeId);
+        Long result = (Long) query.getSingleResult();
+        entity.close();
+        return result;
+    }
+
     public Long getAllRequestCancelContractCount() {
         EntityManager entity = factory.createEntityManager();
         String hql = "SELECT COUNT(co) FROM ContractEntity co WHERE co.status = :requestCancel";

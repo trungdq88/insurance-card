@@ -69,6 +69,11 @@ public class ContractBusiness {
         return contractDao.getAllActiveContractCount();
     }
 
+    public Long getCountOfContractByContractType(int contractTypeId){
+        ContractDao contractDao = new ContractDao();
+        return contractDao.getCountOfContractByContractType(contractTypeId);
+    }
+
     public Long searchContractCount(String keyword) {
         ContractDao contractDao = new ContractDao();
         return contractDao.getContractByCodeOrCustomerNameCount(keyword);

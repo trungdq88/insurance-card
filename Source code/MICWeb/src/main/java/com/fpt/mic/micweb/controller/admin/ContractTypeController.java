@@ -61,7 +61,13 @@ public class ContractTypeController extends BasicController {
     public ResponseObject getDeleteContractType(R r){
         ContractBusiness contractBusiness = new ContractBusiness();
         int contractTypeId = Integer.parseInt(r.equest.getParameter("contractTypeId"));
-        contractBusiness.deleteContractType(contractTypeId);
-        return new RedirectTo("/admin/contractType?action=view&page="+r.equest.getParameter("page"));
+        // check if contractTypeId is used
+        if (contractBusiness.getCountOfContractByContractType(contractTypeId) == 0){
+            contractBusiness.deleteContractType(contractTypeId);
+            return new RedirectTo("/admin/contractType?action=view&info=Xóa thành công&page="+r.equest.getParameter("page"));
+        } else {
+            return new RedirectTo("/admin/contractType?action=view&info=Không thể xóa vì đang có hợp đồng với loại hợp đồng này&page="+r.equest.getParameter("page"));
+        }
+
     }
 }
