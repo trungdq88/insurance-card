@@ -46,9 +46,10 @@ public class CustomerBusiness {
      *
      * @return list accident
      */
-    public List<AccidentEntity> getAllAccidentByContractCode(String contractCode) {
+    public List<AccidentEntity> getAllAccidentByContractCode(String contractCode,
+                                                             int offset, int count) {
         AccidentDao accidentDao = new AccidentDao();
-        return accidentDao.getAllAccidentByContractCode(contractCode);
+        return accidentDao.getAllAccidentByContractCode(contractCode, offset, count);
     }
 
     public Long getAllContractByCustomerCount(String customerCode) {
@@ -324,5 +325,10 @@ public class CustomerBusiness {
         }
         return result;
 
+    }
+
+    public Long getAllAccidentByContractCodeCount(String code) {
+        AccidentDao accidentDao = new AccidentDao();
+        return accidentDao.getAllAccidentByContractCodeCount(code);
     }
 }

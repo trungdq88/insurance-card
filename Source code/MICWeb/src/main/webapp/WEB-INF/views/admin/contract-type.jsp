@@ -27,20 +27,26 @@
       </div>
       <!-- /.col-lg-12 -->
     </div>
-    <div class="text-info">
       <c:if test="${param.info eq 1}">
-        Xóa thành công
+        <div class="text-success">
+            Xóa thành công
+        </div>
       </c:if>
       <c:if test="${param.info eq 0}">
-        Không thể xóa vì đang có hợp đồng với loại hợp đồng này
+        <div class="text-danger">
+            Không thể xóa vì đang có hợp đồng với loại hợp đồng này
+        </div>
       </c:if>
       <c:if test="${param.info eq 2}">
-        Thêm loại hợp đồng thành công
+        <div class="text-success">
+            Thêm loại hợp đồng thành công
+      </div>
       </c:if>
       <c:if test="${param.info eq 3}">
-        Có lỗi xảy ra. Xin thử lại
+          <div class="text-danger">
+            Có lỗi xảy ra. Xin thử lại
+          </div>
       </c:if>
-    </div>
     <div class="row">
       <div class="col-lg-12">
         <br/>
