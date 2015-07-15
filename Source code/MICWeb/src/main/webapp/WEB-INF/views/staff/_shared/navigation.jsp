@@ -44,7 +44,7 @@
             </a>
             <ul class="dropdown-menu dropdown-user">
                 <li>
-                    <a href="${pageContext.request.contextPath}/staff/profile?action=detail&code=${sessionScope.userDto.id}">
+                    <a href="${pageContext.request.contextPath}/staff/profile">
                         <i class="fa fa-user fa-fw"></i> Thông tin cá nhân
                     </a>
                 </li>
