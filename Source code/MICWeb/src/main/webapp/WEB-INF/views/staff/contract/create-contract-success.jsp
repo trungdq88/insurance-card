@@ -16,61 +16,14 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="well text-primary text-center bs-example">
-                    <i class="fa fa-check"></i>
-                    Hợp đồng đã được khởi tạo thành công!
+                    <i class="fa fa-check"></i> Hợp đồng đã được khởi tạo thành công!
                 </div>
 
-                <c:set var="info" value="${requestScope.CONTRACT}"/>
+                <c:set var="contract" value="${requestScope.CONTRACT}" scope="request"/>
 
-                <c:if test="${not empty info}">
-                    <div class="table-responsive">
-                        <table class="table table-hover table-bordered table-striped">
-                            <thead>
-                            <tr>
-                                <th>Mã hợp đồng</th>
-                                <th>Tên khách hàng</th>
-                                <th>Ngày bắt đầu</th>
-                                <th>Ngày kết thúc</th>
-                                <th>Trạng thái</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <td>
-                                    <a href="${pageContext.request.contextPath}/staff/contract?action=detail&code=${info.contractCode}">
-                                            ${info.contractCode}
-                                    </a>
-                                </td>
-                                <td>
-                                    <a href="${pageContext.request.contextPath}/staff/customer?action=detail&code=${info.customerCode}">
-                                    ${info.micCustomerByCustomerCode.name}
-                                    </a>
-                                </td>
-                                <td>
-                                    <fmt:formatDate value="${info.startDate}" pattern="dd/MM/yyyy"/>
-                                </td>
-                                <td>
-                                    <fmt:formatDate value="${info.expiredDate}" pattern="dd/MM/yyyy"/>
-                                </td>
-                                <td>
-                                    <c:set var="status" value="${info.status}"/>
-                                    <c:choose>
-                                        <c:when test="${status.equalsIgnoreCase('Pending')}">
-                                            <span class="label label-gray">Chưa kích hoạt</span>
-                                        </c:when>
-                                        <c:when test="${status.equalsIgnoreCase('No card')}">
-                                            <span class="label label-primary">Chưa có thẻ</span>
-                                        </c:when>
-                                        <c:otherwise>
-                                            <span class="label label-default">Không trạng thái</span>
-                                        </c:otherwise>
-                                    </c:choose>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </c:if>
+                <form class="form-horizontal">
+                    <jsp:include page="contract-detail-general.jsp" flush="true"/>
+                </form>
                 <br/>
 
                 <div class="text-center">

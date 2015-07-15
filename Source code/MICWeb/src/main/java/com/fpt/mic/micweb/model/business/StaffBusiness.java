@@ -278,14 +278,17 @@ public class StaffBusiness {
 
     public List<ContractTypeEntity> getAllContractType() {
         ContractTypeDao contractTypeDao = new ContractTypeDao();
-        List<ContractTypeEntity> listContractType = contractTypeDao.getAllContractType();
-        return listContractType;
+        return contractTypeDao.getAllContractType();
+    }
+
+    public ContractTypeEntity getContractType(int contractTypeId) {
+        ContractTypeDao contractTypeDao = new ContractTypeDao();
+        return contractTypeDao.read(contractTypeId);
     }
 
     public List<PaymentEntity> getPaymentByContractCode(String contractCode) {
         PaymentDao paymentDao = new PaymentDao();
-        List<PaymentEntity> listPayment = paymentDao.getPaymentByContractCode(contractCode);
-        return listPayment;
+        return paymentDao.getPaymentByContractCode(contractCode);
     }
 
     public PaymentEntity getPaymentDetail(Integer id) {

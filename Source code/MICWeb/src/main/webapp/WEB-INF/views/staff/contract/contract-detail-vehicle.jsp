@@ -3,7 +3,7 @@
 <fieldset>
     <legend>Thông tin về xe cơ giới
         <div class="pull-right" style="margin-top: -5px;">
-            <button type="button" class="btn btn-xs btn-primary"
+            <button type="button" class="btn btn-xs btn-primary editBtn"
                     data-toggle="modal" data-target="#edit-contract-modal">
                 <i class="fa fa-pencil"></i> Chỉnh sửa
             </button>
@@ -12,20 +12,16 @@
 
     <!-- Plate number & brand -->
     <div class="form-group">
-        <label class="col-sm-3 control-label">Biển số</label>
+        <label class="col-sm-3 control-label">Biển số đăng ký</label>
 
         <div class="col-sm-3">
-            <div class="text-value">
-                ${contract.plate}
-            </div>
+            <div class="text-value">${contract.plate}</div>
         </div>
 
         <label class="col-sm-2 control-label">Nhãn hiệu</label>
 
         <div class="col-sm-3">
-            <div class="text-value">
-                ${contract.brand}
-            </div>
+            <div class="text-value">${contract.brand}</div>
         </div>
     </div>
 
@@ -34,17 +30,13 @@
         <label class="col-sm-3 control-label">Số khung</label>
 
         <div class="col-sm-3">
-            <div class="text-value">
-                ${contract.chassis}
-            </div>
+            <div class="text-value">${contract.chassis}</div>
         </div>
 
         <label class="col-sm-2 control-label">Số máy</label>
 
         <div class="col-sm-3">
-            <div class="text-value">
-                ${contract.engine}
-            </div>
+            <div class="text-value">${contract.engine}</div>
         </div>
     </div>
 
@@ -53,9 +45,7 @@
         <label class="col-sm-3 control-label">Dung tích</label>
 
         <div class="col-sm-3">
-            <div class="text-value">
-                ${contract.capacity}
-            </div>
+            <div class="text-value">${contract.capacity} cc</div>
         </div>
 
         <label class="col-sm-2 control-label">Màu sơn</label>
@@ -66,9 +56,7 @@
                     <c:when test="${empty contract.color}">
                         <span class="empty-value">Không có</span>
                     </c:when>
-                    <c:otherwise>
-                        ${contract.color}
-                    </c:otherwise>
+                    <c:otherwise>${contract.color}</c:otherwise>
                 </c:choose>
             </div>
         </div>
@@ -84,9 +72,7 @@
                     <c:when test="${empty contract.modelCode}">
                         <span class="empty-value">Không có</span>
                     </c:when>
-                    <c:otherwise>
-                        ${contract.modelCode}
-                    </c:otherwise>
+                    <c:otherwise>${contract.modelCode}</c:otherwise>
                 </c:choose>
             </div>
         </div>
@@ -99,9 +85,7 @@
                     <c:when test="${empty contract.vehicleType}">
                         <span class="empty-value">Không có</span>
                     </c:when>
-                    <c:otherwise>
-                        ${contract.vehicleType}
-                    </c:otherwise>
+                    <c:otherwise>${contract.vehicleType}</c:otherwise>
                 </c:choose>
             </div>
         </div>
@@ -117,9 +101,7 @@
                     <c:when test="${empty contract.yearOfManufacture}">
                         <span class="empty-value">Không có</span>
                     </c:when>
-                    <c:otherwise>
-                        ${contract.yearOfManufacture}
-                    </c:otherwise>
+                    <c:otherwise>${contract.yearOfManufacture}</c:otherwise>
                 </c:choose>
             </div>
         </div>
@@ -132,9 +114,7 @@
                     <c:when test="${empty contract.weight}">
                         <span class="empty-value">Không có</span>
                     </c:when>
-                    <c:otherwise>
-                        ${contract.weight}
-                    </c:otherwise>
+                    <c:otherwise>${contract.weight} kg</c:otherwise>
                 </c:choose>
             </div>
         </div>
@@ -149,9 +129,7 @@
                     <c:when test="${empty contract.seatCapacity}">
                         <span class="empty-value">Không có</span>
                     </c:when>
-                    <c:otherwise>
-                        ${contract.seatCapacity}
-                    </c:otherwise>
+                    <c:otherwise>${contract.seatCapacity} người</c:otherwise>
                 </c:choose>
             </div>
         </div>
