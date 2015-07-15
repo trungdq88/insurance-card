@@ -32,6 +32,9 @@ public class ContractController extends AuthController {
      * Paginator for contract
      */
     Paginator contractPaginator = new Paginator();
+    Paginator compensationPaginator = new Paginator("compensation");
+    Paginator punishmentPaginator = new Paginator("punishment");
+    Paginator accidentPaginator = new Paginator("accident");
 
     @Override
     public List<String> getAllowedRoles() {
@@ -166,7 +169,7 @@ public class ContractController extends AuthController {
     }
 
     public ResponseObject getDetail(R r) {
-        CustomerBusiness customerBusiness = new CustomerBusiness();
+        final CustomerBusiness customerBusiness = new CustomerBusiness();
         CardBusiness cardBusiness = new CardBusiness();
         final CompensationBusiness compensationBusiness = new CompensationBusiness();
         final PunishmentBusiness punishmentBusiness = new PunishmentBusiness();
@@ -183,7 +186,6 @@ public class ContractController extends AuthController {
                     contract.getLastModified());
 
             // compensation region
-            Paginator compensationPaginator = new Paginator();
             compensationPaginator.setGetItemsCallback(new Paginator.IGetItems() {
                 @Override
                 public List getItems(int offset, int count) {
@@ -198,7 +200,6 @@ public class ContractController extends AuthController {
             });
             //
             //punishment region
-            Paginator punishmentPaginator = new Paginator();
             punishmentPaginator.setGetItemsCallback(new Paginator.IGetItems() {
                 @Override
                 public List getItems(int offset, int count) {
@@ -212,12 +213,25 @@ public class ContractController extends AuthController {
                 }
             });
 
-            List listAccident = customerBusiness.getAllAccidentByContractCode(code);
+            //accident region
+            accidentPaginator.setGetItemsCallback(new Paginator.IGetItems() {
+                @Override
+                public List getItems(int offset, int count) {
+                    return customerBusiness.getAllAccidentByContractCode(code, offset, count);
+                }
+            });
+            accidentPaginator.setGetItemSizeCallback(new Paginator.IGetItemSize() {
+                @Override
+                public Long getItemSize() {
+                    return customerBusiness.getAllAccidentByContractCodeCount(code);
+                }
+            });
+
             r.equest.setAttribute("contract", contract);
 
             r.equest.setAttribute("isNewCardRequested",cardBusiness.isNewCardRequested(code));
             r.equest.setAttribute("card", cardBusiness.getCardByContract(code));
-            r.equest.setAttribute("listAccident", listAccident);
+            r.equest.setAttribute("accidentPaginator", accidentPaginator);
             r.equest.setAttribute("compensationPaginator", compensationPaginator);
             r.equest.setAttribute("punishmentPaginator", punishmentPaginator);
             return new JspPage("customer/contract-detail.jsp");

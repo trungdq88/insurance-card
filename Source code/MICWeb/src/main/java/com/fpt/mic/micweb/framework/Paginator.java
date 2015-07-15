@@ -8,9 +8,14 @@ import java.util.List;
  */
 public class Paginator {
     /**
+     * Tag for this paginator. Use when we have more than 1 list in a single page.
+     */
+    String tag = "";
+
+    /**
      * Number of item displayed per page
      */
-    int itemPerPage = 10;
+    int itemPerPage = 1;
 
 
     /**
@@ -25,11 +30,18 @@ public class Paginator {
     public Paginator() {
     }
 
+    public Paginator(String tag) {
+        this.tag = tag;
+    }
+
     /**
      * Get current page number, start from 1
      * @return
      */
-    public int getCurrentPage(String pageStr) {
+    public int getCurrentPage(String pageStr, String tag) {
+        // If not current tag, display page 1
+        if (!tag.equals(this.tag)) return 1;
+
         int page;
         if (pageStr == null || pageStr.isEmpty()) {
             page = 1;
@@ -45,17 +57,27 @@ public class Paginator {
         return page;
     }
 
+    // @Overload
+    public int getCurrentPage(String pageStr) {
+        return getCurrentPage(pageStr, "");
+    }
+
     /**
      * Get items displayed on current page
      * @return
      */
-    public List getItemsOnCurrentPage(String pageStr) {
-        int currentPage = getCurrentPage(pageStr);
+    public List getItemsOnCurrentPage(String pageStr, String tag) {
+        int currentPage = getCurrentPage(pageStr, tag);
         // Page 1: 0 - 9
         // Page 2: 10 - 19
         // Page 3: 20 - 29
         int offset = (currentPage - 1) * itemPerPage;
         return getItemsCallback.getItems(offset, itemPerPage);
+    }
+
+    // @Overload
+    public List getItemsOnCurrentPage(String pageStr) {
+        return getItemsOnCurrentPage(pageStr, "");
     }
 
     public int getPageSize() {
@@ -92,6 +114,14 @@ public class Paginator {
 
     public void setGetItemSizeCallback(IGetItemSize getItemSizeCallback) {
         this.getItemSizeCallback = getItemSizeCallback;
+    }
+
+    public String getTag() {
+        return tag;
+    }
+
+    public void setTag(String tag) {
+        this.tag = tag;
     }
 
     /// Interfaces
