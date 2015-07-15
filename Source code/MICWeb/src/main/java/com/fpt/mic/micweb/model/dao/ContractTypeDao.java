@@ -25,4 +25,24 @@ public class ContractTypeDao extends GenericDaoJpaImpl<ContractTypeEntity, Integ
         Query query = entity.createQuery(hql);
         return query.getResultList();
     }
+
+    public Long getAllContractTypeCount() {
+        EntityManager entity = factory.createEntityManager();
+        String hql = "SELECT COUNT(ct) FROM ContractTypeEntity ct";
+        Query query = entity.createQuery(hql);
+        Long result = (Long)query.getSingleResult();
+        entity.close();
+        return result;
+    }
+
+    public List getOnePageContractTypes(int offset, int count) {
+        EntityManager entity = factory.createEntityManager();
+        String hql = "SELECT ct FROM ContractTypeEntity ct";
+        Query query = entity.createQuery(hql);
+        query.setFirstResult(offset);
+        query.setMaxResults(count);
+        List resultList = query.getResultList();
+        entity.close();
+        return resultList;
+    }
 }

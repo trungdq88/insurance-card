@@ -2,8 +2,7 @@ package com.fpt.mic.micweb.model.business;
 
 import com.fpt.mic.micweb.model.dao.ContractDao;
 import com.fpt.mic.micweb.model.dao.ContractTypeDao;
-import com.fpt.mic.micweb.model.dao.helper.NewCardRequestDao;
-import com.fpt.mic.micweb.model.dto.ContractSearchResultDto;
+import com.fpt.mic.micweb.model.dto.form.ContractTypeDto;
 import com.fpt.mic.micweb.model.entity.ContractEntity;
 import com.fpt.mic.micweb.model.entity.ContractTypeEntity;
 import com.fpt.mic.micweb.utils.Constants;
@@ -12,16 +11,52 @@ import org.joda.time.DateTime;
 import org.joda.time.Days;
 
 import java.sql.Timestamp;
-import java.util.Date;
 import java.util.List;
 
 /**
  * Created by TriPQMse60746 on 06/11/2015.
  */
 public class ContractBusiness {
+
     public List<ContractTypeEntity> getAllContractType() {
         ContractTypeDao contractTypeDao = new ContractTypeDao();
         return contractTypeDao.getAllContractType();
+    }
+
+    public List getOnePageContractTypes(int offset, int count) {
+        ContractTypeDao contractTypeDao = new ContractTypeDao();
+        return contractTypeDao.getOnePageContractTypes(offset, count);
+    }
+
+    public Long getAllContractTypeCount() {
+        ContractTypeDao contractTypeDao = new ContractTypeDao();
+        return contractTypeDao.getAllContractTypeCount();
+    }
+
+    public boolean addContractType(ContractTypeDto contractTypeDto){
+        ContractTypeDao contractTypeDao = new ContractTypeDao();
+        ContractTypeEntity contractTypeEntity = new ContractTypeEntity();
+        contractTypeEntity.setName(contractTypeDto.getName());
+        contractTypeEntity.setDescription(contractTypeDto.getDescription());
+        contractTypeEntity.setPricePerYear(contractTypeDto.getPricePerYear());
+        try{
+            contractTypeDao.create(contractTypeEntity);
+            return true;
+        } catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean deleteContractType(int contractTypeId){
+        ContractTypeDao contractTypeDao = new ContractTypeDao();
+        ContractTypeEntity contractTypeEntity = contractTypeDao.read(contractTypeId);
+        if (contractTypeEntity != null){
+            contractTypeDao.delete(contractTypeEntity);
+            return true;
+        }else {
+            return false;
+        }
     }
 
     public Long getAllRequestCancelContractCount(){

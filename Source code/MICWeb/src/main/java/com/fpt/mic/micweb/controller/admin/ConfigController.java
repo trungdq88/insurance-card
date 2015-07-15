@@ -58,6 +58,21 @@ public class ConfigController extends BasicController{
             r.equest.setAttribute("validateErrors", errors);
             // Gửi dữ liệu mà người dùng đã nhập về trang JSP, gán vào biến submitted
             r.equest.setAttribute("submitted", businessRulesDto);
+            final AdminBusiness adminBusiness = new AdminBusiness();
+            final StaffBusiness staffBus = new StaffBusiness();
+            businessRulesPaginator.setGetItemsCallback(new Paginator.IGetItems() {
+                @Override
+                public List getItems(int offset, int count) {
+                    return adminBusiness.getOnePageBusinessRules(offset, count);
+                }
+            });
+            businessRulesPaginator.setGetItemSizeCallback(new Paginator.IGetItemSize() {
+                @Override
+                public Long getItemSize() {
+                    return adminBusiness.getAllBusinessRulesCount();
+                }
+            });
+            r.equest.setAttribute("businessRulesPaginator", businessRulesPaginator);
             return new JspPage("admin/business-config-rules.jsp");
         }
         AdminBusiness adminBusiness = new AdminBusiness();

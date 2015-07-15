@@ -57,6 +57,11 @@
                         <i class="fa fa-key fa-fw"></i> Thiết lập
                     </a>
                 </li>
+                <li>
+                    <a href="${pageContext.request.contextPath}/admin/contractType">
+                        <i class="fa fa-key fa-fw"></i> Loại hợp đồng
+                    </a>
+                </li>
             </ul>
         </div>
         <!-- /.sidebar-collapse -->
