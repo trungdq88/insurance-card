@@ -5,6 +5,7 @@ import com.fpt.mic.micweb.model.dao.CustomerDao;
 import com.fpt.mic.micweb.utils.ConfigUtils;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.hibernate.validator.constraints.Range;
+import org.joda.time.LocalDate;
 
 import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.NotNull;
@@ -87,7 +88,9 @@ public class CreateContractDto {
     private boolean isValidExpiredDateMin() {
         if (expiredDate != null) {
             ConfigUtils configUtils = new ConfigUtils();
-            Timestamp expiredDateMin = new Timestamp(configUtils.getExpiredDateMin().toDateTimeAtStartOfDay().getMillis());
+            LocalDate stDate = new LocalDate(startDate);
+            LocalDate expDateMin = stDate.plusMonths(configUtils.getContractMinTerm());
+            Timestamp expiredDateMin = new Timestamp(expDateMin.toDateTimeAtStartOfDay().getMillis());
             return !expiredDate.before(expiredDateMin);
         }
         return false;
@@ -97,7 +100,9 @@ public class CreateContractDto {
     private boolean isValidExpiredDateMax() {
         if (expiredDate != null) {
             ConfigUtils configUtils = new ConfigUtils();
-            Timestamp expiredDateMax = new Timestamp(configUtils.getExpiredDateMax().toDateTimeAtStartOfDay().getMillis());
+            LocalDate stDate = new LocalDate(startDate);
+            LocalDate expDateMax = stDate.plusMonths(configUtils.getContractDefaultTerm());
+            Timestamp expiredDateMax = new Timestamp(expDateMax.toDateTimeAtStartOfDay().getMillis());
             return !expiredDate.after(expiredDateMax);
         }
         return false;
@@ -112,24 +117,25 @@ public class CreateContractDto {
         }
     }
 
-    @AssertTrue(message = "Thời hạn hợp đồng tối đa là 1 năm")
-    private boolean isValidTerm() {
+    @AssertTrue(message = "Thời hạn hợp đồng không được dài hơn thời gian quy định")
+    private boolean isValidDefaultTerm() {
         if (startDate != null & expiredDate != null) {
-            long contractTerm = expiredDate.getTime() - startDate.getTime();
+            ConfigUtils configUtils = new ConfigUtils();
+            LocalDate maxExpDate = new LocalDate(startDate).plusMonths(configUtils.getContractDefaultTerm());
+            Timestamp maxExpiredDate = new Timestamp(maxExpDate.toDateTimeAtStartOfDay().getMillis());
+            return !maxExpiredDate.before(expiredDate);
+        } else {
+            return false;
+        }
+    }
 
-            final int MILLIS_IN_SECOND = 1000;
-            final int SECONDS_IN_MINUTE = 60;
-            final int MINUTES_IN_HOUR = 60;
-            final int HOURS_IN_DAY = 24;
-            final int DAYS_IN_YEAR = 366;
-            final long MILLISECONDS_IN_YEAR =
-                    (long) MILLIS_IN_SECOND * SECONDS_IN_MINUTE * MINUTES_IN_HOUR
-                            * HOURS_IN_DAY * DAYS_IN_YEAR;
-            if (contractTerm <= MILLISECONDS_IN_YEAR) {
-                return true;
-            } else {
-                return false;
-            }
+    @AssertTrue(message = "Thời hạn hợp đồng không được ngắn hơn thời gian quy định")
+    private boolean isValidMinTerm() {
+        if (startDate != null & expiredDate != null) {
+            ConfigUtils configUtils = new ConfigUtils();
+            LocalDate minExpDate = new LocalDate(startDate).plusMonths(configUtils.getContractMinTerm());
+            Timestamp minExpiredDate = new Timestamp(minExpDate.toDateTimeAtStartOfDay().getMillis());
+            return !minExpiredDate.after(expiredDate);
         } else {
             return false;
         }
