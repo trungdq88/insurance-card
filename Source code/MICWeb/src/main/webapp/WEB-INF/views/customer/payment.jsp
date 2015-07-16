@@ -31,7 +31,7 @@
             <div class="panel panel-heading">
                 <div class="pull-left">
                     <!--<input type="checkbox" class="check-all"/>-->
-                    <b>Có ${listPayment.size()} giao dịch</b>
+                    <b>Có ${paymentPaginator.itemSize} giao dịch</b>
                 </div>
                 <div class="clearfix"></div>
             </div>
@@ -55,8 +55,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <c:set var="payments"
-                               value="${listPayment}"/>
+                        <c:set var="payments" value="${paymentPaginator.getItemsOnCurrentPage(param.page)}"/>
                         <c:choose>
                             <c:when test="${payments.size() == 0}">
                                 <tr>
@@ -66,8 +65,7 @@
                                 </tr>
                             </c:when>
                             <c:otherwise>
-                                <c:forEach items="${listPayment}"
-                                           var="payment"
+                                <c:forEach items="${paymentPaginator.getItemsOnCurrentPage(param.page)}" var="payment"
                                            varStatus="counter">
                                     <tr>
                                         <td class="text-center">
@@ -124,7 +122,26 @@
                 <div class="panel panel-footer">
                     <nav class="text-right">
                         <ul class="pagination">
-
+                            <c:if test="${param.page != 1 && not empty param.page}">
+                                <li>
+                                    <a href="?action=${param.action}&keyword=${param.keyword}&page=1" aria-label="Previous">
+                                        <span aria-hidden="true">Đầu</span>
+                                    </a>
+                                </li>
+                            </c:if>
+                            <c:forEach begin="1" end="${paymentPaginator.pageSize}" var="pageNumber">
+                                <li ${param.page == pageNumber ||(pageNumber == 1 && empty param.page) ? "class='active'": ""} >
+                                    <a href="?action=${param.action}&keyword=${param.keyword}&page=${pageNumber}">${pageNumber}</a>
+                                </li>
+                            </c:forEach>
+                            <c:if test="${param.page != paymentPaginator.pageSize && paymentPaginator.pageSize != 1}">
+                                <li>
+                                    <a href="?action=${param.action}&keyword=${param.keyword}&page=${paymentPaginator.pageSize}"
+                                       aria-label="Next">
+                                        <span aria-hidden="true">Cuối</span>
+                                    </a>
+                                </li>
+                            </c:if>
                         </ul>
                     </nav>
                 </div>

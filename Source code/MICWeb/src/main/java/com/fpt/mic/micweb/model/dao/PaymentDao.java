@@ -51,9 +51,9 @@ public class PaymentDao extends GenericDaoJpaImpl<PaymentEntity, Integer> {
         return query.getResultList();
     }
 
-    public Long getAllPaymentByContractCodeCount(String customerCode) {
+    public Long getAllPaymentByCustomerCodeCount(String customerCode) {
         EntityManager entityManager = factory.createEntityManager();
-        String hql = "SELECT pm FROM PaymentEntity AS pm " +
+        String hql = "SELECT COUNT(pm) FROM PaymentEntity AS pm " +
                 "inner join pm.micContractByContractCode c " +
                 "WHERE pm.contractCode = c.contractCode " +
                 "AND c.customerCode = :customerCode " ;
