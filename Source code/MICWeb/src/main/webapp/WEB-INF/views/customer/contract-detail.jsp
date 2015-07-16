@@ -773,73 +773,72 @@
                                         </td>
 
                                     </tr>
-                                    <tr class="hide cardInfo">
-                                        <td colspan="2">
-                                            <div id="collapseCardInfo" class="panel-collapse collapse" role="tabpanel"
-                                                 aria-labelledby="headingThree">
-                                                <table class="table table-bordered">
-                                                    <thead>
-                                                    <tr class="success">
-
-                                                        <th class="text-center">
-                                                            Mã thẻ
-                                                        </th>
-                                                        <th class="text-center">
-                                                            Ngày kích hoạt
-                                                        </th>
-                                                        <th class=" text-center">
-                                                            Trạng thái
-                                                        </th>
-                                                    </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                    <c:choose>
-                                                        <c:when test="${empty card.cardId}">
-                                                            <tr>
-                                                                <td colspan="5"
-                                                                    style="vertical-align: middle; text-align: center;">
-                                                                    Không có thẻ nào
-                                                                </td>
-                                                            </tr>
-                                                        </c:when>
-                                                        <c:otherwise>
-                                                            <tr>
-                                                                <td>
-                                                                    <a href="${pageContext.request.contextPath}/customer/card?action=detail&cardId=${card.cardId}"
-                                                                       target="_newtab">
-                                                                            ${card.cardId}
-                                                                    </a>
-                                                                </td>
-                                                                <td>
-                                                                    <fmt:formatDate value="${card.activatedDate}"
-                                                                                    pattern="dd/MM/yyyy"/>
-                                                                    lúc
-                                                                    <fmt:formatDate value="${card.activatedDate}" type="time"/>
-                                                                </td>
-                                                                <td class="text-center">
-                                                                    <c:choose>
-                                                                        <c:when test="${empty card.deactivatedDate}">
-                                                                            <span class="label label-success">Hoạt động</span>
-                                                                        </c:when>
-                                                                        <c:otherwise>
-                                                                            <span class="label label-danger">Ngưng hoạt động</span>
-                                                                        </c:otherwise>
-                                                                    </c:choose>
-                                                                </td>
-                                                            </tr>
-                                                        </c:otherwise>
-
-                                                    </c:choose>
-
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </td>
-                                    </tr>
                                 </table>
                             </td>
                         </tr>
+                        <tr class="hide cardInfo">
+                            <td colspan="2">
+                                <div id="collapseCardInfo" class="panel-collapse collapse" role="tabpanel"
+                                     aria-labelledby="headingThree">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                        <tr class="success">
 
+                                            <th class="text-center">
+                                                Mã thẻ
+                                            </th>
+                                            <th class="text-center">
+                                                Ngày kích hoạt
+                                            </th>
+                                            <th class=" text-center">
+                                                Trạng thái
+                                            </th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <c:choose>
+                                            <c:when test="${empty card.cardId}">
+                                                <tr>
+                                                    <td colspan="5"
+                                                        style="vertical-align: middle; text-align: center;">
+                                                        Không có thẻ nào
+                                                    </td>
+                                                </tr>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <tr>
+                                                    <td>
+                                                        <a href="${pageContext.request.contextPath}/customer/card?action=detail&cardId=${card.cardId}"
+                                                           target="_newtab">
+                                                                ${card.cardId}
+                                                        </a>
+                                                    </td>
+                                                    <td>
+                                                        <fmt:formatDate value="${card.activatedDate}"
+                                                                        pattern="dd/MM/yyyy"/>
+                                                        lúc
+                                                        <fmt:formatDate value="${card.activatedDate}" type="time"/>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <c:choose>
+                                                            <c:when test="${empty card.deactivatedDate}">
+                                                                <span class="label label-success">Hoạt động</span>
+                                                            </c:when>
+                                                            <c:otherwise>
+                                                                <span class="label label-danger">Ngưng hoạt động</span>
+                                                            </c:otherwise>
+                                                        </c:choose>
+                                                    </td>
+                                                </tr>
+                                            </c:otherwise>
+
+                                        </c:choose>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </td>
+                        </tr>
 
                     </table>
                 </div>

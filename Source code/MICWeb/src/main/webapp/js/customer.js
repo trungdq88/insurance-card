@@ -72,7 +72,7 @@ $(document).ready(function () {
         //Pending
         else if (status == 'Pending') {
             $('#renew').addClass('hide');
-            $('#delete').addClass('hide');
+            //$('#delete').addClass('hide');
         }
         //Request cancel
         else if (status == 'Request cancel') {
