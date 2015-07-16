@@ -470,10 +470,6 @@
                     <a href="#accidents" aria-controls="messages" role="tab" data-toggle="tab">Lịch sử tai nạn
                     </a>
                 </li>
-                <li role="presentation">
-                    <a href="#cards" aria-controls="messages" role="tab" data-toggle="tab">Thẻ đang hoạt động
-                    </a>
-                </li>
                 <c:if test="${contract.status.equalsIgnoreCase('Ready') }">
                     <%--<form action="${pageContext.request.contextPath}/customer/card" method="get">--%>
                     <c:if test="${isNewCardRequested == false}">
@@ -764,7 +760,82 @@
                                             </c:choose>
                                         </td>
                                     </tr>
+                                    <tr class="active">
+                                        <td colspan="2" class="text-center" style="font-size: 15px">
+                                            <label class="text-center">
+                                                <a class="collapsed showCardInfo" role="button" data-toggle="collapse"
+                                                   data-parent="#accordion" href="#collapseCardInfo" aria-expanded="false"
+                                                   aria-controls="collapseCardInfo">
+                                                    Thông tin thẻ đang hoạt động
+                                                </a>
+                                            </label>
 
+                                        </td>
+
+                                    </tr>
+                                    <tr class="hide cardInfo">
+                                        <td colspan="2">
+                                            <div id="collapseCardInfo" class="panel-collapse collapse" role="tabpanel"
+                                                 aria-labelledby="headingThree">
+                                                <table class="table table-bordered">
+                                                    <thead>
+                                                    <tr class="success">
+
+                                                        <th class="text-center">
+                                                            Mã thẻ
+                                                        </th>
+                                                        <th class="text-center">
+                                                            Ngày kích hoạt
+                                                        </th>
+                                                        <th class=" text-center">
+                                                            Trạng thái
+                                                        </th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    <c:choose>
+                                                        <c:when test="${empty card.cardId}">
+                                                            <tr>
+                                                                <td colspan="5"
+                                                                    style="vertical-align: middle; text-align: center;">
+                                                                    Không có thẻ nào
+                                                                </td>
+                                                            </tr>
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            <tr>
+                                                                <td>
+                                                                    <a href="${pageContext.request.contextPath}/customer/card?action=detail&cardId=${card.cardId}"
+                                                                       target="_newtab">
+                                                                            ${card.cardId}
+                                                                    </a>
+                                                                </td>
+                                                                <td>
+                                                                    <fmt:formatDate value="${card.activatedDate}"
+                                                                                    pattern="dd/MM/yyyy"/>
+                                                                    lúc
+                                                                    <fmt:formatDate value="${card.activatedDate}" type="time"/>
+                                                                </td>
+                                                                <td class="text-center">
+                                                                    <c:choose>
+                                                                        <c:when test="${empty card.deactivatedDate}">
+                                                                            <span class="label label-success">Hoạt động</span>
+                                                                        </c:when>
+                                                                        <c:otherwise>
+                                                                            <span class="label label-danger">Ngưng hoạt động</span>
+                                                                        </c:otherwise>
+                                                                    </c:choose>
+                                                                </td>
+                                                            </tr>
+                                                        </c:otherwise>
+
+                                                    </c:choose>
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </td>
+                                    </tr>
                                 </table>
                             </td>
                         </tr>
@@ -778,78 +849,7 @@
             <%@include file="contract-detail/accident.jsp" %>
 
             <%----------------------------------------------------------------------------------------------------%>
-            <%------------------------------------------Card Active------------------------------------------------%>
-            <div role="tabpane1" class="tab-pane" id="cards">
 
-                <div class="panel panel-default">
-                    <div class="panel panel-body">
-
-                        <div class="table table-responsive">
-                            <table class="table table-bordered">
-                                <thead>
-                                <tr class="success">
-
-                                    <th class="text-center col-md-2">
-                                        Mã thẻ
-                                    </th>
-                                    <th class="text-center col-md-2">
-                                        Ngày kích hoạt
-                                    </th>
-                                    <th class=" text-center col-md-1">
-                                        Trạng thái
-                                    </th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <c:choose>
-                                    <c:when test="${empty card.cardId}">
-                                        <tr>
-                                            <td colspan="5" style="vertical-align: middle; text-align: center;">
-                                                Không có thẻ nào
-                                            </td>
-                                        </tr>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <tr>
-                                            <td>
-                                                <a href="${pageContext.request.contextPath}/customer/card?action=detail&cardId=${card.cardId}"
-                                                   target="_newtab">
-                                                        ${card.cardId}
-                                                </a>
-                                            </td>
-                                            <td>
-                                                <fmt:formatDate value="${card.activatedDate}" pattern="dd/MM/yyyy"/>
-                                                lúc
-                                                <fmt:formatDate value="${card.activatedDate}" type="time"/>
-                                            </td>
-                                            <td class="text-center">
-                                                <c:choose>
-                                                    <c:when test="${empty card.deactivatedDate}">
-                                                        <span class="label label-success">Hoạt động</span>
-                                                    </c:when>
-                                                    <c:otherwise>
-                                                        <span class="label label-danger">Ngưng hoạt động</span>
-                                                    </c:otherwise>
-                                                </c:choose>
-                                            </td>
-                                        </tr>
-                                    </c:otherwise>
-
-                                </c:choose>
-
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <%--<div class="panel panel-footer">--%>
-                    <%--<nav class="text-right">--%>
-
-                    <%--</ul>--%>
-                    <%--</nav>--%>
-                    <%--</div>--%>
-                </div>
-            </div>
-            <%----------------------------------------------------------------------------------------------------%>
         </div>
 
     </div>

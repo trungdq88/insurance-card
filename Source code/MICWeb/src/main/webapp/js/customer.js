@@ -3,9 +3,19 @@
  */
 
 $(document).ready(function () {
-
+    var isShow = false;
 
     CheckDayAvailable();
+    $('.showCardInfo').click(function(){
+        isShow = !isShow;
+        if(isShow == true){
+            $('.cardInfo').removeClass('hide');
+        }
+        else {
+            $('.cardInfo').addClass('hide');
+        }
+
+    });
     $('[data-toggle="tooltip"]').tooltip();
     if ($('#isFirstLogin').val() == 0) {
         $('#changePass').trigger("click");
