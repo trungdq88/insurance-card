@@ -86,7 +86,7 @@ public class CreateContractDto {
 
     @AssertTrue(message = "Thời điểm hết hiệu lực không được trước thời gian quy định")
     private boolean isValidExpiredDateMin() {
-        if (expiredDate != null) {
+        if (startDate != null & expiredDate != null) {
             ConfigUtils configUtils = new ConfigUtils();
             LocalDate stDate = new LocalDate(startDate);
             LocalDate expDateMin = stDate.plusMonths(configUtils.getContractMinTerm());
@@ -98,7 +98,7 @@ public class CreateContractDto {
 
     @AssertTrue(message = "Thời điểm hết hiệu lực không được sau thời gian quy định")
     private boolean isValidExpiredDateMax() {
-        if (expiredDate != null) {
+        if (startDate != null & expiredDate != null) {
             ConfigUtils configUtils = new ConfigUtils();
             LocalDate stDate = new LocalDate(startDate);
             LocalDate expDateMax = stDate.plusMonths(configUtils.getContractDefaultTerm());
