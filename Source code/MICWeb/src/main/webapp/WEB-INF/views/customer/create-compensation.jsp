@@ -157,8 +157,8 @@
                             <div class="col-sm-3">
                                 <input id="vehicleCapacity" name="compensation:vehicleCapacity"
                                        class="form-control input-md"
-                                       type="text" required minlength="2" maxlength="20"
-                                       title="Vui lòng nhập dung tích xe!" placeholder="Ví dụ: 7 chỗ"
+                                       type="text" required minlength="1" maxlength="20"
+                                       title="Vui lòng nhập trọng tải/số chỗ ngồi!" placeholder="Ví dụ: 7 chỗ"
                                        value="${submitted.vehicleCapacity}">
                             </div>
                         </div>
