@@ -34,6 +34,7 @@ public class ContractEntity {
     public Timestamp lastModified;
     public Timestamp createdDate;
     public Integer needRenewPayment;
+    public Integer activeCardInstanceId;
     public Collection<Object> micAccidentsByContractCode;
     public Collection<Object> micCardInstancesByContractCode;
     public Collection<Object> micCompensationsByContractCode;
@@ -42,4 +43,5 @@ public class ContractEntity {
     public StaffEntity micStaffByStaffCode;
     public Collection<Object> micPaymentsByContractCode;
     public Collection<Object> micPunishmentsByContractCode;
+    public CardInstanceEntity micCardInstanceByActiveCardInstanceId;
 }
