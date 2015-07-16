@@ -234,7 +234,8 @@ public class StaffBusiness {
             contractEntity.setCancelNote(null);
             // Concurrency set value
             contractEntity.setLastModified(currentTime);
-            if (!isPaidContract) {
+            Timestamp currentDate = DateUtils.currentDateWithoutTime();
+            if (!isPaidContract || contractEntity.getStartDate().after(currentDate)) {
                 contractEntity.setStatus(Constants.ContractStatus.PENDING);
             } else if (card == null) {
                 contractEntity.setStatus(Constants.ContractStatus.NO_CARD);

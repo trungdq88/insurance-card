@@ -207,11 +207,16 @@ public class ContractController extends AuthController {
             return new RedirectTo("/error/404");
         }
 
-        // Save last_modified value for concurrency check
-        r.equest.getSession(true).setAttribute(
-                Constants.Session.CONCURRENCY + contractCode, contractEntity.getLastModified());
+        // Only check concurrency for the first time
+        if (r.equest.getAttribute("submitted") == null){
+            // Save last_modified value for concurrency check
+            r.equest.getSession(true).setAttribute(
+                    Constants.Session.CONCURRENCY + contractCode, contractEntity.getLastModified());
+        }
+
 
         r.equest.setAttribute("CONTRACT", contractEntity);
+
         // Dispatch to JSP page
         return new JspPage("staff/contract/edit-vehicle.jsp");
     }
@@ -561,6 +566,7 @@ public class ContractController extends AuthController {
             // r.equest.setAttribute("submitted", dto);
             // Re-call the contract detail page
             r.equest.setAttribute("contractCode", dto.getContractCode());
+            r.equest.setAttribute("submitted",dto);
             return getEditVehicle(r);
         }
         // If the code reached this line that means there is no validation errors

@@ -42,7 +42,9 @@
                                 <input id="plate" name="edit:plate" class="form-control input-md"
                                        type="text" required minlength="4" maxlength="15"
                                        title="Vui lòng nhập biển số xe" placeholder="Ví dụ: 78Y9-15383"
-                                       value="${contract.plate}">
+                                       <c:if test="${empty submitted}">value="${contract.plate}"</c:if>
+                                       <c:if test="${not empty submitted}">value="${submitted.plate}"</c:if>
+                                       >
                             </div>
 
                             <label class="col-sm-2 control-label" for="brand">Nhãn hiệu *</label>
@@ -51,7 +53,9 @@
                                 <input id="brand" name="edit:brand" class="form-control input-md"
                                        type="text" required minlength="2" maxlength="20"
                                        title="Vui lòng nhập nhãn hiệu xe" placeholder="Ví dụ: Honda"
-                                       value="${contract.brand}">
+                                       <c:if test="${empty submitted}">value="${contract.brand}"</c:if>
+                                       <c:if test="${not empty submitted}">value="${submitted.brand}"</c:if>
+                                        >
                             </div>
                         </div>
 
@@ -63,7 +67,9 @@
                                 <input id="chassis" name="edit:chassis" class="form-control input-md"
                                        type="text" required minlength="2" maxlength="20"
                                        title="Vui lòng nhập số khung xe!"
-                                       value="${contract.chassis}">
+                                       <c:if test="${empty submitted}">value="${contract.chassis}"</c:if>
+                                       <c:if test="${not empty submitted}">value="${submitted.chassis}"</c:if>
+                                        >
                             </div>
 
                             <label class="col-sm-2 control-label" for="engine">Số máy *</label>
@@ -72,7 +78,9 @@
                                 <input id="engine" name="edit:engine" class="form-control input-md"
                                        type="text" required minlength="2" maxlength="20"
                                        title="Vui lòng nhập số máy xe!"
-                                       value="${contract.engine}">
+                                       <c:if test="${empty submitted}">value="${contract.engine}"</c:if>
+                                       <c:if test="${not empty submitted}">value="${submitted.engine}"</c:if>
+                                        >
                             </div>
                         </div>
 
@@ -85,7 +93,9 @@
                                     <input id="capacity" name="edit:capacity" class="form-control input-md"
                                            type="text" required minlength="2" maxlength="20"
                                            title="Vui lòng nhập dung tích xe!"
-                                           value="${contract.capacity}">
+                                           <c:if test="${empty submitted}">value="${contract.capacity}"</c:if>
+                                           <c:if test="${not empty submitted}">value="${submitted.capacity}"</c:if>
+                                            >
                                     <span class="input-group-addon">cc</span>
                                 </div>
                             </div>
@@ -96,7 +106,9 @@
                                 <input id="color" name="edit:color" class="form-control input-md"
                                        type="text" minlength="2" maxlength="20"
                                        title="Vui lòng nhập màu sơn xe!"
-                                       value="${contract.color}">
+                                       <c:if test="${empty submitted}">value="${contract.color}"</c:if>
+                                       <c:if test="${not empty submitted}">value="${submitted.color}"</c:if>
+                                        >
                             </div>
                         </div>
 
@@ -108,7 +120,9 @@
                                 <input id="modelCode" name="edit:modelCode" class="form-control input-md"
                                        type="text" minlength="2" maxlength="20"
                                        title="Vui lòng nhập số loại xe!" placeholder="Ví dụ: Air Blade"
-                                       value="${contract.modelCode}">
+                                       <c:if test="${empty submitted}">value="${contract.modelCode}"</c:if>
+                                       <c:if test="${not empty submitted}">value="${submitted.modelCode}"</c:if>
+                                        >
                             </div>
 
                             <label class="col-sm-2 control-label" for="vehicleType">Loại xe</label>
@@ -117,7 +131,9 @@
                                 <input id="vehicleType" name="edit:vehicleType" class="form-control input-md"
                                        type="text" minlength="2" maxlength="20"
                                        title="Vui lòng nhập loại xe!" placeholder="Ví dụ: Hai bánh"
-                                       value="${contract.vehicleType}">
+                                       <c:if test="${empty submitted}">value="${contract.vehicleType}"</c:if>
+                                       <c:if test="${not empty submitted}">value="${submitted.vehicleType}"</c:if>
+                                        >
                             </div>
                         </div>
 
@@ -129,7 +145,9 @@
                                 <input id="yearOfMan" name="edit:yearOfManufacture" class="form-control input-md"
                                        type="number" min="1900" max="2200"
                                        title="Vui lòng nhập năm sản xuất xe!"
-                                       value="${contract.yearOfManufacture}">
+                                       <c:if test="${empty submitted}">value="${contract.yearOfManufacture}"</c:if>
+                                       <c:if test="${not empty submitted}">value="${submitted.yearOfManufacture}"</c:if>
+                                        >
                             </div>
 
                             <label class="col-sm-3 control-label" for="weight">Tự trọng</label>
@@ -139,7 +157,9 @@
                                     <input id="weight" name="edit:weight" class="form-control input-md"
                                            type="number" min="1" max="1000"
                                            title="Vui lòng nhập tự trọng của xe!"
-                                           value="${contract.weight}">
+                                           <c:if test="${empty submitted}">value="${contract.weight}"</c:if>
+                                           <c:if test="${not empty submitted}">value="${submitted.weight}"</c:if>
+                                            >
                                     <span class="input-group-addon">kg</span>
                                 </div>
                             </div>
@@ -152,9 +172,11 @@
                             <div class="col-sm-3">
                                 <div class="input-group">
                                     <input id="seatCapacity" name="edit:seatCapacity" class="form-control input-md"
-                                           type="number" min="1" max="1000"
+                                           type="number" min="1" max="100"
                                            title="Vui lòng nhập số người cho phép chở!"
-                                           value="${contract.seatCapacity}">
+                                           <c:if test="${empty submitted}">value="${contract.seatCapacity}"</c:if>
+                                           <c:if test="${not empty submitted}">value="${submitted.seatCapacity}"</c:if>
+                                            >
                                     <span class="input-group-addon">người</span>
                                 </div>
                             </div>
