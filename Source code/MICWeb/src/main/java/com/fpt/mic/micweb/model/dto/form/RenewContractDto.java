@@ -5,6 +5,7 @@ import com.fpt.mic.micweb.model.entity.ContractEntity;
 import com.fpt.mic.micweb.utils.ConfigUtils;
 import com.fpt.mic.micweb.utils.DateUtils;
 import org.hibernate.validator.constraints.NotEmpty;
+import org.joda.time.LocalDate;
 
 import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.NotNull;
@@ -68,8 +69,11 @@ public class RenewContractDto {
     @AssertTrue(message = "Thời điểm hết hiệu lực không được trước thời gian quy định")
     private boolean isValidExpiredDateMin() {
         if (expiredDate != null) {
+            Timestamp startDate = getStartDate();
             ConfigUtils configUtils = new ConfigUtils();
-            Timestamp expiredDateMin = new Timestamp(configUtils.getExpiredDateMin().toDateTimeAtStartOfDay().getMillis());
+            LocalDate stDate = new LocalDate(startDate);
+            LocalDate expDateMin = stDate.plusMonths(configUtils.getContractMinTerm());
+            Timestamp expiredDateMin = new Timestamp(expDateMin.toDateTimeAtStartOfDay().getMillis());
             return !expiredDate.before(expiredDateMin);
         }
         return false;
@@ -78,8 +82,11 @@ public class RenewContractDto {
     @AssertTrue(message = "Thời điểm hết hiệu lực không được sau thời gian quy định")
     private boolean isValidExpiredDateMax() {
         if (expiredDate != null) {
+            Timestamp startDate = getStartDate();
             ConfigUtils configUtils = new ConfigUtils();
-            Timestamp expiredDateMax = new Timestamp(configUtils.getExpiredDateMax().toDateTimeAtStartOfDay().getMillis());
+            LocalDate stDate = new LocalDate(startDate);
+            LocalDate expDateMax = stDate.plusMonths(configUtils.getContractDefaultTerm());
+            Timestamp expiredDateMax = new Timestamp(expDateMax.toDateTimeAtStartOfDay().getMillis());
             return !expiredDate.after(expiredDateMax);
         }
         return false;
@@ -87,28 +94,35 @@ public class RenewContractDto {
 
     @AssertTrue(message = "Thời điểm có hiệu lực phải sau thời điểm hết hiệu lực")
     private boolean isValidExpiredDate() {
-        Timestamp startDate = getStartDate();
-        if (startDate != null & expiredDate != null) {
+        if (expiredDate != null) {
+            Timestamp startDate = getStartDate();
             return expiredDate.after(startDate);
         } else {
             return false;
         }
     }
 
-    @AssertTrue(message = "Thời hạn hợp đồng tối đa là 1 năm")
-    private boolean isValidTerm() {
-        Timestamp startDate = getStartDate();
-        if (startDate != null & expiredDate != null) {
-            long contractTerm = expiredDate.getTime() - startDate.getTime();
+    @AssertTrue(message = "Thời hạn hợp đồng không được dài hơn thời gian quy định")
+    private boolean isValidDefaultTerm() {
+        if (expiredDate != null) {
+            Timestamp startDate = getStartDate();
+            ConfigUtils configUtils = new ConfigUtils();
+            LocalDate maxExpDate = new LocalDate(startDate).plusMonths(configUtils.getContractDefaultTerm());
+            Timestamp maxExpiredDate = new Timestamp(maxExpDate.toDateTimeAtStartOfDay().getMillis());
+            return !maxExpiredDate.before(expiredDate);
+        } else {
+            return false;
+        }
+    }
 
-            final long MILLISECONDS_IN_YEAR =
-                    (long) MILLIS_IN_SECOND * SECONDS_IN_MINUTE * MINUTES_IN_HOUR
-                            * HOURS_IN_DAY * DAYS_IN_YEAR;
-            if (contractTerm <= MILLISECONDS_IN_YEAR) {
-                return true;
-            } else {
-                return false;
-            }
+    @AssertTrue(message = "Thời hạn hợp đồng không được ngắn hơn thời gian quy định")
+    private boolean isValidMinTerm() {
+        if (expiredDate != null) {
+            Timestamp startDate = getStartDate();
+            ConfigUtils configUtils = new ConfigUtils();
+            LocalDate minExpDate = new LocalDate(startDate).plusMonths(configUtils.getContractMinTerm());
+            Timestamp minExpiredDate = new Timestamp(minExpDate.toDateTimeAtStartOfDay().getMillis());
+            return !minExpiredDate.after(expiredDate);
         } else {
             return false;
         }
