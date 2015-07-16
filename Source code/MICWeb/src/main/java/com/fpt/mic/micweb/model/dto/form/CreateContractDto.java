@@ -2,6 +2,7 @@ package com.fpt.mic.micweb.model.dto.form;
 
 import com.fpt.mic.micweb.model.dao.ContractDao;
 import com.fpt.mic.micweb.model.dao.CustomerDao;
+import com.fpt.mic.micweb.utils.ConfigUtils;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.hibernate.validator.constraints.Range;
 
@@ -62,6 +63,46 @@ public class CreateContractDto {
         return customerCode != null && customerDao.read(customerCode) != null;
     }
 
+    @AssertTrue(message = "Thời điểm có hiệu lực không được trước thời gian quy định")
+    private boolean isValidStartDateMin() {
+        if (startDate != null) {
+            ConfigUtils configUtils = new ConfigUtils();
+            Timestamp startDateMin = new Timestamp(configUtils.getStartDateMin().toDateTimeAtStartOfDay().getMillis());
+            return !startDate.before(startDateMin);
+        }
+        return false;
+    }
+
+    @AssertTrue(message = "Thời điểm có hiệu lực không được sau thời gian quy định")
+    private boolean isValidStartDateMax() {
+        if (startDate != null) {
+            ConfigUtils configUtils = new ConfigUtils();
+            Timestamp startDateMax = new Timestamp(configUtils.getStartDateMax().toDateTimeAtStartOfDay().getMillis());
+            return !startDate.after(startDateMax);
+        }
+        return false;
+    }
+
+    @AssertTrue(message = "Thời điểm hết hiệu lực không được trước thời gian quy định")
+    private boolean isValidExpiredDateMin() {
+        if (expiredDate != null) {
+            ConfigUtils configUtils = new ConfigUtils();
+            Timestamp expiredDateMin = new Timestamp(configUtils.getExpiredDateMin().toDateTimeAtStartOfDay().getMillis());
+            return !expiredDate.before(expiredDateMin);
+        }
+        return false;
+    }
+
+    @AssertTrue(message = "Thời điểm hết hiệu lực không được sau thời gian quy định")
+    private boolean isValidExpiredDateMax() {
+        if (expiredDate != null) {
+            ConfigUtils configUtils = new ConfigUtils();
+            Timestamp expiredDateMax = new Timestamp(configUtils.getExpiredDateMax().toDateTimeAtStartOfDay().getMillis());
+            return !expiredDate.after(expiredDateMax);
+        }
+        return false;
+    }
+    
     @AssertTrue(message = "Thời điểm có hiệu lực phải sau thời điểm hết hiệu lực")
     private boolean isValidDate() {
         if (startDate != null & expiredDate != null) {
@@ -128,6 +169,26 @@ public class CreateContractDto {
             // Nếu có giá trị thì phải có độ dài đúng requirement
             return color.length() >= 2 && color.length() <= 20;
         }
+    }
+
+    @AssertTrue(message = "Ngày nộp phí không được trước thời gian quy định")
+    private boolean isValidPaidDateMin() {
+        if (paidDate != null) {
+            ConfigUtils configUtils = new ConfigUtils();
+            Timestamp paidDateMin = new Timestamp(configUtils.getPaidDateMin().toDateTimeAtStartOfDay().getMillis());
+            return !paidDate.before(paidDateMin);
+        }
+        return false;
+    }
+
+    @AssertTrue(message = "Ngày nộp phí không được sau thời gian quy định")
+    private boolean isValidPaidDateMax() {
+        if (paidDate != null) {
+            ConfigUtils configUtils = new ConfigUtils();
+            Timestamp paidDateMax = new Timestamp(configUtils.getPaidDateMax().toDateTimeAtStartOfDay().getMillis());
+            return !paidDate.after(paidDateMax);
+        }
+        return false;
     }
 
     public CreateContractDto() {
