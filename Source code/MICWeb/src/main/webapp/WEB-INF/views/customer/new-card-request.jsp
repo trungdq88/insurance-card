@@ -113,17 +113,18 @@
 
                         <input id="delivery" name="request:deliveryRequested" type="checkbox" value="true" onclick="{
                     if( this.checked){
-                        $('#delivery').attr('value','false');
-                        $('#transform_Cost1').text(0);
-                        $('#total_Cost').text(parseFloat($('#newCard_Cost').val()).formatMoney(0));
-                    } else {
                         $('#transform_Cost1').text(parseFloat($('#transform_Cost').val()).formatMoney(0));
                         $('#delivery').attr('value','true');
                         $('#total_Cost').text((parseFloat($('#newCard_Cost').val()) + parseFloat($('#transform_Cost').val())).formatMoney(0));
+
+                    } else {
+                        $('#delivery').attr('value','false');
+                        $('#transform_Cost1').text(0);
+                        $('#total_Cost').text(parseFloat($('#newCard_Cost').val()).formatMoney(0));
                     };
                     }"
-                        <c:if test="${submitted.deliveryRequested == false}"> checked</c:if> >
-                        <label for="delivery">Nhận thẻ tại công ty</label>
+                        <c:if test="${submitted.deliveryRequested == true}"> checked</c:if> >
+                        <label for="delivery">Giao thẻ tận nơi</label>
                     </p>
 
                 </div>
@@ -173,15 +174,17 @@
     };
     $('.tranformCost').removeClass('hide');
     $('.newCardCost').removeClass('hide');
-    if ($('#deactiveCard').attr('value') == true) {
+    if ($('#deactiveCard').attr('value') == 'true') {
         $('#deactiveCard').checked;
     }
 
-    if($('#delivery').attr('value') == false) {
-        $('#total_Cost').text(parseFloat($('#newCard_Cost').val()).formatMoney(0));
-        $('#delivery').checked;
-    } else {
+    if($('#delivery').attr('value') == 'true') {
         $('#total_Cost').text((parseFloat($('#newCard_Cost').val()) + parseFloat($('#transform_Cost').val())).formatMoney(0));
+        $('#delivery').attr('checked',true);
+        $('#transform_Cost1').text(parseFloat($('#transform_Cost').val()).formatMoney(0));
+    } else {
+        $('#total_Cost').text(parseFloat($('#newCard_Cost').val()).formatMoney(0));
+        $('#transform_Cost1').text(0);
     }
 
     $('#newCard_Cost1').text(parseFloat($('#newCard_Cost').val()).formatMoney(0));
