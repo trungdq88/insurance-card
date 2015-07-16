@@ -81,7 +81,7 @@
                 </div>
               </div>
 
-              <label class="col-sm-3 control-label">Số CMND / Hộ chiếu *</label>
+              <label class="col-sm-3 control-label">Số CMND / Hộ chiếu </label>
 
               <div class="col-sm-3">
                 <div class="text-value">
