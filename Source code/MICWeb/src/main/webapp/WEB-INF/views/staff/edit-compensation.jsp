@@ -145,7 +145,7 @@
                                     <input id="vehicleCapacity" name="edit:vehicleCapacity"
                                            class="form-control input-md"
                                            type="text" required minlength="1" maxlength="20"
-                                           title="Vui lòng nhập dung tích xe!" placeholder="Ví dụ: 7"
+                                           title="Vui lòng nhập trọng tải hoặc số chỗ ngồi!" placeholder="Ví dụ: 7"
                                            value="${compensation.vehicleCapacity}">
                                     <span class="input-group-addon" id="basic-addon">(tấn/chỗ)</span>
                                 </div>
