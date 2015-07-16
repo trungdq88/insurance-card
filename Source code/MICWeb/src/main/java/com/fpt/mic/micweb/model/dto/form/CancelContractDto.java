@@ -2,6 +2,7 @@ package com.fpt.mic.micweb.model.dto.form;
 
 import com.fpt.mic.micweb.model.dao.ContractDao;
 import com.fpt.mic.micweb.model.entity.ContractEntity;
+import com.fpt.mic.micweb.utils.ConfigUtils;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.validation.constraints.AssertTrue;
@@ -49,6 +50,26 @@ public class CancelContractDto {
         return contractCode != null && contractDao.read(contractCode) != null;
     }
 
+    @AssertTrue(message = "Ngày hủy hợp đồng không được trước thời gian quy định")
+    private boolean isValidCancelDateMin() {
+        if (cancelDate != null) {
+            ConfigUtils configUtils = new ConfigUtils();
+            Timestamp cancelDateMin = new Timestamp(configUtils.getCancelDateMin().toDateTimeAtStartOfDay().getMillis());
+            return !cancelDate.before(cancelDateMin);
+        }
+        return false;
+    }
+
+    @AssertTrue(message = "Ngày hủy hợp đồng không được sau thời gian quy định")
+    private boolean isValidCancelDateMax() {
+        if (cancelDate != null) {
+            ConfigUtils configUtils = new ConfigUtils();
+            Timestamp cancelDateMax = new Timestamp(configUtils.getCancelDateMax().toDateTimeAtStartOfDay().getMillis());
+            return !cancelDate.after(cancelDateMax);
+        }
+        return false;
+    }
+    
     @AssertTrue(message = "Lý do hủy hợp đồng không thể là khoảng trắng")
     private boolean isCancelReasonValid() {
         if (cancelReason.trim().equals("")) {

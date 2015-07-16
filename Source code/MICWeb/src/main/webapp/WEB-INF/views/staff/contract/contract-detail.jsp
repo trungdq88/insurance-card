@@ -137,7 +137,7 @@
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">Lý do hủy</label>
 
-                                <div class="col-sm-7">
+                                <div class="col-sm-8">
                                     <div class="text-value">${contract.cancelReason}</div>
                                 </div>
                             </div>
@@ -146,7 +146,7 @@
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">Ghi chú hủy</label>
 
-                                <div class="col-sm-7">
+                                <div class="col-sm-8">
                                     <div class="text-value">
                                         <c:choose>
                                             <c:when test="${empty contract.cancelNote}">
