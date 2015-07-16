@@ -69,7 +69,7 @@ public class PersonalController extends AuthController {
                 mess = "Bạn đã thay đổi thông tin cá nhân thành công";
                 r.equest.setAttribute("message", mess);
                 r.equest.setAttribute("customer", customerBusiness.getCustomer(customerCode));
-                return new JspPage("customer/personal-information.jsp");
+                return new RedirectTo("customer");
             }
             else {
                 mess = "Thay đổi thông tin cá nhân thất bại";
