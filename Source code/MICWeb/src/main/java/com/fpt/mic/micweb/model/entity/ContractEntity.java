@@ -36,6 +36,7 @@ public class ContractEntity {
     private Integer needRenewPayment;
     private Timestamp lastModified;
     private Timestamp createdDate;
+    private Integer activeCardInstanceId;
 
     private Collection<AccidentEntity> micAccidentsByContractCode;
     private Collection<CardInstanceEntity> micCardInstancesByContractCode;
@@ -296,6 +297,16 @@ public class ContractEntity {
 
     public void setNeedRenewPayment(Integer needRenewPayment) {
         this.needRenewPayment = needRenewPayment;
+    }
+
+    @Basic
+    @Column(name = "active_card_instance_id")
+    public Integer getActiveCardInstanceId() {
+        return activeCardInstanceId;
+    }
+
+    public void setActiveCardInstanceId(Integer activeCardInstanceId) {
+        this.activeCardInstanceId = activeCardInstanceId;
     }
 
     @Override
