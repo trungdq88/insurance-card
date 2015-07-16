@@ -276,6 +276,34 @@ public class StaffBusiness {
         return false;
     }
 
+    public boolean editVehicleInfo(EditVehicleDto dto) {
+        ContractDao contractDao = new ContractDao();
+        ContractEntity contractEntity = contractDao.read(dto.getContractCode());
+
+        // Check contract
+        if (contractEntity != null) {
+            // Update vehicle information
+            contractEntity.setPlate(dto.getPlate());
+            contractEntity.setBrand(dto.getBrand());
+            contractEntity.setModelCode(dto.getModelCode());
+            contractEntity.setVehicleType(dto.getVehicleType());
+            contractEntity.setColor(dto.getColor());
+            contractEntity.setEngine(dto.getEngine());
+            contractEntity.setChassis(dto.getChassis());
+            contractEntity.setCapacity(dto.getCapacity());
+            contractEntity.setYearOfManufacture(dto.getYearOfManufacture());
+            contractEntity.setWeight(dto.getWeight());
+            contractEntity.setSeatCapacity(dto.getSeatCapacity());
+            // Set lastModified is current date
+            contractEntity.setLastModified(DateUtils.currentTimeWithoutNanos());
+
+            if (contractDao.update(contractEntity) != null) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public List<ContractTypeEntity> getAllContractType() {
         ContractTypeDao contractTypeDao = new ContractTypeDao();
         return contractTypeDao.getAllContractType();
@@ -398,10 +426,10 @@ public class StaffBusiness {
         return contractEntity != null && !contractEntity.getLastModified().equals(lastModified);
     }
 
-    public boolean updateStaffProfile(EditStaffProfileDto editStaffProfileDto, String staffCode){
+    public boolean updateStaffProfile(EditStaffProfileDto editStaffProfileDto, String staffCode) {
         StaffDao staffDao = new StaffDao();
         StaffEntity staffEntity = staffDao.read(staffCode);
-        if (staffEntity != null){
+        if (staffEntity != null) {
             staffEntity.setEmail(editStaffProfileDto.getEmail());
             staffEntity.setName(editStaffProfileDto.getName());
             staffEntity.setPhone(editStaffProfileDto.getPhone());
@@ -413,18 +441,18 @@ public class StaffBusiness {
 
     /**
      * Edit Profile
-     * */
-    public Boolean updateCustomerProfile( EditCustomerProfileByStaffDto dto){
+     */
+    public Boolean updateCustomerProfile(EditCustomerProfileByStaffDto dto) {
         CustomerDao customerDao = new CustomerDao();
         CustomerEntity customerEntity = customerDao.read(dto.getCustomerCode());
-        if(customerEntity != null){
+        if (customerEntity != null) {
             customerEntity.setAddress(dto.getAddress());
             customerEntity.setName(dto.getName());
             customerEntity.setEmail(dto.getEmail());
             customerEntity.setPhone(dto.getPhone());
             customerEntity.setPersonalId(dto.getPersonalId());
             customerEntity.setLastModified(new Timestamp(new java.util.Date().getTime()));
-            if(customerDao.update(customerEntity) != null){
+            if (customerDao.update(customerEntity) != null) {
                 return true;
             }
         }

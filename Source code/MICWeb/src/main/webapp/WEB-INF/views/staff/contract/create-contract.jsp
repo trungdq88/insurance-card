@@ -343,39 +343,42 @@
 <!-- model for select customer -->
 <div class="modal fade" id="select-customer-modal">
     <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                        aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Chọn khách hàng đã có sẵn trong hệ thống</h4>
-            </div>
-            <div class="modal-body">
-
-                <input type="text" class="form-control" placeholder="Tìm theo tên KH, CMND, biển số xe"/>
-                <br/>
-
-                <div class="table-responsive">
-                    <table class="table table-striped table-bordered table-hover">
-                        <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Mã KH</th>
-                            <th>Tên KH</th>
-                            <th></th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                    </table>
+        <form class="form-horizontal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Chọn khách hàng đã có sẵn trong hệ thống</h4>
                 </div>
-                <!-- /.table-responsive -->
+                <div class="modal-body">
+                    <input type="text" class="form-control" placeholder="Tìm theo tên KH, CMND, biển số xe"/>
+                    <br/>
+
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered table-hover">
+                            <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Mã KH</th>
+                                <th>Tên KH</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- /.table-responsive -->
+                </div>
+                <div class="modal-footer">
+                    <input type="hidden" name="action" value="handleCancelRequest"/>
+                    <button type="submit" class="btn btn-primary" data-toggle="collapse" data-target="#customerInfo">
+                        <i class="fa fa-check"></i> Xác nhận
+                    </button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+                </div>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal"
-                        data-toggle="collapse" data-target="#customerInfo">Đóng
-                </button>
-            </div>
-        </div>
+        </form>
         <!-- /.modal-content -->
     </div>
     <!-- /.modal-dialog -->

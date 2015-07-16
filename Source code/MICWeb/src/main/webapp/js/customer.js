@@ -3,19 +3,10 @@
  */
 
 $(document).ready(function () {
-    var isShow = false;
+
 
     CheckDayAvailable();
-    $('.showCardInfo').click(function(){
-        isShow = !isShow;
-        if(isShow == true){
-            $('.cardInfo').removeClass('hide');
-        }
-        else {
-            $('.cardInfo').addClass('hide');
-        }
 
-    });
     $('[data-toggle="tooltip"]').tooltip();
     if ($('#isFirstLogin').val() == 0) {
         $('#changePass').trigger("click");
@@ -72,7 +63,7 @@ $(document).ready(function () {
         //Pending
         else if (status == 'Pending') {
             $('#renew').addClass('hide');
-            $('#delete').addClass('hide');
+            //$('#delete').addClass('hide');
         }
         //Request cancel
         else if (status == 'Request cancel') {

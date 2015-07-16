@@ -39,7 +39,7 @@
                                        type="text" required minlength="3" maxlength="80"
                                        pattern="^([^0-9`~!@#$%^&*,.<>;':/|{}()=_+-]+)$"
                                        value="${submitted.name}" title="Vui lòng nhập họ tên"
-                                       placeholder="Ví dụ: Võ Thị Minh Châu">
+                                       placeholder="Ví dụ: Trần Văn A">
                             </div>
                         </div>
 
@@ -63,7 +63,7 @@
                                        type="text" required minlength="3" maxlength="250"
                                        pattern="^([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3})$"
                                        value="${submitted.email}" title="Vui lòng nhập một email đúng"
-                                       placeholder="Ví dụ: chauvtm@yahoo.com">
+                                       placeholder="Ví dụ: aido@tenmien.com">
                             </div>
                         </div>
 

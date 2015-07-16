@@ -27,15 +27,32 @@ import java.util.*;
  */
 @WebServlet(name = "PaymentController", urlPatterns = "/customer/payment")
 public class PaymentController extends AuthController {
+    Paginator paymentPaginator = new Paginator();
     @Override
     public List<String> getAllowedRoles() {
         return Collections.singletonList(UserDto.ROLE_CUSTOMER);
     }
     public ResponseObject getView(R r) {
+        final CustomerBusiness customerBusiness = new CustomerBusiness();
         final String customerCode = ((CustomerEntity) getLoggedInUser()).getCustomerCode();
-        CustomerBusiness customerBusiness = new CustomerBusiness();
-        List listPayment = customerBusiness.getAllPaymentByCustomerCode(customerCode);
-        r.equest.setAttribute("listPayment", listPayment);
-        return new JspPage("customer/payment.jsp");
+        if (customerCode == null ) {
+            return new RedirectTo("/error/404");
+        }else {
+            paymentPaginator.setGetItemsCallback(new Paginator.IGetItems() {
+                @Override
+                public List getItems(int offset, int count) {
+                    return customerBusiness.getAllPaymentByCustomerCode(customerCode, offset, count);
+                }
+            });
+            paymentPaginator.setGetItemSizeCallback(new Paginator.IGetItemSize() {
+                @Override
+                public Long getItemSize() {
+                    return customerBusiness.getAllPaymentByCustomerCount(customerCode);
+                }
+            });
+            r.equest.setAttribute("paymentPaginator", paymentPaginator);
+            return new JspPage("customer/payment.jsp");
+        }
+
     }
 }

@@ -56,10 +56,13 @@ public class CustomerBusiness {
         ContractDao contractDao = new ContractDao();
         return contractDao.getContractByCustomerCodeCount(customerCode);
     }
-
-    public List<PaymentEntity> getAllPaymentByCustomerCode(String customerCode) {
+    public Long getAllPaymentByCustomerCount(String customerCode) {
         PaymentDao paymentDao = new PaymentDao();
-        return paymentDao.getAllPaymentByCustomerCode(customerCode);
+        return paymentDao.getAllPaymentByCustomerCodeCount(customerCode);
+    }
+    public List<PaymentEntity> getAllPaymentByCustomerCode(String customerCode , int offset, int count) {
+        PaymentDao paymentDao = new PaymentDao();
+        return paymentDao.getPaymentByCustomerCode(customerCode, offset, count);
     }
 
     // get contract detail
@@ -162,12 +165,20 @@ public class CustomerBusiness {
         CardInstanceEntity card = cardInstanceDao.getActiveCardInstanceByContract(contractCode);
         ContractEntity contract = contractDao.read(contractCode);
         java.util.Date date = new java.util.Date();
+        // pending
+        if(contract.getStartDate().equals(contract.getExpiredDate())){
+            contract.setStatus(Constants.ContractStatus.PENDING);
+        }
         // no card
-        if (card == null) {
+        else if (card == null) {
             contract.setStatus(Constants.ContractStatus.NO_CARD);
-        } else if ((new Timestamp(date.getTime()).before(contract.getExpiredDate()))) {
+        }
+        // ready
+        else if ((new Timestamp(date.getTime()).before(contract.getExpiredDate()))) {
             contract.setStatus(Constants.ContractStatus.READY);
-        } else if ((new Timestamp(date.getTime()).after(contract.getExpiredDate()))) {
+        }
+        // expired
+        else if ((new Timestamp(date.getTime()).after(contract.getExpiredDate()))) {
             contract.setStatus(Constants.ContractStatus.EXPIRED);
         }
         contract.setCancelReason(null);

@@ -145,6 +145,33 @@ public class ContractController extends AuthController {
         return new JspPage("staff/contract/create-contract.jsp");
     }
 
+    public ResponseObject getEditVehicle(R r) {
+        String contractCode = r.equest.getParameter("code");
+
+        // Receive contractCode from failed validation
+        // @see {@link postEditVehicle}
+        if (contractCode == null) {
+            contractCode = (String) r.equest.getAttribute("contractCode");
+        }
+
+        // Call business method
+        StaffBusiness staffBusiness = new StaffBusiness();
+        ContractEntity contractEntity = staffBusiness.getContractDetail(contractCode);
+
+        // If contract is not exists, show 404 page
+        if (contractEntity == null) {
+            return new RedirectTo("/error/404");
+        }
+
+        // Save last_modified value for concurrency check
+        r.equest.getSession(true).setAttribute(
+                Constants.Session.CONCURRENCY + contractCode, contractEntity.getLastModified());
+
+        r.equest.setAttribute("CONTRACT", contractEntity);
+        // Dispatch to JSP page
+        return new JspPage("staff/contract/edit-vehicle.jsp");
+    }
+
     public ResponseObject postPreview(R r) {
         // Get contract information
         CreateContractDto dto = (CreateContractDto) r.ead.entity(CreateContractDto.class, "contract");
@@ -170,6 +197,7 @@ public class ContractController extends AuthController {
         r.equest.setAttribute("TYPE", contractType);
         return new JspPage("staff/contract/create-contract-preview.jsp");
     }
+
     public ResponseObject postReturnToEdit(R r) {
         // Get contract information
         CreateContractDto dto = (CreateContractDto) r.ead.entity(CreateContractDto.class, "contract");
@@ -440,8 +468,6 @@ public class ContractController extends AuthController {
         Timestamp lastModified = (Timestamp) r.equest.getSession(true).getAttribute(
                 Constants.Session.CONCURRENCY + dto.getContractCode());
         dto.setLastModified(lastModified);
-        System.out.println("postCompletePayment" + dto.getContractCode());
-
 
         List errors = r.ead.validate(dto);
         // If there is validation errors
@@ -465,6 +491,44 @@ public class ContractController extends AuthController {
             msg = "Đã hoàn tất thông tin thanh toán thành công";
         } else {
             msg = "Thêm thông tin thanh toán thất bại";
+        }
+        // Set contract code to request scope. Use it in message page.
+        r.equest.setAttribute("CODE", dto.getContractCode());
+        r.equest.setAttribute("MESSAGE", msg);
+        return new JspPage("staff/message.jsp");
+    }
+
+    public ResponseObject postEditVehicle(R r) {
+        // Get edit vehicle information
+        EditVehicleDto dto = (EditVehicleDto) r.ead.entity(EditVehicleDto.class, "edit");
+
+        // Get concurrency data
+        Timestamp lastModified = (Timestamp) r.equest.getSession(true).getAttribute(
+                Constants.Session.CONCURRENCY + dto.getContractCode());
+        dto.setLastModified(lastModified);
+
+        List errors = r.ead.validate(dto);
+        // If there is validation errors
+        if (errors.size() > 0) {
+            // Send error messages to JSP page
+            r.equest.setAttribute("validateErrors", errors);
+            // This is a form in a popup, we don't need to display data again since
+            // the popup will not automatically open when the page is reloaded
+            // r.equest.setAttribute("submitted", dto);
+            // Re-call the contract detail page
+            r.equest.setAttribute("contractCode", dto.getContractCode());
+            return getEditVehicle(r);
+        }
+        // If the code reached this line that means there is no validation errors
+
+        // Call business method
+        StaffBusiness staffBus = new StaffBusiness();
+        boolean result = staffBus.editVehicleInfo(dto);
+
+        if (result) {
+            msg = "Đã sửa thông tin xe cơ giới thành công";
+        } else {
+            msg = "Sửa thông tin xe cơ giới thất bại";
         }
         // Set contract code to request scope. Use it in message page.
         r.equest.setAttribute("CODE", dto.getContractCode());
