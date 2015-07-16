@@ -8,10 +8,13 @@
                             <form action="${pageContext.request.contextPath}/customer/compensation" method="get">
                               <input type="hidden" name="action" value="Create">
                               <input type="hidden" name="contractCode" value="${contract.contractCode}">
-                              <button href="${pageContext.request.contextPath}/customer/compensation?action=create"
-                                      type="submit"
-                                      class="btn btn-success ">Yêu cầu bồi thường
-                              </button>
+                              <c:if test="${!contract.status.equalsIgnoreCase('Cancelled')}">
+                                <button href="${pageContext.request.contextPath}/customer/compensation?action=create"
+                                        type="submit"
+                                        class="btn btn-success ">Yêu cầu bồi thường
+                                </button>
+                              </c:if>
+
                             </form>
                           </span>
     </div>

@@ -6,10 +6,13 @@
   <div class="row">
     <div class="col-lg-12">
       <div class="pull-right">
-        <a href="${pageContext.request.contextPath}/customer/accident?action=create&code=${contract.contractCode}"
-           class="btn btn-success">
-          <i class="fa fa-plus"></i> Thông báo tai nạn mới
-        </a>
+        <c:if test="${!contract.status.equalsIgnoreCase('Cancelled')}">
+          <a href="${pageContext.request.contextPath}/customer/accident?action=create&code=${contract.contractCode}"
+             class="btn btn-success">
+            <i class="fa fa-plus"></i> Thông báo tai nạn mới
+          </a>
+        </c:if>
+
       </div>
     </div>
   </div>

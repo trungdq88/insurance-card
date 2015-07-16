@@ -73,10 +73,13 @@
   <div class="row">
     <div class="col-lg-12">
       <div class="pull-right">
-        <a href="${pageContext.request.contextPath}/customer/punishment?action=create&contractCode=${contract.contractCode}"
-           class="btn btn-success">
-          <i class="fa fa-plus"></i>Thêm vi phạm
-        </a>
+        <c:if test="${!contract.status.equalsIgnoreCase('Cancelled')}">
+          <a href="${pageContext.request.contextPath}/customer/punishment?action=create&contractCode=${contract.contractCode}"
+             class="btn btn-success">
+            <i class="fa fa-plus"></i>Thêm vi phạm
+          </a>
+        </c:if>
+
       </div>
     </div>
   </div>
