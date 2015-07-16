@@ -143,7 +143,11 @@
                             <label class="col-sm-4 control-label" for="startDate">Thời điểm có hiệu lực *</label>
 
                             <div class="col-sm-3">
-                                <input id="startDate" name="contract:startDate" class="form-control input-md"
+                                <input id="startDate" name="contract:startDate" class="form-control input-md" onchange="{
+                                        $('#expiredDate').val(addMonth($('#startDate').val(),'${config.contractDefaultTerm}'));
+                                        $('#expiredDate').min = addMonth($('#startDate').val(),'${config.contractMinTerm}');
+                                        $('#expiredDate').max = addMonth($('#startDate').val(),'${config.contractDefaultTerm}');
+                                }"
                                        type="date" required
                                        value="<fmt:formatDate value="${submitted.startDate}" pattern="yyyy-MM-dd" />"/>
                             </div>
@@ -410,10 +414,10 @@
         document.getElementById("startDate").min = '${config.startDateMin}';
         document.getElementById("startDate").max = '${config.startDateMax}';
         if ($('#expiredDate').val() == "") {
-            $('#expiredDate').val(getCurrentDateInNextYear());
+            $('#expiredDate').val(addMonth($('#startDate').val(),'${config.contractDefaultTerm}'));
         }
-        document.getElementById("expiredDate").min = '${config.expiredDateMin}';
-        document.getElementById("expiredDate").max = '${config.expiredDateMax}';
+        document.getElementById("expiredDate").min = addMonth($('#startDate').val(),'${config.contractMinTerm}');
+        document.getElementById("expiredDate").max = addMonth($('#startDate').val(),'${config.contractDefaultTerm}');
         if ($('#paidDate').val() == "") {
             $('#paidDate').val(getCurrentDate());
         }
@@ -433,8 +437,8 @@
                 contractFee = calculateContractFee(contractTerm, pricePerYear);
                 refreshFee(contractFee);
                 // Refreshing min max expired date
-                document.getElementById("expiredDate").min = getInputDateNextDate(stDate);
-                document.getElementById("expiredDate").max = getInputDateInNextYear(stDate);
+//                document.getElementById("expiredDate").min = getInputDateNextDate(stDate);
+//                document.getElementById("expiredDate").max = getInputDateInNextYear(stDate);
             });
             refreshFee(contractFee);
         }).change();
