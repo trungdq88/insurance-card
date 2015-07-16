@@ -84,6 +84,14 @@ function daysBetween(date1, date2) {
         return 0;
     }
 }
+//  hàm + tháng vào date
+function addMonth(startDate, defaultTerm) {
+    var array = startDate.split("-");
+    var month = parseInt(defaultTerm);// get tu config
+    var newMonth = parseInt((parseInt(array[1])+month)% 12);
+    var newYear = parseInt(array[0])+((parseInt(array[1])+month)-newMonth)/12;
+    return newYear+'-'+newMonth+'-'+array[2];
+}
 
 function calculateContractFee(contractTerm, pricePerYear) {
     var nTerm = parseInt(contractTerm);
