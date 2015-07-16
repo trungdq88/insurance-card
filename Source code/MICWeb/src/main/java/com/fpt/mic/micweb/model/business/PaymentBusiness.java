@@ -3,6 +3,7 @@ package com.fpt.mic.micweb.model.business;
 import com.fpt.mic.micweb.model.dao.PaymentDao;
 import com.fpt.mic.micweb.model.dto.form.CreateNewCardPaymentDto;
 import com.fpt.mic.micweb.model.entity.PaymentEntity;
+import com.fpt.mic.micweb.utils.ConfigUtils;
 import com.fpt.mic.micweb.utils.Constants;
 
 import java.sql.Timestamp;
@@ -29,14 +30,15 @@ public class PaymentBusiness {
         PaymentEntity paymentEntity = new PaymentEntity();
         paymentEntity.setContractCode(createNewCardPaymentDto.getContractCode());
         paymentEntity.setPaymentMethod("Trực tiếp");
+        ConfigUtils configUtils = new ConfigUtils();
         // kiem tra neu isDeliveryRequested
         if(createNewCardPaymentDto.getDelivery() == 1) {
             paymentEntity.setContent("Đăng ký thẻ mới "+createNewCardPaymentDto.getContractCode() +" + giao thẻ trực tiếp");
-            paymentEntity.setAmount(Constants.PaymentFee.NEW_CARD_REQUEST_FEE + Constants.PaymentFee.DELIVERY_FEE);
+            paymentEntity.setAmount(configUtils.getNewCardFee() + configUtils.getDeliveryFee());
         }
         else {
             paymentEntity.setContent("Đăng ký thẻ mới "+createNewCardPaymentDto.getContractCode());
-            paymentEntity.setAmount(Constants.PaymentFee.NEW_CARD_REQUEST_FEE);
+            paymentEntity.setAmount(configUtils.getNewCardFee());
         }
         paymentEntity.setPaidDate(createNewCardPaymentDto.getPaidDate());
         paymentEntity.setReceiver(staffCode);

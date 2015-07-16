@@ -15,6 +15,7 @@ import com.fpt.mic.micweb.model.dto.UserDto;
 import com.fpt.mic.micweb.model.dto.form.NewCardRequestDto;
 import com.fpt.mic.micweb.model.entity.CardInstanceEntity;
 import com.fpt.mic.micweb.model.entity.CustomerEntity;
+import com.fpt.mic.micweb.utils.ConfigUtils;
 import com.fpt.mic.micweb.utils.Constants;
 
 import javax.servlet.annotation.WebServlet;
@@ -100,8 +101,9 @@ public class CardController extends AuthController {
         String contractCode = r.equest.getParameter("contractCode");
         r.equest.setAttribute("contractCode", contractCode);
         r.equest.setAttribute("customerCode", customerCode);
-        r.equest.setAttribute("newCardFee", "" + Constants.PaymentFee.NEW_CARD_REQUEST_FEE);
-        r.equest.setAttribute("transformFee", "" + Constants.PaymentFee.DELIVERY_FEE);
+        ConfigUtils configUtils = new ConfigUtils();
+        r.equest.setAttribute("newCardFee", "" + configUtils.getNewCardFee());
+        r.equest.setAttribute("transformFee", "" + configUtils.getDeliveryFee());
         return new JspPage("/customer/new-card-request.jsp");
     }
 
@@ -118,8 +120,9 @@ public class CardController extends AuthController {
             r.equest.setAttribute("validateErrors", errors);
             r.equest.setAttribute("submitted", newCardRequestDto);
             r.equest.setAttribute("contractCode", newCardRequestDto.getContractCode());
-            r.equest.setAttribute("newCardFee", "" + Constants.PaymentFee.NEW_CARD_REQUEST_FEE);
-            r.equest.setAttribute("transformFee", "" + Constants.PaymentFee.DELIVERY_FEE);
+            ConfigUtils configUtils = new ConfigUtils();
+            r.equest.setAttribute("newCardFee", "" + configUtils.getNewCardFee());
+            r.equest.setAttribute("transformFee", "" + configUtils.getDeliveryFee());
             // Gửi dữ liệu mà người dùng đã nhập về trang JSP, gán vào biết submitted
 
             return getNewCard(r);
@@ -168,11 +171,14 @@ public class CardController extends AuthController {
                     session.setAttribute("cancel_message", "Bạn đã hủy thanh toán. Xin vui lòng thực hiện lại hoặc đến thanh toán trực tiếp");
                     session.setAttribute("redirectLink", "/customer/contract?action=detail&code=" + contractCode);
                     float totalAmount;
+                    ConfigUtils configUtils = new ConfigUtils();
+                    float newCardFee = configUtils.getNewCardFee();
+                    float deliveryFee = configUtils.getDeliveryFee();
                     // neu yeu cau delivery thi + them phi
                     if(newCardRequestDto.isDeliveryRequested()){
-                        totalAmount = Constants.PaymentFee.NEW_CARD_REQUEST_FEE + Constants.PaymentFee.DELIVERY_FEE;
+                        totalAmount = newCardFee + deliveryFee;
                     } else {
-                        totalAmount = Constants.PaymentFee.NEW_CARD_REQUEST_FEE;
+                        totalAmount = newCardFee;
                     }
                     CheckoutRequestDto checkoutRequest = new CheckoutRequestDto();
                     checkoutRequest.setPaymentrequest_name("Yêu cầu thẻ mới " + newCardRequestDto.getContractCode());
