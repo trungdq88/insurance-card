@@ -5,6 +5,7 @@ import com.fpt.mic.micweb.model.dao.ContractDao;
 import com.fpt.mic.micweb.model.dto.NotificationBuilder;
 import com.fpt.mic.micweb.model.entity.ContractEntity;
 import com.fpt.mic.micweb.model.entity.helper.NotificationEntity;
+import com.fpt.mic.micweb.utils.ConfigUtils;
 import com.fpt.mic.micweb.utils.Constants;
 import com.fpt.mic.micweb.utils.DateUtils;
 
@@ -54,14 +55,15 @@ public class SchedulerBusiness {
             NotificationBusiness bus = new NotificationBusiness();
 
             int type = 0;
+            ConfigUtils configUtils = new ConfigUtils();
 
-            if (DateUtils.dateBetween(currentDate, contractEntity.getExpiredDate()) <= Constants.DueDate.NEARLY_EXCEED_EXPIRED_1) {
+            if (DateUtils.dateBetween(currentDate, contractEntity.getExpiredDate()) <= configUtils.getNearlyExceedExpiredOne()) {
                 type = NotificationEntity.Type.CONTRACT_NEARLY_EXPIRED_1;
             }
-            if (DateUtils.dateBetween(currentDate, contractEntity.getExpiredDate()) <= Constants.DueDate.NEARLY_EXCEED_EXPIRED_2) {
+            if (DateUtils.dateBetween(currentDate, contractEntity.getExpiredDate()) <= configUtils.getNearlyExceedExpiredTwo()) {
                 type = NotificationEntity.Type.CONTRACT_NEARLY_EXPIRED_2;
             }
-            if (DateUtils.dateBetween(currentDate, contractEntity.getExpiredDate()) <= Constants.DueDate.NEARLY_EXCEED_EXPIRED_3) {
+            if (DateUtils.dateBetween(currentDate, contractEntity.getExpiredDate()) <= configUtils.getNearlyExceedExpiredThree()) {
                 type = NotificationEntity.Type.CONTRACT_NEARLY_EXPIRED_3;
             }
             if (type > 0) {
@@ -99,10 +101,11 @@ public class SchedulerBusiness {
     public boolean checkIfContractExceedPaymentDueDate(ContractEntity contractEntity) {
         ContractDao contractDao = new ContractDao();
         Timestamp currentDate = DateUtils.currentDateWithoutTime();
+        ConfigUtils configUtils = new ConfigUtils();
         // check if Pending contract exceeded payment due date
         if (contractEntity.getStatus().equals(Constants.ContractStatus.PENDING)) {
             if (contractEntity.getStartDate().equals(contractEntity.getExpiredDate())) {
-                if (DateUtils.dateBetween(contractEntity.getCreatedDate(), currentDate) > Constants.DueDate.PAYMENT_DUE_DATE) {
+                if (DateUtils.dateBetween(contractEntity.getCreatedDate(), currentDate) > configUtils.getPaymentDueDate()) {
                     contractEntity.setStatus(Constants.ContractStatus.CANCELLED);
                     contractEntity.setCancelDate(currentDate);
                     contractEntity.setCancelReason("Quá ngày thanh toán hợp đồng");
