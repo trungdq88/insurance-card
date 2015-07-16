@@ -45,6 +45,7 @@ public class ContractEntity {
     private StaffEntity micStaffByStaffCode;
     private Collection<PaymentEntity> micPaymentsByContractCode;
     private Collection<PunishmentEntity> micPunishmentsByContractCode;
+    private CardInstanceEntity micCardInstanceByActiveCardInstanceId;
 
     @Id
     @Column(name = "contract_code")
@@ -430,5 +431,15 @@ public class ContractEntity {
 
     public void setMicPunishmentsByContractCode(Collection<PunishmentEntity> micPunishmentsByContractCode) {
         this.micPunishmentsByContractCode = micPunishmentsByContractCode;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "active_card_instance_id", referencedColumnName = "id", insertable = false, updatable = false)
+    public CardInstanceEntity getMicCardInstanceByActiveCardInstanceId() {
+        return micCardInstanceByActiveCardInstanceId;
+    }
+
+    public void setMicCardInstanceByActiveCardInstanceId(CardInstanceEntity micCardInstanceByActiveCardInstanceId) {
+        this.micCardInstanceByActiveCardInstanceId = micCardInstanceByActiveCardInstanceId;
     }
 }
