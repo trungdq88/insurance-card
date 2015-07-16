@@ -2,13 +2,14 @@ package com.fpt.mic.micweb.model.dto.form;
 
 import com.fpt.mic.micweb.model.dao.ContractDao;
 import com.fpt.mic.micweb.model.entity.ContractEntity;
+import com.fpt.mic.micweb.utils.ConfigUtils;
 import com.fpt.mic.micweb.utils.DateUtils;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.sql.Timestamp;
-import java.util.Date;
 
 /**
  * Created by Kha on 23/06/2015.
@@ -22,6 +23,7 @@ public class RenewContractDto {
     private static final int DAYS_IN_YEAR = 366;
 
     @NotEmpty(message = "Mã hợp đồng không được để trống")
+    @Pattern(regexp = "^HD([0-9A-Z]{4,8})$", message = "Mã hợp đồng không hợp lệ")
     // Mã hợp đồng không tồn tại: @see {@link isNotExisted}
     private String contractCode;
     @NotNull(message = "Thời điểm hết hiệu lực không được để trống")
@@ -61,6 +63,26 @@ public class RenewContractDto {
     private boolean isNotExisted() {
         ContractDao contractDao = new ContractDao();
         return contractCode != null && contractDao.read(contractCode) != null;
+    }
+
+    @AssertTrue(message = "Thời điểm hết hiệu lực không được trước thời gian quy định")
+    private boolean isValidExpiredDateMin() {
+        if (expiredDate != null) {
+            ConfigUtils configUtils = new ConfigUtils();
+            Timestamp expiredDateMin = new Timestamp(configUtils.getExpiredDateMin().toDateTimeAtStartOfDay().getMillis());
+            return !expiredDate.before(expiredDateMin);
+        }
+        return false;
+    }
+
+    @AssertTrue(message = "Thời điểm hết hiệu lực không được sau thời gian quy định")
+    private boolean isValidExpiredDateMax() {
+        if (expiredDate != null) {
+            ConfigUtils configUtils = new ConfigUtils();
+            Timestamp expiredDateMax = new Timestamp(configUtils.getExpiredDateMax().toDateTimeAtStartOfDay().getMillis());
+            return !expiredDate.after(expiredDateMax);
+        }
+        return false;
     }
 
     @AssertTrue(message = "Thời điểm có hiệu lực phải sau thời điểm hết hiệu lực")
