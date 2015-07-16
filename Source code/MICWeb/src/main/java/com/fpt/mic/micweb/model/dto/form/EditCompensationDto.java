@@ -46,7 +46,7 @@ public class EditCompensationDto {
     @Size(min = 4, max = 15, message = "Biển số xe gây tai nạn phải có từ {min} đến {max} ký tự")
     private String plate;
     @NotEmpty(message = "Trọng tải/số chỗ ngồi không được để trống")
-    @Size(min = 2, max = 20, message = "Trọng tải/số chỗ ngồi phải có từ {min} đến {max} ký tự")
+    @Size(min = 1, max = 20, message = "Trọng tải/số chỗ ngồi phải có từ {min} đến {max} ký tự")
     private String vehicleCapacity;
     @NotNull(message = "Ngày xảy ra tai nạn không được để trống")
     private Timestamp accidentDate;
