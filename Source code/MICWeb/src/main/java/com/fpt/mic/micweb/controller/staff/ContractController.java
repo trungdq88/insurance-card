@@ -27,6 +27,9 @@ public class ContractController extends AuthController {
      * Paginator for contract
      */
     Paginator contractPaginator = new Paginator();
+    Paginator compensationPaginator = new Paginator("compensation");
+    Paginator punishmentPaginator = new Paginator("punishment");
+    Paginator accidentPaginator = new Paginator("accident");
 
     @Override
     public List<String> getAllowedRoles() {
@@ -81,6 +84,9 @@ public class ContractController extends AuthController {
     }
 
     public ResponseObject getDetail(R r) {
+        final CompensationBusiness compensationBusiness = new CompensationBusiness();
+        final PunishmentBusiness punishmentBusiness = new PunishmentBusiness();
+        final CustomerBusiness customerBusiness = new CustomerBusiness();
         StaffBusiness staffBus = new StaffBusiness();
         String contractCode = r.equest.getParameter("code");
 
@@ -106,29 +112,67 @@ public class ContractController extends AuthController {
         CustomerEntity customerDetail = staffBus.getCustomerDetail(contractDetail.getCustomerCode());
         // Get contract payment
         List<PaymentEntity> listPayment = staffBus.getPaymentByContractCode(contractDetail.getContractCode());
-        // Get contract compensation
-        CompensationBusiness compenBus = new CompensationBusiness();
-        List<CompensationEntity> listCompensation =
-                compenBus.getCompensationByContractCode(contractDetail.getContractCode());
-        // Get contract accident
-        AccidentBusiness accidentBusiness = new AccidentBusiness();
-        List<AccidentEntity> listAccident =
-                accidentBusiness.getAccidentByContractCode(contractDetail.getContractCode());
-        // Get contract punishment
-        PunishmentBusiness punishmentBusiness = new PunishmentBusiness();
-        List<PunishmentEntity> listPunishment =
-                punishmentBusiness.getPunishmentByContractCode(contractDetail.getContractCode());
+
         // Get contract card instance
         CardBusiness cardBusiness = new CardBusiness();
         List<CardInstanceEntity> listCard = cardBusiness.getCardInstancesIncludeDeactive(contractDetail.getContractCode());
         ConfigUtils config = new ConfigUtils();
 
+
+
+        final String finalContractCode = contractCode;
+        // compensation region
+        compensationPaginator.setGetItemsCallback(new Paginator.IGetItems() {
+            @Override
+            public List getItems(int offset, int count) {
+                return compensationBusiness.getAllCompensationByContractCode(finalContractCode, offset, count);
+            }
+        });
+        compensationPaginator.setGetItemSizeCallback(new Paginator.IGetItemSize() {
+            @Override
+            public Long getItemSize() {
+                return compensationBusiness.getAllCompensationByContractCodeCount(finalContractCode);
+            }
+        });
+        //
+        //punishment region
+        punishmentPaginator.setGetItemsCallback(new Paginator.IGetItems() {
+            @Override
+            public List getItems(int offset, int count) {
+                return punishmentBusiness.getAllPunishmentByContractCode(finalContractCode, offset, count);
+            }
+        });
+        punishmentPaginator.setGetItemSizeCallback(new Paginator.IGetItemSize() {
+            @Override
+            public Long getItemSize() {
+                return punishmentBusiness.getAllPunishmentByContractCodeCount(finalContractCode);
+            }
+        });
+
+        //accident region
+        accidentPaginator.setGetItemsCallback(new Paginator.IGetItems() {
+            @Override
+            public List getItems(int offset, int count) {
+                return customerBusiness.getAllAccidentByContractCode(finalContractCode, offset, count);
+            }
+        });
+        accidentPaginator.setGetItemSizeCallback(new Paginator.IGetItemSize() {
+            @Override
+            public Long getItemSize() {
+                return customerBusiness.getAllAccidentByContractCodeCount(finalContractCode);
+            }
+        });
+
+
+
         r.equest.setAttribute("CUSTOMER", customerDetail);
         r.equest.setAttribute("CONTRACT", contractDetail);
         r.equest.setAttribute("PAYMENT", listPayment);
-        r.equest.setAttribute("COMPENSATION", listCompensation);
-        r.equest.setAttribute("ACCIDENT", listAccident);
-        r.equest.setAttribute("PUNISHMENT", listPunishment);
+
+        r.equest.setAttribute("compensationPaginator", compensationPaginator);
+        r.equest.setAttribute("punishmentPaginator", punishmentPaginator);
+        r.equest.setAttribute("accidentPaginator", accidentPaginator);
+
         r.equest.setAttribute("CARD", listCard);
         r.equest.setAttribute("CONFIG", config);
 

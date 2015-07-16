@@ -168,3 +168,7 @@ body {
     background-color: #6897FC;
     color: white;
 }
+
+.tab-content > .tab-pane {
+    min-height: 500px;
+}
