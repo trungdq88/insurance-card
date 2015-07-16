@@ -13,10 +13,16 @@ public class ConfigUtils {
     private LocalDate startDateMax;
     private LocalDate expiredDateMin;
     private LocalDate expiredDateMax;
+    private int contractDefaultTerm;
+    private int contractMinTerm;
     private LocalDate paidDateMin;
     private LocalDate paidDateMax;
     private LocalDate cancelDateMin;
     private LocalDate cancelDateMax;
+    private int nearlyExceedExpiredOne;
+    private int nearlyExceedExpiredTwo;
+    private int nearlyExceedExpiredThree;
+    private int paymentDueDate;
     private float newCardFee;
     private float deliveryFee;
 
@@ -58,6 +64,22 @@ public class ConfigUtils {
         this.expiredDateMax = expiredDateMax;
     }
 
+    public int getContractDefaultTerm() {
+        return contractDefaultTerm = entity.getContractDefaultTerm();
+    }
+
+    public void setContractDefaultTerm(int contractDefaultTerm) {
+        this.contractDefaultTerm = contractDefaultTerm;
+    }
+
+    public int getContractMinTerm() {
+        return contractMinTerm = entity.getContractMinTerm();
+    }
+
+    public void setContractMinTerm(int contractMinTerm) {
+        this.contractMinTerm = contractMinTerm;
+    }
+
     public LocalDate getPaidDateMin() {
         return paidDateMin = new LocalDate().minusDays(entity.getPaidDaterBefore());
     }
@@ -88,6 +110,38 @@ public class ConfigUtils {
 
     public void setCancelDateMax(LocalDate cancelDateMax) {
         this.cancelDateMax = cancelDateMax;
+    }
+
+    public int getNearlyExceedExpiredOne() {
+        return nearlyExceedExpiredOne = entity.getNearlyExceedExpiredOne();
+    }
+
+    public void setNearlyExceedExpiredOne(int nearlyExceedExpiredOne) {
+        this.nearlyExceedExpiredOne = nearlyExceedExpiredOne;
+    }
+
+    public int getNearlyExceedExpiredTwo() {
+        return nearlyExceedExpiredTwo = entity.getNearlyExceedExpiredTwo();
+    }
+
+    public void setNearlyExceedExpiredTwo(int nearlyExceedExpiredTwo) {
+        this.nearlyExceedExpiredTwo = nearlyExceedExpiredTwo;
+    }
+
+    public int getNearlyExceedExpiredThree() {
+        return nearlyExceedExpiredThree = entity.getNearlyExceedExpiredThree();
+    }
+
+    public void setNearlyExceedExpiredThree(int nearlyExceedExpiredThree) {
+        this.nearlyExceedExpiredThree = nearlyExceedExpiredThree;
+    }
+
+    public int getPaymentDueDate() {
+        return paymentDueDate = entity.getPaymentDueDate();
+    }
+
+    public void setPaymentDueDate(int paymentDueDate) {
+        this.paymentDueDate = paymentDueDate;
     }
 
     public float getNewCardFee() {
