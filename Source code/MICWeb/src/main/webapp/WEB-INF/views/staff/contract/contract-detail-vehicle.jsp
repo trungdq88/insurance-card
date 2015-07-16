@@ -3,10 +3,10 @@
 <fieldset>
     <legend>Thông tin về xe cơ giới
         <div class="pull-right" style="margin-top: -5px;">
-            <button type="button" class="btn btn-xs btn-primary editBtn"
-                    data-toggle="modal" data-target="#edit-contract-modal">
+            <a href="${pageContext.request.contextPath}/staff/contract?action=editVehicle&code=${contract.contractCode}"
+               type="button" class="btn btn-xs btn-primary editBtn">
                 <i class="fa fa-pencil"></i> Chỉnh sửa
-            </button>
+            </a>
         </div>
     </legend>
 

@@ -109,12 +109,12 @@
 
                     <div class="text-center">
                         <input type="hidden" id="action-value" name="action" value="returnToEdit" />
-                        <button type="button" class="btn btn-default submitButtonOnClick" value="returnToEdit">
-                            <i class="fa fa-arrow-left"></i> Quay lại chỉnh sửa
-                        </button>
-                        <br/> <br/>
                         <button type="button" class="btn btn-success submitButtonOnClick" value="create">
                             <i class="fa fa-arrow-right"></i> Hoàn tất hợp đồng
+                        </button>
+                        <br/> <br/>
+                        <button type="button" class="btn btn-default submitButtonOnClick" value="returnToEdit">
+                            <i class="fa fa-arrow-left"></i> Quay lại chỉnh sửa
                         </button>
                     </div>
                     <br/> <br/>

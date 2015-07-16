@@ -1,32 +1,23 @@
 package com.fpt.mic.micweb.model.dto.form;
 
 import com.fpt.mic.micweb.model.dao.ContractDao;
-import com.fpt.mic.micweb.model.dao.CustomerDao;
+import com.fpt.mic.micweb.model.entity.ContractEntity;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.hibernate.validator.constraints.Range;
 
 import javax.validation.constraints.AssertTrue;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.sql.Timestamp;
 
 /**
- * Created by Kha on 18/06/2015.
+ * Created by Kha on 16/07/2015.
  */
-public class CreateContractDto {
-    @NotEmpty(message = "Mã khách hàng không được để trống")
-    @Pattern(regexp = "^KH([0-9A-Z]{4,8})$", message = "Mã khách hàng không hợp lệ")
-    // Mã khách hàng không tồn tại: @see {@link isNotExisted}
-    private String customerCode;
-    @NotNull(message = "Loại hợp đồng không được để trống")
-    private Integer contractTypeId;
-    @NotNull(message = "Thời điểm có hiệu lực không được để trống")
-    private Timestamp startDate;
-    @NotNull(message = "Thời điểm hết hiệu lực không được để trống")
-    private Timestamp expiredDate;
-    @NotNull(message = "Phí bảo hiểm không được để trống")
-    private Float contractFee;
+public class EditVehicleDto {
+    @NotEmpty(message = "Mã hợp đồng không được để trống")
+    @Pattern(regexp = "^HD([0-9A-Z]{4,8})$", message = "Mã hợp đồng không hợp lệ")
+    // Mã hợp đồng không tồn tại: @see {@link isContractCodeNotExisted}
+    private String contractCode;
     @NotEmpty(message = "Biển số xe không được để trống")
     @Size(min = 4, max = 15, message = "Biển số xe phải có từ {min} đến {max} ký tự")
     private String plate;
@@ -51,53 +42,22 @@ public class CreateContractDto {
     private Integer weight;
     @Range(min = 1, max = 100, message = "Số người được phép chở phải có giá trị từ {min} đến {max}")
     private Integer seatCapacity;
-    @NotNull(message = "Ngày nộp phí không được để trống")
-    private Timestamp paidDate;
-    @NotNull(message = "Phí bảo hiểm không được để trống")
-    private Float amount;
+    private Timestamp lastModified;
 
-    @AssertTrue(message = "Mã khách hàng không tồn tại")
-    private boolean isNotExisted() {
-        CustomerDao customerDao = new CustomerDao();
-        return customerCode != null && customerDao.read(customerCode) != null;
-    }
-
-    @AssertTrue(message = "Thời điểm có hiệu lực phải sau thời điểm hết hiệu lực")
-    private boolean isValidDate() {
-        if (startDate != null & expiredDate != null) {
-            return expiredDate.after(startDate);
-        } else {
-            return false;
-        }
-    }
-
-    @AssertTrue(message = "Thời hạn hợp đồng tối đa là 1 năm")
-    private boolean isValidTerm() {
-        if (startDate != null & expiredDate != null) {
-            long contractTerm = expiredDate.getTime() - startDate.getTime();
-
-            final int MILLIS_IN_SECOND = 1000;
-            final int SECONDS_IN_MINUTE = 60;
-            final int MINUTES_IN_HOUR = 60;
-            final int HOURS_IN_DAY = 24;
-            final int DAYS_IN_YEAR = 366;
-            final long MILLISECONDS_IN_YEAR =
-                    (long) MILLIS_IN_SECOND * SECONDS_IN_MINUTE * MINUTES_IN_HOUR
-                            * HOURS_IN_DAY * DAYS_IN_YEAR;
-            if (contractTerm <= MILLISECONDS_IN_YEAR) {
-                return true;
-            } else {
-                return false;
-            }
-        } else {
-            return false;
-        }
+    @AssertTrue(message = "Mã hợp đồng không tồn tại")
+    private boolean isContractCodeNotExisted() {
+        ContractDao contractDao = new ContractDao();
+        return contractCode != null && contractDao.read(contractCode) != null;
     }
 
     @AssertTrue(message = "Đang có hợp đồng hiệu lực với xe có biển số này")
     private boolean isValidPlate() {
         ContractDao contractDao = new ContractDao();
-        return !contractDao.isExistByPlate(plate);
+        if (plate.equals(contractDao.read(contractCode).getPlate())) {
+            return true;
+        } else {
+            return !contractDao.isExistByPlate(plate);
+        }
     }
 
     @AssertTrue(message = "Số loại phải có độ dài từ 2 đến 20 ký tự")
@@ -130,18 +90,24 @@ public class CreateContractDto {
         }
     }
 
-    public CreateContractDto() {
+    @AssertTrue(message = "Thông tin hợp đồng đã bị sửa đổi trước đó bởi một người khác, vui lòng thực hiện lại thao tác")
+    private boolean isContractNotChanged() {
+        if (this.lastModified != null && this.contractCode != null) {
+            ContractDao contractDao = new ContractDao();
+            ContractEntity contractEntity = contractDao.read(contractCode);
+            return contractEntity.getLastModified().equals(lastModified);
+        } else {
+            return false;
+        }
     }
 
-    public CreateContractDto(String customerCode, Integer contractTypeId, Timestamp startDate, Timestamp expiredDate,
-                             Float contractFee, String plate, String brand, String modelCode, String vehicleType,
-                             String color, String engine, String chassis, String capacity, Integer yearOfManufacture,
-                             Integer weight, Integer seatCapacity, Timestamp paidDate, Float amount) {
-        this.customerCode = customerCode;
-        this.contractTypeId = contractTypeId;
-        this.startDate = startDate;
-        this.expiredDate = expiredDate;
-        this.contractFee = contractFee;
+    public EditVehicleDto() {
+    }
+
+    public EditVehicleDto(String contractCode, String plate, String brand, String modelCode, String vehicleType,
+                          String color, String engine, String chassis, String capacity, Integer yearOfManufacture,
+                          Integer weight, Integer seatCapacity, Timestamp lastModified) {
+        this.contractCode = contractCode;
         this.plate = plate;
         this.brand = brand;
         this.modelCode = modelCode;
@@ -153,48 +119,15 @@ public class CreateContractDto {
         this.yearOfManufacture = yearOfManufacture;
         this.weight = weight;
         this.seatCapacity = seatCapacity;
-        this.paidDate = paidDate;
-        this.amount = amount;
+        this.lastModified = lastModified;
     }
 
-    public String getCustomerCode() {
-        return customerCode;
+    public String getContractCode() {
+        return contractCode;
     }
 
-    public void setCustomerCode(String customerCode) {
-        this.customerCode = customerCode;
-    }
-
-    public Integer getContractTypeId() {
-        return contractTypeId;
-    }
-
-    public void setContractTypeId(Integer contractTypeId) {
-        this.contractTypeId = contractTypeId;
-    }
-
-    public Timestamp getStartDate() {
-        return startDate;
-    }
-
-    public void setStartDate(Timestamp startDate) {
-        this.startDate = startDate;
-    }
-
-    public Timestamp getExpiredDate() {
-        return expiredDate;
-    }
-
-    public void setExpiredDate(Timestamp expiredDate) {
-        this.expiredDate = expiredDate;
-    }
-
-    public Float getContractFee() {
-        return contractFee;
-    }
-
-    public void setContractFee(Float contractFee) {
-        this.contractFee = contractFee;
+    public void setContractCode(String contractCode) {
+        this.contractCode = contractCode;
     }
 
     public String getPlate() {
@@ -285,19 +218,11 @@ public class CreateContractDto {
         this.seatCapacity = seatCapacity;
     }
 
-    public Timestamp getPaidDate() {
-        return paidDate;
+    public Timestamp getLastModified() {
+        return lastModified;
     }
 
-    public void setPaidDate(Timestamp paidDate) {
-        this.paidDate = paidDate;
-    }
-
-    public Float getAmount() {
-        return amount;
-    }
-
-    public void setAmount(Float amount) {
-        this.amount = amount;
+    public void setLastModified(Timestamp lastModified) {
+        this.lastModified = lastModified;
     }
 }
