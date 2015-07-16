@@ -79,6 +79,11 @@
                     </a>
                 </li>
                 <li>
+                    <a href="${pageContext.request.contextPath}/staff/compensation">
+                        <i class="fa fa-gavel fa-fw"></i> Bồi thường
+                    </a>
+                </li>
+                <li>
                     <a href="${pageContext.request.contextPath}/staff/card">
                         <i class="fa fa-credit-card fa-fw"></i> Thẻ đã phát hành
                     </a>
@@ -86,11 +91,6 @@
                 <li>
                     <a href="${pageContext.request.contextPath}/staff/card?action=newCardRequest">
                         <i class="fa fa-exclamation fa-fw"></i> Yêu cầu thẻ mới
-                    </a>
-                </li>
-                <li>
-                    <a href="${pageContext.request.contextPath}/staff/compensation">
-                        <i class="fa fa-gavel fa-fw"></i> Bồi thường
                     </a>
                 </li>
             </ul>

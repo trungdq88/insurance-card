@@ -499,7 +499,7 @@
 
         if (contractStatus.toLowerCase() == 'Cancelled'.toLowerCase()) {
             $('button[type=button]').not('#btnRenew, #btnCancel').addClass('hide');
-            $('a[type=button]').addClass('hide');
+            $('.editBtn').addClass('hide');
             $('#remain').text(0);
         }
 

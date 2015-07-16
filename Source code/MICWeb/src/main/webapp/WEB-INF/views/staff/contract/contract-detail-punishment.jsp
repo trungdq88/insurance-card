@@ -7,7 +7,7 @@
             Lịch sử vi phạm luật ATGT
             <div class="pull-right" style="margin-top: -10px;">
                 <a href="${pageContext.request.contextPath}/staff/punishment?action=create&code=${contract.contractCode}"
-                   type="button" class="btn btn-success">
+                   type="button" class="btn btn-success editBtn">
                     <i class="fa fa-plus"></i> Thêm vi phạm luật ATGT
                 </a>
             </div>
@@ -39,7 +39,7 @@
                     </td>
                     <td>
                         <a href="${pageContext.request.contextPath}/staff/punishment?action=edit&id=${punishment.id}"
-                           type="button" class="btn btn-xs btn-primary">
+                           type="button" class="btn btn-xs btn-primary editBtn">
                             <i class="fa fa-pencil"></i> Chỉnh sửa
                         </a>
                     </td>

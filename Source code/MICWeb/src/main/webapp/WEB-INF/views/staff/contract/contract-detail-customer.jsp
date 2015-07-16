@@ -3,9 +3,9 @@
 <fieldset>
     <legend>Thông tin khách hàng
         <div class="pull-right" style="margin-top: -5px;">
-            <a href="${pageContext.request.contextPath}/staff/customer?action=viewEditProfile&customerCode=${customer.customerCode}" class="btn btn-primary btn-xs editBtn">
-                <i class="fa fa-pencil"></i>
-                Sửa thông tin
+            <a href="${pageContext.request.contextPath}/staff/customer?action=viewEditProfile&customerCode=${customer.customerCode}"
+               type="button" class="btn btn-xs btn-primary editBtn">
+                <i class="fa fa-pencil"></i> Chỉnh sửa
             </a>
         </div>
     </legend>
