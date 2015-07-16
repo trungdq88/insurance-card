@@ -48,17 +48,6 @@
 
               </div>
             </div>
-            <div class="form-group">
-              <label class="col-sm-4 control-label" for="email">Email *</label>
-
-              <div class="col-sm-6 ">
-                <input id="email" name="staff:email" type="text" class="form-control input-md"
-                       type="text" required minlength="3" maxlength="250"
-                       pattern="^([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3})$"
-                       value="${submitted.email}" title="Vui lòng nhập một email đúng"
-                        >
-              </div>
-            </div>
 
             <div class="form-group">
               <label class="col-sm-4 control-label" for="name">Họ tên *</label>
@@ -68,6 +57,17 @@
                        type="text" required minlength="3" maxlength="80"
                        pattern="^([^0-9`~!@#$%^&*,.<>;':/|{}()=_+-]+)$"
                        value="${submitted.name}" title="Vui lòng nhập họ tên"
+                        >
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-4 control-label" for="email">Email *</label>
+
+              <div class="col-sm-6 ">
+                <input id="email" name="staff:email" type="text" class="form-control input-md"
+                       type="text" required minlength="3" maxlength="250"
+                       pattern="^([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3})$"
+                       value="${submitted.email}" title="Vui lòng nhập một email đúng"
                         >
               </div>
             </div>
@@ -87,14 +87,14 @@
           <div class="pull-left">
 
             <a href="${pageContext.request.contextPath}/staff/profile" type="button"
-               class="btn btn-success">
+               class="btn btn-default">
               <i class="fa fa-arrow-left"></i>
               Trở về
             </a>
           </div>
           <div class="text-center">
             <input type="hidden" name="action" value="editProfile">
-            <button type="submit" class="btn btn-success">
+            <button type="submit" class="btn btn-primary">
               </i>
               Cập nhật
             </button>
