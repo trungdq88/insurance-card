@@ -90,6 +90,10 @@ function addMonth(startDate, defaultTerm) {
     var month = parseInt(defaultTerm);// get tu config
     var newMonth = parseInt((parseInt(array[1])+month)% 12);
     var newYear = parseInt(array[0])+((parseInt(array[1])+month)-newMonth)/12;
+    if (newMonth == 0){
+        newMonth = 12;
+        newYear = newYear -1;
+    }
     if(newMonth<10){
         newMonth = '0'+ newMonth;
     }
