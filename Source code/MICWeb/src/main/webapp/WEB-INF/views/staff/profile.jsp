@@ -117,7 +117,7 @@
                 <div class="text-left">
 
                     <a href="${pageContext.request.contextPath}/staff" type="button"
-                       class="btn btn-success">
+                       class="btn btn-default">
                         <i class="fa fa-arrow-left"></i>
                         Trở về trang chủ
                     </a>
