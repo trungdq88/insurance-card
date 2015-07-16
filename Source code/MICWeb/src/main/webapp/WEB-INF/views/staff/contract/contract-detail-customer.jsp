@@ -3,10 +3,10 @@
 <fieldset>
     <legend>Thông tin khách hàng
         <div class="pull-right" style="margin-top: -5px;">
-            <button type="button" class="btn btn-xs btn-primary editBtn"
-                    data-toggle="modal" data-target="#edit-contract-modal">
-                <i class="fa fa-pencil"></i> Chỉnh sửa
-            </button>
+            <a href="${pageContext.request.contextPath}/staff/customer?action=viewEditProfile&customerCode=${customer.customerCode}" class="btn btn-primary">
+                <i class="fa fa-edit"></i>
+                Sửa thông tin
+            </a>
         </div>
     </legend>
 
