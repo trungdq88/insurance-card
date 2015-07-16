@@ -50,4 +50,32 @@ public class PaymentDao extends GenericDaoJpaImpl<PaymentEntity, Integer> {
         query.setParameter("customerCode", customerCode);
         return query.getResultList();
     }
+
+    public Long getAllPaymentByContractCodeCount(String customerCode) {
+        EntityManager entityManager = factory.createEntityManager();
+        String hql = "SELECT pm FROM PaymentEntity AS pm " +
+                "inner join pm.micContractByContractCode c " +
+                "WHERE pm.contractCode = c.contractCode " +
+                "AND c.customerCode = :customerCode " ;
+        Query query = entityManager.createQuery(hql);
+        query.setParameter("customerCode", customerCode);
+        Long singleResult = (Long) query.getSingleResult();
+        entityManager.close();
+        return singleResult;
+    }
+
+    public List getPaymentByCustomerCode(String customerCode, int offset, int count) {
+        EntityManager entityManager = factory.createEntityManager();
+        String hql = "SELECT pm FROM PaymentEntity AS pm " +
+                "inner join pm.micContractByContractCode c " +
+                "WHERE pm.contractCode = c.contractCode " +
+                "AND c.customerCode = :customerCode " ;
+        Query query = entityManager.createQuery(hql);
+        query.setParameter("customerCode", customerCode);
+        query.setFirstResult(offset);
+        query.setMaxResults(count);
+        List resultList = query.getResultList();
+        entityManager.close();
+        return resultList;
+    }
 }
