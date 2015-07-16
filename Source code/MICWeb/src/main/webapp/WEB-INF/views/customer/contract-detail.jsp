@@ -290,32 +290,32 @@
                     <form action="${pageContext.request.contextPath}/customer/contract" method="post">
                         <div class="fixWell text-center text-danger " style="height: 65% !important;">
                             <label style="font-size: 18px">Hợp đồng đã được yêu cầu hủy vui lòng chờ xác nhận của nhân viên</label> &nbsp;
+                            <br/>
                             <input type="hidden" name="contractcode"
                                    value="${contract.contractCode}"/>
                             <input type="hidden" name="action" value="RejectRequestCancel"/>
                             <br/>
                             <div class="form-group">
-                                <label class="col-md-4 text-right">Đã cầu hủy lúc: </label>
+                                <label class="col-md-3 text-right">Đã cầu hủy lúc: </label>
 
-                                <div class="col-md-8 text-left">
+                                <div class="col-md-9 text-left">
                                     <fmt:formatDate value="${contract.cancelDate}" pattern="dd/MM/yyyy"/>
                                 </div>
                             </div>
                             <br/>
 
                             <div class="form-group">
-                                <label class="col-md-4 text-right">Lý do hủy: </label>
+                                <label class="col-md-3 text-right">Lý do hủy: </label>
 
-                                <div class="col-md-8 text-left">
+                                <div class="col-md-9 text-left">
                                         ${contract.cancelReason}
                                 </div>
                                 <br/>
                             </div>
-                            <div class="form-group">
-                                <div class="text-center" style="padding-right: 17%;">
 
+                            <div style="padding-top: 1%">
                                     <input type="submit" class="btn btn-danger small" value="Hủy yêu cầu"/>
-                                </div>
+
                             </div>
 
 
