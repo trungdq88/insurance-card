@@ -459,4 +459,23 @@ public class StaffBusiness {
         return false;
 
     }
+
+    public boolean changePassword(StaffChangePasswordDto dto) {
+        StaffDao staffDao= new StaffDao();
+        StaffEntity staffEntity= staffDao.read(dto.getStaffCode());
+        if (staffEntity != null) {
+            String encryptedPassword = StringUtils.getMD5Hash(dto.getCurrentPassword());
+            if (staffEntity.getPassword().equals(encryptedPassword)) {
+                if (dto.getConfirmPassword().equals(dto.getNewPassword())) {
+                    String encryptedConfirmPassword = StringUtils.getMD5Hash(dto.getConfirmPassword());
+                    staffEntity.setPassword(encryptedConfirmPassword);
+                    if (staffDao.update(staffEntity) != null){
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
 }

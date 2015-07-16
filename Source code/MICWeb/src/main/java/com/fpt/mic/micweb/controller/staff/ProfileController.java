@@ -8,6 +8,7 @@ import com.fpt.mic.micweb.framework.responses.ResponseObject;
 import com.fpt.mic.micweb.model.business.StaffBusiness;
 import com.fpt.mic.micweb.model.dto.UserDto;
 import com.fpt.mic.micweb.model.dto.form.EditStaffProfileDto;
+import com.fpt.mic.micweb.model.dto.form.StaffChangePasswordDto;
 import com.fpt.mic.micweb.model.entity.StaffEntity;
 
 import javax.servlet.annotation.WebServlet;
@@ -52,6 +53,28 @@ public class ProfileController extends AuthController {
         }
         else {
             return new RedirectTo("/staff/profile?action=view&info=fail");
+        }
+
+    }
+
+    public ResponseObject postChangePassword(R r){
+        StaffChangePasswordDto dto = (StaffChangePasswordDto) r.ead.entity(StaffChangePasswordDto.class,"newPass");
+        dto.setStaffCode(((StaffEntity)getLoggedInUser()).getStaffCode());
+        List errors = r.ead.validate(dto);
+
+        // Nếu có lỗi khi validate
+        if (errors.size() > 0) {
+            // Gửi lỗi về trang JSP
+            r.equest.setAttribute("validateErrors", errors);
+            // Gửi dữ liệu mà người dùng đã nhập về trang JSP, gán vào biến submitted
+
+            return getView(r);
+        }
+        StaffBusiness staffBusiness = new StaffBusiness();
+        if (staffBusiness.changePassword(dto)){
+            return new RedirectTo("/staff/profile?action=view&info=changePasswordSuccess");
+        } else {
+            return new RedirectTo("/staff/profile?action=view&info=changePasswordFail");
         }
 
     }
