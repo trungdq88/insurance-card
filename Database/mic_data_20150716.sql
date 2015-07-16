@@ -238,7 +238,7 @@ COMMENT = 'Accident information';
 -- Table `mic_data`.`mic_business_rules`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mic_data`.`mic_business_rules` (
-  `id` INT(10) UNSIGNED NOT NULL,
+  `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `start_date` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `start_date_before` INT(10) UNSIGNED NOT NULL,
   `start_date_after` INT(10) UNSIGNED NOT NULL,
