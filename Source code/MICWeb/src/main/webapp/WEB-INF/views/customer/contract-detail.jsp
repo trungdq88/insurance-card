@@ -56,7 +56,7 @@
 
     .fixWell {
         padding-top: 10px;
-        height: 170px;
+        height: 200px;
         margin-bottom: 20px;
         background-color: #f5f5f5;
         border: 1px solid #e3e3e3;
@@ -294,7 +294,7 @@
                                    value="${contract.contractCode}"/>
                             <input type="hidden" name="action" value="RejectRequestCancel"/>
                             <br/>
-                            <div class="form-group"style="margin-bottom:5px">
+                            <div class="form-group">
                                 <label class="col-md-4 text-right">Đã cầu hủy lúc: </label>
 
                                 <div class="col-md-8 text-left">
@@ -311,7 +311,6 @@
                                 </div>
                                 <br/>
                             </div>
-                            <br/>
                             <div class="form-group">
                                 <div class="text-center" style="padding-right: 17%;">
 
@@ -335,7 +334,7 @@
                         </div>
                         <br/>
 
-                        <div class="form-group" style="margin-bottom:5px">
+                        <div class="form-group" >
                             <label class="col-md-3 text-right">Đã cầu hủy lúc: </label>
 
                             <div class="col-md-9 text-left">
@@ -344,7 +343,7 @@
                         </div>
                         <br/>
 
-                        <div class="form-group" style="margin-bottom:5px">
+                        <div class="form-group" >
                             <label class="col-md-3 text-right">Lý do hủy: </label>
 
                             <div class="col-md-9 text-left">
@@ -353,7 +352,7 @@
                         </div>
                         <br/>
 
-                        <div class="form-group" style="margin-bottom:5px">
+                        <div class="form-group">
                             <label class="col-md-3 text-right">Ghi chú hủy: </label>
 
                             <div class="col-md-9 text-left">
