@@ -18,6 +18,16 @@
             </div>
             <!-- /.col-lg-12 -->
         </div>
+        <c:if test="${param.info eq 'success'}">
+            <div class="text-success text-center">
+                Sửa thông tin thành công
+            </div>
+        </c:if>
+        <c:if test="${param.info eq 'fail'}">
+            <div class="text-danger text-center">
+                Có lỗi xảy ra. Xin thử lại
+            </div>
+        </c:if>
         <div class="row">
             <div class="col-lg-12">
                 <form class="form-horizontal">

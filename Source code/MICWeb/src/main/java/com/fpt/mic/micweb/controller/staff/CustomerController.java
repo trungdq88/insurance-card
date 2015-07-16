@@ -4,15 +4,21 @@ import com.fpt.mic.micweb.controller.common.AuthController;
 import com.fpt.mic.micweb.framework.Paginator;
 import com.fpt.mic.micweb.framework.R;
 import com.fpt.mic.micweb.framework.responses.JspPage;
+import com.fpt.mic.micweb.framework.responses.RedirectTo;
 import com.fpt.mic.micweb.framework.responses.ResponseObject;
+import com.fpt.mic.micweb.model.business.CustomerBusiness;
 import com.fpt.mic.micweb.model.business.StaffBusiness;
 import com.fpt.mic.micweb.model.dto.CreateCustomerInfoDto;
 import com.fpt.mic.micweb.model.dto.UserDto;
 import com.fpt.mic.micweb.model.dto.form.CreateCustomerDto;
+import com.fpt.mic.micweb.model.dto.form.EditCustomerProfileByStaffDto;
+import com.fpt.mic.micweb.model.dto.form.EditCustomerProfileDto;
 import com.fpt.mic.micweb.model.entity.ContractEntity;
 import com.fpt.mic.micweb.model.entity.CustomerEntity;
+import com.fpt.mic.micweb.utils.Constants;
 
 import javax.servlet.annotation.WebServlet;
+import java.sql.Timestamp;
 import java.util.Collections;
 import java.util.List;
 
@@ -133,6 +139,43 @@ public class CustomerController extends AuthController {
         } else {
             r.equest.setAttribute("error", "Something wrong");
             return new JspPage("staff/message.jsp");
+        }
+    }
+
+    public ResponseObject getViewEditProfile(R r){
+        CustomerBusiness customerBusiness = new CustomerBusiness();
+        String customerCode = r.equest.getParameter("customerCode");
+        r.equest.setAttribute("submitted",customerBusiness.getCustomer(customerCode));
+        // Save last_modified value for concurrency check
+        r.equest.getSession(true).setAttribute(
+                Constants.Session.CONCURRENCY + customerCode,
+                customerBusiness.getCustomer(customerCode).getLastModified());
+        return new JspPage("staff/customer-edit.jsp");
+    }
+
+    public ResponseObject postEditProfile(R r){
+        EditCustomerProfileByStaffDto dto = (EditCustomerProfileByStaffDto) r.ead.entity(EditCustomerProfileByStaffDto.class,"customer");
+
+        StaffBusiness staffBusiness = new StaffBusiness();
+        // Get concurrency data
+        Timestamp lastModified = (Timestamp) r.equest.getSession(true).getAttribute(
+                Constants.Session.CONCURRENCY + dto.getCustomerCode());
+        dto.setLastModified(lastModified);
+        List errors = r.ead.validate(dto);
+
+        if (errors.size() > 0) {
+            r.equest.setAttribute("validateErrors", errors);
+            r.equest.setAttribute("submitted", dto);
+            return new JspPage("staff/customer-edit.jsp");
+        }
+        else {
+
+            if(staffBusiness.updateCustomerProfile(dto) == true){
+                return new RedirectTo("/staff/customer?action=detail&info=success&code="+dto.getCustomerCode());
+            }
+            else {
+                return new RedirectTo("/staff/customer?action=detail&info=fail&code="+dto.getCustomerCode());
+            }
         }
     }
 }

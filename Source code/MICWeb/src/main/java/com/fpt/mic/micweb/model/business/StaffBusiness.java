@@ -410,4 +410,25 @@ public class StaffBusiness {
         }
         return false;
     }
+
+    /**
+     * Edit Profile
+     * */
+    public Boolean updateCustomerProfile( EditCustomerProfileByStaffDto dto){
+        CustomerDao customerDao = new CustomerDao();
+        CustomerEntity customerEntity = customerDao.read(dto.getCustomerCode());
+        if(customerEntity != null){
+            customerEntity.setAddress(dto.getAddress());
+            customerEntity.setName(dto.getName());
+            customerEntity.setEmail(dto.getEmail());
+            customerEntity.setPhone(dto.getPhone());
+            customerEntity.setPersonalId(dto.getPersonalId());
+            customerEntity.setLastModified(new Timestamp(new java.util.Date().getTime()));
+            if(customerDao.update(customerEntity) != null){
+                return true;
+            }
+        }
+        return false;
+
+    }
 }
