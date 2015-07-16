@@ -7,6 +7,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.sql.Timestamp;
 
@@ -15,6 +16,7 @@ import java.sql.Timestamp;
  */
 public class CancelContractDto {
     @NotEmpty(message = "Mã hợp đồng không được để trống")
+    @Pattern(regexp = "^HD([0-9A-Z]{4,8})$", message = "Mã hợp đồng không hợp lệ")
     // Mã hợp đồng không tồn tại: @see {@link isNotExisted}
     private String contractCode;
     @NotNull(message = "Ngày hủy hợp đồng không được trống")
