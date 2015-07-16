@@ -18,6 +18,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="_shared/header.jsp" %>
 <style type="text/css">
+    .fixCheckbox{
+        padding-left: 4%
+    }
     .handleInput {
         border: none;
         background-color: white;
@@ -51,6 +54,18 @@
         display: none;
     }
 
+    .fixWell {
+        padding-top: 10px;
+        height: 200px;
+        margin-bottom: 20px;
+        background-color: #f5f5f5;
+        border: 1px solid #e3e3e3;
+        border-radius: 5px;
+        -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .05);
+        box-shadow: inset 0 1px 1px rgba(0, 0, 0, .05);
+
+    }
+
 </style>
 <div id="wrapper">
     <%@ include file="_shared/navigation.jsp" %>
@@ -76,7 +91,7 @@
                 <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog"
                      aria-labelledby="myLargeModalLabel"
                      aria-hidden="true">
-                    <div class="modal-dialog modal-lg">
+                    <div class="modal-dialog modal-lg" style="width: 820px !important;">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
@@ -91,43 +106,43 @@
                                             aria-hidden="true">&times;</span></button>
                                     Vui lòng chọn lí do hủy hợp đồng trước khi xác nhận. Cảm ơn!
                                 </div>
-                                <div class="text-info">
+                                <div class="text-info fixCheckbox">
                                     <label>
                                         Quý khách vui lòng cung cấp lý do hoặc trường hợp hủy hợp đồng
                                     </label>
                                 </div>
-                                <div class="checkbox">
+                                <div class="checkbox fixCheckbox" >
                                     <label>
                                         <input type="radio" value="" name="rdbReason1" class="check" id="rdbReason1">
                                         Xe cơ giới bị thu hồi đăng ký và biển số theo quy định của pháp luật
                                     </label>
                                 </div>
-                                <div class="checkbox">
+                                <div class="checkbox fixCheckbox">
                                     <label>
                                         <input type="radio" value="" name="rdbReason2" id="rdbReason2" class="check">
                                         Xe cơ giới hết niên hạn sử dụng theo quy định của pháp luật
                                     </label>
                                 </div>
-                                <div class="checkbox">
+                                <div class="checkbox fixCheckbox">
                                     <label>
                                         <input type="radio" value="" name="rdbReason3" id="rdbReason3" class="check">
                                         Xe cơ giới bị mất được cơ quan công an xác nhận
                                     </label>
                                 </div>
-                                <div class="checkbox">
+                                <div class="checkbox fixCheckbox">
                                     <label>
                                         <input type="radio" value="" name="rdbReason4" id="rdbReason4" class="check">
                                         Xe cơ giới hỏng không sử dụng được hoặc bị phá huỷ do tai nạn giao thông được cơ
                                         quan công an xác nhận
                                     </label>
                                 </div>
-                                <div class="checkbox">
+                                <div class="checkbox fixCheckbox">
                                     <label>
                                         <input type="radio" value="" name="rdbAnother" id="rdbAnother" class="check">
                                         Lý do khác
                                     </label>
                                 </div>
-                                <div class="checkbox">
+                                <div class="checkbox fixCheckbox">
                                     <label>
                                        <textarea name="txtAnotherReason" rows="3" cols="95" id="anotherReason"
                                                  class="hide"
@@ -147,8 +162,8 @@
                                 <%---------------------------------------%>
                                 <input id="deleteContract" type="submit" class="btn btn-primary" name="Xác Nhận"
                                        value="Xác Nhận"/>
-                                <input type="button" class="btn btn-danger" id="cancelAction" data-dismiss="modal"
-                                       value="Hủy Bỏ"/>
+                                <input type="button" class="btn btn-default" id="cancelAction" data-dismiss="modal"
+                                       value="Đóng"/>
                             </div>
                         </div>
 
@@ -257,55 +272,61 @@
             </form>
         </div>
 
-        <!---------------------------------------- /.modal-dialog ---------------------------------------------->
-        <div class="col-lg-12">
-            <c:if test="${not empty validateErrors}">
-                <div class="well well-lg text-danger ">
-                    <ul>
-                        <c:forEach var="error" items="${validateErrors}">
-                            <li>${error}</li>
-                        </c:forEach>
-                    </ul>
-                </div>
-            </c:if>
-            <div class="text-info text-center">
-                ${message}
-            </div>
-            <c:if test="${contract.status.equalsIgnoreCase('Request cancel')}">
-                <form action="${pageContext.request.contextPath}/customer/contract" method="post">
-                    <div class="well well-lg text-center text-danger " style="height:128px !important;">
-                        <label>Hợp đồng đã được yêu cầu hủy vui lòng chờ xác nhận của nhân viên</label> &nbsp;
-                        <input type="hidden" name="contractcode"
-                               value="${contract.contractCode}"/>
-                        <input type="hidden" name="action" value="RejectRequestCancel"/>
-                        <input type="submit" class="btn btn-danger small" value="Hủy Yêu Cầu"/><br/>
-
-                        <div class="form-group" style="margin-bottom:5px">
-                            <label class="col-md-4 text-right">Đã cầu hủy lúc: </label>
-
-                            <div class="col-md-8 text-left">
-                                <fmt:formatDate value="${contract.cancelDate}" pattern="dd/MM/yyyy"/>
-                            </div>
-                        </div>
-                        <br/>
-
-                        <div class="form-group" style="margin-bottom:5px">
-                            <label class="col-md-4 text-right">Lý do hủy: </label>
-
-                            <div class="col-md-8 text-left">
-                                    ${contract.cancelReason}
-                            </div>
-                        </div>
-
+        <div class="row">
+            <div class="col-lg-12">
+                <c:if test="${not empty validateErrors}">
+                    <div class="well well-lg text-danger ">
+                        <ul>
+                            <c:forEach var="error" items="${validateErrors}">
+                                <li>${error}</li>
+                            </c:forEach>
+                        </ul>
                     </div>
-                </form>
+                </c:if>
+                <div class="text-info text-center">
+                    ${message}
+                </div>
+                <c:if test="${contract.status.equalsIgnoreCase('Request cancel')}">
+                    <form action="${pageContext.request.contextPath}/customer/contract" method="post">
+                        <div class="fixWell text-center text-danger " style="height: 65% !important;">
+                            <label style="font-size: 18px">Hợp đồng đã được yêu cầu hủy vui lòng chờ xác nhận của nhân viên</label> &nbsp;
+                            <input type="hidden" name="contractcode"
+                                   value="${contract.contractCode}"/>
+                            <input type="hidden" name="action" value="RejectRequestCancel"/>
+                            <br/>
+                            <div class="form-group">
+                                <label class="col-md-4 text-right">Đã cầu hủy lúc: </label>
 
-            </c:if>
-            <c:if test="${contract.status.equalsIgnoreCase('Cancelled')}">
-                <form action="${pageContext.request.contextPath}/customer/contract" method="post">
-                    <div class="well well-lg text-center text-danger " style="height:140px !important;">
+                                <div class="col-md-8 text-left">
+                                    <fmt:formatDate value="${contract.cancelDate}" pattern="dd/MM/yyyy"/>
+                                </div>
+                            </div>
+                            <br/>
+
+                            <div class="form-group">
+                                <label class="col-md-4 text-right">Lý do hủy: </label>
+
+                                <div class="col-md-8 text-left">
+                                        ${contract.cancelReason}
+                                </div>
+                                <br/>
+                            </div>
+                            <div class="form-group">
+                                <div class="text-center" style="padding-right: 17%;">
+
+                                    <input type="submit" class="btn btn-danger small" value="Hủy yêu cầu"/>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </form>
+
+                </c:if>
+                <c:if test="${contract.status.equalsIgnoreCase('Cancelled')}">
+                    <div class="text-center text-danger fixWell ">
                         <div class="form-group">
-                            <label class="col-md-6 text-right fa-lg"> Hợp đồng đã bị hủy </label>
+                            <label class="col-md-6 text-right" style="font-size: 18px"> Hợp đồng đã bị hủy </label>
 
                             <div class="col-md-6">
 
@@ -313,7 +334,7 @@
                         </div>
                         <br/>
 
-                        <div class="form-group" style="margin-bottom:5px">
+                        <div class="form-group" >
                             <label class="col-md-3 text-right">Đã cầu hủy lúc: </label>
 
                             <div class="col-md-9 text-left">
@@ -322,7 +343,7 @@
                         </div>
                         <br/>
 
-                        <div class="form-group" style="margin-bottom:5px">
+                        <div class="form-group" >
                             <label class="col-md-3 text-right">Lý do hủy: </label>
 
                             <div class="col-md-9 text-left">
@@ -331,7 +352,7 @@
                         </div>
                         <br/>
 
-                        <div class="form-group" style="margin-bottom:5px">
+                        <div class="form-group">
                             <label class="col-md-3 text-right">Ghi chú hủy: </label>
 
                             <div class="col-md-9 text-left">
@@ -346,28 +367,28 @@
                             </div>
                         </div>
                     </div>
-                </form>
 
-            </c:if>
-            <c:if test="${contract.status.equalsIgnoreCase('Pending') && contract.startDate == contract.expiredDate}">
 
-                <div class="alert alert-block alert-error fade in well well-lg text-info">
-                    <h4 class="alert-heading">Hợp đồng của quý khách chưa được thanh toán!</h4>
+                </c:if>
+                <c:if test="${contract.status.equalsIgnoreCase('Pending') && contract.startDate == contract.expiredDate}">
 
-                    <p>Quý khách có thể thanh toán trực tiếp tại công ty
-                        <button class="btn" data-toggle="modal" title="Hiện địa chỉ công ty"
-                                data-target=".map-modal"><i class="fa fa-map-marker"></i>
-                        </button>
-                    </p>
-                    <form action="${pageContext.request.contextPath}/customer/contract" method="post">
+                    <div class="alert alert-block alert-error fade in well well-lg text-info">
+                        <h4 class="alert-heading">Hợp đồng của quý khách chưa được thanh toán!</h4>
 
-                        <button class="btn btn-primary choice" type="submit" id="payContract"
-                                rel="tooltip"
-                                data-toggle="tooltip"
-                                data-trigger="hover"
-                                data-placement="bottom"
-                                data-html="true"
-                                data-title="
+                        <p>Quý khách có thể thanh toán trực tiếp tại công ty
+                            <button class="btn" data-toggle="modal" title="Hiện địa chỉ công ty"
+                                    data-target=".map-modal"><i class="fa fa-map-marker"></i>
+                            </button>
+                        </p>
+                        <form action="${pageContext.request.contextPath}/customer/contract" method="post">
+
+                            <button class="btn btn-primary choice" type="submit" id="payContract"
+                                    rel="tooltip"
+                                    data-toggle="tooltip"
+                                    data-trigger="hover"
+                                    data-placement="bottom"
+                                    data-html="true"
+                                    data-title="
                                      <div class='form-horizontal'>
                                     <div class='form-group'>
                                         <label class='col-sm-5 text-right'>Loại hợp đồng :</label>
@@ -404,445 +425,453 @@
                                     </div>
                                 </div>
                                 ">
-                            Thanh toán online bằng Paypal
-                        </button>
-                        <!-- input hidden -->
-                        <input id="payAmount1" disabled="disabled" type="hidden"
-                               value="${contract.getMicContractTypeByContractTypeId().getPricePerYear()} VNĐ"/>
-                        <input id="contractCode" disabled="disabled" type="hidden"
-                               value="${contract.contractCode}"/>
-                        <input type="hidden" name="L_PAYMENTREQUEST_0_NAME0" value="">
-                        <input type="hidden" name="L_PAYMENTREQUEST_0_DESC0" id="content3">
-                        <input type="hidden" name="L_PAYMENTREQUEST_0_QTY0" value="1">
-                        <input type="hidden" name="PAYMENTREQUEST_0_ITEMAMT" id="payment1">
-                        <input type="hidden" name="PAYMENTREQUEST_0_TAXAMT" value="0">
-                        <input type="hidden" name="PAYMENTREQUEST_0_AMT" id="paymentATM1">
-                        <input type="hidden" name="currencyCodeType" value="USD">
-                        <input type="hidden" name="paymentType" value="Sale">
-                        <input type="hidden" name="successUrl"
-                               value="/customer/contract?action=ActivePayContract">
-                        <input type="hidden" name="txtContractCode" value="${contract.contractCode}">
-                        <input type="hidden" name="action" value="PayContract">
+                                Thanh toán online bằng Paypal
+                            </button>
+                            <!-- input hidden -->
+                            <input id="payAmount1" disabled="disabled" type="hidden"
+                                   value="${contract.getMicContractTypeByContractTypeId().getPricePerYear()} VNĐ"/>
+                            <input id="contractCode" disabled="disabled" type="hidden"
+                                   value="${contract.contractCode}"/>
+                            <input type="hidden" name="L_PAYMENTREQUEST_0_NAME0" value="">
+                            <input type="hidden" name="L_PAYMENTREQUEST_0_DESC0" id="content3">
+                            <input type="hidden" name="L_PAYMENTREQUEST_0_QTY0" value="1">
+                            <input type="hidden" name="PAYMENTREQUEST_0_ITEMAMT" id="payment1">
+                            <input type="hidden" name="PAYMENTREQUEST_0_TAXAMT" value="0">
+                            <input type="hidden" name="PAYMENTREQUEST_0_AMT" id="paymentATM1">
+                            <input type="hidden" name="currencyCodeType" value="USD">
+                            <input type="hidden" name="paymentType" value="Sale">
+                            <input type="hidden" name="successUrl"
+                                   value="/customer/contract?action=ActivePayContract">
+                            <input type="hidden" name="txtContractCode" value="${contract.contractCode}">
+                            <input type="hidden" name="action" value="PayContract">
 
-                    </form>
+                        </form>
 
 
-                </div>
-                <div class="modal fade map-modal" tabindex="-1" role="dialog"
-                     aria-labelledby="myLargeModalLabel"
-                     aria-hidden="true">
-                    <div class="modal-dialog modal-lg">
-                        <div class="modal-content">
-                            <div class="modal-body">
-                                <iframe
-                                        width="100%"
-                                        height="500"
-                                        frameborder="0" style="border:0"
-                                        src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBHWaWHbQJEFOvVmZw7tcR0qIGQQUoxsKM&q=Trường Đại Học FPT, tòa nhà Innovation, Công viên phần mềm Quang Trung, P.Tân Chánh Hiệp, Quận 12, TP. Hồ Chí Minh"
-                                        >
+                    </div>
+                    <div class="modal fade map-modal" tabindex="-1" role="dialog"
+                         aria-labelledby="myLargeModalLabel"
+                         aria-hidden="true">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-body">
+                                    <iframe
+                                            width="100%"
+                                            height="500"
+                                            frameborder="0" style="border:0"
+                                            src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBHWaWHbQJEFOvVmZw7tcR0qIGQQUoxsKM&q=Trường Đại Học FPT, tòa nhà Innovation, Công viên phần mềm Quang Trung, P.Tân Chánh Hiệp, Quận 12, TP. Hồ Chí Minh"
+                                            >
 
-                                </iframe>
+                                    </iframe>
+                                </div>
+
                             </div>
-
                         </div>
                     </div>
-                </div>
 
-            </c:if>
-        </div>
+                </c:if>
 
-        <div role="tabpanel">
-            <!-- Nav tabs -->
-            <ul class="nav nav-tabs" role="tablist">
-                <li role="presentation" class="active">
-                    <a href="#commonInfo" aria-controls="profile" role="tab" data-toggle="tab">Thông tin chung</a>
-                </li>
-                <li role="presentation">
-                    <a href="#compensations" aria-controls="profile" role="tab" data-toggle="tab">Lịch sử bồi
-                        thường</a>
-                </li>
-                <li role="presentation" id="showPunishment">
-                    <a href="#punishments" aria-controls="messages" role="tab" data-toggle="tab">Lịch sử vi phạm
-                        luật
-                        GT</a>
-                </li>
-                <li role="presentation">
-                    <a href="#accidents" aria-controls="messages" role="tab" data-toggle="tab">Lịch sử tai nạn
-                    </a>
-                </li>
-                <c:if test="${contract.status.equalsIgnoreCase('Ready') }">
-                    <%--<form action="${pageContext.request.contextPath}/customer/card" method="get">--%>
-                    <c:if test="${isNewCardRequested == false}">
-                        <div class="pull-right">
-                            <a href="${pageContext.request.contextPath}/customer/card?action=newCard&contractCode=${param.code}"
-                               class="btn btn-sm btn-primary">
-                                Yêu cầu thẻ mới
+
+                <div role="tabpanel">
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li role="presentation" class="active">
+                            <a href="#commonInfo" aria-controls="profile" role="tab" data-toggle="tab">Thông tin
+                                chung</a>
+                        </li>
+                        <li role="presentation">
+                            <a href="#compensations" aria-controls="profile" role="tab" data-toggle="tab">Lịch sử bồi
+                                thường</a>
+                        </li>
+                        <li role="presentation" id="showPunishment">
+                            <a href="#punishments" aria-controls="messages" role="tab" data-toggle="tab">Lịch sử vi phạm
+                                luật
+                                GT</a>
+                        </li>
+                        <li role="presentation">
+                            <a href="#accidents" aria-controls="messages" role="tab" data-toggle="tab">Lịch sử tai nạn
                             </a>
+                        </li>
+                        <c:if test="${contract.status.equalsIgnoreCase('Ready') }">
+                            <%--<form action="${pageContext.request.contextPath}/customer/card" method="get">--%>
+                            <c:if test="${isNewCardRequested == false}">
+                                <div class="pull-right">
+                                    <a href="${pageContext.request.contextPath}/customer/card?action=newCard&contractCode=${param.code}"
+                                       class="btn btn-sm btn-primary">
+                                        Yêu cầu thẻ mới
+                                    </a>
 
-                        </div>
-                    </c:if>
-                    <c:if test="${isNewCardRequested == true}">
-                        <div class="pull-right">
-                            <p class="text-value">
+                                </div>
+                            </c:if>
+                            <c:if test="${isNewCardRequested == true}">
+                                <div class="pull-right">
+                                    <p class="text-value">
                         <span class="label label-info"
                               style="font-size: 16px">Đang yêu cầu thẻ mới</span>
-                            </p>
-                        </div>
-                    </c:if>
+                                    </p>
+                                </div>
+                            </c:if>
 
 
-                    <%--</form>--%>
-                </c:if>
-            </ul>
-        </div>
-        <br/>
+                            <%--</form>--%>
+                        </c:if>
+                    </ul>
+                </div>
+                <br/>
 
-        <div class="tab-content">
-            <div role="tabpanel" class="tab-pane active" id="commonInfo">
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane active" id="commonInfo">
 
-                <%--<div class="col-md-5">--%>
-                <%--<img src="http://finefrugality.files.wordpress.com/2012/06/handshake.jpg" width="100%" height="100%">--%>
-                <%--</div>--%>
-                <div class="form-horizontal">
-                    <table class="table table-bordered">
-                        <tr>
-                            <td class="col-md-5">
-                                <table class="table table-bordered">
-                                    <tr>
-                                        <td class="col-md-5">
-                                            <label>Mã hợp đồng</label>
-                                        </td>
-                                        <td class="col-md-5 ">
-                                            ${contract.contractCode}
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="col-md-5">
-                                            <label class="text-center">Ngày tham gia lúc</label>
-                                        </td>
-                                        <td class="col-md-5 ">
-                                            <fmt:formatDate value="${contract.startDate}" pattern="dd/MM/yyyy"/>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="col-md-5">
-                                            <label>Ngày hết hạn</label>
-                                        </td>
-                                        <td class="col-md-5 ">
-                                            <fmt:formatDate value="${contract.expiredDate}" pattern="dd/MM/yyyy"/>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </td>
-                            <td class="col-md-5">
-                                <table class="table table-bordered">
-
-                                    <tr>
-                                        <td class="text-center">
-                                            <label>Quyền lợi bảo hiểm</label>
-                                        </td>
-                                        <td class="">
-                                            ${contract.getMicContractTypeByContractTypeId().getDescription()}
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-center">
-                                            <label> Tình trạng hợp đồng</label>
-                                        </td>
-                                        <c:if test="${!contract.status.equalsIgnoreCase('Cancelled')}">
-                                            <td class="text-center " colspan="2">
-                                                <input type="hidden" name="txtNewStartDate" id="expiredDate"
-                                                       value="${contract.expiredDate}"/>
-                                                <label>
-                                                    <input id="dateAvailable" type="text" disabled="disabled"
-                                                           style="border:none ; background-color: white; width: 100%"/></label>
-                                            </td>
-                                        </c:if>
-                                        <c:if test="${contract.status.equalsIgnoreCase('Cancelled')}">
-                                            <td class="text-center" colspan="2">
-                                                <label>Hợp đồng đã bị hủy</label>
-                                            </td>
-                                        </c:if>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-center">
-                                            <label>Trạng thái</label>
-                                        </td>
-                                        <c:if test="${contract.status.equalsIgnoreCase('Ready')}">
-                                            <td class="text-center">
-                                                <span class="fa label label-success"
-                                                      style="font-size: 16px">Sẵn sàng</span>
-                                            </td>
-                                        </c:if>
-                                        <c:if test="${contract.status.equalsIgnoreCase('Cancelled')}">
-                                            <td class="text-center"><span class="label label-dark"
-                                                                          style="font-size: 16px">Đã huỷ</span></td>
-                                        </c:if>
-                                        <c:if test="${contract.status.equalsIgnoreCase('No card')}">
-                                            <td class="text-center"><span class="label label-primary"
-                                                                          style="font-size: 16px">Chưa có thẻ</span>
-                                            </td>
-                                        </c:if>
-                                        <c:if test="${contract.status.equalsIgnoreCase('Expired')}">
-                                            <td class="text-center"><span class="label label-danger"
-                                                                          style="font-size: 16px"> Hết hạn</span></td>
-                                        </c:if>
-                                        <c:if test="${contract.status.equalsIgnoreCase('Pending')}">
-                                            <td class="text-center"><span
-                                                    class="label label-default"
-                                                    style="font-size: 16px">Chưa kích hoạt</span></td>
-                                        </c:if>
-                                        <c:if test="${contract.status.equalsIgnoreCase('Request cancel')}">
-                                            <td class="text-center"><span class="label label-warning"
-                                                                          style="font-size: 16px">Yêu cầu hủy</span>
-                                            </td>
-                                        </c:if>
-                                    </tr>
-
-                                </table>
-                            </td>
-                        </tr>
-                        <tr class="active">
-                            <td colspan="2" class="text-center" style="font-size: 15px"><label class="text-center">Thông
-                                tin xe</label></td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <table class="table table-bordered">
-                                    <tr>
-                                        <td class="col-md-5">
-                                            <label>Biển số đăng ký</label>
-                                        </td>
-                                        <td class="col-md-5 ">
-                                            ${contract.plate}
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="col-md-5">
-                                            <label>Số khung</label>
-                                        </td>
-                                        <td class="col-md-5 ">
-                                            ${contract.chassis}
-                                        </td>
-
-                                    </tr>
-                                </table>
-                            </td>
-                            <td>
-                                <table class="table table-bordered">
-                                    <tr>
-                                        <td class="col-md-5">
-                                            <label class="text-center">Nhãn hiệu</label>
-                                        </td>
-                                        <td class="col-md-5 ">
-                                            ${contract.brand}
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="col-md-5">
-                                            <label>Số máy</label>
-                                        </td>
-                                        <td class="col-md-5 ">
-                                            ${contract.engine}
-                                        </td>
-                                    </tr>
-                                </table>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <table class="table table-bordered">
-                                    <tr>
-                                        <td class="col-md-5">
-                                            <label>Dung tích</label>
-                                        </td>
-                                        <td class="col-md-5 ">
-                                            ${contract.capacity}
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="col-md-5">
-                                            <label>Số loại</label>
-                                        </td>
-                                        <td class="col-md-5 ">
-                                            <c:choose>
-                                                <c:when test="${empty contract.modelCode}">
-                                                    <label class="empty-value">Không có</label>
-                                                </c:when>
-                                                <c:otherwise>
-                                                    ${contract.modelCode}
-                                                </c:otherwise>
-                                            </c:choose>
-                                        </td>
-                                    </tr>
-
-                                </table>
-                            </td>
-                            <td>
-                                <table class="table table-bordered">
-                                    <tr>
-                                        <td class="col-md-5">
-                                            <label class="text-center">Màu sơn</label>
-                                        </td>
-                                        <td class="col-md-5 ">
-                                            <c:choose>
-                                                <c:when test="${empty contract.color}">
-                                                    <label class="empty-value">Không có</label>
-                                                </c:when>
-                                                <c:otherwise>
-                                                    ${contract.color}
-                                                </c:otherwise>
-                                            </c:choose>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="col-md-5">
-                                            <label>Loại xe</label>
-                                        </td>
-                                        <td class="col-md-5 ">
-                                            <c:choose>
-                                                <c:when test="${empty contract.vehicleType}">
-                                                    <label class="empty-value">Không có</label>
-                                                </c:when>
-                                                <c:otherwise>
-                                                    ${contract.vehicleType}
-                                                </c:otherwise>
-                                            </c:choose>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>
-                                <table class="table table-bordered">
-                                    <tr>
-                                        <td class="col-md-5">
-                                            <label>Năm sản xuất</label>
-                                        </td>
-                                        <td class="col-md-5 ">
-                                            <c:choose>
-                                                <c:when test="${empty contract.yearOfManufacture}">
-                                                    <label class="empty-value">Không có</label>
-                                                </c:when>
-                                                <c:otherwise>
-                                                    ${contract.yearOfManufacture}
-                                                </c:otherwise>
-                                            </c:choose>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="col-md-5">
-                                            <label>Tự trọng</label>
-                                        </td>
-                                        <td class="col-md-5 ">
-                                            ${contract.capacity}
-                                        </td>
-                                    </tr>
-                                </table>
-                            </td>
-
-                            <td>
-                                <table class="table table-bordered">
-                                    <tr>
-                                        <td class="col-md-5">
-                                            <label>Số người được chở</label>
-                                        </td>
-                                        <td class="col-md-5 ">
-                                            <c:choose>
-                                                <c:when test="${empty contract.seatCapacity}">
-                                                    <label class="empty-value">Không có</label>
-                                                </c:when>
-                                                <c:otherwise>
-                                                    ${contract.seatCapacity}
-                                                </c:otherwise>
-                                            </c:choose>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </td>
-                        </tr>
-                        <tr class="active">
-                            <td colspan="2" class="text-center" style="font-size: 15px">
-                                <label class="text-center">
-                                    Thông tin thẻ đang hoạt động
-                                </label>
-
-                            </td>
-
-                        </tr>
-                        <tr>
-                            <td colspan="2">
-                                <table class="table table-bordered">
-                                    <thead>
-                                    <tr class="success">
-
-                                        <th class="text-center">
-                                            Mã thẻ
-                                        </th>
-                                        <th class="text-center">
-                                            Ngày kích hoạt
-                                        </th>
-                                        <th class=" text-center">
-                                            Trạng thái
-                                        </th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <c:choose>
-                                        <c:when test="${empty card.cardId}">
+                        <%--<div class="col-md-5">--%>
+                        <%--<img src="http://finefrugality.files.wordpress.com/2012/06/handshake.jpg" width="100%" height="100%">--%>
+                        <%--</div>--%>
+                        <div class="form-horizontal">
+                            <table class="table table-bordered">
+                                <tr>
+                                    <td class="col-md-5">
+                                        <table class="table table-bordered">
                                             <tr>
-                                                <td colspan="5"
-                                                    style="vertical-align: middle; text-align: center;">
-                                                    Không có thẻ nào
+                                                <td class="col-md-5">
+                                                    <label>Mã hợp đồng</label>
+                                                </td>
+                                                <td class="col-md-5 ">
+                                                    ${contract.contractCode}
                                                 </td>
                                             </tr>
-                                        </c:when>
-                                        <c:otherwise>
                                             <tr>
-                                                <td>
-                                                    <a href="${pageContext.request.contextPath}/customer/card?action=detail&cardId=${card.cardId}"
-                                                       target="_newtab">
-                                                            ${card.cardId}
-                                                    </a>
+                                                <td class="col-md-5">
+                                                    <label class="text-center">Ngày tham gia lúc</label>
                                                 </td>
-                                                <td>
-                                                    <fmt:formatDate value="${card.activatedDate}"
+                                                <td class="col-md-5 ">
+                                                    <fmt:formatDate value="${contract.startDate}" pattern="dd/MM/yyyy"/>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="col-md-5">
+                                                    <label>Ngày hết hạn</label>
+                                                </td>
+                                                <td class="col-md-5 ">
+                                                    <fmt:formatDate value="${contract.expiredDate}"
                                                                     pattern="dd/MM/yyyy"/>
-                                                    lúc
-                                                    <fmt:formatDate value="${card.activatedDate}" type="time"/>
                                                 </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td class="col-md-5">
+                                        <table class="table table-bordered">
+
+                                            <tr>
                                                 <td class="text-center">
+                                                    <label>Quyền lợi bảo hiểm</label>
+                                                </td>
+                                                <td class="">
+                                                    ${contract.getMicContractTypeByContractTypeId().getDescription()}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-center">
+                                                    <label> Tình trạng hợp đồng</label>
+                                                </td>
+                                                <c:if test="${!contract.status.equalsIgnoreCase('Cancelled')}">
+                                                    <td class="text-center " colspan="2">
+                                                        <input type="hidden" name="txtNewStartDate" id="expiredDate"
+                                                               value="${contract.expiredDate}"/>
+                                                        <label>
+                                                            <input id="dateAvailable" type="text" disabled="disabled"
+                                                                   style="border:none ; background-color: white; width: 100%"/></label>
+                                                    </td>
+                                                </c:if>
+                                                <c:if test="${contract.status.equalsIgnoreCase('Cancelled')}">
+                                                    <td class="text-center" colspan="2">
+                                                        <label>Hợp đồng đã bị hủy</label>
+                                                    </td>
+                                                </c:if>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-center">
+                                                    <label>Trạng thái</label>
+                                                </td>
+                                                <c:if test="${contract.status.equalsIgnoreCase('Ready')}">
+                                                    <td class="text-center">
+                                                <span class="label label-success"
+                                                      style="font-size: 16px">Sẵn sàng</span>
+                                                    </td>
+                                                </c:if>
+                                                <c:if test="${contract.status.equalsIgnoreCase('Cancelled')}">
+                                                    <td class="text-center"><span class="label label-dark"
+                                                                                  style="font-size: 16px">Đã huỷ</span>
+                                                    </td>
+                                                </c:if>
+                                                <c:if test="${contract.status.equalsIgnoreCase('No card')}">
+                                                    <td class="text-center"><span class="label label-primary"
+                                                                                  style="font-size: 16px">Chưa có thẻ</span>
+                                                    </td>
+                                                </c:if>
+                                                <c:if test="${contract.status.equalsIgnoreCase('Expired')}">
+                                                    <td class="text-center"><span class="label label-danger"
+                                                                                  style="font-size: 16px"> Hết hạn</span>
+                                                    </td>
+                                                </c:if>
+                                                <c:if test="${contract.status.equalsIgnoreCase('Pending')}">
+                                                    <td class="text-center"><span
+                                                            class="label label-default"
+                                                            style="font-size: 16px">Chưa kích hoạt</span></td>
+                                                </c:if>
+                                                <c:if test="${contract.status.equalsIgnoreCase('Request cancel')}">
+                                                    <td class="text-center"><span class="label label-warning"
+                                                                                  style="font-size: 16px">Yêu cầu hủy</span>
+                                                    </td>
+                                                </c:if>
+                                            </tr>
+
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr class="active">
+                                    <td colspan="2" class="text-center" style="font-size: 15px"><label
+                                            class="text-center">Thông
+                                        tin xe</label></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <table class="table table-bordered">
+                                            <tr>
+                                                <td class="col-md-5">
+                                                    <label>Biển số đăng ký</label>
+                                                </td>
+                                                <td class="col-md-5 ">
+                                                    ${contract.plate}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="col-md-5">
+                                                    <label>Số khung</label>
+                                                </td>
+                                                <td class="col-md-5 ">
+                                                    ${contract.chassis}
+                                                </td>
+
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table class="table table-bordered">
+                                            <tr>
+                                                <td class="col-md-5">
+                                                    <label class="text-center">Nhãn hiệu</label>
+                                                </td>
+                                                <td class="col-md-5 ">
+                                                    ${contract.brand}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="col-md-5">
+                                                    <label>Số máy</label>
+                                                </td>
+                                                <td class="col-md-5 ">
+                                                    ${contract.engine}
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <table class="table table-bordered">
+                                            <tr>
+                                                <td class="col-md-5">
+                                                    <label>Dung tích</label>
+                                                </td>
+                                                <td class="col-md-5 ">
+                                                    ${contract.capacity}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="col-md-5">
+                                                    <label>Số loại</label>
+                                                </td>
+                                                <td class="col-md-5 ">
                                                     <c:choose>
-                                                        <c:when test="${empty card.deactivatedDate}">
-                                                            <span class="label label-success">Hoạt động</span>
+                                                        <c:when test="${empty contract.modelCode}">
+                                                            <label class="empty-value">Không có</label>
                                                         </c:when>
                                                         <c:otherwise>
-                                                            <span class="label label-danger">Ngưng hoạt động</span>
+                                                            ${contract.modelCode}
                                                         </c:otherwise>
                                                     </c:choose>
                                                 </td>
                                             </tr>
-                                        </c:otherwise>
 
-                                    </c:choose>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table class="table table-bordered">
+                                            <tr>
+                                                <td class="col-md-5">
+                                                    <label class="text-center">Màu sơn</label>
+                                                </td>
+                                                <td class="col-md-5 ">
+                                                    <c:choose>
+                                                        <c:when test="${empty contract.color}">
+                                                            <label class="empty-value">Không có</label>
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            ${contract.color}
+                                                        </c:otherwise>
+                                                    </c:choose>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="col-md-5">
+                                                    <label>Loại xe</label>
+                                                </td>
+                                                <td class="col-md-5 ">
+                                                    <c:choose>
+                                                        <c:when test="${empty contract.vehicleType}">
+                                                            <label class="empty-value">Không có</label>
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            ${contract.vehicleType}
+                                                        </c:otherwise>
+                                                    </c:choose>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
 
-                                    </tbody>
-                                </table>
-                            </td>
-                        </tr>
+                                <tr>
+                                    <td>
+                                        <table class="table table-bordered">
+                                            <tr>
+                                                <td class="col-md-5">
+                                                    <label>Năm sản xuất</label>
+                                                </td>
+                                                <td class="col-md-5 ">
+                                                    <c:choose>
+                                                        <c:when test="${empty contract.yearOfManufacture}">
+                                                            <label class="empty-value">Không có</label>
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            ${contract.yearOfManufacture}
+                                                        </c:otherwise>
+                                                    </c:choose>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="col-md-5">
+                                                    <label>Tự trọng</label>
+                                                </td>
+                                                <td class="col-md-5 ">
+                                                    ${contract.capacity}
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
 
-                    </table>
+                                    <td>
+                                        <table class="table table-bordered">
+                                            <tr>
+                                                <td class="col-md-5">
+                                                    <label>Số người được chở</label>
+                                                </td>
+                                                <td class="col-md-5 ">
+                                                    <c:choose>
+                                                        <c:when test="${empty contract.seatCapacity}">
+                                                            <label class="empty-value">Không có</label>
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            ${contract.seatCapacity}
+                                                        </c:otherwise>
+                                                    </c:choose>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr class="active">
+                                    <td colspan="2" class="text-center" style="font-size: 15px">
+                                        <label class="text-center">
+                                            Thông tin thẻ đang hoạt động
+                                        </label>
+
+                                    </td>
+
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <table class="table table-bordered">
+                                            <thead>
+                                            <tr class="success">
+
+                                                <th class="text-center">
+                                                    Mã thẻ
+                                                </th>
+                                                <th class="text-center">
+                                                    Ngày kích hoạt
+                                                </th>
+                                                <th class=" text-center">
+                                                    Trạng thái
+                                                </th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <c:choose>
+                                                <c:when test="${empty card.cardId}">
+                                                    <tr>
+                                                        <td colspan="5"
+                                                            style="vertical-align: middle; text-align: center;">
+                                                            Không có thẻ nào
+                                                        </td>
+                                                    </tr>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <tr>
+                                                        <td>
+                                                            <a href="${pageContext.request.contextPath}/customer/card?action=detail&cardId=${card.cardId}"
+                                                               target="_newtab">
+                                                                    ${card.cardId}
+                                                            </a>
+                                                        </td>
+                                                        <td>
+                                                            <fmt:formatDate value="${card.activatedDate}"
+                                                                            pattern="dd/MM/yyyy"/>
+                                                            lúc
+                                                            <fmt:formatDate value="${card.activatedDate}" type="time"/>
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <c:choose>
+                                                                <c:when test="${empty card.deactivatedDate}">
+                                                                    <span class="label label-success">Hoạt động</span>
+                                                                </c:when>
+                                                                <c:otherwise>
+                                                                    <span class="label label-danger">Ngưng hoạt động</span>
+                                                                </c:otherwise>
+                                                            </c:choose>
+                                                        </td>
+                                                    </tr>
+                                                </c:otherwise>
+
+                                            </c:choose>
+
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+
+                            </table>
+                        </div>
+                    </div>
+                    <%@include file="contract-detail/compensation.jsp" %>
+                    <%@include file="contract-detail/punishment.jsp" %>
+                    <%@include file="contract-detail/accident.jsp" %>
+
+                    <%----------------------------------------------------------------------------------------------------%>
+
                 </div>
             </div>
-            <%@include file="contract-detail/compensation.jsp" %>
-            <%@include file="contract-detail/punishment.jsp" %>
-            <%@include file="contract-detail/accident.jsp" %>
-
-            <%----------------------------------------------------------------------------------------------------%>
-
         </div>
+
 
     </div>
 
