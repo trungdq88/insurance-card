@@ -36,6 +36,7 @@ public class InfoActivity extends Activity {
     TextView txtDatePublish;
     TextView txtHotline;
     private CardInstanceEntity card;
+    private Date checkTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +64,7 @@ public class InfoActivity extends Activity {
         txtDatePublish = (TextView) findViewById(R.id.txtDatePublish);
         txtHotline = (TextView) findViewById(R.id.txtHotline);
 
+        checkTime = new Date(getIntent().getLongExtra("checkTime", new Date().getTime()));
         showInfo((CardInstanceEntity) getIntent().getParcelableExtra("card"));
     }
 
@@ -121,7 +123,7 @@ public class InfoActivity extends Activity {
                 card.micContractByContractCode.status
                 .equalsIgnoreCase(Constants.ContractStatus.REQUEST_CANCEL)) {
             // Check if nearly expired
-            if (card.micContractByContractCode.expiredDate.getTime() - (new Date()).getTime() <
+            if (card.micContractByContractCode.expiredDate.getTime() - checkTime.getTime() <
                     Constants.CONTRACT_NEARLY_EXPIRED_RANGE) {
                 showNearlyExpiredCard();
             } else {

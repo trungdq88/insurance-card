@@ -8,6 +8,7 @@ import com.fpt.mic.mobile.checker.app.utils.Settings;
 import com.fpt.mic.mobile.checker.app.utils.SystemUtils;
 
 import java.io.IOException;
+import java.util.Date;
 
 /**
  * FPT University - Capstone Project - Summer 2015 - CheckerMobileApp
@@ -41,7 +42,7 @@ public class ApiBusiness {
     }
 
     public void checkCard(String cardID, final IOnCheckContract cb) {
-        ApiRequest apiRequest = new ApiRequest(Settings.getApiBase());
+        final ApiRequest apiRequest = new ApiRequest(Settings.getApiBase());
         apiRequest.setParam("action", "checkCard");
         apiRequest.setParam("cardID", cardID);
         apiRequest.setParam("deviceID", SystemUtils.getDeviceID());
@@ -49,11 +50,29 @@ public class ApiBusiness {
             @Override
             public void onResponse(String response) {
                 try {
-                    CardInstanceEntity card = mapper.readValue(response, CardInstanceEntity.class);
-                    cb.onCheckCardResult(card);
+                    final CardInstanceEntity card = mapper.readValue(response, CardInstanceEntity.class);
+
+                    // Get server time
+                    ApiRequest apiRequest2 = new ApiRequest(Settings.getApiBase());
+                    apiRequest2.setParam("action", "getTime");
+                    apiRequest2.get(new ApiRequest.IOnApiResponse() {
+                        @Override
+                        public void onResponse(String response) {
+                            try {
+                                Date checkTime = mapper.readValue(response, Date.class);
+
+                                // Return result here.
+                                cb.onCheckCardResult(card, checkTime);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                                cb.onCheckCardResult(null, null);
+                            }
+                        }
+                    });
+
                 } catch (IOException e) {
                     e.printStackTrace();
-                    cb.onCheckCardResult(null);
+                    cb.onCheckCardResult(null, null);
                 }
             }
         });
@@ -86,7 +105,7 @@ public class ApiBusiness {
     }
 
     public interface IOnCheckContract {
-        void onCheckCardResult(CardInstanceEntity result);
+        void onCheckCardResult(CardInstanceEntity result, Date checkTime);
     }
 
     public interface IOnConnectionResult {

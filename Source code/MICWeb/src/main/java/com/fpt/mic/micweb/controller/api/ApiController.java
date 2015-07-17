@@ -9,6 +9,7 @@ import com.fpt.mic.micweb.model.dto.ContractSearchResultDto;
 import com.fpt.mic.micweb.model.entity.CardInstanceEntity;
 
 import javax.servlet.annotation.WebServlet;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -20,6 +21,10 @@ public class ApiController extends BasicController {
 
     ApiBusiness apiBusiness = new ApiBusiness();
 
+
+    public ResponseObject getGetTime(R r) {
+        return new JsonString(new Date());
+    }
     public ResponseObject getCheckConnection(R r) {
         return new JsonString(true);
     }
