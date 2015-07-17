@@ -14,6 +14,7 @@ public class ContractTypeEntity {
     private String name;
     private String description;
     private float pricePerYear;
+    private int active;
     private Collection<ContractEntity> micContractsById;
 
     @Id
@@ -57,6 +58,16 @@ public class ContractTypeEntity {
         this.pricePerYear = pricePerYear;
     }
 
+    @Basic
+    @Column(name = "active")
+    public int getActive() {
+        return active;
+    }
+
+    public void setActive(int active) {
+        this.active = active;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -68,6 +79,7 @@ public class ContractTypeEntity {
         if (Float.compare(that.pricePerYear, pricePerYear) != 0) return false;
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
         if (description != null ? !description.equals(that.description) : that.description != null) return false;
+        if (active != that.active) return false;
 
         return true;
     }
@@ -75,6 +87,7 @@ public class ContractTypeEntity {
     @Override
     public int hashCode() {
         int result = id;
+        result = 31 * result + active;
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (description != null ? description.hashCode() : 0);
         result = 31 * result + (pricePerYear != +0.0f ? Float.floatToIntBits(pricePerYear) : 0);
