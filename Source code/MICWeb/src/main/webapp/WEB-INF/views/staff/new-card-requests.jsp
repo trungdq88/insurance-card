@@ -59,7 +59,7 @@
                                 <c:choose>
                                     <c:when test="${requests.size() == 0}">
                                         <tr>
-                                            <td colspan="6" style="vertical-align: middle; text-align: center;">
+                                            <td colspan="8" style="vertical-align: middle; text-align: center;">
                                                 Không có yêu cầu thẻ mới nào
                                             </td>
                                         </tr>
