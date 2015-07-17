@@ -355,7 +355,7 @@
                 </div>
                 <div class="modal-body">
                     <input type="text" class="form-control" id="select-customer-keyword"
-                           placeholder="Tìm theo tên KH, CMND, biển số xe"/>
+                           placeholder="Tìm theo tên hoặc mã khác hàng"/>
                     <br/>
 
                     <div class="table-responsive">
