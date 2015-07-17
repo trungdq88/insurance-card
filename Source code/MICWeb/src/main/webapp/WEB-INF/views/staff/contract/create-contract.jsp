@@ -40,24 +40,14 @@
 
                             <div class="col-sm-3">
                                 <div class="input-group">
-                                    <c:choose>
-                                        <c:when test="${not empty param.code}">
-                                            <input id="customerCode" name="contract:customerCode"
-                                                   class="form-control input-md" value="${param.code}"
-                                                   type="text" required pattern="^KH([0-9A-Z]{4,8})$"
-                                                   title="Ví dụ: KH49S4">
-                                        </c:when>
-                                        <c:otherwise>
-                                            <input id="customerCode" name="contract:customerCode"
-                                                   class="form-control input-md" value="${submitted.customerCode}"
-                                                   type="text" required pattern="^KH([0-9A-Z]{4,8})$"
-                                                   title="Ví dụ: KH49S4">
-                                        </c:otherwise>
-                                    </c:choose>
+                                        <input id="customerCode" name="contract:customerCode"
+                                               class="form-control input-md" value="${not empty param.code ? param.code : submitted.customerCode}"
+                                               type="text" required pattern="^KH([0-9A-Z]{4,8})$"
+                                               readonly title="Ví dụ: KH49S4">
                                 <span class="input-group-btn" data-toggle="tooltip" data-placement="top"
                                       id="btnTooltip" title="Chọn hợp đồng có sẵn trong hệ thống">
-                                    <button type="button" class="btn btn-primary" data-toggle="modal"
-                                            data-target="#select-customer-modal">
+                                    <button id="customer-select-btn" type="button" class="btn btn-primary" data-toggle="modal"
+                                            data-target="#select-customer-modal" onclick="loadCustomers()">
                                         <i class="fa fa-search"></i> Chọn
                                     </button>
                                 </span>
@@ -72,7 +62,9 @@
                                 <label class="col-sm-4 control-label">Họ tên</label>
 
                                 <div class="col-sm-4">
+                                    <div class="text-value" id="customer-name">
 
+                                    </div>
                                 </div>
                             </div>
 
@@ -81,7 +73,9 @@
                                 <label class="col-sm-4 control-label">Địa chỉ</label>
 
                                 <div class="col-sm-5">
+                                    <div class="text-value" id="customer-address">
 
+                                    </div>
                                 </div>
                             </div>
 
@@ -90,7 +84,9 @@
                                 <label class="col-sm-4 control-label">Email</label>
 
                                 <div class="col-sm-4">
+                                    <div class="text-value" id="customer-email">
 
+                                    </div>
                                 </div>
                             </div>
 
@@ -99,7 +95,9 @@
                                 <label class="col-sm-4 control-label">Số điện thoại</label>
 
                                 <div class="col-sm-3">
+                                    <div class="text-value" id="customer-phone">
 
+                                    </div>
                                 </div>
                             </div>
 
@@ -108,7 +106,9 @@
                                 <label class="col-sm-4 control-label">Số CMND / Hộ chiếu</label>
 
                                 <div class="col-sm-3">
+                                    <div class="text-value" id="customer-personal-id">
 
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -347,7 +347,6 @@
 <!-- model for select customer -->
 <div class="modal fade" id="select-customer-modal">
     <div class="modal-dialog">
-        <form class="form-horizontal">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
@@ -355,7 +354,8 @@
                     <h4 class="modal-title">Chọn khách hàng đã có sẵn trong hệ thống</h4>
                 </div>
                 <div class="modal-body">
-                    <input type="text" class="form-control" placeholder="Tìm theo tên KH, CMND, biển số xe"/>
+                    <input type="text" class="form-control" id="select-customer-keyword"
+                           placeholder="Tìm theo tên KH, CMND, biển số xe"/>
                     <br/>
 
                     <div class="table-responsive">
@@ -365,24 +365,19 @@
                                 <th>#</th>
                                 <th>Mã KH</th>
                                 <th>Tên KH</th>
-                                <th></th>
+                                <th>Chọn</th>
                             </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="list-items">
                             </tbody>
                         </table>
                     </div>
                     <!-- /.table-responsive -->
                 </div>
                 <div class="modal-footer">
-                    <input type="hidden" name="action" value="handleCancelRequest"/>
-                    <button type="submit" class="btn btn-primary" data-toggle="collapse" data-target="#customerInfo">
-                        <i class="fa fa-check"></i> Xác nhận
-                    </button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
                 </div>
             </div>
-        </form>
         <!-- /.modal-content -->
     </div>
     <!-- /.modal-dialog -->
@@ -442,7 +437,77 @@
             });
             refreshFee(contractFee);
         }).change();
+
+        // Ajax load for search box in customer select modal
+        var ajaxDelay;
+        $('#select-customer-keyword').keyup(function () {
+            clearTimeout(ajaxDelay);
+            ajaxDelay = setTimeout(function () {
+                loadCustomers();
+            }, 500);
+        });
+
+        // Auto open modal to select customer (do not allow handy enter customer code)
+        $('#customerCode').click(function () {
+            $('#customer-select-btn').click();
+        })
     });
+    function escapeHtml(unsafe) {
+        return unsafe
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+    }
+    function showCustomerInfo(info) {
+        $('#customerInfo').slideDown();
+        $('#customerCode').val(info.customerCode);
+        $('#customer-name').html(info.name);
+        $('#customer-address').html(info.address);
+        $('#customer-email').html(info.email);
+        $('#customer-phone').html(info.phone);
+        $('#customer-personal-id').html(info.personalId);
+    }
+
+    function loadCustomers() {
+        var keyword = $('#select-customer-keyword').val();
+
+        var updateList = function (items) {
+            var html = '';
+            if (!items || items.length == 0) {
+                html = '<tr><td class="text-center" colspan="4">Không có khách hàng nào</td></tr>'
+            } else {
+                for (var i = 0; i < items.length; i++) {
+                    var item = items[i];
+                    html += '<tr>' +
+                            '<td>' + (i + 1) + '</td>' +
+                            '<td>' + item.customerCode + '</td>' +
+                            '<td>' + item.name + '</td>' +
+                            '<td><button data-dismiss="modal" type="button" class="btn btn-primary btn-xs"' +
+                            'onclick="showCustomerInfo(' + escapeHtml(JSON.stringify(item)) +')">' +
+                            '<i class="fa fa-check"></i> Chọn</button></td>' +
+                            '</tr>';
+                }
+            }
+            $('#list-items').html(html);
+        };
+
+        $('#list-items').html('<tr><td class="text-center" colspan="4">Đang tìm kiếm...</td></tr>');
+        $.ajax({
+            url: '/ajax',
+            method: 'get',
+            dataType: 'json',
+            data: {
+                action: 'loadCustomers',
+                keyword: keyword
+            }
+        }).done(function (customers) {
+            updateList(customers);
+        }).fail(function () {
+            updateList([]);
+        });
+    }
 </script>
 
 <%@ include file="../_shared/footer.jsp" %>

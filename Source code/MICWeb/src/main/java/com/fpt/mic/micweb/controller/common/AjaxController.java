@@ -89,4 +89,12 @@ public class AjaxController extends AuthController {
         return new JsonString(unreadNotifications);
     }
 
+    public ResponseObject getLoadCustomers(R r) {
+        String keyword = r.equest.getParameter("keyword");
+        if (keyword == null) keyword = "";
+        AjaxBusiness ajaxBusiness = new AjaxBusiness();
+        List result = ajaxBusiness.loadCustomers(keyword);
+        return new JsonString(result);
+    }
+
 }
