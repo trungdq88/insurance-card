@@ -109,7 +109,7 @@ CREATE TABLE IF NOT EXISTS `mic_data`.`mic_contract_type` (
   `name` VARCHAR(250) NOT NULL,
   `description` VARCHAR(2000) NOT NULL,
   `price_per_year` FLOAT UNSIGNED NOT NULL,
-  `active` INT(10) UNSIGNED NULL DEFAULT '0',
+  `active` INT(10) UNSIGNED NULL DEFAULT '1',
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
 AUTO_INCREMENT = 6
