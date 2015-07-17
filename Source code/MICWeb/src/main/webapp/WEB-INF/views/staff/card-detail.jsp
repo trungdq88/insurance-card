@@ -195,7 +195,7 @@
                             <ul class="pagination">
                                 <c:if test="${param.page != 1 && not empty param.page}">
                                     <li>
-                                        <a href="?action=${param.action}&keyword=${param.keyword}&page=1"
+                                        <a href="?action=${param.action}&cardId=${param.cardId}&page=1"
                                            aria-label="Previous">
                                             <span aria-hidden="true">Đầu</span>
                                         </a>
@@ -203,12 +203,12 @@
                                 </c:if>
                                 <c:forEach begin="1" end="${calPaginator.pageSize}" var="pageNumber">
                                     <li ${param.page == pageNumber ||(pageNumber == 1 && empty param.page) ? "class='active'": ""} >
-                                        <a href="?action=${param.action}&keyword=${param.keyword}&page=${pageNumber}">${pageNumber}</a>
+                                        <a href="?action=${param.action}&cardId=${param.cardId}&page=${pageNumber}">${pageNumber}</a>
                                     </li>
                                 </c:forEach>
                                 <c:if test="${param.page != calPaginator.pageSize && calPaginator.pageSize != 1}">
                                     <li>
-                                        <a href="?action=${param.action}&keyword=${param.keyword}&page=${calPaginator.pageSize}"
+                                        <a href="?action=${param.action}&cardId=${param.cardId}&page=${calPaginator.pageSize}"
                                            aria-label="Next">
                                             <span aria-hidden="true">Cuối</span>
                                         </a>
