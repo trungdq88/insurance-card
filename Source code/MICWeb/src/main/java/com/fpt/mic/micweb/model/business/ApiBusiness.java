@@ -3,6 +3,7 @@ package com.fpt.mic.micweb.model.business;
 import com.fpt.mic.micweb.framework.responses.JsonString;
 import com.fpt.mic.micweb.model.dao.*;
 import com.fpt.mic.micweb.model.dao.helper.NewCardRequestDao;
+import com.fpt.mic.micweb.model.dto.CheckCardResponseDto;
 import com.fpt.mic.micweb.model.dto.ContractSearchResultDto;
 import com.fpt.mic.micweb.model.entity.*;
 import com.fpt.mic.micweb.utils.Constants;
@@ -106,26 +107,31 @@ public class ApiBusiness {
         return result;
     }
 
-    public CardInstanceEntity checkCard(String deviceID, String cardID) {
+    public CheckCardResponseDto checkCard(String deviceID, String cardID) {
         CardInstanceDao cardInstanceDao = new CardInstanceDao();
         CardAccessLogDao cardAccessLogDao = new CardAccessLogDao();
         CardBusiness cardBusiness = new CardBusiness();
 
-        CardInstanceEntity result = cardInstanceDao.checkCard(cardID);
+        CardInstanceEntity card = cardInstanceDao.checkCard(cardID);
+        CheckCardResponseDto result = null;
 
-        if (result != null) {
+        if (card != null) {
             // Log down the access activity
             CardAccessLogEntity cardAccessLogEntity = new CardAccessLogEntity();
             cardAccessLogEntity.setAccessDate(new Timestamp(new Date().getTime()));
-            cardAccessLogEntity.setCardInstanceId(result.getId());
+            cardAccessLogEntity.setCardInstanceId(card.getId());
             cardAccessLogEntity.setDevice(deviceID);
             cardAccessLogEntity.setRequestService(CardAccessLogEntity.SERVICE_CHECK_CARD);
-            cardAccessLogEntity.setResponseContent(cardBusiness.getCardValidation(result));
+            cardAccessLogEntity.setResponseContent(cardBusiness.getCardValidation(card));
 
             cardAccessLogDao.create(cardAccessLogEntity);
+
+
+            result = new CheckCardResponseDto(card,
+                    cardBusiness.getCardValidationCode(card));
         }
 
-        // Return check card result
+        // Return result
         return result;
 
     }

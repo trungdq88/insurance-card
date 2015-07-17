@@ -11,6 +11,7 @@ public class ContractTypeEntity {
     public String name;
     public String description;
     public float pricePerYear;
+    public int active;
     public Collection<Object> micContractsById;
 
 
