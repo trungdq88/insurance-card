@@ -74,16 +74,21 @@
                             <label class="col-sm-4 control-label" for="attachment">Văn bản đính kèm *</label>
 
                             <div class="col-sm-6">
-                                <img id="imgAttachment" height="100px" src=""/>
+
+                                <img id="imgAttachment" height="100px" src=""/> &nbsp;&nbsp;
+                                <button class="btn btn-primary" type="button" id="pickFile">Chọn văn bản</button>
                                 <input id="attachment" name="accident:attachment" class="form-control"
                                        type="hidden" maxlength="255">
 
                                 <script type="text/javascript" src="//api.filepicker.io/v2/filepicker.js"></script>
 
-                                <input type="filepicker" data-fp-apikey="AEbPPQfPfRHqODjEl5AZ2z"
+                                <input type="filepicker" data-fp-apikey="AEbPPQfPfRHqODjEl5AZ2z" class="hide pick"
                                        required id="attImage"
                                        title="Vui lòng tải lên văn bản đính kèm"
                                        onchange="$('#imgAttachment').attr('src', event.fpfile.url);$('#attachment').val(event.fpfile.url);">
+                                <br/>
+
+
                             </div>
                         </div>
                     </fieldset>
@@ -108,6 +113,11 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
+        //alert($('#imgAttachment').val());
+
+        $('#pickFile').click(function () {
+            $('.pick').trigger("click");
+        });
         if ($('#createdDate').val() == "") {
             $('#createdDate').val(getCurrentDate());
         }
@@ -117,19 +127,19 @@
                 $('#notifyAccident').addClass('hide');
             }
         });
-        $('#create').click(function(){
+        $('#create').click(function () {
             if ($.trim($('#title').val()) == 0) {
                 $('#notifyAccident').removeClass('hide');
                 return false;
             }
-            else{
+            else {
                 $('#notifyAccident').addClass('hide');
             }
-            if($('#attachment').val() == ''){
+            if ($('#attachment').val() == '') {
                 $('#notifyAccident1').removeClass('hide');
                 return false;
             }
-            else{
+            else {
                 $('#notifyAccident1').addClass('hide');
             }
         });

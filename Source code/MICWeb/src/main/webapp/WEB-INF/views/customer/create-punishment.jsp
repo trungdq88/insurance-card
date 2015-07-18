@@ -63,7 +63,8 @@
                             <label class="col-sm-4 control-label" for="attachment">Văn bản đính kèm *</label>
 
                             <div class="col-sm-6">
-                                <img id="imgAttachment" height="100px" src=""/>
+                                <img id="imgAttachment" height="100px" src=""/>&nbsp;&nbsp;
+                                <button class="btn btn-primary" type="button" id="pickFilePunishment">Chọn văn bản</button>
                                 <input id="attachment" name="punishment:attachment"
                                        class="form-control "
                                        type="hidden">
@@ -73,7 +74,7 @@
                                         src="//api.filepicker.io/v2/filepicker.js"></script>
 
                                 <input type="filepicker" data-fp-apikey="AEbPPQfPfRHqODjEl5AZ2z"
-
+                                       class="chooseFile hide"
                                        title="Đính kèm ảnh vi phạm không được trống"
                                        onchange="$('#imgAttachment').attr('src', event.fpfile.url);$('#attachment').val(event.fpfile.url);">
                             </div>
@@ -103,6 +104,9 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
+        $('#pickFilePunishment').click(function () {
+            $('.chooseFile').trigger("click");
+        });
         $("#contentPunishment").keydown(function (event) {
             if ($.trim($('#notifyPunishment').val()) == 0) {
                 $('#notifyPunishment').addClass('hide');

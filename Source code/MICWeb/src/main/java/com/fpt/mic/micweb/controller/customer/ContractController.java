@@ -120,7 +120,7 @@ public class ContractController extends AuthController {
 
     public ResponseObject getView(R r) {
         final CustomerBusiness customerBusiness = new CustomerBusiness();
-        final String customerCode = ((CustomerEntity) getLoggedInUser()).getCustomerCode();
+            final String customerCode = ((CustomerEntity) getLoggedInUser()).getCustomerCode();
 
         contractPaginator.setGetItemsCallback(new Paginator.IGetItems() {
             @Override
