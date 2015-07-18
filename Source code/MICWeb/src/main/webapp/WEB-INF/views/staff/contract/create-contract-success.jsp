@@ -27,6 +27,11 @@
                 <br/>
 
                 <div class="text-center">
+                    <a href="${pageContext.request.contextPath}/staff/contract?action=detail&code=${contract.contractCode}"
+                       type="button" class="btn btn-default">
+                        <i class="fa fa-arrow-right"></i> <strong>Xem chi tiết hợp đồng này</strong>
+                    </a>
+                    <br/> <br/>
                     <a href="${pageContext.request.contextPath}/staff/contract" type="button" class="btn btn-default">
                         <i class="fa fa-arrow-left"></i> <strong>Danh sách hợp đồng</strong>
                     </a>

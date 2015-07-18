@@ -17,48 +17,12 @@ function getCurrentDate() {
     return today;
 }
 
-function getCurrentDateInNextYear() {
-    var now = new Date();
-    var curYear = now.getFullYear();
-    var curYearMonth = now.getMonth() + 1;
-    var curYearDay = now.getDate();
-    var nextYear = curYear + 1;
-    if ((curYearMonth == 2) && (curYearDay == 29)) {
-        curYearDay = 28;
-    }
-    var nextYearDisplay = ("0000" + nextYear.toString()).slice(-4) + "-"
-        + ("00" + curYearMonth.toString()).slice(-2) + "-" + ("00" + curYearDay.toString()).slice(-2);
-    return nextYearDisplay;
-}
-
-function getInputDateNextDate(inputDate) {
-    var today = inputDate;
-    var nextDate = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 1);
-    var nextDateDisplay = ("0000" + nextDate.getFullYear().toString()).slice(-4) + "-"
-        + ("00" + (nextDate.getMonth() + 1).toString()).slice(-2) + "-" + ("00" + nextDate.getDate().toString()).slice(-2);
-    return nextDateDisplay;
-}
-
 function getInputDateWithoutTime(inputDate) {
     var today = inputDate;
     var nextDate = new Date(today.getFullYear(), today.getMonth(), today.getDate());
     var withoutTime = ("0000" + nextDate.getFullYear().toString()).slice(-4) + "-"
         + ("00" + (nextDate.getMonth() + 1).toString()).slice(-2) + "-" + ("00" + nextDate.getDate().toString()).slice(-2);
     return withoutTime;
-}
-
-function getInputDateInNextYear(inputDate) {
-    var curYear = inputDate.getFullYear();
-    var curYearMonth = inputDate.getMonth() + 1;
-    var curYearDay = inputDate.getDate();
-    curYear = parseInt(curYear);
-    var nextYear = curYear + 1;
-    if ((curYearMonth == 02) && (curYearDay == 29)) {
-        curYearDay = 28;
-    }
-    var nextYearDisplay = ("0000" + nextYear.toString()).slice(-4) + "-"
-        + ("00" + curYearMonth.toString()).slice(-2) + "-" + ("00" + curYearDay.toString()).slice(-2);
-    return nextYearDisplay;
 }
 
 function daysBetween(date1, date2) {
@@ -88,16 +52,19 @@ function daysBetween(date1, date2) {
 function addMonth(startDate, defaultTerm) {
     var array = startDate.split("-");
     var month = parseInt(defaultTerm);// get tu config
-    var newMonth = parseInt((parseInt(array[1])+month)% 12);
-    var newYear = parseInt(array[0])+((parseInt(array[1])+month)-newMonth)/12;
-    if (newMonth == 0){
+    var newMonth = parseInt((parseInt(array[1]) + month) % 12);
+    var newYear = parseInt(array[0]) + ((parseInt(array[1]) + month) - newMonth) / 12;
+    if (newMonth == 0) {
         newMonth = 12;
-        newYear = newYear -1;
+        newYear = newYear - 1;
     }
-    if(newMonth<10){
-        newMonth = '0'+ newMonth;
+    if (newMonth < 10) {
+        newMonth = '0' + newMonth;
     }
-    return newYear+'-'+newMonth+'-'+array[2];
+    if ((newMonth == 02) && (array[2] == 29)) {
+        array[2] = 28;
+    }
+    return newYear + '-' + newMonth + '-' + array[2];
 }
 
 function calculateContractFee(contractTerm, pricePerYear) {
@@ -148,7 +115,6 @@ function addZero(i) {
  * @author KhaNC
  * @version 1.0
  */
-
 function getDateTime(longTime) {
     if (longTime) {
         // create a new javascript Date object based on the timestamp

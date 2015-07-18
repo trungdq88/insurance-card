@@ -40,14 +40,15 @@
 
                             <div class="col-sm-3">
                                 <div class="input-group">
-                                        <input id="customerCode" name="contract:customerCode"
-                                               class="form-control input-md" value="${not empty param.code ? param.code : submitted.customerCode}"
-                                               type="text" required pattern="^KH([0-9A-Z]{4,8})$"
-                                               readonly title="Ví dụ: KH49S4">
+                                    <input id="customerCode" name="contract:customerCode"
+                                           value="${not empty param.code ? param.code : submitted.customerCode}"
+                                           class="form-control input-md" readonly title="Ví dụ: KH49S4"
+                                           type="text" required pattern="^KH([0-9A-Z]{4,8})$">
                                 <span class="input-group-btn" data-toggle="tooltip" data-placement="top"
                                       id="btnTooltip" title="Chọn hợp đồng có sẵn trong hệ thống">
-                                    <button id="customer-select-btn" type="button" class="btn btn-primary" data-toggle="modal"
-                                            data-target="#select-customer-modal" onclick="loadCustomers()">
+                                    <button id="customer-select-btn" type="button" class="btn btn-primary"
+                                            data-toggle="modal" data-target="#select-customer-modal"
+                                            onclick="loadCustomers()">
                                         <i class="fa fa-search"></i> Chọn
                                     </button>
                                 </span>
@@ -59,9 +60,9 @@
                         <div class="collapse" id="customerInfo">
                             <!-- Customer name -->
                             <div class="form-group">
-                                <label class="col-sm-4 control-label">Họ tên</label>
+                                <label class="col-sm-4 control-label">Tên khách hàng</label>
 
-                                <div class="col-sm-4">
+                                <div class="col-sm-8">
                                     <div class="text-value" id="customer-name">
 
                                     </div>
@@ -72,7 +73,7 @@
                             <div class="form-group">
                                 <label class="col-sm-4 control-label">Địa chỉ</label>
 
-                                <div class="col-sm-5">
+                                <div class="col-sm-8">
                                     <div class="text-value" id="customer-address">
 
                                     </div>
@@ -83,27 +84,24 @@
                             <div class="form-group">
                                 <label class="col-sm-4 control-label">Email</label>
 
-                                <div class="col-sm-4">
+                                <div class="col-sm-8">
                                     <div class="text-value" id="customer-email">
 
                                     </div>
                                 </div>
                             </div>
 
-                            <!-- Phone -->
+                            <!-- Phone & Personal ID -->
                             <div class="form-group">
                                 <label class="col-sm-4 control-label">Số điện thoại</label>
 
-                                <div class="col-sm-3">
+                                <div class="col-sm-2">
                                     <div class="text-value" id="customer-phone">
 
                                     </div>
                                 </div>
-                            </div>
 
-                            <!-- Personal ID -->
-                            <div class="form-group">
-                                <label class="col-sm-4 control-label">Số CMND / Hộ chiếu</label>
+                                <label class="col-sm-3 control-label">Số CMND / Hộ chiếu</label>
 
                                 <div class="col-sm-3">
                                     <div class="text-value" id="customer-personal-id">
@@ -143,11 +141,7 @@
                             <label class="col-sm-4 control-label" for="startDate">Thời điểm có hiệu lực *</label>
 
                             <div class="col-sm-3">
-                                <input id="startDate" name="contract:startDate" class="form-control input-md" onchange="{
-                                        $('#expiredDate').val(addMonth($('#startDate').val(),'${config.contractDefaultTerm}'));
-                                        $('#expiredDate').min = addMonth($('#startDate').val(),'${config.contractMinTerm}');
-                                        $('#expiredDate').max = addMonth($('#startDate').val(),'${config.contractDefaultTerm}');
-                                }"
+                                <input id="startDate" name="contract:startDate" class="form-control input-md"
                                        type="date" required
                                        value="<fmt:formatDate value="${submitted.startDate}" pattern="yyyy-MM-dd" />"/>
                             </div>
@@ -347,37 +341,37 @@
 <!-- model for select customer -->
 <div class="modal fade" id="select-customer-modal">
     <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                            aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Chọn khách hàng đã có sẵn trong hệ thống</h4>
-                </div>
-                <div class="modal-body">
-                    <input type="text" class="form-control" id="select-customer-keyword"
-                           placeholder="Tìm theo tên hoặc mã khác hàng"/>
-                    <br/>
-
-                    <div class="table-responsive">
-                        <table class="table table-striped table-bordered table-hover">
-                            <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Mã KH</th>
-                                <th>Tên KH</th>
-                                <th>Chọn</th>
-                            </tr>
-                            </thead>
-                            <tbody id="list-items">
-                            </tbody>
-                        </table>
-                    </div>
-                    <!-- /.table-responsive -->
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
-                </div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Chọn khách hàng đã có sẵn trong hệ thống</h4>
             </div>
+            <div class="modal-body">
+                <input type="text" class="form-control" id="select-customer-keyword"
+                       placeholder="Tìm theo tên hoặc mã khác hàng"/>
+                <br/>
+
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered table-hover">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Mã KH</th>
+                            <th>Tên KH</th>
+                            <th>Chọn</th>
+                        </tr>
+                        </thead>
+                        <tbody id="list-items">
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.table-responsive -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
         <!-- /.modal-content -->
     </div>
     <!-- /.modal-dialog -->
@@ -409,10 +403,10 @@
         document.getElementById("startDate").min = '${config.startDateMin}';
         document.getElementById("startDate").max = '${config.startDateMax}';
         if ($('#expiredDate').val() == "") {
-            $('#expiredDate').val(addMonth($('#startDate').val(),'${config.contractDefaultTerm}'));
+            $('#expiredDate').val(addMonth($('#startDate').val(), '${config.contractDefaultTerm}'));
         }
-        document.getElementById("expiredDate").min = addMonth($('#startDate').val(),'${config.contractMinTerm}');
-        document.getElementById("expiredDate").max = addMonth($('#startDate').val(),'${config.contractDefaultTerm}');
+        document.getElementById("expiredDate").min = '${config.expiredDateMin}';
+        document.getElementById("expiredDate").max = '${config.expiredDateMax}';
         if ($('#paidDate').val() == "") {
             $('#paidDate').val(getCurrentDate());
         }
@@ -426,14 +420,14 @@
 
             $('input[type="date"]').not('#paidDate').blur(function () {
                 // Refreshing fee
-                stDate = new Date($("#startDate").val());
-                expDate = new Date($("#expiredDate").val());
-                contractTerm = daysBetween(stDate, expDate);
+                stDate = $("#startDate").val();
+                expDate = $("#expiredDate").val();
+                contractTerm = daysBetween(new Date(stDate), new Date(expDate));
                 contractFee = calculateContractFee(contractTerm, pricePerYear);
                 refreshFee(contractFee);
-                // Refreshing min max expired date
-//                document.getElementById("expiredDate").min = getInputDateNextDate(stDate);
-//                document.getElementById("expiredDate").max = getInputDateInNextYear(stDate);
+                // Change expired date min max while input date is lost focus
+                document.getElementById("expiredDate").min = addMonth(stDate,'${config.contractMinTerm}');
+                document.getElementById("expiredDate").max = addMonth(stDate,'${config.contractDefaultTerm}');
             });
             refreshFee(contractFee);
         }).change();
@@ -485,7 +479,7 @@
                             '<td>' + item.customerCode + '</td>' +
                             '<td>' + item.name + '</td>' +
                             '<td><button data-dismiss="modal" type="button" class="btn btn-primary btn-xs"' +
-                            'onclick="showCustomerInfo(' + escapeHtml(JSON.stringify(item)) +')">' +
+                            'onclick="showCustomerInfo(' + escapeHtml(JSON.stringify(item)) + ')">' +
                             '<i class="fa fa-check"></i> Chọn</button></td>' +
                             '</tr>';
                 }

@@ -169,8 +169,18 @@
 
                         <div class="col-sm-2">
                             <div class="text-value">
-                                <span id="remain"
-                                      style="color:deepskyblue; font-weight: bolder; font-size: large"></span> ngày
+                                <c:choose>
+                                    <c:when test="${contract.status eq 'Cancelled'}">
+                                        <span class="empty-value">Đã hủy</span>
+                                    </c:when>
+                                    <c:when test="${contract.status eq 'Expired'}">
+                                        <span class="empty-value">Đã hết hạn</span>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <span id="remain"
+                                              style="color:deepskyblue; font-weight: bolder; font-size: large"></span>
+                                    </c:otherwise>
+                                </c:choose>
                             </div>
                         </div>
 
@@ -417,13 +427,13 @@
     }
 
     $(document).ready(function () {
-        $('#expiredDate').val(getCurrentDateInNextYear());
+        $('#expiredDate').val(addMonth(getCurrentDate(), '${config.contractDefaultTerm}'));
         $('#addPaidDate').val(getCurrentDate());
         document.getElementById("addPaidDate").min = '${config.paidDateMin}';
         document.getElementById("addPaidDate").max = '${config.paidDateMax}';
-        $('#paymentDate').val(getCurrentDate());
-        document.getElementById("paymentDate").min = '${config.paidDateMin}';
-        document.getElementById("paymentDate").max = '${config.paidDateMax}';
+        $('#completePaidDate').val(getCurrentDate());
+        document.getElementById("completePaidDate").min = '${config.paidDateMin}';
+        document.getElementById("completePaidDate").max = '${config.paidDateMax}';
         $('#paidDate').val(getCurrentDate());
         document.getElementById("paidDate").min = '${config.paidDateMin}';
         document.getElementById("paidDate").max = '${config.paidDateMax}';
@@ -452,8 +462,7 @@
 
         // Handle remaining days to display
         var remainDays = daysBetween(new Date(), expDate);
-        $('#remain').text(remainDays);
-        $('#remain2').text(remainDays);
+        $('#remain').text(remainDays + ' ngày');
 
         // Handle request cancel contract
         $('#decision').change(function () {
@@ -492,15 +501,14 @@
             document.getElementById("expiredDate").max = '${config.expiredDateMax}';
         } else {
             $('#startDate').val('${contract.expiredDate}');
-            $('#expiredDate').val(getInputDateInNextYear(expDate));
-            document.getElementById("expiredDate").min = getInputDateNextDate(expDate);
-            document.getElementById("expiredDate").max = getInputDateInNextYear(expDate);
+            $('#expiredDate').val(addMonth(getInputDateWithoutTime(expDate), '${config.contractDefaultTerm}'));
+            document.getElementById("expiredDate").min = addMonth(getInputDateWithoutTime(expDate), '${config.contractMinTerm}');
+            document.getElementById("expiredDate").max = addMonth(getInputDateWithoutTime(expDate), '${config.contractDefaultTerm}');
         }
 
         if (contractStatus.toLowerCase() == 'Cancelled'.toLowerCase()) {
             $('button[type=button]').not('#btnRenew, #btnCancel').addClass('hide');
             $('.editBtn').addClass('hide');
-            $('#remain').text(0);
         }
 
         // Ajax load data to modal
