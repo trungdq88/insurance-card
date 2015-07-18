@@ -28,7 +28,7 @@
           <button type="submit" class="btn btn-danger">
             <i class="fa fa-stop"></i> Ngừng hoạt động
           </button>
-          <button type="button" class="btn btn-info" data-dismiss="modal">Đóng</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
 
         </div>
       </div>
@@ -52,7 +52,7 @@
           <button type="submit" class="btn btn-success">
             <i class="fa fa-play"></i> Tái hoạt động
           </button>
-          <button type="button" class="btn btn-info" data-dismiss="modal">Đóng</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
 
         </div>
       </div>
