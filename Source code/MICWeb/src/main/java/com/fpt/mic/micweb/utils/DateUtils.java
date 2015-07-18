@@ -44,6 +44,15 @@ public class DateUtils {
         timestamp = new Timestamp(dt.getTime());
         return timestamp;
     }
+    public static Timestamp addMonth(Timestamp timestamp, int month) {
+        Date dt = new Date(timestamp.getTime());
+        Calendar c = Calendar.getInstance();
+        c.setTime(dt);
+        c.add(Calendar.MONTH, month);
+        dt = c.getTime();
+        timestamp = new Timestamp(dt.getTime());
+        return timestamp;
+    }
 
     public static Timestamp currentDateWithoutTime() {
         Calendar cal = Calendar.getInstance();

@@ -175,8 +175,9 @@ public class RegisterBusiness {
         {
             contractEntity.setStartDate(currentDate);
         }
-        // set expired date = start_date + 1 year
-        contractEntity.setExpiredDate(DateUtils.addOneYear(contractEntity.getStartDate()));
+
+        ConfigUtils configUtils = new ConfigUtils();
+        contractEntity.setExpiredDate(DateUtils.addMonth(contractEntity.getStartDate(), configUtils.getContractDefaultTerm()));
 
         // set new last modified time
         contractEntity.setLastModified(new Timestamp(new Date().getTime()));
