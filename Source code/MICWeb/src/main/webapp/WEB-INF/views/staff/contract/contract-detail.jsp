@@ -57,6 +57,16 @@
                         </ul>
                     </div>
                 </c:if>
+                <c:if test="${param.info eq 'cancelNewCardRequestSuccess'}">
+                    <div class="text-success text-center">
+                        Hủy yêu cầu thẻ mới thành công
+                    </div>
+                </c:if>
+                <c:if test="${param.info eq 'fail'}">
+                    <div class="text-danger text-center">
+                        Có lỗi xảy ra. Xin thử lại
+                    </div>
+                </c:if>
 
                 <form class="form-horizontal">
                     <c:if test="${(contract.status eq 'Pending') and (empty listPayment)}">
@@ -227,10 +237,10 @@
                             <%--<form action="${pageContext.request.contextPath}/customer/card" method="get">--%>
                             <c:if test="${isNewCardRequested == true}">
                                 <div class="pull-right">
-                                    <p class="text-value">
-                        <span class="label label-info"
-                              style="font-size: 16px">Đang yêu cầu thẻ mới</span>
-                                    </p>
+                                    <button  type="button" class="btn btn-danger btn-xs"
+                                             data-toggle="modal" data-target="#cancel-new-card-request">
+                                        <i class="fa fa-times"></i> Hủy yêu cầu thẻ mới
+                                    </button>
                                 </div>
                             </c:if>
 
@@ -604,3 +614,4 @@
     });
 </script>
 <%@ include file="../_shared/footer.jsp" %>
+<jsp:include page="cancel-new-card-request-modal.jsp" flush="true"/>

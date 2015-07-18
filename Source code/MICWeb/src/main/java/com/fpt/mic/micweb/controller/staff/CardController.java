@@ -7,12 +7,14 @@ import com.fpt.mic.micweb.framework.responses.JspPage;
 import com.fpt.mic.micweb.framework.responses.RedirectTo;
 import com.fpt.mic.micweb.framework.responses.ResponseObject;
 import com.fpt.mic.micweb.model.business.CardBusiness;
+import com.fpt.mic.micweb.model.business.CustomerBusiness;
 import com.fpt.mic.micweb.model.business.PaymentBusiness;
 import com.fpt.mic.micweb.model.business.StaffBusiness;
 import com.fpt.mic.micweb.model.dto.UserDto;
 import com.fpt.mic.micweb.model.dto.form.RecycleCardDto;
 import com.fpt.mic.micweb.model.entity.CardInstanceEntity;
 import com.fpt.mic.micweb.model.dto.form.CreateNewCardPaymentDto;
+import com.fpt.mic.micweb.model.entity.CustomerEntity;
 import com.fpt.mic.micweb.model.entity.StaffEntity;
 import com.fpt.mic.micweb.utils.ConfigUtils;
 import com.fpt.mic.micweb.utils.Constants;
@@ -178,5 +180,18 @@ public class CardController extends AuthController {
         r.equest.setAttribute("MESSAGE", msg);
         return new JspPage("staff/message.jsp");
         //return new RedirectTo("/staff/card?action=newCardRequest");
+    }
+
+    public ResponseObject postCancelNewCardRequest(R r) {
+        CardBusiness cardBusiness = new CardBusiness();
+        String contractCode = r.equest.getParameter("contractCode");
+        if (cardBusiness.cancelNewCardRequest(contractCode)) {
+            // thanh cong
+            return new RedirectTo("/staff/contract?action=detail&info=cancelNewCardRequestSuccess&code="+contractCode);
+        }
+        else {
+            return new RedirectTo("/staff/contract?action=detail&info=fail&code="+contractCode);
+        }
+
     }
 }
