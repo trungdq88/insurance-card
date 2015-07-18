@@ -13,6 +13,7 @@ import com.fpt.mic.micweb.model.dto.form.ConcurrencyDto;
 import com.fpt.mic.micweb.model.dto.form.PublicHomeFormDto;
 import com.fpt.mic.micweb.model.dto.form.PublicRegisterFormDto;
 import com.fpt.mic.micweb.model.entity.ContractTypeEntity;
+import com.fpt.mic.micweb.utils.ConfigUtils;
 import com.fpt.mic.micweb.utils.Constants;
 
 import javax.servlet.annotation.WebServlet;
@@ -34,6 +35,8 @@ public class RegisterController extends BasicController {
             mapContractType.put(list.get(i).getId(),list.get(i));
         }
         r.equest.setAttribute("mapContractType",mapContractType);
+        ConfigUtils configUtils = new ConfigUtils();
+        r.equest.setAttribute("contractDefaultTerm",configUtils.getContractDefaultTerm());
         return new JspPage("public/register.jsp"); // Go to homepage
     }
 
@@ -41,6 +44,8 @@ public class RegisterController extends BasicController {
         PublicHomeFormDto publicHomeFormDto = (PublicHomeFormDto) r.ead.entity(PublicHomeFormDto.class,"register");
         // Gọi hàm validate ở đây
         List errors = r.ead.validate(publicHomeFormDto);
+        ConfigUtils configUtils = new ConfigUtils();
+        r.equest.setAttribute("contractDefaultTerm",configUtils.getContractDefaultTerm());
 
         // Nếu có lỗi khi validate
         if (errors.size() > 0) {
@@ -49,6 +54,7 @@ public class RegisterController extends BasicController {
             // Gửi dữ liệu mà người dùng đã nhập về trang JSP, gán vào biến submitted
             r.equest.setAttribute("submitted", publicHomeFormDto);
             r.equest.setAttribute("startDate", r.equest.getParameter("register:startDate"));
+
             return new ForwardTo("/public/home");
         }
 

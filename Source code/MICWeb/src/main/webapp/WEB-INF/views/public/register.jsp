@@ -159,7 +159,7 @@
                                             </div>
                                             <div class="col-sm-5 col-sm-offset-1">
                                                 <div class="form-group">
-                                                    <label><b>Thời hạn bảo hiểm: </b>01 năm</label>
+                                                    <label><b>Thời hạn bảo hiểm: </b>${contractDefaultTerm} tháng</label>
                                                 </div>
                                             </div>
                                             <div class="col-sm-5 col-sm-offset-1">
@@ -358,7 +358,7 @@
                                         </div>
                                         <div class="col-sm-10 col-sm-offset-1">
                                             <label><b>Thời hạn: </b></label>
-                                            01 năm kể từ ngày bảo hiểm có hiệu lực
+                                            ${contractDefaultTerm} tháng kể từ ngày bảo hiểm có hiệu lực
                                         </div>
                                         <div class="col-sm-5 col-sm-offset-1">
                                             <label><b>Phí bảo hiểm (VND): </b></label>
