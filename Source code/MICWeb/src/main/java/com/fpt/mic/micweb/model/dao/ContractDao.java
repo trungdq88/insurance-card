@@ -7,9 +7,8 @@ import com.fpt.mic.micweb.utils.Constants;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
-import java.util.List;
-
 import javax.persistence.TypedQuery;
+import java.util.List;
 
 /**
  * Created by TriPQM on 06/04/2015.
@@ -153,6 +152,25 @@ public class ContractDao extends IncrementDao<ContractEntity, String> {
                 Constants.ContractStatus.NO_CARD);
         List<ContractSearchResultDto> resultList = query.getResultList();
         entityManager.close();
+        return resultList;
+    }
+
+    /**
+     * Return customers with name or code that contains keyword
+     * @param keyword
+     * @param offset
+     * @param count
+     */
+    public List searchContractByCodeOrCustomerName(String keyword, int offset, int count) {
+        EntityManager entity = factory.createEntityManager();
+        Query query = entity.createQuery(
+                "SELECT c FROM ContractEntity c WHERE c.contractCode LIKE :keyword " +
+                        "OR c.micCustomerByCustomerCode.name LIKE :keyword");
+        query.setParameter("keyword", "%" + keyword + "%");
+        query.setFirstResult(offset);
+        query.setMaxResults(count);
+        List resultList = query.getResultList();
+        entity.close();
         return resultList;
     }
 

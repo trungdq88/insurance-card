@@ -1,5 +1,6 @@
 package com.fpt.mic.micweb.model.business;
 
+import com.fpt.mic.micweb.model.dao.ContractDao;
 import com.fpt.mic.micweb.model.dao.CustomerDao;
 import com.fpt.mic.micweb.model.entity.CustomerEntity;
 import com.fpt.mic.micweb.utils.StringUtils;
@@ -41,5 +42,16 @@ public class AjaxBusiness {
     public List loadCustomers(String keyword) {
         CustomerDao customerDao = new CustomerDao();
         return customerDao.searchCustomerByNameOrCode(keyword, 0, 10);
+    }
+
+    /**
+     * Return contract search result for ajax request.
+     * Only returns 10 results
+     * @param keyword
+     * @return
+     */
+    public List loadContracts(String keyword) {
+        ContractDao contractDao = new ContractDao();
+        return contractDao.searchContractByCodeOrCustomerName(keyword, 0, 10);
     }
 }

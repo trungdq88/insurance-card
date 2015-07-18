@@ -1,6 +1,5 @@
 package com.fpt.mic.micweb.controller.common;
 
-import com.fpt.mic.micweb.framework.BasicController;
 import com.fpt.mic.micweb.framework.R;
 import com.fpt.mic.micweb.framework.responses.JsonString;
 import com.fpt.mic.micweb.framework.responses.ResponseObject;
@@ -9,12 +8,9 @@ import com.fpt.mic.micweb.model.business.CustomerBusiness;
 import com.fpt.mic.micweb.model.business.NotificationBusiness;
 import com.fpt.mic.micweb.model.business.StaffBusiness;
 import com.fpt.mic.micweb.model.entity.PaymentEntity;
-import com.fpt.mic.micweb.model.entity.CustomerEntity;
-import com.fpt.mic.micweb.model.entity.StaffEntity;
 import com.fpt.mic.micweb.model.entity.helper.IUserEntity;
 
 import javax.servlet.annotation.WebServlet;
-import javax.xml.ws.Response;
 import java.math.BigInteger;
 import java.util.List;
 
@@ -97,4 +93,11 @@ public class AjaxController extends AuthController {
         return new JsonString(result);
     }
 
+    public ResponseObject getLoadContracts(R r) {
+        String keyword = r.equest.getParameter("keyword");
+        if (keyword == null) keyword = "";
+        AjaxBusiness ajaxBusiness = new AjaxBusiness();
+        List result = ajaxBusiness.loadContracts(keyword);
+        return new JsonString(result);
+    }
 }

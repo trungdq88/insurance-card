@@ -185,6 +185,8 @@ public class CompensationController extends AuthController {
             // This is a form in a popup, we don't need to display data again since
             // the popup will not automatically open when the page is reloaded
             // r.equest.setAttribute("submitted", dto);
+            // Send submitted data to JSP page
+            r.equest.setAttribute("submitted", dto);
             // Re-call the contract detail page
             r.equest.setAttribute("compensationCode", dto.getCompensationCode());
             return getEdit(r);
