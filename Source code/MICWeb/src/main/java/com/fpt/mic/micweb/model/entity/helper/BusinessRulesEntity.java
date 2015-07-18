@@ -25,6 +25,7 @@ public class BusinessRulesEntity {
     private int paymentDueDate;
     private int newCardRequestFee;
     private int deliveryFee;
+    private int updateContractDueDate;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -186,6 +187,16 @@ public class BusinessRulesEntity {
         this.deliveryFee = deliveryFee;
     }
 
+    @Basic
+    @Column(name = "update_contract_due_date")
+    public int getUpdateContractDueDate() {
+        return updateContractDueDate;
+    }
+
+    public void setUpdateContractDueDate(int updateContractDueDate) {
+        this.updateContractDueDate = updateContractDueDate;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -207,6 +218,7 @@ public class BusinessRulesEntity {
         if (paymentDueDate != that.paymentDueDate) return false;
         if (newCardRequestFee != that.newCardRequestFee) return false;
         if (deliveryFee != that.deliveryFee) return false;
+        if (updateContractDueDate != that.updateContractDueDate) return false;
 
         return true;
     }
@@ -227,6 +239,7 @@ public class BusinessRulesEntity {
         result = 31 * result + paymentDueDate;
         result = 31 * result + newCardRequestFee;
         result = 31 * result + deliveryFee;
+        result = 31 * result + updateContractDueDate;
         return result;
     }
 }
