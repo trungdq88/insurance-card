@@ -7,13 +7,6 @@
 --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%--
-  Created by IntelliJ IDEA.
-  User: TriPQM
-  Date: 07/02/2015
-  Time: 11:39 PM
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="_shared/header.jsp" %>
 
@@ -27,26 +20,27 @@
       </div>
       <!-- /.col-lg-12 -->
     </div>
-      <c:if test="${param.info eq 1}">
+      <c:if test="${param.info eq 'deactivateSuccess'}">
         <div class="text-success">
-            Xóa thành công
+            Ngừng hoạt động thành công
         </div>
       </c:if>
-      <c:if test="${param.info eq 0}">
-        <div class="text-danger">
-            Không thể xóa vì đang có hợp đồng với loại hợp đồng này
-        </div>
-      </c:if>
-      <c:if test="${param.info eq 2}">
+      <c:if test="${param.info eq 'addSuccess'}">
         <div class="text-success">
             Thêm loại hợp đồng thành công
       </div>
       </c:if>
-      <c:if test="${param.info eq 3}">
+      <c:if test="${param.info eq 'fail'}">
           <div class="text-danger">
             Có lỗi xảy ra. Xin thử lại
           </div>
       </c:if>
+    <c:if test="${param.info eq 'activateSuccess'}">
+      <div class="text-success">
+        Tái hoạt động thành công
+      </div>
+  </c:if>
+
     <div class="row">
       <div class="col-lg-12">
         <br/>
@@ -64,7 +58,7 @@
           <fieldset>
             <legend>Thêm loại hợp đồng mới</legend>
             <div>
-              <label class="col-sm-4 control-label">Tên loại hợp đồng</label>
+              <label class="col-sm-4 control-label">Tên loại hợp đồng *</label>
 
               <div class="col-sm-7">
                 <p class="text-value"><input name="contractType:name" type="text" class="form-control input-md" required
@@ -73,7 +67,7 @@
               </div>
             </div>
             <div>
-              <label class="col-sm-4 control-label">Miêu tả</label>
+              <label class="col-sm-4 control-label">Miêu tả *</label>
 
               <div class="col-sm-7">
                 <p class="text-value"><textarea name="contractType:description" cols="2" class="form-control input-md"
@@ -82,7 +76,7 @@
               </div>
             </div>
             <div>
-              <label class="col-sm-4 control-label">Phí hằng năm (VNĐ)</label>
+              <label class="col-sm-4 control-label">Phí hằng năm (VNĐ) *</label>
 
               <div class="col-sm-7">
                 <p class="text-value"><input name="contractType:pricePerYear" type="number" class="form-control input-md"
@@ -112,6 +106,7 @@
                   <th>Tên</th>
                   <th>Miêu tả</th>
                   <th>Phí hằng năm (VNĐ)</th>
+                  <th>Tình trạng</th>
                   <th></th>
                 </tr>
                 </thead>
@@ -131,35 +126,71 @@
                       <tr>
                         <td>${(contractTypePaginator.getCurrentPage(param.page) - 1) * contractTypePaginator.itemPerPage + counter.count}</td>
                         <td>
-                          ${row.name}
+                          <a href="${pageContext.request.contextPath}/admin/contractType?action=viewEditContractType&contractTypeId=${row.id}">
+                              ${row.name}
+                          </a>
+
                         </td>
                         <td>
                               <a tabindex="0" data-trigger="focus" data-toggle="popover" title="Miêu tả"
                                  role="button" data-content="${row.description}"><i class="fa fa-file"></i></a>
                         </td>
                         <td>
+                          <fmt:setLocale value="vi_VN"/>
                           <fmt:formatNumber
                                   value="${row.pricePerYear}"
                                   type="currency"
-                                  currencyCode="VND"
                                   maxFractionDigits="0"/>
                         </td>
+                          <c:if test="${row.active eq '1'}">
+                            <td>
+                                                <span class="label label-success"
+                                                      style="font-size: 12px">Đang hoạt động</span>
+                            </td>
+                            </c:if>
+                          <c:if test="${row.active eq '0'}">
+                            <td><span class="label label-dark"
+                                                          style="font-size: 12px">Ngừng hoạt động</span>
+                            </td>
+                            </c:if>
                         <td>
-
-                          <button  contractTypeId ="${row.id}" page ="${param.page}" contractName ="${row.name}"
-                                   type="button" class="btn btn-danger"
-                                   data-toggle="modal" data-target="#delete-contract-type" onclick="{
+                          <c:if test="${row.active eq 1}">
+                          <button  contractTypeId ="${row.id}" page ="${param.page}" contractName ="${row.name}" actionName="deactivateContractType"
+                                   type="button" class="btn btn-danger btn-xs"
+                                   data-toggle="modal" data-target="#deactivate-contract-type" onclick="{
                                       var contractTypeId = $(this).attr('contractTypeId');
                                       var page = $(this).attr('page');
                                       var contractName = $(this).attr('contractName');
+                                      var action = $(this).attr('actionName');
+                                      $('#action').val(action);
                                       $('#contractTypeId').val(contractTypeId);
                                       $('#page').val(page);
                                       $('#contractTypeId1').text(contractTypeId);
                                       $('#page1').text(page);
                                       $('#contractName').text(contractName);
                                    }">
-                            <i class="fa fa-trash"></i> Xóa
+                            <i class="fa fa-stop"></i> Ngừng hoạt động
                           </button>
+                          </c:if>
+                          <c:if test="${row.active eq 0}">
+                            <button  contractTypeId ="${row.id}" page ="${param.page}" contractName ="${row.name}" actionName="activateContractType"
+                                     type="button" class="btn btn-success btn-xs"
+                                     data-toggle="modal" data-target="#activate-contract-type" onclick="{
+                                      var contractTypeId = $(this).attr('contractTypeId');
+                                      var page = $(this).attr('page');
+                                      var contractName = $(this).attr('contractName');
+                                      var action = $(this).attr('actionName');
+                                      $('#contractTypeId').val(contractTypeId);
+                                      $('#page').val(page);
+                                      $('#action').val(action);
+                                      $('#contractTypeId1').text(contractTypeId);
+                                      $('#page1').text(page);
+                                      $('#contractName1').text(contractName);
+
+                                   }">
+                              <i class="fa fa-play"></i> Tái hoạt động
+                            </button>
+                          </c:if>
                         </td>
                       </tr>
                     </c:forEach>
@@ -201,6 +232,7 @@
       </div>
     </div>
   </div>
+    </div>
   <!-- /#wrapper -->
     <jsp:include page="contract-type-modal.jsp" flush="true"/>
   <%@ include file="_shared/footer.jsp" %>

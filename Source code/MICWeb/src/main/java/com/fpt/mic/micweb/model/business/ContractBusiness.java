@@ -39,6 +39,7 @@ public class ContractBusiness {
         contractTypeEntity.setName(contractTypeDto.getName());
         contractTypeEntity.setDescription(contractTypeDto.getDescription());
         contractTypeEntity.setPricePerYear(contractTypeDto.getPricePerYear());
+        contractTypeEntity.setActive(1);
         try{
             contractTypeDao.create(contractTypeEntity);
             return true;
@@ -57,6 +58,30 @@ public class ContractBusiness {
         }else {
             return false;
         }
+    }
+
+    public boolean deactivateContractType(int contractTypeId){
+        ContractTypeDao contractTypeDao = new ContractTypeDao();
+        ContractTypeEntity contractTypeEntity = contractTypeDao.read(contractTypeId);
+        if (contractTypeEntity != null){
+            contractTypeEntity.setActive(0);
+            if (contractTypeDao.update(contractTypeEntity) != null){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean activateContractType(int contractTypeId){
+        ContractTypeDao contractTypeDao = new ContractTypeDao();
+        ContractTypeEntity contractTypeEntity = contractTypeDao.read(contractTypeId);
+        if (contractTypeEntity != null){
+            contractTypeEntity.setActive(1);
+            if (contractTypeDao.update(contractTypeEntity) != null){
+                return true;
+            }
+        }
+        return false;
     }
 
     public Long getAllRequestCancelContractCount(){
@@ -159,6 +184,18 @@ public class ContractBusiness {
         if (contractEntity != null){
             contractEntity.setStatus(status);
             contractDao.update(contractEntity);
+            return true;
+        }
+        return false;
+    }
+
+    public boolean editContractType(int contractTypeId, ContractTypeDto dto){
+        ContractTypeDao contractTypeDao = new ContractTypeDao();
+        ContractTypeEntity contractTypeEntity = contractTypeDao.read(contractTypeId);
+        contractTypeEntity.setName(dto.getName());
+        contractTypeEntity.setPricePerYear(dto.getPricePerYear());
+        contractTypeEntity.setDescription(dto.getDescription());
+        if (contractTypeDao.update(contractTypeEntity) != null){
             return true;
         }
         return false;

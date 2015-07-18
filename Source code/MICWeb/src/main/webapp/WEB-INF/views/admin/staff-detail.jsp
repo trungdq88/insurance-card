@@ -81,7 +81,7 @@
         <div class="text-left">
 
           <a href="${pageContext.request.contextPath}/admin/staff" type="button"
-             class="btn btn-success">
+             class="btn btn-default">
             <i class="fa fa-arrow-left"></i>
             Trở lại
           </a>

@@ -51,9 +51,9 @@ public class ContractTypeController extends BasicController {
         }
         ContractBusiness contractBusiness = new ContractBusiness();
         if (contractBusiness.addContractType(contractTypeDto)){
-            return new RedirectTo("/admin/contractType?info=2");
+            return new RedirectTo("/admin/contractType?info=addSuccess");
         } else {
-            return new RedirectTo("/admin/contractType?info=3");
+            return new RedirectTo("/admin/contractType?info=fail");
         }
         //return new RedirectTo("/admin/contractType?info=Thêm loại hợp đồng thành công");*
     }
@@ -67,6 +67,55 @@ public class ContractTypeController extends BasicController {
             return new RedirectTo("/admin/contractType?action=view&info=1&page="+r.equest.getParameter("page"));
         } else {
             return new RedirectTo("/admin/contractType?action=view&info=0&page="+r.equest.getParameter("page"));
+        }
+    }
+
+    public ResponseObject postDeactivateContractType(R r){
+        ContractBusiness contractBusiness = new ContractBusiness();
+        int contractTypeId = Integer.parseInt(r.equest.getParameter("contractTypeId"));
+        if (contractBusiness.deactivateContractType(contractTypeId)){
+            return new RedirectTo("/admin/contractType?action=view&info=deactivateSuccess&page="+r.equest.getParameter("page"));
+        } else {
+            return new RedirectTo("/admin/contractType?action=view&info=fail&page="+r.equest.getParameter("page"));
+        }
+    }
+
+    public ResponseObject postActivateContractType(R r){
+        ContractBusiness contractBusiness = new ContractBusiness();
+        int contractTypeId = Integer.parseInt(r.equest.getParameter("contractTypeId"));
+        if (contractBusiness.activateContractType(contractTypeId)){
+            return new RedirectTo("/admin/contractType?action=view&info=activateSuccess&page="+r.equest.getParameter("page"));
+        } else {
+            return new RedirectTo("/admin/contractType?action=view&info=fail&page="+r.equest.getParameter("page"));
+        }
+    }
+
+    public ResponseObject getViewEditContractType(R r){
+        ContractBusiness contractBusiness = new ContractBusiness();
+        int contractTypeId = Integer.parseInt(r.equest.getParameter("contractTypeId"));
+        r.equest.setAttribute("submitted",contractBusiness.getContractType(contractTypeId));
+        r.equest.setAttribute("contractTypeId",contractTypeId);
+        return new JspPage("admin/contract-type-detail.jsp");
+    }
+
+    public ResponseObject postEditContractType(R r){
+        ContractTypeDto contractTypeDto =(ContractTypeDto) r.ead.entity(ContractTypeDto.class,"contractType");
+        int contractTypeId = Integer.parseInt(r.equest.getParameter("contractTypeId"));
+        List errors = r.ead.validate(contractTypeDto);
+        // Nếu có lỗi khi validate
+        if (errors.size() > 0) {
+            // Gửi lỗi về trang JSP
+            r.equest.setAttribute("validateErrors", errors);
+            // Gửi dữ liệu mà người dùng đã nhập về trang JSP, gán vào biến submitted
+            r.equest.setAttribute("submitted", contractTypeDto);
+            r.equest.setAttribute("contractTypeId",contractTypeId);
+            return new JspPage("admin/contract-type-detail.jsp");
+        }
+        ContractBusiness contractBusiness = new ContractBusiness();
+        if(contractBusiness.editContractType(contractTypeId,contractTypeDto)){
+            return new RedirectTo("/admin/contractType?action=viewEditContractType&contractTypeId="+contractTypeId+"&info=editSuccess");
+        } else {
+            return new RedirectTo("/admin/contractType?action=viewEditContractType&contractTypeId="+contractTypeId+"&info=fail");
         }
 
     }
