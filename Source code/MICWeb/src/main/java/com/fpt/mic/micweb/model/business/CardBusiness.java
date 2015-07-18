@@ -27,6 +27,17 @@ import java.util.Map;
  */
 public class CardBusiness {
 
+    public boolean cancelNewCardRequest(String contractCode) {
+        NewCardRequestDao newCardRequestDao = new NewCardRequestDao();
+        NewCardRequestEntity newCardRequestEntity;
+        newCardRequestEntity = newCardRequestDao.getUnresolveRequest(contractCode);
+        if (newCardRequestEntity != null){
+            newCardRequestDao.delete(newCardRequestEntity);
+            return true;
+        }
+        return false;
+    }
+
     public List<CardEntity> getIssuedCard(int offset, int count) {
         CardInstanceDao cardInstanceDao = new CardInstanceDao();
         return cardInstanceDao.getIssuedCard(offset, count);

@@ -223,6 +223,20 @@
                                 <strong>Lịch sử vi phạm luật ATGT</strong>
                             </a>
                         </li>
+                        <c:if test="${contract.status.equalsIgnoreCase('Ready') }">
+                            <%--<form action="${pageContext.request.contextPath}/customer/card" method="get">--%>
+                            <c:if test="${isNewCardRequested == true}">
+                                <div class="pull-right">
+                                    <p class="text-value">
+                        <span class="label label-info"
+                              style="font-size: 16px">Đang yêu cầu thẻ mới</span>
+                                    </p>
+                                </div>
+                            </c:if>
+
+
+                            <%--</form>--%>
+                        </c:if>
                     </ul>
                 </div>
 

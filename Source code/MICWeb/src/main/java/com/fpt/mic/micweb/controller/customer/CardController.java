@@ -290,4 +290,22 @@ public class CardController extends AuthController {
         r.equest.setAttribute("unresolvedRequestCount",customerBusiness.getUnresolvedNewCardRequestCount(customerCode));
         return new JspPage("customer/view-new-card-requests.jsp");
     }
+
+    public ResponseObject postCancelNewCardRequest(R r) {
+        String customerCode = ((CustomerEntity) getLoggedInUser()).getCustomerCode();
+        CardBusiness cardBusiness = new CardBusiness();
+        CustomerBusiness customerBusiness = new CustomerBusiness();
+        String contractCode = r.equest.getParameter("contractCode");
+        if (!customerCode.equals(customerBusiness.getContractDetail(contractCode).getCustomerCode())){
+            return new RedirectTo("/error/404");
+        }
+        if (cardBusiness.cancelNewCardRequest(contractCode)) {
+            // thanh cong
+            return new RedirectTo("/customer/contract?action=detail&info=cancelNewCardRequestSuccess&code="+contractCode);
+        }
+        else {
+            return new RedirectTo("/customer/contract?action=detail&info=fail&code="+contractCode);
+        }
+
+    }
 }

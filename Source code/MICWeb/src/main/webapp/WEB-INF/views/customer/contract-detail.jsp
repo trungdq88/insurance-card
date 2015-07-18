@@ -286,6 +286,16 @@
                 <div class="text-info text-center">
                     ${message}
                 </div>
+                <c:if test="${param.info eq 'cancelNewCardRequestSuccess'}">
+                    <div class="text-success text-center">
+                        Hủy yêu cầu thẻ mới thành công
+                    </div>
+                </c:if>
+                <c:if test="${param.info eq 'fail'}">
+                    <div class="text-danger text-center">
+                        Có lỗi xảy ra. Xin thử lại
+                    </div>
+                </c:if>
                 <c:if test="${contract.status.equalsIgnoreCase('Request cancel')}">
                     <form action="${pageContext.request.contextPath}/customer/contract" method="post">
                         <div class="fixWell text-center text-danger " style="height: 65% !important;">
@@ -505,11 +515,16 @@
                             </c:if>
                             <c:if test="${isNewCardRequested == true}">
                                 <div class="pull-right">
-                                    <p class="text-value">
-                        <span class="label label-info"
-                              style="font-size: 16px">Đang yêu cầu thẻ mới</span>
-                                    </p>
+                                    <%--<p class="text-value">--%>
+                        <%--<span class="label label-info"--%>
+                              <%--style="font-size: 16px">Đang yêu cầu thẻ mới</span>--%>
+                                    <%--</p>--%>
+                                    <button  type="button" class="btn btn-danger btn-xs"
+                                             data-toggle="modal" data-target="#cancel-new-card-request">
+                                        <i class="fa fa-times"></i> Hủy yêu cầu thẻ mới
+                                    </button>
                                 </div>
+
                             </c:if>
 
 
@@ -901,3 +916,4 @@
     });
 </script>
 <%@ include file="_shared/footer.jsp" %>
+<jsp:include page="cancel-new-card-request-modal.jsp" flush="true"/>
