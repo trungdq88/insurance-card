@@ -94,7 +94,7 @@
                             <label class="col-sm-5 control-label" for="paidDate">Ngày nộp phí *</label>
 
                             <div class="col-sm-4">
-                                <input id="paymentDate" name="completePayment:paidDate" class="form-control input-md"
+                                <input id="completePaidDate" name="completePayment:paidDate" class="form-control input-md"
                                        type="date" required>
                                 <input type="hidden" name="completePayment:amount" value="${contract.contractFee}"/>
                             </div>
