@@ -52,6 +52,11 @@ public class BusinessRulesDto {
     @Range(min = 0, message = "Phí vận chuyển phải lớn hơn hoặc bằng 0")
     private Integer deliveryFee;
 
+    @NotNull(message = "Thời gian thêm thông tin sau khi hủy hợp đồng không được bỏ trống")
+    @Range(min = 0, message = "Giới hạn thời gian thêm thông tin sau khi hủy hợp đồng phải lớn hơn hoặc bằng 0")
+    private Integer updateContractDueDate;
+
+
     public BusinessRulesDto() {
     }
 
@@ -165,5 +170,13 @@ public class BusinessRulesDto {
 
     public void setDeliveryFee(Integer deliveryFee) {
         this.deliveryFee = deliveryFee;
+    }
+
+    public Integer getUpdateContractDueDate() {
+        return updateContractDueDate;
+    }
+
+    public void setUpdateContractDueDate(Integer updateContractDueDate) {
+        this.updateContractDueDate = updateContractDueDate;
     }
 }

@@ -109,6 +109,17 @@
                     </fieldset>
                     <fieldset>
                         <legend>Giới hạn chỉnh sửa ngày cho nhân viên</legend>
+                        <label class="col-sm-7 control-label">Thời gian thêm thông tin sau khi hủy hợp đồng:</label>
+
+                        <div class="col-sm-2">
+                            <input  name="config:updateContractDueDate" type="number"
+                                   class="form-control input-md" required min="0" max="1000000000" min="0"
+                                   value="${submitted.updateContractDueDate}">
+
+                        </div>
+                        <div class="col-sm-2">
+                            <p class="text-value"> ngày</p>
+                        </div>
 
                         <label class="col-sm-7 control-label">Ngày bắt đầu hợp đồng trước ngày hiện tại:</label>
 

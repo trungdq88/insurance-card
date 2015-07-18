@@ -72,6 +72,7 @@ public class AdminBusiness {
         businessRulesEntity.setNearlyExceedExpiredThree(businessRulesDto.getNearlyExceedExpiredThree());
         businessRulesEntity.setNewCardRequestFee(businessRulesDto.getNewCardRequestFee());
         businessRulesEntity.setDeliveryFee(businessRulesDto.getDeliveryFee());
+        businessRulesEntity.setUpdateContractDueDate(businessRulesDto.getUpdateContractDueDate());
         businessRulesDao.create(businessRulesEntity);
     }
 

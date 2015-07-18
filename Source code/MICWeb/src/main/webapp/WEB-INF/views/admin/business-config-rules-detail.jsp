@@ -106,6 +106,15 @@
                     </fieldset>
                     <fieldset>
                         <legend>Giới hạn chỉnh sửa ngày cho nhân viên</legend>
+                        <label class="col-sm-7 control-label">Thời gian thêm thông tin sau khi hủy hợp đồng:</label>
+
+                        <div class="col-sm-2">
+                            <p class="text-value">${submitted.updateContractDueDate}</p>
+
+                        </div>
+                        <div class="col-sm-2">
+                            <p class="text-value"> ngày</p>
+                        </div>
 
                         <label class="col-sm-7 control-label">Ngày bắt đầu hợp đồng trước ngày hiện tại:</label>
 
@@ -187,9 +196,11 @@
                     <br>
 
                     <div class="pull-left">
-                        <button type="submit" class="btn btn-success">
-                            Quay lại
-                        </button>
+                        <a href="${pageContext.request.contextPath}/admin/config" type="button"
+                           class="btn btn-default">
+                            <i class="fa fa-arrow-left"></i>
+                            Trở lại
+                        </a>
                     </div>
                     <br>
 
