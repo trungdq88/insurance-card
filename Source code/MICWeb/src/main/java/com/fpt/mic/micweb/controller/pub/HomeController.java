@@ -6,6 +6,7 @@ import com.fpt.mic.micweb.framework.R;
 import com.fpt.mic.micweb.framework.responses.ResponseObject;
 import com.fpt.mic.micweb.model.business.ContractBusiness;
 import com.fpt.mic.micweb.model.entity.ContractTypeEntity;
+import com.fpt.mic.micweb.utils.ConfigUtils;
 
 import javax.servlet.annotation.WebServlet;
 import java.util.ArrayList;
@@ -21,6 +22,8 @@ public class HomeController extends BasicController {
         ContractBusiness contractBusiness = new ContractBusiness();
         List<ContractTypeEntity> list = contractBusiness.getAllContractType();
         r.equest.setAttribute("listContractType", list);
+        ConfigUtils configUtils = new ConfigUtils();
+        r.equest.setAttribute("contractDefaultTerm",configUtils.getContractDefaultTerm());
         return new JspPage("public/home.jsp");
     }
 

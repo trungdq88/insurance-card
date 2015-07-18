@@ -278,7 +278,7 @@
                     <div class="form-group  col-md-12">
                         <p class="form-control-static">
                             <label>Thời hạn:</label>
-                            01 năm kể từ khi cấp
+                            ${contractDefaultTerm} tháng kể từ khi cấp
                         </p>
 
                         <p class="form-control-static">
