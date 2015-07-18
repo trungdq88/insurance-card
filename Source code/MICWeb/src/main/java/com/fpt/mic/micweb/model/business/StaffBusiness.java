@@ -259,8 +259,13 @@ public class StaffBusiness {
         // Check contract
         if (contractEntity != null) {
             // Update contract information
-            if (dto.getCancelDate() != null) {
-                contractEntity.setCancelDate(dto.getCancelDate());
+            Timestamp cancelDate = dto.getCancelDate();
+            if (cancelDate != null) {
+                if (cancelDate.equals(DateUtils.currentDateWithoutTime())) {
+                    contractEntity.setCancelDate(DateUtils.currentTimeWithoutNanos());
+                } else {
+                    contractEntity.setCancelDate(cancelDate);
+                }
             }
             if (dto.getCancelReason() != null) {
                 contractEntity.setCancelReason(dto.getCancelReason());
@@ -462,15 +467,15 @@ public class StaffBusiness {
     }
 
     public boolean changePassword(StaffChangePasswordDto dto) {
-        StaffDao staffDao= new StaffDao();
-        StaffEntity staffEntity= staffDao.read(dto.getStaffCode());
+        StaffDao staffDao = new StaffDao();
+        StaffEntity staffEntity = staffDao.read(dto.getStaffCode());
         if (staffEntity != null) {
             String encryptedPassword = StringUtils.getMD5Hash(dto.getCurrentPassword());
             if (staffEntity.getPassword().equals(encryptedPassword)) {
                 if (dto.getConfirmPassword().equals(dto.getNewPassword())) {
                     String encryptedConfirmPassword = StringUtils.getMD5Hash(dto.getConfirmPassword());
                     staffEntity.setPassword(encryptedConfirmPassword);
-                    if (staffDao.update(staffEntity) != null){
+                    if (staffDao.update(staffEntity) != null) {
                         return true;
                     }
                 }
