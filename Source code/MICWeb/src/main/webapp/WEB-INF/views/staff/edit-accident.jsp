@@ -165,6 +165,20 @@
             $('#createdDate').val(getCurrentDate());
         }
         document.getElementById("createdDate").max = getCurrentDate();
+
+        // Ajax load for search box in contract select modal
+        var ajaxDelay;
+        $('#select-contract-keyword').keyup(function () {
+            clearTimeout(ajaxDelay);
+            ajaxDelay = setTimeout(function () {
+                loadContracts();
+            }, 500);
+        });
+
+        // Auto open modal to select contract (do not allow handy enter contract code)
+        $('#contractCode').click(function () {
+            $('#contract-select-btn').click();
+        })
     });
 
     function escapeHtml(unsafe) {
