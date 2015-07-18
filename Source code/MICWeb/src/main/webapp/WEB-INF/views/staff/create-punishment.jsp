@@ -33,14 +33,8 @@
                 <form action="${pageContext.request.contextPath}/staff/punishment" method="post" class="form-horizontal">
                     <fieldset>
                         <!-- Contract code -->
-                        <c:choose>
-                            <c:when test="${not empty param.code}">
-                                <input type="hidden" name="punishment:contractCode" value="${param.code}">
-                            </c:when>
-                            <c:otherwise>
-                                <input type="hidden" name="punishment:contractCode" value="${submitted.contractCode}">
-                            </c:otherwise>
-                        </c:choose>
+                        <input type="hidden" name="punishment:contractCode"
+                               value="${not empty param.code ? param.code : submitted.contractCode}">
 
                         <!-- Created date -->
                         <div class="form-group">

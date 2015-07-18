@@ -38,18 +38,22 @@
                         <div class="form-group">
                             <label class="col-sm-4 control-label" for="contractCode">Mã hợp đồng *</label>
 
-                            <div class="col-sm-2">
-                                <input id="contractCode" name="edit:contractCode" class="form-control input-md"
-                                       type="text" required pattern="^HD([0-9A-Z]{4,8})$"
-                                       title="Ví dụ: HD1024" value="${punishment.contractCode}">
-                            </div>
-
-                            <div class="col-sm-2" data-toggle="modal" data-target="#select-customer-modal">
-                                <a href="#" class="btn btn-primary btn-block" data-toggle="tooltip"
-                                   data-placement="bottom"
-                                   title="Chọn hợp đồng có sẵn trong hệ thống">
-                                    <i class="fa fa-search"></i> Chọn
-                                </a>
+                            <div class="col-sm-3">
+                                <div class="input-group">
+                                    <input id="contractCode" name="edit:contractCode"
+                                           class="form-control input-md"
+                                           value="${not empty submitted.contractCode ? submitted.contractCode : punishment.contractCode}"
+                                           readonly title="Ví dụ: HD2703"
+                                           type="text" required pattern="^HD([0-9A-Z]{4,8})$">
+                                    <span class="input-group-btn" data-toggle="tooltip" data-placement="top"
+                                          id="btnTooltip" title="Chọn hợp đồng có sẵn trong hệ thống">
+                                    <button id="contract-select-btn" type="button" class="btn btn-primary"
+                                            data-toggle="modal" data-target="#select-contract-modal"
+                                            onclick="loadContracts()">
+                                        <i class="fa fa-search"></i> Chọn
+                                    </button>
+                                    </span>
+                                </div>
                             </div>
                         </div>
 
@@ -59,7 +63,7 @@
 
                             <div class="col-sm-3">
                                 <input id="createdDate" name="edit:createdDate"
-                                       value="<fmt:formatDate value="${punishment.createdDate}" pattern="yyyy-MM-dd" />"
+                                       value="<fmt:formatDate value="${not empty submitted.createdDate ? submitted.createdDate : punishment.createdDate}" pattern="yyyy-MM-dd" />"
                                        class="form-control input-md" type="date" required>
                             </div>
                         </div>
@@ -72,7 +76,7 @@
                                 <textarea id="title" name="edit:title" class="form-control input-md"
                                           placeholder="Ví dụ: Vượt đèn đỏ, lấn tuyến, vượt quá tốc độ 5%"
                                           rows="4" maxlength="250"
-                                          title="Vui lòng nhập nội dung thông báo">${punishment.title}</textarea>
+                                          title="Vui lòng nhập nội dung thông báo">${not empty submitted.title ? submitted.title : punishment.title}</textarea>
                             </div>
                         </div>
 
@@ -115,13 +119,119 @@
 </div>
 <!-- /#wrapper -->
 
+<!-- model for select contract -->
+<div class="modal fade" id="select-contract-modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Chọn hợp đồng đã có sẵn trong hệ thống</h4>
+            </div>
+            <div class="modal-body">
+                <input type="text" class="form-control" id="select-contract-keyword"
+                       placeholder="Tìm theo mã hợp đồng hoặc tên khách hàng"/>
+                <br/>
+
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered table-hover">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Mã hợp đồng</th>
+                            <th>Tên khách hàng</th>
+                            <th>Chọn</th>
+                        </tr>
+                        </thead>
+                        <tbody id="list-items">
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.table-responsive -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
 <script type="text/javascript">
     $(document).ready(function () {
         if ($('#createdDate').val() == "") {
             $('#createdDate').val(getCurrentDate());
         }
         document.getElementById("createdDate").max = getCurrentDate();
+
+        // Ajax load for search box in contract select modal
+        var ajaxDelay;
+        $('#select-contract-keyword').keyup(function () {
+            clearTimeout(ajaxDelay);
+            ajaxDelay = setTimeout(function () {
+                loadContracts();
+            }, 500);
+        });
+
+        // Auto open modal to select contract (do not allow handy enter contract code)
+        $('#contractCode').click(function () {
+            $('#contract-select-btn').click();
+        })
     });
+
+    function escapeHtml(unsafe) {
+        return unsafe
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+    }
+
+    function showContractInfo(info) {
+        $('#contractCode').val(info.contractCode);
+    }
+
+    function loadContracts() {
+        var keyword = $('#select-contract-keyword').val();
+
+        var updateList = function (items) {
+            var html = '';
+            if (!items || items.length == 0) {
+                html = '<tr><td class="text-center" colspan="4">Không có hợp đồng nào</td></tr>'
+            } else {
+                for (var i = 0; i < items.length; i++) {
+                    var item = items[i];
+                    html += '<tr>' +
+                            '<td>' + (i + 1) + '</td>' +
+                            '<td>' + item.contractCode + '</td>' +
+                            '<td>' + item.micCustomerByCustomerCode.name + '</td>' +
+                            '<td><button data-dismiss="modal" type="button" class="btn btn-primary btn-xs"' +
+                            'onclick="showContractInfo(' + escapeHtml(JSON.stringify(item)) + ')">' +
+                            '<i class="fa fa-check"></i> Chọn</button></td>' +
+                            '</tr>';
+                }
+            }
+            $('#list-items').html(html);
+        };
+
+        $('#list-items').html('<tr><td class="text-center" colspan="4">Đang tìm kiếm...</td></tr>');
+        $.ajax({
+            url: '/ajax',
+            method: 'get',
+            dataType: 'json',
+            data: {
+                action: 'loadContracts',
+                keyword: keyword
+            }
+        }).done(function (contracts) {
+            updateList(contracts);
+        }).fail(function () {
+            updateList([]);
+        });
+    }
 </script>
 
 <%@ include file="_shared/footer.jsp" %>
