@@ -283,10 +283,12 @@
                                 <input id="attachment" name="compensation:attachment" class="form-control input-md"
                                        type="hidden" maxlength="255">
 
-                                <img id="imgAttachment" height="100px" src=""/>
+                                <img id="imgAttachment" height="100px" src=""/>&nbsp;&nbsp;
+                                <button class="btn btn-primary" type="button" id="pickFileCompensation">Chọn văn bản</button>
                                 <script type="text/javascript" src="//api.filepicker.io/v2/filepicker.js"></script>
 
                                 <input type="filepicker" data-fp-apikey="AEbPPQfPfRHqODjEl5AZ2z"
+                                       class="pickCompensation hide"
                                        onchange="$('#imgAttachment').attr('src', event.fpfile.url);$('#attachment').val(event.fpfile.url);">
                             </div>
                         </div>
@@ -336,6 +338,9 @@
     initialize2();
     initialize3();
     $(document).ready(function () {
+        $('#pickFileCompensation').click(function () {
+            $('.pickCompensation').trigger("click");
+        });
         if ($('#createdDate').val() == "") {
             $('#createdDate').val(getCurrentDate());
         }
