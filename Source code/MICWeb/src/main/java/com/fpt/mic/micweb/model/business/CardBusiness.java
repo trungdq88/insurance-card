@@ -4,6 +4,7 @@ import com.fpt.mic.micweb.model.dao.CardAccessLogDao;
 import com.fpt.mic.micweb.model.dao.CardDao;
 import com.fpt.mic.micweb.model.dao.CardInstanceDao;
 import com.fpt.mic.micweb.model.dao.helper.NewCardRequestDao;
+import com.fpt.mic.micweb.model.dto.CheckCardResponseDto;
 import com.fpt.mic.micweb.model.dto.NotificationBuilder;
 import com.fpt.mic.micweb.model.dto.form.NewCardRequestDto;
 import com.fpt.mic.micweb.model.dto.form.RecycleCardDto;
@@ -11,7 +12,9 @@ import com.fpt.mic.micweb.model.entity.CardAccessLogEntity;
 import com.fpt.mic.micweb.model.entity.CardEntity;
 import com.fpt.mic.micweb.model.entity.CardInstanceEntity;
 import com.fpt.mic.micweb.model.entity.NewCardRequestEntity;
+import com.fpt.mic.micweb.utils.ConfigUtils;
 import com.fpt.mic.micweb.utils.Constants;
+import com.fpt.mic.micweb.utils.DateUtils;
 
 import java.sql.Timestamp;
 import java.util.Date;
@@ -184,35 +187,18 @@ public class CardBusiness {
     }
 
     public String getCardValidation(CardInstanceEntity card) {
-
-        if (card.getDeactivatedDate() != null ||
-                card.getMicContractByContractCode().getStatus()
-                        .equalsIgnoreCase(Constants.ContractStatus.CANCELLED) ||
-                card.getMicContractByContractCode().getStatus()
-                        .equalsIgnoreCase(Constants.ContractStatus.PENDING) ||
-                card.getMicContractByContractCode().getStatus()
-                        .equalsIgnoreCase(Constants.ContractStatus.NO_CARD)) {
-            return "Thẻ không hợp lệ";
-        }
-
-        if (card.getMicContractByContractCode().getStatus()
-                .equalsIgnoreCase(Constants.ContractStatus.EXPIRED)) {
-            return "Thẻ hết hạn";
-        }
-
-        if (card.getMicContractByContractCode().getStatus()
-                .equalsIgnoreCase(Constants.ContractStatus.READY) ||
-                card.getMicContractByContractCode().getStatus()
-                        .equalsIgnoreCase(Constants.ContractStatus.REQUEST_CANCEL)) {
-            // Check if nearly expired
-            if (card.getMicContractByContractCode().getExpiredDate().getTime() - (new Date()).getTime() <
-                    Constants.StaffConfiguration.EXPIRED_DATE_AFTER) {
-                return "Thẻ sắp hết hạn";
-            } else {
+        switch (getCardValidationCode(card)) {
+            case CheckCardResponseDto.RESULT_VALID_CARD:
                 return "Thẻ hợp lệ";
-            }
+            case CheckCardResponseDto.RESULT_INVALID_CARD:
+                return "Thẻ không hợp lệ";
+            case CheckCardResponseDto.RESULT_EXPIRED_CARD:
+                return "Thẻ hết hạn";
+            case CheckCardResponseDto.RESULT_NEARLY_EXPIRED_CARD:
+                return "Thẻ sắp hết hạn";
+            default:
+                return "Thẻ không hợp lệ";
         }
-        return "Thẻ không hợp lệ";
     }
 
     public Long getAllUnresolvedNewCardRequestCount(){
@@ -220,4 +206,35 @@ public class CardBusiness {
         return newCardRequestDao.getAllUnresolvedNewCardRequestCount();
     }
 
+    public int getCardValidationCode(CardInstanceEntity card) {
+        if (card.getDeactivatedDate() != null ||
+                card.getMicContractByContractCode().getStatus()
+                        .equalsIgnoreCase(Constants.ContractStatus.CANCELLED) ||
+                card.getMicContractByContractCode().getStatus()
+                        .equalsIgnoreCase(Constants.ContractStatus.PENDING) ||
+                card.getMicContractByContractCode().getStatus()
+                        .equalsIgnoreCase(Constants.ContractStatus.NO_CARD)) {
+            return CheckCardResponseDto.RESULT_INVALID_CARD;
+        }
+
+        if (card.getMicContractByContractCode().getStatus()
+                .equalsIgnoreCase(Constants.ContractStatus.EXPIRED)) {
+            return CheckCardResponseDto.RESULT_EXPIRED_CARD;
+        }
+
+        if (card.getMicContractByContractCode().getStatus()
+                .equalsIgnoreCase(Constants.ContractStatus.READY) ||
+                card.getMicContractByContractCode().getStatus()
+                        .equalsIgnoreCase(Constants.ContractStatus.REQUEST_CANCEL)) {
+            ConfigUtils configUtils = new ConfigUtils();
+            // Check if nearly expired
+            if (DateUtils.dateBetween(new Timestamp((new Date()).getTime()), card.getMicContractByContractCode().getExpiredDate()) <
+                    configUtils.getNearlyExceedExpiredOne()) {
+                return CheckCardResponseDto.RESULT_NEARLY_EXPIRED_CARD;
+            } else {
+                return CheckCardResponseDto.RESULT_VALID_CARD;
+            }
+        }
+        return CheckCardResponseDto.RESULT_INVALID_CARD;
+    }
 }

@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.fpt.mic.mobile.checker.app.R;
 import com.fpt.mic.mobile.checker.app.entity.CardInstanceEntity;
+import com.fpt.mic.mobile.checker.app.entity.CheckCardResponseDto;
 import com.fpt.mic.mobile.checker.app.utils.Constants;
 
 import java.util.Date;
@@ -36,7 +37,6 @@ public class InfoActivity extends Activity {
     TextView txtDatePublish;
     TextView txtHotline;
     private CardInstanceEntity card;
-    private Date checkTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,8 +64,9 @@ public class InfoActivity extends Activity {
         txtDatePublish = (TextView) findViewById(R.id.txtDatePublish);
         txtHotline = (TextView) findViewById(R.id.txtHotline);
 
-        checkTime = new Date(getIntent().getLongExtra("checkTime", new Date().getTime()));
-        showInfo((CardInstanceEntity) getIntent().getParcelableExtra("card"));
+        CardInstanceEntity card = (CardInstanceEntity) getIntent().getParcelableExtra("card");
+        int result = getIntent().getIntExtra("result", CheckCardResponseDto.RESULT_INVALID_CARD);
+        showInfo(card, result);
     }
 
     @Override
@@ -93,7 +94,7 @@ public class InfoActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void showInfo(CardInstanceEntity card) {
+    public void showInfo(CardInstanceEntity card, int result) {
 
         this.card = card;
 
@@ -102,33 +103,22 @@ public class InfoActivity extends Activity {
             return;
         }
 
-        if (card.deactivatedDate != null ||
-                card.micContractByContractCode.status
-                        .equalsIgnoreCase(Constants.ContractStatus.CANCELLED) ||
-                card.micContractByContractCode.status
-                        .equalsIgnoreCase(Constants.ContractStatus.PENDING) ||
-                card.micContractByContractCode.status
-                        .equalsIgnoreCase(Constants.ContractStatus.NO_CARD)) {
-            showInvalidCard();
-            return;
-        }
-
-        if (card.micContractByContractCode.status
-                .equalsIgnoreCase(Constants.ContractStatus.EXPIRED)) {
-            showExpiredCard();
-        }
-
-        if (card.micContractByContractCode.status
-                .equalsIgnoreCase(Constants.ContractStatus.READY) ||
-                card.micContractByContractCode.status
-                .equalsIgnoreCase(Constants.ContractStatus.REQUEST_CANCEL)) {
-            // Check if nearly expired
-            if (card.micContractByContractCode.expiredDate.getTime() - checkTime.getTime() <
-                    Constants.CONTRACT_NEARLY_EXPIRED_RANGE) {
-                showNearlyExpiredCard();
-            } else {
+        switch (result) {
+            case CheckCardResponseDto.RESULT_VALID_CARD:
                 showValidCard();
-            }
+                break;
+            case CheckCardResponseDto.RESULT_INVALID_CARD:
+                showInvalidCard();
+                return;
+            case CheckCardResponseDto.RESULT_EXPIRED_CARD:
+                showExpiredCard();
+                break;
+            case CheckCardResponseDto.RESULT_NEARLY_EXPIRED_CARD:
+                showNearlyExpiredCard();
+                break;
+            default:
+                showInvalidCard();
+                return;
         }
 
         txtName.setText(card.micContractByContractCode.micCustomerByCustomerCode.name);

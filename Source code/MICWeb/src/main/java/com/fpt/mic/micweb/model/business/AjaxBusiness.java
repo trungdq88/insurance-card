@@ -4,6 +4,8 @@ import com.fpt.mic.micweb.model.dao.CustomerDao;
 import com.fpt.mic.micweb.model.entity.CustomerEntity;
 import com.fpt.mic.micweb.utils.StringUtils;
 
+import java.util.List;
+
 
 /**
  * FPT University - Capstone Project - Summer 2015 - MICWeb
@@ -28,5 +30,16 @@ public class AjaxBusiness {
 
         // Send new password email
         return registerBusiness.sendPasswordEmail(loginUrl, customerPassword, customerEntity);
+    }
+
+    /**
+     * Return customer search result for ajax request.
+     * Only returns 10 results
+     * @param keyword
+     * @return
+     */
+    public List loadCustomers(String keyword) {
+        CustomerDao customerDao = new CustomerDao();
+        return customerDao.searchCustomerByNameOrCode(keyword, 0, 10);
     }
 }

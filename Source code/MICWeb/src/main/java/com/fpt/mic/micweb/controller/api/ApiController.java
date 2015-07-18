@@ -5,6 +5,7 @@ import com.fpt.mic.micweb.framework.R;
 import com.fpt.mic.micweb.framework.responses.JsonString;
 import com.fpt.mic.micweb.framework.responses.ResponseObject;
 import com.fpt.mic.micweb.model.business.ApiBusiness;
+import com.fpt.mic.micweb.model.dto.CheckCardResponseDto;
 import com.fpt.mic.micweb.model.dto.ContractSearchResultDto;
 import com.fpt.mic.micweb.model.entity.CardInstanceEntity;
 
@@ -86,10 +87,10 @@ public class ApiController extends BasicController {
         }
 
         // Call to business
-        CardInstanceEntity card = apiBusiness.checkCard(deviceID, cardID);
+        CheckCardResponseDto response = apiBusiness.checkCard(deviceID, cardID);
 
         // Return json result
-        return new JsonString(card);
+        return new JsonString(response);
     }
 
     public ResponseObject getUpdatePunishment(R r) {

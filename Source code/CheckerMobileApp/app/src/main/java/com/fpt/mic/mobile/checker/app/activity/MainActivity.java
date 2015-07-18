@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.fpt.mic.mobile.checker.app.R;
 import com.fpt.mic.mobile.checker.app.business.ApiBusiness;
 import com.fpt.mic.mobile.checker.app.entity.CardInstanceEntity;
+import com.fpt.mic.mobile.checker.app.entity.CheckCardResponseDto;
 
 import java.util.Date;
 
@@ -115,10 +116,12 @@ public class MainActivity extends Activity {
         ApiBusiness apiBusiness = new ApiBusiness();
         apiBusiness.checkCard(tagID, new ApiBusiness.IOnCheckContract() {
             @Override
-            public void onCheckCardResult(CardInstanceEntity result, Date checkTime) {
+            public void onCheckCardResult(CheckCardResponseDto result) {
                 Intent intent = new Intent(MainActivity.this, InfoActivity.class);
-                intent.putExtra("card", result);
-                intent.putExtra("checkTime", checkTime.getTime());
+                if (result != null) {
+                    intent.putExtra("card", result.cardInstanceEntity);
+                    intent.putExtra("result", result.result);
+                }
                 startActivity(intent);
             }
         });

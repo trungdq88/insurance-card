@@ -4,6 +4,7 @@ package com.fpt.mic.mobile.checker.app.business;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fpt.mic.mobile.checker.app.ApiRequest.ApiRequest;
 import com.fpt.mic.mobile.checker.app.entity.CardInstanceEntity;
+import com.fpt.mic.mobile.checker.app.entity.CheckCardResponseDto;
 import com.fpt.mic.mobile.checker.app.utils.Settings;
 import com.fpt.mic.mobile.checker.app.utils.SystemUtils;
 
@@ -50,29 +51,13 @@ public class ApiBusiness {
             @Override
             public void onResponse(String response) {
                 try {
-                    final CardInstanceEntity card = mapper.readValue(response, CardInstanceEntity.class);
+                    CheckCardResponseDto result = mapper.readValue(response, CheckCardResponseDto.class);
 
-                    // Get server time
-                    ApiRequest apiRequest2 = new ApiRequest(Settings.getApiBase());
-                    apiRequest2.setParam("action", "getTime");
-                    apiRequest2.get(new ApiRequest.IOnApiResponse() {
-                        @Override
-                        public void onResponse(String response) {
-                            try {
-                                Date checkTime = mapper.readValue(response, Date.class);
-
-                                // Return result here.
-                                cb.onCheckCardResult(card, checkTime);
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                                cb.onCheckCardResult(null, null);
-                            }
-                        }
-                    });
+                    cb.onCheckCardResult(result);
 
                 } catch (IOException e) {
                     e.printStackTrace();
-                    cb.onCheckCardResult(null, null);
+                    cb.onCheckCardResult(null);
                 }
             }
         });
@@ -105,7 +90,7 @@ public class ApiBusiness {
     }
 
     public interface IOnCheckContract {
-        void onCheckCardResult(CardInstanceEntity result, Date checkTime);
+        void onCheckCardResult(CheckCardResponseDto card);
     }
 
     public interface IOnConnectionResult {
