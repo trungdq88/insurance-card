@@ -1,7 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ include file="_shared/header.jsp"%>
+<%@ include file="_shared/header.jsp" %>
 
 <div id="wrapper">
 
@@ -69,10 +69,13 @@
                                             <tr>
                                                 <td>${(requestPaginator.getCurrentPage(param.page) - 1) * requestPaginator.itemPerPage + counter.count}</td>
                                                 <td>
-                                                    <fmt:formatDate value="${newRequest.requestDate}" pattern="dd/MM/yyyy"/>
+                                                    <fmt:formatDate value="${newRequest.requestDate}"
+                                                                    pattern="dd/MM/yyyy"/>
                                                 </td>
-                                                <td><a tabindex="0" data-trigger="focus" data-toggle="popover" title="Ghi chú từ khách hàng"
-                                                       role="button" data-content="${newRequest.note}"><i class="fa fa-file"></i></a></td>
+                                                <td><a tabindex="0" data-trigger="focus" data-toggle="popover"
+                                                       title="Ghi chú từ khách hàng"
+                                                       role="button" data-content="${newRequest.note}"><i
+                                                        class="fa fa-file"></i></a></td>
                                                 <td>
                                                     <a href="${pageContext.request.contextPath}/staff/card?action=detail&cardId=${newRequest.micCardInstanceByOldCardInstanceId.cardId}">
                                                             ${newRequest.micCardInstanceByOldCardInstanceId.cardId}
@@ -91,9 +94,11 @@
                                                     <c:if test="${newRequest.isPaid == 0}">
                                                         <%--<span class="label label-danger">Chưa thanh toán</span>--%>
 
-                                                            <button  delivery="${newRequest.isDeliveryRequested}" contractCode="${newRequest.micCardInstanceByOldCardInstanceId.contractCode}"
-                                                                     type="button" class="btn btn-success btn-xs"
-                                                                    data-toggle="modal" data-target="#add-payment-modal" onclick="{
+                                                        <button delivery="${newRequest.isDeliveryRequested}"
+                                                                contractCode="${newRequest.micCardInstanceByOldCardInstanceId.contractCode}"
+                                                                type="button" class="btn btn-success btn-xs"
+                                                                data-toggle="modal" data-target="#add-payment-modal"
+                                                                onclick="{
 //                                                            var rowNumber = $(this).attr('value');
                                                                     var delivery = $(this).attr('delivery');
                                                                     var contractCode = $(this).attr('contractCode');
@@ -118,8 +123,8 @@
                                                                     $('#delivery').val(delivery);
 
                                                             }">
-                                                                <i class="fa fa-plus"></i> Thanh toán
-                                                            </button>
+                                                            <i class="fa fa-plus"></i> Thanh toán
+                                                        </button>
 
                                                     </c:if>
 
@@ -127,8 +132,9 @@
                                                 <td>
                                                     <c:if test="${empty newRequest.resolveDate}">
                                                         <span class="label label-danger">Chưa cấp</span>
-                                                     </c:if>
-                                                    <fmt:formatDate value="${newRequest.resolveDate}" pattern="dd/MM/yyyy"/>
+                                                    </c:if>
+                                                    <fmt:formatDate value="${newRequest.resolveDate}"
+                                                                    pattern="dd/MM/yyyy"/>
 
                                                 </td>
                                                 <td>
@@ -150,7 +156,8 @@
                             <ul class="pagination">
                                 <c:if test="${param.page != 1 && not empty param.page}">
                                     <li>
-                                        <a href="?action=${param.action}&keyword=${param.keyword}&page=1" aria-label="Previous">
+                                        <a href="?action=${param.action}&keyword=${param.keyword}&page=1"
+                                           aria-label="Previous">
                                             <span aria-hidden="true">Đầu</span>
                                         </a>
                                     </li>
@@ -181,14 +188,28 @@
                         Quy trình cấp lại thẻ mới
                     </div>
                     <div class="panel-body">
-                        <p>Để cấp thẻ mới cho khách hàng trong trường hợp thẻ bị mất, cần thực hiện các bước sau đây:</p>
+                        <p>
+                            Để cấp thẻ mới cho khách hàng trong trường hợp có yêu cầu thẻ mới, cần thực hiện các bước
+                            sau đây:
+                        </p>
                         <ol>
-                            <li>Sử dụng <b>Ứng dụng in thẻ</b> trên điện thoại, dùng chức năng <b>Cấp lại thẻ</b> để tìm và in thẻ mới cho khách hàng.</li>
-                            <li>Chuyển phát thẻ mới cho khách hàng, thẻ cũ sẽ tự động bị <b>vô hiệu hoá</b> và sẽ <b>không thể sử dụng lại được nữa</b>.</li>
-                            <li>Thông tin về thẻ mới sẽ được <b>tự động cập nhật</b> ở trang này sau khi thẻ mới được cấp.</li>
+                            <li>Sử dụng <b>Ứng dụng in thẻ</b> trên điện thoại, bấm chọn hoặc dùng chức năng <b>Tìm
+                                kiếm</b> để tìm kiếm hợp đồng cần in thẻ mới.
+                            </li>
+                            <li>Chuyển phát thẻ mới cho khách hàng nếu có yêu cầu, thẻ cũ sẽ tự động bị <b>vô hiệu
+                                hoá</b>.
+                            </li>
+                            <li>
+                                Thông tin về thẻ mới sẽ được <b>tự động cập nhật</b> ở trang này sau khi thẻ mới được
+                                cấp.
+                            </li>
                         </ol>
 
-                        <p>Trong trường hợp cần thiết, các thông tin lưu trên thẻ cũ vẫn có thể được tra cứu lại tại trang <a href="cards.html">Quản lý thẻ</a></p>
+                        <p>
+                            Trong trường hợp cần thiết, các thông tin lưu trên thẻ cũ vẫn có thể được tra cứu lại tại
+                            trang
+                            <a href="${pageContext.request.contextPath}/staff/card">Quản lý thẻ</a>
+                        </p>
                     </div>
                 </div>
 
@@ -198,31 +219,34 @@
 </div>
 <!-- /#wrapper -->
 <jsp:include page="new-card-requests-modal.jsp" flush="true"/>
-<%@ include file="_shared/footer.jsp"%>
+<%@ include file="_shared/footer.jsp" %>
 <script language="JavaScript">
     document.getElementById("addPaidDate").min = '${config.paidDateMin}';
     document.getElementById("addPaidDate").max = '${config.paidDateMax}';
 
-    function setInputDate(_id){
+    function setInputDate(_id) {
         var _dat = document.querySelector(_id);
         var hoy = new Date(),
                 d = hoy.getDate(),
-                m = hoy.getMonth()+1,
+                m = hoy.getMonth() + 1,
                 y = hoy.getFullYear(),
                 data;
 
-        if(d < 10){
-            d = "0"+d;
-        };
-        if(m < 10){
-            m = "0"+m;
-        };
+        if (d < 10) {
+            d = "0" + d;
+        }
+        ;
+        if (m < 10) {
+            m = "0" + m;
+        }
+        ;
 
-        data = y+"-"+m+"-"+d;
+        data = y + "-" + m + "-" + d;
         console.log(data);
         _dat.value = data;
-    };
-    if($('#addPaidDate').val() == "") {
+    }
+    ;
+    if ($('#addPaidDate').val() == "") {
         setInputDate("#addPaidDate");
     }
 </script>

@@ -357,8 +357,8 @@
                         <thead>
                         <tr>
                             <th>#</th>
-                            <th>Mã KH</th>
-                            <th>Tên KH</th>
+                            <th>Mã khách hàng</th>
+                            <th>Tên khách hàng</th>
                             <th>Chọn</th>
                         </tr>
                         </thead>
@@ -446,6 +446,7 @@
             $('#customer-select-btn').click();
         })
     });
+
     function escapeHtml(unsafe) {
         return unsafe
                 .replace(/&/g, "&amp;")
@@ -454,6 +455,7 @@
                 .replace(/"/g, "&quot;")
                 .replace(/'/g, "&#039;");
     }
+
     function showCustomerInfo(info) {
         $('#customerInfo').slideDown();
         $('#customerCode').val(info.customerCode);

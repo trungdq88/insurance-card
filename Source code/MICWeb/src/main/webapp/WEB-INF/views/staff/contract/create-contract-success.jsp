@@ -1,7 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="../_shared/header.jsp" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <div id="wrapper">
 
@@ -36,7 +35,6 @@
                         <i class="fa fa-arrow-left"></i> <strong>Danh sách hợp đồng</strong>
                     </a>
                 </div>
-
                 <br/>
 
                 <div class="panel panel-success">
@@ -47,13 +45,12 @@
                         Để cấp thẻ cho khách hàng, nhân viên cần sử dụng <b>Ứng dụng in thẻ</b> trên điện thoại để in
                         thông tin khách hàng lên thẻ.
                         <ol>
-                            <li>Tìm kiếm thông tin khách hàng trên ứng dụng.</li>
-                            <li>Kiểm tra chính xác thông tin khác hàng.</li>
-                            <li>In thông tin ra thẻ và chuyển phát cho khách hàng.</li>
+                            <li>Lựa chọn hoặc sử dụng chức năng tìm kiếm hợp đồng cần in thẻ trên ứng dụng.</li>
+                            <li>Kiểm tra chính xác thông tin hợp đồng.</li>
+                            <li>In thông tin ra thẻ và chuyển phát cho hợp đồng.</li>
                         </ol>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
