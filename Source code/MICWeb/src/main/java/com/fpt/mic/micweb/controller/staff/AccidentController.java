@@ -109,9 +109,8 @@ public class AccidentController extends AuthController {
         if (errors.size() > 0) {
             // Send error messages to JSP page
             r.equest.setAttribute("validateErrors", errors);
-            // This is a form in a popup, we don't need to display data again since
-            // the popup will not automatically open when the page is reloaded
-            // r.equest.setAttribute("submitted", dto);
+            // Send submitted data to JSP page
+            r.equest.setAttribute("submitted", dto);
             // Re-call the contract detail page
             r.equest.setAttribute("accidentId", dto.getId());
             return getEdit(r);
