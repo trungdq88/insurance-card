@@ -44,7 +44,7 @@
                             <form action="${pageContext.request.contextPath}/staff/card" method="get">#341
                                 <input type="hidden" name="action" value="newCardRequestSearch"/>
                                 <input type="text" class="form-control long-text-box" name="keyword"
-                                       placeholder="Tìm kiếm theo mã thẻ, tên chủ thẻ" value="${param.keyword}"/>
+                                       placeholder="Tìm kiếm theo mã thẻ cũ" value="${param.keyword}"/>
                                 <input type="submit" class="btn btn-default" value="Tìm kiếm"/>
                             </form>
                         </div>

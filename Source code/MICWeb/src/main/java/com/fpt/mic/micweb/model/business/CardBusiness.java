@@ -265,4 +265,13 @@ public class CardBusiness {
         CardInstanceDao cardInstanceDao = new CardInstanceDao();
         return cardInstanceDao.searchIssuedCardCount(finalKeyword);
     }
+    public List searchIssuedCard(String customerCode, String finalKeyword, int offset, int count) {
+        CardInstanceDao cardInstanceDao = new CardInstanceDao();
+        return cardInstanceDao.searchIssuedCard(customerCode, finalKeyword, offset, count);
+    }
+
+    public Long searchIssuedCardCount(String customerCode, String finalKeyword) {
+        CardInstanceDao cardInstanceDao = new CardInstanceDao();
+        return cardInstanceDao.searchIssuedCardCount(customerCode, finalKeyword);
+    }
 }

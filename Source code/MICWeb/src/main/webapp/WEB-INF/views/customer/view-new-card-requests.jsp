@@ -39,10 +39,12 @@
               <b>Có ${unresolvedRequestCount} yêu cầu cấp thẻ mới chưa xử lý</b>
             </div>
             <div class="pull-right no-wrap">
-              <input type="text" class="form-control long-text-box"
-                     placeholder="Tìm kiếm theo mã thẻ, tên chủ thẻ"/>
-              <input type="button" class="btn btn-default" value="Tìm kiếm"/>
-
+              <form action="${pageContext.request.contextPath}/customer/card" method="get">
+                <input type="hidden" name="action" value="viewNewCardRequestsSearch"/>
+                <input type="text" class="form-control long-text-box" name="keyword"
+                       placeholder="Tìm kiếm theo mã thẻ cũ" value="${param.keyword}"/>
+                <input type="submit" class="btn btn-default" value="Tìm kiếm"/>
+              </form>
             </div>
             <div class="clearfix"></div>
           </div>

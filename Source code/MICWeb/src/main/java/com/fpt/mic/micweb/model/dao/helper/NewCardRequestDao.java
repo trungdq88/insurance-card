@@ -42,6 +42,24 @@ public class NewCardRequestDao extends GenericDaoJpaImpl<NewCardRequestEntity, I
         entityManager.close();
         return resultList;
     }
+    public List searchOnePageNewCardRequest(String keyword, String customerCode, int offset, int count) {
+        EntityManager entityManager = factory.createEntityManager();
+        Query query = entityManager.createQuery(
+                "SELECT co " +
+                        "FROM NewCardRequestEntity co " +
+                        "WHERE co.micCardInstanceByOldCardInstanceId.micContractByContractCode" +
+                        ".micCustomerByCustomerCode.customerCode = :customerCode " +
+                        "AND co.micCardInstanceByOldCardInstanceId.cardId LIKE :keyword " +
+                        "ORDER BY co.resolveDate ASC"
+        );
+        query.setParameter("customerCode", customerCode);
+        query.setParameter("keyword", "%" + keyword + "%");
+        query.setFirstResult(offset);
+        query.setMaxResults(count);
+        List resultList = query.getResultList();
+        entityManager.close();
+        return resultList;
+    }
 
     public List getAllNewCardRequest() {
         EntityManager entityManager = factory.createEntityManager();
@@ -124,6 +142,22 @@ public class NewCardRequestDao extends GenericDaoJpaImpl<NewCardRequestEntity, I
                         ".micCustomerByCustomerCode.customerCode = :customerCode ORDER BY co.resolveDate ASC"
         );
         query.setParameter("customerCode", customerCode);
+        Long result = (Long) query.getSingleResult();
+        entityManager.close();
+        return result;
+    }
+    public Long searchAllNewCardRequestCount(String keyword, String customerCode) {
+        EntityManager entityManager = factory.createEntityManager();
+        Query query = entityManager.createQuery(
+                "SELECT COUNT (co) " +
+                        "FROM NewCardRequestEntity co " +
+                        "WHERE co.micCardInstanceByOldCardInstanceId.micContractByContractCode" +
+                        ".micCustomerByCustomerCode.customerCode = :customerCode " +
+                        "AND co.micCardInstanceByOldCardInstanceId.cardId LIKE :keyword " +
+                        "ORDER BY co.resolveDate ASC"
+        );
+        query.setParameter("customerCode", customerCode);
+        query.setParameter("keyword", "%" + keyword + "%");
         Long result = (Long) query.getSingleResult();
         entityManager.close();
         return result;
