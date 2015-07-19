@@ -49,7 +49,7 @@ public class CustomerCreateContractDto {
     @Range(min = 1, max = 100, message = "Số chỗ ngồi phải có giá trị từ {min} đến {max}")
     private Integer seatCapacity;
 
-    @AssertTrue(message = "Thời điểm bắt đầu không được quá 5 năm so với thời điểm hiện tại")
+    @AssertTrue(message = "Ngày bắt đầu hiệu lực hợp đồng không hợp lệ")
     private boolean isValidMaxStartDate() {
         if (startDate != null) {
             ConfigUtils configUtils = new ConfigUtils();
