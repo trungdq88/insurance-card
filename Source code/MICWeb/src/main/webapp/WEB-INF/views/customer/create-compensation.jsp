@@ -30,7 +30,8 @@
 
                             <div class="col-sm-6">
                                 <div class="text-value">
-                                    <b>${contractCode}</b>
+                                    <a href="${pageContext.request.contextPath}/customer/contract?action=detail&code=${contractCode}">
+                                        <b>${contractCode}</b></a>
                                 </div>
                             </div>
                         </div>
