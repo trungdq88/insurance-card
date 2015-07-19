@@ -5,6 +5,7 @@ import com.fpt.mic.micweb.model.dto.CreateCustomerInfoDto;
 import com.fpt.mic.micweb.model.dto.form.*;
 import com.fpt.mic.micweb.model.entity.*;
 import com.fpt.mic.micweb.utils.*;
+import org.joda.time.LocalDate;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -377,8 +378,11 @@ public class StaffBusiness {
             if (currentDate.after(contractEntity.getStartDate())) {
                 contractEntity.setStartDate(currentDate);
             }
-            // Set expired date = start_date + 1 year
-            contractEntity.setExpiredDate(DateUtils.addOneYear(contractEntity.getStartDate()));
+            // Set expired date = start_date + contract defaultTerm
+            ConfigUtils configUtils = new ConfigUtils();
+            LocalDate maxExpDate = new LocalDate(contractEntity.getStartDate()).plusMonths(configUtils.getContractDefaultTerm());
+            Timestamp maxExpiredDate = new Timestamp(maxExpDate.toDateTimeAtStartOfDay().getMillis());
+            contractEntity.setExpiredDate(maxExpiredDate);
 
             // Concurrency check value
             contractEntity.setLastModified(DateUtils.currentTimeWithoutNanos());
