@@ -294,9 +294,9 @@
                             Gởi yêu cầu bồi thường
                         </button>
                     </div>
+                    <br/> <br/>
                 </form>
             </div>
-            <br/> <br/>
             <!-- /.col-lg-12 -->
         </div>
         <!-- /.row -->
