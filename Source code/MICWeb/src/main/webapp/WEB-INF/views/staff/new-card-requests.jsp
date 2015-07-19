@@ -150,14 +150,17 @@
                                                             }">
                                                             <i class="fa fa-plus"></i> Thanh toán
                                                         </button>
-                                                        <button contractCode="${newRequest.micCardInstanceByOldCardInstanceId.contractCode}" type="button" class="btn btn-danger btn-xs"
-                                                                 data-toggle="modal" data-target="#cancel-new-card-request" onclick="{
+                                                        <c:if test="${empty map[newRequest.id]}">
+                                                            <button contractCode="${newRequest.micCardInstanceByOldCardInstanceId.contractCode}" type="button" class="btn btn-danger btn-xs"
+                                                                    data-toggle="modal" data-target="#cancel-new-card-request" onclick="{
                                                                     var contractCode = $(this).attr('contractCode');
                                                                     $('#contractCodeModal').val(contractCode);
                                                                     $('#contractCodeModal1').text(contractCode);
                                                                  }">
-                                                            <i class="fa fa-times"></i> Hủy
-                                                        </button>
+                                                                <i class="fa fa-times"></i> Hủy
+                                                            </button>
+                                                        </c:if>
+
 
                                                     </c:if>
 

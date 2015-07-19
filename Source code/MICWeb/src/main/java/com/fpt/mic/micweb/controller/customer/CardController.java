@@ -301,10 +301,10 @@ public class CardController extends AuthController {
         }
         if (cardBusiness.cancelNewCardRequest(contractCode)) {
             // thanh cong
-            return new RedirectTo("/customer/contract?action=detail&info=cancelNewCardRequestSuccess&code="+contractCode);
+            return new RedirectTo("/customer/card?action=viewNewCardRequests&info=cancelNewCardRequestSuccess");
         }
         else {
-            return new RedirectTo("/customer/contract?action=detail&info=fail&code="+contractCode);
+            return new RedirectTo("/customer/card?action=viewNewCardRequests&info=fail");
         }
 
     }

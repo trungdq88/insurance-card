@@ -20,6 +20,16 @@
       </div>
       <!-- /.col-lg-12 -->
     </div>
+    <c:if test="${param.info eq 'cancelNewCardRequestSuccess'}">
+      <div class="text-success text-center">
+        Hủy yêu cầu thẻ mới thành công
+      </div>
+    </c:if>
+    <c:if test="${param.info eq 'fail'}">
+      <div class="text-danger text-center">
+        Có lỗi xảy ra. Xin thử lại
+      </div>
+    </c:if>
     <div class="row">
       <div class="col-lg-12">
         <div class="panel panel-default">
@@ -49,6 +59,7 @@
                   <th>Hợp đồng</th>
                   <th>Ngày cấp mới</th>
                   <th>Thẻ mới cấp</th>
+                  <th>Thực hiện</th>
                 </tr>
                 </thead>
                 <c:set var="requests" value="${requestPaginator.getItemsOnCurrentPage(param.page)}"/>
@@ -86,6 +97,21 @@
                         </td>
                         <td>
                             ${map[newRequest.id]}
+                        </td>
+                        <td>
+                          <c:if test="${newRequest.isPaid == 1}">
+                            <span class="label label-info">Đã thanh toán</span>
+                          </c:if>
+                          <c:if test="${newRequest.isPaid == 0}">
+                            <button contractCode="${newRequest.micCardInstanceByOldCardInstanceId.contractCode}" type="button" class="btn btn-danger btn-xs"
+                                    data-toggle="modal" data-target="#cancel-new-card-request" onclick="{
+                                                                    var contractCode = $(this).attr('contractCode');
+                                                                    $('#contractCodeModal').val(contractCode);
+                                                                    $('#contractCodeModal1').text(contractCode);
+                                                                 }">
+                              <i class="fa fa-times"></i> Hủy
+                            </button>
+                          </c:if>
                         </td>
                       </tr>
                     </c:forEach>
@@ -133,3 +159,4 @@
 <!-- /#wrapper -->
 
 <%@ include file="_shared/footer.jsp"%>
+<jsp:include page="cancel-new-card-request-modal.jsp" flush="true"/>
