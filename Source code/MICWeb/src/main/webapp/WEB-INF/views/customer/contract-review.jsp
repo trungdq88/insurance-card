@@ -366,7 +366,7 @@
 
         day = day.length > 1 ? day : '0' + day;
 
-        return year + '-' + month + '-' + day;
+        return day + '/' + month + '/' + year;
     }
     Number.prototype.formatMoney = function (c, d, t) {
         var n = this,
