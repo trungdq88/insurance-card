@@ -174,6 +174,8 @@ public class ContractController extends AuthController {
     }
 
     public ResponseObject getDetail(R r) {
+        ConfigUtils configUtils = new ConfigUtils();
+
         final CustomerBusiness customerBusiness = new CustomerBusiness();
         CardBusiness cardBusiness = new CardBusiness();
         final CompensationBusiness compensationBusiness = new CompensationBusiness();
@@ -233,7 +235,7 @@ public class ContractController extends AuthController {
             });
 
             r.equest.setAttribute("contract", contract);
-
+            r.equest.setAttribute("configUtils",configUtils);
             r.equest.setAttribute("isNewCardRequested",cardBusiness.isNewCardRequested(code));
             r.equest.setAttribute("card", cardBusiness.getCardByContract(code));
             r.equest.setAttribute("accidentPaginator", accidentPaginator);

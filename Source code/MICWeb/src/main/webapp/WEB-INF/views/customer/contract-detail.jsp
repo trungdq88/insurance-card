@@ -306,7 +306,7 @@
                             <input type="hidden" name="action" value="RejectRequestCancel"/>
                             <br/>
                             <div class="form-group">
-                                <label class="col-md-3 text-right">Đã cầu hủy lúc: </label>
+                                <label class="col-md-3 text-right">Đã hủy vào: </label>
 
                                 <div class="col-md-9 text-left">
                                     <fmt:formatDate value="${contract.cancelDate}" pattern="dd/MM/yyyy"/>
@@ -345,7 +345,7 @@
                         <br/>
 
                         <div class="form-group" >
-                            <label class="col-md-3 text-right">Đã cầu hủy lúc: </label>
+                            <label class="col-md-3 text-right">Đã hủy vào: </label>
 
                             <div class="col-md-9 text-left">
                                 <fmt:formatDate value="${contract.cancelDate}" pattern="dd/MM/yyyy"/>
