@@ -39,7 +39,7 @@
                     </b></p>
                 <p class="text-right"><b>Các ô có dấu * là bắt buộc</b></p>
 
-                <form class="form-horizontal" action="${pageContext.request.contextPath}/customer/contract" novalidate
+                <form class="form-horizontal" action="${pageContext.request.contextPath}/customer/contract"
                       method="get">
                     <fieldset>
                         <legend>Thông tin về dịch vụ bảo hiểm</legend>
@@ -82,7 +82,7 @@
                                        min="<%=new Date().getYear()+1900%>-<%=(new Date().getMonth()+1)<10?"0"+(new Date().getMonth()+1):(new Date().getMonth()+1)%>-<%=(new Date().getDate())<10?"0"+(new Date().getDate()):(new Date().getDate())%>"
                                        title="Vui lòng chọn ngày bắt đầu"
                                        value="${startDate}"
-
+                                       max="${configUtils.startDateMax}"
                                        class="form-control" id="dateDefault"
                                         />
                             </div>
