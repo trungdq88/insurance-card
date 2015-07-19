@@ -15,7 +15,6 @@
         border: none;
         background-color: white;
         width: 100%;
-        padding-top: 6px;
     }
 </style>
 <div id="wrapper">
@@ -31,9 +30,12 @@
         <div class="row">
             <div class="col-lg-12">
                 <h3>
-                    <p class="text-center"><b>Vui lòng kiểm tra lại các thông tin hợp đồng</b></p>
+                    <div class="well text-info">
+                        <p class="text-center">Vui lòng kiểm tra lại các thông tin hợp đồng</p>
 
-                    <p class="text-center"><b>nhấn nút Xác nhận để hoàn tất tạo hợp đồng:</b></p>
+                        <p class="text-center">nhấn nút Xác nhận để hoàn tất tạo hợp đồng</p>
+                    </div>
+
                 </h3>
                 <p class="text-center">
                     <b>
@@ -77,7 +79,7 @@
                                        type="hidden"/>
 
                                 <div class="text-value">
-                                    ${startDate}
+                                    <input type="text" id="showStartDate" disabled="disabled" class="handleInput"/>
                                 </div>
 
                             </div>
@@ -318,15 +320,6 @@
                     </div>
                 </form>
                 <br/>
-
-
-                <br/>
-                <br/>
-                <br/>
-                <br/>
-                <br/>
-                <br/>
-                <br/>
                 <br/>
                 <br/>
                 <br/>
@@ -346,9 +339,19 @@
 
         var dateStartDefault = $('#startDate').val();
         var temp = $('#configTime').val();
+        $('#showStartDate').val(formatDatetimeNow(dateStartDefault));
         $('#defaultExpired').val(checkDefaultExpired(dateStartDefault, temp));
 
     });
+    function formatDatetimeNow(date) {
+        var myDate = new Date(date);
+        var year = myDate.getFullYear();
+        var month = (1 + myDate.getMonth()).toString();
+        month = month.length > 1 ? month : '0' + month;
+        var day = myDate.getDate().toString();
+        day = day.length > 1 ? day : '0' + day;
+        return day + '/' + month + '/' + year;
+    }
     function checkDefaultExpired(dateStart, temp) {
         //dateStart : start date of contract
         //temp : config rule default time for contract
@@ -357,14 +360,27 @@
         var year = parseInt(dt[0]);
         var month = parseInt(parseInt(dt[1]) + parseInt(temp));
         var day = dt[2].toString();
-
+        var tempYear = parseInt(month / 12).toFixed(0);
+        year = parseInt(parseInt(tempYear) + parseInt(dt[0]));
         if (month > 12) {
-            month = month - 12;
-            year = parseInt(year + 1);
+            month = parseInt(parseInt(month + temp) % 12);
         }
+
+        //nam nhuan
+        if ((year % 4 == 0 && year % 100 != 0) || year % 400 == 0) {
+            if(month == 2 && day == 29){
+                day = 29;
+            }
+        }
+        else {
+            if(month == 2 && day == 29){
+                day = 28;
+            }
+        }
+
         month = month.toString().length > 1 ? month : '0' + month;
 
-        day = day.length > 1 ? day : '0' + day;
+        day = day.toString().length > 1 ? day : '0' + day;
 
         return day + '/' + month + '/' + year;
     }

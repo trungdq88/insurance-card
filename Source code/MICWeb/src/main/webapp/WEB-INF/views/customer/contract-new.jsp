@@ -279,6 +279,7 @@
         });
 
     });
+
     function checkDefaultExpired(dateStart, temp) {
         //dateStart : start date of contract
         //temp : config rule default time for contract
@@ -287,18 +288,30 @@
         var year = parseInt(dt[0]);
         var month = parseInt(parseInt(dt[1]) + parseInt(temp));
         var day = dt[2].toString();
-
+        var tempYear = parseInt(month / 12).toFixed(0);
+        year = parseInt(parseInt(tempYear) + parseInt(dt[0]));
         if (month > 12) {
-            month = month - 12;
-            year = parseInt(year + 1);
+            month = parseInt(parseInt(month + temp) % 12);
         }
+
+        //nam nhuan
+        if ((year % 4 == 0 && year % 100 != 0) || year % 400 == 0) {
+            if(month == 2 && day == 29){
+                day = 29;
+            }
+        }
+        else {
+            if(month == 2 && day == 29){
+                day = 28;
+            }
+        }
+
         month = month.toString().length > 1 ? month : '0' + month;
 
-        day = day.length > 1 ? day : '0' + day;
+        day = day.toString().length > 1 ? day : '0' + day;
 
         return day + '/' + month + '/' + year;
     }
-
     function setInputDate(_id) {
         var _dat = document.querySelector(_id);
         var hoy = new Date(),
