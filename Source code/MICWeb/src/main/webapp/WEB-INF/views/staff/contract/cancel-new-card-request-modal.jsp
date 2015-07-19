@@ -16,13 +16,13 @@
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                   aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title">Xác nhận ${contract.contractCode}</h4>
+          <h4 class="modal-title">Xác nhận</h4>
         </div>
         <div class="modal-body">
-          <p class="text-center">Hủy yêu cầu thẻ mới hợp đồng: ${contract.contractCode}</p>
+          <p class="text-center">Hủy yêu cầu thẻ mới hợp đồng: <span id="contractCodeModal1"></span></p>
         </div>
         <div class="modal-footer">
-          <input name="contractCode" type="hidden" value="${contract.contractCode}"/>
+          <input id="contractCodeModal" name="contractCode" type="hidden"/>
           <input type="hidden" name="action" value="cancelNewCardRequest" />
           <button type="submit" class="btn btn-danger">
             <i class="fa fa-times"></i> Hủy yêu cầu

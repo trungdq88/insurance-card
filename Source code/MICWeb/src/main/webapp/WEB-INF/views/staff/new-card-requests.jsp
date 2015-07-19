@@ -24,6 +24,16 @@
                         </ul>
                     </div>
                 </c:if>
+                <c:if test="${param.info eq 'cancelNewCardRequestSuccess'}">
+                    <div class="text-success text-center">
+                        Hủy yêu cầu thẻ mới thành công
+                    </div>
+                </c:if>
+                <c:if test="${param.info eq 'fail'}">
+                    <div class="text-danger text-center">
+                        Có lỗi xảy ra. Xin thử lại
+                    </div>
+                </c:if>
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <div class="pull-left center-dropdown-button">
@@ -49,9 +59,9 @@
                                     <th>Ghi chú</th>
                                     <th>Mã thẻ cũ</th>
                                     <th>Hợp đồng</th>
-                                    <th>Thanh toán</th>
                                     <th>Ngày cấp mới</th>
                                     <th>Thẻ mới cấp</th>
+                                    <th>Thực hiện</th>
                                 </tr>
                                 </thead>
                                 <c:set var="requests" value="${requestPaginator.getItemsOnCurrentPage(param.page)}"/>
@@ -84,6 +94,21 @@
                                                 <td>
                                                     <a href="${pageContext.request.contextPath}/staff/contract?action=detail&code=${newRequest.micCardInstanceByOldCardInstanceId.contractCode}">
                                                             ${newRequest.micCardInstanceByOldCardInstanceId.contractCode}
+                                                    </a>
+
+                                                </td>
+
+                                                <td>
+                                                    <c:if test="${empty newRequest.resolveDate}">
+                                                        <span class="label label-danger">Chưa cấp</span>
+                                                    </c:if>
+                                                    <fmt:formatDate value="${newRequest.resolveDate}"
+                                                                    pattern="dd/MM/yyyy"/>
+
+                                                </td>
+                                                <td>
+                                                    <a href="${pageContext.request.contextPath}/staff/card?action=detail&cardId=${map[newRequest.id]}">
+                                                            ${map[newRequest.id]}
                                                     </a>
 
                                                 </td>
@@ -125,22 +150,16 @@
                                                             }">
                                                             <i class="fa fa-plus"></i> Thanh toán
                                                         </button>
+                                                        <button contractCode="${newRequest.micCardInstanceByOldCardInstanceId.contractCode}" type="button" class="btn btn-danger btn-xs"
+                                                                 data-toggle="modal" data-target="#cancel-new-card-request" onclick="{
+                                                                    var contractCode = $(this).attr('contractCode');
+                                                                    $('#contractCodeModal').val(contractCode);
+                                                                    $('#contractCodeModal1').text(contractCode);
+                                                                 }">
+                                                            <i class="fa fa-times"></i> Hủy
+                                                        </button>
 
                                                     </c:if>
-
-                                                </td>
-                                                <td>
-                                                    <c:if test="${empty newRequest.resolveDate}">
-                                                        <span class="label label-danger">Chưa cấp</span>
-                                                    </c:if>
-                                                    <fmt:formatDate value="${newRequest.resolveDate}"
-                                                                    pattern="dd/MM/yyyy"/>
-
-                                                </td>
-                                                <td>
-                                                    <a href="${pageContext.request.contextPath}/staff/card?action=detail&cardId=${map[newRequest.id]}">
-                                                            ${map[newRequest.id]}
-                                                    </a>
 
                                                 </td>
                                             </tr>
@@ -250,3 +269,4 @@
         setInputDate("#addPaidDate");
     }
 </script>
+<jsp:include page="contract/cancel-new-card-request-modal.jsp" flush="true"/>

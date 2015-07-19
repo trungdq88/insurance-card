@@ -234,7 +234,6 @@
                             </a>
                         </li>
                         <c:if test="${contract.status.equalsIgnoreCase('Ready') }">
-                            <%--<form action="${pageContext.request.contextPath}/customer/card" method="get">--%>
                             <c:if test="${isNewCardRequested == true}">
                                 <div class="pull-right">
                                     <button  type="button" class="btn btn-danger btn-xs"
@@ -614,4 +613,4 @@
     });
 </script>
 <%@ include file="../_shared/footer.jsp" %>
-<jsp:include page="cancel-new-card-request-modal.jsp" flush="true"/>
+<%--<jsp:include page="cancel-new-card-request-modal.jsp" flush="true"/>--%>

@@ -187,10 +187,10 @@ public class CardController extends AuthController {
         String contractCode = r.equest.getParameter("contractCode");
         if (cardBusiness.cancelNewCardRequest(contractCode)) {
             // thanh cong
-            return new RedirectTo("/staff/contract?action=detail&info=cancelNewCardRequestSuccess&code="+contractCode);
+            return new RedirectTo("/staff/card?action=newCardRequest&info=cancelNewCardRequestSuccess");
         }
         else {
-            return new RedirectTo("/staff/contract?action=detail&info=fail&code="+contractCode);
+            return new RedirectTo("/staff/card?action=newCardRequest&info=fail&code=");
         }
 
     }
