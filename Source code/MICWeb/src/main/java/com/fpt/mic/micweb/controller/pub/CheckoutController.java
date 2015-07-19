@@ -2,6 +2,7 @@ package com.fpt.mic.micweb.controller.pub;
 
 import com.fpt.mic.micweb.framework.BasicController;
 import com.fpt.mic.micweb.framework.R;
+import com.fpt.mic.micweb.framework.responses.ErrorPage;
 import com.fpt.mic.micweb.framework.responses.JspPage;
 import com.fpt.mic.micweb.framework.responses.RedirectTo;
 import com.fpt.mic.micweb.framework.responses.ResponseObject;
@@ -86,7 +87,11 @@ public class CheckoutController extends BasicController {
 
             // Convert the money to USD and round it up to 2 digits after the comma
             Double paymentAmount = (Double.parseDouble(checkoutDetails.get("PAYMENTREQUEST_0_AMT")));
-            paymentAmount = paymentAmount / CurrencyUtils.getCurrentRate();
+            double currentRate = CurrencyUtils.getCurrentRate();
+            if (currentRate == 0) {
+                return new ErrorPage("Không thể kết nối đến PayPal.");
+            }
+            paymentAmount = paymentAmount / currentRate;
             paymentAmount = NumberUtils.round(paymentAmount, 2);
             checkoutDetails.put("L_PAYMENTREQUEST_0_NAME0",
                     StringUtils.unAccent(checkoutDetails.get("L_PAYMENTREQUEST_0_NAME0")));

@@ -34,28 +34,8 @@
                 <!-- Form to create new customer -->
                 <form action="${pageContext.request.contextPath}/staff/punishment" method="post" class="form-horizontal">
                     <fieldset>
-                        <!-- Contract input -->
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label" for="contractCode">Mã hợp đồng *</label>
-
-                            <div class="col-sm-3">
-                                <div class="input-group">
-                                    <input id="contractCode" name="edit:contractCode"
-                                           class="form-control input-md"
-                                           value="${not empty submitted.contractCode ? submitted.contractCode : punishment.contractCode}"
-                                           readonly title="Ví dụ: HD2703"
-                                           type="text" required pattern="^HD([0-9A-Z]{4,8})$">
-                                    <span class="input-group-btn" data-toggle="tooltip" data-placement="top"
-                                          id="btnTooltip" title="Chọn hợp đồng có sẵn trong hệ thống">
-                                    <button id="contract-select-btn" type="button" class="btn btn-primary"
-                                            data-toggle="modal" data-target="#select-contract-modal"
-                                            onclick="loadContracts()">
-                                        <i class="fa fa-search"></i> Chọn
-                                    </button>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
+                        <!-- Contract code -->
+                        <input type="hidden" name="edit:contractCode" value="${punishment.contractCode}">
 
                         <!-- Created date -->
                         <div class="form-group">
@@ -88,8 +68,9 @@
                                 <input id="attachment" name="edit:attachment" type="hidden" required maxlength="255"
                                        value="${punishment.attachment}">
                                 <img id="imgAttachment" height="100px" src="${punishment.attachment}"/>
+                                <button type="button" id="pickAttachment" class="btn btn-primary">Chọn văn bản</button>
                                 <script type="text/javascript" src="//api.filepicker.io/v2/filepicker.js"></script>
-                                <input type="filepicker" data-fp-apikey="AEbPPQfPfRHqODjEl5AZ2z"
+                                <input type="filepicker" data-fp-apikey="AEbPPQfPfRHqODjEl5AZ2z" class="hide filePicker"
                                        onchange="$('#imgAttachment').attr('src', event.fpfile.url);$('#attachment').val(event.fpfile.url);">
                             </div>
                         </div>
@@ -161,77 +142,16 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
+        // Use Vietnamese button to open File Picker dialog
+        $('#pickAttachment').click(function () {
+            $('.filePicker').trigger("click");
+        });
+        // Set created date value and restriction
         if ($('#createdDate').val() == "") {
             $('#createdDate').val(getCurrentDate());
         }
         document.getElementById("createdDate").max = getCurrentDate();
-
-        // Ajax load for search box in contract select modal
-        var ajaxDelay;
-        $('#select-contract-keyword').keyup(function () {
-            clearTimeout(ajaxDelay);
-            ajaxDelay = setTimeout(function () {
-                loadContracts();
-            }, 500);
-        });
-
-        // Auto open modal to select contract (do not allow handy enter contract code)
-        $('#contractCode').click(function () {
-            $('#contract-select-btn').click();
-        })
     });
-
-    function escapeHtml(unsafe) {
-        return unsafe
-                .replace(/&/g, "&amp;")
-                .replace(/</g, "&lt;")
-                .replace(/>/g, "&gt;")
-                .replace(/"/g, "&quot;")
-                .replace(/'/g, "&#039;");
-    }
-
-    function showContractInfo(info) {
-        $('#contractCode').val(info.contractCode);
-    }
-
-    function loadContracts() {
-        var keyword = $('#select-contract-keyword').val();
-
-        var updateList = function (items) {
-            var html = '';
-            if (!items || items.length == 0) {
-                html = '<tr><td class="text-center" colspan="4">Không có hợp đồng nào</td></tr>'
-            } else {
-                for (var i = 0; i < items.length; i++) {
-                    var item = items[i];
-                    html += '<tr>' +
-                            '<td>' + (i + 1) + '</td>' +
-                            '<td>' + item.contractCode + '</td>' +
-                            '<td>' + item.micCustomerByCustomerCode.name + '</td>' +
-                            '<td><button data-dismiss="modal" type="button" class="btn btn-primary btn-xs"' +
-                            'onclick="showContractInfo(' + escapeHtml(JSON.stringify(item)) + ')">' +
-                            '<i class="fa fa-check"></i> Chọn</button></td>' +
-                            '</tr>';
-                }
-            }
-            $('#list-items').html(html);
-        };
-
-        $('#list-items').html('<tr><td class="text-center" colspan="4">Đang tìm kiếm...</td></tr>');
-        $.ajax({
-            url: '/ajax',
-            method: 'get',
-            dataType: 'json',
-            data: {
-                action: 'loadContracts',
-                keyword: keyword
-            }
-        }).done(function (contracts) {
-            updateList(contracts);
-        }).fail(function () {
-            updateList([]);
-        });
-    }
 </script>
 
 <%@ include file="_shared/footer.jsp" %>

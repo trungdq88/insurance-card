@@ -1,10 +1,6 @@
 package com.fpt.mic.micweb.framework;
 
-import com.fpt.mic.micweb.framework.responses.ForwardTo;
-import com.fpt.mic.micweb.framework.responses.JsonString;
-import com.fpt.mic.micweb.framework.responses.JspPage;
-import com.fpt.mic.micweb.framework.responses.RedirectTo;
-import com.fpt.mic.micweb.framework.responses.ResponseObject;
+import com.fpt.mic.micweb.framework.responses.*;
 import com.fpt.mic.micweb.utils.StringUtils;
 
 import javax.servlet.ServletException;
@@ -95,6 +91,8 @@ public abstract class BasicController extends HttpServlet {
                     .forward(request, response);
         } else if (responseObject instanceof RedirectTo) {
             response.sendRedirect(((RedirectTo) responseObject).getUrl());
+        } else if (responseObject instanceof ErrorPage) {
+            response.sendError(500, ((ErrorPage) responseObject).getMsg());
         } else {
             // TODO: process other kind of response
             // Do something else

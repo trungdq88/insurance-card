@@ -1,6 +1,7 @@
 package com.fpt.mic.micweb.controller.test;
 
 import com.fpt.mic.micweb.framework.BasicController;
+import com.fpt.mic.micweb.framework.responses.ErrorPage;
 import com.fpt.mic.micweb.framework.responses.JsonString;
 import com.fpt.mic.micweb.framework.responses.JspPage;
 import com.fpt.mic.micweb.framework.R;
@@ -84,4 +85,10 @@ public class TestController extends BasicController {
         return new JsonString(CurrencyUtils.getCurrentRate());
     }
 
+    public ResponseObject getTestErrorPage(R r) {
+        return new ErrorPage("Không có gì!");
+    }
+    public ResponseObject getTest500(R r) {
+        return new JsonString(1/0 + "");
+    }
 }

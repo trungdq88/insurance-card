@@ -7,7 +7,7 @@
             Lịch sử tai nạn
             <div class="pull-right" style="margin-top: -10px;">
                 <a href="${pageContext.request.contextPath}/staff/accident?action=create&code=${contract.contractCode}"
-                   type="button" class="btn btn-success editBtn">
+                   type="button" class="btn btn-success updateBtn">
                     <i class="fa fa-plus"></i> Thông báo tai nạn mới
                 </a>
             </div>
@@ -69,7 +69,7 @@
                             </td>
                             <td>
                                 <a href="${pageContext.request.contextPath}/staff/accident?action=edit&id=${accident.id}"
-                                   type="button" class="btn btn-xs btn-primary editBtn">
+                                   type="button" class="btn btn-xs btn-primary updateBtn">
                                     <i class="fa fa-pencil"></i> Chỉnh sửa
                                 </a>
                             </td>
