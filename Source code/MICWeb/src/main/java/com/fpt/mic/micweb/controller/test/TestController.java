@@ -70,7 +70,7 @@ public class TestController extends BasicController {
     }
 
     public ResponseObject postCreate(R r) {
-        String username #345= r.equest.getParameter("username");
+        String username = r.equest.getParameter("username");
         String password = r.equest.getParameter("password");
 
         r.equest.setAttribute("username", username);
