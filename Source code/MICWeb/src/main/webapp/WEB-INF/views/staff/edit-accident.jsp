@@ -88,8 +88,9 @@
                                 <input id="attachment" name="edit:attachment" type="hidden" required maxlength="255"
                                        value="${accident.attachment}">
                                 <img id="imgAttachment" height="100px" src="${accident.attachment}"/>
+                                <button type="button" id="pickAttachment" class="btn btn-primary">Chọn văn bản</button>
                                 <script type="text/javascript" src="//api.filepicker.io/v2/filepicker.js"></script>
-                                <input type="filepicker" data-fp-apikey="AEbPPQfPfRHqODjEl5AZ2z"
+                                <input type="filepicker" data-fp-apikey="AEbPPQfPfRHqODjEl5AZ2z" class="hide filePicker"
                                        onchange="$('#imgAttachment').attr('src', event.fpfile.url);$('#attachment').val(event.fpfile.url);">
                             </div>
                         </div>
@@ -161,6 +162,11 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
+        // Use Vietnamese button to open File Picker dialog
+        $('#pickAttachment').click(function () {
+            $('.filePicker').trigger("click");
+        });
+        // Set created date value and restriction
         if ($('#createdDate').val() == "") {
             $('#createdDate').val(getCurrentDate());
         }

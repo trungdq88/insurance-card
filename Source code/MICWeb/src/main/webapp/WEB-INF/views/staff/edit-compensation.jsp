@@ -280,10 +280,12 @@
                             </label>
 
                             <div class="col-sm-6">
-                                <input id="attachment" name="edit:attachment" type="hidden" maxlength="255">
+                                <input id="attachment" name="edit:attachment" type="hidden" maxlength="255"
+                                       value="${compensation.attachment}">
                                 <img id="imgAttachment" height="100px" src="${compensation.attachment}"/>
+                                <button type="button" id="pickAttachment" class="btn btn-primary">Chọn văn bản</button>
                                 <script type="text/javascript" src="//api.filepicker.io/v2/filepicker.js"></script>
-                                <input type="filepicker" data-fp-apikey="AEbPPQfPfRHqODjEl5AZ2z"
+                                <input type="filepicker" data-fp-apikey="AEbPPQfPfRHqODjEl5AZ2z" class="hide filePicker"
                                        onchange="$('#imgAttachment').attr('src', event.fpfile.url);$('#attachment').val(event.fpfile.url);">
                             </div>
                         </div>
@@ -404,6 +406,11 @@
     initialize2();
     initialize3();
     $(document).ready(function () {
+        // Use Vietnamese button to open File Picker dialog
+        $('#pickAttachment').click(function () {
+            $('.filePicker').trigger("click");
+        });
+        // Set accident date value and restriction follow up created date
         document.getElementById("createdDate").max = getCurrentDate();
         document.getElementById("accidentDate").max = getCurrentDate();
         $('#createdDate').change(function () {
