@@ -35,7 +35,7 @@
                 <div class="pull-right no-wrap">
                     <form action="${pageContext.request.contextPath}/staff/compensation" method="get">
                         <input type="text" class="form-control long-text-box" name="keyword"
-                               placeholder="Tìm kiếm theo mã yêu cầu..." value="${param.keyword}"/>
+                               placeholder="Tìm kiếm theo mã yêu cầu, tên khách hàng..." value="${param.keyword}"/>
                         <input type="submit" class="btn btn-default" value="Tìm kiếm"/>
                         <input type="hidden" name="action" value="search"/>
                     </form>

@@ -199,4 +199,30 @@ public class CardInstanceDao extends GenericDaoJpaImpl<CardInstanceEntity, Integ
             return null;
         }
     }
+
+    public List searchIssuedCard(String finalKeyword, int offset, int count) {
+        EntityManager entityManager = factory.createEntityManager();
+        String hql = "SELECT c FROM CardEntity c " +
+                "JOIN FETCH c.micCardInstancesByCardId AS cardInstances " +
+                "WHERE c.cardId LIKE :keyword " +
+                "ORDER BY cardInstances.activatedDate DESC";
+        Query query = entityManager.createQuery(hql);
+        query.setParameter("keyword", "%" + finalKeyword + "%");
+        query.setFirstResult(offset);
+        query.setMaxResults(count);
+        List resultList = query.getResultList();
+        entityManager.close();
+        return resultList;
+    }
+
+    public Long searchIssuedCardCount(String finalKeyword) {
+        EntityManager entityManager = factory.createEntityManager();
+        String hql = "SELECT COUNT(c) FROM CardEntity c " +
+                "WHERE c.cardId LIKE :keyword ";
+        Query query = entityManager.createQuery(hql);
+        query.setParameter("keyword", "%" + finalKeyword + "%");
+        Long result = (Long) query.getSingleResult();
+        entityManager.close();
+        return result;
+    }
 }

@@ -85,6 +85,10 @@ public class StaffBusiness {
         StaffDao staffDao = new StaffDao();
         return staffDao.getAllNewCardRequestCount();
     }
+    public Long searchAllNewCardRequestCount(String finalKeyword) {
+        StaffDao staffDao = new StaffDao();
+        return staffDao.searchAllNewCardRequestCount(finalKeyword);
+    }
 
     public Long getUnresolvedNewCardRequestCount() {
         StaffDao staffDao = new StaffDao();
@@ -99,6 +103,10 @@ public class StaffBusiness {
     public List getOnePageNewCardRequest(int offset, int count) {
         StaffDao staffDao = new StaffDao();
         return staffDao.getOnePageNewCardRequest(offset, count);
+    }
+    public List searchOnePageNewCardRequest(String finalKeyword, int offset, int count) {
+        StaffDao staffDao = new StaffDao();
+        return staffDao.searchOnePageNewCardRequest(finalKeyword, offset, count);
     }
 
     public List getContractByCustomerCode(String customerCode, int offset, int count) {
