@@ -53,6 +53,33 @@ public class CompensationController extends AuthController {
         return new JspPage("staff/compensations.jsp");
     }
 
+    public ResponseObject getSearch(R r) {
+        String keyword = r.equest.getParameter("keyword");
+        if (keyword == null) {
+            keyword = "";
+        }
+        keyword = keyword.trim();
+
+        final CompensationBusiness compenBus = new CompensationBusiness();
+
+        final String finalKeyword = keyword;
+        compenPaginator.setGetItemsCallback(new Paginator.IGetItems() {
+            @Override
+            public List getItems(int offset, int count) {
+                return compenBus.searchCompensation(finalKeyword, offset, count);
+            }
+        });
+        compenPaginator.setGetItemSizeCallback(new Paginator.IGetItemSize() {
+            @Override
+            public Long getItemSize() {
+                return compenBus.searchCompensationCount(finalKeyword);
+            }
+        });
+
+        r.equest.setAttribute("compenPaginator", compenPaginator);
+        return new JspPage("staff/compensations.jsp");
+    }
+
     public ResponseObject getDetail(R r) {
         String compensationCode = r.equest.getParameter("code");
 

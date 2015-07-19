@@ -59,6 +59,32 @@ public class CardController extends AuthController {
         return new JspPage("/customer/cards.jsp");
     }
 
+    public ResponseObject getSearch(R r) {
+        String keyword = r.equest.getParameter("keyword");
+        if (keyword == null) {
+            keyword = "";
+        }
+        keyword = keyword.trim();
+        final String customerCode = ((CustomerEntity) getLoggedInUser()).getCustomerCode();
+        final CardBusiness cardBusiness = new CardBusiness();
+        final String finalKeyword = keyword;
+        cardPaginator.setGetItemsCallback(new Paginator.IGetItems() {
+            @Override
+            public List getItems(int offset, int count) {
+                return cardBusiness.searchIssuedCard(customerCode, finalKeyword, offset, count);
+            }
+        });
+        cardPaginator.setGetItemSizeCallback(new Paginator.IGetItemSize() {
+            @Override
+            public Long getItemSize() {
+                return cardBusiness.searchIssuedCardCount(customerCode, finalKeyword);
+            }
+        });
+
+        r.equest.setAttribute("cardPaginator", cardPaginator);
+        return new JspPage("customer/cards.jsp");
+    }
+
     public ResponseObject getDetail(R r) {
         final String cardId = r.equest.getParameter("cardId");
 
@@ -267,18 +293,24 @@ public class CardController extends AuthController {
     public ResponseObject getViewNewCardRequests(R r) {
         final CustomerBusiness customerBusiness = new CustomerBusiness();
         final String customerCode = ((CustomerEntity) getLoggedInUser()).getCustomerCode();
-        requestPaginator.setGetItemsCallback(new Paginator.IGetItems() {
-            @Override
-            public List getItems(int offset, int count) {
-                return customerBusiness.getOnePageNewCardRequest(customerCode,offset, count);
-            }
-        });
-        requestPaginator.setGetItemSizeCallback(new Paginator.IGetItemSize() {
-            @Override
-            public Long getItemSize() {
-                return customerBusiness.getAllNewCardRequestCount(customerCode);
-            }
-        });
+
+        Paginator p = (Paginator) r.equest.getAttribute("requestPaginator");
+        if (p != null) {
+            requestPaginator = p;
+        } else {
+            requestPaginator.setGetItemsCallback(new Paginator.IGetItems() {
+                @Override
+                public List getItems(int offset, int count) {
+                    return customerBusiness.getOnePageNewCardRequest(customerCode, offset, count);
+                }
+            });
+            requestPaginator.setGetItemSizeCallback(new Paginator.IGetItemSize() {
+                @Override
+                public Long getItemSize() {
+                    return customerBusiness.getAllNewCardRequestCount(customerCode);
+                }
+            });
+        }
         CardBusiness cardBusiness = new CardBusiness();
         Map<Integer,String> newCardMapping = new HashMap();
         newCardMapping = cardBusiness.getMappingWithNewCardRequest();
@@ -289,6 +321,32 @@ public class CardController extends AuthController {
         r.equest.setAttribute("requestPaginator", requestPaginator);
         r.equest.setAttribute("unresolvedRequestCount",customerBusiness.getUnresolvedNewCardRequestCount(customerCode));
         return new JspPage("customer/view-new-card-requests.jsp");
+    }
+    public ResponseObject getViewNewCardRequestsSearch(R r) {
+        String keyword = r.equest.getParameter("keyword");
+        if (keyword == null) {
+            keyword = "";
+        }
+        keyword = keyword.trim();
+        final CustomerBusiness customerBusiness = new CustomerBusiness();
+        final String customerCode = ((CustomerEntity) getLoggedInUser()).getCustomerCode();
+
+        final String finalKeyword = keyword;
+        requestPaginator.setGetItemsCallback(new Paginator.IGetItems() {
+            @Override
+            public List getItems(int offset, int count) {
+                return customerBusiness.searchOnePageNewCardRequest(finalKeyword, customerCode, offset, count);
+            }
+        });
+        requestPaginator.setGetItemSizeCallback(new Paginator.IGetItemSize() {
+            @Override
+            public Long getItemSize() {
+                return customerBusiness.searchAllNewCardRequestCount(finalKeyword, customerCode);
+            }
+        });
+
+        r.equest.setAttribute("requestPaginator", requestPaginator);
+        return getViewNewCardRequests(r);
     }
 
     public ResponseObject postCancelNewCardRequest(R r) {

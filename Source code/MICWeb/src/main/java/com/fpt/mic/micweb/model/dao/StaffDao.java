@@ -67,6 +67,19 @@ public class StaffDao extends IncrementDao<StaffEntity, String> {
         entity.close();
         return resultList;
     }
+    public List searchOnePageNewCardRequest(String finalKeyword, int offset, int count) {
+        EntityManager entity = factory.createEntityManager();
+        String hql = "SELECT co FROM NewCardRequestEntity co " +
+                "WHERE co.micCardInstanceByOldCardInstanceId.cardId LIKE :keyword " +
+                "ORDER BY co.resolveDate asc";
+        Query query = entity.createQuery(hql);
+        query.setParameter("keyword", "%" + finalKeyword + "%");
+        query.setFirstResult(offset);
+        query.setMaxResults(count);
+        List resultList = query.getResultList();
+        entity.close();
+        return resultList;
+    }
 
     public Long getAllStaffCount() {
         EntityManager entity = factory.createEntityManager();
@@ -81,6 +94,18 @@ public class StaffDao extends IncrementDao<StaffEntity, String> {
         EntityManager entity = factory.createEntityManager();
         String hql = "SELECT COUNT(co) FROM NewCardRequestEntity co ORDER BY co.id DESC";
         Query query = entity.createQuery(hql);
+        Long result = (Long) query.getSingleResult();
+        entity.close();
+        return result;
+    }
+
+    public Long searchAllNewCardRequestCount(String finalKeyword) {
+        EntityManager entity = factory.createEntityManager();
+        String hql = "SELECT COUNT(co) FROM NewCardRequestEntity co " +
+                "WHERE co.micCardInstanceByOldCardInstanceId.cardId LIKE :keyword " +
+                "ORDER BY co.id DESC";
+        Query query = entity.createQuery(hql);
+        query.setParameter("keyword", "%" + finalKeyword + "%");
         Long result = (Long) query.getSingleResult();
         entity.close();
         return result;

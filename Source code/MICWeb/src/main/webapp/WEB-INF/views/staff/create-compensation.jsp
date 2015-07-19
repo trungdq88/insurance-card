@@ -199,7 +199,8 @@
 
                             <div class="col-sm-8">
                                 <textarea id="description" name="compensation:description" rows="2"
-                                          required maxlength="2000" title="Vui lòng nhập diễn biến và nguyên nhân tai nạn"
+                                          required maxlength="2000"
+                                          title="Vui lòng nhập diễn biến và nguyên nhân tai nạn"
                                           class="form-control input-md">${submitted.description}</textarea>
                             </div>
                         </div>
@@ -264,7 +265,8 @@
                             <div class="col-sm-8">
                                 <textarea id="compensationNote" name="compensation:compensationNote" maxlength="2000"
                                           title="Vui lòng nhập yêu cầu bồi thường"
-                                          class="form-control input-md" rows="2">${submitted.compensationNote}</textarea>
+                                          class="form-control input-md"
+                                          rows="2">${submitted.compensationNote}</textarea>
                             </div>
                         </div>
 
@@ -277,8 +279,9 @@
                             <div class="col-sm-6">
                                 <input id="attachment" name="compensation:attachment" type="hidden" maxlength="255">
                                 <img id="imgAttachment" height="100px" src=""/>
+                                <button type="button" id="pickAttachment" class="btn btn-primary">Chọn văn bản</button>
                                 <script type="text/javascript" src="//api.filepicker.io/v2/filepicker.js"></script>
-                                <input type="filepicker" data-fp-apikey="AEbPPQfPfRHqODjEl5AZ2z"
+                                <input type="filepicker" data-fp-apikey="AEbPPQfPfRHqODjEl5AZ2z" class="hide filePicker"
                                        onchange="$('#imgAttachment').attr('src', event.fpfile.url);$('#attachment').val(event.fpfile.url);">
                             </div>
                         </div>
@@ -291,9 +294,9 @@
                             Gởi yêu cầu bồi thường
                         </button>
                     </div>
+                    <br/> <br/>
                 </form>
             </div>
-            <br/> <br/>
             <!-- /.col-lg-12 -->
         </div>
         <!-- /.row -->
@@ -351,14 +354,21 @@
     initialize2();
     initialize3();
     $(document).ready(function () {
+        // Use Vietnamese button to open File Picker dialog
+        $('#pickAttachment').click(function () {
+            $('.filePicker').trigger("click");
+        });
+        // Set created date value and restriction
         if ($('#createdDate').val() == "") {
             $('#createdDate').val(getCurrentDate());
         }
         document.getElementById("createdDate").max = getCurrentDate();
+        // Set accident date value and restriction
         if ($('#accidentDate').val() == "") {
             $('#accidentDate').val(getCurrentDate());
         }
         document.getElementById("accidentDate").max = getCurrentDate();
+        // Accident date value & restriction change follow up created date
         $('#createdDate').blur(function () {
             $('#accidentDate').val($('#createdDate').val());
             document.getElementById("accidentDate").max = $('#createdDate').val();

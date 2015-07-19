@@ -1,7 +1,7 @@
 <%@ page import="java.util.Date" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
-
+<%--<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>--%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <%--
   Created by IntelliJ IDEA.
@@ -93,7 +93,8 @@
 
                             <div class="col-sm-3">
                                 <div class="text-value">
-                                    01 năm kể từ khi cấp
+                                    <input type="hidden" id="configTime" value=" ${configUtils.contractDefaultTerm}">
+                                    <input type="text" id="defaultExpired" disabled="disabled" class="form-control"/>
                                 </div>
                             </div>
 
@@ -268,6 +269,36 @@
 <!-- /#wrapper -->
 <%@ include file="_shared/footer.jsp" %>
 <script language="javascript">
+    $(document).ready(function () {
+
+        var dateStartDefault = $('#dateDefault').val();
+        var temp = $('#configTime').val();
+        $('#defaultExpired').val(checkDefaultExpired(dateStartDefault, temp));
+        $('#dateDefault').change(function () {
+            $('#defaultExpired').val(checkDefaultExpired($('#dateDefault').val(), temp));
+        });
+
+    });
+    function checkDefaultExpired(dateStart, temp) {
+        //dateStart : start date of contract
+        //temp : config rule default time for contract
+
+        var dt = dateStart.split(/\-|\s/);
+        var year = parseInt(dt[0]);
+        var month = parseInt(parseInt(dt[1]) + parseInt(temp));
+        var day = dt[2].toString();
+
+        if (month > 12) {
+            month = month - 12;
+            year = parseInt(year + 1);
+        }
+        month = month.toString().length > 1 ? month : '0' + month;
+
+        day = day.length > 1 ? day : '0' + day;
+
+        return day + '/' + month + '/' + year;
+    }
+
     function setInputDate(_id) {
         var _dat = document.querySelector(_id);
         var hoy = new Date(),
@@ -289,10 +320,10 @@
         console.log(data);
         _dat.value = data;
     }
-    ;
     if ($('#dateDefault').val() == "") {
         setInputDate("#dateDefault");
     }
+
     Number.prototype.formatMoney = function (c, d, t) {
         var n = this,
                 c = isNaN(c = Math.abs(c)) ? 2 : c,

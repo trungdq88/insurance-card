@@ -73,9 +73,17 @@
     <div class="row">
         <div class="col-lg-12">
             <div class="pull-right">
+                <input type="hidden" id="cancelDatePunishment" value="${contract.cancelDate}">
+                <input type="hidden" id="ruleCancelPunishment" value="${configUtils.updateContractDueDate}">
                 <c:if test="${!contract.status.equalsIgnoreCase('Cancelled')}">
                     <a href="${pageContext.request.contextPath}/customer/punishment?action=create&contractCode=${contract.contractCode}"
                        class="btn btn-success">
+                        <i class="fa fa-plus"></i>Thêm vi phạm
+                    </a>
+                </c:if>
+                <c:if test="${contract.status.equalsIgnoreCase('Cancelled')}">
+                    <a href="${pageContext.request.contextPath}/customer/punishment?action=create&contractCode=${contract.contractCode}"
+                       class="btn btn-success addNewPunishment hide">
                         <i class="fa fa-plus"></i>Thêm vi phạm
                     </a>
                 </c:if>
@@ -177,3 +185,20 @@
         </ul>
     </nav>
 </div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var cancelDate = $('#cancelDatePunishment').val();
+        var temp = $('#ruleCancelPunishment').val();
+        var count = Math.abs(DayDiff(cancelDate));
+        if (count <= temp) {
+            $('.addNewPunishment').removeClass('hide');
+        }
+
+    });
+    function DayDiff(date) {
+        var oneDay = 24 * 60 * 60 * 1000;
+        var timeNow = new Date();
+        var expiredDate = new Date(date);
+        return Math.round((expiredDate.getTime() - timeNow.getTime()) / (oneDay));
+    }
+</script>

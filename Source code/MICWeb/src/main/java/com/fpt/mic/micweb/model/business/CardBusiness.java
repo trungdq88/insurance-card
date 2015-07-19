@@ -31,7 +31,7 @@ public class CardBusiness {
         NewCardRequestDao newCardRequestDao = new NewCardRequestDao();
         NewCardRequestEntity newCardRequestEntity;
         newCardRequestEntity = newCardRequestDao.getUnresolveRequest(contractCode);
-        if (newCardRequestEntity != null){
+        if (newCardRequestEntity != null) {
             newCardRequestDao.delete(newCardRequestEntity);
             return true;
         }
@@ -42,6 +42,7 @@ public class CardBusiness {
         CardInstanceDao cardInstanceDao = new CardInstanceDao();
         return cardInstanceDao.getIssuedCard(offset, count);
     }
+
     public List<CardInstanceEntity> getIssuedCard(String customerCode, int offset, int count) {
         CardInstanceDao cardDao = new CardInstanceDao();
         return cardDao.getIssuedCard(customerCode, offset, count);
@@ -51,6 +52,7 @@ public class CardBusiness {
         CardInstanceDao cardInstanceDao = new CardInstanceDao();
         return cardInstanceDao.getIssuedCardCount(customerCode);
     }
+
     public Long getIssuedCardCount() {
         CardInstanceDao cardInstanceDao = new CardInstanceDao();
         return cardInstanceDao.getIssuedCardCount();
@@ -71,6 +73,7 @@ public class CardBusiness {
         CardInstanceEntity cardEntity = cardInstanceDao.getActiveCardInstanceByContract(contractCode);
         return cardEntity;
     }
+
     // return map: key = newCardRequestId, value: new CardId
     public Map<Integer, String> getMappingWithNewCardRequest() {
         Map<Integer, String> map = new HashMap<Integer, String>();
@@ -109,20 +112,20 @@ public class CardBusiness {
         return cardInstanceDao.getCardInstancesByContractIncludeDeactive(contractCode);
     }
 
-    public CardInstanceEntity isActive(String cardId){
+    public CardInstanceEntity isActive(String cardId) {
         CardInstanceDao cardInstanceDao = new CardInstanceDao();
         CardInstanceEntity cardInstanceEntity = cardInstanceDao.isActive(cardId);
-        if(cardInstanceEntity != null){
+        if (cardInstanceEntity != null) {
             return cardInstanceEntity;
         }
         return null;
     }
 
-    public CardInstanceEntity isActiveCardByCustomerCode(String cardId, String customerCode){
+    public CardInstanceEntity isActiveCardByCustomerCode(String cardId, String customerCode) {
         CardInstanceDao cardInstanceDao = new CardInstanceDao();
         CardInstanceEntity cardInstanceEntity = cardInstanceDao.isActive(cardId);
-        if(cardInstanceEntity != null){
-            if(customerCode.equalsIgnoreCase(cardInstanceEntity.getMicContractByContractCode().getCustomerCode())){
+        if (cardInstanceEntity != null) {
+            if (customerCode.equalsIgnoreCase(cardInstanceEntity.getMicContractByContractCode().getCustomerCode())) {
                 return cardInstanceEntity;
             }
         }
@@ -131,10 +134,11 @@ public class CardBusiness {
 
 
     // kiem tra hop dong da co yeu cau the moi chua giai quyet chua
-    public boolean isNewCardRequested(String contractCode){
+    public boolean isNewCardRequested(String contractCode) {
         NewCardRequestDao newCardRequestDao = new NewCardRequestDao();
         return newCardRequestDao.getUnresolveRequest(contractCode) != null;
     }
+
     // dang ky the moi
     public boolean requestNewCardRequest(NewCardRequestDto newCardRequestDto, boolean isDeliveryRequested, boolean isPaid) {
         NewCardRequestDao newCardRequestDao = new NewCardRequestDao();
@@ -162,6 +166,7 @@ public class CardBusiness {
         }
         return false;
     }
+
     public void deactiveCardByContractCode(String contractCode) {
         CardInstanceDao cardInstanceDao = new CardInstanceDao();
         CardInstanceEntity cardEntity = cardInstanceDao.getActiveCardInstanceByContract(contractCode);
@@ -181,6 +186,7 @@ public class CardBusiness {
 
     /**
      * Set status for card to AVAILABLE and ready to be use for other contract
+     *
      * @param dto
      */
     public void recycleCard(RecycleCardDto dto) {
@@ -189,7 +195,8 @@ public class CardBusiness {
         card.setStatus(CardEntity.STATUS_AVAILABLE);
         cardDao.update(card);
     }
-    public NewCardRequestEntity updatePaidNewCardRequest(String contractCode){
+
+    public NewCardRequestEntity updatePaidNewCardRequest(String contractCode) {
         NewCardRequestEntity newCardRequestEntity;
         NewCardRequestDao newCardRequestDao = new NewCardRequestDao();
         newCardRequestEntity = newCardRequestDao.getUnpaidRequestByContractCode(contractCode);
@@ -212,7 +219,7 @@ public class CardBusiness {
         }
     }
 
-    public Long getAllUnresolvedNewCardRequestCount(){
+    public Long getAllUnresolvedNewCardRequestCount() {
         NewCardRequestDao newCardRequestDao = new NewCardRequestDao();
         return newCardRequestDao.getAllUnresolvedNewCardRequestCount();
     }
@@ -247,5 +254,24 @@ public class CardBusiness {
             }
         }
         return CheckCardResponseDto.RESULT_INVALID_CARD;
+    }
+
+    public List searchIssuedCard(String finalKeyword, int offset, int count) {
+        CardInstanceDao cardInstanceDao = new CardInstanceDao();
+        return cardInstanceDao.searchIssuedCard(finalKeyword, offset, count);
+    }
+
+    public Long searchIssuedCardCount(String finalKeyword) {
+        CardInstanceDao cardInstanceDao = new CardInstanceDao();
+        return cardInstanceDao.searchIssuedCardCount(finalKeyword);
+    }
+    public List searchIssuedCard(String customerCode, String finalKeyword, int offset, int count) {
+        CardInstanceDao cardInstanceDao = new CardInstanceDao();
+        return cardInstanceDao.searchIssuedCard(customerCode, finalKeyword, offset, count);
+    }
+
+    public Long searchIssuedCardCount(String customerCode, String finalKeyword) {
+        CardInstanceDao cardInstanceDao = new CardInstanceDao();
+        return cardInstanceDao.searchIssuedCardCount(customerCode, finalKeyword);
     }
 }

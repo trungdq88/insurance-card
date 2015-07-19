@@ -7,10 +7,18 @@
                 <form action="${pageContext.request.contextPath}/customer/compensation" method="get">
                     <input type="hidden" name="action" value="Create">
                     <input type="hidden" name="contractCode" value="${contract.contractCode}">
+                    <input type="hidden" id="cancelDateCompensation" value="${contract.cancelDate}">
+                    <input type="hidden" id="ruleCancelCompensation" value="${configUtils.updateContractDueDate}">
                     <c:if test="${!contract.status.equalsIgnoreCase('Cancelled')}">
                         <button href="${pageContext.request.contextPath}/customer/compensation?action=create"
                                 type="submit"
                                 class="btn btn-success ">Yêu cầu bồi thường
+                        </button>
+                    </c:if>
+                    <c:if test="${contract.status.equalsIgnoreCase('Cancelled')}">
+                        <button href="${pageContext.request.contextPath}/customer/compensation?action=create"
+                                type="submit"
+                                class="btn btn-success addNewCompensation hide">Yêu cầu bồi thường
                         </button>
                     </c:if>
 
@@ -124,3 +132,20 @@
         </nav>
     </div>
 </div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var cancelDate = $('#cancelDateCompensation').val();
+        var temp = $('#ruleCancelCompensation').val();
+        var count = Math.abs(DayDiff(cancelDate));
+        if (count <= temp) {
+            $('.addNewCompensation').removeClass('hide');
+        }
+
+    });
+    function DayDiff(date) {
+        var oneDay = 24 * 60 * 60 * 1000;
+        var timeNow = new Date();
+        var expiredDate = new Date(date);
+        return Math.round((expiredDate.getTime() - timeNow.getTime()) / (oneDay));
+    }
+</script>

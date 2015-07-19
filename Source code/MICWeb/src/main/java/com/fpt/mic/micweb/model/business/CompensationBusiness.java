@@ -148,4 +148,21 @@ public class CompensationBusiness {
         CompensationDao compensationDao = new CompensationDao();
         return compensationDao.getCompensationByContractCode(code, offset, count);
     }
+
+    /**
+     * Search by compensation code or customer name
+     * @param finalKeyword
+     * @param offset
+     * @param count
+     * @return
+     */
+    public List searchCompensation(String finalKeyword, int offset, int count) {
+        CompensationDao compensationDao = new CompensationDao();
+        return compensationDao.searchCompensation(finalKeyword, offset, count);
+    }
+
+    public Long searchCompensationCount(String finalKeyword) {
+        CompensationDao compensationDao = new CompensationDao();
+        return compensationDao.searchCompensationCount(finalKeyword);
+    }
 }

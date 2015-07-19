@@ -14,6 +14,7 @@ import com.fpt.mic.micweb.model.entity.*;
 import com.fpt.mic.micweb.framework.responses.JspPage;
 import com.fpt.mic.micweb.framework.R;
 import com.fpt.mic.micweb.framework.responses.ResponseObject;
+import com.fpt.mic.micweb.utils.ConfigUtils;
 import com.fpt.mic.micweb.utils.Constants;
 import com.fpt.mic.micweb.utils.DateUtils;
 
@@ -43,17 +44,20 @@ public class ContractController extends AuthController {
 
     public ResponseObject getNewContract(R r) {
         ContractBusiness contractBusiness = new ContractBusiness();
+        ConfigUtils configUtils = new ConfigUtils();
         List<ContractTypeEntity> list = contractBusiness.getAllContractType();
         HashMap<Integer, ContractTypeEntity> mapContractType = new HashMap<Integer, ContractTypeEntity>();
         for (int i = 0; i < list.size(); i++) {
             mapContractType.put(list.get(i).getId(), list.get(i));
         }
+        r.equest.setAttribute("configUtils", configUtils);
         r.equest.setAttribute("mapContractType", mapContractType);
         return new JspPage("customer/contract-new.jsp");
     }
 
     public ResponseObject getReviewNewContract(R r) {
         CustomerCreateContractDto customerCreateContractDto = (CustomerCreateContractDto) r.ead.entity(CustomerCreateContractDto.class, "contract");
+        ConfigUtils configUtils = new ConfigUtils();
         // Gọi hàm validate ở đây
         List errors = r.ead.validate(customerCreateContractDto);
 
@@ -68,6 +72,7 @@ public class ContractController extends AuthController {
         }
         r.equest.setAttribute("startDate", r.equest.getParameter("contract:startDate"));
         r.equest.setAttribute("submitted", customerCreateContractDto);
+        r.equest.setAttribute("configUtils", configUtils);
         ContractBusiness contractBusiness = new ContractBusiness();
         r.equest.setAttribute("contractTypeName", contractBusiness.getContractType(customerCreateContractDto.getContractType()).getName());
         return new JspPage("customer/contract-review.jsp");
@@ -169,6 +174,8 @@ public class ContractController extends AuthController {
     }
 
     public ResponseObject getDetail(R r) {
+        ConfigUtils configUtils = new ConfigUtils();
+
         final CustomerBusiness customerBusiness = new CustomerBusiness();
         CardBusiness cardBusiness = new CardBusiness();
         final CompensationBusiness compensationBusiness = new CompensationBusiness();
@@ -228,7 +235,7 @@ public class ContractController extends AuthController {
             });
 
             r.equest.setAttribute("contract", contract);
-
+            r.equest.setAttribute("configUtils",configUtils);
             r.equest.setAttribute("isNewCardRequested",cardBusiness.isNewCardRequested(code));
             r.equest.setAttribute("card", cardBusiness.getCardByContract(code));
             r.equest.setAttribute("accidentPaginator", accidentPaginator);

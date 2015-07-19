@@ -517,8 +517,14 @@
         }
 
         if (contractStatus.toLowerCase() == 'Cancelled'.toLowerCase()) {
-            $('button[type=button]').not('#btnRenew, #btnCancel').addClass('hide');
+            // Hide 2 edit button (btnRenew & btnCancel hidden default)
+            $('#btnPayment').addClass('hide');
             $('.editBtn').addClass('hide');
+            // Hide create & edit compensation, accident, punishment while exceed staff config
+            var durationFromCurrentToCancel = daysBetween(new Date("${contract.cancelDate}"), new Date());
+            if (durationFromCurrentToCancel > '${config.updateContractDueDate}') {
+                $('.updateBtn').addClass('hide');
+            }
         }
 
         // Ajax load data to modal

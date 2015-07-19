@@ -5,7 +5,6 @@ import com.fpt.mic.micweb.model.dao.helper.NewCardRequestDao;
 import com.fpt.mic.micweb.model.dto.NotificationBuilder;
 import com.fpt.mic.micweb.model.dto.form.CancelContractDto;
 import com.fpt.mic.micweb.model.dto.form.ChangePasswordDto;
-import com.fpt.mic.micweb.model.dto.form.CreateCustomerDto;
 import com.fpt.mic.micweb.model.dto.form.EditCustomerProfileDto;
 import com.fpt.mic.micweb.model.entity.*;
 import com.fpt.mic.micweb.utils.Constants;
@@ -311,6 +310,15 @@ public class CustomerBusiness {
     public Long getAllNewCardRequestCount(String customerCode) {
         NewCardRequestDao newCardRequestDao = new NewCardRequestDao();
         return newCardRequestDao.getAllNewCardRequestCount(customerCode);
+    }
+    public List searchOnePageNewCardRequest(String keyword, String customerCode, int offset, int count) {
+        NewCardRequestDao newCardRequestDao = new NewCardRequestDao();
+        return newCardRequestDao.searchOnePageNewCardRequest(keyword, customerCode, offset, count);
+    }
+
+    public Long searchAllNewCardRequestCount(String keyword, String customerCode) {
+        NewCardRequestDao newCardRequestDao = new NewCardRequestDao();
+        return newCardRequestDao.searchAllNewCardRequestCount(keyword, customerCode);
     }
 
     public Long getUnresolvedNewCardRequestCount(String customerCode) {

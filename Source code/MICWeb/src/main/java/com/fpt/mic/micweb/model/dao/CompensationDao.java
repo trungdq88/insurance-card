@@ -85,4 +85,39 @@ public class CompensationDao extends IncrementDao<CompensationEntity, String> {
         entityManager.close();
         return resultList;
     }
+
+    /**
+     * Search by compensation code or customer name
+     * @param finalKeyword
+     * @param offset
+     * @param count
+     * @return
+     */
+    public List searchCompensation(String finalKeyword, int offset, int count) {
+        EntityManager entityManager = factory.createEntityManager();
+        String hql = "SELECT compensation FROM CompensationEntity AS compensation " +
+                "WHERE compensation.compensationCode LIKE :keyword " +
+                "OR compensation.micContractByContractCode.micCustomerByCustomerCode.name LIKE :keyword " +
+                "ORDER BY compensation.compensationCode DESC";
+        Query query = entityManager.createQuery(hql);
+        query.setParameter("keyword", "%" + finalKeyword + "%");
+        query.setFirstResult(offset);
+        query.setMaxResults(count);
+        List resultList = query.getResultList();
+        entityManager.close();
+        return resultList;
+    }
+
+    public Long searchCompensationCount(String finalKeyword) {
+        EntityManager entityManager = factory.createEntityManager();
+        String hql = "SELECT COUNT(compensation) FROM CompensationEntity AS compensation " +
+                "WHERE compensation.compensationCode LIKE :keyword " +
+                "OR compensation.micContractByContractCode.micCustomerByCustomerCode.name LIKE :keyword " +
+                "ORDER BY compensation.compensationCode DESC";
+        Query query = entityManager.createQuery(hql);
+        query.setParameter("keyword",  "%" + finalKeyword + "%");
+        Long result = (Long) query.getSingleResult();
+        entityManager.close();
+        return result;
+    }
 }

@@ -5,13 +5,20 @@
     <div class="row">
         <div class="col-lg-12">
             <div class="pull-right">
+                <input type="hidden" id="cancelDate" value="${contract.cancelDate}">
+                <input type="hidden" id="ruleCanel" value="${configUtils.updateContractDueDate}">
                 <c:if test="${!contract.status.equalsIgnoreCase('Cancelled')}">
                     <a href="${pageContext.request.contextPath}/customer/accident?action=create&code=${contract.contractCode}"
                        class="btn btn-success">
                         <i class="fa fa-plus"></i> Thông báo tai nạn mới
                     </a>
                 </c:if>
-
+                <c:if test="${contract.status.equalsIgnoreCase('Cancelled')}">
+                    <a href="${pageContext.request.contextPath}/customer/accident?action=create&code=${contract.contractCode}"
+                       class="btn btn-success hide addNew">
+                        <i class="fa fa-plus"></i> Thông báo tai nạn mới
+                    </a>
+                </c:if>
             </div>
         </div>
     </div>
@@ -127,3 +134,20 @@
         </ul>
     </nav>
 </div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var cancelDate = $('#cancelDate').val();
+        var temp = $('#ruleCanel').val();
+        var count = Math.abs(DayDiff(cancelDate));
+        if (count <= temp) {
+            $('.addNew').removeClass('hide');
+        }
+
+    });
+    function DayDiff(date) {
+        var oneDay = 24 * 60 * 60 * 1000;
+        var timeNow = new Date();
+        var expiredDate = new Date(date);
+        return Math.round((expiredDate.getTime() - timeNow.getTime()) / (oneDay));
+    }
+</script>

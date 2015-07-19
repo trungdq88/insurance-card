@@ -59,6 +59,32 @@ public class CardController extends AuthController {
         return new JspPage("staff/cards.jsp");
     }
 
+    public ResponseObject getSearch(R r) {
+        String keyword = r.equest.getParameter("keyword");
+        if (keyword == null) {
+            keyword = "";
+        }
+        keyword = keyword.trim();
+
+        final CardBusiness cardBusiness = new CardBusiness();
+        final String finalKeyword = keyword;
+        cardPaginator.setGetItemsCallback(new Paginator.IGetItems() {
+            @Override
+            public List getItems(int offset, int count) {
+                return cardBusiness.searchIssuedCard(finalKeyword, offset, count);
+            }
+        });
+        cardPaginator.setGetItemSizeCallback(new Paginator.IGetItemSize() {
+            @Override
+            public Long getItemSize() {
+                return cardBusiness.searchIssuedCardCount(finalKeyword);
+            }
+        });
+
+        r.equest.setAttribute("cardPaginator", cardPaginator);
+        return new JspPage("staff/cards.jsp");
+    }
+
     public ResponseObject getDetail(R r) {
         String cardId = r.equest.getParameter("cardId");
 
@@ -99,21 +125,28 @@ public class CardController extends AuthController {
 
     public ResponseObject getNewCardRequest(R r) {
         final StaffBusiness staffBus = new StaffBusiness();
-        requestPaginator.setGetItemsCallback(new Paginator.IGetItems() {
-            @Override
-            public List getItems(int offset, int count) {
-                return staffBus.getOnePageNewCardRequest(offset, count);
-            }
-        });
-        requestPaginator.setGetItemSizeCallback(new Paginator.IGetItemSize() {
-            @Override
-            public Long getItemSize() {
-                return staffBus.getAllNewCardRequestCount();
-            }
-        });
+
+        Paginator p = (Paginator) r.equest.getAttribute("requestPaginator");
+
+        if (p != null) {
+            requestPaginator = p;
+        } else {
+            requestPaginator.setGetItemsCallback(new Paginator.IGetItems() {
+                @Override
+                public List getItems(int offset, int count) {
+                    return staffBus.getOnePageNewCardRequest(offset, count);
+                }
+            });
+            requestPaginator.setGetItemSizeCallback(new Paginator.IGetItemSize() {
+                @Override
+                public Long getItemSize() {
+                    return staffBus.getAllNewCardRequestCount();
+                }
+            });
+        }
         CardBusiness cardBusiness = new CardBusiness();
-        Map<Integer, String> newCardMappingRequest = new HashMap();
-        newCardMappingRequest = cardBusiness.getMappingWithNewCardRequest();
+        Map<Integer, String> newCardMappingRequest
+                = cardBusiness.getMappingWithNewCardRequest();
         ConfigUtils configUtils = new ConfigUtils();
         r.equest.setAttribute("config",configUtils);
         r.equest.setAttribute("newCardFee", configUtils.getNewCardFee());
@@ -124,6 +157,32 @@ public class CardController extends AuthController {
         r.equest.setAttribute("unresolvedRequestCount", staffBus.getUnresolvedNewCardRequestCount());
         return new JspPage("staff/new-card-requests.jsp");
     }
+
+    public ResponseObject getNewCardRequestSearch(R r) {
+        String keyword = r.equest.getParameter("keyword");
+        if (keyword == null) {
+            keyword = "";
+        }
+        keyword = keyword.trim();
+        final StaffBusiness staffBus = new StaffBusiness();
+        final String finalKeyword = keyword;
+        requestPaginator.setGetItemsCallback(new Paginator.IGetItems() {
+            @Override
+            public List getItems(int offset, int count) {
+                return staffBus.searchOnePageNewCardRequest(finalKeyword, offset, count);
+            }
+        });
+        requestPaginator.setGetItemSizeCallback(new Paginator.IGetItemSize() {
+            @Override
+            public Long getItemSize() {
+                return staffBus.searchAllNewCardRequestCount(finalKeyword);
+            }
+        });
+        r.equest.setAttribute("requestPaginator", requestPaginator);
+
+        return getNewCardRequest(r);
+    }
+
 
     public ResponseObject postRecycle(R r) {
         RecycleCardDto dto = (RecycleCardDto)
