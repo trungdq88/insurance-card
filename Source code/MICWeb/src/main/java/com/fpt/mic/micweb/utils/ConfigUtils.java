@@ -25,6 +25,7 @@ public class ConfigUtils {
     private int paymentDueDate;
     private float newCardFee;
     private float deliveryFee;
+    private int updateContractDueDate;
 
     public ConfigUtils() {
     }
@@ -158,5 +159,13 @@ public class ConfigUtils {
 
     public void setDeliveryFee(float deliveryFee) {
         this.deliveryFee = deliveryFee;
+    }
+
+    public int getUpdateContractDueDate() {
+        return updateContractDueDate = entity.getUpdateContractDueDate();
+    }
+
+    public void setUpdateContractDueDate(int updateContractDueDate) {
+        this.updateContractDueDate = updateContractDueDate;
     }
 }
