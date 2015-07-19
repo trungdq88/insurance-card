@@ -7,10 +7,17 @@
 --%>
 <%@ page import="java.util.Date" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="_shared/header.jsp" %>
-
+<style type="text/css">
+    .handleInput {
+        border: none;
+        background-color: white;
+        width: 100%;
+        padding-top: 6px;
+    }
+</style>
 <div id="wrapper">
 
     <%@ include file="_shared/navigation.jsp" %>
@@ -25,6 +32,7 @@
             <div class="col-lg-12">
                 <h3>
                     <p class="text-center"><b>Vui lòng kiểm tra lại các thông tin hợp đồng</b></p>
+
                     <p class="text-center"><b>nhấn nút Xác nhận để hoàn tất tạo hợp đồng:</b></p>
                 </h3>
                 <p class="text-center">
@@ -81,7 +89,8 @@
 
                             <div class="col-sm-3">
                                 <div class="text-value">
-                                    01 năm kể từ khi cấp
+                                    <input type="hidden" id="configTime" value=" ${configUtils.contractDefaultTerm}">
+                                    <input type="text" id="defaultExpired" disabled="disabled" class="handleInput"/>
                                 </div>
                             </div>
                         </div>
@@ -333,6 +342,32 @@
 
 <%@ include file="_shared/footer.jsp" %>
 <script language="javascript">
+    $(document).ready(function () {
+
+        var dateStartDefault = $('#startDate').val();
+        var temp = $('#configTime').val();
+        $('#defaultExpired').val(checkDefaultExpired(dateStartDefault, temp));
+
+    });
+    function checkDefaultExpired(dateStart, temp) {
+        //dateStart : start date of contract
+        //temp : config rule default time for contract
+
+        var dt = dateStart.split(/\-|\s/);
+        var year = parseInt(dt[0]);
+        var month = parseInt(parseInt(dt[1]) + parseInt(temp));
+        var day = dt[2].toString();
+
+        if (month > 12) {
+            month = month - 12;
+            year = parseInt(year + 1);
+        }
+        month = month.toString().length > 1 ? month : '0' + month;
+
+        day = day.length > 1 ? day : '0' + day;
+
+        return year + '-' + month + '-' + day;
+    }
     Number.prototype.formatMoney = function (c, d, t) {
         var n = this,
                 c = isNaN(c = Math.abs(c)) ? 2 : c,
