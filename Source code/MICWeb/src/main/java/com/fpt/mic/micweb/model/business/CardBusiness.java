@@ -134,9 +134,9 @@ public class CardBusiness {
 
 
     // kiem tra hop dong da co yeu cau the moi chua giai quyet chua
-    public boolean isNewCardRequested(String contractCode) {
+    public NewCardRequestEntity getUnresolveNewCardRequest(String contractCode) {
         NewCardRequestDao newCardRequestDao = new NewCardRequestDao();
-        return newCardRequestDao.getUnresolveRequest(contractCode) != null;
+        return newCardRequestDao.getUnresolveRequest(contractCode);
     }
 
     // dang ky the moi

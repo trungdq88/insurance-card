@@ -504,7 +504,7 @@
                         </li>
 
                             <%--<form action="${pageContext.request.contextPath}/customer/card" method="get">--%>
-                            <c:if test="${isNewCardRequested == false}">
+                            <c:if test="${empty newCardRequested }">
                                 <c:if test="${contract.status.equalsIgnoreCase('Ready')}">
                                 <div class="pull-right">
                                     <a href="${pageContext.request.contextPath}/customer/card?action=newCard&contractCode=${param.code}"
@@ -515,20 +515,22 @@
                                 </div>
                                     </c:if>
                             </c:if>
-                            <c:if test="${isNewCardRequested == true}">
+                            <c:if test="${not empty newCardRequested}">
                                 <div class="pull-right">
                                     <p class="text-value">
                         <span class="label label-info"
                               style="font-size: 14px">Đang yêu cầu thẻ mới</span>
                                 <c:if test="${contract.status.equalsIgnoreCase('Ready')}">
-                                    <button contractCode="${contract.contractCode}" type="button" class="btn btn-danger btn-xs"
-                                            data-toggle="modal" data-target="#cancel-new-card-request" onclick="{
+                                    <c:if test="${newCardRequested.isPaid eq 0}">
+                                        <button contractCode="${contract.contractCode}" type="button" class="btn btn-danger btn-xs"
+                                                data-toggle="modal" data-target="#cancel-new-card-request" onclick="{
                                                                     var contractCode = $(this).attr('contractCode');
                                                                     $('#contractCodeModal').val(contractCode);
                                                                     $('#contractCodeModal1').text(contractCode);
                                                                  }">
-                                        <i class="fa fa-times"></i> Hủy
-                                    </button>
+                                            <i class="fa fa-times"></i> Hủy
+                                        </button>
+                                    </c:if>
                                     </c:if>
                                     </p>
                                 </div>

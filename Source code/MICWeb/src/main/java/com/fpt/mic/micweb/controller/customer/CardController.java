@@ -164,7 +164,7 @@ public class CardController extends AuthController {
         if (cardBusiness.getCardInstancesIncludeDeactive(contractCode).size() > 0) {
 
             // neu hop dong da dc phat hanh the, kiem tra xem co yeu cau truoc do chua
-            if (cardBusiness.isNewCardRequested(contractCode) == false) {
+            if (cardBusiness.getUnresolveNewCardRequest(contractCode) == null) {
                 // neu chua thi tien hanh thanh toan
                 HttpSession session = r.equest.getSession();
                 // thanh toan truc tiep

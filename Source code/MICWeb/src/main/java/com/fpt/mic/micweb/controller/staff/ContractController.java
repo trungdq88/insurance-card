@@ -164,7 +164,7 @@ public class ContractController extends AuthController {
         });
 
 
-        r.equest.setAttribute("isNewCardRequested",cardBusiness.isNewCardRequested(contractCode));
+        r.equest.setAttribute("newCardRequested",cardBusiness.getUnresolveNewCardRequest(contractCode));
         r.equest.setAttribute("CUSTOMER", customerDetail);
         r.equest.setAttribute("CONTRACT", contractDetail);
         r.equest.setAttribute("PAYMENT", listPayment);
@@ -325,7 +325,7 @@ public class ContractController extends AuthController {
             // kiem tra neu hop dong da duoc cap the ( bao gom the cu va moi)
             if (cardBusiness.getCardInstancesIncludeDeactive(dto.getContractCode()).size() > 0) {
                 // neu hop dong da dc phat hanh the, kiem tra xem co yeu cau truoc do chua
-                if (!cardBusiness.isNewCardRequested(dto.getContractCode())) {
+                if (cardBusiness.getUnresolveNewCardRequest(dto.getContractCode()) == null) {
                     if (cardBusiness.getCardByContract(dto.getContractCode()) != null) {
                         // Send new card request
                         if (dto.isDeliveryNewCard()) {
