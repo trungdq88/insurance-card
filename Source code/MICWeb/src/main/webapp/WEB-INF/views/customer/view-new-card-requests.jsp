@@ -103,14 +103,16 @@
                             <span class="label label-info">Đã thanh toán</span>
                           </c:if>
                           <c:if test="${newRequest.isPaid == 0}">
-                            <button contractCode="${newRequest.micCardInstanceByOldCardInstanceId.contractCode}" type="button" class="btn btn-danger btn-xs"
-                                    data-toggle="modal" data-target="#cancel-new-card-request" onclick="{
+                            <c:if test="${newRequest.micCardInstanceByOldCardInstanceId.micContractByContractCode.status.equalsIgnoreCase('Ready')}">
+                              <button contractCode="${newRequest.micCardInstanceByOldCardInstanceId.contractCode}" type="button" class="btn btn-danger btn-xs"
+                                      data-toggle="modal" data-target="#cancel-new-card-request" onclick="{
                                                                     var contractCode = $(this).attr('contractCode');
                                                                     $('#contractCodeModal').val(contractCode);
                                                                     $('#contractCodeModal1').text(contractCode);
                                                                  }">
-                              <i class="fa fa-times"></i> Hủy
-                            </button>
+                                <i class="fa fa-times"></i> Hủy
+                              </button>
+                            </c:if>
                           </c:if>
                         </td>
                       </tr>

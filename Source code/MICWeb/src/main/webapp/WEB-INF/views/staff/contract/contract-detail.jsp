@@ -233,19 +233,6 @@
                                 <strong>Lịch sử vi phạm luật ATGT</strong>
                             </a>
                         </li>
-                        <c:if test="${contract.status.equalsIgnoreCase('Ready') }">
-                            <c:if test="${isNewCardRequested == true}">
-                                <div class="pull-right">
-                                    <button  type="button" class="btn btn-danger btn-xs"
-                                             data-toggle="modal" data-target="#cancel-new-card-request">
-                                        <i class="fa fa-times"></i> Hủy yêu cầu thẻ mới
-                                    </button>
-                                </div>
-                            </c:if>
-
-
-                            <%--</form>--%>
-                        </c:if>
                     </ul>
                 </div>
 

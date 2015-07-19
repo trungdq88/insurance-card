@@ -502,9 +502,10 @@
                             <a href="#accidents" aria-controls="messages" role="tab" data-toggle="tab">Lịch sử tai nạn
                             </a>
                         </li>
-                        <c:if test="${contract.status.equalsIgnoreCase('Ready') }">
+
                             <%--<form action="${pageContext.request.contextPath}/customer/card" method="get">--%>
                             <c:if test="${isNewCardRequested == false}">
+                                <c:if test="${contract.status.equalsIgnoreCase('Ready')}">
                                 <div class="pull-right">
                                     <a href="${pageContext.request.contextPath}/customer/card?action=newCard&contractCode=${param.code}"
                                        class="btn btn-sm btn-primary">
@@ -512,24 +513,30 @@
                                     </a>
 
                                 </div>
+                                    </c:if>
                             </c:if>
                             <c:if test="${isNewCardRequested == true}">
                                 <div class="pull-right">
                                     <p class="text-value">
                         <span class="label label-info"
-                              style="font-size: 16px">Đang yêu cầu thẻ mới</span>
+                              style="font-size: 14px">Đang yêu cầu thẻ mới</span>
+                                <c:if test="${contract.status.equalsIgnoreCase('Ready')}">
+                                    <button contractCode="${contract.contractCode}" type="button" class="btn btn-danger btn-xs"
+                                            data-toggle="modal" data-target="#cancel-new-card-request" onclick="{
+                                                                    var contractCode = $(this).attr('contractCode');
+                                                                    $('#contractCodeModal').val(contractCode);
+                                                                    $('#contractCodeModal1').text(contractCode);
+                                                                 }">
+                                        <i class="fa fa-times"></i> Hủy
+                                    </button>
+                                    </c:if>
                                     </p>
-                                    <%--<button  type="button" class="btn btn-danger btn-xs"--%>
-                                             <%--data-toggle="modal" data-target="#cancel-new-card-request">--%>
-                                        <%--<i class="fa fa-times"></i> Hủy yêu cầu thẻ mới--%>
-                                    <%--</button>--%>
                                 </div>
 
                             </c:if>
 
 
                             <%--</form>--%>
-                        </c:if>
                     </ul>
                 </div>
                 <br/>
@@ -916,4 +923,4 @@
     });
 </script>
 <%@ include file="_shared/footer.jsp" %>
-<%--<jsp:include page="cancel-new-card-request-modal.jsp" flush="true"/>--%>
+<jsp:include page="cancel-new-card-request-modal.jsp" flush="true"/>
