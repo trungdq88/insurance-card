@@ -45,6 +45,15 @@ public class CustomerCreateContractDto {
     @Range(min = 1, max = 100, message = "Số chỗ ngồi phải có giá trị từ {min} đến {max}")
     private Integer seatCapacity;
 
+    @AssertTrue(message = "Thời điểm bắt đầu không được quá 5 năm so với thời điểm hiện tại")
+    private boolean isValidMaxStartDate() {
+        if (startDate != null) {
+            Timestamp currentDate = DateUtils.currentDateWithoutTime();
+            Timestamp maxDate = DateUtils.addFiveYear(currentDate);
+            return !startDate.after(maxDate);
+        }
+        return false;
+    }
     @AssertTrue(message = "Ngày bắt đầu phải kể từ ngày hôm nay trở đi")
     private boolean isValidStartDate() {
         if (startDate != null) {
