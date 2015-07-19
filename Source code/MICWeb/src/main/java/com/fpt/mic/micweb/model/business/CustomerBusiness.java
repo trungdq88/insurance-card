@@ -7,9 +7,11 @@ import com.fpt.mic.micweb.model.dto.form.CancelContractDto;
 import com.fpt.mic.micweb.model.dto.form.ChangePasswordDto;
 import com.fpt.mic.micweb.model.dto.form.EditCustomerProfileDto;
 import com.fpt.mic.micweb.model.entity.*;
+import com.fpt.mic.micweb.utils.ConfigUtils;
 import com.fpt.mic.micweb.utils.Constants;
 import com.fpt.mic.micweb.utils.DateUtils;
 import com.fpt.mic.micweb.utils.StringUtils;
+import org.joda.time.LocalDate;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -218,7 +220,10 @@ public class CustomerBusiness {
                 contract.setStartDate(currentDate);
             }
             // set expired date = start_date + 1 year
-            contract.setExpiredDate(DateUtils.addOneYear(contract.getStartDate()));
+            ConfigUtils configUtils = new ConfigUtils();
+            LocalDate configDate = new LocalDate(contract.getStartDate()).plusMonths(configUtils.getContractDefaultTerm());
+            Timestamp newExpiredDate = new Timestamp(configDate.toDateTimeAtStartOfDay().getMillis());
+            contract.setExpiredDate(newExpiredDate);
             if (contract.getStartDate().after(currentDate)) {
                 contract.setStatus(Constants.ContractStatus.PENDING);
             } else {
