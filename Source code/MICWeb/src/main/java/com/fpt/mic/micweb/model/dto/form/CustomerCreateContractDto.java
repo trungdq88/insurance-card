@@ -3,9 +3,13 @@ import com.fpt.mic.micweb.model.dao.ContractDao;
 import com.fpt.mic.micweb.model.dao.ContractTypeDao;
 import com.fpt.mic.micweb.model.dao.CustomerDao;
 import com.fpt.mic.micweb.model.entity.ContractTypeEntity;
+import com.fpt.mic.micweb.model.entity.helper.BusinessRulesEntity;
+import com.fpt.mic.micweb.utils.ConfigUtils;
 import com.fpt.mic.micweb.utils.DateUtils;
+import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.hibernate.validator.constraints.Range;
+import org.joda.time.LocalDate;
 
 import javax.validation.constraints.*;
 import java.sql.Timestamp;
@@ -45,6 +49,16 @@ public class CustomerCreateContractDto {
     @Range(min = 1, max = 100, message = "Số chỗ ngồi phải có giá trị từ {min} đến {max}")
     private Integer seatCapacity;
 
+    @AssertTrue(message = "Ngày bắt đầu hiệu lực hợp đồng không hợp lệ")
+    private boolean isValidMaxStartDate() {
+        if (startDate != null) {
+            ConfigUtils configUtils = new ConfigUtils();
+            LocalDate maxDate = configUtils.getStartDateMax();
+            Timestamp maxStartDate = new Timestamp(maxDate.toDateTimeAtStartOfDay().getMillis());
+            return !startDate.after(maxStartDate);
+        }
+        return false;
+    }
     @AssertTrue(message = "Ngày bắt đầu phải kể từ ngày hôm nay trở đi")
     private boolean isValidStartDate() {
         if (startDate != null) {

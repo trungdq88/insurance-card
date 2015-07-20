@@ -82,6 +82,7 @@
                                        min="<%=new Date().getYear()+1900%>-<%=(new Date().getMonth()+1)<10?"0"+(new Date().getMonth()+1):(new Date().getMonth()+1)%>-<%=(new Date().getDate())<10?"0"+(new Date().getDate()):(new Date().getDate())%>"
                                        title="Vui lòng chọn ngày bắt đầu"
                                        value="${startDate}"
+                                       max="${configUtils.startDateMax}"
                                        class="form-control" id="dateDefault"
                                         />
                             </div>
