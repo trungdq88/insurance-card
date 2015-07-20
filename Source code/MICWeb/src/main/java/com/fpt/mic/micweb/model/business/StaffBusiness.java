@@ -324,6 +324,11 @@ public class StaffBusiness {
         return contractTypeDao.getAllContractType();
     }
 
+    public List<ContractTypeEntity> getAllActiveContractType() {
+        ContractTypeDao contractTypeDao = new ContractTypeDao();
+        return contractTypeDao.getAllActiveContractType();
+    }
+
     public ContractTypeEntity getContractType(int contractTypeId) {
         ContractTypeDao contractTypeDao = new ContractTypeDao();
         return contractTypeDao.read(contractTypeId);

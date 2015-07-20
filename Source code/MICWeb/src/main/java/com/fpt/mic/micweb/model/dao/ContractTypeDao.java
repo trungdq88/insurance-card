@@ -26,6 +26,13 @@ public class ContractTypeDao extends GenericDaoJpaImpl<ContractTypeEntity, Integ
         return query.getResultList();
     }
 
+    public List<ContractTypeEntity> getAllActiveContractType() {
+        EntityManager entity = factory.createEntityManager();
+        String hql = "SELECT ct FROM ContractTypeEntity ct WHERE ct.active = 1";
+        Query query = entity.createQuery(hql);
+        return query.getResultList();
+    }
+
     public Long getAllContractTypeCount() {
         EntityManager entity = factory.createEntityManager();
         String hql = "SELECT COUNT(ct) FROM ContractTypeEntity ct";
