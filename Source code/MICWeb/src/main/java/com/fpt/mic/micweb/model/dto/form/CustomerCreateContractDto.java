@@ -1,12 +1,9 @@
 package com.fpt.mic.micweb.model.dto.form;
 import com.fpt.mic.micweb.model.dao.ContractDao;
 import com.fpt.mic.micweb.model.dao.ContractTypeDao;
-import com.fpt.mic.micweb.model.dao.CustomerDao;
 import com.fpt.mic.micweb.model.entity.ContractTypeEntity;
-import com.fpt.mic.micweb.model.entity.helper.BusinessRulesEntity;
 import com.fpt.mic.micweb.utils.ConfigUtils;
 import com.fpt.mic.micweb.utils.DateUtils;
-import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.hibernate.validator.constraints.Range;
 import org.joda.time.LocalDate;
