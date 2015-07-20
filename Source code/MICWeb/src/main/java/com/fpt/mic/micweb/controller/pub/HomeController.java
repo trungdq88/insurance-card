@@ -20,7 +20,7 @@ import java.util.List;
 public class HomeController extends BasicController {
     public ResponseObject getView(R r) {
         ContractBusiness contractBusiness = new ContractBusiness();
-        List<ContractTypeEntity> list = contractBusiness.getAllContractType();
+        List<ContractTypeEntity> list = contractBusiness.getAllActiveContractType();
         r.equest.setAttribute("listContractType", list);
         ConfigUtils configUtils = new ConfigUtils();
         r.equest.setAttribute("contractDefaultTerm",configUtils.getContractDefaultTerm());

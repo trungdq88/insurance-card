@@ -29,7 +29,7 @@ public class RegisterController extends BasicController {
 
     public ResponseObject getView(R r) {
         ContractBusiness contractBusiness = new ContractBusiness();
-        List<ContractTypeEntity> list = contractBusiness.getAllContractType();
+        List<ContractTypeEntity> list = contractBusiness.getAllActiveContractType();
         HashMap<Integer,ContractTypeEntity> mapContractType = new HashMap<Integer, ContractTypeEntity>();
         for (int i = 0; i< list.size();i++) {
             mapContractType.put(list.get(i).getId(),list.get(i));
@@ -60,7 +60,7 @@ public class RegisterController extends BasicController {
 
         r.equest.setAttribute("startDate", r.equest.getParameter("register:startDate"));
         ContractBusiness contractBusiness = new ContractBusiness();
-        List<ContractTypeEntity> list = contractBusiness.getAllContractType();
+        List<ContractTypeEntity> list = contractBusiness.getAllActiveContractType();
         HashMap<Integer,ContractTypeEntity> mapContractType = new HashMap<Integer, ContractTypeEntity>();
         for (int i = 0; i< list.size();i++) {
             mapContractType.put(list.get(i).getId(),list.get(i));

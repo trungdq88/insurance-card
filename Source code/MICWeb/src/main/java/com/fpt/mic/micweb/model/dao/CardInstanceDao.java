@@ -79,7 +79,9 @@ public class CardInstanceDao extends GenericDaoJpaImpl<CardInstanceEntity, Integ
         EntityManager entity = factory.createEntityManager();
         String hql = "SELECT ca FROM CardInstanceEntity ca";
         Query query = entity.createQuery(hql);
-        return query.getResultList();
+        List<CardInstanceEntity> resultList = query.getResultList();
+        entity.close();
+        return resultList;
     }
 
     public CardInstanceEntity getActiveCardInstanceByContract(String contractCode) {
@@ -148,7 +150,9 @@ public class CardInstanceDao extends GenericDaoJpaImpl<CardInstanceEntity, Integ
         String hql = "SELECT ca FROM CardInstanceEntity ca WHERE ca.cardId = :cardID";
         Query query = entity.createQuery(hql);
         query.setParameter("cardID", cardID);
-        return query.getResultList();
+        List resultList = query.getResultList();
+        entity.close();
+        return resultList;
     }
 
     public List<CardInstanceEntity> getAllCardInstancesByCardID(String cardID) {
