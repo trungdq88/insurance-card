@@ -41,7 +41,7 @@
                             <b>Có ${unresolvedRequestCount} yêu cầu cấp thẻ mới chưa xử lý</b>
                         </div>
                         <div class="pull-right no-wrap">
-                            <form action="${pageContext.request.contextPath}/staff/card" method="get">#341
+                            <form action="${pageContext.request.contextPath}/staff/card" method="get">
                                 <input type="hidden" name="action" value="newCardRequestSearch"/>
                                 <input type="text" class="form-control long-text-box" name="keyword"
                                        placeholder="Tìm kiếm theo mã thẻ cũ" value="${param.keyword}"/>
