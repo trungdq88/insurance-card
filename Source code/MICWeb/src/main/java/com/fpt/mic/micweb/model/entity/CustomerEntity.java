@@ -23,6 +23,7 @@ public class CustomerEntity implements IUserEntity {
     private int isDefaultPassword;
     private Timestamp lastModified;
     private Collection<ContractEntity> micContractsByCustomerCode;
+    private Collection<CardInstanceEntity> micCardInstancesByCustomerCode;
 
     @Id
     @Column(name = "customer_code")
@@ -154,6 +155,15 @@ public class CustomerEntity implements IUserEntity {
 
     public void setMicContractsByCustomerCode(Collection<ContractEntity> micContractsByCustomerCode) {
         this.micContractsByCustomerCode = micContractsByCustomerCode;
+    }
+
+    @OneToMany(mappedBy = "micCustomerByCustomerCode")
+    public Collection<CardInstanceEntity> getMicCardInstancesByCustomerCode() {
+        return micCardInstancesByCustomerCode;
+    }
+
+    public void setMicCardInstancesByCustomerCode(Collection<CardInstanceEntity> micCardsByCustomerCode) {
+        this.micCardInstancesByCustomerCode = micCardsByCustomerCode;
     }
 
     @Override
