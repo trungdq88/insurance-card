@@ -18,8 +18,10 @@ public class CardInstanceEntity implements Serializable {
     private Timestamp deactivatedDate;
     private String contractCode;
     private Integer newCardRequestId;
+    private String customerCode;
     private CardEntity micCardByCardId;
     private ContractEntity micContractByContractCode;
+    private CustomerEntity micCustomerByCustomerCode;
     private NewCardRequestEntity micNewCardRequestByNewCardRequestId;
     private Collection<CardAccessLogEntity> micCardAccessLogsByCardId;
     private Collection<NewCardRequestEntity> micNewCardRequestsByCardId;
@@ -83,6 +85,16 @@ public class CardInstanceEntity implements Serializable {
 
     public void setNewCardRequestId(Integer newCardRequestId) {
         this.newCardRequestId = newCardRequestId;
+    }
+
+    @Basic
+    @Column(name = "customer_code")
+    public String getCustomerCode() {
+        return customerCode;
+    }
+
+    public void setCustomerCode(String customerCode) {
+        this.customerCode = customerCode;
     }
 
     @Override
@@ -160,5 +172,15 @@ public class CardInstanceEntity implements Serializable {
 
     public void setMicCardByCardId(CardEntity micCardByCardId) {
         this.micCardByCardId = micCardByCardId;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "customer_code", referencedColumnName = "customer_code", nullable = false, insertable = false, updatable = false)
+    public CustomerEntity getMicCustomerByCustomerCode() {
+        return micCustomerByCustomerCode;
+    }
+
+    public void setMicCustomerByCustomerCode(CustomerEntity micCustomerByCustomerCode) {
+        this.micCustomerByCustomerCode = micCustomerByCustomerCode;
     }
 }

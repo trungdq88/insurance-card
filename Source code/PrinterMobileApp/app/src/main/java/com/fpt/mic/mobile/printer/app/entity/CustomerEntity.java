@@ -15,9 +15,9 @@ public class CustomerEntity {
     public String phone;
     public String personalId;
     public String password;
-    public Collection<Object> micContractsByCustomerCode;
-    public Collection<Object> micNewCardRequestsByCustomerCode;
     public int isDefaultPassword;
     public Timestamp lastModified;
+    public Collection<Object> micContractsByCustomerCode;
+    public Collection<CardInstanceEntity> micCardInstancesByCustomerCode;
 
 }

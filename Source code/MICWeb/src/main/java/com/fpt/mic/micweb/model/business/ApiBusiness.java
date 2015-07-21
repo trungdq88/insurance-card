@@ -33,6 +33,14 @@ public class ApiBusiness {
         NewCardRequestDao newCardRequestDao = new NewCardRequestDao();
         CardDao cardDao = new CardDao();
 
+        // Check if contract is exists
+        ContractEntity contract = contractDao.read(contractCode);
+
+        if (contract == null) {
+            // Contract not exists, nothing to do here
+            return null;
+        }
+
         // Validate contract code, card ID
         // Basic validate if the card is already in the system
         List cards = cardInstanceDao.getCardInstancesByCardID(cardID);
@@ -92,12 +100,12 @@ public class ApiBusiness {
         cardInstanceEntity.setCardId(cardID);
         cardInstanceEntity.setActivatedDate(new Timestamp(new Date().getTime()));
         cardInstanceEntity.setNewCardRequestId(requestId);
+        cardInstanceEntity.setCustomerCode(contract.getCustomerCode());
 
         CardInstanceEntity result = cardInstanceDao.create(cardInstanceEntity);
 
         if (result != null) {
             // Change contract status
-            ContractEntity contract = contractDao.read(contractCode);
             if (contract.getStatus().equals(Constants.ContractStatus.NO_CARD)) {
                 contract.setStatus(Constants.ContractStatus.READY);
             }
