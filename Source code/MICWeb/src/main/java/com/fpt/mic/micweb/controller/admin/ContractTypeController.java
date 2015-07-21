@@ -113,9 +113,11 @@ public class ContractTypeController extends BasicController {
         }
         ContractBusiness contractBusiness = new ContractBusiness();
         if(contractBusiness.editContractType(contractTypeId,contractTypeDto)){
-            return new RedirectTo("/admin/contractType?action=viewEditContractType&contractTypeId="+contractTypeId+"&info=editSuccess");
+            r.equest.setAttribute("info","Cập nhật thành công");
+            return new JspPage("admin/message.jsp");
         } else {
-            return new RedirectTo("/admin/contractType?action=viewEditContractType&contractTypeId="+contractTypeId+"&info=fail");
+            r.equest.setAttribute("danger","Có lỗi xảy ra. Cập nhật thất bại");
+            return new JspPage("admin/message.jsp");
         }
 
     }
