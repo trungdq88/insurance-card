@@ -14,7 +14,7 @@
         <div class="span4">
         </div>
         <div class="span5">
-            <div class="row text-center"><h3>Loading...</h3></div>
+
         </div>
     </div>
 </div>
