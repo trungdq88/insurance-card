@@ -115,6 +115,7 @@
                                                     <input required type="date" class="form-control" name="register:startDate"
                                                            id="txtStartDate"
                                                            min="<%=new Date().getYear()+1900%>-<%=(new Date().getMonth()+1)<10?"0"+(new Date().getMonth()+1):(new Date().getMonth()+1)%>-<%=new Date().getDate()%>"
+                                                           max="${startDateMax}"
                                                            placeholder="Ngày bắt đầu tham gia bảo hiểm?"
                                                            value="${startDate}">
                                                 </div>

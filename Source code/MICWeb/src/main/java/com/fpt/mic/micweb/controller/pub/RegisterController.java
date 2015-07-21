@@ -37,6 +37,7 @@ public class RegisterController extends BasicController {
         r.equest.setAttribute("mapContractType",mapContractType);
         ConfigUtils configUtils = new ConfigUtils();
         r.equest.setAttribute("contractDefaultTerm",configUtils.getContractDefaultTerm());
+        r.equest.setAttribute("startDateMax",configUtils.getStartDateMax());
         return new JspPage("public/register.jsp"); // Go to homepage
     }
 
@@ -67,6 +68,7 @@ public class RegisterController extends BasicController {
         }
         r.equest.setAttribute("mapContractType",mapContractType);
         r.equest.setAttribute("publicHomeFormDto", publicHomeFormDto);
+        r.equest.setAttribute("startDateMax",configUtils.getStartDateMax());
         return new JspPage("public/register.jsp");
     }
 

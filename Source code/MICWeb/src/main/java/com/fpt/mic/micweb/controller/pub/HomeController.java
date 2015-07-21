@@ -24,6 +24,7 @@ public class HomeController extends BasicController {
         r.equest.setAttribute("listContractType", list);
         ConfigUtils configUtils = new ConfigUtils();
         r.equest.setAttribute("contractDefaultTerm",configUtils.getContractDefaultTerm());
+        r.equest.setAttribute("startDateMax",configUtils.getStartDateMax());
         return new JspPage("public/home.jsp");
     }
 
