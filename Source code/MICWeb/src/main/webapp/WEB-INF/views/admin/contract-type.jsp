@@ -126,54 +126,57 @@
                       <tr>
                         <td>${(contractTypePaginator.getCurrentPage(param.page) - 1) * contractTypePaginator.itemPerPage + counter.count}</td>
                         <td>
-                          <a href="${pageContext.request.contextPath}/admin/contractType?action=viewEditContractType&contractTypeId=${row.id}">
-                              ${row.name}
+                          <a href="${pageContext.request.contextPath}/admin/contractType?action=viewEditContractType&contractTypeId=${row[0].id}">
+                              ${row[0].name}
                           </a>
 
                         </td>
                         <td>
                               <a tabindex="0" data-trigger="focus" data-toggle="popover" title="Miêu tả"
-                                 role="button" data-content="${row.description}"><i class="fa fa-file"></i></a>
+                                 role="button" data-content="${row[0].description}"><i class="fa fa-file"></i></a>
                         </td>
                         <td>
                           <fmt:setLocale value="vi_VN"/>
                           <fmt:formatNumber
-                                  value="${row.pricePerYear}"
+                                  value="${row[0].pricePerYear}"
                                   type="currency"
                                   maxFractionDigits="0"/>
                         </td>
-                          <c:if test="${row.active eq '1'}">
+                          <c:if test="${row[0].active eq '1'}">
                             <td>
                                                 <span class="label label-success"
                                                       style="font-size: 12px">Đang hoạt động</span>
                             </td>
                             </c:if>
-                          <c:if test="${row.active eq '0'}">
+                          <c:if test="${row[0].active eq '0'}">
                             <td><span class="label label-dark"
                                                           style="font-size: 12px">Ngừng hoạt động</span>
                             </td>
                             </c:if>
                         <td>
-                          <c:if test="${row.active eq 1}">
-                          <button  contractTypeId ="${row.id}" page ="${param.page}" contractName ="${row.name}" actionName="deactivateContractType"
+                          <c:if test="${row[0].active eq 1}">
+                          <button  contractTypeId ="${row[0].id}" page ="${param.page}" contractName ="${row[0].name}" actionName="deactivateContractType"
+                                   numberContracts="${row[1]}"
                                    type="button" class="btn btn-danger btn-xs"
                                    data-toggle="modal" data-target="#deactivate-contract-type" onclick="{
                                       var contractTypeId = $(this).attr('contractTypeId');
                                       var page = $(this).attr('page');
                                       var contractName = $(this).attr('contractName');
                                       var action = $(this).attr('actionName');
+                                      var numberContracts = $(this).attr('numberContracts');
                                       $('#action').val(action);
                                       $('#contractTypeId').val(contractTypeId);
                                       $('#page').val(page);
                                       $('#contractTypeId1').text(contractTypeId);
                                       $('#page1').text(page);
                                       $('#contractName').text(contractName);
+                                      $('#numberContracts').text(numberContracts);
                                    }">
                             <i class="fa fa-stop"></i> Ngừng hoạt động
                           </button>
                           </c:if>
-                          <c:if test="${row.active eq 0}">
-                            <button  contractTypeId ="${row.id}" page ="${param.page}" contractName ="${row.name}" actionName="activateContractType"
+                          <c:if test="${row[0].active eq 0}">
+                            <button  contractTypeId ="${row[0].id}" page ="${param.page}" contractName ="${row[0].name}" actionName="activateContractType"
                                      type="button" class="btn btn-success btn-xs"
                                      data-toggle="modal" data-target="#activate-contract-type" onclick="{
                                       var contractTypeId = $(this).attr('contractTypeId');

@@ -16,10 +16,11 @@
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                   aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title">Xác nhận ${contractName}</h4>
+          <h4 class="modal-title">Xác nhận</h4>
         </div>
         <div class="modal-body">
-          <p class="text-center">Ngừng hoạt động loại hợp đồng: <span id="contractName"></span></p>
+          <p class="text-center">Có <span id="numberContracts"></span> hợp đồng thuộc loại hợp đồng: <span id="contractName"></span></p>
+          <p class="text-center">Bạn có chắc chắn muốn ngừng hoạt động loại hợp đồng này? </p>
         </div>
         <div class="modal-footer">
           <input id="contractTypeId" name="contractTypeId" type="hidden"/>
