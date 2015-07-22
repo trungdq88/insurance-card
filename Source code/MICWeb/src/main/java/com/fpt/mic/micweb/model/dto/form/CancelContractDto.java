@@ -3,6 +3,7 @@ package com.fpt.mic.micweb.model.dto.form;
 import com.fpt.mic.micweb.model.dao.ContractDao;
 import com.fpt.mic.micweb.model.entity.ContractEntity;
 import com.fpt.mic.micweb.utils.ConfigUtils;
+import com.fpt.mic.micweb.utils.Constants;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.validation.constraints.AssertTrue;
@@ -88,6 +89,17 @@ public class CancelContractDto {
         } else {
             // Nếu có giá trị thì phải có độ dài đúng requirement
             return cancelNote.length() >= 1 && cancelNote.length() <= 2000;
+        }
+    }
+
+    @AssertTrue(message = "Không thể hủy hợp đồng đã bị hủy")
+    private boolean isValidStatus() {
+        ContractDao contractDao = new ContractDao();
+        ContractEntity contractEntity = contractDao.read(contractCode);
+        if (contractEntity != null) {
+            return !contractEntity.getStatus().equalsIgnoreCase(Constants.ContractStatus.CANCELLED);
+        } else {
+            return true;
         }
     }
 

@@ -1,7 +1,9 @@
 package com.fpt.mic.micweb.model.dto.form;
 
 import com.fpt.mic.micweb.model.dao.ContractDao;
+import com.fpt.mic.micweb.model.entity.ContractEntity;
 import com.fpt.mic.micweb.utils.ConfigUtils;
+import com.fpt.mic.micweb.utils.Constants;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.hibernate.validator.constraints.Range;
 
@@ -52,6 +54,17 @@ public class CreatePaymentDto {
             return !paidDate.after(paidDateMax);
         }
         return false;
+    }
+
+    @AssertTrue(message = "Hợp đồng đã bị hủy không thể thêm thông tin thanh toán")
+    private boolean isValidStatus() {
+        ContractDao contractDao = new ContractDao();
+        ContractEntity contractEntity = contractDao.read(contractCode);
+        if (contractEntity != null) {
+            return !contractEntity.getStatus().equalsIgnoreCase(Constants.ContractStatus.CANCELLED);
+        } else {
+            return true;
+        }
     }
 
     public CreatePaymentDto() {

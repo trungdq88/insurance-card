@@ -1,15 +1,17 @@
 package com.fpt.mic.micweb.model.dto.form;
+
 import com.fpt.mic.micweb.model.dao.ContractDao;
 import com.fpt.mic.micweb.model.dao.ContractTypeDao;
 import com.fpt.mic.micweb.model.entity.ContractTypeEntity;
 import com.fpt.mic.micweb.utils.ConfigUtils;
-import com.fpt.mic.micweb.utils.DateUtils;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.hibernate.validator.constraints.Range;
-import org.joda.time.LocalDate;
 
-import javax.validation.constraints.*;
+import javax.validation.constraints.AssertTrue;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.sql.Timestamp;
+
 /**
  * Created by TriPQM on 07/02/2015.
  */
@@ -46,51 +48,56 @@ public class CustomerCreateContractDto {
     @Range(min = 1, max = 100, message = "Số chỗ ngồi phải có giá trị từ {min} đến {max}")
     private Integer seatCapacity;
 
-    @AssertTrue(message = "Ngày bắt đầu hiệu lực hợp đồng không hợp lệ")
-    private boolean isValidMaxStartDate() {
+    @AssertTrue(message = "Thời điểm có hiệu lực không được trước thời gian quy định")
+    private boolean isValidStartDateMin() {
         if (startDate != null) {
             ConfigUtils configUtils = new ConfigUtils();
-            LocalDate maxDate = configUtils.getStartDateMax();
-            Timestamp maxStartDate = new Timestamp(maxDate.toDateTimeAtStartOfDay().getMillis());
-            return !startDate.after(maxStartDate);
+            Timestamp startDateMin = new Timestamp(configUtils.getStartDateMin().toDateTimeAtStartOfDay().getMillis());
+            return !startDate.before(startDateMin);
         }
         return false;
     }
-    @AssertTrue(message = "Ngày bắt đầu phải kể từ ngày hôm nay trở đi")
-    private boolean isValidStartDate() {
+
+    @AssertTrue(message = "Thời điểm có hiệu lực không được sau thời gian quy định")
+    private boolean isValidStartDateMax() {
         if (startDate != null) {
-            Timestamp currentDate = DateUtils.currentDateWithoutTime();
-            return !startDate.before(currentDate);
+            ConfigUtils configUtils = new ConfigUtils();
+            Timestamp startDateMax = new Timestamp(configUtils.getStartDateMax().toDateTimeAtStartOfDay().getMillis());
+            return !startDate.after(startDateMax);
         }
         return false;
     }
+
     @AssertTrue(message = "Dung tích xe phải từ 2 đến 20 ký tự")
-    public boolean isValidCapacity(){
-        if ( capacity == null || capacity.isEmpty() ) {
+    public boolean isValidCapacity() {
+        if (capacity == null || capacity.isEmpty()) {
             return true;
         } else {
             return capacity.length() > 1 && capacity.length() < 21;
         }
     }
+
     @AssertTrue(message = "Loại xe phải từ 2 đến 20 ký tự")
-    public boolean isValidType(){
-        if ( type == null || type.isEmpty() ) {
+    public boolean isValidType() {
+        if (type == null || type.isEmpty()) {
             return true;
         } else {
             return type.length() > 1 && type.length() < 21;
         }
     }
+
     @AssertTrue(message = "Số loại phải từ 2 đến 20 ký tự")
-    public boolean isValidModel(){
-        if ( model == null || model.isEmpty() ) {
+    public boolean isValidModel() {
+        if (model == null || model.isEmpty()) {
             return true;
         } else {
             return model.length() > 1 && model.length() < 21;
         }
     }
+
     @AssertTrue(message = "Màu xe phải từ 2 đến 20 ký tự")
-    public boolean isValidColor(){
-        if ( color == null || color.isEmpty() ) {
+    public boolean isValidColor() {
+        if (color == null || color.isEmpty()) {
             return true;
         } else {
             return color.length() > 1 && color.length() < 21;
@@ -104,7 +111,7 @@ public class CustomerCreateContractDto {
     }
 
     @AssertTrue(message = "Phí bảo hiểm không đúng")
-    public boolean isValidContactFee(){
+    public boolean isValidContactFee() {
         try {
             ContractTypeDao contractTypeDao = new ContractTypeDao();
             ContractTypeEntity contractTypeEntity = contractTypeDao.read(contractType);

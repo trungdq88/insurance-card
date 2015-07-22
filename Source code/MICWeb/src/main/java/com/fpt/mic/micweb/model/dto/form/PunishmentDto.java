@@ -1,8 +1,13 @@
 package com.fpt.mic.micweb.model.dto.form;
 
 import com.fpt.mic.micweb.model.dao.ContractDao;
+import com.fpt.mic.micweb.model.entity.ContractEntity;
+import com.fpt.mic.micweb.utils.ConfigUtils;
+import com.fpt.mic.micweb.utils.Constants;
 import com.fpt.mic.micweb.utils.DateUtils;
 import org.hibernate.validator.constraints.NotEmpty;
+import org.joda.time.Days;
+import org.joda.time.LocalDate;
 
 import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.NotNull;
@@ -41,6 +46,20 @@ public class PunishmentDto {
             return !createdDate.after(DateUtils.currentDateWithoutTime());
         }
         return false;
+    }
+
+    @AssertTrue(message = "Không thể thêm thông tin vi phạm luật ATGT cho hợp đồng đã bị hủy quá thời hạn cập nhật thông tin")
+    private boolean isValidUpdateDueDate() {
+        ContractDao contractDao = new ContractDao();
+        ContractEntity contractEntity = contractDao.read(contractCode);
+        if (contractEntity != null && contractEntity.getStatus().equalsIgnoreCase(Constants.ContractStatus.CANCELLED)) {
+            LocalDate cancelDate = new LocalDate(contractEntity.getCancelDate());
+            int durationFromCurrentToCancel = Days.daysBetween(cancelDate, new LocalDate()).getDays();
+            ConfigUtils configUtils = new ConfigUtils();
+            return durationFromCurrentToCancel <= configUtils.getUpdateContractDueDate();
+        } else {
+            return true;
+        }
     }
 
     public PunishmentDto() {

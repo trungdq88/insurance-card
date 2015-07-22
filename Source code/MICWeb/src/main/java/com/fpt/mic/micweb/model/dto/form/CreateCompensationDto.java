@@ -2,8 +2,12 @@ package com.fpt.mic.micweb.model.dto.form;
 
 import com.fpt.mic.micweb.model.dao.ContractDao;
 import com.fpt.mic.micweb.model.entity.ContractEntity;
+import com.fpt.mic.micweb.utils.ConfigUtils;
+import com.fpt.mic.micweb.utils.Constants;
 import com.fpt.mic.micweb.utils.DateUtils;
 import org.hibernate.validator.constraints.NotEmpty;
+import org.joda.time.Days;
+import org.joda.time.LocalDate;
 
 import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.NotNull;
@@ -110,6 +114,20 @@ public class CreateCompensationDto {
         } else {
             // Nếu có giá trị thì phải có độ dài đúng requirement
             return attachment.length() >= 1 && attachment.length() <= 255;
+        }
+    }
+
+    @AssertTrue(message = "Không thể gởi yêu cầu bồi thường cho hợp đồng đã bị hủy quá thời hạn cập nhật thông tin")
+    private boolean isValidUpdateDueDate() {
+        ContractDao contractDao = new ContractDao();
+        ContractEntity contractEntity = contractDao.read(contractCode);
+        if (contractEntity != null && contractEntity.getStatus().equalsIgnoreCase(Constants.ContractStatus.CANCELLED)) {
+            LocalDate cancelDate = new LocalDate(contractEntity.getCancelDate());
+            int durationFromCurrentToCancel = Days.daysBetween(cancelDate, new LocalDate()).getDays();
+            ConfigUtils configUtils = new ConfigUtils();
+            return durationFromCurrentToCancel <= configUtils.getUpdateContractDueDate();
+        } else {
+            return true;
         }
     }
 
