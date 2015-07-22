@@ -26,6 +26,7 @@ public class BusinessRulesEntity {
     private int newCardRequestFee;
     private int deliveryFee;
     private int updateContractDueDate;
+    private int contractRenewLimit;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -197,6 +198,16 @@ public class BusinessRulesEntity {
         this.updateContractDueDate = updateContractDueDate;
     }
 
+    @Basic
+    @Column(name = "contract_renew_limit")
+    public int getContractRenewLimit() {
+        return contractRenewLimit;
+    }
+
+    public void setContractRenewLimit(int contractRenewLimit) {
+        this.contractRenewLimit = contractRenewLimit;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -219,6 +230,7 @@ public class BusinessRulesEntity {
         if (newCardRequestFee != that.newCardRequestFee) return false;
         if (deliveryFee != that.deliveryFee) return false;
         if (updateContractDueDate != that.updateContractDueDate) return false;
+        if (contractRenewLimit != that.contractRenewLimit) return false;
 
         return true;
     }
@@ -240,6 +252,7 @@ public class BusinessRulesEntity {
         result = 31 * result + newCardRequestFee;
         result = 31 * result + deliveryFee;
         result = 31 * result + updateContractDueDate;
+        result = 31 * result + contractRenewLimit;
         return result;
     }
 }
