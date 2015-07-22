@@ -7,7 +7,18 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!-- Navigation -->
-<nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+<style type="text/css">
+    .textWellcome {
+        color: white;
+        font-weight: 300;
+        font-style: italic;
+        font-size: 25px;
+        padding-left: 4px;
+        margin-bottom: 0 !important;
+    }
+</style>
+<nav class="navbar navbar-default navbar-static-top" role="navigation"
+     style="margin-bottom: 0; background-color:dodgerblue !important;">
     <div class="navbar-header">
         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
             <span class="sr-only">Toggle navigation</span>
@@ -18,6 +29,7 @@
         <a href="${pageContext.request.contextPath}/customer">
             <img src="${pageContext.request.contextPath}/img/logoCompany.png"/>
         </a>
+        <label class="textWellcome">Giao diện khách hàng ${sessionScope.userDto.userEntity.name}</label>
     </div>
     <!-- /.navbar-header -->
 
@@ -77,8 +89,8 @@
                         <i class="fa fa-credit-card fa-fw"></i> Thông tin thẻ</a>
                 </li>
                 <li>
-                <a href="${pageContext.request.contextPath}/customer/card?action=viewNewCardRequests">
-                <i class="fa fa-exclamation fa-fw"></i> Yêu cầu thẻ mới</a>
+                    <a href="${pageContext.request.contextPath}/customer/card?action=viewNewCardRequests">
+                        <i class="fa fa-exclamation fa-fw"></i> Yêu cầu thẻ mới</a>
                 </li>
                 <li>
                     <a href="${pageContext.request.contextPath}/customer/payment">

@@ -22,7 +22,9 @@ public class CardInstanceEntity implements Parcelable {
     public Integer newCardRequestId;
     public CardEntity micCardByCardId;
     public ContractEntity micContractByContractCode;
+    public String customerCode;
     public Object micNewCardRequestByNewCardRequestId;
+    public CustomerEntity micCustomerByCustomerCode;
     public Collection<Object> micCardAccessLogsByCardId;
     public Collection<Object> micNewCardRequestsByCardId;
 
@@ -45,10 +47,12 @@ public class CardInstanceEntity implements Parcelable {
         this.contractCode = cardEntity.contractCode;
         this.newCardRequestId = cardEntity.newCardRequestId;
         this.micCardByCardId = cardEntity.micCardByCardId;
+        this.customerCode = cardEntity.customerCode;
         this.micContractByContractCode = cardEntity.micContractByContractCode;
         this.micNewCardRequestByNewCardRequestId = cardEntity.micNewCardRequestByNewCardRequestId;
         this.micCardAccessLogsByCardId = cardEntity.micCardAccessLogsByCardId;
         this.micNewCardRequestsByCardId = cardEntity.micNewCardRequestsByCardId;
+        this.micCustomerByCustomerCode = cardEntity.micCustomerByCustomerCode;
     }
 
     @Override

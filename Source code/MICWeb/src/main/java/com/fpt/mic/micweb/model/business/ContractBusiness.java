@@ -23,6 +23,11 @@ public class ContractBusiness {
         return contractTypeDao.getAllContractType();
     }
 
+    public List<ContractTypeEntity> getAllActiveContractType() {
+        ContractTypeDao contractTypeDao = new ContractTypeDao();
+        return contractTypeDao.getAllActiveContractType();
+    }
+
     public List getOnePageContractTypes(int offset, int count) {
         ContractTypeDao contractTypeDao = new ContractTypeDao();
         return contractTypeDao.getOnePageContractTypes(offset, count);

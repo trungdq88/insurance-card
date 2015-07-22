@@ -250,6 +250,7 @@
                             <label>Ngày bắt đầu *</label>
                             <input required type="date" name="register:startDate"
                                    min="<%=new Date().getYear()+1900%>-<%=(new Date().getMonth()+1)<10?"0"+(new Date().getMonth()+1):(new Date().getMonth()+1)%>-<%=(new Date().getDate())<10?"0"+(new Date().getDate()):(new Date().getDate())%>"
+                                   max="${startDateMax}"
                                    title="Vui lòng chọn ngày bắt đầu"
                                    value="${startDate}"
                                    class="form-control" id="dateDefault"

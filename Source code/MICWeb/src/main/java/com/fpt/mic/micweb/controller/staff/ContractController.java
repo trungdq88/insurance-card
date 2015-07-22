@@ -183,7 +183,7 @@ public class ContractController extends AuthController {
 
     public ResponseObject getCreate(R r) {
         StaffBusiness staffBus = new StaffBusiness();
-        List<ContractTypeEntity> listContractType = staffBus.getAllContractType();
+        List<ContractTypeEntity> listContractType = staffBus.getAllActiveContractType();
         ConfigUtils config = new ConfigUtils();
         r.equest.setAttribute("CONTRACTTYPE", listContractType);
         r.equest.setAttribute("CONFIG", config);

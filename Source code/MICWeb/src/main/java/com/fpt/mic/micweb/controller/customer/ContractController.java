@@ -45,7 +45,7 @@ public class ContractController extends AuthController {
     public ResponseObject getNewContract(R r) {
         ContractBusiness contractBusiness = new ContractBusiness();
         ConfigUtils configUtils = new ConfigUtils();
-        List<ContractTypeEntity> list = contractBusiness.getAllContractType();
+        List<ContractTypeEntity> list = contractBusiness.getAllActiveContractType();
         HashMap<Integer, ContractTypeEntity> mapContractType = new HashMap<Integer, ContractTypeEntity>();
         for (int i = 0; i < list.size(); i++) {
             mapContractType.put(list.get(i).getId(), list.get(i));

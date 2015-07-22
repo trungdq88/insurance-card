@@ -2,6 +2,7 @@ package com.fpt.mic.micweb.model.dto.form;
 
 
 import com.fpt.mic.micweb.model.dao.CustomerDao;
+import com.fpt.mic.micweb.utils.ConfigUtils;
 import com.fpt.mic.micweb.utils.DateUtils;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.hibernate.validator.constraints.Range;
@@ -48,6 +49,16 @@ public class PublicHomeFormDto {
         }
         return false;
     }
+    @AssertTrue(message = "Ngày bắt đầu không được sau thời gian quy định")
+    private boolean isValidStartDateMax() {
+        if (startDate != null) {
+            ConfigUtils configUtils = new ConfigUtils();
+            Timestamp startDateMax = new Timestamp(configUtils.getStartDateMax().toDateTimeAtStartOfDay().getMillis());
+            return !startDate.after(startDateMax);
+        }
+        return false;
+    }
+
     @AssertTrue(message = "Số CMND/Hộ chiếu không hợp lệ")
     public boolean isValidPersonalId(){
         if ( personalId == null || personalId.isEmpty() ) {
