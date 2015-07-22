@@ -6,7 +6,16 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
+<style type="text/css">
+    .textWellcome {
+        color: white;
+        font-weight: 300;
+        font-style: italic;
+        font-size: 25px;
+        padding-left: 4px;
+        margin-bottom: 0 !important;
+    }
+</style>
 <!-- Navigation -->
 <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
     <div class="navbar-header">
@@ -22,6 +31,7 @@
         <a href="${pageContext.request.contextPath}/staff">
             <img src="${pageContext.request.contextPath}/img/logoCompany.png"/>
         </a>
+        <label class="textWellcome">Giao diện nhân viên ${sessionScope.userDto.userEntity.name}</label>
     </div>
     <!-- /.navbar-header -->
 
