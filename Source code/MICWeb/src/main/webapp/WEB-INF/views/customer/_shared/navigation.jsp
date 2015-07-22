@@ -7,18 +7,8 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!-- Navigation -->
-<style type="text/css">
-    .textWellcome {
-        color: white;
-        font-weight: 300;
-        font-style: italic;
-        font-size: 25px;
-        padding-left: 4px;
-        margin-bottom: 0 !important;
-    }
-</style>
 <nav class="navbar navbar-default navbar-static-top" role="navigation"
-     style="margin-bottom: 0; background-color:dodgerblue !important;">
+     style="margin-bottom: 0;">
     <div class="navbar-header">
         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
             <span class="sr-only">Toggle navigation</span>
@@ -27,9 +17,9 @@
             <span class="icon-bar"></span>
         </button>
         <a href="${pageContext.request.contextPath}/customer">
-            <img src="${pageContext.request.contextPath}/img/logoCompany.png"/>
+            <img src="${pageContext.request.contextPath}/img/customer.png"/>
         </a>
-        <label class="textWellcome">Giao diện khách hàng ${sessionScope.userDto.userEntity.name}</label>
+        <label class="textWellcome">Khách hàng ${sessionScope.userDto.userEntity.name}</label>
     </div>
     <!-- /.navbar-header -->
 

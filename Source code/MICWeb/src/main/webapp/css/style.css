@@ -172,3 +172,14 @@ body {
 .tab-content > .tab-pane {
     min-height: 500px;
 }
+
+
+.textWellcome {
+    color: white;
+    font-weight: 300;
+    font-style: italic;
+    font-size: 25px;
+    padding-left: 4px;
+    margin-bottom: 0 !important;
+    vertical-align: middle;
+}
