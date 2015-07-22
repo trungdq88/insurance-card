@@ -5,6 +5,8 @@ import com.fpt.mic.micweb.model.entity.ContractTypeEntity;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -46,13 +48,23 @@ public class ContractTypeDao extends GenericDaoJpaImpl<ContractTypeEntity, Integ
 
     public List getOnePageContractTypes(int offset, int count) {
         EntityManager entity = factory.createEntityManager();
-        String hql = "SELECT ct,count(ct.id) FROM ContractTypeEntity ct JOIN FETCH ct.micContractsById as ce" +
-                " WHERE ct.id = ce.contractTypeId GROUP BY ct.id";
+        String hql = "SELECT ct FROM ContractTypeEntity ct";
         Query query = entity.createQuery(hql);
         query.setFirstResult(offset);
         query.setMaxResults(count);
         List resultList = query.getResultList();
         entity.close();
         return resultList;
+    }
+
+    public Long getCountContractByContractTypeId(int contractTypeId) {
+        EntityManager entity = factory.createEntityManager();
+        String hql = "SELECT count (ce) FROM ContractEntity ce " +
+                "WHERE ce.contractTypeId = :contractTypeId";
+        Query query = entity.createQuery(hql);
+        query.setParameter("contractTypeId", contractTypeId);
+        Long result =(Long) query.getSingleResult();
+        entity.close();
+        return result;
     }
 }
