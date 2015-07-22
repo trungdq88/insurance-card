@@ -85,7 +85,7 @@
                                 <input id="driverName" name="compensation:driverName" class="form-control input-md"
                                        type="text" required minlength="3" maxlength="80"
                                        pattern="^([^0-9`~!@#$%^&*,.<>;':/|{}()=_+-]+)$"
-                                       value="${submitted.driverName}" title="Vui lòng nhập họ tên"
+                                       value="${sessionScope.userDto.userEntity.name}" title="Vui lòng nhập họ tên"
                                        placeholder="Ví dụ: Nguyễn Văn A">
                             </div>
 
@@ -95,7 +95,7 @@
                                 <input id="driverPhone" name="compensation:driverPhone" class="form-control input-md"
                                        type="tel" required minlength="8" maxlength="15"
                                        pattern="[0-9]+" title="Vui lòng chỉ nhập số"
-                                       value="${submitted.driverPhone}" placeholder="Ví dụ: 0933270393">
+                                       value="${customer.phone}" placeholder="Ví dụ: 0933270393">
                             </div>
                         </div>
 
@@ -107,7 +107,7 @@
                                 <input id="driverAddress" name="compensation:driverAddress"
                                        class="form-control input-md"
                                        type="text" required minlength="3" maxlength="250"
-                                       value="${submitted.driverAddress}" onfocus="geolocate()"
+                                       value="${customer.address}" onfocus="geolocate()"
                                        title="Vui lòng nhập địa chỉ"
                                        placeholder="Ví dụ: 123A, Điện Biên Phủ, Quận 1, TP.HCM">
                             </div>
@@ -142,7 +142,7 @@
                                 <input id="plate" name="compensation:plate" class="form-control input-md"
                                        type="text" required minlength="4" maxlength="15"
                                        title="Vui lòng nhập biển số xe!" placeholder="Ví dụ: 78Y9-15383"
-                                       value="${submitted.plate}">
+                                       value="${contractDetail.plate}">
                             </div>
                             <label class="col-sm-3 control-label" for="vehicleCapacity">
                                 Trọng tải/số chỗ ngồi *
@@ -154,7 +154,7 @@
                                            class="form-control input-md"
                                            type="text" required minlength="1" maxlength="20"
                                            title="Vui lòng nhập trọng tải hoặc số chỗ ngồi!" placeholder="Ví dụ: 7"
-                                           value="${submitted.vehicleCapacity}">
+                                           value="${contractDetail.capacity}/${contractDetail.seatCapacity}">
                                     <span class="input-group-addon" id="basic-addon">(tấn/chỗ)</span>
                                 </div>
                             </div>
@@ -209,7 +209,7 @@
                                 <textarea id="description" name="compensation:description" rows="2"
                                           required maxlength="2000"
                                           title="Vui lòng nhập diễn biến và nguyên nhân tai nạn"
-                                          class="form-control input-md">${submitted.description}</textarea>
+                                          class="form-control input-md valueInput">${submitted.description}</textarea>
                             </div>
                         </div>
 
@@ -220,7 +220,7 @@
                             <div class="col-sm-8">
                                 <textarea id="humanDamage" name="compensation:humanDamage" rows="2"
                                           required maxlength="2000" title="Vui lòng nhập tình hình thiệt hại về người"
-                                          class="form-control input-md">${submitted.humanDamage}</textarea>
+                                          class="form-control input-md valueInput">${submitted.humanDamage}</textarea>
                             </div>
                         </div>
 
@@ -231,7 +231,7 @@
                             <div class="col-sm-8">
                                 <textarea id="assetDamage" name="compensation:assetDamage" rows="2"
                                           required maxlength="2000" title="Vui lòng nhập tình hình thiệt hại về tài sản"
-                                          class="form-control input-md">${submitted.assetDamage}</textarea>
+                                          class="form-control input-md valueInput">${submitted.assetDamage}</textarea>
                             </div>
                         </div>
 
@@ -273,7 +273,7 @@
                             <div class="col-sm-8">
                                 <textarea id="compensationNote" name="compensation:compensationNote" maxlength="2000"
                                           title="Vui lòng nhập yêu cầu bồi thường"
-                                          class="form-control input-md"
+                                          class="form-control input-md valueInput"
                                           rows="2">${submitted.compensationNote}</textarea>
                             </div>
                         </div>
@@ -296,13 +296,13 @@
                     </fieldset>
 
 
-
                     <br/>
                     <!-- Create new customer button -->
                     <div class="text-center">
                         <input type="hidden" name="action" value="create"/>
                         <input type="hidden" name="compensation:contractCode" value="${contractCode}">
                         <input type="hidden" name="contractCode" value="${contractCode}">
+
                         <div class="form-group hide">
                             <div class="col-sm-3">
                                 <input id="createdDate" name="compensation:createdDate"
@@ -353,5 +353,31 @@
             $('#accidentDate').val(getCurrentDate());
         }
         document.getElementById("accidentDate").max = getCurrentDate();
+        $('input[type=text]').each(function () {
+            if ($(this).val() == '') {
+                $(this).addClass('textColor');
+            }
+        });
+        $('input[type=text]').change(function () {
+            if ($(this).val() != '') {
+                $(this).removeClass('textColor');
+            }
+        });
+        /////////////////////////////////////////
+        $('.valueInput').each(function () {
+            if ($(this).val() == '') {
+                $(this).addClass('textColor');
+            }
+        });
+        $('.valueInput').change(function () {
+            if ($(this).val() != '') {
+                $(this).removeClass('textColor');
+            }
+        });
     });
 </script>
+<style type="text/css">
+    .textColor {
+        background-color: bisque;
+    }
+</style>
