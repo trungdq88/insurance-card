@@ -27,6 +27,7 @@ public class AccidentController extends AuthController {
     }
 
     private static String msg = "";
+    private static boolean isSuccess;
 
     public ResponseObject getCreate(R r) {
         return new JspPage("/staff/create-accident.jsp");
@@ -86,12 +87,15 @@ public class AccidentController extends AuthController {
         AccidentEntity result = accidentBusiness.createAccident(dto);
 
         if (result != null) {
+            isSuccess = true;
             msg = "Gởi thông báo tai nạn mới thành công";
         } else {
+            isSuccess = false;
             msg = "Gởi thông báo tai nạn thất bại, vui lòng thử lại hoặc liên hệ IT";
         }
         r.equest.setAttribute("CODE", dto.getContractCode());
         r.equest.setAttribute("MESSAGE", msg);
+        r.equest.setAttribute("SUCCESS", isSuccess);
         return new JspPage("/staff/message.jsp");
     }
 
@@ -122,12 +126,15 @@ public class AccidentController extends AuthController {
         boolean result = accidentBusiness.editAccident(dto);
 
         if (result) {
+            isSuccess = true;
             msg = "Chỉnh sửa thông báo tai nạn thành công";
         } else {
+            isSuccess = false;
             msg = "Chỉnh sửa thông báo tai nạn thất bại, vui lòng thử lại hoặc liên hệ IT";
         }
         r.equest.setAttribute("CODE", dto.getContractCode());
         r.equest.setAttribute("MESSAGE", msg);
+        r.equest.setAttribute("SUCCESS", isSuccess);
         return new JspPage("/staff/message.jsp");
     }
 }

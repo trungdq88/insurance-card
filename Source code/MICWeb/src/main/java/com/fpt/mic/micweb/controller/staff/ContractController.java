@@ -31,12 +31,13 @@ public class ContractController extends AuthController {
     Paginator punishmentPaginator = new Paginator("punishment");
     Paginator accidentPaginator = new Paginator("accident");
 
+    private static String msg = "";
+    private static boolean isSuccess;
+
     @Override
     public List<String> getAllowedRoles() {
         return Collections.singletonList(UserDto.ROLE_STAFF);
     }
-
-    private static String msg = "";
 
     public ResponseObject getView(R r) {
         final StaffBusiness staffBus = new StaffBusiness();
@@ -286,8 +287,10 @@ public class ContractController extends AuthController {
             // Return Success JSP Page
             return new JspPage("staff/contract/create-contract-success.jsp");
         } else {
+            isSuccess = false;
             msg = "Tạo hợp đồng thất bại, vui lòng thử lại hoặc liên hệ IT";
             r.equest.setAttribute("MESSAGE", msg);
+            r.equest.setAttribute("SUCCESS", isSuccess);
             return new JspPage("staff/message.jsp");
         }
     }
@@ -336,24 +339,30 @@ public class ContractController extends AuthController {
                         // Deactivate current card
                         cardBusiness.deactiveCardByContractCode(dto.getContractCode());
                     } else {
+                        isSuccess = false;
                         msg = "Hợp đồng này không có thẻ đang hoạt động. Vui lòng xử lý";
                         // Set contract code to request scope. Use it in message page.
                         r.equest.setAttribute("CODE", dto.getContractCode());
                         r.equest.setAttribute("MESSAGE", msg);
+                        r.equest.setAttribute("SUCCESS", isSuccess);
                         return new JspPage("staff/message.jsp");
                     }
                 } else {
+                    isSuccess = false;
                     msg = "Hợp đồng đã yêu cầu thẻ mới trước đó. Vui lòng xử lý";
                     // Set contract code to request scope. Use it in message page.
                     r.equest.setAttribute("CODE", dto.getContractCode());
                     r.equest.setAttribute("MESSAGE", msg);
+                    r.equest.setAttribute("SUCCESS", isSuccess);
                     return new JspPage("staff/message.jsp");
                 }
             } else {
+                isSuccess = false;
                 msg = "Hợp đồng chưa có thẻ bảo hiểm. Xin vui lòng phát hành";
                 // Set contract code to request scope. Use it in message page.
                 r.equest.setAttribute("CODE", dto.getContractCode());
                 r.equest.setAttribute("MESSAGE", msg);
+                r.equest.setAttribute("SUCCESS", isSuccess);
                 return new JspPage("staff/message.jsp");
             }
         }
@@ -363,13 +372,16 @@ public class ContractController extends AuthController {
         boolean result = staffBus.renewContract(dto, (StaffEntity) getLoggedInUser());
 
         if (result) {
+            isSuccess = true;
             msg = "Đã gia hạn hợp đồng thành công";
         } else {
+            isSuccess = false;
             msg = "Gia hạn hợp đồng thất bại";
         }
         // Set contract code to request scope. Use it in message page.
         r.equest.setAttribute("CODE", dto.getContractCode());
         r.equest.setAttribute("MESSAGE", msg);
+        r.equest.setAttribute("SUCCESS", isSuccess);
         return new JspPage("staff/message.jsp");
     }
 
@@ -420,13 +432,16 @@ public class ContractController extends AuthController {
         }
 
         if (result) {
+            isSuccess = true;
             msg = "Đã giải quyết yêu cầu hủy hợp đồng thành công";
         } else {
+            isSuccess = false;
             msg = "Giải quyết yêu cầu hủy hợp đồng thất bại";
         }
         // Set contract code to request scope. Use it in message page.
         r.equest.setAttribute("CODE", dto.getContractCode());
         r.equest.setAttribute("MESSAGE", msg);
+        r.equest.setAttribute("SUCCESS", isSuccess);
         return new JspPage("staff/message.jsp");
     }
 
@@ -468,13 +483,16 @@ public class ContractController extends AuthController {
         boolean result = staffBus.cancelContract(dto);
 
         if (result) {
+            isSuccess = true;
             msg = "Đã hủy hợp đồng thành công";
         } else {
+            isSuccess = false;
             msg = "Hủy hợp đồng thất bại";
         }
         // Set contract code to request scope. Use it in message page.
         r.equest.setAttribute("CODE", dto.getContractCode());
         r.equest.setAttribute("MESSAGE", msg);
+        r.equest.setAttribute("SUCCESS", isSuccess);
         return new JspPage("staff/message.jsp");
     }
 
@@ -499,13 +517,16 @@ public class ContractController extends AuthController {
         StaffBusiness staffBus = new StaffBusiness();
         boolean result = staffBus.createPayment(dto, (StaffEntity) getLoggedInUser());
         if (result) {
+            isSuccess = true;
             msg = "Đã thêm thông tin thanh toán thành công";
         } else {
+            isSuccess = false;
             msg = "Thêm thông tin thanh toán thất bại";
         }
         // Set contract code to request scope. Use it in message page.
         r.equest.setAttribute("CODE", dto.getContractCode());
         r.equest.setAttribute("MESSAGE", msg);
+        r.equest.setAttribute("SUCCESS", isSuccess);
         return new JspPage("staff/message.jsp");
     }
 
@@ -537,13 +558,16 @@ public class ContractController extends AuthController {
         boolean result = staffBus.completePayment(dto, (StaffEntity) getLoggedInUser());
 
         if (result) {
+            isSuccess = true;
             msg = "Đã hoàn tất thông tin thanh toán thành công";
         } else {
+            isSuccess = false;
             msg = "Thêm thông tin thanh toán thất bại";
         }
         // Set contract code to request scope. Use it in message page.
         r.equest.setAttribute("CODE", dto.getContractCode());
         r.equest.setAttribute("MESSAGE", msg);
+        r.equest.setAttribute("SUCCESS", isSuccess);
         return new JspPage("staff/message.jsp");
     }
 
@@ -576,13 +600,16 @@ public class ContractController extends AuthController {
         boolean result = staffBus.editVehicleInfo(dto);
 
         if (result) {
+            isSuccess = true;
             msg = "Đã sửa thông tin xe cơ giới thành công";
         } else {
+            isSuccess = false;
             msg = "Sửa thông tin xe cơ giới thất bại";
         }
         // Set contract code to request scope. Use it in message page.
         r.equest.setAttribute("CODE", dto.getContractCode());
         r.equest.setAttribute("MESSAGE", msg);
+        r.equest.setAttribute("SUCCESS", isSuccess);
         return new JspPage("staff/message.jsp");
     }
 }

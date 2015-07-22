@@ -30,6 +30,7 @@ public class CompensationController extends AuthController {
     }
 
     private static String msg = "";
+    private static boolean isSuccess;
 
     Paginator compenPaginator = new Paginator();
 
@@ -159,8 +160,10 @@ public class CompensationController extends AuthController {
             r.equest.setAttribute("COMPENSATION", result);
             return new JspPage("staff/create-compensation-success.jsp");
         } else {
+            isSuccess = false;
             msg = "Tạo yêu cầu bồi thường thất bại, vui lòng thử lại hoặc liên hệ IT";
             r.equest.setAttribute("MESSAGE", msg);
+            r.equest.setAttribute("SUCCESS", isSuccess);
             return new JspPage("staff/message.jsp");
         }
     }

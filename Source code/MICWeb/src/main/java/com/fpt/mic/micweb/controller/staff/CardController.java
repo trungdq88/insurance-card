@@ -7,21 +7,17 @@ import com.fpt.mic.micweb.framework.responses.JspPage;
 import com.fpt.mic.micweb.framework.responses.RedirectTo;
 import com.fpt.mic.micweb.framework.responses.ResponseObject;
 import com.fpt.mic.micweb.model.business.CardBusiness;
-import com.fpt.mic.micweb.model.business.CustomerBusiness;
 import com.fpt.mic.micweb.model.business.PaymentBusiness;
 import com.fpt.mic.micweb.model.business.StaffBusiness;
 import com.fpt.mic.micweb.model.dto.UserDto;
+import com.fpt.mic.micweb.model.dto.form.CreateNewCardPaymentDto;
 import com.fpt.mic.micweb.model.dto.form.RecycleCardDto;
 import com.fpt.mic.micweb.model.entity.CardInstanceEntity;
-import com.fpt.mic.micweb.model.dto.form.CreateNewCardPaymentDto;
-import com.fpt.mic.micweb.model.entity.CustomerEntity;
 import com.fpt.mic.micweb.model.entity.StaffEntity;
 import com.fpt.mic.micweb.utils.ConfigUtils;
-import com.fpt.mic.micweb.utils.Constants;
 
 import javax.servlet.annotation.WebServlet;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -34,6 +30,9 @@ public class CardController extends AuthController {
     Paginator cardPaginator = new Paginator();
     /* Card acess log pagination */
     Paginator calPaginator = new Paginator();
+
+    private static String msg = "";
+    private static boolean isSuccess;
 
     @Override
     public List<String> getAllowedRoles() {
@@ -148,7 +147,7 @@ public class CardController extends AuthController {
         Map<Integer, String> newCardMappingRequest
                 = cardBusiness.getMappingWithNewCardRequest();
         ConfigUtils configUtils = new ConfigUtils();
-        r.equest.setAttribute("config",configUtils);
+        r.equest.setAttribute("config", configUtils);
         r.equest.setAttribute("newCardFee", configUtils.getNewCardFee());
         r.equest.setAttribute("deliveryFee", configUtils.getDeliveryFee());
 
@@ -205,7 +204,7 @@ public class CardController extends AuthController {
     }
 
     public ResponseObject postCreateNewCardPayment(R r) {
-        CreateNewCardPaymentDto createNewCardPaymentDto =(CreateNewCardPaymentDto) r.ead.entity(CreateNewCardPaymentDto.class,"createNewCardPayment");
+        CreateNewCardPaymentDto createNewCardPaymentDto = (CreateNewCardPaymentDto) r.ead.entity(CreateNewCardPaymentDto.class, "createNewCardPayment");
         List errors = r.ead.validate(createNewCardPaymentDto);
         // If there is validation errors
         if (errors.size() > 0) {
@@ -213,30 +212,33 @@ public class CardController extends AuthController {
             r.equest.setAttribute("validateErrors", errors);
             // This is a form in a popup, we don't need to display data again since
             // the popup will not automatically open when the page is reloaded
-            r.equest.setAttribute("content",r.equest.getParameter("content"));
-            r.equest.setAttribute("amount",r.equest.getParameter("amount"));
+            r.equest.setAttribute("content", r.equest.getParameter("content"));
+            r.equest.setAttribute("amount", r.equest.getParameter("amount"));
             r.equest.setAttribute("submitted", createNewCardPaymentDto);
             // Re-call the contract detail page
             return getNewCardRequest(r);
         }
         PaymentBusiness paymentBusiness = new PaymentBusiness();
         String contractCode = createNewCardPaymentDto.getContractCode();
-        String msg = null;
         // neu thanh toan thanh cong
-        if( null != paymentBusiness.createNewCardRequestPayment(createNewCardPaymentDto, ((StaffEntity) getLoggedInUser()).getStaffCode())) {
+        if (null != paymentBusiness.createNewCardRequestPayment(createNewCardPaymentDto, ((StaffEntity) getLoggedInUser()).getStaffCode())) {
             // cap nhat request da paid
             CardBusiness cardBusiness = new CardBusiness();
-            if (null != cardBusiness.updatePaidNewCardRequest(contractCode)){
+            if (null != cardBusiness.updatePaidNewCardRequest(contractCode)) {
+                isSuccess = true;
                 msg = "Đã thêm thông tin thanh toán thành công";
-            } else  {
+            } else {
+                isSuccess = false;
                 msg = "Thêm thông tin thanh toán thất bại";
             }
         } else {
+            isSuccess = false;
             msg = "Thêm thông tin thanh toán thất bại";
         }
         // Set contract code to request scope. Use it in message page.
         r.equest.setAttribute("CODE", contractCode);
         r.equest.setAttribute("MESSAGE", msg);
+        r.equest.setAttribute("SUCCESS", isSuccess);
         return new JspPage("staff/message.jsp");
         //return new RedirectTo("/staff/card?action=newCardRequest");
     }
@@ -247,8 +249,7 @@ public class CardController extends AuthController {
         if (cardBusiness.cancelNewCardRequest(contractCode)) {
             // thanh cong
             return new RedirectTo("/staff/card?action=newCardRequest&info=cancelNewCardRequestSuccess");
-        }
-        else {
+        } else {
             return new RedirectTo("/staff/card?action=newCardRequest&info=fail&code=");
         }
 
