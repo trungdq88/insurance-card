@@ -120,7 +120,6 @@ public class ContractController extends AuthController {
         ConfigUtils config = new ConfigUtils();
 
 
-
         final String finalContractCode = contractCode;
         // compensation region
         compensationPaginator.setGetItemsCallback(new Paginator.IGetItems() {
@@ -165,7 +164,7 @@ public class ContractController extends AuthController {
         });
 
 
-        r.equest.setAttribute("newCardRequested",cardBusiness.getUnresolveNewCardRequest(contractCode));
+        r.equest.setAttribute("newCardRequested", cardBusiness.getUnresolveNewCardRequest(contractCode));
         r.equest.setAttribute("CUSTOMER", customerDetail);
         r.equest.setAttribute("CONTRACT", contractDetail);
         r.equest.setAttribute("PAYMENT", listPayment);
@@ -209,12 +208,11 @@ public class ContractController extends AuthController {
         }
 
         // Only check concurrency for the first time
-        if (r.equest.getAttribute("submitted") == null){
+        if (r.equest.getAttribute("submitted") == null) {
             // Save last_modified value for concurrency check
             r.equest.getSession(true).setAttribute(
                     Constants.Session.CONCURRENCY + contractCode, contractEntity.getLastModified());
         }
-
 
         r.equest.setAttribute("CONTRACT", contractEntity);
 
@@ -590,7 +588,7 @@ public class ContractController extends AuthController {
             // r.equest.setAttribute("submitted", dto);
             // Re-call the contract detail page
             r.equest.setAttribute("contractCode", dto.getContractCode());
-            r.equest.setAttribute("submitted",dto);
+            r.equest.setAttribute("submitted", dto);
             return getEditVehicle(r);
         }
         // If the code reached this line that means there is no validation errors

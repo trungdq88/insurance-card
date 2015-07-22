@@ -27,6 +27,7 @@ public class PunishmentController extends AuthController {
     }
 
     private static String msg = "";
+    private static boolean isSuccess;
 
     public ResponseObject getCreate(R r) {
         return new JspPage("/staff/create-punishment.jsp");
@@ -86,12 +87,15 @@ public class PunishmentController extends AuthController {
         PunishmentEntity result = punishmentBusiness.createNewPunishment(dto);
 
         if (result != null) {
+            isSuccess = true;
             msg = "Thêm vi phạm luật ATGT thành công";
         } else {
+            isSuccess = false;
             msg = "Thêm vi phạm luật ATGT thất bại, vui lòng thử lại hoặc liên hệ IT";
         }
         r.equest.setAttribute("CODE", dto.getContractCode());
         r.equest.setAttribute("MESSAGE", msg);
+        r.equest.setAttribute("SUCCESS", isSuccess);
         return new JspPage("/staff/message.jsp");
     }
 
@@ -122,12 +126,15 @@ public class PunishmentController extends AuthController {
         boolean result = punishmentBusiness.editPunishment(dto);
 
         if (result) {
+            isSuccess = true;
             msg = "Chỉnh sửa vi phạm luật ATGT thành công";
         } else {
+            isSuccess = false;
             msg = "Chỉnh sửa vi phạm luật ATGT thất bại, vui lòng thử lại hoặc liên hệ IT";
         }
         r.equest.setAttribute("CODE", dto.getContractCode());
         r.equest.setAttribute("MESSAGE", msg);
+        r.equest.setAttribute("SUCCESS", isSuccess);
         return new JspPage("/staff/message.jsp");
     }
 }

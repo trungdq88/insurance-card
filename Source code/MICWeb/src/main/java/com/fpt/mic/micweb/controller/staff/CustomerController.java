@@ -12,7 +12,6 @@ import com.fpt.mic.micweb.model.dto.CreateCustomerInfoDto;
 import com.fpt.mic.micweb.model.dto.UserDto;
 import com.fpt.mic.micweb.model.dto.form.CreateCustomerDto;
 import com.fpt.mic.micweb.model.dto.form.EditCustomerProfileByStaffDto;
-import com.fpt.mic.micweb.model.dto.form.EditCustomerProfileDto;
 import com.fpt.mic.micweb.model.entity.ContractEntity;
 import com.fpt.mic.micweb.model.entity.CustomerEntity;
 import com.fpt.mic.micweb.utils.Constants;
@@ -32,6 +31,9 @@ public class CustomerController extends AuthController {
      * Paginator for customer
      */
     Paginator customerPaginator = new Paginator();
+
+    private static String msg = "";
+    private static boolean isSuccess;
 
     @Override
     public List<String> getAllowedRoles() {
@@ -137,7 +139,10 @@ public class CustomerController extends AuthController {
             // Return Success JSP Page
             return new JspPage("staff/create-customer-success.jsp");
         } else {
-            r.equest.setAttribute("error", "Something wrong");
+            isSuccess = false;
+            msg = "Tạo khách hàng thất bại, vui lòng thử lại hoặc liên hệ IT";
+            r.equest.setAttribute("MESSAGE", msg);
+            r.equest.setAttribute("SUCCESS", isSuccess);
             return new JspPage("staff/message.jsp");
         }
     }
