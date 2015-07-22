@@ -112,7 +112,7 @@
                         <label class="col-sm-7 control-label">Thời gian thêm thông tin sau khi hủy hợp đồng:</label>
 
                         <div class="col-sm-2">
-                            <input  name="config:updateContractDueDate" type="number"
+                            <input name="config:updateContractDueDate" type="number"
                                    class="form-control input-md" required min="0" max="1000000000" min="0"
                                    value="${submitted.updateContractDueDate}">
 
@@ -247,7 +247,8 @@
                                                 <td>${(businessRulesPaginator.getCurrentPage(param.page) - 1) * businessRulesPaginator.itemPerPage + counter.count}</td>
                                                 <td>
                                                     <a href="${pageContext.request.contextPath}/admin/config?action=detail&configId=${row.id}">
-                                                        <fmt:formatDate type="both" dateStyle="short" timeStyle="short" value="${row.startDate}" />
+                                                        <fmt:formatDate type="both" dateStyle="short" timeStyle="short"
+                                                                        value="${row.startDate}"/>
                                                     </a>
                                                 </td>
                                             </tr>
@@ -290,7 +291,8 @@
             </div>
         </div>
     </div>
-    <!-- /#wrapper -->
+</div>
+<!-- /#wrapper -->
 
 
 <%@ include file="_shared/footer.jsp" %>

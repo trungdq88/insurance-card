@@ -35,6 +35,7 @@ public class ContractTypeController extends BasicController {
             }
         });
         r.equest.setAttribute("contractTypePaginator", contractTypePaginator);
+        r.equest.setAttribute("map",contractBusiness.getMappingCountContractAndContractType());
         return new JspPage("admin/contract-type.jsp");
     }
 

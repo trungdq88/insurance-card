@@ -10,8 +10,12 @@ import com.fpt.mic.micweb.utils.DateUtils;
 import org.joda.time.DateTime;
 import org.joda.time.Days;
 
+import java.lang.reflect.Array;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by TriPQMse60746 on 06/11/2015.
@@ -31,6 +35,17 @@ public class ContractBusiness {
     public List getOnePageContractTypes(int offset, int count) {
         ContractTypeDao contractTypeDao = new ContractTypeDao();
         return contractTypeDao.getOnePageContractTypes(offset, count);
+    }
+
+    // return map : key = contractTypeId, value = number of contracts using contractTypeId.
+    public Map<Integer,Long> getMappingCountContractAndContractType() {
+        ContractTypeDao contractTypeDao = new ContractTypeDao();
+        List<ContractTypeEntity> list = contractTypeDao.getAllContractType();
+        Map<Integer,Long> result = new HashMap<Integer, Long>();
+        for (ContractTypeEntity entity : list) {
+            result.put(entity.getId(),contractTypeDao.getCountContractByContractTypeId(entity.getId()));
+        }
+        return result;
     }
 
     public Long getAllContractTypeCount() {
