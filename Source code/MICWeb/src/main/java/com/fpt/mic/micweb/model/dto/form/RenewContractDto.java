@@ -3,8 +3,10 @@ package com.fpt.mic.micweb.model.dto.form;
 import com.fpt.mic.micweb.model.dao.ContractDao;
 import com.fpt.mic.micweb.model.entity.ContractEntity;
 import com.fpt.mic.micweb.utils.ConfigUtils;
+import com.fpt.mic.micweb.utils.Constants;
 import com.fpt.mic.micweb.utils.DateUtils;
 import org.hibernate.validator.constraints.NotEmpty;
+import org.joda.time.Days;
 import org.joda.time.LocalDate;
 
 import javax.validation.constraints.AssertTrue;
@@ -16,12 +18,6 @@ import java.sql.Timestamp;
  * Created by Kha on 23/06/2015.
  */
 public class RenewContractDto {
-
-    private static final int MILLIS_IN_SECOND = 1000;
-    private static final int SECONDS_IN_MINUTE = 60;
-    private static final int MINUTES_IN_HOUR = 60;
-    private static final int HOURS_IN_DAY = 24;
-    private static final int DAYS_IN_YEAR = 366;
 
     @NotEmpty(message = "Mã hợp đồng không được để trống")
     @Pattern(regexp = "^HD([0-9A-Z]{4,8})$", message = "Mã hợp đồng không hợp lệ")
@@ -40,14 +36,6 @@ public class RenewContractDto {
     @NotNull(message = "Yêu cầu giao thẻ không có giá trị")
     private boolean deliveryNewCard;
     private Timestamp lastModified;
-
-    public Timestamp getLastModified() {
-        return lastModified;
-    }
-
-    public void setLastModified(Timestamp lastModified) {
-        this.lastModified = lastModified;
-    }
 
     @AssertTrue(message = "Thông tin hợp đồng đã bị sửa đổi trước đó bởi một người khác, vui lòng thực hiện lại thao tác")
     private boolean isContractNotChanged() {
@@ -128,23 +116,30 @@ public class RenewContractDto {
         }
     }
 
-    @AssertTrue(message = "Không thể gia hạn hợp đồng còn giá trị trên 2 tháng")
+    @AssertTrue(message = "Không thể gia hạn hợp đồng còn thời hạn dài hơn quy định")
     private boolean isValidCurrentTerm() {
         ContractDao contractDao = new ContractDao();
         ContractEntity contractEntity = contractDao.read(contractCode);
         if (contractEntity != null) {
-            long currentTerm = contractEntity.getExpiredDate().getTime() - System.currentTimeMillis();
-
-            final long MILLISECONDS_IN_TWO_MONTHS =
-                    (long) MILLIS_IN_SECOND * SECONDS_IN_MINUTE * MINUTES_IN_HOUR
-                            * HOURS_IN_DAY * 60;
-            if (currentTerm < MILLISECONDS_IN_TWO_MONTHS) {
-                return true;
-            } else {
-                return false;
-            }
+            LocalDate expDate = new LocalDate(contractEntity.getExpiredDate());
+            int currentTerm = Days.daysBetween(new LocalDate(), expDate).getDays();
+            ConfigUtils configUtils = new ConfigUtils();
+            return currentTerm <= configUtils.getContractRenewLimit();
         } else {
-            return false;
+            return true;
+        }
+    }
+
+    @AssertTrue(message = "Không thể gia hạn hợp đồng có trạng thái hiện tại")
+    private boolean isValidStatus() {
+        ContractDao contractDao = new ContractDao();
+        ContractEntity contractEntity = contractDao.read(contractCode);
+        if (contractEntity != null) {
+            String status = contractEntity.getStatus();
+            return !status.equalsIgnoreCase(Constants.ContractStatus.REQUEST_CANCEL) ||
+                    !status.equalsIgnoreCase(Constants.ContractStatus.CANCELLED);
+        } else {
+            return true;
         }
     }
 
@@ -229,5 +224,13 @@ public class RenewContractDto {
 
     public void setDeliveryNewCard(boolean deliveryNewCard) {
         this.deliveryNewCard = deliveryNewCard;
+    }
+
+    public Timestamp getLastModified() {
+        return lastModified;
+    }
+
+    public void setLastModified(Timestamp lastModified) {
+        this.lastModified = lastModified;
     }
 }

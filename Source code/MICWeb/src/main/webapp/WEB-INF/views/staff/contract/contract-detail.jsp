@@ -491,14 +491,14 @@
         }
 
         if (contractStatus.toLowerCase() == 'No card'.toLowerCase()) {
-            if (remainDays < 60) {
+            if (remainDays < parseInt('${config.contractRenewLimit}')) {
                 $('#btnRenew').removeClass('hide');
             }
             $('#btnCancel').removeClass('hide');
         }
 
         if (contractStatus.toLowerCase() == 'Ready'.toLowerCase()) {
-            if (remainDays < 60) {
+            if (remainDays < parseInt('${config.contractRenewLimit}')) {
                 $('#btnRenew').removeClass('hide');
             }
             $('#btnCancel').removeClass('hide');
