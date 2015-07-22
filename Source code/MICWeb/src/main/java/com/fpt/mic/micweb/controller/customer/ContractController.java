@@ -125,7 +125,7 @@ public class ContractController extends AuthController {
 
     public ResponseObject getView(R r) {
         final CustomerBusiness customerBusiness = new CustomerBusiness();
-            final String customerCode = ((CustomerEntity) getLoggedInUser()).getCustomerCode();
+        final String customerCode = ((CustomerEntity) getLoggedInUser()).getCustomerCode();
 
         contractPaginator.setGetItemsCallback(new Paginator.IGetItems() {
             @Override
@@ -235,8 +235,8 @@ public class ContractController extends AuthController {
             });
 
             r.equest.setAttribute("contract", contract);
-            r.equest.setAttribute("configUtils",configUtils);
-            r.equest.setAttribute("newCardRequested",cardBusiness.getUnresolveNewCardRequest(code));
+            r.equest.setAttribute("configUtils", configUtils);
+            r.equest.setAttribute("newCardRequested", cardBusiness.getUnresolveNewCardRequest(code));
             r.equest.setAttribute("card", cardBusiness.getCardByContract(code));
             r.equest.setAttribute("accidentPaginator", accidentPaginator);
             r.equest.setAttribute("compensationPaginator", compensationPaginator);
@@ -310,11 +310,13 @@ public class ContractController extends AuthController {
     public ResponseObject postRenewContract(R r) {
         //get parameter
         String contractCode = r.equest.getParameter("txtContractCode");
+        ConfigUtils configUtils = new ConfigUtils();
 
         // Validate: check if the remaining days is greater than 2 months
         ContractBusiness contractBusiness = new ContractBusiness();
         if (!contractBusiness.isRenewable(contractCode)) {
-            return showCustomError(r, contractCode, contractBusiness, "Không thể gia hạn hợp đồng còn giá trị trên 2 tháng");
+            return showCustomError(r, contractCode, contractBusiness, "Không thể gia hạn hợp đồng còn giá trị trên "
+                    + configUtils.getContractRenewLimit() + " ngày");
         }
 
         Timestamp newExpiredDate = contractBusiness.getNewExpiredDate(contractCode);

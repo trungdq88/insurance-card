@@ -5,6 +5,7 @@ import com.fpt.mic.micweb.model.dao.ContractTypeDao;
 import com.fpt.mic.micweb.model.dto.form.ContractTypeDto;
 import com.fpt.mic.micweb.model.entity.ContractEntity;
 import com.fpt.mic.micweb.model.entity.ContractTypeEntity;
+import com.fpt.mic.micweb.utils.ConfigUtils;
 import com.fpt.mic.micweb.utils.Constants;
 import com.fpt.mic.micweb.utils.DateUtils;
 import org.joda.time.DateTime;
@@ -136,13 +137,14 @@ public class ContractBusiness {
     public boolean isRenewable(String contractCode) {
         ContractDao contractDao = new ContractDao();
         ContractEntity contract = contractDao.read(contractCode);
+        ConfigUtils configUtils = new ConfigUtils();
 
         if (contract == null) return false;
 
         DateTime currentDate = DateTime.now();
         DateTime expiredDate = new DateTime(contract.getExpiredDate().getTime());
         int remainingDays = Days.daysBetween(currentDate, expiredDate).getDays();
-        return remainingDays <= 60;
+        return remainingDays <= configUtils.getContractRenewLimit();
     }
 
     /**

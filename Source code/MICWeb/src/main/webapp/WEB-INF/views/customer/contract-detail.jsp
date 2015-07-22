@@ -18,9 +18,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="_shared/header.jsp" %>
 <style type="text/css">
-    .fixCheckbox{
+    .fixCheckbox {
         padding-left: 4%
     }
+
     .handleInput {
         border: none;
         background-color: white;
@@ -76,6 +77,7 @@
                 <h2 class="page-header ">Hợp Đồng ${contract.contractCode}
                      <span class="pull-right">
                             <input type="hidden" id="contractStatus1" value="${contract.status}">
+                            <input type="hidden" id="contractRenewLimit" value="${configUtils.contractRenewLimit}">
                              <button type="submit" class="btn btn-primary" data-toggle="modal" id="renew"
                                      data-target=".renew-contract-modal"><i
                                      class="fa fa-refresh"></i> Gia Hạn
@@ -111,7 +113,7 @@
                                         Quý khách vui lòng cung cấp lý do hoặc trường hợp hủy hợp đồng
                                     </label>
                                 </div>
-                                <div class="checkbox fixCheckbox" >
+                                <div class="checkbox fixCheckbox">
                                     <label>
                                         <input type="radio" value="" name="rdbReason1" class="check" id="rdbReason1">
                                         Xe cơ giới bị thu hồi đăng ký và biển số theo quy định của pháp luật
@@ -188,7 +190,7 @@
                                     <div class="alert alert-block alert-error fade
                                      in well well-lg text-info alertRenew hide">
                                         <h4 class="alert-heading text-center">KHÔNG THỂ GIA HẠN HỢP ĐỒNG CÒN GIÁ TRỊ
-                                            TRÊN 2 THÁNG</h4>
+                                            TRÊN ${configUtils.contractRenewLimit} NGÀY</h4>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-sm-5 text-right">Loại hợp đồng </label>
@@ -299,12 +301,14 @@
                 <c:if test="${contract.status.equalsIgnoreCase('Request cancel')}">
                     <form action="${pageContext.request.contextPath}/customer/contract" method="post">
                         <div class="fixWell text-center text-danger " style="height: 65% !important;">
-                            <label style="font-size: 18px">Hợp đồng đã được yêu cầu hủy vui lòng chờ xác nhận của nhân viên</label> &nbsp;
+                            <label style="font-size: 18px">Hợp đồng đã được yêu cầu hủy vui lòng chờ xác nhận của nhân
+                                viên</label> &nbsp;
                             <br/>
                             <input type="hidden" name="contractcode"
                                    value="${contract.contractCode}"/>
                             <input type="hidden" name="action" value="RejectRequestCancel"/>
                             <br/>
+
                             <div class="form-group">
                                 <label class="col-md-3 text-right">Đã hủy vào: </label>
 
@@ -324,7 +328,7 @@
                             </div>
 
                             <div style="padding-top: 1%">
-                                    <input type="submit" class="btn btn-danger small" value="Hủy yêu cầu"/>
+                                <input type="submit" class="btn btn-danger small" value="Hủy yêu cầu"/>
 
                             </div>
 
@@ -344,7 +348,7 @@
                         </div>
                         <br/>
 
-                        <div class="form-group" >
+                        <div class="form-group">
                             <label class="col-md-3 text-right">Đã hủy vào: </label>
 
                             <div class="col-md-9 text-left">
@@ -353,7 +357,7 @@
                         </div>
                         <br/>
 
-                        <div class="form-group" >
+                        <div class="form-group">
                             <label class="col-md-3 text-right">Lý do hủy: </label>
 
                             <div class="col-md-9 text-left">
@@ -503,9 +507,9 @@
                             </a>
                         </li>
 
-                            <%--<form action="${pageContext.request.contextPath}/customer/card" method="get">--%>
-                            <c:if test="${empty newCardRequested }">
-                                <c:if test="${contract.status.equalsIgnoreCase('Ready')}">
+                        <%--<form action="${pageContext.request.contextPath}/customer/card" method="get">--%>
+                        <c:if test="${empty newCardRequested }">
+                            <c:if test="${contract.status.equalsIgnoreCase('Ready')}">
                                 <div class="pull-right">
                                     <a href="${pageContext.request.contextPath}/customer/card?action=newCard&contractCode=${param.code}"
                                        class="btn btn-sm btn-primary">
@@ -513,32 +517,33 @@
                                     </a>
 
                                 </div>
-                                    </c:if>
                             </c:if>
-                            <c:if test="${not empty newCardRequested}">
-                                <div class="pull-right">
-                                    <p class="text-value">
+                        </c:if>
+                        <c:if test="${not empty newCardRequested}">
+                            <div class="pull-right">
+                                <p class="text-value">
                         <span class="label label-info"
                               style="font-size: 14px">Đang yêu cầu thẻ mới</span>
-                                <c:if test="${contract.status.equalsIgnoreCase('Ready')}">
-                                    <c:if test="${newCardRequested.isPaid eq 0}">
-                                        <button contractCode="${contract.contractCode}" type="button" class="btn btn-danger btn-xs"
-                                                data-toggle="modal" data-target="#cancel-new-card-request" onclick="{
+                                    <c:if test="${contract.status.equalsIgnoreCase('Ready')}">
+                                        <c:if test="${newCardRequested.isPaid eq 0}">
+                                            <button contractCode="${contract.contractCode}" type="button"
+                                                    class="btn btn-danger btn-xs"
+                                                    data-toggle="modal" data-target="#cancel-new-card-request" onclick="{
                                                                     var contractCode = $(this).attr('contractCode');
                                                                     $('#contractCodeModal').val(contractCode);
                                                                     $('#contractCodeModal1').text(contractCode);
                                                                  }">
-                                            <i class="fa fa-times"></i> Hủy
-                                        </button>
+                                                <i class="fa fa-times"></i> Hủy
+                                            </button>
+                                        </c:if>
                                     </c:if>
-                                    </c:if>
-                                    </p>
-                                </div>
+                                </p>
+                            </div>
 
-                            </c:if>
+                        </c:if>
 
 
-                            <%--</form>--%>
+                        <%--</form>--%>
                     </ul>
                 </div>
                 <br/>
