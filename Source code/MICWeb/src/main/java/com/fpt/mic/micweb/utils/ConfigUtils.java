@@ -26,6 +26,7 @@ public class ConfigUtils {
     private float newCardFee;
     private float deliveryFee;
     private int updateContractDueDate;
+    private int contractRenewLimit;
 
     public ConfigUtils() {
     }
@@ -167,5 +168,13 @@ public class ConfigUtils {
 
     public void setUpdateContractDueDate(int updateContractDueDate) {
         this.updateContractDueDate = updateContractDueDate;
+    }
+
+    public int getContractRenewLimit() {
+        return contractRenewLimit = entity.getContractRenewLimit();
+    }
+
+    public void setContractRenewLimit(int contractRenewLimit) {
+        this.contractRenewLimit = contractRenewLimit;
     }
 }
