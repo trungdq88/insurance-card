@@ -556,6 +556,11 @@
                         <%--</div>--%>
                         <div class="form-horizontal">
                             <table class="table table-bordered">
+                                <tr class="active">
+                                    <td colspan="2" class="text-center" style="font-size: 15px"><label
+                                            class="text-center">Thông tin
+                                        hợp đồng</label></td>
+                                </tr>
                                 <tr>
                                     <td class="col-md-5">
                                         <table class="table table-bordered">
