@@ -7,11 +7,14 @@ import com.fpt.mic.micweb.framework.responses.JspPage;
 import com.fpt.mic.micweb.framework.responses.RedirectTo;
 import com.fpt.mic.micweb.framework.responses.ResponseObject;
 import com.fpt.mic.micweb.model.business.CompensationBusiness;
+import com.fpt.mic.micweb.model.business.StaffBusiness;
 import com.fpt.mic.micweb.model.dto.UserDto;
 import com.fpt.mic.micweb.model.dto.form.CreateCompensationDto;
 import com.fpt.mic.micweb.model.dto.form.EditCompensationDto;
 import com.fpt.mic.micweb.model.dto.form.ResolveCompensationDto;
 import com.fpt.mic.micweb.model.entity.CompensationEntity;
+import com.fpt.mic.micweb.model.entity.ContractEntity;
+import com.fpt.mic.micweb.model.entity.CustomerEntity;
 import com.fpt.mic.micweb.utils.Constants;
 
 import javax.servlet.annotation.WebServlet;
@@ -108,6 +111,25 @@ public class CompensationController extends AuthController {
     }
 
     public ResponseObject getCreate(R r) {
+        return new JspPage("staff/create-compensation.jsp");
+    }
+
+    public ResponseObject getCreateFromContract(R r) {
+        String contractCode = r.equest.getParameter("code");
+        StaffBusiness staffBusiness = new StaffBusiness();
+        ContractEntity contractEntity = staffBusiness.getContractDetail(contractCode);
+        if (contractEntity != null) {
+            CustomerEntity customerEntity = staffBusiness.getCustomerDetail(contractEntity.getCustomerCode());
+            CreateCompensationDto dto = new CreateCompensationDto();
+            dto.setDriverName(customerEntity.getName());
+            dto.setDriverAddress(customerEntity.getAddress());
+            dto.setDriverPhone(customerEntity.getPhone());
+            dto.setPlate(contractEntity.getPlate());
+            if (contractEntity.getSeatCapacity() != null) {
+                dto.setVehicleCapacity(contractEntity.getSeatCapacity().toString());
+            }
+            r.equest.setAttribute("submitted", dto);
+        }
         return new JspPage("staff/create-compensation.jsp");
     }
 
