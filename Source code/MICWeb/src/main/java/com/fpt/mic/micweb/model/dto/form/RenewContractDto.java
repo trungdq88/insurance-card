@@ -130,7 +130,7 @@ public class RenewContractDto {
         }
     }
 
-    @AssertTrue(message = "Không thể gia hạn hợp đồng có trạng thái hiện tại")
+    @AssertTrue(message = "Không thể gia hạn hợp đồng đang yêu cầu hủy hoặc đã hủy")
     private boolean isValidStatus() {
         ContractDao contractDao = new ContractDao();
         ContractEntity contractEntity = contractDao.read(contractCode);
