@@ -56,6 +56,10 @@ public class BusinessRulesDto {
     @Range(min = 0, message = "Giới hạn thời gian thêm thông tin sau khi hủy hợp đồng phải lớn hơn hoặc bằng 0")
     private Integer updateContractDueDate;
 
+    @NotNull(message = "Thời hạn tối đa còn lại để gia hạn hợp đồng không được bỏ trống")
+    @Range(min = 0, message = "Thời hạn tối đa còn lại để gia hạn hợp đồng phải lớn hơn hoặc bằng 0")
+    private Integer contractRenewLimit;
+
 
     public BusinessRulesDto() {
     }
@@ -178,5 +182,13 @@ public class BusinessRulesDto {
 
     public void setUpdateContractDueDate(Integer updateContractDueDate) {
         this.updateContractDueDate = updateContractDueDate;
+    }
+
+    public Integer getContractRenewLimit() {
+        return contractRenewLimit;
+    }
+
+    public void setContractRenewLimit(Integer contractRenewLimit) {
+        this.contractRenewLimit = contractRenewLimit;
     }
 }

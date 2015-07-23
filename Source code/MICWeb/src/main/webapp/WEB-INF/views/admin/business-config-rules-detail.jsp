@@ -103,6 +103,16 @@
                         <div class="col-sm-2">
                             <p class="text-value"> tháng</p>
                         </div>
+                        <label class="col-sm-7 control-label">Thời hạn tối đa còn lại để gia hạn hợp đồng:
+                        </label>
+
+                        <div class="col-sm-2">
+                            <p class="text-value">${submitted.contractRenewLimit}</p>
+
+                        </div>
+                        <div class="col-sm-2">
+                            <p class="text-value"> ngày</p>
+                        </div>
                     </fieldset>
                     <fieldset>
                         <legend>Giới hạn chỉnh sửa ngày cho nhân viên</legend>

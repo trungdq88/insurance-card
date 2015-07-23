@@ -73,6 +73,7 @@ public class AdminBusiness {
         businessRulesEntity.setNewCardRequestFee(businessRulesDto.getNewCardRequestFee());
         businessRulesEntity.setDeliveryFee(businessRulesDto.getDeliveryFee());
         businessRulesEntity.setUpdateContractDueDate(businessRulesDto.getUpdateContractDueDate());
+        businessRulesEntity.setContractRenewLimit(businessRulesDto.getContractRenewLimit());
         businessRulesDao.create(businessRulesEntity);
     }
 

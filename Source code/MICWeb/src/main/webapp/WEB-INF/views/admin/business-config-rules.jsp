@@ -106,6 +106,18 @@
                         <div class="col-sm-2">
                             <p class="text-value"> tháng</p>
                         </div>
+                        <label class="col-sm-7 control-label">Thời hạn tối đa còn lại để gia hạn hợp đồng:
+                            </label>
+
+                        <div class="col-sm-2">
+                            <input name="config:contractRenewLimit" type="number" class="form-control input-md"
+                                   required min="0" max="1000000000" min="0"
+                                   value="${submitted.contractRenewLimit}">
+
+                        </div>
+                        <div class="col-sm-2">
+                            <p class="text-value"> ngày</p>
+                        </div>
                     </fieldset>
                     <fieldset>
                         <legend>Giới hạn chỉnh sửa ngày cho nhân viên</legend>
