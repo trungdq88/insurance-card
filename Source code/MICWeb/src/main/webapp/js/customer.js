@@ -6,6 +6,7 @@ $(document).ready(function () {
 
 
     CheckDayAvailable();
+    var contractRenewLimit = parseInt($('#contractRenewLimit').val());
 
     $('[data-toggle="tooltip"]').tooltip();
     if ($('#isFirstLogin').val() == 0) {
@@ -44,7 +45,7 @@ $(document).ready(function () {
     function handleShowingButton(status) {
         //Ready
         if (status == 'Ready') {
-            if (DayDiff($('#expiredDate').val()) > 60) {
+            if (DayDiff($('#expiredDate').val()) > contractRenewLimit) {
                 $('#renew').addClass('hide');
             }
         }
@@ -55,7 +56,7 @@ $(document).ready(function () {
         }
         //Expired
         else if (status == 'Expired') {
-            if (DayDiff($('#expiredDate').val()) > 60) {
+            if (DayDiff($('#expiredDate').val()) > contractRenewLimit) {
                 $('#renew').addClass('hide');
             }
             $('#delete').addClass('hide');
@@ -72,7 +73,7 @@ $(document).ready(function () {
         }
         //No card
         else if (status == 'No card') {
-            if (DayDiff($('#expiredDate').val()) > 60) {
+            if (DayDiff($('#expiredDate').val()) > contractRenewLimit) {
                 $('#renew').addClass('hide');
             }
         }
@@ -194,7 +195,7 @@ $(document).ready(function () {
     }
 
     $('#renew').click(function () {
-        if (DayDiff($('#expiredDate').val()) > 60) {
+        if (DayDiff($('#expiredDate').val()) > contractRenewLimit) {
             $('#acceptRenew').prop('disabled', true);
             $('.alertRenew').removeClass('hide');
         }

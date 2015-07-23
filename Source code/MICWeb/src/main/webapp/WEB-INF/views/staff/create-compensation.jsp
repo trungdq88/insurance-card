@@ -400,6 +400,11 @@
 
     function showContractInfo(info) {
         $('#contractCode').val(info.contractCode);
+        $('#driverName').val(info.micCustomerByCustomerCode.name);
+        $('#driverPhone').val(info.micCustomerByCustomerCode.phone);
+        $('#driverAddress').val(info.micCustomerByCustomerCode.address);
+        $('#plate').val(info.plate);
+        $('#vehicleCapacity').val(info.seatCapacity);
     }
 
     function loadContracts() {

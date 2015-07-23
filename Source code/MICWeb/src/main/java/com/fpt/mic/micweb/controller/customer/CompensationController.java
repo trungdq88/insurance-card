@@ -6,9 +6,12 @@ import com.fpt.mic.micweb.framework.R;
 import com.fpt.mic.micweb.framework.responses.RedirectTo;
 import com.fpt.mic.micweb.framework.responses.ResponseObject;
 import com.fpt.mic.micweb.model.business.CompensationBusiness;
+import com.fpt.mic.micweb.model.business.CustomerBusiness;
 import com.fpt.mic.micweb.model.dto.UserDto;
 import com.fpt.mic.micweb.model.dto.form.CreateCompensationDto;
 import com.fpt.mic.micweb.model.entity.CompensationEntity;
+import com.fpt.mic.micweb.model.entity.ContractEntity;
+import com.fpt.mic.micweb.model.entity.CustomerEntity;
 import com.fpt.mic.micweb.utils.DateUtils;
 
 import javax.servlet.annotation.WebServlet;
@@ -45,7 +48,13 @@ public class CompensationController extends AuthController {
     }
 
     public ResponseObject getCreate(R r) {
+        CustomerBusiness customerBusiness = new CustomerBusiness();
         String contractCode = r.equest.getParameter("contractCode");
+        String customerCode = ((CustomerEntity) getLoggedInUser()).getCustomerCode();
+        ContractEntity contractEntity = customerBusiness.getContractDetail(contractCode);
+        CustomerEntity customerEntity = customerBusiness.getCustomer(customerCode);
+        r.equest.setAttribute("customer", customerEntity);
+        r.equest.setAttribute("contractDetail", contractEntity);
         r.equest.setAttribute("contractCode", contractCode);
         return new JspPage("customer/create-compensation.jsp");
     }
