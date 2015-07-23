@@ -4,6 +4,8 @@ import android.content.ActivityNotFoundException;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -670,12 +672,40 @@ public class Filepicker extends FragmentActivity
                 if (resultCode == RESULT_OK) {
                     Utils.showQuickToast(this, R.string.uploading_image);
                     showLoading();
-                    uploadLocalFile(imageUri);
+                    resizeAndUpload();
                 } else {
                     finish();
                 }
                 break;
         }
+    }
+
+    private void resizeAndUpload() {
+        // Get bitmap
+        try {
+            Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
+            // Resize to new bitmap
+            Bitmap resized = resizeBitmap(bitmap, 1000);
+            // Save to new file
+            Uri resizedUri = saveBitmap(resized);
+            uploadLocalFile(resizedUri);
+            return;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        uploadLocalFile(imageUri);
+    }
+
+    private Uri saveBitmap(Bitmap resized) {
+        String url = MediaStore.Images.Media.insertImage(getContentResolver(), resized,
+                System.currentTimeMillis() + ".jpg", "Image captured by camera resized");
+        return Uri.parse(url);
+    }
+
+    private Bitmap resizeBitmap(Bitmap bitmap, int newWidth) {
+        int newHeight = (int) (newWidth * 1.0 / bitmap.getWidth() * bitmap.getHeight());
+        Bitmap scaledBitmap = Bitmap.createScaledBitmap(bitmap, newWidth, newHeight, false);
+        return scaledBitmap;
     }
 
     private void showLoading() {
@@ -706,6 +736,16 @@ public class Filepicker extends FragmentActivity
         values.put(MediaStore.Images.Media.DESCRIPTION, "Image captured by camera");
         values.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg");
         imageUri = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+    }
+
+    private Uri getCameraImageUri() {
+        String fileName = "" + System.currentTimeMillis() + ".jpg";
+
+        ContentValues values = new ContentValues();
+        values.put(MediaStore.Images.Media.TITLE, fileName);
+        values.put(MediaStore.Images.Media.DESCRIPTION, "Image captured by camera");
+        values.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg");
+        return getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
     }
 
     // Returns array of selected providers if it was provided in intent
