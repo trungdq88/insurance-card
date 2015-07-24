@@ -11,7 +11,7 @@
     <div id="page-wrapper">
         <div class="row">
             <div class="col-lg-12">
-                <h1 class="page-header">Thông báo (${unreadCount})</h1>
+                <h3 class="page-header">Thông báo (${unreadCount})</h3>
             </div>
             <!-- /.col-lg-12 -->
         </div>
@@ -21,11 +21,13 @@
                     <table class="table table-hover">
                         <c:choose>
                             <c:when test="${notifications.size() == 0}">
+                                <c:if test="${noCardContractCount == 0}">
                                 <tr>
                                     <td colspan="6" style="vertical-align: middle; text-align: center;">
                                         Không có thông báo mới nào
                                     </td>
                                 </tr>
+                                </c:if>
                             </c:when>
                             <c:otherwise>
                                 <c:forEach var="notification" items="${notifications}" varStatus="counter">
@@ -57,12 +59,20 @@
                         </c:choose>
                     </table>
                 </div>
+
+                <c:if test="${noCardContractCount > 0}">
+                    <p>
+                        <a href="${pageContext.request.contextPath}/staff/contract">
+                            <i class="fa fa-warning text-warning-notif"></i>
+                            Có ${noCardContractCount} hợp đồng chưa được cấp thẻ. Nhấn để xem chi tiết</a>
+                    </p>
+                </c:if>
             </div>
             <!-- /.col-lg-12 -->
         </div>
         <div class="row">
             <div class="col-lg-12">
-                <h1 class="page-header">Thông tin chung</h1>
+                <h3 class="page-header">Thông tin chung</h3>
             </div>
             <!-- /.col-lg-12 -->
         </div>

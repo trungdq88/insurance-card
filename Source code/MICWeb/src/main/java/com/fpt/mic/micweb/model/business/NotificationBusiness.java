@@ -1,5 +1,6 @@
 package com.fpt.mic.micweb.model.business;
 
+import com.fpt.mic.micweb.model.dao.ContractDao;
 import com.fpt.mic.micweb.model.dao.helper.NotificationDao;
 import com.fpt.mic.micweb.model.dao.helper.NotificationReadDao;
 import com.fpt.mic.micweb.model.dto.NotificationDto;
@@ -103,5 +104,10 @@ public class NotificationBusiness {
     public NotificationDto get(int id) {
         NotificationDao dao = new NotificationDao();
         return dao.get(id);
+    }
+
+    public Long getNoCardContractCount() {
+        ContractDao contractDao = new ContractDao();
+        return contractDao.getNoCardContractCount();
     }
 }

@@ -414,12 +414,19 @@
 
         // Data to send to server
         $('#contractFee').val(calculatedRenewFee);
-        $('#amount').val(calculatedRenewFee + calculatedNewCardFee + calculatedDeliveryFee)
+        $('#amount').val(calculatedRenewFee + calculatedNewCardFee + calculatedDeliveryFee);
 
         refreshFeeUI();
     }
 
     function refreshFeeUI() {
+        if ('${contract.status}' == 'No card') {
+            $('#newCard').attr('disabled', 'disabled');
+            $('#newCardTooltip').attr('data-original-title', 'Hợp đồng này chưa được cấp thẻ nên không thể yêu cầu thẻ mới.');
+        } else {
+            $('#newCard').removeAttr('disabled');
+            $('#newCardTooltip').attr('data-original-title', 'Thẻ cũ sẽ bị vô hiệu hóa, yêu cầu cấp thẻ mới sẽ được tạo.');
+        }
         if (isNewCard) {
             $('.control-delivery').slideDown();
         } else {
@@ -467,8 +474,7 @@
             isDeliveryNewCard = isChecked;
             refreshFees();
         });
-
-        refreshFees();
+        setTimeout(refreshFees, 1000);
 
         // Handle remaining days to display
         var remainDays = daysBetween(new Date(), expDate);
@@ -533,7 +539,7 @@
             var paymentId = that.getAttribute("payment-id");
             $.ajax({
                 url: "${pageContext.request.contextPath}/ajax?action=paymentDetail&paymentId=" + paymentId,
-                type: "GET",
+                type: "GET"
             }).done(function (data) {
                 $("#payment-id-value").html(data.id);
                 $("#contract-code-value").html(data.contractCode);
