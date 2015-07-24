@@ -185,9 +185,11 @@ $(document).ready(function () {
 
     function CheckDayAvailable() {
         var expiredDate = $('#expiredDate').val();
-
         if (DayDiff(expiredDate) >= 0) {
             $('#dateAvailable').val("Còn hạn: " + Math.abs(DayDiff($('#expiredDate').val())) + ' ngày');
+        }
+        else if(DayDiff(expiredDate) == -1){
+            $('#dateAvailable').val("Không xác định");
         }
         else {
             $('#dateAvailable').val("Quá hạn: " + Math.abs(DayDiff($('#expiredDate').val())) + ' ngày');
