@@ -29,7 +29,7 @@ public class SchedulerBusiness {
                     if(!checkIfContractExpired(contractEntity)){
                         // if not, check if contract is nearly expired
                         if(!checkIfContractNearlyExpired(contractEntity)){
-                            // if not, check if contract if exceeded payment due date
+                            // if not, check if contract is exceeded payment due date
                             if(!checkIfContractExceedPaymentDueDate(contractEntity)){
                                 // check if contract is started.
                                 checkIfPendingContractStart(contractEntity);
@@ -105,7 +105,8 @@ public class SchedulerBusiness {
         // check if Pending contract exceeded payment due date
         if (contractEntity.getStatus().equals(Constants.ContractStatus.PENDING)) {
             if (contractEntity.getStartDate().equals(contractEntity.getExpiredDate())) {
-                if (DateUtils.dateBetween(contractEntity.getCreatedDate(), currentDate) > configUtils.getPaymentDueDate()) {
+                if (DateUtils.dateBetween(DateUtils.convertDateTimeToDate(contractEntity.getCreatedDate()), currentDate) > configUtils.getPaymentDueDate()) {
+
                     contractEntity.setStatus(Constants.ContractStatus.CANCELLED);
                     contractEntity.setCancelDate(currentDate);
                     contractEntity.setCancelReason("Quá ngày thanh toán hợp đồng");
