@@ -37,7 +37,10 @@ public class RenewContractDto {
     private boolean deliveryNewCard;
     private Timestamp lastModified;
 
-    @AssertTrue(message = "Thông tin hợp đồng đã bị sửa đổi trước đó bởi một người khác, vui lòng thực hiện lại thao tác")
+
+    @AssertTrue(message = "Thông tin hợp đồng đã bị sửa đổi trước đó bởi" +
+            " một người khác, vui lòng thực hiện lại thao tác. " +
+            "<div class='more-detail'></div>")
     private boolean isContractNotChanged() {
         if (this.lastModified != null && this.contractCode != null) {
             ContractDao contractDao = new ContractDao();

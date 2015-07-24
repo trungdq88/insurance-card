@@ -49,6 +49,7 @@
             <div class="col-lg-12">
 
                 <c:if test="${not empty validateErrors}">
+                    <input type="hidden" id="modify-reason" value="${contract.modifyReason}"/>
                     <div class="text-danger">
                         <ul>
                             <c:forEach var="error" items="${validateErrors}">

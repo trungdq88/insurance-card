@@ -85,6 +85,7 @@ public class SchedulerBusiness {
             if (contractEntity.getExpiredDate().before(currentDate)) {
                 contractEntity.setStatus(Constants.ContractStatus.EXPIRED);
                 contractEntity.setLastModified(new Timestamp(new Date().getTime()));
+                contractEntity.setModifyReason(Constants.ContractModify.SCHEDULER_CONTRACT_EXPIRED);
                 contractDao.update(contractEntity);
 
                 // Send notification to customer
@@ -110,6 +111,7 @@ public class SchedulerBusiness {
                     contractEntity.setCancelDate(currentDate);
                     contractEntity.setCancelReason("Quá ngày thanh toán hợp đồng");
                     contractEntity.setLastModified(new Timestamp(new Date().getTime()));
+                    contractEntity.setModifyReason(Constants.ContractModify.SCHEDULER_EXCEED_PAYMENT);
                     contractDao.update(contractEntity);
 
                     // Send notification to customer
@@ -132,15 +134,14 @@ public class SchedulerBusiness {
                     && !contractEntity.getStartDate().equals(contractEntity.getExpiredDate()) // And the contract is paid
                     ) {
                 CardInstanceDao cardInstanceDao = new CardInstanceDao();
+                contractEntity.setLastModified(new Timestamp(new Date().getTime()));
+                contractEntity.setModifyReason(Constants.ContractModify.SCHEDULER_CONTRACT_STATUS_CHANGED);
                 if (null == cardInstanceDao.getActiveCardInstanceByContract(contractEntity.getContractCode())) {
                     contractEntity.setStatus(Constants.ContractStatus.NO_CARD);
-                    contractEntity.setLastModified(new Timestamp(new Date().getTime()));
-                    contractDao.update(contractEntity);
                 } else {
                     contractEntity.setStatus(Constants.ContractStatus.READY);
-                    contractEntity.setLastModified(new Timestamp(new Date().getTime()));
-                    contractDao.update(contractEntity);
                 }
+                contractDao.update(contractEntity);
 
                 // Send notification to customer
                 NotificationBusiness bus = new NotificationBusiness();
