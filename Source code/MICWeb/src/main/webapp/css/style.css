@@ -173,13 +173,34 @@ body {
     min-height: 500px;
 }
 
-
-.textWellcome {
+.brand-header,.brand-header:hover {
     color: white;
+    font-size: 20px;
+    text-decoration: none;
+}
+
+.textWellcome img {
+    width: 80px;
+}
+
+.textWellcome label {
+    font-size: 18px;
+    font-weight: normal;
+}
+.textWellcome p {
+    font-size: 22px;
+    margin: 0;
+}
+.textWellcome.customer {
+    background-color: #DEFFDA;
+}
+.textWellcome.staff {
+    background-color: #FFDADA;
+}
+.textWellcome {
+    padding: 10px;
+    text-align: center;
     font-weight: 300;
-    font-style: italic;
-    font-size: 25px;
-    padding-left: 4px;
     margin-bottom: 0 !important;
     vertical-align: middle;
 }

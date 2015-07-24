@@ -11,7 +11,7 @@
     <div id="page-wrapper">
         <div class="row">
             <div class="col-lg-12">
-                <h3 class="page-header">Thông báo (${unreadCount})</h3>
+                <h3 class="page-header">Thông báo</h3>
             </div>
             <!-- /.col-lg-12 -->
         </div>
