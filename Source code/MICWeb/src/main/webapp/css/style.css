@@ -183,3 +183,7 @@ body {
     margin-bottom: 0 !important;
     vertical-align: middle;
 }
+
+.text-warning-notif {
+    color: #FFAE21;
+}

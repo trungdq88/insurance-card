@@ -8,6 +8,7 @@ import com.fpt.mic.micweb.utils.Constants;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+import java.math.BigInteger;
 import java.util.List;
 
 /**
@@ -256,6 +257,19 @@ public class ContractDao extends IncrementDao<ContractEntity, String> {
         );
         query.setParameter("customerCode", customerCode);
         query.setParameter("keyword", "%" + keyword + "%");
+        Long result = (Long) query.getSingleResult();
+        entityManager.close();
+        return result;
+    }
+
+    public Long getNoCardContractCount() {
+        EntityManager entityManager = factory.createEntityManager();
+        Query query = entityManager.createQuery(
+                "SELECT COUNT(co) " +
+                        "FROM ContractEntity co " +
+                        "WHERE co.status = :status"
+        );
+        query.setParameter("status", Constants.ContractStatus.NO_CARD);
         Long result = (Long) query.getSingleResult();
         entityManager.close();
         return result;
