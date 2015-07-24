@@ -37,6 +37,7 @@ public class ContractEntity {
     private Timestamp lastModified;
     private Timestamp createdDate;
     private Integer activeCardInstanceId;
+    private String modifyReason;
 
     private Collection<AccidentEntity> micAccidentsByContractCode;
     private Collection<CardInstanceEntity> micCardInstancesByContractCode;
@@ -307,6 +308,16 @@ public class ContractEntity {
 
     public void setActiveCardInstanceId(Integer activeCardInstanceId) {
         this.activeCardInstanceId = activeCardInstanceId;
+    }
+
+    @Basic
+    @Column(name = "modify_reason")
+    public String getModifyReason() {
+        return modifyReason;
+    }
+
+    public void setModifyReason(String modifyReason) {
+        this.modifyReason = modifyReason;
     }
 
     @Override

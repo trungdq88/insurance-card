@@ -37,4 +37,21 @@ public class Constants {
         public static final String USER_DTO = "userDto";
         public static final String CONCURRENCY = "concurrency_";
     }
+
+    public static class ContractModify {
+        public static final String CUSTOMER_REQUEST_CANCEL = "Khách hàng đã gửi yêu cầu hủy hợp đồng này trước đó";
+        public static final String CUSTOMER_PAYMENT_CONTRACT = "Khách hàng đã thanh toán cho hợp đồng này trước đó";
+        public static final String CUSTOMER_REJECT_CANCEL_REQUEST = "Khách hàng đã xóa yêu cầu hủy hợp đồng này trước đó";
+        public static final String CUSTOMER_RENEW_CONTRACT = "Khách hàng đã thực hiện gia hạn hợp đồng này trước đó";
+        public static final String CUSTOMER_REGISTER_CONTRACT = "Khách hàng đã đăng ký mới hợp đồng này";
+        public static final String SCHEDULER_EXCEED_PAYMENT = "Hợp đồng này đã bị hủy vì quá hạn thanh toán";
+        public static final String SCHEDULER_CONTRACT_EXPIRED = "Hợp đồng này đã hết hạn";
+        public static final String SCHEDULER_CONTRACT_STATUS_CHANGED = "Trạng thái của hợp đồng này đã bị thay đổi trước đó";
+        public static final String STAFF_CANCEL_CONTRACT = "Một nhân viên đã hủy hợp đồng này trước đó";
+        public static final String STAFF_PAYMENT_CONTRACT = "Một nhân viên đã thanh toán cho hợp đồng này trước đó";
+        public static final String STAFF_CREATE_CONTRACT = "Một nhân viên đã tạo mới hợp đồng này";
+        public static final String STAFF_CHANGED_CONTRACT_INFO = "";
+        public static final String STAFF_REJECT_CANCEL_CONTRACT = "Một nhân viên đã giải quyết yêu cầu hủy hợp đồng này trước đó";
+        public static final String STAFF_RENEW_CONTRACT = "Một nhân viên đã gia hạn cho hợp đồng này trước đó";
+    }
 }

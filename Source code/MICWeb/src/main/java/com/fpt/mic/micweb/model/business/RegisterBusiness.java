@@ -48,6 +48,7 @@ public class RegisterBusiness {
         Timestamp currentTime = new Timestamp(new Date().getTime());
         currentTime.setNanos(0);
         contractEntity.setLastModified(currentTime);
+        contractEntity.setModifyReason(Constants.ContractModify.CUSTOMER_REGISTER_CONTRACT);
         contractEntity.setContractCode(contractDao.getIncrementId());
         contractEntity.setCustomerCode(customerCode);
 
@@ -99,6 +100,7 @@ public class RegisterBusiness {
         Timestamp currentTime = new Timestamp(new Date().getTime());
         currentTime.setNanos(0);
         contractEntity.setLastModified(currentTime);
+        contractEntity.setModifyReason(Constants.ContractModify.CUSTOMER_REGISTER_CONTRACT);
 
         ContractDao contractDao = new ContractDao();
         CustomerDao customerDao = new CustomerDao();
@@ -181,6 +183,7 @@ public class RegisterBusiness {
 
         // set new last modified time
         contractEntity.setLastModified(new Timestamp(new Date().getTime()));
+        contractEntity.setModifyReason(Constants.ContractModify.CUSTOMER_PAYMENT_CONTRACT);
 
         if(contractEntity.getStartDate().after(currentDate)) {
             contractEntity.setStatus(Constants.ContractStatus.PENDING);

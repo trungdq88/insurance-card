@@ -35,7 +35,7 @@ public class DashboardController extends AuthController {
         CardBusiness cardBusiness = new CardBusiness();
         ContractBusiness contractBusiness = new ContractBusiness();
 
-        BigInteger unreadCount = notificationBusiness.getUnreadNotificationsCount(staffCode);
+        // BigInteger unreadCount = notificationBusiness.getUnreadNotificationsCount(staffCode);
         Long noCardContractCount = notificationBusiness.getNoCardContractCount();
 
         r.equest.setAttribute("activeContractCount",contractBusiness.getAllActiveContractCount());
@@ -44,7 +44,7 @@ public class DashboardController extends AuthController {
         r.equest.setAttribute("requestCancelContractCount",contractBusiness.getAllRequestCancelContractCount());
 
         r.equest.setAttribute("notifications", notifications);
-        r.equest.setAttribute("unreadCount", unreadCount);
+        // r.equest.setAttribute("unreadCount", unreadCount);
         r.equest.setAttribute("noCardContractCount", noCardContractCount);
 
         return new JspPage("staff/dashboard.jsp");

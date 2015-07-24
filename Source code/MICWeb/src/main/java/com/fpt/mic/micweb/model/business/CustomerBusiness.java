@@ -92,6 +92,7 @@ public class CustomerBusiness {
 
         // Concurrency set value
         contract.setLastModified(new Timestamp(new java.util.Date().getTime()));
+        contract.setModifyReason(Constants.ContractModify.CUSTOMER_REQUEST_CANCEL);
 
         // Send notification
         NotificationBusiness bus = new NotificationBusiness();
@@ -122,6 +123,7 @@ public class CustomerBusiness {
         if (contract != null) {
             // Concurrency set value
             contract.setLastModified(new Timestamp(new java.util.Date().getTime()));
+            contract.setModifyReason(Constants.ContractModify.CUSTOMER_RENEW_CONTRACT);
 
             // Mark payment done
             contract.setNeedRenewPayment(null);
@@ -187,7 +189,7 @@ public class CustomerBusiness {
 
         // Concurrency set value
         contract.setLastModified(new Timestamp(new java.util.Date().getTime()));
-
+        contract.setModifyReason(Constants.ContractModify.CUSTOMER_REJECT_CANCEL_REQUEST);
 
         if (contractDao.update(contract) != null) {
             return contract;
@@ -213,6 +215,7 @@ public class CustomerBusiness {
         if (contract != null) {
             // Concurrency set value
             contract.setLastModified(new Timestamp(new java.util.Date().getTime()));
+            contract.setModifyReason(Constants.ContractModify.CUSTOMER_PAYMENT_CONTRACT);
 
             // set start date
             Timestamp currentDate = DateUtils.currentDateWithoutTime();

@@ -16,10 +16,9 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
         </button>
-        <a href="${pageContext.request.contextPath}/customer">
-            <img src="${pageContext.request.contextPath}/img/customer.png"/>
+        <a href="${pageContext.request.contextPath}/customer" class="brand-header">
+            <img src="${pageContext.request.contextPath}/img/logo.png"/> Công ty bảo hiểm MIC
         </a>
-        <label class="textWellcome">Khách hàng ${sessionScope.userDto.userEntity.name}</label>
     </div>
     <!-- /.navbar-header -->
 
@@ -42,8 +41,8 @@
                 <i class="fa fa-caret-down"></i>
             </a>
             <ul class="dropdown-menu dropdown-user">
-                <li><a href="${pageContext.request.contextPath}/customer"><i class="fa fa-user fa-fw"></i> Thông tin cá
-                    nhân</a>
+                <li><a href="${pageContext.request.contextPath}/customer">
+                    <i class="fa fa-user fa-fw"></i> Thông tin cá nhân</a>
                 </li>
                 <li class="divider"></li>
                 <li><a href="${pageContext.request.contextPath}/user?action=logout"><i class="fa fa-sign-out fa-fw"></i>
@@ -59,6 +58,13 @@
     <div class="navbar-default sidebar" role="navigation">
 
         <div class="sidebar-nav navbar-collapse">
+            <div class="textWellcome customer">
+                <img src="${pageContext.request.contextPath}/img/customer.png">
+                <p>Khách hàng</p>
+                <label>
+                    ${sessionScope.userDto.userEntity.name}
+                </label>
+            </div>
             <ul class="nav" id="side-menu">
                 <li>
                     <a href="${pageContext.request.contextPath}/customer">

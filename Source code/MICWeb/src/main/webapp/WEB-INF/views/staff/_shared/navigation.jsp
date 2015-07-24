@@ -18,10 +18,9 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
         </button>
-        <a href="${pageContext.request.contextPath}/staff">
-            <img src="${pageContext.request.contextPath}/img/staff.png"/>
+        <a href="${pageContext.request.contextPath}/staff" class="brand-header">
+            <img src="${pageContext.request.contextPath}/img/logo.png"/> Công ty bảo hiểm MIC
         </a>
-        <label class="textWellcome">Nhân viên ${sessionScope.userDto.userEntity.name}</label>
     </div>
     <!-- /.navbar-header -->
 
@@ -62,6 +61,14 @@
 
     <div class="navbar-default sidebar" role="navigation">
         <div class="sidebar-nav navbar-collapse">
+
+            <div class="textWellcome staff">
+                <img src="${pageContext.request.contextPath}/img/staff.png">
+                <p>Nhân viên</p>
+                <label>
+                    ${sessionScope.userDto.userEntity.name}
+                </label>
+            </div>
             <ul class="nav" id="side-menu">
                 <li>
                     <a href="${pageContext.request.contextPath}/staff">

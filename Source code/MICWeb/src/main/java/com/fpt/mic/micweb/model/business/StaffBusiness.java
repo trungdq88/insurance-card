@@ -159,6 +159,7 @@ public class StaffBusiness {
         contractEntity.setStaffCode(receiver.getStaffCode());
         // Set lastModified is current date
         contractEntity.setLastModified(DateUtils.currentTimeWithoutNanos());
+        contractEntity.setModifyReason(Constants.ContractModify.STAFF_CREATE_CONTRACT);
         // Create new contract
         ContractEntity newContract = contractDao.create(contractEntity);
         // Check contract to add payment
@@ -195,6 +196,7 @@ public class StaffBusiness {
             contractEntity.setNeedRenewPayment(null);
             // Concurrency set value
             contractEntity.setLastModified(DateUtils.currentTimeWithoutNanos());
+            contractEntity.setModifyReason(Constants.ContractModify.STAFF_RENEW_CONTRACT);
 
             if (cardEntity == null || dto.isNewCard()) {
                 contractEntity.setStatus(Constants.ContractStatus.NO_CARD);
@@ -243,6 +245,7 @@ public class StaffBusiness {
             contractEntity.setCancelNote(null);
             // Concurrency set value
             contractEntity.setLastModified(currentTime);
+            contractEntity.setModifyReason(Constants.ContractModify.STAFF_REJECT_CANCEL_CONTRACT);
             Timestamp currentDate = DateUtils.currentDateWithoutTime();
             if (!isPaidContract || contractEntity.getStartDate().after(currentDate)) {
                 contractEntity.setStatus(Constants.ContractStatus.PENDING);
@@ -283,7 +286,7 @@ public class StaffBusiness {
             contractEntity.setStatus(Constants.ContractStatus.CANCELLED);
             // Concurrency set value
             contractEntity.setLastModified(DateUtils.currentTimeWithoutNanos());
-
+            contractEntity.setModifyReason(Constants.ContractModify.STAFF_CANCEL_CONTRACT);
             if (contractDao.update(contractEntity) != null) {
                 return true;
             }
@@ -311,6 +314,7 @@ public class StaffBusiness {
             contractEntity.setSeatCapacity(dto.getSeatCapacity());
             // Set lastModified is current date
             contractEntity.setLastModified(DateUtils.currentTimeWithoutNanos());
+            contractEntity.setModifyReason(Constants.ContractModify.STAFF_CHANGED_CONTRACT_INFO);
 
             if (contractDao.update(contractEntity) != null) {
                 return true;
@@ -391,6 +395,7 @@ public class StaffBusiness {
 
             // Concurrency check value
             contractEntity.setLastModified(DateUtils.currentTimeWithoutNanos());
+            contractEntity.setModifyReason(Constants.ContractModify.STAFF_PAYMENT_CONTRACT);
 
             // Update contract status
             // kiem tra neu chua den ngay start hop dong thi de la pending, nguoc lai thi no_card
