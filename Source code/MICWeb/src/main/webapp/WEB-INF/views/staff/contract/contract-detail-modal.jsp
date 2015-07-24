@@ -260,7 +260,8 @@
                         </div>
 
                         <label class="col-sm-3 control-label control-newcard" for="newCard">Cấp thẻ mới
-                            <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="bottom" title=""
+
+                            <i class="fa fa-question-circle" id="newCardTooltip" data-toggle="tooltip" data-placement="bottom" title=""
                                data-original-title="Thẻ cũ sẽ bị vô hiệu hóa, yêu cầu cấp thẻ mới sẽ được tạo."></i>
                         </label>
 
