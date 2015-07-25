@@ -176,7 +176,7 @@ $(document).ready(function () {
         var oneDay = 24 * 60 * 60 * 1000;
         var timeNow = new Date();
         var expiredDate = new Date(date);
-        return Math.round((expiredDate.getTime() - timeNow.getTime()) / (oneDay));
+        return Math.round((expiredDate.getTime() - timeNow.getTime()) / (oneDay) );
     }
 
 
@@ -185,11 +185,11 @@ $(document).ready(function () {
 
     function CheckDayAvailable() {
         var expiredDate = $('#expiredDate').val();
-        if (DayDiff(expiredDate) >= 0) {
+        if (DayDiff(expiredDate) > 0) {
             $('#dateAvailable').val("Còn hạn: " + Math.abs(DayDiff($('#expiredDate').val())) + ' ngày');
         }
-        else if(DayDiff(expiredDate) == -1){
-            $('#dateAvailable').val("Không xác định");
+        else if(DayDiff(expiredDate) == 0){
+            $('#dateAvailable').val("");
         }
         else {
             $('#dateAvailable').val("Quá hạn: " + Math.abs(DayDiff($('#expiredDate').val())) + ' ngày');
