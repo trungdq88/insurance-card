@@ -82,7 +82,7 @@ public class SchedulerBusiness {
                 || contractEntity.getStatus().equals(Constants.ContractStatus.NO_CARD)
                 || contractEntity.getStatus().equals(Constants.ContractStatus.REQUEST_CANCEL)) {
             // check if contract expired (2)
-            if (contractEntity.getExpiredDate().before(currentDate)) {
+            if (contractEntity.getExpiredDate().equals(currentDate) || contractEntity.getExpiredDate().before(currentDate) ) {
                 contractEntity.setStatus(Constants.ContractStatus.EXPIRED);
                 contractEntity.setLastModified(new Timestamp(new Date().getTime()));
                 contractEntity.setModifyReason(Constants.ContractModify.SCHEDULER_CONTRACT_EXPIRED);
@@ -106,7 +106,7 @@ public class SchedulerBusiness {
         // check if Pending contract exceeded payment due date
         if (contractEntity.getStatus().equals(Constants.ContractStatus.PENDING)) {
             if (contractEntity.getStartDate().equals(contractEntity.getExpiredDate())) {
-                if (DateUtils.dateBetween(DateUtils.convertDateTimeToDate(contractEntity.getCreatedDate()), currentDate) > configUtils.getPaymentDueDate()) {
+                if (DateUtils.dateBetween(DateUtils.convertDateTimeToDate(contractEntity.getCreatedDate()), currentDate) >= configUtils.getPaymentDueDate()) {
 
                     contractEntity.setStatus(Constants.ContractStatus.CANCELLED);
                     contractEntity.setCancelDate(currentDate);
