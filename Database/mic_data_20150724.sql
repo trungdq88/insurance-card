@@ -192,7 +192,7 @@ CREATE TABLE IF NOT EXISTS `mic_data`.`mic_contract` (
   `customer_code` VARCHAR(10) NOT NULL,
   `need_renew_payment` INT(11) UNSIGNED NULL DEFAULT NULL,
   `active_card_instance_id` INT UNSIGNED NULL,
-  `modify_reason` VARCHAR NULL DEFAULT NULL,
+  `modify_reason` VARCHAR(2000) NULL DEFAULT NULL,
   PRIMARY KEY (`contract_code`),
   INDEX `fk_mic_contract_mic_staff_idx` (`staff_code` ASC),
   INDEX `fk_mic_contract_mic_contract_type1_idx` (`contract_type_id` ASC),
