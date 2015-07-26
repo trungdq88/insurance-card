@@ -60,7 +60,7 @@
                                     <c:forEach var="cardEntity" items="${cards}" varStatus="counter">
                                         <c:set var="card" value="${cardEntity.micCardInstancesByCardId.get(0)}"/>
                                         <tr>
-                                            <td>${counter.count}</td>
+                                            <td>${(cardPaginator.getCurrentPage(param.page) - 1) * cardPaginator.itemPerPage + counter.count}</td>
                                             <td>
                                                 <a href="${pageContext.request.contextPath}/staff/card?action=detail&cardId=${card.cardId}">
                                                         ${card.cardId}

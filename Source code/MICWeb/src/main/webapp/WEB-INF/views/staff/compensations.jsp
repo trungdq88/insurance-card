@@ -68,7 +68,7 @@
                             <c:otherwise>
                                 <c:forEach var="compensation" items="${compensations}" varStatus="counter">
                                     <tr>
-                                        <td>${counter.count}</td>
+                                        <td>${(compenPaginator.getCurrentPage(param.page) - 1) * compenPaginator.itemPerPage + counter.count}</td>
                                         <td>
                                             <a href="${pageContext.request.contextPath}/staff/compensation?action=detail&code=${compensation.compensationCode}">
                                                 ${compensation.compensationCode}

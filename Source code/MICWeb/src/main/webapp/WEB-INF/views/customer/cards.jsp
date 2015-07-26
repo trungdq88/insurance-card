@@ -65,7 +65,7 @@
                 <c:otherwise>
                   <c:forEach var="card" items="${cards}" varStatus="counter">
                     <tr>
-                      <td>${counter.count}</td>
+                      <td>${(cardPaginator.getCurrentPage(param.page) - 1) * cardPaginator.itemPerPage + counter.count}</td>
                       <td>
                         <a href="${pageContext.request.contextPath}/customer/card?action=detail&cardId=${card.cardId}">
                             ${card.cardId}
