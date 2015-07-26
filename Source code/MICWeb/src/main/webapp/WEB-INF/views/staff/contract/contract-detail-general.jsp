@@ -59,7 +59,9 @@
 
         <div class="col-sm-5">
             <div class="text-value">
-                <fmt:formatDate value="${contract.startDate}" pattern="dd/MM/yyyy"/>
+                ngày <fmt:formatDate value="${contract.startDate}" pattern="dd"/>
+                tháng <fmt:formatDate value="${contract.startDate}" pattern="MM"/>
+                năm <fmt:formatDate value="${contract.startDate}" pattern="yyyy"/>
             </div>
         </div>
     </div>
@@ -69,7 +71,9 @@
 
         <div class="col-sm-5">
             <div class="text-value">
-                <fmt:formatDate value="${contract.expiredDate}" pattern="dd/MM/yyyy"/>
+                ngày <fmt:formatDate value="${contract.expiredDate}" pattern="dd"/>
+                tháng <fmt:formatDate value="${contract.expiredDate}" pattern="MM"/>
+                năm <fmt:formatDate value="${contract.expiredDate}" pattern="yyyy"/>
             </div>
         </div>
     </div>
