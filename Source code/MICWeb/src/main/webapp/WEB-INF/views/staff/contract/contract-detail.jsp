@@ -187,6 +187,9 @@
                                     <c:when test="${contract.status eq 'Expired'}">
                                         <span class="empty-value">Đã hết hạn</span>
                                     </c:when>
+                                    <c:when test="${contract.status eq 'Pending' and empty listPayment}">
+                                        <span class="empty-value">Không có</span>
+                                    </c:when>
                                     <c:otherwise>
                                         <span id="remain"
                                               style="color:deepskyblue; font-weight: bolder; font-size: large"></span>
