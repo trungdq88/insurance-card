@@ -76,6 +76,7 @@
             <div class="col-lg-12">
                 <h2 class="page-header ">Hợp Đồng ${contract.contractCode}
                      <span class="pull-right">
+                            <input type="hidden" id="isPayment" value="${isPayment}">
                             <input type="hidden" id="contractStatus1" value="${contract.status}">
                             <input type="hidden" id="contractRenewLimit" value="${configUtils.contractRenewLimit}">
                              <button type="submit" class="btn btn-primary" data-toggle="modal" id="renew"
@@ -278,6 +279,7 @@
             <div class="col-lg-12">
                 <c:if test="${not empty validateErrors}">
                     <input type="hidden" id="modify-reason" value="${contract.modifyReason}"/>
+
                     <div class="well well-lg text-danger ">
                         <ul>
                             <c:forEach var="error" items="${validateErrors}">
