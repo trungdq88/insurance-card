@@ -50,6 +50,7 @@
 
                 <c:if test="${not empty validateErrors}">
                     <input type="hidden" id="modify-reason" value="${contract.modifyReason}"/>
+
                     <div class="text-danger">
                         <ul>
                             <c:forEach var="error" items="${validateErrors}">
@@ -174,31 +175,35 @@
                     </c:if>
                     <%--/Show cancel contract information --%>
                     <jsp:include page="contract-detail-general.jsp" flush="true"/>
-                    <!-- Remaining days -->
+                    <!-- Remaining days & contract fee -->
                     <div class="form-group">
-                        <label class="col-sm-4 control-label">Thời gian đến ngày hết hạn</label>
+                        <c:choose>
+                            <c:when test="${not empty listPayment}">
+                                <label class="col-sm-4 control-label">Thời gian đến ngày hết hạn</label>
 
-                        <div class="col-sm-2">
-                            <div class="text-value">
-                                <c:choose>
-                                    <c:when test="${contract.status eq 'Cancelled'}">
-                                        <span class="empty-value">Đã hủy</span>
-                                    </c:when>
-                                    <c:when test="${contract.status eq 'Expired'}">
-                                        <span class="empty-value">Đã hết hạn</span>
-                                    </c:when>
-                                    <c:when test="${contract.status eq 'Pending' and empty listPayment}">
-                                        <span class="empty-value">Không có</span>
-                                    </c:when>
-                                    <c:otherwise>
+                                <div class="col-sm-2">
+                                    <div class="text-value">
+                                        <c:choose>
+                                            <c:when test="${contract.status eq 'Cancelled'}">
+                                                <span class="empty-value">Đã hủy</span>
+                                            </c:when>
+                                            <c:when test="${contract.status eq 'Expired'}">
+                                                <span class="empty-value">Đã hết hạn</span>
+                                            </c:when>
+                                            <c:otherwise>
                                         <span id="remain"
                                               style="color:deepskyblue; font-weight: bolder; font-size: large"></span>
-                                    </c:otherwise>
-                                </c:choose>
-                            </div>
-                        </div>
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </div>
+                                </div>
 
-                        <label class="col-sm-2 control-label">Phí bảo hiểm</label>
+                                <label class="col-sm-2 control-label">Phí bảo hiểm</label>
+                            </c:when>
+                            <c:otherwise>
+                                <label class="col-sm-4 control-label">Phí bảo hiểm</label>
+                            </c:otherwise>
+                        </c:choose>
 
                         <div class="col-sm-2">
                             <div class="text-value">
