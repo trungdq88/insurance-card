@@ -57,11 +57,13 @@ public class CustomerBusiness {
         ContractDao contractDao = new ContractDao();
         return contractDao.getContractByCustomerCodeCount(customerCode);
     }
+
     public Long getAllPaymentByCustomerCount(String customerCode) {
         PaymentDao paymentDao = new PaymentDao();
         return paymentDao.getAllPaymentByCustomerCodeCount(customerCode);
     }
-    public List<PaymentEntity> getAllPaymentByCustomerCode(String customerCode , int offset, int count) {
+
+    public List<PaymentEntity> getAllPaymentByCustomerCode(String customerCode, int offset, int count) {
         PaymentDao paymentDao = new PaymentDao();
         return paymentDao.getPaymentByCustomerCode(customerCode, offset, count);
     }
@@ -169,7 +171,7 @@ public class CustomerBusiness {
         ContractEntity contract = contractDao.read(contractCode);
         java.util.Date date = new java.util.Date();
         // pending
-        if(contract.getStartDate().equals(contract.getExpiredDate())){
+        if (contract.getStartDate().equals(contract.getExpiredDate())) {
             contract.setStatus(Constants.ContractStatus.PENDING);
         }
         // no card
@@ -319,6 +321,7 @@ public class CustomerBusiness {
         NewCardRequestDao newCardRequestDao = new NewCardRequestDao();
         return newCardRequestDao.getAllNewCardRequestCount(customerCode);
     }
+
     public List searchOnePageNewCardRequest(String keyword, String customerCode, int offset, int count) {
         NewCardRequestDao newCardRequestDao = new NewCardRequestDao();
         return newCardRequestDao.searchOnePageNewCardRequest(keyword, customerCode, offset, count);
@@ -333,20 +336,21 @@ public class CustomerBusiness {
         NewCardRequestDao newCardRequestDao = new NewCardRequestDao();
         return newCardRequestDao.getUnresolvedNewCardRequestCount(customerCode);
     }
+
     /**
      * Edit Profile
-     * */
-    public Boolean editCustomerProfile(String customerCode, EditCustomerProfileDto dto){
+     */
+    public Boolean editCustomerProfile(String customerCode, EditCustomerProfileDto dto) {
         boolean result = false;
         CustomerDao customerDao = new CustomerDao();
         CustomerEntity customerEntity = customerDao.read(customerCode);
-        if(customerEntity != null){
+        if (customerEntity != null) {
             customerEntity.setAddress(dto.getAddress());
             customerEntity.setEmail(dto.getEmail());
             customerEntity.setPhone(dto.getPhone());
             customerEntity.setPersonalId(dto.getPersonalID());
             customerEntity.setLastModified(new Timestamp(new java.util.Date().getTime()));
-            if(customerDao.update(customerEntity) != null){
+            if (customerDao.update(customerEntity) != null) {
                 result = true;
             }
         }
@@ -357,5 +361,19 @@ public class CustomerBusiness {
     public Long getAllAccidentByContractCodeCount(String code) {
         AccidentDao accidentDao = new AccidentDao();
         return accidentDao.getAllAccidentByContractCodeCount(code);
+    }
+
+    /**
+     * Payment befor startDate
+     */
+    public boolean isPayment(String contractCode) {
+        PaymentDao paymentDao = new PaymentDao();
+        List<PaymentEntity> listPayment = paymentDao.getPaymentByContractCode(contractCode);
+        if (listPayment != null && listPayment.size() > 0) {
+            return true;
+        } else {
+            return false;
+        }
+
     }
 }

@@ -8,6 +8,7 @@ $(document).ready(function () {
     CheckDayAvailable();
     var contractRenewLimit = parseInt($('#contractRenewLimit').val());
 
+
     $('[data-toggle="tooltip"]').tooltip();
     if ($('#isFirstLogin').val() == 0) {
         $('#changePass').trigger("click");
@@ -176,9 +177,9 @@ $(document).ready(function () {
         var oneDay = 24 * 60 * 60 * 1000;
         var timeNow = new Date();
 
-        var refreshDate = timeNow.setHours(00,00,0000);
+        var refreshDate = timeNow.setHours(00, 00, 0000);
         var expiredDate = new Date(date);
-        return Math.round((expiredDate.getTime() - refreshDate) / (oneDay)  );
+        return Math.round((expiredDate.getTime() - refreshDate) / (oneDay));
     }
 
 
@@ -187,15 +188,16 @@ $(document).ready(function () {
 
     function CheckDayAvailable() {
         var expiredDate = $('#expiredDate').val();
-        if (DayDiff(expiredDate) > 0) {
-            $('#dateAvailable').val("Còn hạn: " + Math.abs(DayDiff($('#expiredDate').val())) + ' ngày');
+        var checkPayment = $('#isPayment').val();
+        if (checkPayment == 'true') {
+            if (DayDiff(expiredDate) >= 0) {
+                $('#dateAvailable').val("Còn hạn: " + Math.abs(DayDiff($('#expiredDate').val())) + ' ngày');
+            }
+            else {
+                $('#dateAvailable').val("Quá hạn: " + Math.abs(DayDiff($('#expiredDate').val())) + ' ngày');
+            }
         }
-        else if(DayDiff(expiredDate) == 0){
-            $('#dateAvailable').val("");
-        }
-        else {
-            $('#dateAvailable').val("Quá hạn: " + Math.abs(DayDiff($('#expiredDate').val())) + ' ngày');
-        }
+
     }
 
     $('#renew').click(function () {
