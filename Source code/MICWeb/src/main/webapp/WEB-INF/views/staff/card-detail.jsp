@@ -130,10 +130,18 @@
                             </div>
                             <div class="pull-right no-wrap">
                                 <form action="${pageContext.request.contextPath}/staff/card" method="get">
-                                    Lọc kết quả từ <input type="date" class="form-control short-input"/>
-                                    đến <input type="date" class="form-control short-input"/>
+
+                                    <input type="hidden" name="action" value="detail"/>
+                                    <input type="hidden" name="cardId" value="${param.cardId}"/>
+
+                                    Lọc kết quả từ
+                                    <input id="filter-begin" name="filter-begin" type="date"
+                                           class="form-control short-input" value="${param['filter-begin']}"/>
+                                    đến
+                                    <input id="filter-end"  name="filter-end" type="date"
+                                           class="form-control short-input" value="${param['filter-end']}"/>
                                     <input type="submit" class="btn btn-default" value="Tìm kiếm"/>
-                                    <input type="hidden" name="action" value="search"/>
+
                                 </form>
                             </div>
                             <div class="clearfix"></div>
@@ -195,7 +203,7 @@
                             <ul class="pagination">
                                 <c:if test="${param.page != 1 && not empty param.page}">
                                     <li>
-                                        <a href="?action=${param.action}&cardId=${param.cardId}&page=1"
+                                        <a href="?action=${param.action}&cardId=${param.cardId}&filter-begin=${param['filter-begin']}&filter-end=${param['filter-end']}&page=1"
                                            aria-label="Previous">
                                             <span aria-hidden="true">Đầu</span>
                                         </a>
@@ -203,12 +211,12 @@
                                 </c:if>
                                 <c:forEach begin="1" end="${calPaginator.pageSize}" var="pageNumber">
                                     <li ${param.page == pageNumber ||(pageNumber == 1 && empty param.page) ? "class='active'": ""} >
-                                        <a href="?action=${param.action}&cardId=${param.cardId}&page=${pageNumber}">${pageNumber}</a>
+                                        <a href="?action=${param.action}&cardId=${param.cardId}&filter-begin=${param['filter-begin']}&filter-end=${param['filter-end']}&page=${pageNumber}">${pageNumber}</a>
                                     </li>
                                 </c:forEach>
                                 <c:if test="${param.page != calPaginator.pageSize && calPaginator.pageSize != 1}">
                                     <li>
-                                        <a href="?action=${param.action}&cardId=${param.cardId}&page=${calPaginator.pageSize}"
+                                        <a href="?action=${param.action}&cardId=${param.cardId}&filter-begin=${param['filter-begin']}&filter-end=${param['filter-end']}&page=${calPaginator.pageSize}"
                                            aria-label="Next">
                                             <span aria-hidden="true">Cuối</span>
                                         </a>
@@ -281,5 +289,24 @@
     </div>
 </div>
 <!-- /#wrapper -->
+<script>
+    $(function () {
+        var $begin = $("#filter-begin");
+        var $end = $("#filter-end");
+        if ($begin.val() == "") {
+            $begin.val(getCurrentDate());
+        }
+        if ($end.val() == "") {
+            $end.val(getCurrentDate());
+        }
+        $begin.blur(function () {
+            $end.attr('min', $begin.val());
+        }).blur();
+        $end.blur(function () {
+            $begin.attr('max', $end.val());
+        }).blur();
 
+
+    })
+</script>
 <%@ include file="_shared/footer.jsp" %>

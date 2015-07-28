@@ -17,7 +17,11 @@ import com.fpt.mic.micweb.model.entity.StaffEntity;
 import com.fpt.mic.micweb.utils.ConfigUtils;
 
 import javax.servlet.annotation.WebServlet;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -87,6 +91,25 @@ public class CardController extends AuthController {
     public ResponseObject getDetail(R r) {
         String cardId = r.equest.getParameter("cardId");
 
+        // Filter
+        final String strFilterBegin = r.equest.getParameter("filter-begin");
+        final String strFilterEnd = r.equest.getParameter("filter-end");
+
+
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+
+        Date filterBegin = null;
+        Date filterEnd = null;
+
+        try {
+            filterBegin = df.parse(strFilterBegin);
+            filterEnd = df.parse(strFilterEnd);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        } catch (NullPointerException e) {
+            // e.printStackTrace();
+        }
+
         // Get id from fail validation
         if (cardId == null) {
             cardId = (String) r.equest.getAttribute("cardId");
@@ -100,19 +123,43 @@ public class CardController extends AuthController {
         final CardBusiness cardBusiness = new CardBusiness();
         final CardInstanceEntity cardInstance = cardBusiness.getLastActiveCardInnstance(cardId);
 
-        final String finalCardId = cardId;
-        calPaginator.setGetItemsCallback(new Paginator.IGetItems() {
-            @Override
-            public List getItems(int offset, int count) {
-                return cardBusiness.getCardInstanceAccessLog(cardInstance.getId(), offset, count);
-            }
-        });
-        calPaginator.setGetItemSizeCallback(new Paginator.IGetItemSize() {
-            @Override
-            public Long getItemSize() {
-                return cardBusiness.getCardInstanceAccessLogCount(cardInstance.getId());
-            }
-        });
+
+        if (filterBegin == null || filterEnd == null || filterBegin.equals(filterEnd)) {
+            // No filter, get all the access log
+            calPaginator.setGetItemsCallback(new Paginator.IGetItems() {
+                @Override
+                public List getItems(int offset, int count) {
+                    return cardBusiness.getCardInstanceAccessLog(
+                            cardInstance.getId(), offset, count);
+                }
+            });
+            calPaginator.setGetItemSizeCallback(new Paginator.IGetItemSize() {
+                @Override
+                public Long getItemSize() {
+                    return cardBusiness.getCardInstanceAccessLogCount(
+                            cardInstance.getId());
+                }
+            });
+        } else {
+            // There is filter to the access log
+            final Date finalFilterBegin = filterBegin;
+            final Date finalFilterEnd = filterEnd;
+            calPaginator.setGetItemsCallback(new Paginator.IGetItems() {
+                @Override
+                public List getItems(int offset, int count) {
+                    return cardBusiness.searchCardInstanceAccessLog(
+                            cardInstance.getId(), finalFilterBegin, finalFilterEnd,
+                            offset, count);
+                }
+            });
+            calPaginator.setGetItemSizeCallback(new Paginator.IGetItemSize() {
+                @Override
+                public Long getItemSize() {
+                    return cardBusiness.searchCardInstanceAccessLogCount(
+                            cardInstance.getId(), finalFilterBegin, finalFilterEnd);
+                }
+            });
+        }
 
         List<CardInstanceEntity> listInstance = cardBusiness.getAllCardInstancesByCardID(cardId);
 

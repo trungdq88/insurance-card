@@ -17,6 +17,9 @@ import com.fpt.mic.micweb.utils.Constants;
 import com.fpt.mic.micweb.utils.DateUtils;
 
 import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -182,6 +185,16 @@ public class CardBusiness {
     public Long getCardInstanceAccessLogCount(int cardInstanceId) {
         CardAccessLogDao cardAccessLogDao = new CardAccessLogDao();
         return cardAccessLogDao.getCardAccessLogCount(cardInstanceId);
+    }
+
+    public List searchCardInstanceAccessLog(int cardInstanceId, Date filterBegin, Date filterEnd, int offset, int count) {
+        CardAccessLogDao cardAccessLogDao = new CardAccessLogDao();
+        return cardAccessLogDao.getCardAccessLog(cardInstanceId, filterBegin, filterEnd, offset, count);
+    }
+
+    public Long searchCardInstanceAccessLogCount(int cardInstanceId, Date filterBegin, Date filterEnd) {
+        CardAccessLogDao cardAccessLogDao = new CardAccessLogDao();
+        return cardAccessLogDao.getCardAccessLogCount(cardInstanceId, filterBegin, filterEnd);
     }
 
     /**

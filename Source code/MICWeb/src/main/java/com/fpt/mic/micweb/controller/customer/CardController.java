@@ -20,10 +20,10 @@ import com.fpt.mic.micweb.utils.Constants;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpSession;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * Created by dinhquangtrung on 5/24/15.
@@ -88,6 +88,25 @@ public class CardController extends AuthController {
     public ResponseObject getDetail(R r) {
         final String cardId = r.equest.getParameter("cardId");
 
+        // Filter
+        final String strFilterBegin = r.equest.getParameter("filter-begin");
+        final String strFilterEnd = r.equest.getParameter("filter-end");
+
+
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+
+        Date filterBegin = null;
+        Date filterEnd = null;
+
+        try {
+            filterBegin = df.parse(strFilterBegin);
+            filterEnd = df.parse(strFilterEnd);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        } catch (NullPointerException e) {
+            // e.printStackTrace();
+        }
+
         // Call to business
         final CardBusiness cardBusiness = new CardBusiness();
         String customerCode = ((CustomerEntity) getLoggedInUser()).getCustomerCode();
@@ -98,18 +117,44 @@ public class CardController extends AuthController {
         }
         final CardInstanceEntity cardInstance = cardBusiness.getLastActiveCardInnstance(cardId);
 
-        calPaginator.setGetItemsCallback(new Paginator.IGetItems() {
-            @Override
-            public List getItems(int offset, int count) {
-                return cardBusiness.getCardInstanceAccessLog(cardInstance.getId(), offset, count);
-            }
-        });
-        calPaginator.setGetItemSizeCallback(new Paginator.IGetItemSize() {
-            @Override
-            public Long getItemSize() {
-                return cardBusiness.getCardInstanceAccessLogCount(cardInstance.getId());
-            }
-        });
+
+        if (filterBegin == null || filterEnd == null || filterBegin.equals(filterEnd)) {
+            // No filter, get all the access log
+            calPaginator.setGetItemsCallback(new Paginator.IGetItems() {
+                @Override
+                public List getItems(int offset, int count) {
+                    return cardBusiness.getCardInstanceAccessLog(
+                            cardInstance.getId(), offset, count);
+                }
+            });
+            calPaginator.setGetItemSizeCallback(new Paginator.IGetItemSize() {
+                @Override
+                public Long getItemSize() {
+                    return cardBusiness.getCardInstanceAccessLogCount(
+                            cardInstance.getId());
+                }
+            });
+        } else {
+            // There is filter to the access log
+            final Date finalFilterBegin = filterBegin;
+            final Date finalFilterEnd = filterEnd;
+            calPaginator.setGetItemsCallback(new Paginator.IGetItems() {
+                @Override
+                public List getItems(int offset, int count) {
+                    return cardBusiness.searchCardInstanceAccessLog(
+                            cardInstance.getId(), finalFilterBegin, finalFilterEnd,
+                            offset, count);
+                }
+            });
+            calPaginator.setGetItemSizeCallback(new Paginator.IGetItemSize() {
+                @Override
+                public Long getItemSize() {
+                    return cardBusiness.searchCardInstanceAccessLogCount(
+                            cardInstance.getId(), finalFilterBegin, finalFilterEnd);
+                }
+            });
+        }
+
         Map<Integer, String> newCardMappingRequest = new HashMap();
         newCardMappingRequest = cardBusiness.getMappingWithNewCardRequest();
         Map<String,Integer> newOldCardMappingRequest = new HashMap<String, Integer>();
