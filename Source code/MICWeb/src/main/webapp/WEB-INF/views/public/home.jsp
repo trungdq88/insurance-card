@@ -261,9 +261,13 @@
                             <c:set var="selectedId" value="${submitted.contractType}" ></c:set>
                             <select required class="form-control" name="register:contractType" id="ddlContractType" onchange="{
                                 var fee = parseFloat(this.options[this.selectedIndex].innerHTML);
-                                $('#txtFeeInput').val(fee);
-                                fee = fee.formatMoney(0,'.',',');
-                                $('#txtFee1').text(fee);
+                                    var contractDefaultTerm = parseFloat('${contractDefaultTerm}');
+                                    var realFee = fee * (contractDefaultTerm/12);
+                                    realFee = (realFee - (realFee % 1000));
+                                    $('#txtFeeInput').val(realFee);
+
+                                realFee = realFee.formatMoney(0,'.',',');
+                                $('#txtFee1').text(realFee);
 
                             }" >
                                 <c:forEach var="row" items="${listContractType}">
@@ -363,7 +367,10 @@
 
     if ($('#txtFeeInput').val() == "") {
         var fee = parseFloat('${listContractType[0].pricePerYear}');
-        $('#txtFeeInput').val(fee);
+        var contractDefaultTerm = parseFloat('${contractDefaultTerm}');
+        var realFee = fee * (contractDefaultTerm/12);
+        realFee = (realFee - (realFee % 1000));
+        $('#txtFeeInput').val(realFee);
     }
     $('#txtFee1').text(parseFloat($('#txtFeeInput').val()).formatMoney(0,'.',','));
 
