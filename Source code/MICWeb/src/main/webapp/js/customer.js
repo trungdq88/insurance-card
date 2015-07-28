@@ -5,7 +5,7 @@
 $(document).ready(function () {
 
 
-    CheckDayAvailable();
+    //CheckDayAvailable();
     var contractRenewLimit = parseInt($('#contractRenewLimit').val());
 
 
@@ -42,43 +42,43 @@ $(document).ready(function () {
     /**
      ------------------------------------------Handle button contract detail------------------------------------------
      */
-    handleShowingButton($('#contractStatus1').val());
-    function handleShowingButton(status) {
-        //Ready
-        if (status == 'Ready') {
-            if (DayDiff($('#expiredDate').val()) > contractRenewLimit) {
-                $('#renew').addClass('hide');
-            }
-        }
-        //Cancelled
-        else if (status == 'Cancelled') {
-            $('#renew').addClass('hide');
-            $('#delete').addClass('hide');
-        }
-        //Expired
-        else if (status == 'Expired') {
-            if (DayDiff($('#expiredDate').val()) > contractRenewLimit) {
-                $('#renew').addClass('hide');
-            }
-            $('#delete').addClass('hide');
-        }
-        //Pending
-        else if (status == 'Pending') {
-            $('#renew').addClass('hide');
-            //$('#delete').addClass('hide');
-        }
-        //Request cancel
-        else if (status == 'Request cancel') {
-            $('#renew').addClass('hide');
-            $('#delete').addClass('hide');
-        }
-        //No card
-        else if (status == 'No card') {
-            if (DayDiff($('#expiredDate').val()) > contractRenewLimit) {
-                $('#renew').addClass('hide');
-            }
-        }
-    }
+    //handleShowingButton($('#contractStatus1').val());
+    //function handleShowingButton(status) {
+    //    //Ready
+    //    if (status == 'Ready') {
+    //        if (DayDiff($('#expiredDate').val()) > contractRenewLimit) {
+    //            $('#renew').addClass('hide');
+    //        }
+    //    }
+    //    //Cancelled
+    //    else if (status == 'Cancelled') {
+    //        $('#renew').addClass('hide');
+    //        $('#delete').addClass('hide');
+    //    }
+    //    //Expired
+    //    else if (status == 'Expired') {
+    //        if (DayDiff($('#expiredDate').val()) > contractRenewLimit) {
+    //            $('#renew').addClass('hide');
+    //        }
+    //        $('#delete').addClass('hide');
+    //    }
+    //    //Pending
+    //    else if (status == 'Pending') {
+    //        $('#renew').addClass('hide');
+    //        //$('#delete').addClass('hide');
+    //    }
+    //    //Request cancel
+    //    else if (status == 'Request cancel') {
+    //        $('#renew').addClass('hide');
+    //        $('#delete').addClass('hide');
+    //    }
+    //    //No card
+    //    else if (status == 'No card') {
+    //        if (DayDiff($('#expiredDate').val()) > contractRenewLimit) {
+    //            $('#renew').addClass('hide');
+    //        }
+    //    }
+    //}
 
     /**
      -----------------------------------------------------------------------------------------------------------
@@ -181,24 +181,24 @@ $(document).ready(function () {
         var expiredDate = new Date(date);
         return Math.round((expiredDate.getTime() - refreshDate) / (oneDay));
     }
-
-
-    //DayDiff($('#expiredDate').val()) > 0 ? $('#dateAvailable').val("Còn hạn: " + Math.abs(DayDiff($('#expiredDate').val())) + ' ngày')
-    //    : $('#dateAvailable').val("Quá hạn: " + Math.abs(DayDiff($('#expiredDate').val())) + ' ngày');
-
-    function CheckDayAvailable() {
-        var expiredDate = $('#expiredDate').val();
-        var checkPayment = $('#isPayment').val();
-        if (checkPayment == 'true') {
-            if (DayDiff(expiredDate) >= 0) {
-                $('#dateAvailable').val("Còn hạn: " + Math.abs(DayDiff($('#expiredDate').val())) + ' ngày');
-            }
-            else {
-                $('#dateAvailable').val("Quá hạn: " + Math.abs(DayDiff($('#expiredDate').val())) + ' ngày');
-            }
-        }
-
-    }
+    //
+    //
+    ////DayDiff($('#expiredDate').val()) > 0 ? $('#dateAvailable').val("Còn hạn: " + Math.abs(DayDiff($('#expiredDate').val())) + ' ngày')
+    ////    : $('#dateAvailable').val("Quá hạn: " + Math.abs(DayDiff($('#expiredDate').val())) + ' ngày');
+    //
+    //function CheckDayAvailable() {
+    //    var expiredDate = $('#expiredDate').val();
+    //    var checkPayment = $('#isPayment').val();
+    //    if (checkPayment == 'true') {
+    //        if (DayDiff(expiredDate) >= 0) {
+    //            $('#dateAvailable').val("Còn hạn: " + Math.abs(DayDiff($('#expiredDate').val())) + ' ngày');
+    //        }
+    //        else {
+    //            $('#dateAvailable').val("Quá hạn: " + Math.abs(DayDiff($('#expiredDate').val())) + ' ngày');
+    //        }
+    //    }
+    //
+    //}
 
     $('#renew').click(function () {
         if (DayDiff($('#expiredDate').val()) > contractRenewLimit) {

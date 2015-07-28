@@ -76,15 +76,14 @@
             <div class="col-lg-12">
                 <h2 class="page-header ">Hợp Đồng ${contract.contractCode}
                      <span class="pull-right">
-                            <input type="hidden" id="isPayment" value="${isPayment}">
                             <input type="hidden" id="contractStatus1" value="${contract.status}">
                             <input type="hidden" id="contractRenewLimit" value="${configUtils.contractRenewLimit}">
-                             <button type="submit" class="btn btn-primary" data-toggle="modal" id="renew"
+                             <button type="submit" class="btn btn-primary ${handleShowingButton.checkRenew}" data-toggle="modal" id="renew"
                                      data-target=".renew-contract-modal"><i
                                      class="fa fa-refresh"></i> Gia Hạn
                              </button>
 
-                               <button type="button" class="btn btn-danger" data-toggle="modal" id="delete"
+                               <button type="button" class="btn btn-danger ${handleShowingButton.checkCancelled}" data-toggle="modal" id="delete"
                                        data-target=".bs-example-modal-lg"><i class="fa fa-times"></i> Hủy Hợp Đồng
                                </button>
                      </span>
@@ -614,8 +613,8 @@
                                                         <input type="hidden" name="txtNewStartDate" id="expiredDate"
                                                                value="${contract.expiredDate}"/>
                                                         <label>
-                                                            <input id="dateAvailable" type="text" disabled="disabled"
-                                                                   style="border:none ; background-color: white; width: 100%"/></label>
+                                                        <input value="${messageContract}" type="text" disabled="disabled"
+                                                               style="border:none ; background-color: white; width: 100%"/></label>
                                                     </td>
                                                 </c:if>
                                                 <c:if test="${contract.status.equalsIgnoreCase('Cancelled')}">

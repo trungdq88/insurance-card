@@ -34,15 +34,6 @@ public class DateUtils {
         }
         return timeStamp;
     }
-    public static Timestamp addFiveYear (Timestamp timestamp) {
-        Date dt = new Date(timestamp.getTime());
-        Calendar c = Calendar.getInstance();
-        c.setTime(dt);
-        c.add(Calendar.YEAR, 5);
-        dt = c.getTime();
-        timestamp = new Timestamp(dt.getTime());
-        return timestamp;
-    }
     public static Timestamp addOneYear (Timestamp timestamp) {
         Date dt = new Date(timestamp.getTime());
         Calendar c = Calendar.getInstance();

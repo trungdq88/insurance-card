@@ -2,6 +2,7 @@ package com.fpt.mic.micweb.model.business;
 
 import com.fpt.mic.micweb.model.dao.*;
 import com.fpt.mic.micweb.model.dao.helper.NewCardRequestDao;
+import com.fpt.mic.micweb.model.dto.CheckShowingRenewCanceled;
 import com.fpt.mic.micweb.model.dto.NotificationBuilder;
 import com.fpt.mic.micweb.model.dto.form.CancelContractDto;
 import com.fpt.mic.micweb.model.dto.form.ChangePasswordDto;
@@ -374,6 +375,65 @@ public class CustomerBusiness {
         } else {
             return false;
         }
+    }
 
+    /**
+     * check status for datetime of contract
+     */
+    public String messageContract(Timestamp expiredDate, String contractCode) {
+        String mesg = "";
+        if (isPayment(contractCode) == true) {
+            long countNumDate = DateUtils.dateBetween(new Timestamp(new java.util.Date().getTime()), expiredDate);
+            if (countNumDate >= 0) {
+                mesg = "Còn hạn: " + countNumDate + " ngày";
+            } else {
+                mesg = "Quá hạn: " + Math.abs(countNumDate) + " ngày";
+            }
+        }
+        return mesg;
+    }
+
+    /**
+     * check show or hide button renew and canceled
+     */
+    public CheckShowingRenewCanceled handleShowingButton(Timestamp expiredDate, String status) {
+        CheckShowingRenewCanceled handle = new CheckShowingRenewCanceled();
+        ConfigUtils configUtils = new ConfigUtils();
+        long countNumDate = DateUtils.dateBetween(new Timestamp(new java.util.Date().getTime()), expiredDate);
+
+        //Ready
+        if (status.equals(Constants.ContractStatus.READY)) {
+            if (Math.abs(countNumDate) > configUtils.getContractRenewLimit()) {
+                handle.setCheckRenew("hide");
+            }
+        }
+        //Cancelled
+        else if (status.equals(Constants.ContractStatus.CANCELLED)) {
+            handle.setCheckRenew("hide");
+            handle.setCheckCancelled("hide");
+        }
+        //Expired
+        else if (status.equals(Constants.ContractStatus.EXPIRED)) {
+            if (Math.abs(countNumDate) > configUtils.getContractRenewLimit()) {
+                handle.setCheckRenew("hide");
+            }
+            handle.setCheckCancelled("hide");
+        }
+        //Pending
+        else if (status.equals(Constants.ContractStatus.PENDING)) {
+            handle.setCheckRenew("hide");
+        }
+        //Request cancel
+        else if (status.equals(Constants.ContractStatus.REQUEST_CANCEL)) {
+            handle.setCheckRenew("hide");
+            handle.setCheckCancelled("hide");
+        }
+        //No card
+        else if (status.equals(Constants.ContractStatus.NO_CARD)) {
+            if (Math.abs(countNumDate) > configUtils.getContractRenewLimit()) {
+                handle.setCheckRenew("hide");
+            }
+        }
+        return handle;
     }
 }

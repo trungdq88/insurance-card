@@ -175,7 +175,6 @@ public class ContractController extends AuthController {
 
     public ResponseObject getDetail(R r) {
         ConfigUtils configUtils = new ConfigUtils();
-
         final CustomerBusiness customerBusiness = new CustomerBusiness();
         CardBusiness cardBusiness = new CardBusiness();
         final CompensationBusiness compensationBusiness = new CompensationBusiness();
@@ -184,6 +183,7 @@ public class ContractController extends AuthController {
         String customerCode = ((CustomerEntity) getLoggedInUser()).getCustomerCode();
         final String code = r.equest.getParameter("code");
         ContractEntity contract = customerBusiness.getContractDetail(code);
+
         if (contract == null || contract.getCustomerCode().compareToIgnoreCase(customerCode) != 0) {
             return new RedirectTo("/error/404");
         } else {
@@ -235,7 +235,9 @@ public class ContractController extends AuthController {
             });
 
             r.equest.setAttribute("contract", contract);
-            r.equest.setAttribute("isPayment", customerBusiness.isPayment(code));
+            r.equest.setAttribute("messageContract", customerBusiness.messageContract(contract.getExpiredDate(), code));
+            r.equest.setAttribute("handleShowingButton", customerBusiness.handleShowingButton(contract.getExpiredDate(),
+                                                         contract.getStatus()));
             r.equest.setAttribute("configUtils", configUtils);
             r.equest.setAttribute("newCardRequested", cardBusiness.getUnresolveNewCardRequest(code));
             r.equest.setAttribute("card", cardBusiness.getCardByContract(code));
