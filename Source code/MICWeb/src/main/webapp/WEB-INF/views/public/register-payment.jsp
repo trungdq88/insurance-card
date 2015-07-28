@@ -33,13 +33,13 @@
                                         <small>Vui lòng ghi nhớ những thông tin cần thiết sau:</small>
                                     </c:if>
                                 </h3>
-                                <div class="col-sm-10 col-sm-offset-3">
+                                <div class="col-sm-9 col-sm-offset-3">
                                     <p style="color: red;">Vui lòng thanh toán để hợp đồng có hiệu lực</p>
                                     <p><b>Mã khách hàng:</b> ${register.customerEntity.customerCode}</p>
                                     <c:if test="${!register.existCustomer}">
                                         <p><b>Mật khẩu:</b>
                                                 ${register.emailSuccess ? "<span class='label label-success'>đã gửi</span>" : "<span class='label label-danger'>gửi thất bại</span>"}
-                                            (kiểm tra email ${register.customerEntity.email})
+                                            (kiểm tra email: ${register.customerEntity.email})
                                             <button data-customer-code="${register.customerEntity.customerCode}" type="button" id="btnResendPassword" class="btn btn-xs btn-primary">
                                                 <i class="fa fa-refresh"></i>
                                                 Gửi lại email
