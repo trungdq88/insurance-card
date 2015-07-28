@@ -176,7 +176,7 @@ $(document).ready(function () {
         var oneDay = 24 * 60 * 60 * 1000;
         var timeNow = new Date();
         var expiredDate = new Date(date);
-        return Math.round((expiredDate.getTime() - timeNow.getTime()) / (oneDay) );
+        return Math.round((expiredDate.getTime() - timeNow.getTime()) / (oneDay) + 1 );
     }
 
 
