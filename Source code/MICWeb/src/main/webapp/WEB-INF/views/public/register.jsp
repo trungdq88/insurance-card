@@ -1,4 +1,3 @@
-
 <%@ page import="java.util.Date" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -24,7 +23,8 @@
 
                 <!--      Wizard container        -->
                 <div class="wizard-container">
-                    <form id="myForm" role="form" action="${pageContext.request.contextPath}/public/register" method="post">
+                    <form id="myForm" role="form" action="${pageContext.request.contextPath}/public/register"
+                          method="post">
                         <div class="card wizard-card ct-wizard-azzure" id="wizard">
 
                             <!-- You can switch "ct-wizard-azzure"  with one of the next bright colors: "ct-wizard-blue",
@@ -37,148 +37,162 @@
 
                             </div>
                             <ul>
-                                <li><a id="hrefPersonal" href="#personal" data-toggle="tab"><strong>1. Thông tin cá nhân </strong></a>
+                                <li><a id="hrefPersonal" href="#personal" data-toggle="tab"><strong>1. Thông tin cá
+                                    nhân </strong></a>
                                 </li>
-                                <li><a id="hrefVehicle" href="#vehicle" onclick="step2()" data-toggle="tab"><strong>2. Thông tin xe </strong></a></li>
-                                <li><a id="hrefConfirm" href="#contract" onclick="step3()" data-toggle="tab"><strong>3. Tạo hợp đồng và
+                                <li><a id="hrefVehicle" href="#vehicle" onclick="step2()" data-toggle="tab"><strong>2.
+                                    Thông tin xe </strong></a></li>
+                                <li><a id="hrefConfirm" href="#contract" onclick="step3()" data-toggle="tab"><strong>3.
+                                    Tạo hợp đồng và
                                     thanh toán </strong></a>
                                 </li>
                             </ul>
 
                             <div class="tab-content">
 
-                                    <div class="tab-pane" id="personal">
-                                        <div class="row">
-                                            <c:if test="${not empty validateErrors}">
+                                <div class="tab-pane" id="personal">
+                                    <div class="row">
+                                        <c:if test="${not empty validateErrors}">
 
-                                                <div class="col-sm-12">
-                                                    <div class="text-danger">
-                                                        <ul>
-                                                            <c:forEach var="error" items="${validateErrors}">
-                                                                <li>${error}</li>
-                                                            </c:forEach>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </c:if>
                                             <div class="col-sm-12">
-                                                <h3 class="info-text"> THÔNG TIN CHỦ SỞ HỮU XE </h3>
-                                                <h5 class="info-text"> Các ô có dấu * là bắt buộc </h5>
-                                            </div>
-                                            <div class="col-sm-4 col-sm-offset-1">
-                                                <div class="form-group">
-                                                    <label><b>Họ tên *</b></label>
-                                                    <input required type="text" class="form-control" name="register:name" id="txtName"
-                                                           pattern="\S[^0-9]+"
-                                                           minlength="3" maxlength="80"
-                                                           placeholder="Ví dụ: Nguyễn Văn A"
-                                                           title="Vui lòng nhập họ tên!"
-                                                           value="${publicHomeFormDto.name}">
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-6">
-                                                <div class="form-group">
-                                                    <label><b>Email *</b></label>
-                                                    <input required type="text" class="form-control" name="register:email" id="txtEmail"
-                                                           placeholder="Ví dụ: baohiem@micinsurance.vn"
-                                                           pattern="^[A-Za-z0-9._%-]+@[A-Za-z0-9.-]+.[A-Za-z]{2,4}"
-                                                           title="Vui lòng nhập email!"
-                                                           value="${publicHomeFormDto.email}">
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-7 col-sm-offset-1">
-                                                <div class="form-group">
-                                                    <label><b>Địa chỉ *</b></label><br>
-                                                    <input required type="text" class="form-control" name="register:address"
-                                                           id="txtAddress" onFocus="geolocate()"
-                                                           placeholder="Ví dụ: 123A, Điện Biên Phủ, Quận 1, TP.HCM"
-                                                           maxlength="250" minlength="3"
-                                                           title="Vui lòng nhập địa chỉ!"
-                                                           value="${publicHomeFormDto.address}">
-                                                </div>
-                                            </div>
-
-                                            <div class="col-sm-3">
-                                                <div class="form-group">
-                                                    <label><b>Số điện thoại *</b></label>
-                                                    <input required type="text" class="form-control" name="register:phone" id="txtPhone"
-                                                           placeholder="Ví dụ: 0909000999"
-                                                           pattern="[0-9]+"
-                                                           minlength="8" maxlength="15"
-                                                           title="Vui lòng nhập đúng số điện thoại!"
-                                                           value="${publicHomeFormDto.phone}">
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-4 col-sm-offset-1">
-                                                <div class="form-group">
-                                                    <label><b>Ngày bắt đầu *</b></label>
-                                                    <input required type="date" class="form-control" name="register:startDate"
-                                                           id="txtStartDate"
-                                                           min="<%=new Date().getYear()+1900%>-<%=(new Date().getMonth()+1)<10?"0"+(new Date().getMonth()+1):(new Date().getMonth()+1)%>-<%=new Date().getDate()%>"
-                                                           max="${startDateMax}"
-                                                           placeholder="Ngày bắt đầu tham gia bảo hiểm?"
-                                                           value="${startDate}">
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-6">
-                                                <div class="form-group">
-                                                    <label><b>Số CMDN/Hộ chiếu</b></label>
-                                                    <input type="text" class="form-control" name="register:personalId"
-                                                           id="txtPersonalId"
-                                                           placeholder="Ví dụ: 272185738"
-                                                           pattern="[0-9]+"
-                                                           minlength="8" maxlength="15"
-                                                           title="Vui lòng chỉ nhập số!"
-
-                                                           value="${publicHomeFormDto.personalId}">
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-10 col-sm-offset-1">
-                                                <div class="form-group">
-                                                    <label><b>Quyền lợi bảo hiểm *</b></label>
-                                                    <c:set var="mapContract" value="${mapContractType}" ></c:set>
-
-                                                    <c:set var="selectedId" value="${publicHomeFormDto.contractType}" ></c:set>
-                                                    <select class="form-control" name="register:contractType" id="ddlContractType"
-                                                            onchange="{
-                                var fee = parseFloat(this.options[this.selectedIndex].innerHTML);
-                                $('#txtFeeInput').val(fee);
-                                fee = fee.formatMoney(0);
-                                $('#txtFee1').text(fee);
-                                $('#txtFee2').text(fee);
-                            }">
-                                                        <c:forEach var="row" items="${mapContractType}">
-                                                            <option <c:if test="${row.key == selectedId}">
-                                                                selected="selected" </c:if>
-                                                                    label="<c:out value="${row.value.name}" />"
-                                                                    value="<c:out value="${row.key}"/>">
-                                                                <c:out value="${row.value.pricePerYear}" />
-                                                            </option>
+                                                <div class="text-danger">
+                                                    <ul>
+                                                        <c:forEach var="error" items="${validateErrors}">
+                                                            <li>${error}</li>
                                                         </c:forEach>
-                                                    </select>
+                                                    </ul>
                                                 </div>
                                             </div>
-                                            <div class="col-sm-5 col-sm-offset-1">
-                                                <div class="form-group">
-                                                    <label><b>Thời hạn bảo hiểm: </b>${contractDefaultTerm} tháng</label>
-                                                </div>
+                                        </c:if>
+                                        <div class="col-sm-12">
+                                            <h3 class="info-text"> THÔNG TIN CHỦ SỞ HỮU XE </h3>
+                                            <h5 class="info-text"> Các ô có dấu * là bắt buộc </h5>
+                                        </div>
+                                        <div class="col-sm-4 col-sm-offset-1">
+                                            <div class="form-group">
+                                                <label><b>Họ tên *</b></label>
+                                                <input required type="text" class="form-control" name="register:name"
+                                                       id="txtName"
+                                                       pattern="\S[^0-9]+"
+                                                       minlength="3" maxlength="80"
+                                                       placeholder="Ví dụ: Nguyễn Văn A"
+                                                       title="Vui lòng nhập họ tên!"
+                                                       value="${publicHomeFormDto.name}">
                                             </div>
-                                            <div class="col-sm-5 col-sm-offset-1">
-                                                <div class="form-group">
-                                                    <label><b>Phí bảo hiểm: </b></label>
-                                                    <b style="color: red"><span id="txtFee1"></span> VND</b>
-                                                    <input type="hidden" id="txtFeeInput" name="register:contractFee" value="${publicHomeFormDto.contractFee}">
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <label><b>Email *</b></label>
+                                                <input required type="text" class="form-control" name="register:email"
+                                                       id="txtEmail"
+                                                       placeholder="Ví dụ: baohiem@micinsurance.vn"
+                                                       pattern="^[A-Za-z0-9._%-]+@[A-Za-z0-9.-]+.[A-Za-z]{2,4}"
+                                                       title="Vui lòng nhập email!"
+                                                       value="${publicHomeFormDto.email}">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-7 col-sm-offset-1">
+                                            <div class="form-group">
+                                                <label><b>Địa chỉ *</b></label><br>
+                                                <input required type="text" class="form-control" name="register:address"
+                                                       id="txtAddress" onFocus="geolocate()"
+                                                       placeholder="Ví dụ: 123A, Điện Biên Phủ, Quận 1, TP.HCM"
+                                                       maxlength="250" minlength="3"
+                                                       title="Vui lòng nhập địa chỉ!"
+                                                       value="${publicHomeFormDto.address}">
+                                            </div>
+                                        </div>
 
-                                                </div>
+                                        <div class="col-sm-3">
+                                            <div class="form-group">
+                                                <label><b>Số điện thoại *</b></label>
+                                                <input required type="text" class="form-control" name="register:phone"
+                                                       id="txtPhone"
+                                                       placeholder="Ví dụ: 0909000999"
+                                                       pattern="[0-9]+"
+                                                       minlength="8" maxlength="15"
+                                                       title="Vui lòng nhập đúng số điện thoại!"
+                                                       value="${publicHomeFormDto.phone}">
                                             </div>
                                         </div>
-                                        <div class="pull-right">
-                                            <input type='button' onclick="step2()"
-                                                   class='btn btn-fill btn-success btn-wd btn-sm'
-                                                   name='btnNext' value='Tiếp theo'/>
+                                        <div class="col-sm-4 col-sm-offset-1">
+                                            <div class="form-group">
+                                                <label><b>Ngày bắt đầu *</b></label>
+                                                <input required type="date" class="form-control"
+                                                       name="register:startDate"
+                                                       id="txtStartDate"
+                                                       min="<%=new Date().getYear()+1900%>-<%=(new Date().getMonth()+1)<10?"0"+(new Date().getMonth()+1):(new Date().getMonth()+1)%>-<%=new Date().getDate()%>"
+                                                       max="${startDateMax}"
+                                                       placeholder="Ngày bắt đầu tham gia bảo hiểm?"
+                                                       value="${startDate}">
+                                            </div>
                                         </div>
-                                        <br>
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <label><b>Số CMDN/Hộ chiếu</b></label>
+                                                <input type="text" class="form-control" name="register:personalId"
+                                                       id="txtPersonalId"
+                                                       placeholder="Ví dụ: 272185738"
+                                                       pattern="[0-9]+"
+                                                       minlength="8" maxlength="15"
+                                                       title="Vui lòng chỉ nhập số!"
+
+                                                       value="${publicHomeFormDto.personalId}">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-10 col-sm-offset-1">
+                                            <div class="form-group">
+                                                <label><b>Quyền lợi bảo hiểm *</b></label>
+                                                <c:set var="mapContract" value="${mapContractType}"></c:set>
+
+                                                <c:set var="selectedId"
+                                                       value="${publicHomeFormDto.contractType}"></c:set>
+                                                <select class="form-control" name="register:contractType"
+                                                        id="ddlContractType"
+                                                        onchange="{
+                                                                var fee = parseFloat(this.options[this.selectedIndex].innerHTML);
+                                                                var contractDefaultTerm = parseFloat('${contractDefaultTerm}');
+                                                                var realFee = fee * (contractDefaultTerm/12);
+                                                                realFee = (realFee - (realFee % 1000));
+                                                                $('#txtFeeInput').val(realFee);
+
+                                                                realFee = realFee.formatMoney(0,'.',',');
+                                                                $('#txtFee1').text(realFee);
+                                                                $('#txtFee2').text(realFee);
+                                                                }">
+                                                    <c:forEach var="row" items="${mapContractType}">
+                                                        <option <c:if test="${row.key == selectedId}">
+                                                            selected="selected" </c:if>
+                                                                label="<c:out value="${row.value.name}" />"
+                                                                value="<c:out value="${row.key}"/>">
+                                                            <c:out value="${row.value.pricePerYear}"/>
+                                                        </option>
+                                                    </c:forEach>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-5 col-sm-offset-1">
+                                            <div class="form-group">
+                                                <label><b>Thời hạn bảo hiểm: </b>${contractDefaultTerm} tháng</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-5 col-sm-offset-1">
+                                            <div class="form-group">
+                                                <label><b>Phí bảo hiểm: </b></label>
+                                                <b style="color: red"><span id="txtFee1"></span> VND</b>
+                                                <input type="hidden" id="txtFeeInput" name="register:contractFee"
+                                                       value="${publicHomeFormDto.contractFee}">
+
+                                            </div>
+                                        </div>
                                     </div>
+                                    <div class="pull-right">
+                                        <input type='button' onclick="step2()"
+                                               class='btn btn-fill btn-success btn-wd btn-sm'
+                                               name='btnNext' value='Tiếp theo'/>
+                                    </div>
+                                    <br>
+                                </div>
                                 <div class="tab-pane" id="vehicle">
                                     <div class="row">
                                         <c:if test="${not empty validateErrors}">
@@ -202,7 +216,8 @@
                                         <div class="col-sm-5 col-sm-offset-1">
                                             <div class="form-group">
                                                 <label><b>Biển số đăng ký *</b></label>
-                                                <input required type="text" class="form-control" name="register:plate" id="txtPlate"
+                                                <input required type="text" class="form-control" name="register:plate"
+                                                       id="txtPlate"
                                                        minlength="4" maxlength="15"
                                                        placeholder="Ví dụ: 54-Z6 6666"
                                                        title="Vui lòng nhập biển số xe!"
@@ -212,7 +227,8 @@
                                         <div class="col-sm-5">
                                             <div class="form-group">
                                                 <label><b>Nhãn hiệu *</b></label><br>
-                                                <input required type="text" class="form-control" name="register:brand" id="txtBrand"
+                                                <input required type="text" class="form-control" name="register:brand"
+                                                       id="txtBrand"
                                                        minlength="2" maxlength="20"
                                                        placeholder="Ví dụ: Honda, Yamaha, Suzuki..."
                                                        title="Vui lòng nhập nhãn hiệu xe!"
@@ -234,17 +250,19 @@
                                         <div class="col-sm-3">
                                             <div class="form-group">
                                                 <label><b>Số máy *</b></label>
-                                                <input required type="text" class="form-control" name="register:engine" id="txtEngine"
+                                                <input required type="text" class="form-control" name="register:engine"
+                                                       id="txtEngine"
                                                        minlength="2" maxlength="20"
                                                        placeholder="Ví dụ: 1033612"
-                                                        title="Vui lòng nhập số máy!"
+                                                       title="Vui lòng nhập số máy!"
                                                        value="${publicHomeFormDto.engine}">
                                             </div>
                                         </div>
                                         <div class="col-sm-3">
                                             <div class="form-group">
                                                 <label><b>Dung tích *</b></label>
-                                                <input required type="text" class="form-control" name="register:capacity"
+                                                <input required type="text" class="form-control"
+                                                       name="register:capacity"
                                                        id="txtCapacity"
                                                        minlength="2" maxlength="20"
                                                        placeholder="Ví dụ: 110cc"
@@ -255,7 +273,8 @@
                                         <div class="col-sm-4 col-sm-offset-1">
                                             <div class="form-group">
                                                 <label><b>Số loại</b></label>
-                                                <input type="text" class="form-control" name="register:model" id="txtModel"
+                                                <input type="text" class="form-control" name="register:model"
+                                                       id="txtModel"
                                                        minlength="2" maxlength="20"
                                                        title="Số loại phải từ 2 đến 20 ký tự!"
                                                        placeholder="Ví dụ: Air Blade, Future, Wave..."
@@ -265,7 +284,8 @@
                                         <div class="col-sm-3">
                                             <div class="form-group">
                                                 <label><b>Loại xe</b></label>
-                                                <input type="text" class="form-control" name="register:type" id="txtType"
+                                                <input type="text" class="form-control" name="register:type"
+                                                       id="txtType"
                                                        minlength="2" maxlength="20"
                                                        title="Loại xe phải từ 2 đến 20 ký tự!"
                                                        placeholder="Ví dụ: hai bánh, ba bánh, khác..."
@@ -275,7 +295,8 @@
                                         <div class="col-sm-3">
                                             <div class="form-group">
                                                 <label><b>Màu sơn</b></label>
-                                                <input type="text" class="form-control" name="register:color" id="txtColor"
+                                                <input type="text" class="form-control" name="register:color"
+                                                       id="txtColor"
                                                        minlength="2" maxlength="20"
                                                        title="Màu xe phải từ 2 đến 20 ký tự!"
                                                        placeholder="Ví dụ: Đỏ"
@@ -291,14 +312,15 @@
                                                        min="1900"
                                                        max="<%=new Date().getYear() + 1900%>"
                                                        pattern="[0-9]+"
-                                                        title="Vui lòng nhập đúng năm từ 1900-<%=new Date().getYear() + 1900%>"
+                                                       title="Vui lòng nhập đúng năm từ 1900-<%=new Date().getYear() + 1900%>"
                                                        value="${publicHomeFormDto.yearOfMan}">
                                             </div>
                                         </div>
                                         <div class="col-sm-3">
                                             <div class="form-group">
                                                 <label><b>Tự trọng (kg)</b></label>
-                                                <input type="number" class="form-control" name="register:weight" id="txtWeight"
+                                                <input type="number" class="form-control" name="register:weight"
+                                                       id="txtWeight"
                                                        min="1" max="1000"
                                                        title="Tự trọng xe từ 1-1000 kg!"
                                                        placeholder="Ví dụ: 100"
@@ -320,7 +342,7 @@
                                     <div class="pull-right">
                                         <input type='button' onclick="step3()"
                                                class='btn btn-fill btn-success btn-wd btn-sm'
-                                                value='Tiếp theo'/>
+                                               value='Tiếp theo'/>
                                     </div>
                                     <br>
                                 </div>
@@ -504,7 +526,7 @@
     </div>
 
     <script language="javascript">
-        Number.prototype.formatMoney = function(c, d, t){
+        Number.prototype.formatMoney = function (c, d, t) {
             var n = this,
                     c = isNaN(c = Math.abs(c)) ? 2 : c,
                     d = d == undefined ? "." : d,
@@ -517,7 +539,7 @@
         $('#txtFee1').text(parseFloat($('#txtFeeInput').val()).formatMoney(0));
         $('#txtFee2').text(parseFloat($('#txtFeeInput').val()).formatMoney(0));
         function step2() {
-            if( document.getElementById('txtName').checkValidity() == false ||
+            if (document.getElementById('txtName').checkValidity() == false ||
                     document.getElementById('txtAddress').checkValidity() == false ||
                     document.getElementById('txtEmail').checkValidity() == false ||
                     document.getElementById('txtPhone').checkValidity() == false ||
@@ -532,7 +554,7 @@
             }
         }
         function step3() {
-            if(document.getElementById('myForm').checkValidity() == false) {
+            if (document.getElementById('myForm').checkValidity() == false) {
                 document.getElementById('btnFinish').click();
                 event.preventDefault();
                 event.stopPropagation();
@@ -543,7 +565,7 @@
             $('#txtAddress1').text($('#txtAddress').val());
             $('#txtEmail1').text($('#txtEmail').val());
             $('#txtPhone1').text($('#txtPhone').val());
-            if ($('#txtPersonalId').val() == ""){
+            if ($('#txtPersonalId').val() == "") {
                 $('#txtPersonalId1').text("Không có");
                 $('#txtPersonalId1').addClass("empty-value");
             }
@@ -556,7 +578,7 @@
             $('#ddlContractType1').text($('#ddlContractType option:selected').attr('label'));
             $('#txtPlate1').text($('#txtPlate').val());
             $('#txtBrand1').text($('#txtBrand').val());
-            if ($('#txtModel').val() == ""){
+            if ($('#txtModel').val() == "") {
                 $('#txtModel1').text("Không có");
                 $('#txtModel1').addClass("empty-value");
             }
@@ -565,7 +587,7 @@
                 $('#txtModel1').removeClass("empty-value");
 
             }
-            if ($('#txtType').val() == ""){
+            if ($('#txtType').val() == "") {
                 $('#txtType1').text("Không có");
                 $('#txtType1').addClass("empty-value");
             }
@@ -573,7 +595,7 @@
                 $('#txtType1').text($('#txtType').val());
                 $('#txtType1').removeClass("empty-value");
             }
-            if ($('#txtColor').val() == ""){
+            if ($('#txtColor').val() == "") {
                 $('#txtColor1').text("Không có");
                 $('#txtColor1').addClass("empty-value");
             }
@@ -585,7 +607,7 @@
             $('#txtEngine1').text($('#txtEngine').val());
             $('#txtChassis1').text($('#txtChassis').val());
             $('#txtCapacity1').text($('#txtCapacity').val());
-            if ($('#txtYearOfMan').val() == ""){
+            if ($('#txtYearOfMan').val() == "") {
                 $('#txtYearOfMan1').text("Không có");
                 $('#txtYearOfMan1').addClass("empty-value");
             }
@@ -593,7 +615,7 @@
                 $('#txtYearOfMan1').text($('#txtYearOfMan').val());
                 $('#txtYearOfMan1').removeClass("empty-value");
             }
-            if ($('#txtWeight').val() == ""){
+            if ($('#txtWeight').val() == "") {
                 $('#txtWeight1').text("Không có");
                 $('#txtWeight1').addClass("empty-value");
             }
@@ -602,7 +624,7 @@
                 $('#txtWeight1').removeClass("empty-value");
             }
 
-            if ($('#txtSeatCapacity').val() == ""){
+            if ($('#txtSeatCapacity').val() == "") {
                 $('#txtSeatCapacity1').text("Không có");
                 $('#txtSeatCapacity1').addClass("empty-value");
             }
