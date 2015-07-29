@@ -383,7 +383,7 @@ public class CustomerBusiness {
     public String messageContract(Timestamp expiredDate, String contractCode) {
         String mesg = "";
         if (isPayment(contractCode) == true) {
-            long countNumDate = DateUtils.dateBetween(DateUtils.currentDateWithoutTime(), DateUtils.convertDateTimeToDate(expiredDate)
+            long countNumDate = DateUtils.dateBetween(DateUtils.currentDateWithoutTime(), DateUtils.convertDateTimeToDate(expiredDate));
             if (countNumDate >= 0) {
                 mesg = "Còn hạn: " + countNumDate + " ngày";
             } else {
