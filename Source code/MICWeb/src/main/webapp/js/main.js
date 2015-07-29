@@ -79,7 +79,17 @@ function calculateContractFee(contractTerm, pricePerYear) {
     } else {
         contractFee = (fPrice / 365) * nTerm;
     }
-    return contractFee;
+    return roundThousand(contractFee);
+}
+
+function roundThousand(num) {
+    var num = num / 1000;
+    if (Math.round(num) < num) {
+        num = Math.round(num) + 1;
+    } else {
+        num = Math.round(num);
+    }
+    return num * 1000;
 }
 
 /**
