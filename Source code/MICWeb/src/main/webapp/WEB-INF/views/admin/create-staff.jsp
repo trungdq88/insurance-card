@@ -15,7 +15,7 @@
   <div id="page-wrapper">
     <div class="row">
       <div class="col-lg-12">
-        <h1 class="page-header">Thiết lập cấu hình</h1>
+        <h1 class="page-header">Thêm nhân viên mới</h1>
       </div>
       <!-- /.col-lg-12 -->
     </div>
