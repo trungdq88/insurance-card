@@ -383,12 +383,14 @@ public class CustomerBusiness {
     public String messageContract(Timestamp expiredDate, String contractCode) {
         String mesg = "";
         if (isPayment(contractCode) == true) {
-            long countNumDate = DateUtils.dateBetween(new Timestamp(new java.util.Date().getTime()), expiredDate);
+            long countNumDate = DateUtils.dateBetween(DateUtils.currentDateWithoutTime(), DateUtils.convertDateTimeToDate(expiredDate)
             if (countNumDate >= 0) {
                 mesg = "Còn hạn: " + countNumDate + " ngày";
             } else {
                 mesg = "Quá hạn: " + Math.abs(countNumDate) + " ngày";
             }
+        } else {
+            mesg = "Chưa thanh toán";
         }
         return mesg;
     }
@@ -399,7 +401,7 @@ public class CustomerBusiness {
     public CheckShowingRenewCanceled handleShowingButton(Timestamp expiredDate, String status) {
         CheckShowingRenewCanceled handle = new CheckShowingRenewCanceled();
         ConfigUtils configUtils = new ConfigUtils();
-        long countNumDate = DateUtils.dateBetween(new Timestamp(new java.util.Date().getTime()), expiredDate);
+        long countNumDate = DateUtils.dateBetween(DateUtils.currentDateWithoutTime(), DateUtils.convertDateTimeToDate(expiredDate));
 
         //Ready
         if (status.equals(Constants.ContractStatus.READY)) {
@@ -414,9 +416,6 @@ public class CustomerBusiness {
         }
         //Expired
         else if (status.equals(Constants.ContractStatus.EXPIRED)) {
-            if (Math.abs(countNumDate) > configUtils.getContractRenewLimit()) {
-                handle.setCheckRenew("hide");
-            }
             handle.setCheckCancelled("hide");
         }
         //Pending
