@@ -12,6 +12,7 @@ import com.fpt.mic.micweb.model.dto.form.*;
 import com.fpt.mic.micweb.model.entity.*;
 import com.fpt.mic.micweb.utils.ConfigUtils;
 import com.fpt.mic.micweb.utils.Constants;
+import com.fpt.mic.micweb.utils.ContractDetailConfigUtils;
 
 import javax.servlet.annotation.WebServlet;
 import java.sql.Timestamp;
@@ -117,8 +118,6 @@ public class ContractController extends AuthController {
         // Get contract card instance
         CardBusiness cardBusiness = new CardBusiness();
         List<CardInstanceEntity> listCard = cardBusiness.getCardInstancesIncludeDeactive(contractDetail.getContractCode());
-        ConfigUtils config = new ConfigUtils();
-
 
         final String finalContractCode = contractCode;
         // compensation region
@@ -174,7 +173,8 @@ public class ContractController extends AuthController {
         r.equest.setAttribute("accidentPaginator", accidentPaginator);
 
         r.equest.setAttribute("CARD", listCard);
-        r.equest.setAttribute("CONFIG", config);
+        r.equest.setAttribute("CONFIG", new ConfigUtils());
+        r.equest.setAttribute("detailConfig", new ContractDetailConfigUtils(contractDetail));
 
         // Dispatch to JSP page
         return new JspPage("staff/contract/contract-detail.jsp");
