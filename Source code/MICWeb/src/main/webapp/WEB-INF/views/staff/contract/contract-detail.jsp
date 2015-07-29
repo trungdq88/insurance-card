@@ -205,12 +205,11 @@
                             </c:otherwise>
                         </c:choose>
 
-                        <div class="col-sm-2">
+                        <div class="col-sm-3">
                             <div class="text-value">
                                 <span style="color:hotpink; font-weight: bolder; font-size: large">
-                                    <fmt:setLocale value="vi_VN"/>
                                     <fmt:formatNumber value="${contract.contractFee}" type="currency"
-                                                      maxFractionDigits="0"/>
+                                                      currencySymbol="VNĐ" maxFractionDigits="0"/>
                                 </span>
                             </div>
                         </div>
@@ -327,18 +326,15 @@
                                         <tbody>
                                         <c:forEach var="payment" items="${listPayment}" varStatus="counter">
                                             <tr>
-                                                <td>
-                                                        ${payment.id}
-                                                </td>
+                                                <td>${payment.id}</td>
                                                 <td>
                                                     <fmt:formatDate value="${payment.paidDate}" pattern="dd/MM/yyyy"/>
                                                 </td>
                                                 <td>${payment.paymentMethod}</td>
                                                 <td>${payment.content}</td>
                                                 <td>
-                                                    <fmt:setLocale value="vi_VN"/>
-                                                    <fmt:formatNumber value="${payment.amount}"
-                                                                      type="currency" maxFractionDigits="0"/>
+                                                    <fmt:formatNumber value="${payment.amount}" type="currency"
+                                                                      currencySymbol="VNĐ" maxFractionDigits="0"/>
                                                 </td>
                                                 <td>
                                                     <a href="javascript:;"
@@ -552,7 +548,7 @@
             }).done(function (data) {
                 $("#payment-id-value").html(data.id);
                 $("#contract-code-value").html(data.contractCode);
-                $("#amount-value").html(data.amount);
+                $("#amount-value").html(data.amount.formatMoney(0) + ' VNĐ');
                 $("#content-value").html(data.content);
                 $("#payment-method-value").html(data.paymentMethod);
                 $("#paid-date-value").html(getDateTime(data.paidDate));

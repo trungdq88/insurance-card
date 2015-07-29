@@ -134,7 +134,7 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Mã giao dịch</label>
 
-                            <div class="col-sm-1">
+                            <div class="col-sm-2">
                                 <div class="text-value">
                                     <strong id="payment-id-value"></strong>
                                 </div>
@@ -149,16 +149,19 @@
 
                         <!-- Amount & Content -->
                         <div class="form-group">
+                            <label class="col-sm-3 control-label">Dịch vụ</label>
+
+                            <div class="col-sm-7">
+                                <div class="text-value" id="content-value"></div>
+                            </div>
+                        </div>
+
+                        <!-- Amount -->
+                        <div class="form-group">
                             <label class="col-sm-3 control-label">Số tiền</label>
 
-                            <div class="col-sm-2">
+                            <div class="col-sm-4">
                                 <div class="text-value" id="amount-value"></div>
-                            </div>
-
-                            <label class="col-sm-2 control-label">Dịch vụ</label>
-
-                            <div class="col-sm-5">
-                                <div class="text-value" id="content-value"></div>
                             </div>
                         </div>
 
@@ -254,7 +257,7 @@
                         <div class="col-sm-3">
                             <div class="text-value">
                                     <span id="renewFee"
-                                          style="color:deepskyblue; font-weight: bolder; font-size: large"></span> đ
+                                          style="color:deepskyblue; font-weight: bolder; font-size: large"></span> VNĐ
                                 <input type="hidden" id="contractFee" name="renew:contractFee"/>
                             </div>
                         </div>
@@ -281,7 +284,7 @@
                             <div class="col-sm-3">
                                 <div class="text-value">
                                     <span id="newCardFee"
-                                          style="color:navy; font-weight: bolder; font-size: large"></span> đ
+                                          style="color:navy; font-weight: bolder; font-size: large"></span> VNĐ
                                 </div>
                             </div>
 
@@ -305,7 +308,7 @@
                                 <div class="col-sm-3">
                                     <div class="text-value">
                                     <span id="deliveryFee"
-                                          style="font-weight: bolder; font-size: large"></span> đ
+                                          style="font-weight: bolder; font-size: large"></span> VNĐ
                                     </div>
                                 </div>
                             </div>
@@ -318,7 +321,7 @@
                             <div class="col-sm-3">
                                 <div class="text-value">
                                     <span id="totalFee"
-                                          style="color:red; font-weight: bolder; font-size: large"></span> đ
+                                          style="color:red; font-weight: bolder; font-size: large"></span> VNĐ
                                     <input type="hidden" id="amount" name="renew:amount"/>
                                 </div>
                             </div>

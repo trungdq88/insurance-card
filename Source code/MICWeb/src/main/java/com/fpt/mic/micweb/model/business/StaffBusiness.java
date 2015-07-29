@@ -165,7 +165,11 @@ public class StaffBusiness {
         // Check contract to add payment
         if (newContract != null) {
             // Add payment info
-            paymentEntity.setPaidDate(dto.getPaidDate());
+            if (currentDate.equals(dto.getPaidDate())) {
+                paymentEntity.setPaidDate(DateUtils.currentTimeWithoutNanos());
+            } else {
+                paymentEntity.setPaidDate(dto.getPaidDate());
+            }
             paymentEntity.setPaymentMethod("Trực tiếp");
             paymentEntity.setContent("Đăng ký hợp đồng mới " + newContract.getContractCode());
             paymentEntity.setAmount(dto.getAmount());
@@ -205,7 +209,12 @@ public class StaffBusiness {
             }
             if (contractDao.update(contractEntity) != null) {
                 // Add payment information
-                paymentEntity.setPaidDate(dto.getPaidDate());
+                Timestamp currentDate = DateUtils.currentDateWithoutTime();
+                if (currentDate.equals(dto.getPaidDate())) {
+                    paymentEntity.setPaidDate(DateUtils.currentTimeWithoutNanos());
+                } else {
+                    paymentEntity.setPaidDate(dto.getPaidDate());
+                }
                 paymentEntity.setAmount(dto.getAmount());
                 paymentEntity.setStartDate(startDate);
                 paymentEntity.setExpiredDate(dto.getExpiredDate());
@@ -409,7 +418,11 @@ public class StaffBusiness {
 
             if (contractDao.update(contractEntity) != null) {
                 // Set payment information from dto to entity
-                paymentEntity.setPaidDate(dto.getPaidDate());
+                if (currentDate.equals(dto.getPaidDate())) {
+                    paymentEntity.setPaidDate(DateUtils.currentTimeWithoutNanos());
+                } else {
+                    paymentEntity.setPaidDate(dto.getPaidDate());
+                }
                 paymentEntity.setAmount(dto.getAmount());
                 paymentEntity.setContractCode(dto.getContractCode());
                 // Set others payment information
