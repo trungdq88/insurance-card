@@ -212,7 +212,7 @@
                             <div class="text-value">
                                 <span style="color:hotpink; font-weight: bolder; font-size: large">
                                     <fmt:formatNumber value="${contract.contractFee}" type="currency"
-                                                      currencySymbol="VNĐ" maxFractionDigits="0"/>
+                                                      currencySymbol="" maxFractionDigits="0"/> VNĐ
                                 </span>
                             </div>
                         </div>
@@ -337,7 +337,7 @@
                                                 <td>${payment.content}</td>
                                                 <td>
                                                     <fmt:formatNumber value="${payment.amount}" type="currency"
-                                                                      currencySymbol="VNĐ" maxFractionDigits="0"/>
+                                                                      currencySymbol="" maxFractionDigits="0"/> VNĐ
                                                 </td>
                                                 <td>
                                                     <a href="javascript:;"
@@ -401,9 +401,9 @@
     function calcRenewFee() {
         var inputDate = new Date($('#expiredDate').val());
         if (contractStatus != 'Expired') {
-            contractTerm = daysBetween(expDate, inputDate);
+            contractTerm = getMonthsBetween(expDate, inputDate);
         } else {
-            contractTerm = daysBetween(new Date(getCurrentDate()), inputDate);
+            contractTerm = getMonthsBetween(new Date(getCurrentDate()), inputDate);
         }
         return calculateContractFee(contractTerm, pricePerYear);
     }

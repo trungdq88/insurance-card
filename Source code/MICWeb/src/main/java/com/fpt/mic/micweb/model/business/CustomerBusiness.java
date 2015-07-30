@@ -378,6 +378,14 @@ public class CustomerBusiness {
     }
 
     /**
+     * compare date now and expired date
+     */
+    public long countDateRemain(Timestamp expiredDate) {
+        long countNumDate = DateUtils.dateBetween(DateUtils.currentDateWithoutTime(), DateUtils.convertDateTimeToDate(expiredDate));
+        return countNumDate;
+    }
+
+    /**
      * check status for datetime of contract
      */
     public String messageContract(Timestamp expiredDate, String contractCode) {
@@ -434,5 +442,16 @@ public class CustomerBusiness {
             }
         }
         return handle;
+    }
+
+    public float countFeeContract(float feePerYear) {
+        ConfigUtils configUtils = new ConfigUtils();
+        float contractDefaultTerm = configUtils.getContractDefaultTerm();
+        float numberMonthToCount = (contractDefaultTerm / 12);
+
+        float realFee = feePerYear * numberMonthToCount;
+        // fix 1000
+        realFee = realFee - (realFee % 1000);
+        return realFee;
     }
 }

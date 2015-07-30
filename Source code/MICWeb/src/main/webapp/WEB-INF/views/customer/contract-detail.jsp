@@ -76,14 +76,19 @@
             <div class="col-lg-12">
                 <h2 class="page-header ">Hợp Đồng ${contract.contractCode}
                      <span class="pull-right">
+                           <input type="hidden" id="defaultRenew"
+                                  value="${configUtils.contractDefaultTerm}">
+                            <input type="hidden" id="countDateRemain" value="${countDateRemain}">
                             <input type="hidden" id="contractStatus1" value="${contract.status}">
                             <input type="hidden" id="contractRenewLimit" value="${configUtils.contractRenewLimit}">
-                             <button type="submit" class="btn btn-primary ${handleShowingButton.checkRenew}" data-toggle="modal" id="renew"
+                             <button type="submit" class="btn btn-primary ${handleShowingButton.checkRenew}"
+                                     data-toggle="modal" id="renew"
                                      data-target=".renew-contract-modal"><i
                                      class="fa fa-refresh"></i> Gia Hạn
                              </button>
 
-                               <button type="button" class="btn btn-danger ${handleShowingButton.checkCancelled}" data-toggle="modal" id="delete"
+                               <button type="button" class="btn btn-danger ${handleShowingButton.checkCancelled}"
+                                       data-toggle="modal" id="delete"
                                        data-target=".bs-example-modal-lg"><i class="fa fa-times"></i> Hủy Hợp Đồng
                                </button>
                      </span>
@@ -178,7 +183,7 @@
                 <div class="modal fade renew-contract-modal" tabindex="-1" role="dialog"
                      aria-labelledby="myLargeModalLabel"
                      aria-hidden="true">
-                    <div class="modal-dialog modal-lg">
+                    <div class="modal-dialog modal-lg" style="width: 600px !important;">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
@@ -225,7 +230,7 @@
 
                                         <div class="col-sm-4">
                                             <input id="newExpiredDate" style="border:none; background-color: white"
-                                                   type="datetime" disabled="disabled"/>
+                                                   type="text" disabled="disabled"/>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -235,11 +240,9 @@
                                             <fmt:setLocale value="vi_VN"/>
                                             <input style="border:none; background-color: white" type="hidden"
                                                    id="payAmount" disabled="disabled"
-                                                   value="${contract.getMicContractTypeByContractTypeId().getPricePerYear()} VNĐ"/>
-                                            <fmt:formatNumber
-                                                    value="${contract.getMicContractTypeByContractTypeId().getPricePerYear()}"
-                                                    type="currency"
-                                                    maxFractionDigits="0"/>
+                                                   value="${countFeeContract} VNĐ"/>
+                                            <fmt:formatNumber value="${countFeeContract}" type="currency"
+                                                              currencySymbol="" maxFractionDigits="0"/> VNĐ
                                         </div>
 
                                     </div>
@@ -390,81 +393,99 @@
 
                     <div class="alert alert-block alert-error fade in well well-lg text-info">
                         <h4 class="alert-heading">Hợp đồng của quý khách chưa được thanh toán!</h4>
-
                         <p>Quý khách có thể thanh toán trực tiếp tại công ty
                             <button class="btn" data-toggle="modal" title="Hiện địa chỉ công ty"
                                     data-target=".map-modal"><i class="fa fa-map-marker"></i>
                             </button>
                         </p>
-                        <form action="${pageContext.request.contextPath}/customer/contract" method="post">
+                        <button data-toggle="modal"
+                                data-target=".payOnline" class="btn btn-primary">
+                            Thanh toán online bằng Paypal
+                        </button>
+                    </div>
+                    <form action="${pageContext.request.contextPath}/customer/contract" method="post">
+                        <div class="modal fade payOnline" tabindex="-1" role="dialog"
+                             aria-labelledby="myLargeModalLabel"
+                             aria-hidden="true">
+                            <div class="modal-dialog modal-lg" style="width: 600px !important;">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">
+                                            <label class="text-danger">Thông tin thanh toán</label></h4>
 
-                            <button class="btn btn-primary choice" type="submit" id="payContract"
-                                    rel="tooltip"
-                                    data-toggle="tooltip"
-                                    data-trigger="hover"
-                                    data-placement="bottom"
-                                    data-html="true"
-                                    data-title="
-                                     <div class='form-horizontal'>
-                                    <div class='form-group'>
-                                        <label class='col-sm-5 text-right'>Loại hợp đồng :</label>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="form-horizontal">
+                                            <div class="form-group">
+                                                <label class="col-sm-5 text-right">Loại hợp đồng :</label>
 
-                                        <div class='col-sm-7'>
-                                            ${contract.getMicContractTypeByContractTypeId().getName()}
+                                                <div class="col-sm-7">
+                                                        ${contract.getMicContractTypeByContractTypeId().getName()}
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-sm-5 text-right">Thời điểm bắt đầu :</label>
+
+                                                <div class="col-sm-4">
+                                                    <fmt:formatDate value="${contract.startDate}"
+                                                                    pattern='dd/MM/yyyy'/>
+                                                    <input type="hidden" id="startDatePay"
+                                                           value="${contract.startDate}">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-sm-5 text-right">Thời điểm kết thúc :</label>
+
+                                                <div class="col-sm-4">
+                                                    <input type="hidden" id="configTime"
+                                                           value=" ${configUtils.contractDefaultTerm}">
+                                                    <input type="text" style="padding-top: 0 !important;"
+                                                           id="defaultDateExpired" disabled="disabled"
+                                                           class="handleInput"/>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-sm-5 text-right">Phí thanh toán :</label>
+
+                                                <div class="col-sm-4">
+                                                    <input style="padding-top: 0 !important;" disabled="disabled"
+                                                           type="text" id="textFree" class="handleInput"/>
+
+                                                </div>
+
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class='form-group'>
-                                        <label class='col-sm-5 text-right'>Thời điểm bắt đầu :</label>
-
-                                        <div class='col-sm-4'>
-                                            <fmt:formatDate value='${contract.startDate}' pattern='dd/MM/yyyy'/>
-                                        </div>
-                                    </div>
-                                    <div class='form-group'>
-                                        <label class='col-sm-5 text-right'>Thời điểm kết thúc :</label>
-
-                                        <div class='col-sm-4'>
-                                            <fmt:formatDate value='${contract.expiredDate}' pattern='dd/MM/yyyy'/>
-                                        </div>
-                                    </div>
-                                    <div class='form-group'>
-                                        <label class='col-sm-5 text-right'>Phí thanh toán :</label>
-
-                                        <div class='col-sm-4'>
-                                            <fmt:setLocale value='vi_VN'/>
-                                            <fmt:formatNumber
-                                                    value='${contract.getMicContractTypeByContractTypeId().getPricePerYear()}'
-                                                    type='currency'
-                                                    maxFractionDigits='0'/>
-                                        </div>
-
+                                    <div class="modal-footer">
+                                        <input id="payContract" type="submit" class="btn btn-primary"
+                                               name="Thanh toán" value="Thanh toán"/>
+                                        <input type="button" class="btn btn-default" data-dismiss="modal"
+                                               value="Đóng"/>
+                                        <!-- input hidden -->
+                                        <input id="payAmount1" disabled="disabled" type="hidden"
+                                               value="${countFeeContract} VNĐ"/>
+                                        <input id="contractCode" disabled="disabled" type="hidden"
+                                               value="${contract.contractCode}"/>
+                                        <input type="hidden" name="L_PAYMENTREQUEST_0_NAME0" value="">
+                                        <input type="hidden" name="L_PAYMENTREQUEST_0_DESC0" id="content3">
+                                        <input type="hidden" name="L_PAYMENTREQUEST_0_QTY0" value="1">
+                                        <input type="hidden" name="PAYMENTREQUEST_0_ITEMAMT" id="payment1">
+                                        <input type="hidden" name="PAYMENTREQUEST_0_TAXAMT" value="0">
+                                        <input type="hidden" name="PAYMENTREQUEST_0_AMT" id="paymentATM1">
+                                        <input type="hidden" name="currencyCodeType" value="USD">
+                                        <input type="hidden" name="paymentType" value="Sale">
+                                        <input type="hidden" name="successUrl"
+                                               value="/customer/contract?action=ActivePayContract">
+                                        <input type="hidden" name="txtContractCode"
+                                               value="${contract.contractCode}">
+                                        <input type="hidden" name="action" value="PayContract">
                                     </div>
                                 </div>
-                                ">
-                                Thanh toán online bằng Paypal
-                            </button>
-                            <!-- input hidden -->
-                            <input id="payAmount1" disabled="disabled" type="hidden"
-                                   value="${contract.getMicContractTypeByContractTypeId().getPricePerYear()} VNĐ"/>
-                            <input id="contractCode" disabled="disabled" type="hidden"
-                                   value="${contract.contractCode}"/>
-                            <input type="hidden" name="L_PAYMENTREQUEST_0_NAME0" value="">
-                            <input type="hidden" name="L_PAYMENTREQUEST_0_DESC0" id="content3">
-                            <input type="hidden" name="L_PAYMENTREQUEST_0_QTY0" value="1">
-                            <input type="hidden" name="PAYMENTREQUEST_0_ITEMAMT" id="payment1">
-                            <input type="hidden" name="PAYMENTREQUEST_0_TAXAMT" value="0">
-                            <input type="hidden" name="PAYMENTREQUEST_0_AMT" id="paymentATM1">
-                            <input type="hidden" name="currencyCodeType" value="USD">
-                            <input type="hidden" name="paymentType" value="Sale">
-                            <input type="hidden" name="successUrl"
-                                   value="/customer/contract?action=ActivePayContract">
-                            <input type="hidden" name="txtContractCode" value="${contract.contractCode}">
-                            <input type="hidden" name="action" value="PayContract">
 
-                        </form>
+                            </div>
+                        </div>
 
-
-                    </div>
+                    </form>
                     <div class="modal fade map-modal" tabindex="-1" role="dialog"
                          aria-labelledby="myLargeModalLabel"
                          aria-hidden="true">
@@ -613,8 +634,9 @@
                                                         <input type="hidden" name="txtNewStartDate" id="expiredDate"
                                                                value="${contract.expiredDate}"/>
                                                         <label>
-                                                        <input value="${messageContract}" type="text" disabled="disabled"
-                                                               style="border:none ; background-color: white; width: 100%"/></label>
+                                                            <input value="${messageContract}" type="text"
+                                                                   disabled="disabled"
+                                                                   style="border:none ; background-color: white; width: 100%"/></label>
                                                     </td>
                                                 </c:if>
                                                 <c:if test="${contract.status.equalsIgnoreCase('Cancelled')}">
@@ -917,6 +939,26 @@
 <!-- /#wrapper -->
 <script src="//www.paypalobjects.com/api/checkout.js" async></script>
 <script>
+    $(document).ready(function () {
+        var showTextFee = (parseFloat($('#payAmount1').val())).formatMoney(0, '.', '.');
+        $('#textFree').val(showTextFee + ' VND');
+
+        var dateStartDefault = $('#startDatePay').val();
+        var temp = $('#configTime').val();
+
+        if(dateStartDefault != '' && dateStartDefault!= null && dateStartDefault != undefined){
+            $('#defaultDateExpired').val(checkDefaultExpiredDetail(dateStartDefault, temp));
+        }
+    });
+    //    function countFeeContract(contractDefaultTerm, feeContract) {
+    //        contractDefaultTerm = parseFloat(contractDefaultTerm);
+    //        feeContract = parseFloat(feeContract);
+    //        //tinh theo so nam config
+    //        feeContract = feeContract * (contractDefaultTerm / 12);
+    //        // lam tron 1000
+    //        feeContract = feeContract - (feeContract % 1000);
+    //        return feeContract;
+    //    }
     function getQueryVariable(variable) {
         var query = window.location.search.substring(1);
         var vars = query.split("&");
@@ -935,6 +977,38 @@
             $(".nav-tabs a[href='#" + active + "s']").tab('show')
         }
     });
+    function checkDefaultExpiredDetail(dateStart, temp) {
+        //dateStart : start date of contract
+        //temp : config rule default time for contract
+
+        var dt = dateStart.split(/\-|\s/);
+        var year = parseInt(dt[0]);
+        var month = parseInt(parseInt(dt[1]) + parseInt(temp));
+        var day = dt[2].toString();
+        var tempYear = parseInt(month / 12).toFixed(0);
+        year = parseInt(parseInt(tempYear) + parseInt(dt[0]));
+        if (month > 12) {
+            month = parseInt(parseInt(month + temp) % 12);
+        }
+
+        //nam nhuan
+        if ((year % 4 == 0 && year % 100 != 0) || year % 400 == 0) {
+            if (month == 2 && day == 29) {
+                day = 29;
+            }
+        }
+        else {
+            if (month == 2 && day == 29) {
+                day = 28;
+            }
+        }
+
+        month = month.toString().length > 1 ? month : '0' + month;
+
+        day = day.toString().length > 1 ? day : '0' + day;
+
+        return day + '/' + month + '/' + year;
+    }
 </script>
 <%@ include file="_shared/footer.jsp" %>
 <jsp:include page="cancel-new-card-request-modal.jsp" flush="true"/>
