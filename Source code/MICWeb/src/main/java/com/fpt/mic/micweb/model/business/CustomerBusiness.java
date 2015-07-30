@@ -378,6 +378,31 @@ public class CustomerBusiness {
     }
 
     /**
+     * calculator new day base on number of month follow config
+     */
+    public Timestamp newDate(String contractCode) {
+        Timestamp currentDate = DateUtils.currentDateWithoutTime();
+        ConfigUtils configUtils = new ConfigUtils();
+        //pay contract
+        ContractDao contractDao = new ContractDao();
+        ContractEntity contractEntity = contractDao.read(contractCode);
+        PaymentDao paymentDao = new PaymentDao();
+        List<PaymentEntity> listPayment = paymentDao.getPaymentByContractCode(contractCode);
+        if (contractEntity.getStatus().equals(Constants.ContractStatus.PENDING)) {
+            if (listPayment == null || listPayment.size() <= 0) {
+                currentDate = DateUtils.addMonth(contractEntity.getCreatedDate(), configUtils.getContractDefaultTerm());
+            }
+        } else if (contractEntity.getStatus().equals(Constants.ContractStatus.EXPIRED)) {
+            currentDate = DateUtils.addMonth(currentDate, configUtils.getContractDefaultTerm());
+        }
+        else if (contractEntity.getStatus().equals(Constants.ContractStatus.READY) ||
+                contractEntity.getStatus().equals(Constants.ContractStatus.NO_CARD)) {
+            currentDate = DateUtils.addMonth(contractEntity.getExpiredDate(), configUtils.getContractDefaultTerm());
+        }
+        return currentDate;
+    }
+
+    /**
      * compare date now and expired date
      */
     public long countDateRemain(Timestamp expiredDate) {

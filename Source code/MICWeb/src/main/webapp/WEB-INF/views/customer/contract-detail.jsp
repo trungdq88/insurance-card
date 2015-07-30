@@ -230,7 +230,9 @@
 
                                         <div class="col-sm-4">
                                             <input id="newExpiredDate" style="border:none; background-color: white"
-                                                   type="text" disabled="disabled"/>
+                                                   type="hide" class="hide" disabled="disabled" value="${newDate}"/>
+                                                <fmt:formatDate value="${newDate}"
+                                                                pattern='dd/MM/yyyy'/>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -439,9 +441,11 @@
                                                 <div class="col-sm-4">
                                                     <input type="hidden" id="configTime"
                                                            value=" ${configUtils.contractDefaultTerm}">
-                                                    <input type="text" style="padding-top: 0 !important;"
-                                                           id="defaultDateExpired" disabled="disabled"
-                                                           class="handleInput"/>
+                                                    <%--<input type="text" style="padding-top: 0 !important;"--%>
+                                                           <%--id="defaultDateExpired" disabled="disabled"--%>
+                                                           <%--class="handleInput"/>--%>
+                                                    <fmt:formatDate value="${newDate}"
+                                                                    pattern='dd/MM/yyyy'/>
                                                 </div>
                                             </div>
                                             <div class="form-group">
@@ -941,14 +945,14 @@
 <script>
     $(document).ready(function () {
         var showTextFee = (parseFloat($('#payAmount1').val())).formatMoney(0, '.', '.');
-        $('#textFree').val(showTextFee + ' VND');
+        $('#textFree').val(showTextFee + ' VNĐ');
 
         var dateStartDefault = $('#startDatePay').val();
         var temp = $('#configTime').val();
 
-        if(dateStartDefault != '' && dateStartDefault!= null && dateStartDefault != undefined){
-            $('#defaultDateExpired').val(checkDefaultExpiredDetail(dateStartDefault, temp));
-        }
+//        if(dateStartDefault != '' && dateStartDefault!= null && dateStartDefault != undefined){
+//            $('#defaultDateExpired').val(checkDefaultExpiredDetail(dateStartDefault, temp));
+//        }
     });
     //    function countFeeContract(contractDefaultTerm, feeContract) {
     //        contractDefaultTerm = parseFloat(contractDefaultTerm);
