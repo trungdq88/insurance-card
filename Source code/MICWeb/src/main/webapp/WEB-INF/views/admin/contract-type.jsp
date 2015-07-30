@@ -111,7 +111,7 @@
                                     <th>#</th>
                                     <th>Tên</th>
                                     <th>Miêu tả</th>
-                                    <th>Phí hằng năm (VNĐ)</th>
+                                    <th>Phí hằng năm</th>
                                     <th>Tình trạng</th>
                                     <th></th>
                                 </tr>
@@ -148,6 +148,7 @@
                                                     <fmt:formatNumber
                                                             value="${row.pricePerYear}"
                                                             type="currency"
+                                                            currencySymbol="VNĐ"
                                                             maxFractionDigits="0"/>
                                                 </td>
                                                 <c:if test="${row.active eq '1'}">
