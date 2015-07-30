@@ -52,12 +52,16 @@
                             <div class="col-sm-7">
                                 <select required class="form-control" name="contract:contractType" id="ddlContractType"
                                         onchange="{
-                                    var fee = parseFloat(this.options[this.selectedIndex].innerHTML);
-                                $('#txtFeeInput').val(fee);
-                                fee = fee.formatMoney(0);
-                                $('#txtFee1').text(fee);
-                                $('#txtFee2').text(fee);
-                                }">
+                                                var fee = parseFloat(this.options[this.selectedIndex].innerHTML);
+
+                                                var contractDefaultTerm = parseFloat('${configUtils.contractDefaultTerm}');
+                                                var realFee = fee * (contractDefaultTerm/12);
+                                                realFee = (realFee - (realFee % 1000));
+                                                $('#txtFeeInput').val(realFee);
+
+                                                realFee = realFee.formatMoney(0,'.',',');
+                                                $('#txtFee1').text(realFee);
+                                                }">
                                     <option value="" disabled selected style="display:none;">
                                         Vui lòng chọn loại hợp đồng
                                     </option>
@@ -297,12 +301,12 @@
 
         //nam nhuan
         if ((year % 4 == 0 && year % 100 != 0) || year % 400 == 0) {
-            if(month == 2 && day == 29){
+            if (month == 2 && day == 29) {
                 day = 29;
             }
         }
         else {
-            if(month == 2 && day == 29){
+            if (month == 2 && day == 29) {
                 day = 28;
             }
         }
