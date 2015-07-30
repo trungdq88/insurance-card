@@ -153,7 +153,9 @@
                                                                 var fee = parseFloat(this.options[this.selectedIndex].innerHTML);
                                                                 var contractDefaultTerm = parseFloat('${contractDefaultTerm}');
                                                                 var realFee = fee * (contractDefaultTerm/12);
-                                                                realFee = (realFee - (realFee % 1000));
+                                                                if (realFee % 1000 != 0) {
+                                                                realFee = realFee - (realFee % 1000) + 1000;
+                                                                }
                                                                 $('#txtFeeInput').val(realFee);
 
                                                                 realFee = realFee.formatMoney(0,'.','.');
