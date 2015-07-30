@@ -13,6 +13,7 @@
     <c:set var="listPunishment" value="${requestScope.PUNISHMENT}" scope="request"/>
     <c:set var="listCard" value="${requestScope.CARD}" scope="request"/>
     <c:set var="config" value="${requestScope.CONFIG}"/>
+    <c:set var="detailConfiguration" value="${requestScope.detailConfig}"/>
 
     <%@ include file="../_shared/navigation.jsp" %>
     <div id="page-wrapper">
@@ -23,22 +24,24 @@
                     <div class="pull-right">
                         <c:choose>
                             <c:when test="${not empty contract.needRenewPayment}">
-                                <button id="btnRenew" type="button" class="btn btn-primary hide"
+                                <button id="btnRenew" type="button" class="btn btn-primary"
                                         data-toggle="modal" data-target="#renew-contract-modal">
                                     <i class="fa fa-refresh"></i> Thanh toán gia hạn
                                 </button>
                             </c:when>
-                            <c:otherwise>
-                                <button id="btnRenew" type="button" class="btn btn-primary hide"
+                            <c:when test="${detailConfiguration.renewable}">
+                                <button id="btnRenew" type="button" class="btn btn-primary"
                                         data-toggle="modal" data-target="#renew-contract-modal">
                                     <i class="fa fa-refresh"></i> Gia hạn
                                 </button>
-                            </c:otherwise>
+                            </c:when>
                         </c:choose>
-                        <button id="btnCancel" type="button" class="btn btn-danger hide"
-                                data-toggle="modal" data-target="#cancel-contract-modal">
-                            <i class="fa fa-times"></i> Hủy hợp đồng
-                        </button>
+                        <c:if test="${detailConfiguration.cancelable}">
+                            <button id="btnCancel" type="button" class="btn btn-danger"
+                                    data-toggle="modal" data-target="#cancel-contract-modal">
+                                <i class="fa fa-times"></i> Hủy hợp đồng
+                            </button>
+                        </c:if>
                     </div>
                 </h1>
             </div>
@@ -191,8 +194,8 @@
                                                 <span class="empty-value">Đã hết hạn</span>
                                             </c:when>
                                             <c:otherwise>
-                                        <span id="remain"
-                                              style="color:deepskyblue; font-weight: bolder; font-size: large"></span>
+                                                <span id="remain"
+                                                      style="color:deepskyblue; font-weight: bolder; font-size: large">${detailConfiguration.displayRemain}</span>
                                             </c:otherwise>
                                         </c:choose>
                                     </div>
@@ -205,12 +208,11 @@
                             </c:otherwise>
                         </c:choose>
 
-                        <div class="col-sm-2">
+                        <div class="col-sm-3">
                             <div class="text-value">
                                 <span style="color:hotpink; font-weight: bolder; font-size: large">
-                                    <fmt:setLocale value="vi_VN"/>
                                     <fmt:formatNumber value="${contract.contractFee}" type="currency"
-                                                      maxFractionDigits="0"/>
+                                                      currencySymbol="VNĐ" maxFractionDigits="0"/>
                                 </span>
                             </div>
                         </div>
@@ -327,18 +329,15 @@
                                         <tbody>
                                         <c:forEach var="payment" items="${listPayment}" varStatus="counter">
                                             <tr>
-                                                <td>
-                                                        ${payment.id}
-                                                </td>
+                                                <td>${payment.id}</td>
                                                 <td>
                                                     <fmt:formatDate value="${payment.paidDate}" pattern="dd/MM/yyyy"/>
                                                 </td>
                                                 <td>${payment.paymentMethod}</td>
                                                 <td>${payment.content}</td>
                                                 <td>
-                                                    <fmt:setLocale value="vi_VN"/>
-                                                    <fmt:formatNumber value="${payment.amount}"
-                                                                      type="currency" maxFractionDigits="0"/>
+                                                    <fmt:formatNumber value="${payment.amount}" type="currency"
+                                                                      currencySymbol="VNĐ" maxFractionDigits="0"/>
                                                 </td>
                                                 <td>
                                                     <a href="javascript:;"
@@ -485,10 +484,6 @@
         });
         setTimeout(refreshFees, 1000);
 
-        // Handle remaining days to display
-        var remainDays = daysBetween(new Date(), expDate);
-        $('#remain').text(remainDays + ' ngày');
-
         // Handle request cancel contract
         $('#decision').change(function () {
             var decision = $('#decision option:selected').val();
@@ -500,27 +495,7 @@
             refreshCancelUI();
         });
 
-        // Handle button renew & cancel, disable or enable
-        if (contractStatus.toLowerCase() == 'Pending'.toLowerCase()) {
-            $('#btnCancel').removeClass('hide');
-        }
-
-        if (contractStatus.toLowerCase() == 'No card'.toLowerCase()) {
-            if (remainDays < parseInt('${config.contractRenewLimit}')) {
-                $('#btnRenew').removeClass('hide');
-            }
-            $('#btnCancel').removeClass('hide');
-        }
-
-        if (contractStatus.toLowerCase() == 'Ready'.toLowerCase()) {
-            if (remainDays < parseInt('${config.contractRenewLimit}')) {
-                $('#btnRenew').removeClass('hide');
-            }
-            $('#btnCancel').removeClass('hide');
-        }
-
         if (contractStatus.toLowerCase() == 'Expired'.toLowerCase()) {
-            $('#btnRenew').removeClass('hide');
             $('#startDate').val(getCurrentDate());
             document.getElementById("expiredDate").min = '${config.expiredDateMin}';
             document.getElementById("expiredDate").max = '${config.expiredDateMax}';
@@ -532,7 +507,7 @@
         }
 
         if (contractStatus.toLowerCase() == 'Cancelled'.toLowerCase()) {
-            // Hide 2 edit button (btnRenew & btnCancel hidden default)
+            // Hide 2 edit button
             $('#btnPayment').addClass('hide');
             $('.editBtn').addClass('hide');
             // Hide create & edit compensation, accident, punishment while exceed staff config
@@ -552,7 +527,7 @@
             }).done(function (data) {
                 $("#payment-id-value").html(data.id);
                 $("#contract-code-value").html(data.contractCode);
-                $("#amount-value").html(data.amount);
+                $("#amount-value").html(data.amount.formatMoney(0) + ' VNĐ');
                 $("#content-value").html(data.content);
                 $("#payment-method-value").html(data.paymentMethod);
                 $("#paid-date-value").html(getDateTime(data.paidDate));

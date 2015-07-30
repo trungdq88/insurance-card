@@ -198,9 +198,8 @@
 
                             <div class="col-sm-3">
                                 <div class="text-value">
-                                    <fmt:setLocale value="vi_VN"/>
                                     <fmt:formatNumber value="${contract.amount}" type="currency"
-                                                      maxFractionDigits="0"/>
+                                                      currencySymbol="VNĐ" maxFractionDigits="0"/>
                                 </div>
                             </div>
 

@@ -86,6 +86,7 @@ public class StaffBusiness {
         StaffDao staffDao = new StaffDao();
         return staffDao.getAllNewCardRequestCount();
     }
+
     public Long searchAllNewCardRequestCount(String finalKeyword) {
         StaffDao staffDao = new StaffDao();
         return staffDao.searchAllNewCardRequestCount(finalKeyword);
@@ -105,6 +106,7 @@ public class StaffBusiness {
         StaffDao staffDao = new StaffDao();
         return staffDao.getOnePageNewCardRequest(offset, count);
     }
+
     public List searchOnePageNewCardRequest(String finalKeyword, int offset, int count) {
         StaffDao staffDao = new StaffDao();
         return staffDao.searchOnePageNewCardRequest(finalKeyword, offset, count);
@@ -165,7 +167,11 @@ public class StaffBusiness {
         // Check contract to add payment
         if (newContract != null) {
             // Add payment info
-            paymentEntity.setPaidDate(dto.getPaidDate());
+            if (currentDate.equals(dto.getPaidDate())) {
+                paymentEntity.setPaidDate(DateUtils.currentTimeWithoutNanos());
+            } else {
+                paymentEntity.setPaidDate(dto.getPaidDate());
+            }
             paymentEntity.setPaymentMethod("Trực tiếp");
             paymentEntity.setContent("Đăng ký hợp đồng mới " + newContract.getContractCode());
             paymentEntity.setAmount(dto.getAmount());
@@ -205,7 +211,12 @@ public class StaffBusiness {
             }
             if (contractDao.update(contractEntity) != null) {
                 // Add payment information
-                paymentEntity.setPaidDate(dto.getPaidDate());
+                Timestamp currentDate = DateUtils.currentDateWithoutTime();
+                if (currentDate.equals(dto.getPaidDate())) {
+                    paymentEntity.setPaidDate(DateUtils.currentTimeWithoutNanos());
+                } else {
+                    paymentEntity.setPaidDate(dto.getPaidDate());
+                }
                 paymentEntity.setAmount(dto.getAmount());
                 paymentEntity.setStartDate(startDate);
                 paymentEntity.setExpiredDate(dto.getExpiredDate());
@@ -323,11 +334,6 @@ public class StaffBusiness {
         return false;
     }
 
-    public List<ContractTypeEntity> getAllContractType() {
-        ContractTypeDao contractTypeDao = new ContractTypeDao();
-        return contractTypeDao.getAllContractType();
-    }
-
     public List<ContractTypeEntity> getAllActiveContractType() {
         ContractTypeDao contractTypeDao = new ContractTypeDao();
         return contractTypeDao.getAllActiveContractType();
@@ -409,7 +415,11 @@ public class StaffBusiness {
 
             if (contractDao.update(contractEntity) != null) {
                 // Set payment information from dto to entity
-                paymentEntity.setPaidDate(dto.getPaidDate());
+                if (currentDate.equals(dto.getPaidDate())) {
+                    paymentEntity.setPaidDate(DateUtils.currentTimeWithoutNanos());
+                } else {
+                    paymentEntity.setPaidDate(dto.getPaidDate());
+                }
                 paymentEntity.setAmount(dto.getAmount());
                 paymentEntity.setContractCode(dto.getContractCode());
                 // Set others payment information
@@ -441,19 +451,8 @@ public class StaffBusiness {
     }
 
     /**
-     * Returns true if the contract has changed
-     * Returns false if the contract is not changed or the contract code is not exists
-     *
-     * @param contractCode
-     * @param lastModified
-     * @return boolean, true is changed, false is not change yet
+     * Edit staff profile
      */
-    public boolean isContractChanged(String contractCode, Timestamp lastModified) {
-        ContractDao contractDao = new ContractDao();
-        ContractEntity contractEntity = contractDao.read(contractCode);
-        return contractEntity != null && !contractEntity.getLastModified().equals(lastModified);
-    }
-
     public boolean updateStaffProfile(EditStaffProfileDto editStaffProfileDto, String staffCode) {
         StaffDao staffDao = new StaffDao();
         StaffEntity staffEntity = staffDao.read(staffCode);
@@ -468,7 +467,7 @@ public class StaffBusiness {
     }
 
     /**
-     * Edit Profile
+     * Edit customer profile
      */
     public Boolean updateCustomerProfile(EditCustomerProfileByStaffDto dto) {
         CustomerDao customerDao = new CustomerDao();
@@ -485,9 +484,11 @@ public class StaffBusiness {
             }
         }
         return false;
-
     }
 
+    /**
+     * Change customer password
+     */
     public boolean changePassword(StaffChangePasswordDto dto) {
         StaffDao staffDao = new StaffDao();
         StaffEntity staffEntity = staffDao.read(dto.getStaffCode());
@@ -505,5 +506,4 @@ public class StaffBusiness {
         }
         return false;
     }
-
 }
