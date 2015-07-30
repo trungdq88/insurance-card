@@ -91,8 +91,7 @@
 
                             <div class="col-sm-3">
                                 <div class="text-value">
-                                    <input type="hidden" id="configTime" value=" ${configUtils.contractDefaultTerm}">
-                                    <input type="text" id="defaultExpired" disabled="disabled" class="handleInput"/>
+                                    ${configUtils.contractDefaultTerm} tháng kể từ ngày cấp
                                 </div>
                             </div>
                         </div>
