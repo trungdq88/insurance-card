@@ -86,19 +86,47 @@ function getMonthsBetween(date1, date2) {
 function addMonth(startDate, defaultTerm) {
     var array = startDate.split("-");
     var month = parseInt(defaultTerm);// get tu config
+    var newDate = parseInt(array[2]);
     var newMonth = parseInt((parseInt(array[1]) + month) % 12);
     var newYear = parseInt(array[0]) + ((parseInt(array[1]) + month) - newMonth) / 12;
     if (newMonth == 0) {
         newMonth = 12;
         newYear = newYear - 1;
     }
+    var maxDateInMonth = 31;
+    if (newMonth == 4 || newMonth == 6 || newMonth == 9 || newMonth == 11) {
+        maxDateInMonth = 30;
+    }
+    if (newMonth == 2) {
+        if ((newYear % 4) == 0) {
+            maxDateInMonth = 29;
+        }
+        else maxDateInMonth = 28;
+    }
+
+    // kiem tra lai ngay
+    //if (newDate > maxDateInMonth) {
+    //    newDate = newDate - maxDateInMonth;
+    //    newMonth = newMonth + 1;
+    //    if ( newMonth > 12 ) {
+    //        newMonth = 1;
+    //        newYear = newYear + 1;
+    //    }
+    //}
+
+    // kiem tra lai ngay &  khong + ngay vao thang sau cho giong voi ham plusMonth cua LocalDate
+    if (newDate > maxDateInMonth) {
+        newDate = maxDateInMonth;
+    }
+
     if (newMonth < 10) {
         newMonth = '0' + newMonth;
     }
-    if ((newMonth == 02) && (array[2] == 29)) {
-        array[2] = 28;
+    if (newDate < 10) {
+        newDate = '0' + newDate;
     }
-    return newYear + '-' + newMonth + '-' + array[2];
+
+    return newYear + '-' + newMonth + '-' + newDate;
 }
 
 function calculateContractFee(contractTerm, pricePerYear) {
