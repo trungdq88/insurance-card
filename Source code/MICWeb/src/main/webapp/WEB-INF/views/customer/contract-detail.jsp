@@ -76,6 +76,9 @@
             <div class="col-lg-12">
                 <h2 class="page-header ">Hợp Đồng ${contract.contractCode}
                      <span class="pull-right">
+                           <input type="hidden" id="defaultRenew"
+                                  value="${configUtils.contractDefaultTerm}">
+                            <input type="hidden" id="countDateRemain" value="${countDateRemain}">
                             <input type="hidden" id="contractStatus1" value="${contract.status}">
                             <input type="hidden" id="contractRenewLimit" value="${configUtils.contractRenewLimit}">
                              <button type="submit" class="btn btn-primary ${handleShowingButton.checkRenew}"
@@ -180,7 +183,7 @@
                 <div class="modal fade renew-contract-modal" tabindex="-1" role="dialog"
                      aria-labelledby="myLargeModalLabel"
                      aria-hidden="true">
-                    <div class="modal-dialog modal-lg">
+                    <div class="modal-dialog modal-lg" style="width: 600px !important;">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
@@ -227,7 +230,7 @@
 
                                         <div class="col-sm-4">
                                             <input id="newExpiredDate" style="border:none; background-color: white"
-                                                   type="datetime" disabled="disabled"/>
+                                                   type="text" disabled="disabled"/>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -237,11 +240,9 @@
                                             <fmt:setLocale value="vi_VN"/>
                                             <input style="border:none; background-color: white" type="hidden"
                                                    id="payAmount" disabled="disabled"
-                                                   value="${contract.getMicContractTypeByContractTypeId().getPricePerYear()} VNĐ"/>
-                                            <fmt:formatNumber
-                                                    value="${contract.getMicContractTypeByContractTypeId().getPricePerYear()}"
-                                                    type="currency"
-                                                    maxFractionDigits="0"/>
+                                                   value="${countFeeContract} VNĐ"/>
+                                            <fmt:formatNumber value="${countFeeContract}" type="currency"
+                                                              currencySymbol="" maxFractionDigits="0"/> VNĐ
                                         </div>
 
                                     </div>
@@ -392,7 +393,6 @@
 
                     <div class="alert alert-block alert-error fade in well well-lg text-info">
                         <h4 class="alert-heading">Hợp đồng của quý khách chưa được thanh toán!</h4>
-
                         <p>Quý khách có thể thanh toán trực tiếp tại công ty
                             <button class="btn" data-toggle="modal" title="Hiện địa chỉ công ty"
                                     data-target=".map-modal"><i class="fa fa-map-marker"></i>
@@ -429,16 +429,19 @@
                                                 <div class="col-sm-4">
                                                     <fmt:formatDate value="${contract.startDate}"
                                                                     pattern='dd/MM/yyyy'/>
-                                                    <input type="hidden" id="startDatePay" value="${contract.startDate}">
+                                                    <input type="hidden" id="startDatePay"
+                                                           value="${contract.startDate}">
                                                 </div>
                                             </div>
                                             <div class="form-group">
                                                 <label class="col-sm-5 text-right">Thời điểm kết thúc :</label>
 
                                                 <div class="col-sm-4">
-                                                    <input type="hidden" id="configTime" value=" ${configUtils.contractDefaultTerm}">
-                                                    <input type="text"style="padding-top: 0 !important;"
-                                                           id="defaultDateExpired" disabled="disabled" class="handleInput"/>
+                                                    <input type="hidden" id="configTime"
+                                                           value=" ${configUtils.contractDefaultTerm}">
+                                                    <input type="text" style="padding-top: 0 !important;"
+                                                           id="defaultDateExpired" disabled="disabled"
+                                                           class="handleInput"/>
                                                 </div>
                                             </div>
                                             <div class="form-group">
@@ -942,7 +945,10 @@
 
         var dateStartDefault = $('#startDatePay').val();
         var temp = $('#configTime').val();
-        $('#defaultDateExpired').val(checkDefaultExpiredDetail(dateStartDefault, temp));
+
+        if(dateStartDefault != '' && dateStartDefault!= null && dateStartDefault != undefined){
+            $('#defaultDateExpired').val(checkDefaultExpiredDetail(dateStartDefault, temp));
+        }
     });
     //    function countFeeContract(contractDefaultTerm, feeContract) {
     //        contractDefaultTerm = parseFloat(contractDefaultTerm);

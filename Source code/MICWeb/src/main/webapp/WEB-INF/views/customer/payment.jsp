@@ -82,11 +82,8 @@
                                                 ${payment.content}
                                         </td>
                                         <td>
-                                            <fmt:setLocale value='vi_VN'/>
-                                            <fmt:formatNumber
-                                                    value='${payment.amount}'
-                                                    type='currency'
-                                                    maxFractionDigits='0'/>
+                                            <fmt:formatNumber value="${payment.amount}" type="currency"
+                                                              currencySymbol="" maxFractionDigits="0"/> VNĐ
                                         </td>
                                         <td>
                                             <button type="button" data-toggle="modal" index="${counter.count}"
@@ -148,7 +145,7 @@
             </div>
         </div>
         <div class="modal fade paymentDialog" aria-hidden="false">
-            <div class="modal-dialog">
+            <div class="modal-dialog" style="width: 650px">
                 <form class="form-horizontal">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -289,7 +286,7 @@
 
             $('#payment-id-value').val(index1);
             $('#contract-code-value').val(index2);
-            $('#amount-value').val(index3);
+            $('#amount-value').val(parseFloat(index3).formatMoney(0, '.', '.') + ' VNĐ');
 
             $('#content-value').val(index4);
             $('#payment-method-value').val(index5);
