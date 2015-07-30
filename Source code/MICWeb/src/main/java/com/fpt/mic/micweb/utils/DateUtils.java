@@ -1,7 +1,7 @@
 package com.fpt.mic.micweb.utils;
 
-import org.joda.time.DateTime;
-import org.joda.time.Days;
+import org.joda.time.LocalDate;
+import org.joda.time.Months;
 
 import java.sql.Timestamp;
 import java.text.DateFormat;
@@ -19,6 +19,7 @@ public class DateUtils {
     private static final int SECONDS_IN_MINUTE = 60;
     private static final int MINUTES_IN_HOUR = 60;
     private static final int HOURS_IN_DAY = 24;
+
     public static Timestamp stringToTime(String inputDate) {
         Timestamp timeStamp = null;
         try {
@@ -34,7 +35,8 @@ public class DateUtils {
         }
         return timeStamp;
     }
-    public static Timestamp addOneYear (Timestamp timestamp) {
+
+    public static Timestamp addOneYear(Timestamp timestamp) {
         Date dt = new Date(timestamp.getTime());
         Calendar c = Calendar.getInstance();
         c.setTime(dt);
@@ -43,6 +45,7 @@ public class DateUtils {
         timestamp = new Timestamp(dt.getTime());
         return timestamp;
     }
+
     public static Timestamp addMonth(Timestamp timestamp, int month) {
         Date dt = new Date(timestamp.getTime());
         Calendar c = Calendar.getInstance();
@@ -63,13 +66,13 @@ public class DateUtils {
         return new Timestamp(dateWithoutTime.getTime());
     }
 
-    public static Timestamp convertDateTimeToDate (Timestamp date) {
+    public static Timestamp convertDateTimeToDate(Timestamp date) {
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
-        cal.set( Calendar.HOUR_OF_DAY, 0);
-        cal.set( Calendar.MINUTE, 0);
-        cal.set( Calendar.SECOND, 0);
-        cal.set( Calendar.MILLISECOND, 0);
+        cal.set(Calendar.HOUR_OF_DAY, 0);
+        cal.set(Calendar.MINUTE, 0);
+        cal.set(Calendar.SECOND, 0);
+        cal.set(Calendar.MILLISECOND, 0);
         Date day = cal.getTime();
         return new Timestamp(day.getTime());
     }
@@ -77,6 +80,22 @@ public class DateUtils {
     public static long dateBetween(Timestamp t1, Timestamp t2) {
         long diffTime = t2.getTime() - t1.getTime();
         return diffTime / (MILLIS_IN_SECOND * SECONDS_IN_MINUTE * MINUTES_IN_HOUR * HOURS_IN_DAY);
+    }
+
+    public static int getMonthsBetween(Date d1, Date d2) {
+        LocalDate date1 = new LocalDate(d1);
+        LocalDate date2 = new LocalDate(d2);
+
+        Months months = Months.monthsBetween(date1, date2);
+
+        int diff = months.getMonths();
+
+        LocalDate compare = date1.plusMonths(diff);
+        if (compare.isBefore(date2)) {
+            diff++;
+        }
+
+        return diff;
     }
 
     public static Timestamp currentTimeWithoutNanos() {

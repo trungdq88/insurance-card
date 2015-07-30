@@ -401,9 +401,9 @@
     function calcRenewFee() {
         var inputDate = new Date($('#expiredDate').val());
         if (contractStatus != 'Expired') {
-            contractTerm = daysBetween(expDate, inputDate);
+            contractTerm = getMonthsBetween(expDate, inputDate);
         } else {
-            contractTerm = daysBetween(new Date(getCurrentDate()), inputDate);
+            contractTerm = getMonthsBetween(new Date(getCurrentDate()), inputDate);
         }
         return calculateContractFee(contractTerm, pricePerYear);
     }
