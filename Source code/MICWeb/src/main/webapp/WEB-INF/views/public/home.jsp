@@ -288,7 +288,7 @@
 
                         <p class="form-control-static">
                             <label>Phí bảo hiểm: </label>
-                            <b style="color: red"><span id="txtFee1"></span> VND
+                            <b style="color: red"><span id="txtFee1"></span> VNĐ
                             </b>
 
                             <input type="hidden" id="txtFeeInput" name="register:contractFee" value="${submitted.contractFee}" />
@@ -372,7 +372,7 @@
         realFee = (realFee - (realFee % 1000));
         $('#txtFeeInput').val(realFee);
     }
-    $('#txtFee1').text(parseFloat($('#txtFeeInput').val()).formatMoney(0,'.',','));
+    $('#txtFee1').text(parseFloat($('#txtFeeInput').val()).formatMoney(0,'.','.'));
 
 </script>
 </body>

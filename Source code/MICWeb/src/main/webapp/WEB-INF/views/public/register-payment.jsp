@@ -49,7 +49,7 @@
 
                                     <p><b>Mã hợp đồng:</b> ${register.contractEntity.contractCode}</p>
                                     <input type="hidden" id="amount" value="${register.contractEntity.contractFee}">
-                                    <p><b>Phí cần thanh toán:  </b><span id="amount1"></span> VND</p>
+                                    <p><b>Phí cần thanh toán:  </b><span id="amount1"></span> VNĐ</p>
 
                                 </div>
                             </div>
@@ -92,7 +92,7 @@
                 j = (j = i.length) > 3 ? j % 3 : 0;
         return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
     };
-    $('#amount1').text(parseFloat($('#amount').val()).formatMoney(0));
+    $('#amount1').text(parseFloat($('#amount').val()).formatMoney(0,'.','.'));
 
 
 </script>

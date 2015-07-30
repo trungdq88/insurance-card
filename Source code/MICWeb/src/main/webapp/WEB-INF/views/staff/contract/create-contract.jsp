@@ -390,7 +390,7 @@
     // Refresh displaying & send to server values
     function refreshFee(contractFee) {
         // Data to display to user
-        $('#displayFee').text(contractFee.formatMoney(0));
+        $('#displayFee').text(contractFee.formatMoney(0,'.','.'));
         // Data to send to server
         $('#contractFee').val(contractFee);
         $('#amount').val(contractFee);

@@ -415,10 +415,10 @@
         var calculatedDeliveryFee = isNewCard ? (isDeliveryNewCard ? deliveryFee : 0) : 0;
 
         // Data to display to user
-        $('#renewFee').text(calculatedRenewFee.formatMoney(0));
-        $('#newCardFee').text(calculatedNewCardFee.formatMoney(0));
-        $('#deliveryFee').text(calculatedDeliveryFee.formatMoney(0));
-        $('#totalFee').text((calculatedRenewFee + calculatedNewCardFee + calculatedDeliveryFee).formatMoney(0));
+        $('#renewFee').text(calculatedRenewFee.formatMoney(0,'.','.'));
+        $('#newCardFee').text(calculatedNewCardFee.formatMoney(0,'.','.'));
+        $('#deliveryFee').text(calculatedDeliveryFee.formatMoney(0,'.','.'));
+        $('#totalFee').text((calculatedRenewFee + calculatedNewCardFee + calculatedDeliveryFee).formatMoney(0,'.','.'));
 
         // Data to send to server
         $('#contractFee').val(calculatedRenewFee);
@@ -527,7 +527,7 @@
             }).done(function (data) {
                 $("#payment-id-value").html(data.id);
                 $("#contract-code-value").html(data.contractCode);
-                $("#amount-value").html(data.amount.formatMoney(0) + ' VNĐ');
+                $("#amount-value").html(data.amount.formatMoney(0,'.','.') + ' VNĐ');
                 $("#content-value").html(data.content);
                 $("#payment-method-value").html(data.paymentMethod);
                 $("#paid-date-value").html(getDateTime(data.paidDate));

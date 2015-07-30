@@ -240,7 +240,7 @@
     var newCardRequestFee = '${submitted.newCardRequestFee}';
     var deliveryFee = '${submitted.deliveryFee}';
 
-    $('#newCardRequestFee').text(parseFloat(newCardRequestFee).formatMoney(0,'.',','));
-    $('#deliveryFee').text(parseFloat(deliveryFee).formatMoney(0,'.',','));
+    $('#newCardRequestFee').text(parseFloat(newCardRequestFee).formatMoney(0,'.','.'));
+    $('#deliveryFee').text(parseFloat(deliveryFee).formatMoney(0,'.','.'));
 
 </script>

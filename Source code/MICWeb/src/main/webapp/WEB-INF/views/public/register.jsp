@@ -156,9 +156,9 @@
                                                                 realFee = (realFee - (realFee % 1000));
                                                                 $('#txtFeeInput').val(realFee);
 
-                                                                realFee = realFee.formatMoney(0,'.',',');
-                                                                $('#txtFee1').text(realFee);
-                                                                $('#txtFee2').text(realFee);
+                                                                realFee = realFee.formatMoney(0,'.','.');
+                                                                $('#txtFee1').text(realFee + ' VNĐ');
+                                                                $('#txtFee2').text(realFee + ' VNĐ');
                                                                 }">
                                                     <c:forEach var="row" items="${mapContractType}">
                                                         <option <c:if test="${row.key == selectedId}">
@@ -179,7 +179,7 @@
                                         <div class="col-sm-5 col-sm-offset-1">
                                             <div class="form-group">
                                                 <label><b>Phí bảo hiểm: </b></label>
-                                                <b style="color: red"><span id="txtFee1"></span> VND</b>
+                                                <b style="color: red"><span id="txtFee1"></span></b>
                                                 <input type="hidden" id="txtFeeInput" name="register:contractFee"
                                                        value="${publicHomeFormDto.contractFee}">
 
@@ -384,7 +384,7 @@
                                             ${contractDefaultTerm} tháng kể từ ngày bảo hiểm có hiệu lực
                                         </div>
                                         <div class="col-sm-5 col-sm-offset-1">
-                                            <label><b>Phí bảo hiểm (VND): </b></label>
+                                            <label><b>Phí bảo hiểm : </b></label>
                                             <label id="txtFee2"></label>
                                         </div>
                                         <div class="col-sm-5">
@@ -536,8 +536,8 @@
                     j = (j = i.length) > 3 ? j % 3 : 0;
             return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
         };
-        $('#txtFee1').text(parseFloat($('#txtFeeInput').val()).formatMoney(0));
-        $('#txtFee2').text(parseFloat($('#txtFeeInput').val()).formatMoney(0));
+        $('#txtFee1').text(parseFloat($('#txtFeeInput').val()).formatMoney(0,'.','.') + ' VNĐ');
+        $('#txtFee2').text(parseFloat($('#txtFeeInput').val()).formatMoney(0,'.','.') + ' VNĐ');
         function step2() {
             if (document.getElementById('txtName').checkValidity() == false ||
                     document.getElementById('txtAddress').checkValidity() == false ||

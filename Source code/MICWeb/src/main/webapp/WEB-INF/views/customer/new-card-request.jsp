@@ -52,11 +52,11 @@
                         $('.newCardCost').removeClass('hide');
 
                         if($('#delivery').attr('value') =='false'){
-                            $('#total_Cost').text(parseFloat($('#newCard_Cost').val()).formatMoney(0));
+                            $('#total_Cost').text(parseFloat($('#newCard_Cost').val()).formatMoney(0,'.','.'));
                             $('#transform_Cost1').text(0);
                         } else{
-                            $('#transform_Cost1').text(parseFloat($('#transform_Cost').val()).formatMoney(0));
-                            $('#total_Cost').text((parseFloat($('#newCard_Cost').val()) + parseFloat($('#transform_Cost').val())).formatMoney(0));
+                            $('#transform_Cost1').text(parseFloat($('#transform_Cost').val()).formatMoney(0,'.','.'));
+                            $('#total_Cost').text((parseFloat($('#newCard_Cost').val()) + parseFloat($('#transform_Cost').val())).formatMoney(0,'.','.'));
                         }
 
                     }" checked>
@@ -68,7 +68,7 @@
             <div class="form-group">
                 <div class="col-sm-3 control-label">
                     <input id="direct" type="radio" name="request:payment" value="direct" onclick="{
-                    $('#total_Cost').text(parseFloat($('#newCard_Cost').val()).formatMoney(0));
+                    $('#total_Cost').text(parseFloat($('#newCard_Cost').val()).formatMoney(0,'.','.'));
                     $('.tranformCost').addClass('hide');
                     }">
                 </div>
@@ -113,14 +113,14 @@
 
                         <input id="delivery" name="request:deliveryRequested" type="checkbox" value="true" onclick="{
                     if( this.checked){
-                        $('#transform_Cost1').text(parseFloat($('#transform_Cost').val()).formatMoney(0));
+                        $('#transform_Cost1').text(parseFloat($('#transform_Cost').val()).formatMoney(0,'.','.'));
                         $('#delivery').attr('value','true');
-                        $('#total_Cost').text((parseFloat($('#newCard_Cost').val()) + parseFloat($('#transform_Cost').val())).formatMoney(0));
+                        $('#total_Cost').text((parseFloat($('#newCard_Cost').val()) + parseFloat($('#transform_Cost').val())).formatMoney(0,'.','.'));
 
                     } else {
                         $('#delivery').attr('value','false');
                         $('#transform_Cost1').text(0);
-                        $('#total_Cost').text(parseFloat($('#newCard_Cost').val()).formatMoney(0));
+                        $('#total_Cost').text(parseFloat($('#newCard_Cost').val()).formatMoney(0,'.','.'));
                     };
                     }"
                         <c:if test="${submitted.deliveryRequested == true}"> checked</c:if> >
@@ -179,14 +179,14 @@
     }
 
     if($('#delivery').attr('value') == 'true') {
-        $('#total_Cost').text((parseFloat($('#newCard_Cost').val()) + parseFloat($('#transform_Cost').val())).formatMoney(0));
+        $('#total_Cost').text((parseFloat($('#newCard_Cost').val()) + parseFloat($('#transform_Cost').val())).formatMoney(0,'.','.'));
         $('#delivery').attr('checked',true);
-        $('#transform_Cost1').text(parseFloat($('#transform_Cost').val()).formatMoney(0));
+        $('#transform_Cost1').text(parseFloat($('#transform_Cost').val()).formatMoney(0,'.','.'));
     } else {
-        $('#total_Cost').text(parseFloat($('#newCard_Cost').val()).formatMoney(0));
+        $('#total_Cost').text(parseFloat($('#newCard_Cost').val()).formatMoney(0,'.','.'));
         $('#transform_Cost1').text(0);
     }
 
-    $('#newCard_Cost1').text(parseFloat($('#newCard_Cost').val()).formatMoney(0));
-    $('#transform_Cost1').text(parseFloat($('#transform_Cost').val()).formatMoney(0));
+    $('#newCard_Cost1').text(parseFloat($('#newCard_Cost').val()).formatMoney(0,'.','.'));
+    $('#transform_Cost1').text(parseFloat($('#transform_Cost').val()).formatMoney(0,'.','.'));
 </script>

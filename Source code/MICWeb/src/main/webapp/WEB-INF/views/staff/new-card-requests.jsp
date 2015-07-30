@@ -145,7 +145,7 @@
                                                                     $('#addContent').text(content);
                                                                     $('#content').val(content);
                                                                     $('#amount').val(fee);
-                                                                    $('#addAmount').text(fee);
+                                                                    $('#addAmount').text(parseFloat(fee).formatMoney(0,'.','.'));
                                                                     $('#contractCode').val(contractCode);
                                                                     $('#delivery').val(delivery);
 
