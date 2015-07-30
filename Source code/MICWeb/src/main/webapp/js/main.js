@@ -104,16 +104,6 @@ function addMonth(startDate, defaultTerm) {
         else maxDateInMonth = 28;
     }
 
-    // kiem tra lai ngay
-    //if (newDate > maxDateInMonth) {
-    //    newDate = newDate - maxDateInMonth;
-    //    newMonth = newMonth + 1;
-    //    if ( newMonth > 12 ) {
-    //        newMonth = 1;
-    //        newYear = newYear + 1;
-    //    }
-    //}
-
     // kiem tra lai ngay &  khong + ngay vao thang sau cho giong voi ham plusMonth cua LocalDate
     if (newDate > maxDateInMonth) {
         newDate = maxDateInMonth;
@@ -136,13 +126,6 @@ function calculateContractFee(contractTerm, pricePerYear) {
 
     contractFee = (fPrice / 12) * nTerm;
 
-    /*if (nTerm == 365 || nTerm == 366) {
-        contractFee = fPrice;
-    } else if (nTerm >= 1 && nTerm <= 30) {
-        contractFee = fPrice / 12;
-    } else {
-        contractFee = (fPrice / 365) * nTerm;
-    }*/
     return roundThousand(contractFee);
 }
 
