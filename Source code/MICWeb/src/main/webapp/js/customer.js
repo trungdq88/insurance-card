@@ -223,18 +223,17 @@ $(document).ready(function () {
         day = day.length > 1 ? day : '0' + day;
         myDate = (year + '-' + month + '-' + day);
 
-        //$('#newExpiredDate').val(checkDefaultExpiredDetail(myDate,temp));
-
 
         $('#payment').val((parseFloat($('#payAmount').val())));
         $('#paymentATM').val((parseFloat($('#payAmount').val())));
         /////
-        var startDate = (day + '/' + month + '/' + year);;
+        var startDate = (day + '/' + month + '/' + year);
+
         //startDate = (startDate.getDate().toString().length > 1 ? startDate.getDate().toString() : '0' + startDate.getDate().toString()) + '/' +
         //    ((1 + startDate.getMonth()).toString().length > 1 ? (1 + startDate.getMonth()).toString() : '0' + (1 + startDate.getMonth()).toString()) + '/' +
         //    startDate.getFullYear();
-        $('#content1').val("Gia hạn hợp đồng từ " + startDate + " đến " + $('#newExpiredDate').val());
-        $('#content2').val("Gia hạn hợp đồng từ " + startDate + " đến " + $('#newExpiredDate').val());
+        $('#content1').val("Gia hạn hợp đồng từ " + startDate + " đến " + conertDate($('#newExpiredDate').val()));
+        $('#content2').val("Gia hạn hợp đồng từ " + startDate + " đến " + conertDate($('#newExpiredDate').val()));
 
 
     });
@@ -270,6 +269,15 @@ $(document).ready(function () {
     });
     function getDateNow() {
         var myDate = new Date();
+        var year = myDate.getFullYear();
+        var month = (1 + myDate.getMonth()).toString();
+        month = month.length > 1 ? month : '0' + month;
+        var day = myDate.getDate().toString();
+        day = day.length > 1 ? day : '0' + day;
+        return day + '/' + month + '/' + year;
+    }
+    function conertDate(date) {
+        var myDate = new Date(date);
         var year = myDate.getFullYear();
         var month = (1 + myDate.getMonth()).toString();
         month = month.length > 1 ? month : '0' + month;
