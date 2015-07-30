@@ -199,7 +199,7 @@
                             <div class="col-sm-3">
                                 <div class="text-value">
                                     <fmt:formatNumber value="${contract.amount}" type="currency"
-                                                      currencySymbol="VNĐ" maxFractionDigits="0"/>
+                                                      currencySymbol="" maxFractionDigits="0"/> VNĐ
                                 </div>
                             </div>
 

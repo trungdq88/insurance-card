@@ -145,11 +145,8 @@
                                                 </td>
                                                 <td>
                                                     <fmt:setLocale value="vi_VN"/>
-                                                    <fmt:formatNumber
-                                                            value="${row.pricePerYear}"
-                                                            type="currency"
-                                                            currencySymbol="VNĐ"
-                                                            maxFractionDigits="0"/>
+                                                    <fmt:formatNumber value="${row.pricePerYear}" type="currency"
+                                                                      currencySymbol="" maxFractionDigits="0"/> VNĐ
                                                 </td>
                                                 <c:if test="${row.active eq '1'}">
                                                     <td>

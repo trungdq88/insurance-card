@@ -212,7 +212,7 @@
                             <div class="text-value">
                                 <span style="color:hotpink; font-weight: bolder; font-size: large">
                                     <fmt:formatNumber value="${contract.contractFee}" type="currency"
-                                                      currencySymbol="VNĐ" maxFractionDigits="0"/>
+                                                      currencySymbol="" maxFractionDigits="0"/> VNĐ
                                 </span>
                             </div>
                         </div>
@@ -337,7 +337,7 @@
                                                 <td>${payment.content}</td>
                                                 <td>
                                                     <fmt:formatNumber value="${payment.amount}" type="currency"
-                                                                      currencySymbol="VNĐ" maxFractionDigits="0"/>
+                                                                      currencySymbol="" maxFractionDigits="0"/> VNĐ
                                                 </td>
                                                 <td>
                                                     <a href="javascript:;"
