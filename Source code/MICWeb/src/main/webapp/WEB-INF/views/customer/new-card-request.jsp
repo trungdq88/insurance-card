@@ -82,7 +82,7 @@
                 <label class="col-sm-3 control-label">Phí Làm Thẻ Mới:</label>
 
                 <div class="col-sm-2">
-                    <p class="form-control-static"><span id="newCard_Cost1"></span> VND <input class="hide" id="newCard_Cost" name="newCardFee"
+                    <p class="form-control-static"><span id="newCard_Cost1"></span> VNĐ <input class="hide" id="newCard_Cost" name="newCardFee"
                                                                     value="${newCardFee}"/></p>
                 </div>
                 <div class="col-sm-3">
@@ -104,7 +104,7 @@
                 <label class="col-sm-3 control-label">Phí Vận Chuyển: </label>
 
                 <div class="col-sm-2">
-                    <p class="form-control-static"><span id="transform_Cost1"></span> VND <input class="hide" id="transform_Cost" name="transformFee"
+                    <p class="form-control-static"><span id="transform_Cost1"></span> VNĐ <input class="hide" id="transform_Cost" name="transformFee"
                                                                     value="${transformFee}"/></p>
 
                 </div>
@@ -134,7 +134,7 @@
                 <label class="col-sm-3 control-label">Thành Tiền: </label>
 
                 <div class="col-sm-5">
-                    <p class="form-control-static"><span id="total_Cost"></span> VND</p>
+                    <p class="form-control-static"><span id="total_Cost"></span> VNĐ</p>
                 </div>
             </div>
 

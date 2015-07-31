@@ -266,7 +266,7 @@
                                     realFee = (realFee - (realFee % 1000));
                                     $('#txtFeeInput').val(realFee);
 
-                                realFee = realFee.formatMoney(0,'.',',');
+                                realFee = realFee.formatMoney(0,'.','.');
                                 $('#txtFee1').text(realFee);
 
                             }" >

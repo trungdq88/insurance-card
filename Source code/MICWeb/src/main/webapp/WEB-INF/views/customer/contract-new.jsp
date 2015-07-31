@@ -107,11 +107,11 @@
 
                         <!-- Contract fee -->
                         <div class="form-group">
-                            <label class="col-sm-4 control-label">Phí bảo hiểm (VNĐ): </label>
+                            <label class="col-sm-4 control-label">Phí bảo hiểm: </label>
 
                             <div class="col-sm-3">
                                 <div class="text-value">
-                                    <b style="color: red"><span id="txtFee1"></span> VND
+                                    <b style="color: red"><span id="txtFee1"></span> VNĐ
                                     </b>
 
                                     <input type="hidden" id="txtFeeInput" name="contract:contractFee"

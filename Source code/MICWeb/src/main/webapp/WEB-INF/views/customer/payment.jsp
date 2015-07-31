@@ -82,6 +82,7 @@
                                                 ${payment.content}
                                         </td>
                                         <td>
+                                            <fmt:setLocale value="vi_VN"/>
                                             <fmt:formatNumber value="${payment.amount}" type="currency"
                                                               currencySymbol="" maxFractionDigits="0"/> VNĐ
                                         </td>
