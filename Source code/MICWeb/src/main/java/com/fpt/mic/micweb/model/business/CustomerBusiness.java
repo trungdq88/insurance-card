@@ -394,8 +394,7 @@ public class CustomerBusiness {
             }
         } else if (contractEntity.getStatus().equals(Constants.ContractStatus.EXPIRED)) {
             currentDate = DateUtils.addMonth(currentDate, configUtils.getContractDefaultTerm());
-        }
-        else if (contractEntity.getStatus().equals(Constants.ContractStatus.READY) ||
+        } else if (contractEntity.getStatus().equals(Constants.ContractStatus.READY) ||
                 contractEntity.getStatus().equals(Constants.ContractStatus.NO_CARD)) {
             currentDate = DateUtils.addMonth(contractEntity.getExpiredDate(), configUtils.getContractDefaultTerm());
         }
@@ -477,6 +476,7 @@ public class CustomerBusiness {
         float realFee = feePerYear * numberMonthToCount;
         // fix 1000
         realFee = realFee - (realFee % 1000);
+        realFee += 1000;
         return realFee;
     }
 }
