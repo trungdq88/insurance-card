@@ -175,8 +175,10 @@ $(document).ready(function () {
     function DayDiff(date) {
         var oneDay = 24 * 60 * 60 * 1000;
         var timeNow = new Date();
+
+        var refreshDate = timeNow.setHours(00,00,0000);
         var expiredDate = new Date(date);
-        return Math.round((expiredDate.getTime() - timeNow.getTime()) / (oneDay) + 1 );
+        return Math.round((expiredDate.getTime() - refreshDate) / (oneDay)  );
     }
 
 
