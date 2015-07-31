@@ -119,7 +119,10 @@ public class CustomerCreateContractDto {
             float analFee = contractTypeEntity.getPricePerYear();
 
             float realFee  = analFee * configUtils.getContractDefaultTerm()/12;
-            realFee = realFee - (realFee % 1000);
+            if (realFee % 1000 != 0){
+                realFee = realFee - (realFee % 1000) + 1000;
+            }
+
             if (contractFee == realFee)
                 return true;
         } catch (NullPointerException e) {
