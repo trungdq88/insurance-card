@@ -223,7 +223,7 @@ $(document).ready(function () {
         day = day.length > 1 ? day : '0' + day;
         myDate = (year + '-' + month + '-' + day);
 
-        $('#newExpiredDate').val(checkDefaultExpiredDetail(myDate,temp));
+        //$('#newExpiredDate').val(checkDefaultExpiredDetail(myDate,temp));
 
 
         $('#payment').val((parseFloat($('#payAmount').val())));
