@@ -162,7 +162,7 @@
                         <div class="form-group">
                             <label class="col-sm-4 control-label" for="displayFee">Phí bảo hiểm *</label>
 
-                            <div class="col-sm-2">
+                            <div class="col-sm-3">
                                 <div class="text-value">
                                     <span id="displayFee"
                                           style="color:red; font-weight: bolder; font-size: large"></span> VNĐ
@@ -384,13 +384,13 @@
     function calcContractTerm() {
         var stDate = new Date($("#startDate").val());
         var expDate = new Date($("#expiredDate").val());
-        return daysBetween(stDate, expDate);
+        return getMonthsBetween(stDate, expDate);
     }
 
     // Refresh displaying & send to server values
     function refreshFee(contractFee) {
         // Data to display to user
-        $('#displayFee').text(contractFee.formatMoney(0,'.','.'));
+        $('#displayFee').text(contractFee.formatMoney(0, '.', '.'));
         // Data to send to server
         $('#contractFee').val(contractFee);
         $('#amount').val(contractFee);
@@ -422,12 +422,12 @@
                 // Refreshing fee
                 stDate = $("#startDate").val();
                 expDate = $("#expiredDate").val();
-                contractTerm = daysBetween(new Date(stDate), new Date(expDate));
+                contractTerm = getMonthsBetween(new Date(stDate), new Date(expDate));
                 contractFee = calculateContractFee(contractTerm, pricePerYear);
                 refreshFee(contractFee);
                 // Change expired date min max while input date is lost focus
-                document.getElementById("expiredDate").min = addMonth(stDate,'${config.contractMinTerm}');
-                document.getElementById("expiredDate").max = addMonth(stDate,'${config.contractDefaultTerm}');
+                document.getElementById("expiredDate").min = addMonth(stDate, '${config.contractMinTerm}');
+                document.getElementById("expiredDate").max = addMonth(stDate, '${config.contractDefaultTerm}');
             });
             refreshFee(contractFee);
         }).change();
