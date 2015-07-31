@@ -435,4 +435,14 @@ public class CustomerBusiness {
         }
         return handle;
     }
+    public float countFeeContract(float feePerYear){
+        ConfigUtils configUtils = new ConfigUtils();
+        float contractDefaultTerm = configUtils.getContractDefaultTerm();
+        float numberMonthToCount = (contractDefaultTerm / 12) ;
+
+        float realFee = feePerYear * numberMonthToCount;
+        // fix 1000
+        realFee = realFee - (realFee % 1000);
+        return realFee;
+    }
 }

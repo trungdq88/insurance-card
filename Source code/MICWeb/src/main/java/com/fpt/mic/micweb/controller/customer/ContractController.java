@@ -239,6 +239,8 @@ public class ContractController extends AuthController {
             r.equest.setAttribute("handleShowingButton", customerBusiness.handleShowingButton(contract.getExpiredDate(),
                                                          contract.getStatus()));
             r.equest.setAttribute("configUtils", configUtils);
+            r.equest.setAttribute("countFeeContract", customerBusiness.countFeeContract(
+                             contract.getMicContractTypeByContractTypeId().getPricePerYear()));
             r.equest.setAttribute("newCardRequested", cardBusiness.getUnresolveNewCardRequest(code));
             r.equest.setAttribute("card", cardBusiness.getCardByContract(code));
             r.equest.setAttribute("accidentPaginator", accidentPaginator);
