@@ -1,6 +1,4 @@
-CREATE DATABASE  IF NOT EXISTS `mic_data` /*!40100 DEFAULT CHARACTER SET utf8 */;
-USE `mic_data`;
--- MySQL dump 10.13  Distrib 5.6.23, for Win32 (x86)
+﻿-- MySQL dump 10.13  Distrib 5.6.23, for Win32 (x86)
 --
 -- Host: localhost    Database: mic_data
 -- ------------------------------------------------------
@@ -16,7 +14,8 @@ USE `mic_data`;
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-
+CREATE DATABASE  IF NOT EXISTS `mic_data` /*!40100 DEFAULT CHARACTER SET utf8 */;
+USE `mic_data`;
 --
 -- Table structure for table `increments`
 --
@@ -130,7 +129,7 @@ CREATE TABLE `mic_card` (
 
 LOCK TABLES `mic_card` WRITE;
 /*!40000 ALTER TABLE `mic_card` DISABLE KEYS */;
-INSERT INTO `mic_card` VALUES ('1029375283',1),('2874916285723',1),('347298376510',1),('34875720103',1),('3683457892',1),('382719658223',1),('384792387651',1),('3857629834326',1),('4871928491232',1),('5032384203434',1),('589271982732',1),('8049283172874',1),('8374659283423',1),('85287912372',1),('9021748528325',1),('90284717292325',1),('940382734892',1);
+INSERT INTO `mic_card` VALUES ('1029375283',1),('232498734432',1),('2874916285723',1),('347298376510',1),('34875720103',1),('3683457892',1),('382719658223',1),('384792387651',1),('3857629834326',1),('4871928491232',1),('5032384203434',1),('543534534534',1),('546346576443',1),('589271982732',1),('634333423433',1),('654547445432',1),('654765465333',1),('765865543756',1),('8049283172874',1),('8374659283423',1),('845545434346',1),('85287912372',1),('9021748528325',1),('90284717292325',1),('940382734892',1);
 /*!40000 ALTER TABLE `mic_card` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -412,7 +411,7 @@ CREATE TABLE `mic_notification` (
   `created_date` datetime NOT NULL,
   `resolved_date` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -421,7 +420,7 @@ CREATE TABLE `mic_notification` (
 
 LOCK TABLES `mic_notification` WRITE;
 /*!40000 ALTER TABLE `mic_notification` DISABLE KEYS */;
-INSERT INTO `mic_notification` VALUES (38,'Khách hàng Trương Văn Khải gửi yêu cầu bồi thường cho hợp đồng HD000B','^NV([0-9A-Z]{4,8})$',1,2,'BT0001','2015-07-26 14:48:58',NULL),(39,'Khách hàng Trần Quang Đại gửi yêu cầu cấp thẻ mới cho hợp đồng HD0003','^NV([0-9A-Z]{4,8})$',1,3,'19','2015-07-26 14:50:13',NULL),(40,'Khách hàng Trương Văn Khải gửi yêu cầu bồi thường cho hợp đồng HD000B','^NV([0-9A-Z]{4,8})$',1,2,'BT0002','2015-07-25 19:47:36',NULL);
+INSERT INTO `mic_notification` VALUES (38,'Khách hàng Trương Văn Khải gửi yêu cầu bồi thường cho hợp đồng HD000B','^NV([0-9A-Z]{4,8})$',1,2,'BT0001','2015-07-26 14:48:58',NULL),(39,'Khách hàng Trần Quang Đại gửi yêu cầu cấp thẻ mới cho hợp đồng HD0003','^NV([0-9A-Z]{4,8})$',1,3,'19','2015-07-26 14:50:13',NULL),(40,'Khách hàng Trương Văn Khải gửi yêu cầu bồi thường cho hợp đồng HD000B','^NV([0-9A-Z]{4,8})$',1,2,'BT0002','2015-07-25 19:47:36',NULL),(41,'Hợp đồng HD000B sẽ hết hạn trong 12 ngày nữa','^KH000A$',0,41,'HD000B','2015-07-31 21:24:12',NULL),(42,'Hợp đồng HD000B sẽ hết hạn trong 12 ngày nữa','^KH000A$',0,41,'HD000B','2015-07-31 21:24:12',NULL);
 /*!40000 ALTER TABLE `mic_notification` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -555,4 +554,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-07-25 19:53:52
+-- Dump completed on 2015-07-31 21:32:59
