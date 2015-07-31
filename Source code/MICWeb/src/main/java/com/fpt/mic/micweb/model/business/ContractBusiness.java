@@ -158,15 +158,16 @@ public class ContractBusiness {
     public Timestamp getNewExpiredDate(String contractCode) {
         ContractDao contractDao = new ContractDao();
         ContractEntity contract = contractDao.read(contractCode);
+        ConfigUtils configUtils= new ConfigUtils();
 
         if (contract == null) return null;
 
         Timestamp expiredDate = DateUtils.convertDateTimeToDate(contract.getExpiredDate());
         if (contract.getStatus().equalsIgnoreCase(Constants.ContractStatus.READY)
                 ||contract.getStatus().equalsIgnoreCase(Constants.ContractStatus.NO_CARD)) {
-            expiredDate = DateUtils.addOneYear(expiredDate);
+            expiredDate = DateUtils.addMonth(expiredDate ,configUtils.getContractDefaultTerm());
         } else if (contract.getStatus().equalsIgnoreCase(Constants.ContractStatus.EXPIRED)) {
-            expiredDate = DateUtils.addOneYear(DateUtils.currentDateWithoutTime());
+            expiredDate = DateUtils.addMonth(DateUtils.currentDateWithoutTime(), configUtils.getContractDefaultTerm());
         } else {
             return null;
         }

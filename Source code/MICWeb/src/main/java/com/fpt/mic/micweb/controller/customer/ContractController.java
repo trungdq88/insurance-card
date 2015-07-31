@@ -235,6 +235,7 @@ public class ContractController extends AuthController {
             });
 
             r.equest.setAttribute("contract", contract);
+            r.equest.setAttribute("countDateRemain", customerBusiness.countDateRemain(contract.getExpiredDate()));
             r.equest.setAttribute("messageContract", customerBusiness.messageContract(contract.getExpiredDate(), code));
             r.equest.setAttribute("handleShowingButton", customerBusiness.handleShowingButton(contract.getExpiredDate(),
                                                          contract.getStatus()));
