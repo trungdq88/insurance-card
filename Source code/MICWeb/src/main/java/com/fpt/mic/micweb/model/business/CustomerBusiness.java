@@ -475,8 +475,11 @@ public class CustomerBusiness {
 
         float realFee = feePerYear * numberMonthToCount;
         // fix 1000
-        realFee = realFee - (realFee % 1000);
-        realFee += 1000;
+        if(realFee % 1000 != 0){
+            realFee = realFee - (realFee % 1000);
+            realFee += 1000;
+        }
+
         return realFee;
     }
 }
