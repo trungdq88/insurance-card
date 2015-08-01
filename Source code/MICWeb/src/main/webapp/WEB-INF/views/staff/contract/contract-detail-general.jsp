@@ -47,7 +47,7 @@
     <div class="form-group">
         <label class="col-sm-4 control-label">Loại hợp đồng</label>
 
-        <div class="col-sm-7">
+        <div class="col-sm-8">
             <div class="text-value">
                 ${contract.micContractTypeByContractTypeId.name}
             </div>

@@ -94,7 +94,8 @@
                             <label class="col-sm-5 control-label" for="paidDate">Ngày nộp phí *</label>
 
                             <div class="col-sm-4">
-                                <input id="completePaidDate" name="completePayment:paidDate" class="form-control input-md"
+                                <input id="completePaidDate" name="completePayment:paidDate"
+                                       class="form-control input-md"
                                        type="date" required>
                                 <input type="hidden" name="completePayment:amount" value="${contract.contractFee}"/>
                             </div>
@@ -240,110 +241,129 @@
                     <h4 class="modal-title">Gia hạn hợp đồng</h4>
                 </div>
                 <div class="modal-body">
-                    <jsp:include page="contract-detail-general.jsp" flush="true"/>
-                    <!-- New expired date -->
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label" for="expiredDate">Gia hạn đến *</label>
-
-                        <div class="col-sm-4">
-                            <input id="expiredDate" name="renew:expiredDate" class="form-control input-md"
-                                   type="date" required>
-                        </div>
-                    </div>
-                    <!-- Renew fee -->
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">Phí gia hạn</label>
-
-                        <div class="col-sm-3">
-                            <div class="text-value">
-                                    <span id="renewFee"
-                                          style="color:deepskyblue; font-weight: bolder; font-size: large"></span> VNĐ
-                                <input type="hidden" id="contractFee" name="renew:contractFee"/>
-                            </div>
-                        </div>
-
-                        <label class="col-sm-3 control-label control-newcard" for="newCard">Cấp thẻ mới
-
-                            <i class="fa fa-question-circle" id="newCardTooltip" data-toggle="tooltip" data-placement="bottom" title=""
-                               data-original-title="Thẻ cũ sẽ bị vô hiệu hóa, yêu cầu cấp thẻ mới sẽ được tạo."></i>
-                        </label>
-
-                        <div class="col-sm-1">
-                            <div class="text-value">
-                                <input type="checkbox" id="newCard" class="control-newcard" name="renew:newCard"
-                                       value="true">
-                            </div>
-                        </div>
-                    </div>
-
-                    <div id="collapseNewCard" class="panel-collapse collapse in control-delivery">
-                        <!-- New card fee -->
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label">Phí thẻ mới</label>
-
-                            <div class="col-sm-3">
-                                <div class="text-value">
-                                    <span id="newCardFee"
-                                          style="color:navy; font-weight: bolder; font-size: large"></span> VNĐ
-                                </div>
-                            </div>
-
-                            <label class="col-sm-3 control-label control-delivery" for="deliveryNewCard">
-                                Vận chuyển thẻ
-                            </label>
-
-                            <div class="col-sm-1">
-                                <div class="text-value">
-                                    <input type="checkbox" id="deliveryNewCard" class="control-delivery"
-                                           name="renew:deliveryNewCard" value="true">
-
-                                </div>
-                            </div>
-                        </div>
-
-                        <div id="collapseDelivery" class="panel-collapse collapse in ">
+                    <c:choose>
+                        <c:when test="${contract.micContractTypeByContractTypeId.active eq 1}">
+                            <jsp:include page="contract-detail-general.jsp" flush="true"/>
+                            <legend>Thông tin gia hạn hợp đồng</legend>
+                            <!-- New expired date -->
                             <div class="form-group">
-                                <label class="col-sm-4 control-label">Phí vận chuyển</label>
+                                <label class="col-sm-4 control-label" for="expiredDate">Gia hạn đến *</label>
+
+                                <div class="col-sm-4">
+                                    <input id="expiredDate" name="renew:expiredDate" class="form-control input-md"
+                                           type="date" required>
+                                </div>
+                            </div>
+                            <!-- Renew fee -->
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">Phí gia hạn</label>
 
                                 <div class="col-sm-3">
                                     <div class="text-value">
-                                    <span id="deliveryFee"
-                                          style="font-weight: bolder; font-size: large"></span> VNĐ
+                                    <span id="renewFee"
+                                          style="color:deepskyblue; font-weight: bolder; font-size: large"></span> VNĐ
+                                        <input type="hidden" id="contractFee" name="renew:contractFee"/>
+                                    </div>
+                                </div>
+
+                                <label class="col-sm-3 control-label control-newcard" for="newCard">Cấp thẻ mới
+
+                                    <i class="fa fa-question-circle" id="newCardTooltip" data-toggle="tooltip"
+                                       data-placement="bottom" title=""
+                                       data-original-title="Thẻ cũ sẽ bị vô hiệu hóa, yêu cầu cấp thẻ mới sẽ được tạo."></i>
+                                </label>
+
+                                <div class="col-sm-1">
+                                    <div class="text-value">
+                                        <input type="checkbox" id="newCard" class="control-newcard" name="renew:newCard"
+                                               value="true">
                                     </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <!-- Total fee -->
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label">Tổng chi phí</label>
+                            <div id="collapseNewCard" class="panel-collapse collapse in control-delivery">
+                                <!-- New card fee -->
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Phí thẻ mới</label>
 
-                            <div class="col-sm-3">
-                                <div class="text-value">
+                                    <div class="col-sm-3">
+                                        <div class="text-value">
+                                    <span id="newCardFee"
+                                          style="color:navy; font-weight: bolder; font-size: large"></span> VNĐ
+                                        </div>
+                                    </div>
+
+                                    <label class="col-sm-3 control-label control-delivery" for="deliveryNewCard">
+                                        Vận chuyển thẻ
+                                    </label>
+
+                                    <div class="col-sm-1">
+                                        <div class="text-value">
+                                            <input type="checkbox" id="deliveryNewCard" class="control-delivery"
+                                                   name="renew:deliveryNewCard" value="true">
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div id="collapseDelivery" class="panel-collapse collapse in ">
+                                    <div class="form-group">
+                                        <label class="col-sm-4 control-label">Phí vận chuyển</label>
+
+                                        <div class="col-sm-3">
+                                            <div class="text-value">
+                                    <span id="deliveryFee"
+                                          style="font-weight: bolder; font-size: large"></span> VNĐ
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Total fee -->
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Tổng chi phí</label>
+
+                                    <div class="col-sm-3">
+                                        <div class="text-value">
                                     <span id="totalFee"
                                           style="color:red; font-weight: bolder; font-size: large"></span> VNĐ
-                                    <input type="hidden" id="amount" name="renew:amount"/>
+                                            <input type="hidden" id="amount" name="renew:amount"/>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
 
-                    <!-- Paid date -->
-                    <div class=" form-group">
-                        <label class="col-sm-4 control-label" for="paidDate">Ngày nộp phí *</label>
+                            <!-- Paid date -->
+                            <div class=" form-group">
+                                <label class="col-sm-4 control-label" for="paidDate">Ngày nộp phí *</label>
 
-                        <div class="col-sm-4">
-                            <input id="paidDate" name="renew:paidDate" class="form-control input-md"
-                                   type="date" required>
-                        </div>
-                    </div>
+                                <div class="col-sm-4">
+                                    <input id="paidDate" name="renew:paidDate" class="form-control input-md"
+                                           type="date" required>
+                                </div>
+                            </div>
+                        </c:when>
+                        <c:otherwise>
+                            <div class="alert alert-danger">
+                                <p class="bs-example text-center text-uppercase">
+                                    Không thể gia hạn hợp đồng này
+                                </p>
+                            </div>
+                            <p class="text-center text-primary">
+                                <strong>Loại hợp đồng này đã ngừng hoạt động theo chính sách của công ty</strong>
+                            </p>
+                        </c:otherwise>
+                    </c:choose>
+
                 </div>
                 <div class="modal-footer">
                     <input type="hidden" name="renew:contractCode" value="${contract.contractCode}"/>
                     <input type="hidden" name="action" value="renew"/>
-                    <button type="submit" class="btn btn-primary">
-                        <i class="fa fa-arrow-right"></i> Gia hạn hợp đồng
-                    </button>
+                    <c:if test="${contract.micContractTypeByContractTypeId.active eq 1}">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fa fa-arrow-right"></i> Gia hạn hợp đồng
+                        </button>
+                    </c:if>
                     <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
                 </div>
             </div>

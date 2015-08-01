@@ -5,8 +5,6 @@ import com.fpt.mic.micweb.model.entity.ContractTypeEntity;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -14,13 +12,6 @@ import java.util.List;
  */
 public class ContractTypeDao extends GenericDaoJpaImpl<ContractTypeEntity, Integer> {
 
-    /**
-     * This is the method which get all payment belongs to the customer.
-     * @return list of ContractTypeEntity.
-     *
-     * @author KhaNC
-     * @version 1.0
-     */
     public List<ContractTypeEntity> getAllContractType() {
         EntityManager entity = factory.createEntityManager();
         String hql = "SELECT ct FROM ContractTypeEntity ct";
@@ -34,7 +25,9 @@ public class ContractTypeDao extends GenericDaoJpaImpl<ContractTypeEntity, Integ
         EntityManager entity = factory.createEntityManager();
         String hql = "SELECT ct FROM ContractTypeEntity ct WHERE ct.active = 1";
         Query query = entity.createQuery(hql);
-        return query.getResultList();
+        List resultList = query.getResultList();
+        entity.close();
+        return resultList;
     }
 
     public Long getAllContractTypeCount() {
