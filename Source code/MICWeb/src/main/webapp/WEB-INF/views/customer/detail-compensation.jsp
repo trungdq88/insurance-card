@@ -8,9 +8,13 @@
     <div id="page-wrapper">
         <div class="row">
             <div class="col-lg-12">
-                <h1 class="page-header">Yêu cầu bồi thường cho hợp đồng ${compensation.contractCode}
-                    <div class="pull-right">
-                        <span style="font-size: 50%" class="label label-warning">  <c:choose>
+                <h3 class="page-header text-info">Yêu cầu bồi thường cho hợp đồng ${compensation.contractCode}
+                    sẽ được giải quyết từ ngày <fmt:formatDate value="${compensation.createdDate}" pattern="dd/MM/yyyy"/>
+                    đến ngày <fmt:formatDate value="${dateResolveCompensation}" pattern="dd/MM/yyyy"/>
+                </h3>
+            </div>
+            <div class="pull-right">
+                        <span style="font-size: 100%" class="label label-warning">  <c:choose>
                             <c:when test="${empty compensation.resolveDate}">
                                 <span class="label label-warning">Đang giải quyết</span>
                             </c:when>
@@ -18,10 +22,9 @@
                                 <fmt:formatDate value='${compensation.resolveDate}'
                                                 pattern='dd/MM/yyyy'/>
                             </c:otherwise>
-                        </c:choose></span>
+                        </c:choose>
+                        </span>
 
-                    </div>
-                </h1>
             </div>
             <!-- /.col-lg-12 -->
         </div>

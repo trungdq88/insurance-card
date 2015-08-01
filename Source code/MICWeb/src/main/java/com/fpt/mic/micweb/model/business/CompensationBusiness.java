@@ -8,6 +8,8 @@ import com.fpt.mic.micweb.model.dto.form.ResolveCompensationDto;
 import com.fpt.mic.micweb.model.entity.CompensationEntity;
 import com.fpt.mic.micweb.utils.DateUtils;
 
+import java.sql.Time;
+import java.sql.Timestamp;
 import java.util.List;
 
 /**
@@ -32,6 +34,9 @@ public class CompensationBusiness {
     public CompensationEntity getCompensationDetail(String code) {
         CompensationDao compensationDao = new CompensationDao();
         return compensationDao.read(code);
+    }
+    public Timestamp dateResolveCompensation(Timestamp createDate){
+        return DateUtils.addMonth(createDate , 1);
     }
 
     public List<CompensationEntity> getCompensationByContractCode(String code) {

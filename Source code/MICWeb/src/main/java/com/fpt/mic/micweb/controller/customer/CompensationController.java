@@ -41,6 +41,7 @@ public class CompensationController extends AuthController {
         // Get compensation detail information
         CompensationBusiness compensationBusiness = new CompensationBusiness();
         CompensationEntity compensationEntity = compensationBusiness.getCompensationDetail(compensationCode);
+        r.equest.setAttribute("dateResolveCompensation", compensationBusiness.dateResolveCompensation(compensationEntity.getCreatedDate()));
         r.equest.setAttribute("result", result);
         r.equest.setAttribute("compensation", compensationEntity);
 
