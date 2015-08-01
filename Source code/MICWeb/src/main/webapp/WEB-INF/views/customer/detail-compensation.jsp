@@ -9,8 +9,15 @@
         <div class="row">
             <div class="col-lg-12">
                 <h3 class="page-header text-info">Yêu cầu bồi thường cho hợp đồng ${compensation.contractCode}
-                    sẽ được giải quyết từ ngày <fmt:formatDate value="${compensation.createdDate}" pattern="dd/MM/yyyy"/>
-                    đến ngày <fmt:formatDate value="${dateResolveCompensation}" pattern="dd/MM/yyyy"/>
+                    <c:choose>
+                        <c:when test="${empty compensation.resolveDate}">
+                            sẽ được giải quyết từ ngày <fmt:formatDate value="${compensation.createdDate}"
+                                                                       pattern="dd/MM/yyyy"/>
+                            đến ngày <fmt:formatDate value="${dateResolveCompensation}" pattern="dd/MM/yyyy"/>
+                        </c:when>
+                        <c:otherwise>
+                        </c:otherwise>
+                    </c:choose>
                 </h3>
             </div>
             <div class="pull-right">
