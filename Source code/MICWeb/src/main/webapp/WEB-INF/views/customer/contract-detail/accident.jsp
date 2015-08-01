@@ -7,7 +7,7 @@
             <div class="pull-right">
                 <input type="hidden" id="cancelDate" value="${contract.cancelDate}">
                 <input type="hidden" id="ruleCanel" value="${configUtils.updateContractDueDate}">
-                <c:if test="${!contract.status.equalsIgnoreCase('Cancelled')}">
+                <c:if test="${!contract.status.equalsIgnoreCase('Cancelled') && !contract.status.equalsIgnoreCase('Pending')}}">
                     <a href="${pageContext.request.contextPath}/customer/accident?action=create&code=${contract.contractCode}"
                        class="btn btn-success">
                         <i class="fa fa-plus"></i> Thông báo tai nạn mới
@@ -139,7 +139,8 @@
         var cancelDate = $('#cancelDate').val();
         var temp = $('#ruleCanel').val();
         var count = Math.abs(DayDiff(cancelDate));
-        if (count <= temp) {
+        var countDateRemainAccident = $('#countDateRemain').val();
+        if (Math.abs(countDateRemainAccident) <= temp) {
             $('.addNew').removeClass('hide');
         }
 

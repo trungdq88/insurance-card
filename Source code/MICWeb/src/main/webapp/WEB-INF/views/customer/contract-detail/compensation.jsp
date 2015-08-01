@@ -9,7 +9,7 @@
                     <input type="hidden" name="contractCode" value="${contract.contractCode}">
                     <input type="hidden" id="cancelDateCompensation" value="${contract.cancelDate}">
                     <input type="hidden" id="ruleCancelCompensation" value="${configUtils.updateContractDueDate}">
-                    <c:if test="${!contract.status.equalsIgnoreCase('Cancelled')}">
+                    <c:if test="${!contract.status.equalsIgnoreCase('Cancelled') && !contract.status.equalsIgnoreCase('Pending')}">
                         <button href="${pageContext.request.contextPath}/customer/compensation?action=create"
                                 type="submit"
                                 class="btn btn-success ">Yêu cầu bồi thường
@@ -136,8 +136,10 @@
     $(document).ready(function () {
         var cancelDate = $('#cancelDateCompensation').val();
         var temp = $('#ruleCancelCompensation').val();
+        var countDateRemainCompensation = $('#countDateRemain').val();
+
         var count = Math.abs(DayDiff(cancelDate));
-        if (count <= temp) {
+        if (Math.abs(countDateRemainCompensatio) <= temp) {
             $('.addNewCompensation').removeClass('hide');
         }
 
