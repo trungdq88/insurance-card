@@ -139,7 +139,7 @@
         var countDateRemainCompensation = $('#countDateRemain').val();
 
         var count = Math.abs(DayDiff(cancelDate));
-        if (Math.abs(countDateRemainCompensatio) <= temp) {
+        if (Math.abs(countDateRemainCompensation) <= temp) {
             $('.addNewCompensation').removeClass('hide');
         }
 
