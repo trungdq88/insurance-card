@@ -75,7 +75,7 @@
             <div class="pull-right">
                 <input type="hidden" id="cancelDatePunishment" value="${contract.cancelDate}">
                 <input type="hidden" id="ruleCancelPunishment" value="${configUtils.updateContractDueDate}">
-                <c:if test="${!contract.status.equalsIgnoreCase('Cancelled')}">
+                <c:if test="${!contract.status.equalsIgnoreCase('Cancelled')&& !contract.status.equalsIgnoreCase('Pending')}">
                     <a href="${pageContext.request.contextPath}/customer/punishment?action=create&contractCode=${contract.contractCode}"
                        class="btn btn-success">
                         <i class="fa fa-plus"></i>Thêm vi phạm
@@ -190,7 +190,8 @@
         var cancelDate = $('#cancelDatePunishment').val();
         var temp = $('#ruleCancelPunishment').val();
         var count = Math.abs(DayDiff(cancelDate));
-        if (count <= temp) {
+        var countDateRemainPunishment = $('#countDateRemain').val();
+        if (Math.abs(countDateRemainPunishment) <= temp) {
             $('.addNewPunishment').removeClass('hide');
         }
 
