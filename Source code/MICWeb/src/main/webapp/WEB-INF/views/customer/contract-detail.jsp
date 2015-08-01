@@ -301,8 +301,9 @@
                                 <div class="alert alert-block alert-error fade
                                      in well well-lg text-info alertRenew">
                                     <h4 class="alert-heading text-center">
-                                        Loại hình thức bảo hiểm cho hợp đồng này không còn được công ty
-                                        cung cấp và hỗ trợ.
+                                        Hiện tại công ty đã ngừng cung cấp loại hợp đồng quý khách đang sử dụng
+                                        (${contract.getMicContractTypeByContractTypeId().getName()}).
+                                        Quý khách không thể gia hạn hợp đồng này. Vui lòng liên hệ nhân viên để biết thêm chi tiết
                                     </h4>
                                 </div>
                             </div>
