@@ -142,7 +142,7 @@
                                 <input id="plate" name="compensation:plate" class="form-control input-md"
                                        type="text" required minlength="4" maxlength="15"
                                        title="Vui lòng nhập biển số xe!" placeholder="Ví dụ: 78Y9-15383"
-                                       value="${contractDetail.plate}">
+                                       >
                             </div>
                             <label class="col-sm-3 control-label" for="vehicleCapacity">
                                 Trọng tải/số chỗ ngồi *
@@ -154,7 +154,7 @@
                                            class="form-control input-md"
                                            type="text" required minlength="1" maxlength="20"
                                            title="Vui lòng nhập trọng tải hoặc số chỗ ngồi!" placeholder="Ví dụ: 7"
-                                           value="${contractDetail.seatCapacity}">
+                                           >
                                     <span class="input-group-addon" id="basic-addon">(tấn/chỗ)</span>
                                 </div>
                             </div>
