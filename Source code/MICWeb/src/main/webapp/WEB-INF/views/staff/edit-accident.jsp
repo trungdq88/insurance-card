@@ -68,7 +68,7 @@
                                 <input id="attachment" name="edit:attachment" type="hidden" required maxlength="255"
                                        value="${accident.attachment}">
                                 <img id="imgAttachment" height="100px" src="${accident.attachment}"/>
-                                <button type="button" id="pickAttachment" class="btn btn-primary">Chọn văn bản</button>
+                                <button type="button" id="pickAttachment" class="btn btn-primary">Chọn tập tin</button>
                                 <script type="text/javascript" src="//api.filepicker.io/v2/filepicker.js"></script>
                                 <input type="filepicker" data-fp-apikey="AEbPPQfPfRHqODjEl5AZ2z" class="hide filePicker"
                                        onchange="$('#imgAttachment').attr('src', event.fpfile.url);$('#attachment').val(event.fpfile.url);">
