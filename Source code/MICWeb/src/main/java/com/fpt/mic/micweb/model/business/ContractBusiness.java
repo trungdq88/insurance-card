@@ -223,4 +223,14 @@ public class ContractBusiness {
         }
         return false;
     }
+
+    public boolean isExistByPlate(String plate) {
+        ContractDao contractDao = new ContractDao();
+        return contractDao.isExistByPlate(plate);
+    }
+
+    public ContractEntity getActiveContractByPlate(String plate) {
+        ContractDao contractDao = new ContractDao();
+        return contractDao.getActiveContractByPlate(plate);
+    }
 }

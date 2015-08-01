@@ -549,18 +549,29 @@ public class ContractController extends AuthController {
             r.equest.setAttribute("contractCode", dto.getContractCode());
             return getDetail(r);
         }
-        // If the code reached this line that means there is no validation errors
-
-        // Call business method
-        StaffBusiness staffBus = new StaffBusiness();
-        boolean result = staffBus.completePayment(dto, (StaffEntity) getLoggedInUser());
-
-        if (result) {
-            isSuccess = true;
-            msg = "Đã hoàn tất thông tin thanh toán thành công";
-        } else {
+        ContractBusiness contractBusiness = new ContractBusiness();
+        if (contractBusiness.isExistByPlate(contractBusiness.getContract(dto.getContractCode()).getPlate())) {
+            String activeContractCode = contractBusiness.getActiveContractByPlate(contractBusiness.getContract(dto.getContractCode()).getPlate()).getContractCode();
+            String activeContractLink = r.equest.getScheme() +
+                    "://" + r.equest.getServerName() +
+                    ":" + r.equest.getServerPort() +
+                    r.equest.getContextPath() +
+                    "/staff/contract?action=detail&code="+activeContractCode;
+            msg = "Đang có hợp đồng hiệu lực với biển số này: <a href=\"" + activeContractLink + "\">"+activeContractCode+" </a>. Không thể thanh toán!";
             isSuccess = false;
-            msg = "Thêm thông tin thanh toán thất bại";
+        } else {
+            // If the code reached this line that means there is no validation errors
+            // Call business method
+            StaffBusiness staffBus = new StaffBusiness();
+            boolean result = staffBus.completePayment(dto, (StaffEntity) getLoggedInUser());
+
+            if (result) {
+                isSuccess = true;
+                msg = "Đã hoàn tất thông tin thanh toán thành công";
+            } else {
+                isSuccess = false;
+                msg = "Thêm thông tin thanh toán thất bại";
+            }
         }
         // Set contract code to request scope. Use it in message page.
         r.equest.setAttribute("CODE", dto.getContractCode());
