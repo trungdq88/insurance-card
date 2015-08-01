@@ -199,7 +199,15 @@ $(document).ready(function () {
     //    }
     //
     //}
+    $('#renewDefault').click(function(){
+        var contractTypeStatus = $('#contractTypeStatus').val();
+        if(contractTypeStatus != 1){
+            $('#renewNotify').trigger("click");
+        }else {
+            $('#renew').trigger("click");
+        }
 
+    })
     $('#renew').click(function () {
         var countDateRemain = parseFloat($('#countDateRemain').val());
         var temp = $('#defaultRenew').val();

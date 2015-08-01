@@ -79,18 +79,29 @@
                            <input type="hidden" id="defaultRenew"
                                   value="${configUtils.contractDefaultTerm}">
                             <input type="hidden" id="countDateRemain" value="${countDateRemain}">
+                            <input type="hidden" id="contractTypeStatus"
+                                   value="${contract.getMicContractTypeByContractTypeId().getActive()}">
                             <input type="hidden" id="contractStatus1" value="${contract.status}">
                             <input type="hidden" id="contractRenewLimit" value="${configUtils.contractRenewLimit}">
-                             <button type="submit" class="btn btn-primary ${handleShowingButton.checkRenew}"
-                                     data-toggle="modal" id="renew"
-                                     data-target=".renew-contract-modal"><i
-                                     class="fa fa-refresh"></i> Gia Hạn
-                             </button>
+                            <button type="submit" class="btn btn-primary hide "
+                                    data-toggle="modal" id="renew"
+                                    data-target=".renew-contract-modal"><i
+                                    class="fa fa-refresh "></i> Gia Hạn
+                            </button>
+                           <button type="button" class="btn btn-primary ${handleShowingButton.checkRenew}"
+                                   id="renewDefault">
+                               <i class="fa fa-refresh"></i> Gia Hạn
+                           </button>
+                           <button type="button" class="btn btn-primary hide"
+                                   data-toggle="modal" id="renewNotify"
+                                   data-target=".notifyContractDeactive"><i
+                                   class="fa fa-refresh hide"></i>
+                           </button>
 
-                               <button type="button" class="btn btn-danger ${handleShowingButton.checkCancelled}"
-                                       data-toggle="modal" id="delete"
-                                       data-target=".bs-example-modal-lg"><i class="fa fa-times"></i> Hủy Hợp Đồng
-                               </button>
+                           <button type="button" class="btn btn-danger ${handleShowingButton.checkCancelled}"
+                                   data-toggle="modal" id="delete"
+                                   data-target=".bs-example-modal-lg"><i class="fa fa-times"></i> Hủy Hợp Đồng
+                           </button>
                      </span>
                 </h2>
             </div>
@@ -183,7 +194,7 @@
                 <div class="modal fade renew-contract-modal" tabindex="-1" role="dialog"
                      aria-labelledby="myLargeModalLabel"
                      aria-hidden="true">
-                    <div class="modal-dialog modal-lg" style="width: 600px !important;">
+                    <div class="modal-dialog modal-lg" style="width: 700px !important;">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
@@ -277,6 +288,33 @@
 
                 <!-- /.modal-content -->
             </form>
+            <div class="modal fade notifyContractDeactive" tabindex="-1" role="dialog"
+                 aria-labelledby="myLargeModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog modal-lg" style="width: 800px !important;">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3 class="modal-title text-danger">Không thể gia hạn hợp đồng</h3>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-horizontal">
+                                <div class="alert alert-block alert-error fade
+                                     in well well-lg text-info alertRenew">
+                                    <h4 class="alert-heading text-center">
+                                        Loại hình thức bảo hiểm cho hợp đồng này không còn được công ty
+                                        cung cấp và hỗ trợ.
+                                    </h4>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div class="row">
