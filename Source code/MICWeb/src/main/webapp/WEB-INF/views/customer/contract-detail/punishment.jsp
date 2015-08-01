@@ -203,7 +203,7 @@
         if (Math.abs(countDateRemainPunishment) <= temp) {
             $('.addNewPunishment').removeClass('hide');
         }
-        if (Math.abs(countDateRemainPunishment) <= 30) {
+        if (Math.abs(countDateRemainPunishment) <= temp) {
             $('.addPunishmentCaseExpired').removeClass('hide');
         }
 

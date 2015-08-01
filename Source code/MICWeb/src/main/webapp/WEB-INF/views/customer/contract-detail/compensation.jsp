@@ -150,7 +150,7 @@
         if (Math.abs(countDateRemainCompensation) <= temp) {
             $('.addNewCompensation').removeClass('hide');
         }
-        if (Math.abs(countDateRemainCompensation) <= 30) {
+        if (Math.abs(countDateRemainCompensation) <= temp) {
             $('.addCompensationCaseExpired').removeClass('hide');
         }
 

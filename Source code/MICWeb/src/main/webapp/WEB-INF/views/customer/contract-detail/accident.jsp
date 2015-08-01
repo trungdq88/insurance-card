@@ -152,7 +152,7 @@
         if (Math.abs(countDateRemainAccident) <= temp) {
             $('.addNew').removeClass('hide');
         }
-        if (Math.abs(countDateRemainAccident) <= 30) {
+        if (Math.abs(countDateRemainAccident) <= temp) {
             $('.addAccidentCaseExpired').removeClass('hide');
         }
 
