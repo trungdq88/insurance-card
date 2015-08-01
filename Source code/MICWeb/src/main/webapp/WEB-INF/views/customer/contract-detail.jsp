@@ -231,8 +231,8 @@
                                         <div class="col-sm-4">
                                             <input id="newExpiredDate" style="border:none; background-color: white"
                                                    type="hide" class="hide" disabled="disabled" value="${newDate}"/>
-                                                <fmt:formatDate value="${newDate}"
-                                                                pattern='dd/MM/yyyy'/>
+                                            <fmt:formatDate value="${newDate}"
+                                                            pattern='dd/MM/yyyy'/>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -395,6 +395,7 @@
 
                     <div class="alert alert-block alert-error fade in well well-lg text-info">
                         <h4 class="alert-heading">Hợp đồng của quý khách chưa được thanh toán!</h4>
+
                         <p>Quý khách có thể thanh toán trực tiếp tại công ty
                             <button class="btn" data-toggle="modal" title="Hiện địa chỉ công ty"
                                     data-target=".map-modal"><i class="fa fa-map-marker"></i>
@@ -441,9 +442,9 @@
                                                 <div class="col-sm-4">
                                                     <input type="hidden" id="configTime"
                                                            value=" ${configUtils.contractDefaultTerm}">
-                                                    <%--<input type="text" style="padding-top: 0 !important;"--%>
-                                                           <%--id="defaultDateExpired" disabled="disabled"--%>
-                                                           <%--class="handleInput"/>--%>
+                                                        <%--<input type="text" style="padding-top: 0 !important;"--%>
+                                                        <%--id="defaultDateExpired" disabled="disabled"--%>
+                                                        <%--class="handleInput"/>--%>
                                                     <fmt:formatDate value="${newDate}"
                                                                     pattern='dd/MM/yyyy'/>
                                                 </div>
@@ -825,7 +826,12 @@
                                                     <label>Tự trọng</label>
                                                 </td>
                                                 <td class="col-md-5 ">
-                                                    ${contract.capacity}
+                                                    <c:choose>
+                                                        <c:when test="${empty contract.weight}">
+                                                            <label class="empty-value">Không có</label>
+                                                        </c:when>
+                                                        <c:otherwise>${contract.weight} kg</c:otherwise>
+                                                    </c:choose>
                                                 </td>
                                             </tr>
                                         </table>
