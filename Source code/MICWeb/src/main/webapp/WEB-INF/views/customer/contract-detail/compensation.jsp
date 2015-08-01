@@ -9,7 +9,10 @@
                     <input type="hidden" name="contractCode" value="${contract.contractCode}">
                     <input type="hidden" id="cancelDateCompensation" value="${contract.cancelDate}">
                     <input type="hidden" id="ruleCancelCompensation" value="${configUtils.updateContractDueDate}">
-                    <c:if test="${!contract.status.equalsIgnoreCase('Cancelled') && !contract.status.equalsIgnoreCase('Pending')}">
+                    <c:if test="${!contract.status.equalsIgnoreCase('Cancelled') &&
+                                  !contract.status.equalsIgnoreCase('Pending')&&
+                                  !contract.status.equalsIgnoreCase('Expired')
+                                  }">
                         <button href="${pageContext.request.contextPath}/customer/compensation?action=create"
                                 type="submit"
                                 class="btn btn-success ">Yêu cầu bồi thường
@@ -21,7 +24,12 @@
                                 class="btn btn-success addNewCompensation hide">Yêu cầu bồi thường
                         </button>
                     </c:if>
-
+                    <c:if test="${contract.status.equalsIgnoreCase('Expired')}">
+                        <button href="${pageContext.request.contextPath}/customer/compensation?action=create"
+                                type="submit"
+                                class="btn btn-success addCompensationCaseExpired hide">Yêu cầu bồi thường
+                        </button>
+                    </c:if>
                 </form>
             </div>
         </div>
@@ -141,6 +149,9 @@
         var count = Math.abs(DayDiff(cancelDate));
         if (Math.abs(countDateRemainCompensation) <= temp) {
             $('.addNewCompensation').removeClass('hide');
+        }
+        if (Math.abs(countDateRemainCompensation) <= 30) {
+            $('.addCompensationCaseExpired').removeClass('hide');
         }
 
     });

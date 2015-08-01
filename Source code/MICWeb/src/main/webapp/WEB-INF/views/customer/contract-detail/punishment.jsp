@@ -75,7 +75,10 @@
             <div class="pull-right">
                 <input type="hidden" id="cancelDatePunishment" value="${contract.cancelDate}">
                 <input type="hidden" id="ruleCancelPunishment" value="${configUtils.updateContractDueDate}">
-                <c:if test="${!contract.status.equalsIgnoreCase('Cancelled')&& !contract.status.equalsIgnoreCase('Pending')}">
+                <c:if test="${!contract.status.equalsIgnoreCase('Cancelled')&&
+                              !contract.status.equalsIgnoreCase('Pending')&&
+                              !contract.status.equalsIgnoreCase('Expired')
+                              }">
                     <a href="${pageContext.request.contextPath}/customer/punishment?action=create&contractCode=${contract.contractCode}"
                        class="btn btn-success">
                         <i class="fa fa-plus"></i>Thêm vi phạm
@@ -84,6 +87,12 @@
                 <c:if test="${contract.status.equalsIgnoreCase('Cancelled')}">
                     <a href="${pageContext.request.contextPath}/customer/punishment?action=create&contractCode=${contract.contractCode}"
                        class="btn btn-success addNewPunishment hide">
+                        <i class="fa fa-plus"></i>Thêm vi phạm
+                    </a>
+                </c:if>
+                <c:if test="${contract.status.equalsIgnoreCase('Expired')}">
+                    <a href="${pageContext.request.contextPath}/customer/punishment?action=create&contractCode=${contract.contractCode}"
+                       class="btn btn-success addPunishmentCaseExpired hide">
                         <i class="fa fa-plus"></i>Thêm vi phạm
                     </a>
                 </c:if>
@@ -193,6 +202,9 @@
         var countDateRemainPunishment = $('#countDateRemain').val();
         if (Math.abs(countDateRemainPunishment) <= temp) {
             $('.addNewPunishment').removeClass('hide');
+        }
+        if (Math.abs(countDateRemainPunishment) <= 30) {
+            $('.addPunishmentCaseExpired').removeClass('hide');
         }
 
     });

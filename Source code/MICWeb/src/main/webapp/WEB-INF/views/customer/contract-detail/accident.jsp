@@ -7,7 +7,10 @@
             <div class="pull-right">
                 <input type="hidden" id="cancelDate" value="${contract.cancelDate}">
                 <input type="hidden" id="ruleCanel" value="${configUtils.updateContractDueDate}">
-                <c:if test="${!contract.status.equalsIgnoreCase('Cancelled') && !contract.status.equalsIgnoreCase('Pending')}">
+                <c:if test="${!contract.status.equalsIgnoreCase('Cancelled') &&
+                              !contract.status.equalsIgnoreCase('Pending') &&
+                              !contract.status.equalsIgnoreCase('Expired')
+                              }">
                     <a href="${pageContext.request.contextPath}/customer/accident?action=create&code=${contract.contractCode}"
                        class="btn btn-success">
                         <i class="fa fa-plus"></i> Thông báo tai nạn mới
@@ -16,6 +19,12 @@
                 <c:if test="${contract.status.equalsIgnoreCase('Cancelled')}">
                     <a href="${pageContext.request.contextPath}/customer/accident?action=create&code=${contract.contractCode}"
                        class="btn btn-success hide addNew">
+                        <i class="fa fa-plus"></i> Thông báo tai nạn mới
+                    </a>
+                </c:if>
+                <c:if test="${contract.status.equalsIgnoreCase('Expired')}">
+                    <a href="${pageContext.request.contextPath}/customer/accident?action=create&code=${contract.contractCode}"
+                       class="btn btn-success hide addAccidentCaseExpired">
                         <i class="fa fa-plus"></i> Thông báo tai nạn mới
                     </a>
                 </c:if>
@@ -142,6 +151,9 @@
         var countDateRemainAccident = $('#countDateRemain').val();
         if (Math.abs(countDateRemainAccident) <= temp) {
             $('.addNew').removeClass('hide');
+        }
+        if (Math.abs(countDateRemainAccident) <= 30) {
+            $('.addAccidentCaseExpired').removeClass('hide');
         }
 
     });
