@@ -36,6 +36,7 @@ public class InfoActivity extends Activity {
     TextView txtContractStaff;
     TextView txtDatePublish;
     TextView txtHotline;
+    TextView txtCardId;
     private CardInstanceEntity card;
 
     @Override
@@ -63,6 +64,7 @@ public class InfoActivity extends Activity {
         txtContractStaff = (TextView) findViewById(R.id.txtContractStaff);
         txtDatePublish = (TextView) findViewById(R.id.txtDatePublish);
         txtHotline = (TextView) findViewById(R.id.txtHotline);
+        txtCardId = (TextView) findViewById(R.id.txtCardId);
 
         CardInstanceEntity card = (CardInstanceEntity) getIntent().getParcelableExtra("card");
         int result = getIntent().getIntExtra("result", CheckCardResponseDto.RESULT_INVALID_CARD);
@@ -131,6 +133,7 @@ public class InfoActivity extends Activity {
         txtStartDate.setText(card.micContractByContractCode.startDate.toString());
         txtExpiredDate.setText(card.micContractByContractCode.expiredDate.toString());
         txtContractFee.setText(card.micContractByContractCode.contractFee + " đồng");
+        txtCardId.setText(card.cardId);
 
         // TODO: more status
     }
