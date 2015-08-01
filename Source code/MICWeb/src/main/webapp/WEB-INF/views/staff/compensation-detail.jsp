@@ -84,28 +84,28 @@
                     <%--/Contract information--%>
                     <br/>
                     <fieldset>
-                        <legend>Thông tin yêu cầu bồi thường</legend>
+                        <legend>
+                            Thông tin yêu cầu bồi thường
 
+                            <div class="pull-right" style="margin-top: -7px;">
+                                <c:choose>
+                                    <c:when test="${empty compensation.resolveDate}">
+                                        <span class="label label-default">Chưa giải quyết</span>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <span class="label label-success">Đã giải quyết</span>
+                                    </c:otherwise>
+                                </c:choose>
+                            </div>
+                        </legend>
                         <div class="form-group">
                             <label class="col-sm-4 control-label">Ngày gởi yêu cầu</label>
 
-                            <div class="col-sm-3">
+                            <div class="col-sm-4">
                                 <div class="text-value">
-                                    <fmt:formatDate value="${compensation.createdDate}" pattern="dd/MM/yyyy"/>
-                                </div>
-                            </div>
-                            <label class="col-sm-2 control-label">Trạng thái</label>
-
-                            <div class="col-sm-3">
-                                <div class="text-value">
-                                    <c:choose>
-                                        <c:when test="${empty compensation.resolveDate}">
-                                            <span class="label label-default">Chưa giải quyết</span>
-                                        </c:when>
-                                        <c:otherwise>
-                                            <span class="label label-success">Đã giải quyết</span>
-                                        </c:otherwise>
-                                    </c:choose>
+                                    ngày <fmt:formatDate value="${compensation.createdDate}" pattern="dd"/>
+                                    tháng <fmt:formatDate value="${compensation.createdDate}" pattern="MM"/>
+                                    năm <fmt:formatDate value="${compensation.createdDate}" pattern="yyyy"/>
                                 </div>
                             </div>
                         </div>
@@ -157,7 +157,9 @@
 
                             <div class="col-sm-4">
                                 <div class="text-value">
-                                    <fmt:formatDate value="${compensation.accidentDate}" pattern="dd/MM/yyyy"/>
+                                    ngày <fmt:formatDate value="${compensation.accidentDate}" pattern="dd"/>
+                                    tháng <fmt:formatDate value="${compensation.accidentDate}" pattern="MM"/>
+                                    năm <fmt:formatDate value="${compensation.accidentDate}" pattern="yyyy"/>
                                 </div>
                             </div>
                         </div>
@@ -257,7 +259,9 @@
 
                                 <div class="col-sm-4">
                                     <div class="text-value">
-                                        <fmt:formatDate value="${compensation.resolveDate}" pattern="dd/MM/yyyy"/>
+                                        ngày <fmt:formatDate value="${compensation.resolveDate}" pattern="dd"/>
+                                        tháng <fmt:formatDate value="${compensation.resolveDate}" pattern="MM"/>
+                                        năm <fmt:formatDate value="${compensation.resolveDate}" pattern="yyyy"/>
                                     </div>
                                 </div>
                             </div>
@@ -317,7 +321,7 @@
 
                         <!-- Resolve date -->
                         <div class="form-group">
-                            <label class="col-sm-5 control-label" for="resolveDate">Ngày giải quyết yêu cầu *</label>
+                            <label class="col-sm-3 control-label" for="resolveDate">Ngày giải quyết *</label>
 
                             <div class="col-sm-4">
                                 <input id="resolveDate" name="resolve:resolveDate" type="date" required
@@ -325,36 +329,27 @@
                             </div>
                         </div>
 
-                        <!-- Decision -->
-                        <div class="form-group">
-                            <label class="col-sm-5 control-label" for="decision">Quyết định của công ty *</label>
-
-                            <div class="col-sm-5">
-                                <select class="form-control" id="decision" name="resolve:decision" required>
-                                    <option value="Chưa quyết định">Chưa quyết định</option>
-                                    <option value="Đồng ý bồi thường">Đồng ý bồi thường</option>
-                                    <option value="Từ chối bồi thường">Từ chối bồi thường</option>
-                                </select>
-                            </div>
-                        </div>
-
                         <!-- Resolve note -->
                         <div class="form-group">
-                            <label class="col-sm-5 control-label" for="resolveNote">Ghi chú của công ty</label>
+                            <label class="col-sm-3 control-label" for="resolveNote">Ghi chú</label>
 
-                            <div class="col-sm-6">
-                                <textarea id="resolveNote" name="resolve:resolveNote" rows="3" maxlength="2000"
-                                          class="form-control input-lg"></textarea>
+                            <div class="col-sm-8">
+                                <textarea id="resolveNote" name="resolve:resolveNote" rows="4" maxlength="2000"
+                                          class="form-control input-md"></textarea>
                             </div>
                         </div>
                     </fieldset>
                 </div>
                 <div class="modal-footer">
+                    <input type="hidden" id="decision" name="resolve:decision"/>
                     <input type="hidden" name="action" value="resolve"/>
-                    <button type="submit" class="btn btn-primary">
-                        <i class="fa fa-check"></i> Quyết định
+                    <button type="submit" id="declineBtn" class="btn btn-danger">
+                        <i class="fa fa-close"></i> Từ chối bồi thường
                     </button>
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Đóng</button>
+                    <button type="submit" id="acceptBtn" class="btn btn-primary">
+                        <i class="fa fa-check"></i> Đồng ý bồi thường
+                    </button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
                 </div>
             </div>
             <!-- /.modal-content -->
@@ -370,6 +365,14 @@
         var createdDate = new Date('${compensation.createdDate}');
         document.getElementById("resolveDate").min = getInputDateWithoutTime(createdDate);
         document.getElementById("resolveDate").max = getCurrentDate();
+
+        $("#declineBtn").on("click", function () {
+            $('#decision').val('Từ chối bồi thường');
+        });
+
+        $("#acceptBtn").on("click", function () {
+            $('#decision').val('Đồng ý bồi thường');
+        });
     });
 </script>
 

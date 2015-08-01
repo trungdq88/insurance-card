@@ -344,13 +344,14 @@
                             </div>
                         </c:when>
                         <c:otherwise>
-                            <div class="alert alert-danger">
+                            <div class="alert alert-warning">
                                 <p class="bs-example text-center text-uppercase">
                                     Không thể gia hạn hợp đồng này
                                 </p>
                             </div>
                             <p class="text-center text-primary">
-                                <strong>Loại hợp đồng này đã ngừng hoạt động theo chính sách của công ty</strong>
+                                Loại hợp đồng <strong>${contract.micContractTypeByContractTypeId.name}</strong>
+                                đã bị ngưng hoạt động theo chính sách của công ty
                             </p>
                         </c:otherwise>
                     </c:choose>
