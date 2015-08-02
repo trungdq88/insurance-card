@@ -299,4 +299,30 @@ public class ContractDao extends IncrementDao<ContractEntity, String> {
         entityManager.close();
         return result;
     }
+
+    public List getAllContract(String status, int offset, int count) {
+        EntityManager entity = factory.createEntityManager();
+        String hql = "SELECT co FROM ContractEntity co " +
+                "WHERE co.status LIKE :status " +
+                "ORDER BY co.contractCode DESC";
+        Query query = entity.createQuery(hql);
+        query.setParameter("status", "%" + status + "%");
+        query.setFirstResult(offset);
+        query.setMaxResults(count);
+        List resultList = query.getResultList();
+        entity.close();
+        return resultList;
+    }
+
+    public Long getAllContractCount(String status) {
+        EntityManager entity = factory.createEntityManager();
+        String hql = "SELECT COUNT(co) FROM ContractEntity co " +
+                "WHERE co.status LIKE :status " +
+                "ORDER BY co.contractCode DESC";
+        Query query = entity.createQuery(hql);
+        query.setParameter("status", "%" + status + "%");
+        Long result = (Long) query.getSingleResult();
+        entity.close();
+        return result;
+    }
 }

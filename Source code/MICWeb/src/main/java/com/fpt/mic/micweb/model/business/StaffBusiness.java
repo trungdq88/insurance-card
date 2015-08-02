@@ -506,4 +506,15 @@ public class StaffBusiness {
         }
         return false;
     }
+
+    public List getAllContract(String status, int offset, int count) {
+
+        ContractDao contractDao = new ContractDao();
+        return contractDao.getAllContract(status, offset, count);
+    }
+
+    public Long getAllContractCount(String status) {
+        ContractDao contractDao = new ContractDao();
+        return contractDao.getAllContractCount(status);
+    }
 }

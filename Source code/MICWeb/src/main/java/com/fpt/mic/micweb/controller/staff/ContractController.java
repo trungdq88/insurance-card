@@ -41,17 +41,22 @@ public class ContractController extends AuthController {
     }
 
     public ResponseObject getView(R r) {
+
+        String status = r.equest.getParameter("status");
+        if (status == null) status = "";
+
         final StaffBusiness staffBus = new StaffBusiness();
+        final String finalStatus = status;
         contractPaginator.setGetItemsCallback(new Paginator.IGetItems() {
             @Override
             public List getItems(int offset, int count) {
-                return staffBus.getAllContract(offset, count);
+                return staffBus.getAllContract(finalStatus, offset, count);
             }
         });
         contractPaginator.setGetItemSizeCallback(new Paginator.IGetItemSize() {
             @Override
             public Long getItemSize() {
-                return staffBus.getAllContractCount();
+                return staffBus.getAllContractCount(finalStatus);
             }
         });
         r.equest.setAttribute("contractPaginator", contractPaginator);
