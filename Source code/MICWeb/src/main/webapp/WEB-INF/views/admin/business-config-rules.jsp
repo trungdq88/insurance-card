@@ -121,7 +121,7 @@
                     </fieldset>
                     <fieldset>
                         <legend>Giới hạn chỉnh sửa ngày cho nhân viên</legend>
-                        <label class="col-sm-7 control-label">Thời gian thêm thông tin sau khi hủy hợp đồng:</label>
+                        <label class="col-sm-7 control-label">Thời gian thêm thông tin sau khi hợp đồng bị hủy/hết hạn:</label>
 
                         <div class="col-sm-2">
                             <input name="config:updateContractDueDate" type="number"
