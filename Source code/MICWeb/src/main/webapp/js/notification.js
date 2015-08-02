@@ -41,7 +41,8 @@ function refreshState() {
         }
     });
 }
-$(function () {
+
+function checkNotification() {
     $.ajax({
         url: "/ajax?action=unreadCount",
         method: 'get',
@@ -51,6 +52,11 @@ $(function () {
             $('#unread-notifs').html(count).fadeIn();
         }
     });
+}
+
+$(function () {
+    setInterval(checkNotification, 3000);
+
 
     $('#notif-icon').click(function () {
         var $notif = $('#notif-list');
