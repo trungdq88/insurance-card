@@ -123,6 +123,7 @@ public class NotificationDto {
             case NotificationEntity.Type.CONTRACT_START_DATE_COME:
                 return "/" + role + "/contract?action=detail&code=" + extraData;
             case NotificationEntity.Type.CUSTOMER_SEND_COMPENSATION:
+            case NotificationEntity.Type.COMPENSATION_RESOLVED:
                 return "/" + role + "/compensation?action=detail&code=" + extraData;
             case NotificationEntity.Type.CUSTOMER_SEND_NEW_CARD_REQUEST:
                 return "/" + role + "/card?action=newCardRequest";

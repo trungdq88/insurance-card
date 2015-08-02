@@ -101,6 +101,15 @@ public class CompensationBusiness {
             compensationEntity.setLastModified(DateUtils.currentTimeWithoutNanos());
 
             if (compensationDao.update(compensationEntity) != null) {
+
+                // Send notification
+                NotificationBusiness notificationBusiness = new NotificationBusiness();
+                notificationBusiness.send(
+                        NotificationBuilder
+                                .compensationResolved(compensationEntity),
+                        compensationEntity.getMicContractByContractCode()
+                                .getMicCustomerByCustomerCode().getEmail());
+
                 return true;
             }
         }
