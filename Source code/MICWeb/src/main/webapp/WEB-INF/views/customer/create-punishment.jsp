@@ -63,7 +63,7 @@
                             <label class="col-sm-4 control-label" for="attachment">Văn bản đính kèm *</label>
 
                             <div class="col-sm-6">
-                                <img id="imgAttachment" height="100px" src=""/>&nbsp;&nbsp;
+                                <img id="imgAttachment" height="100px" src=""/>
                                 <button class="btn btn-primary" type="button" id="pickFilePunishment">Chọn tập tin</button>
                                 <input id="attachment" name="punishment:attachment"
                                        class="form-control "
