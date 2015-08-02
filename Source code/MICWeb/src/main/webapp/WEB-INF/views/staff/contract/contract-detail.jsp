@@ -497,6 +497,11 @@
         });
 
         if (contractStatus.toLowerCase() == 'Expired'.toLowerCase()) {
+            // Hide create & edit compensation, accident, punishment while exceed staff config
+            var durationFromCurrentToExpired = daysBetween(new Date("${contract.expiredDate}"), new Date());
+            if (durationFromCurrentToExpired > '${config.updateContractDueDate}') {
+                $('.updateBtn').addClass('hide');
+            }
             $('#startDate').val(getCurrentDate());
             document.getElementById("expiredDate").min = '${config.expiredDateMin}';
             document.getElementById("expiredDate").max = '${config.expiredDateMax}';
