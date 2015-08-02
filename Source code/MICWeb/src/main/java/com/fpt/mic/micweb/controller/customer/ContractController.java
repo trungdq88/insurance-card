@@ -291,6 +291,18 @@ public class ContractController extends AuthController {
     public ResponseObject postPayContract(R r) {
         //get parameter
         String contractCode = r.equest.getParameter("txtContractCode");
+        ContractBusiness contractBusiness = new ContractBusiness();
+        if(contractBusiness.isExistByPlate(contractBusiness.getContract(contractCode).getPlate())) {
+            String activeContractCode = contractBusiness.getActiveContractByPlate(contractBusiness.getContract(contractCode).getPlate()).getContractCode();
+            String activeContractLink = r.equest.getScheme() +
+                    "://" + r.equest.getServerName() +
+                    ":" + r.equest.getServerPort() +
+                    r.equest.getContextPath() +
+                    "/customer/contract?action=detail&code="+activeContractCode;
+            r.equest.setAttribute("result", "Đang có hợp đồng hiệu lực với biển số này: <a href=\"" + activeContractLink + "\">"+activeContractCode+" </a>. Không thể thanh toán!");
+            r.equest.setAttribute("contractCode", contractCode);
+            return new JspPage("customer/message.jsp");
+        }
         HttpSession session = r.equest.getSession();
         session.setAttribute("CONTRACT_CODE", contractCode);
         session.setAttribute("SUCCESS_URL", r.equest.getParameter("successUrl"));
