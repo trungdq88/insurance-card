@@ -138,7 +138,7 @@
                                     <input id="filter-begin" name="filter-begin" type="date"
                                            class="form-control short-input" value="${param['filter-begin']}"/>
                                     đến
-                                    <input id="filter-end"  name="filter-end" type="date"
+                                    <input id="filter-end" name="filter-end" type="date"
                                            class="form-control short-input" value="${param['filter-end']}"/>
                                     <input type="submit" class="btn btn-default" value="Tìm kiếm"/>
 
@@ -182,7 +182,7 @@
                                                         <c:choose>
                                                             <c:when test="${log.requestService == 'Thêm thông tin vi phạm'}">
                                                                 <a href="${pageContext.request.contextPath}/staff/punishment?action=edit&id=${log.responseContent}">
-                                                                        Mã vi phạm ${log.responseContent}
+                                                                    Mã vi phạm ${log.responseContent}
                                                                 </a>
                                                             </c:when>
                                                             <c:otherwise>
@@ -249,9 +249,14 @@
                                     <c:forEach var="instance" items="${instances}" varStatus="counter">
                                         <tr>
                                             <td>${counter.count}</td>
-                                            <td>${instance.contractCode}</td>
                                             <td>
-                                                <fmt:formatDate value="${instance.activatedDate}" pattern="dd/MM/yyyy"/> lúc
+                                                <a href="${pageContext.request.contextPath}/staff/contract?action=detail&code=${instance.contractCode}">
+                                                    <strong>${instance.contractCode}</strong>
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <fmt:formatDate value="${instance.activatedDate}" pattern="dd/MM/yyyy"/>
+                                                lúc
                                                 <fmt:formatDate value="${instance.activatedDate}" type="time"/>
                                             </td>
                                             <td>
@@ -260,8 +265,10 @@
                                                         <span class="label label-success">Đang hoạt động</span>
                                                     </c:when>
                                                     <c:otherwise>
-                                                        <fmt:formatDate value="${instance.deactivatedDate}" pattern="dd/MM/yyyy"/> lúc
-                                                        <fmt:formatDate value="${instance.deactivatedDate}" type="time"/>
+                                                        <fmt:formatDate value="${instance.deactivatedDate}"
+                                                                        pattern="dd/MM/yyyy"/> lúc
+                                                        <fmt:formatDate value="${instance.deactivatedDate}"
+                                                                        type="time"/>
                                                     </c:otherwise>
                                                 </c:choose>
                                             </td>

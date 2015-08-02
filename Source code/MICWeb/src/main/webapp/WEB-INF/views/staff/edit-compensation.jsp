@@ -298,7 +298,7 @@
 
                             <!-- Resolve date -->
                             <div class="form-group">
-                                <label class="col-sm-3 control-label" for="resolveDate">Ngày giải quyết yêu cầu</label>
+                                <label class="col-sm-3 control-label" for="resolveDate">Ngày giải quyết</label>
 
                                 <div class="col-sm-3">
                                     <input id="resolveDate" name="edit:resolveDate" type="date"
@@ -321,7 +321,7 @@
 
                             <!-- Resolve note -->
                             <div class="form-group">
-                                <label class="col-sm-3 control-label" for="resolveNote">Ghi chú của công ty</label>
+                                <label class="col-sm-3 control-label" for="resolveNote">Ghi chú</label>
 
                                 <div class="col-sm-8">
                                 <textarea id="resolveNote" name="edit:resolveNote" rows="3" maxlength="2000"
