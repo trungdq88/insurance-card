@@ -124,10 +124,6 @@ public class CompensationController extends AuthController {
             dto.setDriverName(customerEntity.getName());
             dto.setDriverAddress(customerEntity.getAddress());
             dto.setDriverPhone(customerEntity.getPhone());
-            dto.setPlate(contractEntity.getPlate());
-            if (contractEntity.getSeatCapacity() != null) {
-                dto.setVehicleCapacity(contractEntity.getSeatCapacity().toString());
-            }
             r.equest.setAttribute("submitted", dto);
         }
         return new JspPage("staff/create-compensation.jsp");
