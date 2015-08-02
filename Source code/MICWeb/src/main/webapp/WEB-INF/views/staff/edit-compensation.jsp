@@ -313,7 +313,6 @@
 
                                 <div class="col-sm-4">
                                     <select class="form-control" id="decision" name="edit:decision">
-                                        <option value="Chưa quyết định">Chưa quyết định</option>
                                         <option value="Đồng ý bồi thường">Đồng ý bồi thường</option>
                                         <option value="Từ chối bồi thường">Từ chối bồi thường</option>
                                     </select>
@@ -327,7 +326,7 @@
                                 <div class="col-sm-8">
                                 <textarea id="resolveNote" name="edit:resolveNote" rows="3" maxlength="2000"
                                           title="Vui lòng nhập ghi chú của công ty"
-                                          class="form-control input-lg">${not empty submitted.resolveNote ? submitted.resolveNote : compensation.resolveNote}</textarea>
+                                          class="form-control input-md">${not empty submitted.resolveNote ? submitted.resolveNote : compensation.resolveNote}</textarea>
                                 </div>
                             </div>
                         </fieldset>
