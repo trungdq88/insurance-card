@@ -7,7 +7,7 @@
             <div class="pull-right">
                 <input type="hidden" id="cancelDate" value="${contract.cancelDate}">
                 <input type="hidden" id="ruleCanel" value="${configUtils.updateContractDueDate}">
-                <c:if test="${!contract.status.equalsIgnoreCase('Cancelled') && !contract.status.equalsIgnoreCase('Pending')}}">
+                <c:if test="${!contract.status.equalsIgnoreCase('Cancelled') && !contract.status.equalsIgnoreCase('Pending')}">
                     <a href="${pageContext.request.contextPath}/customer/accident?action=create&code=${contract.contractCode}"
                        class="btn btn-success">
                         <i class="fa fa-plus"></i> Thông báo tai nạn mới
