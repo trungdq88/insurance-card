@@ -62,16 +62,6 @@
                         </ul>
                     </div>
                 </c:if>
-                <c:if test="${param.info eq 'cancelNewCardRequestSuccess'}">
-                    <div class="text-success text-center">
-                        Hủy yêu cầu thẻ mới thành công
-                    </div>
-                </c:if>
-                <c:if test="${param.info eq 'fail'}">
-                    <div class="text-danger text-center">
-                        Có lỗi xảy ra. Xin thử lại
-                    </div>
-                </c:if>
 
                 <form class="form-horizontal">
                     <c:if test="${(contract.status eq 'Pending') and (empty listPayment)}">
