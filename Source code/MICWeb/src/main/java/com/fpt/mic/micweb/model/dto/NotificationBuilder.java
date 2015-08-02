@@ -195,4 +195,24 @@ public class NotificationBuilder {
         return entity;
     }
 
+    /**
+     * Type: 9
+     * Trigger: compensation resolved by staff
+     * Receiver: Customer
+     * Method: Web & Email
+     * Close notify trigger: Mark as read
+     * @param com
+     * @return
+     */
+    public static NotificationEntity compensationResolved(CompensationEntity com) {
+        NotificationEntity entity = new NotificationEntity();
+        String content = "Yêu cầu bồi thường %s đã được giải quyết";
+        entity.setContent(String.format(content, com.getCompensationCode()));
+        entity.setCreatedDate(new Timestamp(new Date().getTime()));
+        entity.setType(NotificationEntity.Type.COMPENSATION_RESOLVED);
+        entity.setExtraData(com.getCompensationCode());
+        entity.setReceiver("^" + com.getMicContractByContractCode().getCustomerCode() + "$");
+        entity.setMethod(NotificationEntity.Method.WEB & NotificationEntity.Method.EMAIL);
+        return entity;
+    }
 }

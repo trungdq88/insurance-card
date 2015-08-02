@@ -53,7 +53,40 @@
                             <th>Tên khách hàng</th>
                             <th>Ngày bắt đầu</th>
                             <th>Ngày kết thúc</th>
-                            <th>Trạng thái</th>
+                            <th>
+                                <div class="dropdown">
+                                    <span class="dropdown-toggle"
+                                            type="button" id="status-dropdown"
+                                            data-toggle="dropdown" aria-haspopup="true"
+                                            aria-expanded="false">
+                                        Trạng thái <span id="status-dropdown-status"></span>
+                                        <span class="caret"></span>
+                                    </span>
+                                    <ul class="dropdown-menu" aria-labelledby="status-dropdown">
+                                        <li><a data-status="" href="?action=${param.action}&keyword=${param.keyword}&status=">
+                                            Tất cả
+                                        </a></li>
+                                        <li><a data-status="Pending" href="?action=${param.action}&keyword=${param.keyword}&status=Pending">
+                                            <span class="label label-gray">Chưa kích hoạt</span>
+                                        </a></li>
+                                        <li><a data-status="No card" href="?action=${param.action}&keyword=${param.keyword}&status=No card">
+                                            <span class="label label-primary">Chưa có thẻ</span>
+                                        </a></li>
+                                        <li><a data-status="Ready" href="?action=${param.action}&keyword=${param.keyword}&status=Ready">
+                                            <span class="label label-success">Sẵn sàng</span>
+                                        </a></li>
+                                        <li><a data-status="Request cancel" href="?action=${param.action}&keyword=${param.keyword}&status=Request cancel">
+                                            <span class="label label-warning">Yêu cầu hủy</span>
+                                        </a></li>
+                                        <li><a data-status="Expired" href="?action=${param.action}&keyword=${param.keyword}&status=Expired">
+                                            <span class="label label-danger">Hết hạn</span>
+                                        </a></li>
+                                        <li><a data-status="Cancelled" href="?action=${param.action}&keyword=${param.keyword}&status=Cancelled">
+                                            <span class="label label-dark">Đã huỷ</span>
+                                        </a></li>
+                                    </ul>
+                                </div>
+                            </th>
                         </tr>
                         </thead>
                         <tbody>
@@ -123,19 +156,19 @@
                     <ul class="pagination">
                         <c:if test="${param.page != 1 && not empty param.page}">
                             <li>
-                                <a href="?action=${param.action}&keyword=${param.keyword}&page=1" aria-label="Previous">
+                                <a href="?action=${param.action}&keyword=${param.keyword}&page=1&status=${param.status}" aria-label="Previous">
                                     <span aria-hidden="true">Đầu</span>
                                 </a>
                             </li>
                         </c:if>
                         <c:forEach begin="1" end="${contractPaginator.pageSize}" var="pageNumber">
                             <li ${param.page == pageNumber ||(pageNumber == 1 && empty param.page) ? "class='active'": ""} >
-                                <a href="?action=${param.action}&keyword=${param.keyword}&page=${pageNumber}">${pageNumber}</a>
+                                <a href="?action=${param.action}&keyword=${param.keyword}&page=${pageNumber}&status=${param.status}">${pageNumber}</a>
                             </li>
                         </c:forEach>
                         <c:if test="${param.page != contractPaginator.pageSize && contractPaginator.pageSize != 1}">
                             <li>
-                                <a href="?action=${param.action}&keyword=${param.keyword}&page=${contractPaginator.pageSize}"
+                                <a href="?action=${param.action}&keyword=${param.keyword}&page=${contractPaginator.pageSize}&status=${param.status}"
                                    aria-label="Next">
                                     <span aria-hidden="true">Cuối</span>
                                 </a>
@@ -186,5 +219,26 @@
     </div>
 </div>
 <!-- /#wrapper -->
+<script>
 
+    function getQueryVariable(variable) {
+        var query = window.location.search.substring(1);
+        var vars = query.split("&");
+        for (var i = 0; i < vars.length; i++) {
+            var pair = vars[i].split("=");
+            if (pair[0] == variable) {
+                return pair[1];
+            }
+        }
+        return false;
+    }
+    $(function () {
+        // Contract status filter
+        var $status = $('#status-dropdown-status');
+        var status = getQueryVariable('status').replace("%20", " ");
+        if (status) {
+            $status.html($('[data-status="'+status+'"]').html());
+        }
+    });
+</script>
 <%@ include file="../_shared/footer.jsp" %>

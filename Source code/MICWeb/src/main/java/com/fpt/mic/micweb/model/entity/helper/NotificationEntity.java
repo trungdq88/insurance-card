@@ -21,6 +21,7 @@ public class NotificationEntity {
         public static final int CUSTOMER_REQUEST_CANCEL = 6;
         public static final int CONTRACT_CANCELLED_NO_PAYMENT = 7;
         public static final int CONTRACT_START_DATE_COME = 8;
+        public static final int COMPENSATION_RESOLVED = 9;
     }
     public static class Method {
         public static final int WEB = 1;
@@ -131,6 +132,7 @@ public class NotificationEntity {
             case Type.CONTRACT_START_DATE_COME:
                 return "/" + role + "/contract?action=detail&code=" + extraData;
             case Type.CUSTOMER_SEND_COMPENSATION:
+            case Type.COMPENSATION_RESOLVED:
                 return "/" + role + "/compensation?action=detail&code=" + extraData;
             case Type.CUSTOMER_SEND_NEW_CARD_REQUEST:
                 return "/" + role + "/card?action=newCardRequest";

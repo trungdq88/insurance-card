@@ -131,12 +131,11 @@ public class WriteActivity extends Activity {
 
     private void writeTag(Tag tag) {
         Ndef ndefTag = Ndef.get(tag);
-        byte[] stringBytes = "Hello World".getBytes();
+        byte[] stringBytes = "MIC".getBytes();
         NdefRecord dataToWrite = NdefRecord.createMime("mic/nfc", stringBytes);
         try {
             ndefTag.connect();
-            ndefTag.writeNdefMessage(new NdefMessage(dataToWrite,
-                    NdefRecord.createApplicationRecord("com.fpt.mic.mobile.checker.app")));
+            ndefTag.writeNdefMessage(new NdefMessage(dataToWrite));
             ndefTag.close();
         } catch (IOException e) {
             e.printStackTrace();

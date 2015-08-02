@@ -212,3 +212,7 @@ body {
 img#imgAttachment[src=""] {
     display: none;
 }
+
+.table-responsive {
+    min-height: 300px;
+}
