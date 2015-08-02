@@ -496,6 +496,11 @@
             refreshCancelUI();
         });
 
+        if (contractStatus.toLowerCase() == 'Pending'.toLowerCase()) {
+            // Hide create & edit compensation, accident, punishment
+            $('.updateBtn').addClass('hide');
+        }
+
         if (contractStatus.toLowerCase() == 'Expired'.toLowerCase()) {
             // Hide create & edit compensation, accident, punishment while exceed staff config
             var durationFromCurrentToExpired = daysBetween(new Date("${contract.expiredDate}"), new Date());
