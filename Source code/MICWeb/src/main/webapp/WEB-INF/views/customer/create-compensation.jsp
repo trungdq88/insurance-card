@@ -45,14 +45,27 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="form-group">
+                            <label class="col-sm-6 control-label">
+                                <a style="padding-right: 9px;"
+                                   href="${pageContext.request.contextPath}/file/Yeu cau boi thuong 84182_TT126BTC6.DOC"
+                                   download>
+                                    Tải mẫu văn bản yêu cầu bồi thường
+                                </a>
+
+                            </label>
+
+
+                        </div>
 
                     </fieldset>
                 </form>
             </div>
 
             <div class="col-lg-12">
-                <legend>Thông tin yêu cầu bồi thường
+                <legend>Hay điền trực tiếp thông tin yêu cầu bồi thường dưới đây <br/>
                 </legend>
+
                 <c:if test="${not empty validateErrors}">
                     <div class="text-danger">
                         <ul>
@@ -62,6 +75,7 @@
                         </ul>
                     </div>
                 </c:if>
+
                 <p class="text-right"><b>Các ô có dấu * là bắt buộc</b></p>
 
                 <div class="alert alert-info">
@@ -142,7 +156,7 @@
                                 <input id="plate" name="compensation:plate" class="form-control input-md"
                                        type="text" required minlength="4" maxlength="15"
                                        title="Vui lòng nhập biển số xe!" placeholder="Ví dụ: 78Y9-15383"
-                                       >
+                                        >
                             </div>
                             <label class="col-sm-3 control-label" for="vehicleCapacity">
                                 Trọng tải/số chỗ ngồi *
@@ -154,7 +168,7 @@
                                            class="form-control input-md"
                                            type="text" required minlength="1" maxlength="20"
                                            title="Vui lòng nhập trọng tải hoặc số chỗ ngồi!" placeholder="Ví dụ: 7"
-                                           >
+                                            >
                                     <span class="input-group-addon" id="basic-addon">(tấn/chỗ)</span>
                                 </div>
                             </div>
