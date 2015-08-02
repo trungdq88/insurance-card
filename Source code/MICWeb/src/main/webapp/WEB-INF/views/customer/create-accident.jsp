@@ -75,7 +75,7 @@
 
                             <div class="col-sm-6">
 
-                                <img id="imgAttachment" height="100px" src=""/> &nbsp;&nbsp;
+                                <img id="imgAttachment" height="100px" src=""/>
                                 <button class="btn btn-primary" type="button" id="pickFile">Chọn tập tin</button>
                                 <input id="attachment" name="accident:attachment" class="form-control"
                                        type="hidden" maxlength="255">
