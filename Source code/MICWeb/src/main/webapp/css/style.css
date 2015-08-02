@@ -208,3 +208,7 @@ body {
 .text-warning-notif {
     color: #FFAE21;
 }
+
+img#imgAttachment[src=""] {
+    display: none;
+}

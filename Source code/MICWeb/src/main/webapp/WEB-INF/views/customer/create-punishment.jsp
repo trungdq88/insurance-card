@@ -64,7 +64,7 @@
 
                             <div class="col-sm-6">
                                 <img id="imgAttachment" height="100px" src=""/>&nbsp;&nbsp;
-                                <button class="btn btn-primary" type="button" id="pickFilePunishment">Chọn văn bản</button>
+                                <button class="btn btn-primary" type="button" id="pickFilePunishment">Chọn tập tin</button>
                                 <input id="attachment" name="punishment:attachment"
                                        class="form-control "
                                        type="hidden">
