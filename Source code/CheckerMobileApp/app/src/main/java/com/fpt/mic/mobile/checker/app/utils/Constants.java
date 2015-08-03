@@ -7,7 +7,7 @@ package com.fpt.mic.mobile.checker.app.utils;
 public class Constants {
     public static final long CONTRACT_NEARLY_EXPIRED_RANGE = 1000 * 86400 * 15; // 15 days
     public static final String FILEPICKER_API_KEY = "AEbPPQfPfRHqODjEl5AZ2z";
-
+    public static final String APP_PREF_NAME = "com.fpt.mic.mobile.checker.app.prefstore";
     public static class ContractStatus {
         public static final String PENDING = "Pending";
         public static final String NO_CARD = "No card";

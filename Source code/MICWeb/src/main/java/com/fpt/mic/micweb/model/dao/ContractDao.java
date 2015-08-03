@@ -160,7 +160,7 @@ public class ContractDao extends IncrementDao<ContractEntity, String> {
      * @param keyword
      * @return
      */
-    public List<ContractSearchResultDto> searchContracts(String keyword) {
+    public List<ContractSearchResultDto> searchContracts(String keyword, int limit) {
 
         EntityManager entityManager = factory.createEntityManager();
         TypedQuery<ContractSearchResultDto> query = entityManager.createQuery(
@@ -175,6 +175,7 @@ public class ContractDao extends IncrementDao<ContractEntity, String> {
         query.setParameter("keyword", "%" + keyword + "%");
         query.setParameter("fieldOrder",
                 Constants.ContractStatus.NO_CARD);
+        query.setMaxResults(limit);
         List<ContractSearchResultDto> resultList = query.getResultList();
         entityManager.close();
         return resultList;

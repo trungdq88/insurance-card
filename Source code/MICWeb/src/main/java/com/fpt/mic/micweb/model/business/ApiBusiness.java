@@ -24,7 +24,7 @@ public class ApiBusiness {
      */
     public List<ContractSearchResultDto> searchContracts(String keyword) {
         ContractDao contractDao = new ContractDao();
-        return contractDao.searchContracts(keyword);
+        return contractDao.searchContracts(keyword, 10);
     }
 
     public CardInstanceEntity updateCardID(String contractCode, String cardID) {

@@ -79,11 +79,11 @@ public class SplashScreen extends Activity {
     }
 
     private void setCustomServerIp(final IServerSetUpDone cb) {
-        DialogUtils.showInputBox(this, "Cài đặt", Settings.serverIp,
+        DialogUtils.showInputBox(this, "Cài đặt", Settings.getServerIp(),
                 "Vui lòng nhập địa chỉ IP của server", new DialogUtils.IOnTextInput() {
                     @Override
                     public void onInput(String text) {
-                        Settings.serverIp = text;
+                        Settings.setServerIp(text);
                         cb.onServerSetUp();
                     }
                 });

@@ -5,10 +5,16 @@ package com.fpt.mic.mobile.printer.app.utils;
  * Created by dinhquangtrung on 6/27/15.
  */
 public class Settings {
-    // Default emulator to host IP
-    public static String serverIp = "10.0.2.2";
     // Connect to localhost via simulator: 10.0.2.2
     public static String getApiBase() {
-        return "http://" + Settings.serverIp + ":8080/api";
+        return "http://" + getServerIp() + ":8080/api";
+    }
+
+    public static String getServerIp() {
+        String defaultIp = "10.0.2.2";
+        return PrefStoreUtils.get("serverIp", defaultIp);
+    }
+    public static void setServerIp(String serverIp) {
+        PrefStoreUtils.set("serverIp", serverIp);
     }
 }

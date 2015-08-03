@@ -130,18 +130,21 @@ public class WriteActivity extends Activity {
     }
 
     private void writeTag(Tag tag) {
-        Ndef ndefTag = Ndef.get(tag);
-        byte[] stringBytes = "MIC".getBytes();
-        NdefRecord dataToWrite = NdefRecord.createMime("mic/nfc", stringBytes);
-        try {
-            ndefTag.connect();
-            ndefTag.writeNdefMessage(new NdefMessage(dataToWrite));
-            ndefTag.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (FormatException e) {
-            e.printStackTrace();
-        }
+
+        // Write nothing here
+
+//        Ndef ndefTag = Ndef.get(tag);
+//        byte[] stringBytes = "MIC".getBytes();
+//        NdefRecord dataToWrite = NdefRecord.createMime("mic/nfc", stringBytes);
+//        try {
+//            ndefTag.connect();
+//            ndefTag.writeNdefMessage(new NdefMessage(dataToWrite));
+//            ndefTag.close();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        } catch (FormatException e) {
+//            e.printStackTrace();
+//        }
     }
 
     @Override
