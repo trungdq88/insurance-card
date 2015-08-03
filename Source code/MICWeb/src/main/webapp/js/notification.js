@@ -55,6 +55,7 @@ function checkNotification() {
 }
 
 $(function () {
+    checkNotification();
     setInterval(checkNotification, 3000);
 
 
