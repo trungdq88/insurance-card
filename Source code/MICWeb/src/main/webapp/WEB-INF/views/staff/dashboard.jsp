@@ -17,7 +17,7 @@
         </div>
         <div class="row">
             <div class="col-lg-12">
-                <div class="table-responsive">
+                <div>
                     <table class="table table-hover">
                         <c:choose>
                             <c:when test="${notifications.size() == 0}">
