@@ -20,8 +20,8 @@
                     </c:choose>
                 </h3>
             </div>
-            <div class="pull-right">
-                        <span style="font-size: 100%" class="label label-warning">  <c:choose>
+            <div class="pull-right" style="padding-bottom: 8px;padding-right: 9px">
+                        <span style="font-size: 110%" class="label label-warning">  <c:choose>
                             <c:when test="${empty compensation.resolveDate}">
                                 <span class="label label-warning">Đang giải quyết</span>
                             </c:when>
@@ -31,12 +31,12 @@
                             </c:otherwise>
                         </c:choose>
                         </span>
-
             </div>
             <!-- /.col-lg-12 -->
         </div>
         <div class="row">
             <div class="col-lg-12">
+
                 <form class="form-horizontal">
                     <c:if test="${not empty result}">
                         <div class="text-center alert alert-success alert-dismissible">
@@ -46,7 +46,7 @@
 
 
                     <fieldset>
-                        <legend style="border-bottom: none">Thông tin hợp đồng</legend>
+                        <legend>Thông tin hợp đồng</legend>
 
                         <div class="form-group">
                             <label class="col-sm-4 control-label">Mã hợp đồng</label>
@@ -88,10 +88,10 @@
                                 <div class="text-value">
                                     <c:choose>
                                         <c:when test="${empty compensation.resolveDate}">
-                                            <span class="label label-default">Chưa giải quyết</span>
+                                            <span style="font-size: 90%" class="label label-default">Chưa giải quyết</span>
                                         </c:when>
                                         <c:otherwise>
-                                            <span class="label label-success">Đã giải quyết</span>
+                                            <span style="font-size: 90%" class="label label-success">Đã giải quyết</span>
                                         </c:otherwise>
                                     </c:choose>
                                 </div>
