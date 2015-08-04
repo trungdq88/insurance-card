@@ -89,14 +89,16 @@ public class PunishmentActivity extends Activity {
                     @Override
                     public void onPunishmentResult(final boolean result) {
                         String message = result ? "Đã thêm thông tin vi phạm thành công" : "Không thể thêm thông tin vi phạm, vui lòng thử lại.";
-                        DialogUtils.showAlert(PunishmentActivity.this, message, new DialogUtils.IOnOkClicked() {
-                            @Override
-                            public void onClick() {
-                                if (result) {
-                                    finish();
-                                }
-                            }
-                        });
+//                        DialogUtils.showAlert(PunishmentActivity.this, message, new DialogUtils.IOnOkClicked() {
+//                            @Override
+//                            public void onClick() {
+//                                if (result) {
+//                                    finish();
+//                                }
+//                            }
+//                        });
+                        Toast.makeText(PunishmentActivity.this, message, Toast.LENGTH_SHORT).show();
+                        finish();
                     }
                 });
 

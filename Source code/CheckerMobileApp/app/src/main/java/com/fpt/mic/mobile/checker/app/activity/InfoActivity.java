@@ -15,6 +15,7 @@ import com.fpt.mic.mobile.checker.app.entity.CardInstanceEntity;
 import com.fpt.mic.mobile.checker.app.entity.CheckCardResponseDto;
 import com.fpt.mic.mobile.checker.app.utils.Constants;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -31,13 +32,10 @@ public class InfoActivity extends Activity {
     TextView txtType;
     TextView txtStartDate;
     TextView txtExpiredDate;
-    TextView txtContractFee;
-    TextView txtFeeDate;
-    TextView txtContractStaff;
-    TextView txtDatePublish;
-    TextView txtHotline;
     TextView txtCardId;
     private CardInstanceEntity card;
+
+    SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,11 +57,6 @@ public class InfoActivity extends Activity {
         txtType = (TextView) findViewById(R.id.txtType);
         txtStartDate = (TextView) findViewById(R.id.txtStartDate);
         txtExpiredDate = (TextView) findViewById(R.id.txtExpiredDate);
-        txtContractFee = (TextView) findViewById(R.id.txtContractFee);
-        txtFeeDate = (TextView) findViewById(R.id.txtFeeDate);
-        txtContractStaff = (TextView) findViewById(R.id.txtContractStaff);
-        txtDatePublish = (TextView) findViewById(R.id.txtDatePublish);
-        txtHotline = (TextView) findViewById(R.id.txtHotline);
         txtCardId = (TextView) findViewById(R.id.txtCardId);
 
         CardInstanceEntity card = (CardInstanceEntity) getIntent().getParcelableExtra("card");
@@ -130,9 +123,9 @@ public class InfoActivity extends Activity {
         txtChassis.setText(card.micContractByContractCode.chassis);
         txtEngine.setText(card.micContractByContractCode.engine);
         txtType.setText(card.micContractByContractCode.vehicleType);
-        txtStartDate.setText(card.micContractByContractCode.startDate.toString());
-        txtExpiredDate.setText(card.micContractByContractCode.expiredDate.toString());
-        txtContractFee.setText(card.micContractByContractCode.contractFee + " đồng");
+        txtStartDate.setText(format.format(new Date(card.micContractByContractCode.startDate.getTime())));
+        txtExpiredDate.setText(format.format(new Date(card.micContractByContractCode.expiredDate.getTime())));
+        // txtContractFee.setText(card.micContractByContractCode.contractFee + " đồng");
         txtCardId.setText(card.cardId);
 
         // TODO: more status
@@ -157,8 +150,6 @@ public class InfoActivity extends Activity {
         txtStatus.setText("THẺ KHÔNG HỢP LỆ");
         txtStatus.setBackgroundColor(Color.RED);
         findViewById(R.id.lytInfo1).setVisibility(View.GONE);
-        findViewById(R.id.lytInfo2).setVisibility(View.GONE);
-        findViewById(R.id.lytInfo3).setVisibility(View.GONE);
         findViewById(R.id.lytInvalid).setVisibility(View.VISIBLE);
     }
 }
