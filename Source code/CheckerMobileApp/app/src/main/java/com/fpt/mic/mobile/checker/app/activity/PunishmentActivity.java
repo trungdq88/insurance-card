@@ -75,8 +75,7 @@ public class PunishmentActivity extends Activity {
             public void onClick(View view) {
                 String title = txtTitle.getText().toString();
                 if (title.isEmpty()) {
-                    Toast.makeText(PunishmentActivity.this, "Vui lòng nhập nội dung vi phạm", Toast.LENGTH_SHORT).show();
-                    return;
+                    title = "";
                 }
 
                 if (photoUrl == null) {

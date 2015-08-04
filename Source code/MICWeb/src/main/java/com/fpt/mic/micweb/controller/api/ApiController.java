@@ -103,9 +103,6 @@ public class ApiController extends BasicController {
         if (contractCode == null || contractCode.isEmpty()) {
             return new JsonString(false);
         }
-        if (title == null || title.isEmpty()) {
-            return new JsonString(false);
-        }
         if (photo == null || photo.isEmpty()) {
             return new JsonString(false);
         }
