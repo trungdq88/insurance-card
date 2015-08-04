@@ -81,7 +81,7 @@ public class AjaxController extends AuthController {
         String userCode = ((IUserEntity) getLoggedInUser()).calcUserCode();
 
         NotificationBusiness bus = new NotificationBusiness();
-        List unreadNotifications = bus.getUnreadNotifications(userCode, 10);
+        List unreadNotifications = bus.getNotifications(userCode, 10);
         return new JsonString(unreadNotifications);
     }
 

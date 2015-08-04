@@ -33,10 +33,6 @@ public class NotificationDao extends GenericDaoJpaImpl<NotificationEntity, Integ
         return resultList;
     }
 
-    public List getUnreadNotifications(String code) {
-        return getUnreadNotifications(code, 0);
-    }
-
     public List getUnreadNotifications(String code, int size) {
 
         EntityManager entityManager = factory.createEntityManager();
@@ -125,5 +121,25 @@ public class NotificationDao extends GenericDaoJpaImpl<NotificationEntity, Integ
         }
         entityManager.close();
         return result;
+    }
+
+    public List getNotifications(String code, int size) {
+        EntityManager entityManager = factory.createEntityManager();
+        Query query = entityManager.createNativeQuery(
+                "SELECT n.*, nr.is_read " +
+                        "FROM mic_notification n " +
+                        "LEFT JOIN mic_notification_read nr " +
+                        "ON n.id = nr.notification_id " +
+                        "AND nr.user_code = :user_code " +
+                        "WHERE :user_code REGEXP receiver " +
+                        "ORDER BY n.created_date DESC ",
+                NotificationDto.class);
+        query.setParameter("user_code", code);
+        if (size > 0) {
+            query.setMaxResults(size);
+        }
+        List resultList = query.getResultList();
+        entityManager.close();
+        return resultList;
     }
 }

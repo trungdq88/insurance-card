@@ -8,7 +8,9 @@ import com.fpt.mic.micweb.model.entity.helper.NotificationEntity;
 import com.fpt.mic.micweb.model.entity.helper.NotificationReadEntity;
 import com.fpt.mic.micweb.utils.EmailTemplate;
 import com.fpt.mic.micweb.utils.EmailUtils;
+import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
 
+import javax.persistence.RollbackException;
 import java.math.BigInteger;
 import java.util.List;
 
@@ -88,8 +90,12 @@ public class NotificationBusiness {
         entity.setNotificationId(id);
         entity.setUserCode(userCode);
         entity.setIsRead(1);
-
-        return dao.create(entity) != null;
+        try {
+            return dao.create(entity) != null;
+        } catch (RollbackException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     public boolean markAsUnread(int id, String userCode) {
@@ -109,5 +115,10 @@ public class NotificationBusiness {
     public Long getNoCardContractCount() {
         ContractDao contractDao = new ContractDao();
         return contractDao.getNoCardContractCount();
+    }
+
+    public List getNotifications(String userCode, int limit) {
+        NotificationDao notificationDao = new NotificationDao();
+        return notificationDao.getNotifications(userCode, limit);
     }
 }

@@ -11,7 +11,15 @@
     <div id="page-wrapper">
         <div class="row">
             <div class="col-lg-12">
-                <h1 class="page-header">Thông báo (${unreadCount})</h1>
+                <h3 class="page-header">
+                    Thông báo
+
+                <span class="pull-right small">
+                    <a href="#" id="view-unread-notifs">Chưa đọc</a>
+                    |
+                    <a href="#" id="view-read-notifs">Đã đọc</a>
+                </span>
+                </h3>
             </div>
             <!-- /.col-lg-12 -->
         </div>

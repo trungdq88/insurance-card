@@ -1,4 +1,3 @@
-
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -11,7 +10,13 @@
     <div id="page-wrapper">
         <div class="row">
             <div class="col-lg-12">
-                <h3 class="page-header">Thông báo</h3>
+                <h3 class="page-header">Thông báo
+                <span class="pull-right small">
+                    <a href="#" id="view-unread-notifs">Chưa đọc</a>
+                    |
+                    <a href="#" id="view-read-notifs">Đã đọc</a>
+                </span>
+                </h3>
             </div>
             <!-- /.col-lg-12 -->
         </div>
@@ -22,11 +27,11 @@
                         <c:choose>
                             <c:when test="${notifications.size() == 0}">
                                 <c:if test="${noCardContractCount == 0}">
-                                <tr>
-                                    <td colspan="6" style="vertical-align: middle; text-align: center;">
-                                        Không có thông báo mới nào
-                                    </td>
-                                </tr>
+                                    <tr>
+                                        <td colspan="6" style="vertical-align: middle; text-align: center;">
+                                            Không có thông báo mới nào
+                                        </td>
+                                    </tr>
                                 </c:if>
                             </c:when>
                             <c:otherwise>
@@ -34,7 +39,8 @@
                                     <tr class="notif-item" data-id="${notification.id}"
                                         data-is-read="${notification.isRead != null ? 'true' : 'false'}">
                                         <td>
-                                            <a class="notif-link" href="/notif?action=markAsRead&id=${notification.id}&redirect=true">
+                                            <a class="notif-link"
+                                               href="/notif?action=markAsRead&id=${notification.id}&redirect=true">
                                                 <i class="fa fa-bell-o"></i> ${notification.content}
                                             </a>
                                         </td>
@@ -44,11 +50,13 @@
                                             <fmt:formatDate value="${notification.createdDate}" type="time"/>
                                         </td>
                                         <td>
-                                            <a class="notif-control mark-as-read" href="javascript:markAsRead(${notification.id})"
+                                            <a class="notif-control mark-as-read"
+                                               href="javascript:markAsRead(${notification.id})"
                                                data-toggle="tooltip" title="Đánh dấu đã đọc">
                                                 <i class="fa fa-check"></i>
                                             </a>
-                                            <a class="notif-control mark-as-unread" href="javascript:markAsUnread(${notification.id})"
+                                            <a class="notif-control mark-as-unread"
+                                               href="javascript:markAsUnread(${notification.id})"
                                                data-toggle="tooltip" title="Đánh dấu chưa đọc">
                                                 <i class="fa fa-bell"></i>
                                             </a>
@@ -62,7 +70,7 @@
 
                 <c:if test="${noCardContractCount > 0}">
                     <p>
-                        <a href="${pageContext.request.contextPath}/staff/contract">
+                        <a href="${pageContext.request.contextPath}/staff/contract?action=&keyword=&status=No%20card">
                             <i class="fa fa-warning text-warning-notif"></i>
                             Có ${noCardContractCount} hợp đồng chưa được cấp thẻ. Nhấn để xem chi tiết</a>
                     </p>

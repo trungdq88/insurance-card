@@ -10,7 +10,7 @@ function markAsRead(id) {
         dataType: 'json'
     }).done(function (result) {
         if (result) {
-            $('.notif-item[data-id=' + id +']').attr('data-is-read', 'true');
+            $('.notif-item[data-id=' + id + ']').attr('data-is-read', 'true');
             refreshState();
         }
     });
@@ -22,7 +22,7 @@ function markAsUnread(id) {
         dataType: 'json'
     }).done(function (result) {
         if (result) {
-            $('.notif-item[data-id=' + id +']').attr('data-is-read', 'false');
+            $('.notif-item[data-id=' + id + ']').attr('data-is-read', 'false');
             refreshState();
         }
     });
@@ -74,10 +74,10 @@ $(function () {
                     var notif = list[i];
 
                     html += '<li>' +
-                        '<a href="/notif?action=markAsRead&id='+notif.id+'&redirect=true">' +
+                        '<a class="' + (notif.isRead == 1 ? "is-read" : "") + '" href="/notif?action=markAsRead&id=' + notif.id + '&redirect=true">' +
                         '<div> <i class="fa fa-bell fa-fw"></i> ' +
                         notif.content +
-                        '<span class="pull-right text-muted small">' +
+                        '<span class="notification-time pull-right text-muted small">' +
                         moment(notif.createdDate).calendar() +
                         '</span>' +
                         '</div>' +
@@ -107,4 +107,26 @@ $(function () {
 
     refreshState();
 
+});
+
+
+function showUnread() {
+    $('.notif-item').hide();
+    $('[data-is-read=false]').show();
+}
+
+function showRead() {
+    $('.notif-item').hide();
+    $('[data-is-read=true]').show();
+}
+
+// Notification filter
+$(function () {
+    $('#view-unread-notifs').click(function () {
+        showUnread();
+    });
+    $('#view-read-notifs').click(function () {
+        showRead();
+    });
+    showUnread();
 });

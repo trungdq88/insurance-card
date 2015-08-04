@@ -30,7 +30,7 @@ public class DashboardController extends AuthController {
     public ResponseObject getView(R r) {
         NotificationBusiness notificationBusiness = new NotificationBusiness();
         String staffCode = ((StaffEntity) getLoggedInUser()).getStaffCode();
-        List notifications = notificationBusiness.getUnreadNotifications(staffCode, 10);
+        List notifications = notificationBusiness.getNotifications(staffCode, 10);
         CompensationBusiness compensationBusiness = new CompensationBusiness();
         CardBusiness cardBusiness = new CardBusiness();
         ContractBusiness contractBusiness = new ContractBusiness();

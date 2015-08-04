@@ -235,7 +235,8 @@
     $(function () {
         // Contract status filter
         var $status = $('#status-dropdown-status');
-        var status = getQueryVariable('status').replace("%20", " ");
+        var status = getQueryVariable('status') || "";
+        status = status.replace("%20", " ");
         if (status) {
             $status.html($('[data-status="'+status+'"]').html());
         }

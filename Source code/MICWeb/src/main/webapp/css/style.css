@@ -216,3 +216,14 @@ img#imgAttachment[src=""] {
 .table-responsive {
     min-height: 300px;
 }
+
+.notification-time {
+    padding-left: 10px;
+}
+.is-read {
+    color: #8c8c8c !important;
+}
+#notif-list {
+    max-height: 300px;
+    overflow: auto;
+}
