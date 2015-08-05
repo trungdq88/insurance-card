@@ -60,23 +60,23 @@
                             </div>
 
                             <!-- Driver name & phone -->
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">Họ tên lái xe</label>
+                            <%--<div class="form-group">--%>
+                                <%--<label class="col-sm-3 control-label">Họ tên lái xe</label>--%>
 
-                                <div class="col-sm-3">
-                                    <div class="text-value">
-                                            ${compensation.driverName}
-                                    </div>
-                                </div>
+                                <%--<div class="col-sm-3">--%>
+                                    <%--<div class="text-value">--%>
+                                            <%--${compensation.driverName}--%>
+                                    <%--</div>--%>
+                                <%--</div>--%>
 
-                                <label class="col-sm-2 control-label">Điện thoại</label>
+                                <%--<label class="col-sm-2 control-label">Điện thoại</label>--%>
 
-                                <div class="col-sm-3">
-                                    <div class="text-value">
-                                            ${compensation.driverPhone}
-                                    </div>
-                                </div>
-                            </div>
+                                <%--<div class="col-sm-3">--%>
+                                    <%--<div class="text-value">--%>
+                                            <%--${compensation.driverPhone}--%>
+                                    <%--</div>--%>
+                                <%--</div>--%>
+                            <%--</div>--%>
                         </fieldset>
                     </form>
                 </c:if>

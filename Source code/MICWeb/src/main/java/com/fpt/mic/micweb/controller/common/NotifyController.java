@@ -40,14 +40,14 @@ public class NotifyController extends AuthController {
 
             boolean b = bus.markAsRead(id, user.calcUserCode());
 
-            if (redirect != null) {
+            if (redirect != null && entity != null) {
                 return new RedirectTo(entity.generateRelatedLink(user.calcRole()));
             } else {
-                return new JsonString(b);
+                return new RedirectTo("/");
             }
         }
 
-        return new JsonString(false);
+        return new RedirectTo("/");
     }
     public ResponseObject getMarkAsUnread(R r) {
         if (!isLoggedIn()) return null;

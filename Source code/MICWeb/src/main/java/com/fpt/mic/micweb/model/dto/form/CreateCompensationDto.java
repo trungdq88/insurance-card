@@ -25,6 +25,8 @@ public class CreateCompensationDto {
     private String contractCode;
     @NotNull(message = "Ngày gởi yêu cầu không được để trống")
     private Timestamp createdDate;
+    @NotEmpty(message = "Mã hợp đồng không được để trống")
+    private String inputMethod;
     @NotEmpty(message = "Họ tên lái xe không được để trống")
     @Pattern(regexp = "^([^0-9`~!@#$%^&*,.<>;':/|{}()=_+-]+)$", message = "Họ tên lái xe không hợp lệ")
     @Size(min = 3, max = 80, message = "Họ tên lái xe phải từ {min} đến {max} ký tự")
@@ -134,13 +136,29 @@ public class CreateCompensationDto {
     public CreateCompensationDto() {
     }
 
-    public CreateCompensationDto(String contractCode, Timestamp createdDate, String driverName, String licenseNumber,
-                                 String licenseType, String driverAddress, String driverPhone, String plate,
-                                 String vehicleCapacity, Timestamp accidentDate, String accidentPlace,
-                                 String controlDepartment, String description, String humanDamage, String assetDamage,
-                                 String observer, String observerAddress, String compensationNote, String attachment) {
+    public CreateCompensationDto(String contractCode,
+                                 Timestamp createdDate,
+                                 String inputMethod,
+                                 String driverName,
+                                 String licenseNumber,
+                                 String licenseType,
+                                 String driverAddress,
+                                 String driverPhone,
+                                 String plate,
+                                 String vehicleCapacity,
+                                 Timestamp accidentDate,
+                                 String accidentPlace,
+                                 String controlDepartment,
+                                 String description,
+                                 String humanDamage,
+                                 String assetDamage,
+                                 String observer,
+                                 String observerAddress,
+                                 String compensationNote,
+                                 String attachment) {
         this.contractCode = contractCode;
         this.createdDate = createdDate;
+        this.inputMethod = inputMethod;
         this.driverName = driverName;
         this.licenseNumber = licenseNumber;
         this.licenseType = licenseType;
@@ -174,6 +192,14 @@ public class CreateCompensationDto {
 
     public void setCreatedDate(Timestamp createdDate) {
         this.createdDate = createdDate;
+    }
+
+    public String getInputMethod() {
+        return inputMethod;
+    }
+
+    public void setInputMethod(String inputMethod) {
+        this.inputMethod = inputMethod;
     }
 
     public String getDriverName() {

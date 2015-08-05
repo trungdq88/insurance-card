@@ -274,21 +274,21 @@
                         </div>
 
                         <!-- Attachment -->
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label" for="attachment">
-                                Biên bản của CQCA
-                            </label>
+                        <%--<div class="form-group">--%>
+                            <%--<label class="col-sm-3 control-label" for="attachment">--%>
+                                <%--Biên bản của CQCA--%>
+                            <%--</label>--%>
 
-                            <div class="col-sm-6">
-                                <input id="attachment" name="edit:attachment" type="hidden" maxlength="255"
-                                       value="${compensation.attachment}">
-                                <img id="imgAttachment" height="100px" src="${compensation.attachment}"/>
-                                <button type="button" id="pickAttachment" class="btn btn-primary">Chọn tập tin</button>
-                                <script type="text/javascript" src="//api.filepicker.io/v2/filepicker.js"></script>
-                                <input type="filepicker" data-fp-apikey="AEbPPQfPfRHqODjEl5AZ2z" class="hide filePicker"
-                                       onchange="$('#imgAttachment').attr('src', event.fpfile.url);$('#attachment').val(event.fpfile.url);">
-                            </div>
-                        </div>
+                            <%--<div class="col-sm-6">--%>
+                                <%--<input id="attachment" name="edit:attachment" type="hidden" maxlength="255"--%>
+                                       <%--value="${compensation.attachment}">--%>
+                                <%--<img id="imgAttachment" height="100px" src="${compensation.attachment}"/>--%>
+                                <%--<button type="button" id="pickAttachment" class="btn btn-primary">Chọn tập tin</button>--%>
+                                <%--<script type="text/javascript" src="//api.filepicker.io/v2/filepicker.js"></script>--%>
+                                <%--<input type="filepicker" data-fp-apikey="AEbPPQfPfRHqODjEl5AZ2z" class="hide filePicker"--%>
+                                       <%--onchange="$('#imgAttachment').attr('src', event.fpfile.url);$('#attachment').val(event.fpfile.url);">--%>
+                            <%--</div>--%>
+                        <%--</div>--%>
                     </fieldset>
                     <br/>
                     <%--/Compensation information--%>

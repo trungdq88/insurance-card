@@ -98,155 +98,166 @@
                                 </c:choose>
                             </div>
                         </legend>
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label">Ngày gởi yêu cầu</label>
 
-                            <div class="col-sm-4">
-                                <div class="text-value">
-                                    ngày <fmt:formatDate value="${compensation.createdDate}" pattern="dd"/>
-                                    tháng <fmt:formatDate value="${compensation.createdDate}" pattern="MM"/>
-                                    năm <fmt:formatDate value="${compensation.createdDate}" pattern="yyyy"/>
+                        <c:choose>
+                            <c:when test="${not empty compensation.attachment}">
+                                <a target="_blank" href="${compensation.attachment}">
+                                    Xem chi tiết <i class="fa fa-external-link"></i>
+                                </a>
+                                <div>
+                                    <img src="${compensation.attachment}" style="width: 100%"/>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label">Họ tên lái xe</label>
+                            </c:when>
+                            <c:otherwise>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Ngày gởi yêu cầu</label>
 
-                            <div class="col-sm-3">
-                                <div class="text-value">${compensation.driverName}</div>
-                            </div>
-                            <label class="col-sm-2 control-label">Điện thoại</label>
-
-                            <div class="col-sm-3">
-                                <div class="text-value">${compensation.driverPhone}</div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label">Địa chỉ liên hệ</label>
-
-                            <div class="col-sm-8">
-                                <div class="text-value">${compensation.driverAddress}</div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label">Giấy phép lái xe số</label>
-
-                            <div class="col-sm-3">
-                                <div class="text-value">${compensation.licenseNumber}</div>
-                            </div>
-                            <label class="col-sm-2 control-label">Hạng</label>
-
-                            <div class="col-sm-3">
-                                <div class="text-value">${compensation.licenseType}</div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label">Biển số xe gây tai nạn</label>
-
-                            <div class="col-sm-2">
-                                <div class="text-value">${compensation.plate}</div>
-                            </div>
-                            <label class="col-sm-3 control-label">Trọng tải/số chỗ ngồi</label>
-
-                            <div class="col-sm-2">
-                                <div class="text-value">${compensation.vehicleCapacity}</div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label">Ngày xảy ra tai nạn</label>
-
-                            <div class="col-sm-4">
-                                <div class="text-value">
-                                    ngày <fmt:formatDate value="${compensation.accidentDate}" pattern="dd"/>
-                                    tháng <fmt:formatDate value="${compensation.accidentDate}" pattern="MM"/>
-                                    năm <fmt:formatDate value="${compensation.accidentDate}" pattern="yyyy"/>
+                                    <div class="col-sm-4">
+                                        <div class="text-value">
+                                            ngày <fmt:formatDate value="${compensation.createdDate}" pattern="dd"/>
+                                            tháng <fmt:formatDate value="${compensation.createdDate}" pattern="MM"/>
+                                            năm <fmt:formatDate value="${compensation.createdDate}" pattern="yyyy"/>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Họ tên lái xe</label>
 
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label">Nơi xảy ra tai nạn</label>
+                                    <div class="col-sm-3">
+                                        <div class="text-value">${compensation.driverName}</div>
+                                    </div>
+                                    <label class="col-sm-2 control-label">Điện thoại</label>
 
-                            <div class="col-sm-8">
-                                <div class="text-value">${compensation.accidentPlace}</div>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label">Cơ quan CA giải quyết</label>
-
-                            <div class="col-sm-8">
-                                <div class="text-value">${compensation.controlDepartment}</div>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label">Diễn biến và nguyên nhân</label>
-
-                            <div class="col-sm-8">
-                                <div class="text-value">${compensation.description}</div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label">Thiệt hại về người</label>
-
-                            <div class="col-sm-8">
-                                <div class="text-value">${compensation.humanDamage}</div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label">Thiệt hại về tài sản</label>
-
-                            <div class="col-sm-8">
-                                <div class="text-value">${compensation.assetDamage}</div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label">Người làm chứng</label>
-
-                            <div class="col-sm-8">
-                                <div class="text-value">${compensation.observer}</div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label">Địa chỉ của người làm chứng</label>
-
-                            <div class="col-sm-8">
-                                <div class="text-value">${compensation.observerAddress}</div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label">Yêu cầu bồi thường</label>
-
-                            <div class="col-sm-8">
-                                <div class="text-value">
-                                    <c:choose>
-                                        <c:when test="${empty compensation.compensationNote}">
-                                            <span class="empty-value">Không có</span>
-                                        </c:when>
-                                        <c:otherwise>${compensation.compensationNote}</c:otherwise>
-                                    </c:choose>
+                                    <div class="col-sm-3">
+                                        <div class="text-value">${compensation.driverPhone}</div>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label">Biên bản của cơ quan CA</label>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Địa chỉ liên hệ</label>
 
-                            <div class="col-sm-6">
-                                <div class="text-value">
-                                    <c:choose>
-                                        <c:when test="${empty compensation.attachment}">
-                                            <span class="empty-value">Không có</span>
-                                        </c:when>
-                                        <c:otherwise>
-                                            <a href="${compensation.attachment}">
-                                                Xem chi tiết
-                                            </a>
-                                        </c:otherwise>
-                                    </c:choose>
+                                    <div class="col-sm-8">
+                                        <div class="text-value">${compensation.driverAddress}</div>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Giấy phép lái xe số</label>
+
+                                    <div class="col-sm-3">
+                                        <div class="text-value">${compensation.licenseNumber}</div>
+                                    </div>
+                                    <label class="col-sm-2 control-label">Hạng</label>
+
+                                    <div class="col-sm-3">
+                                        <div class="text-value">${compensation.licenseType}</div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Biển số xe gây tai nạn</label>
+
+                                    <div class="col-sm-2">
+                                        <div class="text-value">${compensation.plate}</div>
+                                    </div>
+                                    <label class="col-sm-3 control-label">Trọng tải/số chỗ ngồi</label>
+
+                                    <div class="col-sm-2">
+                                        <div class="text-value">${compensation.vehicleCapacity}</div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Ngày xảy ra tai nạn</label>
+
+                                    <div class="col-sm-4">
+                                        <div class="text-value">
+                                            ngày <fmt:formatDate value="${compensation.accidentDate}" pattern="dd"/>
+                                            tháng <fmt:formatDate value="${compensation.accidentDate}" pattern="MM"/>
+                                            năm <fmt:formatDate value="${compensation.accidentDate}" pattern="yyyy"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Nơi xảy ra tai nạn</label>
+
+                                    <div class="col-sm-8">
+                                        <div class="text-value">${compensation.accidentPlace}</div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Cơ quan CA giải quyết</label>
+
+                                    <div class="col-sm-8">
+                                        <div class="text-value">${compensation.controlDepartment}</div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Diễn biến và nguyên nhân</label>
+
+                                    <div class="col-sm-8">
+                                        <div class="text-value">${compensation.description}</div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Thiệt hại về người</label>
+
+                                    <div class="col-sm-8">
+                                        <div class="text-value">${compensation.humanDamage}</div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Thiệt hại về tài sản</label>
+
+                                    <div class="col-sm-8">
+                                        <div class="text-value">${compensation.assetDamage}</div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Người làm chứng</label>
+
+                                    <div class="col-sm-8">
+                                        <div class="text-value">${compensation.observer}</div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Địa chỉ của người làm chứng</label>
+
+                                    <div class="col-sm-8">
+                                        <div class="text-value">${compensation.observerAddress}</div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Yêu cầu bồi thường</label>
+
+                                    <div class="col-sm-8">
+                                        <div class="text-value">
+                                            <c:choose>
+                                                <c:when test="${empty compensation.compensationNote}">
+                                                    <span class="empty-value">Không có</span>
+                                                </c:when>
+                                                <c:otherwise>${compensation.compensationNote}</c:otherwise>
+                                            </c:choose>
+                                        </div>
+                                    </div>
+                                </div>
+                                <%--<div class="form-group">--%>
+                                <%--<label class="col-sm-4 control-label">Biên bản của cơ quan CA</label>--%>
+
+                                <%--<div class="col-sm-6">--%>
+                                <%--<div class="text-value">--%>
+                                <%--<c:choose>--%>
+                                <%--<c:when test="${empty compensation.attachment}">--%>
+                                <%--<span class="empty-value">Không có</span>--%>
+                                <%--</c:when>--%>
+                                <%--<c:otherwise>--%>
+                                <%--<a href="${compensation.attachment}">--%>
+                                <%--Xem chi tiết--%>
+                                <%--</a>--%>
+                                <%--</c:otherwise>--%>
+                                <%--</c:choose>--%>
+                                <%--</div>--%>
+                                <%--</div>--%>
+                                <%--</div>--%>
+                            </c:otherwise>
+                        </c:choose>
+
                     </fieldset>
                     <br/>
                     <%--/Compensation information--%>

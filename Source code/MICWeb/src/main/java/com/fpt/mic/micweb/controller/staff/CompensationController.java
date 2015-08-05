@@ -19,6 +19,7 @@ import com.fpt.mic.micweb.utils.Constants;
 
 import javax.servlet.annotation.WebServlet;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -157,7 +158,24 @@ public class CompensationController extends AuthController {
 
     public ResponseObject postCreate(R r) {
         CreateCompensationDto dto = (CreateCompensationDto) r.ead.entity(CreateCompensationDto.class, "compensation");
-        List errors = r.ead.validate(dto);
+        List errors = new ArrayList();
+
+        // Custom validation for compensation method
+        if (dto.getInputMethod() == null || dto.getInputMethod().isEmpty()) {
+            errors.add("Vui lòng chọn phương thức nhập");
+        } else if (dto.getInputMethod().equals("input")) {
+            // If input, validate as normal
+            errors = r.ead.validate(dto);
+        } else if (dto.getInputMethod().equals("import")) {
+            // If import, only validate attachment
+            if (dto.getAttachment() == null || dto.getAttachment().isEmpty()) {
+                errors.add("Vui lòng chọn tập tin");
+            }
+        } else {
+            // No method
+            errors.add("Vui lòng chọn phương thức nhập");
+        }
+
 
         // If there is validation errors
         if (errors.size() > 0) {
