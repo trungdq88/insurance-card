@@ -298,7 +298,7 @@
                                     <input id="seatCapacity" name="contract:seatCapacity" class="form-control input-md"
                                            type="number" min="1" max="100"
                                            title="Vui lòng nhập số người cho phép chở!"
-                                           value="${submitted.seatCapacity}">
+                                           value="2" disabled>
                                     <span class="input-group-addon">người</span>
                                 </div>
                             </div>
