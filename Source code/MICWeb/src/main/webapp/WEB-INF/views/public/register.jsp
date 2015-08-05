@@ -337,7 +337,7 @@
                                                        min="1" max="100"
                                                        title="Số người từ 1-100!"
                                                        placeholder="Ví dụ: 2"
-                                                       value="${publicHomeFormDto.seatCapacity}">
+                                                       value="2" disabled>
                                             </div>
                                         </div>
                                     </div>

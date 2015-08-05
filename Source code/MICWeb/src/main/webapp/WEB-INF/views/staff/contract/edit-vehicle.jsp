@@ -176,7 +176,7 @@
                                            type="number" min="1" max="100"
                                            title="Vui lòng nhập số người cho phép chở!"
                                            <c:if test="${empty submitted}">value="${contract.seatCapacity}"</c:if>
-                                           <c:if test="${not empty submitted}">value="${submitted.seatCapacity}"</c:if>
+                                           <c:if test="${not empty submitted}">value="${submitted.seatCapacity}"</c:if> disabled
                                             >
                                     <span class="input-group-addon">người</span>
                                 </div>
