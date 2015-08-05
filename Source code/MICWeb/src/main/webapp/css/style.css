@@ -227,3 +227,6 @@ img#imgAttachment[src=""] {
     max-height: 300px;
     overflow: auto;
 }
+.text-bold {
+    font-weight: bold;
+}

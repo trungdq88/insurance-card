@@ -113,11 +113,13 @@ $(function () {
 function showUnread() {
     $('.notif-item').hide();
     $('[data-is-read=false]').show();
+    updateNotifs(false);
 }
 
 function showRead() {
     $('.notif-item').hide();
     $('[data-is-read=true]').show();
+    updateNotifs(true);
 }
 
 // Notification filter
@@ -130,3 +132,15 @@ $(function () {
     });
     showUnread();
 });
+
+function updateNotifs(isRead) {
+    if (!isRead) {
+        $('#view-unread-notifs').addClass('text-bold');
+        $('#view-read-notifs').removeClass('text-bold');
+    } else {
+        $('#view-unread-notifs').removeClass('text-bold');
+        $('#view-read-notifs').addClass('text-bold');
+    }
+    $('#view-unread-notifs span').html('(' + $('[data-is-read=false]').length + ')');
+    $('#view-read-notifs span').html('(' + $('[data-is-read=true]').length + ')');
+}

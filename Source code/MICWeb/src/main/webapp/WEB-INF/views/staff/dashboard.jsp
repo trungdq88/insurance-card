@@ -12,9 +12,15 @@
             <div class="col-lg-12">
                 <h3 class="page-header">Thông báo
                 <span class="pull-right small">
-                    <a href="#" id="view-unread-notifs">Chưa đọc</a>
+                    <a href="#" id="view-unread-notifs" onclick="updateNotifs(false)">
+                        Chưa đọc
+                        <span></span>
+                    </a>
                     |
-                    <a href="#" id="view-read-notifs">Đã đọc</a>
+                    <a href="#" id="view-read-notifs" onclick="updateNotifs(true)">
+                        Đã đọc
+                        <span></span>
+                    </a>
                 </span>
                 </h3>
             </div>
