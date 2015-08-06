@@ -15,9 +15,15 @@
                     Thông báo
 
                 <span class="pull-right small">
-                    <a href="#" id="view-unread-notifs">Chưa đọc</a>
+                    <a href="#" id="view-unread-notifs">
+                        Chưa đọc
+                        <span></span>
+                    </a>
                     |
-                    <a href="#" id="view-read-notifs">Đã đọc</a>
+                    <a href="#" id="view-read-notifs">
+                        Đã đọc
+                        <span></span>
+                    </a>
                 </span>
                 </h3>
             </div>
