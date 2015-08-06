@@ -90,6 +90,8 @@
                 <!-- Form to create new compensation -->
                 <form action="${pageContext.request.contextPath}/customer/compensation" method="post"
                       class="form-horizontal">
+                    <input type="hidden" name="compensation:inputMethod" value="input"/>
+
                     <fieldset>
                         <!-- Driver name & Phone number -->
                         <div class="form-group">

@@ -25,7 +25,7 @@ public class CreateCompensationDto {
     private String contractCode;
     @NotNull(message = "Ngày gởi yêu cầu không được để trống")
     private Timestamp createdDate;
-    @NotEmpty(message = "Mã hợp đồng không được để trống")
+    @NotEmpty(message = "Vui lòng chọn phương thức nhập")
     private String inputMethod;
     @NotEmpty(message = "Họ tên lái xe không được để trống")
     @Pattern(regexp = "^([^0-9`~!@#$%^&*,.<>;':/|{}()=_+-]+)$", message = "Họ tên lái xe không hợp lệ")
