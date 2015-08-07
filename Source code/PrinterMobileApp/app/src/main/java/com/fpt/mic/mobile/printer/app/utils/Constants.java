@@ -15,4 +15,12 @@ public class Constants {
         public static final String REQUEST_CANCEL = "Request cancel";
         public static final String CANCELLED = "Cancelled";
     }
+    public static class StatusColor {
+        public static final String PENDING = "#9B9B9B";
+        public static final String NO_CARD = "#337ab7";
+        public static final String READY = "#5cb85c";
+        public static final String EXPIRED = "#d9534f";
+        public static final String REQUEST_CANCEL = "#f0ad4e";
+        public static final String CANCELLED = "#4C4C4C";
+    }
 }

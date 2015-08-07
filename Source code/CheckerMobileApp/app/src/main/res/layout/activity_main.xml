@@ -1,5 +1,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:background="#fff"
     android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin" android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".MainActivity">
@@ -12,8 +13,8 @@
         android:scaleType="fitCenter"
         android:contentDescription="@string/guide"
         android:layout_centerHorizontal="true"
-        android:layout_above="@+id/txtCardID"
-        android:layout_below="@+id/textView" />
+        android:layout_below="@+id/textView"
+        android:layout_above="@+id/btnCheck" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -22,6 +23,7 @@
         android:text="@string/please_put_nfc_close_to_phone"
         android:id="@+id/textView"
         android:gravity="center"
+        android:textColor="#ff404040"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_marginLeft="30dp"
@@ -31,6 +33,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/txtCardID"
+        android:background="#ffe5f6ff"
+        android:padding="15dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:hint="@string/or_enter_card_id"
@@ -41,6 +45,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/check"
+        android:padding="15dp"
+        android:textColor="#ffffff"
+        android:background="#ff278df4"
         android:id="@+id/btnCheck"
         android:layout_alignBottom="@+id/txtCardID"
         android:layout_alignParentRight="true" />

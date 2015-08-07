@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.*;
 import com.fpt.mic.mobile.printer.app.R;
+import com.fpt.mic.mobile.printer.app.adapter.ResultAdapter;
 import com.fpt.mic.mobile.printer.app.business.ContractBusiness;
 import com.fpt.mic.mobile.printer.app.dto.ContractSearchResult;
 
@@ -20,12 +21,12 @@ import java.util.List;
  */
 public class MainActivity extends Activity {
     private ListView lstContracts;
-    ArrayAdapter<String> adapter;
-    List<String> values = new ArrayList<String>();
+    ResultAdapter adapter;
+    // List<String> values = new ArrayList<String>();
     TextView emptyView;
     View prgLoading;
     EditText txtKeyword;
-    private List<ContractSearchResult> searchContractResults;
+    private ArrayList<ContractSearchResult> searchContractResults;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,8 +40,8 @@ public class MainActivity extends Activity {
         txtKeyword = (EditText) findViewById(R.id.txtKeyword);
 
         // Setup list view
-        adapter = new ArrayAdapter<String>(
-                this, android.R.layout.simple_list_item_1, values);
+//        adapter = new ArrayAdapter<String>(
+//                this, android.R.layout.simple_list_item_1, values);
         lstContracts.setAdapter(adapter);
         lstContracts.setEmptyView(emptyView);
         lstContracts.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -96,14 +97,9 @@ public class MainActivity extends Activity {
 
         contractBusiness.searchContracts(keyword, new ContractBusiness.IOnSearchResult() {
             @Override
-            public void onSearchResult(List<ContractSearchResult> results) {
-                values = new ArrayList<String>();
+            public void onSearchResult(ArrayList<ContractSearchResult> results) {
+                // values = new ArrayList<String>();
                 searchContractResults = results;
-                for (ContractSearchResult result : results) {
-                    values.add(result.contractEntity.contractCode +
-                            " - " + result.customerEntity.name);
-                }
-
                 updateListView();
             }
         });
@@ -111,8 +107,9 @@ public class MainActivity extends Activity {
 
     private void updateListView() {
         // Load items to list view
-        adapter = new ArrayAdapter<String>(
-                MainActivity.this, android.R.layout.simple_list_item_1, values);
+//        adapter = new ArrayAdapter<String>(
+//                MainActivity.this, android.R.layout.simple_list_item_1, values);
+        adapter = new ResultAdapter(this, searchContractResults);
         lstContracts.setAdapter(adapter);
 
         // Handle visible
@@ -120,7 +117,7 @@ public class MainActivity extends Activity {
         prgLoading.setVisibility(View.GONE);
 
         // Tricky handle no result
-        if (values.size() == 0) {
+        if (searchContractResults.size() == 0) {
             if (txtKeyword.getText().toString().isEmpty()) {
                 emptyView.setText(getString(R.string.enter_keyword));
             } else {

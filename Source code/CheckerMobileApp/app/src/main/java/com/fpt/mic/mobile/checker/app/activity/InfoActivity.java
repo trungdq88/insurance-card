@@ -23,6 +23,7 @@ import java.util.Date;
  */
 public class InfoActivity extends Activity {
     TextView txtStatus;
+    TextView txtContractCode;
     TextView txtName;
     TextView txtAddress;
     TextView txtPhone;
@@ -48,6 +49,7 @@ public class InfoActivity extends Activity {
             }
         });
         txtStatus = (TextView) findViewById(R.id.txtStatus);
+        txtContractCode = (TextView) findViewById(R.id.txtContractCode);
         txtName = (TextView) findViewById(R.id.txtName);
         txtAddress = (TextView) findViewById(R.id.txtAddress);
         txtPhone = (TextView) findViewById(R.id.txtPhone);
@@ -116,6 +118,7 @@ public class InfoActivity extends Activity {
                 return;
         }
 
+        txtContractCode.setText(card.contractCode);
         txtName.setText(card.micContractByContractCode.micCustomerByCustomerCode.name);
         txtAddress.setText(card.micContractByContractCode.micCustomerByCustomerCode.address);
         txtPhone.setText(card.micContractByContractCode.micCustomerByCustomerCode.phone);

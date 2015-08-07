@@ -8,6 +8,7 @@ import com.fpt.mic.mobile.printer.app.ApiRequest.ApiRequest;
 import com.fpt.mic.mobile.printer.app.utils.Settings;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -26,7 +27,7 @@ public class ContractBusiness {
             @Override
             public void onResponse(String response) {
                 try {
-                    List<ContractSearchResult> results =
+                    ArrayList<ContractSearchResult> results =
                             mapper.readValue(response,
                                     new TypeReference<List<ContractSearchResult>>() {});
 
@@ -56,7 +57,7 @@ public class ContractBusiness {
     }
 
     public interface IOnSearchResult {
-        void onSearchResult(List<ContractSearchResult> results);
+        void onSearchResult(ArrayList<ContractSearchResult> results);
     }
     public interface IOnApiResult {
         void onApiResult(CardInstanceEntity result);

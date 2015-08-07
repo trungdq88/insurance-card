@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical"
     android:layout_width="match_parent" android:layout_height="match_parent"
+    android:background="#fff"
     android:padding="10dp">
 
     <TextView
@@ -66,7 +67,9 @@
                 android:text="2FD7A9875DFE23"
                 android:id="@+id/txtCardID"
                 android:maxLines="1"
-                android:ellipsize="end" />
+                android:ellipsize="end"
+                android:textColor="#ff278df4"
+                android:textStyle="bold" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -93,6 +96,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Quay lại trang đầu"
+        android:padding="15dp"
+        android:textColor="#ffffff"
+        android:background="#ff278df4"
+        android:layout_marginBottom="15dp"
         android:id="@+id/btnBack"
         android:layout_gravity="center_horizontal" />
 </LinearLayout>

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical"
+    android:background="#fff"
     android:layout_width="match_parent" android:layout_height="match_parent">
 
     <TextView
@@ -40,7 +41,7 @@
                     android:layout_width="80dp"
                     android:layout_height="80dp"
                     android:id="@+id/imageView2"
-                    android:src="@drawable/ic_launcher" />
+                    android:src="@drawable/logo" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -64,6 +65,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="fill_parent"
                     android:paddingRight="20dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="Mã hợp đồng:"
+                        android:id="@+id/textView12"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -122,8 +131,9 @@
                         android:textStyle="bold" />
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:gravity="right"
                         android:textAppearance="?android:attr/textAppearanceMedium"
                         android:text="Thời hạn từ:"
                         android:id="@+id/textView10"
@@ -156,7 +166,21 @@
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceMedium"
                         android:text=""
+                        android:textColor="#ff278df4"
+                        android:textStyle="bold"
+                        android:id="@+id/txtContractCode"
+                        android:theme="@style/text_highlight"
+                        android:maxLines="1"
+                        android:ellipsize="end" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text=""
                         android:id="@+id/txtName"
+                        android:textColor="#ff278df4"
+                        android:textStyle="bold"
                         android:theme="@style/text_highlight"
                         android:maxLines="1"
                         android:ellipsize="end" />
@@ -215,6 +239,8 @@
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceMedium"
                         android:id="@+id/txtStartDate"
+                        android:textColor="#ff278df4"
+                        android:textStyle="bold"
                         android:theme="@style/text_highlight"
                         android:maxLines="1"
                         android:ellipsize="end" />
@@ -224,6 +250,8 @@
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceMedium"
                         android:id="@+id/txtExpiredDate"
+                        android:textColor="#ff278df4"
+                        android:textStyle="bold"
                         android:theme="@style/text_highlight"
                         android:maxLines="1"
                         android:ellipsize="end" />
@@ -232,6 +260,8 @@
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceMedium"
                         android:id="@+id/txtCardId"
+                        android:textColor="#ff278df4"
+                        android:textStyle="bold"
                         android:theme="@style/text_highlight"
                         android:maxLines="1"
                         android:ellipsize="end" />

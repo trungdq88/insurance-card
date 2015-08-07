@@ -2,6 +2,7 @@ package com.fpt.mic.mobile.printer.app.activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -12,12 +13,17 @@ import com.fpt.mic.mobile.printer.app.entity.ContractEntity;
 import com.fpt.mic.mobile.printer.app.utils.Constants;
 import com.fpt.mic.mobile.printer.app.utils.DialogUtils;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * Created by dinhquangtrung on 5/29/15.
  */
 public class InfoActivity extends Activity {
     ContractSearchResult contractSearchResult;
 
+    TextView txtContractCode;
+    TextView txtStatus;
     TextView txtName;
     TextView txtAddress;
     TextView txtPhone;
@@ -27,13 +33,14 @@ public class InfoActivity extends Activity {
     TextView txtType;
     TextView txtStartDate;
     TextView txtExpiredDate;
-    TextView txtContractFee;
-    TextView txtFeeDate;
-    TextView txtContractStaff;
-    TextView txtDatePublish;
-    TextView txtHotline;
+//    TextView txtContractFee;
+//    TextView txtFeeDate;
+//    TextView txtContractStaff;
+//    TextView txtDatePublish;
+//    TextView txtHotline;
     private int SELF_CLOSE = 1;
 
+    SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +48,8 @@ public class InfoActivity extends Activity {
 
         contractSearchResult = getIntent().getParcelableExtra("contract");
 
+        txtContractCode = (TextView) findViewById(R.id.txtContractCode);
+        txtStatus = (TextView) findViewById(R.id.txtStatus);
         txtName = (TextView) findViewById(R.id.txtName);
         txtAddress = (TextView) findViewById(R.id.txtAddress);
         txtPhone = (TextView) findViewById(R.id.txtPhone);
@@ -50,12 +59,15 @@ public class InfoActivity extends Activity {
         txtType = (TextView) findViewById(R.id.txtType);
         txtStartDate = (TextView) findViewById(R.id.txtStartDate);
         txtExpiredDate = (TextView) findViewById(R.id.txtExpiredDate);
-        txtContractFee = (TextView) findViewById(R.id.txtContractFee);
-        txtFeeDate = (TextView) findViewById(R.id.txtFeeDate);
-        txtContractStaff = (TextView) findViewById(R.id.txtContractStaff);
-        txtDatePublish = (TextView) findViewById(R.id.txtDatePublish);
-        txtHotline = (TextView) findViewById(R.id.txtHotline);
+//        txtContractFee = (TextView) findViewById(R.id.txtContractFee);
+//        txtFeeDate = (TextView) findViewById(R.id.txtFeeDate);
+//        txtContractStaff = (TextView) findViewById(R.id.txtContractStaff);
+//        txtDatePublish = (TextView) findViewById(R.id.txtDatePublish);
+//        txtHotline = (TextView) findViewById(R.id.txtHotline);
 
+        txtContractCode.setText(contractSearchResult.contractEntity.contractCode);
+        // txtStatus.setText(contractSearchResult.contractEntity.status);
+        setStatus();
         txtName.setText(contractSearchResult.customerEntity.name);
         txtAddress.setText(contractSearchResult.customerEntity.address);
         txtPhone.setText(contractSearchResult.customerEntity.phone);
@@ -63,9 +75,9 @@ public class InfoActivity extends Activity {
         txtChassis.setText(contractSearchResult.contractEntity.chassis);
         txtEngine.setText(contractSearchResult.contractEntity.engine);
         txtType.setText(contractSearchResult.contractEntity.vehicleType);
-        txtStartDate.setText(contractSearchResult.contractEntity.startDate.toString());
-        txtExpiredDate.setText(contractSearchResult.contractEntity.expiredDate.toString());
-        txtContractFee.setText(contractSearchResult.contractEntity.contractFee + " đồng");
+        txtStartDate.setText(format.format(new Date(contractSearchResult.contractEntity.startDate.getTime())));
+        txtExpiredDate.setText(format.format(new Date(contractSearchResult.contractEntity.expiredDate.getTime())));
+//        txtContractFee.setText(contractSearchResult.contractEntity.contractFee + " đồng");
         // txtFeeDate.setText(contractSearchResult.contractEntity.);
         // txtContractStaff.setText(contractSearchResult.);
         // txtDatePublish.setText(contractSearchResult.contractEntity.);
@@ -85,6 +97,30 @@ public class InfoActivity extends Activity {
                 return true;
             }
         });
+    }
+
+    private void setStatus() {
+        String status = contractSearchResult.contractEntity.status;
+        if (status.equals(Constants.ContractStatus.PENDING)) {
+            txtStatus.setText("Chưa kích hoạt");
+            txtStatus.setBackgroundColor(Color.parseColor(Constants.StatusColor.PENDING));
+        } else if (status.equals(Constants.ContractStatus.NO_CARD)) {
+            txtStatus.setText("Chưa có thẻ");
+            txtStatus.setBackgroundColor(Color.parseColor(Constants.StatusColor.NO_CARD));
+        } else if (status.equals(Constants.ContractStatus.READY)) {
+            txtStatus.setText("Sẵn sàng");
+            txtStatus.setBackgroundColor(Color.parseColor(Constants.StatusColor.READY));
+        } else if (status.equals(Constants.ContractStatus.REQUEST_CANCEL)) {
+            txtStatus.setText("Yêu cầu hủy");
+            txtStatus.setBackgroundColor(Color.parseColor(Constants.StatusColor.REQUEST_CANCEL));
+        } else if (status.equals(Constants.ContractStatus.EXPIRED)) {
+            txtStatus.setText("Hết hạn");
+            txtStatus.setBackgroundColor(Color.parseColor(Constants.StatusColor.EXPIRED));
+        } else if (status.equals(Constants.ContractStatus.CANCELLED)) {
+            txtStatus.setText("Đã hủy");
+            txtStatus.setBackgroundColor(Color.parseColor(Constants.StatusColor.CANCELLED));
+        }
+
     }
 
     private void writeToCard(final boolean ignoreNFC) {

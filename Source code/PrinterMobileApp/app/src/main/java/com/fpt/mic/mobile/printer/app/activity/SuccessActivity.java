@@ -7,11 +7,15 @@ import android.widget.TextView;
 import com.fpt.mic.mobile.printer.app.R;
 import com.fpt.mic.mobile.printer.app.entity.CardInstanceEntity;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * FPT University - Capstone Project - Summer 2015 - PrinterMobileApp
  * Created by dinhquangtrung on 6/8/15.
  */
 public class SuccessActivity extends Activity {
+    SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,7 +29,7 @@ public class SuccessActivity extends Activity {
 
         txtCardID.setText(cardEntity.cardId);
         txtContractCode.setText(cardEntity.contractCode);
-        txtActivatedDate.setText(cardEntity.activatedDate.toString());
+        txtActivatedDate.setText(format.format(new Date(cardEntity.activatedDate.getTime())));
 
         findViewById(R.id.btnBack).setOnClickListener(new View.OnClickListener() {
             @Override
