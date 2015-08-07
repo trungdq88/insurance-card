@@ -19,6 +19,7 @@
 
                 <c:if test="${not empty validateErrors}">
                     <input type="hidden" id="modify-reason" value="${contract.modifyReason}"/>
+
                     <div class="text-danger">
                         <ul>
                             <c:forEach var="error" items="${validateErrors}">
@@ -45,7 +46,7 @@
                                        title="Vui lòng nhập biển số xe" placeholder="Ví dụ: 78Y9-15383"
                                        <c:if test="${empty submitted}">value="${contract.plate}"</c:if>
                                        <c:if test="${not empty submitted}">value="${submitted.plate}"</c:if>
-                                       >
+                                        >
                             </div>
 
                             <label class="col-sm-2 control-label" for="brand">Nhãn hiệu *</label>
@@ -89,19 +90,16 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label" for="capacity">Dung tích *</label>
 
-                            <div class="col-sm-3">
-                                <div class="input-group">
-                                    <input id="capacity" name="edit:capacity" class="form-control input-md"
-                                           type="text" required minlength="2" maxlength="20"
-                                           title="Vui lòng nhập dung tích xe!"
-                                           <c:if test="${empty submitted}">value="${contract.capacity}"</c:if>
-                                           <c:if test="${not empty submitted}">value="${submitted.capacity}"</c:if>
-                                            >
-                                    <span class="input-group-addon">cc</span>
-                                </div>
+                            <div class="col-sm-2">
+                                <input id="capacity" name="edit:capacity" class="form-control input-md"
+                                       type="text" required minlength="2" maxlength="20"
+                                       title="Vui lòng nhập dung tích xe!"
+                                       <c:if test="${empty submitted}">value="${contract.capacity}"</c:if>
+                                       <c:if test="${not empty submitted}">value="${submitted.capacity}"</c:if>
+                                        >
                             </div>
 
-                            <label class="col-sm-2 control-label" for="color">Màu sơn</label>
+                            <label class="col-sm-3 control-label" for="color">Màu sơn</label>
 
                             <div class="col-sm-3">
                                 <input id="color" name="edit:color" class="form-control input-md"
@@ -144,8 +142,7 @@
 
                             <div class="col-sm-2">
                                 <input id="yearOfMan" name="edit:yearOfManufacture" class="form-control input-md"
-                                       type="number" min="1900" max="2200"
-                                       title="Vui lòng nhập năm sản xuất xe!"
+                                       type="number" min="1900" title="Vui lòng nhập năm sản xuất xe!"
                                        <c:if test="${empty submitted}">value="${contract.yearOfManufacture}"</c:if>
                                        <c:if test="${not empty submitted}">value="${submitted.yearOfManufacture}"</c:if>
                                         >
@@ -174,9 +171,9 @@
                                 <div class="input-group">
                                     <input id="seatCapacity" name="edit:seatCapacity" class="form-control input-md"
                                            type="number" min="1" max="100"
-                                           title="Vui lòng nhập số người cho phép chở!"
+                                           title="Vui lòng nhập số người được phép chở!"
                                            <c:if test="${empty submitted}">value="${contract.seatCapacity}"</c:if>
-                                           <c:if test="${not empty submitted}">value="${submitted.seatCapacity}"</c:if> disabled
+                                           <c:if test="${not empty submitted}">value="${submitted.seatCapacity}"</c:if>
                                             >
                                     <span class="input-group-addon">người</span>
                                 </div>
@@ -208,5 +205,11 @@
     <!-- /.page-wrapper -->
 </div>
 <!-- /#wrapper -->
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        document.getElementById("yearOfMan").max = new Date().getFullYear();
+    });
+</script>
 
 <%@ include file="../_shared/footer.jsp" %>

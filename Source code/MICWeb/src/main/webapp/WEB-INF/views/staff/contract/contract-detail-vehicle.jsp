@@ -45,7 +45,7 @@
         <label class="col-sm-3 control-label">Dung tích</label>
 
         <div class="col-sm-3">
-            <div class="text-value">${contract.capacity} cc</div>
+            <div class="text-value">${contract.capacity}</div>
         </div>
 
         <label class="col-sm-2 control-label">Màu sơn</label>
