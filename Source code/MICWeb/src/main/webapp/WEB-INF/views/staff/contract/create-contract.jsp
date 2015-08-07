@@ -224,17 +224,14 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label" for="capacity">Dung tích *</label>
 
-                            <div class="col-sm-3">
-                                <div class="input-group">
-                                    <input id="capacity" name="contract:capacity" class="form-control input-md"
-                                           type="text" required minlength="2" maxlength="20"
-                                           title="Vui lòng nhập dung tích xe!"
-                                           value="${submitted.capacity}">
-                                    <span class="input-group-addon">cc</span>
-                                </div>
+                            <div class="col-sm-2">
+                                <input id="capacity" name="contract:capacity" class="form-control input-md"
+                                       type="text" required minlength="2" maxlength="20"
+                                       title="Vui lòng nhập dung tích xe!"
+                                       value="${submitted.capacity}">
                             </div>
 
-                            <label class="col-sm-2 control-label" for="color">Màu sơn</label>
+                            <label class="col-sm-3 control-label" for="color">Màu sơn</label>
 
                             <div class="col-sm-3">
                                 <input id="color" name="contract:color" class="form-control input-md"
@@ -271,8 +268,7 @@
 
                             <div class="col-sm-2">
                                 <input id="yearOfMan" name="contract:yearOfManufacture" class="form-control input-md"
-                                       type="number" min="1900" max="2200"
-                                       title="Vui lòng nhập năm sản xuất xe!"
+                                       type="number" min="1900" title="Vui lòng nhập năm sản xuất xe!"
                                        value="${submitted.yearOfManufacture}">
                             </div>
 
@@ -297,8 +293,8 @@
                                 <div class="input-group">
                                     <input id="seatCapacity" name="contract:seatCapacity" class="form-control input-md"
                                            type="number" min="1" max="100"
-                                           title="Vui lòng nhập số người cho phép chở!"
-                                           value="2" disabled>
+                                           title="Vui lòng nhập số người được phép chở!"
+                                           value="2" readonly>
                                     <span class="input-group-addon">người</span>
                                 </div>
                             </div>
@@ -412,6 +408,7 @@
         }
         document.getElementById("paidDate").min = '${config.paidDateMin}';
         document.getElementById("paidDate").max = '${config.paidDateMax}';
+        document.getElementById("yearOfMan").max = new Date().getFullYear();
 
         $('#contractType').change(function () {
             var pricePerYear = parseFloat(this.options[this.selectedIndex].innerHTML);
