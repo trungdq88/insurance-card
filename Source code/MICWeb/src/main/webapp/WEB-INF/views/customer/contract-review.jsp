@@ -294,17 +294,20 @@
                             <div class="col-sm-2">
                                 <input id="txtSeatCapacity" name="contract:seatCapacity"
                                        type="hidden"
-                                       value="${submitted.seatCapacity}">
+                                       <%--value="${submitted.seatCapacity}"--%>
+                                        value="2"
+                                        >
 
                                 <div class="text-value">
-                                    <c:choose>
-                                        <c:when test="${empty submitted.seatCapacity}">
-                                            <span class="empty-value">Không có</span>
-                                        </c:when>
-                                        <c:otherwise>
-                                            ${submitted.seatCapacity}
-                                        </c:otherwise>
-                                    </c:choose>
+                                    <%--<c:choose>--%>
+                                        <%--<c:when test="${empty submitted.seatCapacity}">--%>
+                                            <%--<span class="empty-value">Không có</span>--%>
+                                        <%--</c:when>--%>
+                                        <%--<c:otherwise>--%>
+                                            <%--${submitted.seatCapacity}--%>
+                                        <%--</c:otherwise>--%>
+                                    <%--</c:choose>--%>
+                                    2
                                 </div>
                             </div>
                         </div>
