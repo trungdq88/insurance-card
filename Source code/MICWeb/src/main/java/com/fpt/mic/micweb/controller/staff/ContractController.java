@@ -300,6 +300,22 @@ public class ContractController extends AuthController {
     public ResponseObject postRenew(R r) {
         // Get renew contract information
         RenewContractDto dto = (RenewContractDto) r.ead.entity(RenewContractDto.class, "renew");
+        ContractBusiness contractBusiness = new ContractBusiness();
+        String contractCode = dto.getContractCode();
+        // if contract expired, check if there is any valid contract with this plate number
+        if(contractBusiness.getContract(contractCode).getStatus().equalsIgnoreCase(Constants.ContractStatus.EXPIRED)) {
+            if(contractBusiness.isExistByPlate(contractBusiness.getContract(contractCode).getPlate())) {
+                String activeContractCode = contractBusiness.getActiveContractByPlate(contractBusiness.getContract(contractCode).getPlate()).getContractCode();
+                String activeContractLink = r.equest.getScheme() +
+                        "://" + r.equest.getServerName() +
+                        ":" + r.equest.getServerPort() +
+                        r.equest.getContextPath() +
+                        "/staff/contract?action=detail&code="+activeContractCode;
+                r.equest.setAttribute("result", "Đang có hợp đồng hiệu lực với biển số này: <a href=\"" + activeContractLink + "\">"+activeContractCode+" </a>. Không thể gia hạn!");
+                r.equest.setAttribute("contractCode", contractCode);
+                return new JspPage("customer/message.jsp");
+            }
+        }
 
         // Get concurrency data
         Timestamp lastModified = (Timestamp) r.equest.getSession(true).getAttribute(

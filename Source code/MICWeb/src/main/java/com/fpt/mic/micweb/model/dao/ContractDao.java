@@ -127,14 +127,13 @@ public class ContractDao extends IncrementDao<ContractEntity, String> {
         EntityManager entity = factory.createEntityManager();
         String hql = "SELECT co FROM ContractEntity AS co " +
                 "WHERE co.plate = :plate " +
-                "AND (co.status = :ready OR co.status = :noCard OR co.status = :requestCancel OR co.status = :expired" +
+                "AND (co.status = :ready OR co.status = :noCard OR co.status = :requestCancel" +
                 " OR (co.status = :pending AND co.startDate <> co.expiredDate))";
         Query query = entity.createQuery(hql);
         query.setParameter("plate", plate);
         query.setParameter("ready", Constants.ContractStatus.READY);
         query.setParameter("noCard", Constants.ContractStatus.NO_CARD);
         query.setParameter("requestCancel", Constants.ContractStatus.REQUEST_CANCEL);
-        query.setParameter("expired", Constants.ContractStatus.EXPIRED);
         query.setParameter("pending", Constants.ContractStatus.PENDING);
         ContractEntity result;
         try {
@@ -204,14 +203,13 @@ public class ContractDao extends IncrementDao<ContractEntity, String> {
         EntityManager entityManager = factory.createEntityManager();
         String hql = "SELECT co FROM ContractEntity AS co " +
                 "WHERE co.plate = :plate " +
-                "AND (co.status = :ready OR co.status = :noCard OR co.status = :requestCancel OR co.status = :expired" +
+                "AND (co.status = :ready OR co.status = :noCard OR co.status = :requestCancel" +
                 " OR (co.status = :pending AND co.startDate <> co.expiredDate))";
         Query query = entityManager.createQuery(hql);
         query.setParameter("plate", plate);
         query.setParameter("ready", Constants.ContractStatus.READY);
         query.setParameter("noCard", Constants.ContractStatus.NO_CARD);
         query.setParameter("requestCancel", Constants.ContractStatus.REQUEST_CANCEL);
-        query.setParameter("expired", Constants.ContractStatus.EXPIRED);
         query.setParameter("pending", Constants.ContractStatus.PENDING);
         if (query.getResultList().size() == 0) {
             entityManager.close();

@@ -329,10 +329,25 @@ public class ContractController extends AuthController {
     public ResponseObject postRenewContract(R r) {
         //get parameter
         String contractCode = r.equest.getParameter("txtContractCode");
+        ContractBusiness contractBusiness = new ContractBusiness();
+        // if contract expired, check if there is any valid contract with this plate number
+        if(contractBusiness.getContract(contractCode).getStatus().equalsIgnoreCase(Constants.ContractStatus.EXPIRED)) {
+            if(contractBusiness.isExistByPlate(contractBusiness.getContract(contractCode).getPlate())) {
+                String activeContractCode = contractBusiness.getActiveContractByPlate(contractBusiness.getContract(contractCode).getPlate()).getContractCode();
+                String activeContractLink = r.equest.getScheme() +
+                        "://" + r.equest.getServerName() +
+                        ":" + r.equest.getServerPort() +
+                        r.equest.getContextPath() +
+                        "/customer/contract?action=detail&code="+activeContractCode;
+                r.equest.setAttribute("result", "Đang có hợp đồng hiệu lực với biển số này: <a href=\"" + activeContractLink + "\">"+activeContractCode+" </a>. Không thể gia hạn!");
+                r.equest.setAttribute("contractCode", contractCode);
+                return new JspPage("customer/message.jsp");
+            }
+        }
+
         ConfigUtils configUtils = new ConfigUtils();
 
         // Validate: check if the remaining days is greater than 2 months
-        ContractBusiness contractBusiness = new ContractBusiness();
         if (!contractBusiness.isRenewable(contractCode)) {
             return showCustomError(r, contractCode, contractBusiness, "Không thể gia hạn hợp đồng còn giá trị trên "
                     + configUtils.getContractRenewLimit() + " ngày");
