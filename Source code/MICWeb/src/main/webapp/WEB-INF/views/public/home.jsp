@@ -1,6 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="java.util.Date" %>
-<%@ page import="java.sql.Timestamp" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql" %>
 <!DOCTYPE html>
@@ -51,41 +50,41 @@
             <ul class="nav navbar-nav navbar-right">
                 <li>
                     <form action="${pageContext.request.contextPath}/user" method="post">
-                    <table id="login-box">
-                        <tr>
-                            <td class="text-left" style="padding-left: 16px">
-                                Mã khách hàng/email
-                            </td>
-                            <td class="text-left" style="padding-left: 16px">
-                                Mật Khẩu
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="col-md-5">
-                                <input type="text" name="login:emailorcode" class="form-control"
-                                       placeholder=""
-                                       required autofocus title="Vui lòng nhập email hoặc mã khách hàng">
-                            </td>
-                            <td class="col-md-5 ">
-                                <input type="password" name="login:password" class="form-control"
-                                       required title="Vui lòng nhập mật khẩu">
-                            </td>
-                            <td>
-                                <input type="hidden" name="login:redirect" value="/customer"/>
-                                <input type="hidden" name="login:role" value="customer"/>
-                                <input type="hidden" name="action" value="login"/>
-                                <button type="submit" name="btnLogin" class="btn btn-success">Đăng nhập</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="text-left" style="padding-left: 16px">
+                        <table id="login-box">
+                            <tr>
+                                <td class="text-left" style="padding-left: 16px">
+                                    Mã khách hàng/email
+                                </td>
+                                <td class="text-left" style="padding-left: 16px">
+                                    Mật Khẩu
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="col-md-5">
+                                    <input type="text" name="login:emailorcode" class="form-control"
+                                           placeholder=""
+                                           required autofocus title="Vui lòng nhập email hoặc mã khách hàng">
+                                </td>
+                                <td class="col-md-5 ">
+                                    <input type="password" name="login:password" class="form-control"
+                                           required title="Vui lòng nhập mật khẩu">
+                                </td>
+                                <td>
+                                    <input type="hidden" name="login:redirect" value="/customer"/>
+                                    <input type="hidden" name="login:role" value="customer"/>
+                                    <input type="hidden" name="action" value="login"/>
+                                    <button type="submit" name="btnLogin" class="btn btn-success">Đăng nhập</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-left" style="padding-left: 16px">
 
-                            </td>
-                            <td class="text-left" style="padding-left: 16px;">
-                                <a href="#" style="color: white">Quên Mật Khẩu?</a>
-                            </td>
-                        </tr>
-                    </table>
+                                </td>
+                                <td class="text-left" style="padding-left: 16px;">
+                                    <a href="#" style="color: white">Quên Mật Khẩu?</a>
+                                </td>
+                            </tr>
+                        </table>
                     </form>
                 </li>
             </ul>
@@ -111,16 +110,16 @@
     <div u="slides" style="cursor: move; position: absolute; left: 0; top: 0; width: 600px; height: 150px;
             overflow: hidden;">
         <div>
-            <a u=image href="#"><img src="${pageContext.request.contextPath}/img/landscape/01.jpg" /></a>
+            <a u=image href="#"><img src="${pageContext.request.contextPath}/img/landscape/01.jpg"/></a>
         </div>
         <div>
-            <a u=image href="#"><img src="${pageContext.request.contextPath}/img/landscape/02.jpg" /></a>
+            <a u=image href="#"><img src="${pageContext.request.contextPath}/img/landscape/02.jpg"/></a>
         </div>
         <div>
-            <a u=image href="#"><img src="${pageContext.request.contextPath}/img/landscape/03.jpg" /></a>
+            <a u=image href="#"><img src="${pageContext.request.contextPath}/img/landscape/03.jpg"/></a>
         </div>
         <div>
-            <a u=image href="#"><img src="${pageContext.request.contextPath}/img/landscape/05.jpg" /></a>
+            <a u=image href="#"><img src="${pageContext.request.contextPath}/img/landscape/05.jpg"/></a>
         </div>
     </div>
     <!--#region Bullet Navigator Skin Begin -->
@@ -258,31 +257,32 @@
                         </div>
                         <div class="form-group  col-md-7">
                             <label>Hình Thức Bảo Hiểm *</label>
-                            <c:set var="selectedId" value="${submitted.contractType}" ></c:set>
-                            <select required class="form-control" name="register:contractType" id="ddlContractType" onchange="{
-                                var fee = parseFloat(this.options[this.selectedIndex].innerHTML);
-                                    var contractDefaultTerm = parseFloat('${contractDefaultTerm}');
-                                    var realFee = fee * (contractDefaultTerm/12);
-                                    if (realFee % 1000 != 0) {
-                                    realFee = realFee - (realFee % 1000) + 1000;
-                                    }
-                                    $('#txtFeeInput').val(realFee);
+                            <c:set var="selectedId" value="${submitted.contractType}"></c:set>
+                            <select required class="form-control" name="register:contractType" id="ddlContractType"
+                                    onchange="{
+                                            var fee = parseFloat(this.options[this.selectedIndex].innerHTML);
+                                            var contractDefaultTerm = parseFloat('${contractDefaultTerm}');
+                                            var realFee = fee * (contractDefaultTerm/12);
+                                            if (realFee % 1000 != 0) {
+                                            realFee = realFee - (realFee % 1000) + 1000;
+                                            }
+                                            $('#txtFeeInput').val(realFee);
 
-                                realFee = realFee.formatMoney(0,'.','.');
-                                $('#txtFee1').text(realFee);
+                                            realFee = realFee.formatMoney(0,'.','.');
+                                            $('#txtFee1').text(realFee);
 
-                            }" >
+                                            }">
                                 <c:forEach var="row" items="${listContractType}">
                                     <option <c:if test="${row.id == selectedId}">
                                         selected="selected" </c:if>
                                             label="<c:out value="${row.name}"/>" value="<c:out value="${row.id}"/>">
-                                        <c:out value="${row.pricePerYear}" /> </option>
+                                        <c:out value="${row.pricePerYear}"/></option>
                                 </c:forEach>
                             </select>
 
                         </div>
                     </div>
-                    <div class="form-group  col-md-12">
+                    <div class="form-group  col-md-6">
                         <p class="form-control-static">
                             <label>Thời hạn:</label>
                             ${contractDefaultTerm} tháng kể từ khi cấp
@@ -293,10 +293,31 @@
                             <b style="color: red"><span id="txtFee1"></span> VNĐ
                             </b>
 
-                            <input type="hidden" id="txtFeeInput" name="register:contractFee" value="${submitted.contractFee}" />
+                            <input type="hidden" id="txtFeeInput" name="register:contractFee"
+                                   value="${submitted.contractFee}"/>
                         </p>
                         <input type="hidden" name="action" value="register"/>
-                        <input type="submit" id="btnNext" name="btnNext" class="btn btn-primary btn-lg" value="Tiếp theo"/>
+                        <input type="submit" id="btnNext" name="btnNext" class="btn btn-primary btn-lg"
+                               value="Tiếp theo"/>
+                    </div>
+
+                    <div class="form-group  col-md-6">
+                        <label>Câu hỏi bảo mật *</label>
+                        <div>
+                        <span style="    color: black;
+    font-size: 26px;
+    display: inline-block;
+    height: 40px;
+    padding-top: 5px;
+    vertical-align: middle;">
+                            <span id="firstNumber"></span> +
+                            <span id="secondNumber"></span> = </span>
+                            <input style="display: inline-block;width: 100px;"
+                                     required type="number" name="register:captchaTotalNumber"
+                                     title="Vui lòng trả lời câu hỏi bảo mật"
+                                     class="form-control"
+                            />
+                        </div>
                     </div>
                     <input type="hidden" name="register:plate">
                     <input type="hidden" name="register:brand">
@@ -309,6 +330,18 @@
                     <input type="hidden" name="register:yearOfMan">
                     <input type="hidden" name="register:weight">
                     <input type="hidden" name="register:seatCapacity">
+                    <input id="firstNumberInput" type="hidden" name="register:captchaFirstNumber">
+                    <input id="secondNumberInput" type="hidden" name="register:captchaSecondNumber">
+                    <script>
+                        $(function () {
+                            var f = Math.round(Math.random() * 10);
+                            var s = Math.round(Math.random() * 10);
+                            $('#firstNumber').html(f);
+                            $('#secondNumber').html(s);
+                            $('#firstNumberInput').val(f);
+                            $('#secondNumberInput').val(s);
+                        })
+                    </script>
                 </form>
 
                 <br/>
@@ -333,7 +366,7 @@
 </div>
 
 <script language="javascript">
-    Number.prototype.formatMoney = function(c, d, t){
+    Number.prototype.formatMoney = function (c, d, t) {
         var n = this,
                 c = isNaN(c = Math.abs(c)) ? 2 : c,
                 d = d == undefined ? "." : d,
@@ -344,39 +377,42 @@
         return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
     };
 
-    function setInputDate(_id){
+    function setInputDate(_id) {
         var _dat = document.querySelector(_id);
         var hoy = new Date(),
                 d = hoy.getDate(),
-                m = hoy.getMonth()+1,
+                m = hoy.getMonth() + 1,
                 y = hoy.getFullYear(),
                 data;
 
-        if(d < 10){
-            d = "0"+d;
-        };
-        if(m < 10){
-            m = "0"+m;
-        };
+        if (d < 10) {
+            d = "0" + d;
+        }
+        ;
+        if (m < 10) {
+            m = "0" + m;
+        }
+        ;
 
-        data = y+"-"+m+"-"+d;
+        data = y + "-" + m + "-" + d;
         console.log(data);
         _dat.value = data;
-    };
-    if($('#dateDefault').val() == "") {
+    }
+    ;
+    if ($('#dateDefault').val() == "") {
         setInputDate("#dateDefault");
     }
 
     if ($('#txtFeeInput').val() == "") {
         var fee = parseFloat('${listContractType[0].pricePerYear}');
         var contractDefaultTerm = parseFloat('${contractDefaultTerm}');
-        var realFee = fee * (contractDefaultTerm/12);
+        var realFee = fee * (contractDefaultTerm / 12);
         if (realFee % 1000 != 0) {
             realFee = realFee - (realFee % 1000) + 1000;
         }
         $('#txtFeeInput').val(realFee);
     }
-    $('#txtFee1').text(parseFloat($('#txtFeeInput').val()).formatMoney(0,'.','.'));
+    $('#txtFee1').text(parseFloat($('#txtFeeInput').val()).formatMoney(0, '.', '.'));
 
 </script>
 </body>

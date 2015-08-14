@@ -17,17 +17,17 @@ import java.util.Date;
  */
 public class PublicHomeFormDto {
     @NotEmpty(message = "Họ tên không được để trống")
-    @Pattern(regexp = "\\S[^0-9!@#$%^&*()+=~`]+",message = "Họ tên không hợp lệ")
+    @Pattern(regexp = "\\S[^0-9!@#$%^&*()+=~`]+", message = "Họ tên không hợp lệ")
     @Size(min = 3, max = 80, message = "Họ tên phải từ {min} đến {max} ký tự")
     private String name;
     @NotEmpty(message = "Email không được để trống")
-    @Pattern(regexp = "[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,3}$",message = "Email không hợp lệ")
+    @Pattern(regexp = "[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,3}$", message = "Email không hợp lệ")
     private String email;
     @NotEmpty(message = "Số điện thoại không được để trống")
-    @Pattern(regexp = "[0-9]+",message = "Số điện thoại không hợp lệ")
+    @Pattern(regexp = "[0-9]+", message = "Số điện thoại không hợp lệ")
     @Size(min = 8, max = 15, message = "Số điện thoại phải từ {min} đến {max} ký tự")
     private String phone;
-//    @Pattern(regexp = "[0-9]+",message = "Số CMND/Hộ chiếu không hợp lệ")
+    //    @Pattern(regexp = "[0-9]+",message = "Số CMND/Hộ chiếu không hợp lệ")
 //    @Size(min = 8, max = 15, message = "Số CMND/Hộ chiếu phải từ {min} đến {max} ký tự")
     private String personalId;
     @NotEmpty(message = "Địa chỉ không được để trống")
@@ -41,6 +41,10 @@ public class PublicHomeFormDto {
     @Range(min = 0, message = "Phí bảo hiểm phải lớn hơn {min}")
     private Float contractFee;
 
+    private Integer captchaFirstNumber;
+    private Integer captchaSecondNumber;
+    private Integer captchaTotalNumber;
+
     @AssertTrue(message = "Ngày bắt đầu phải kể từ ngày hôm nay trở đi")
     private boolean isValidStartDate() {
         if (startDate != null) {
@@ -49,6 +53,7 @@ public class PublicHomeFormDto {
         }
         return false;
     }
+
     @AssertTrue(message = "Ngày bắt đầu không được sau thời gian quy định")
     private boolean isValidStartDateMax() {
         if (startDate != null) {
@@ -60,21 +65,30 @@ public class PublicHomeFormDto {
     }
 
     @AssertTrue(message = "Số CMND/Hộ chiếu không hợp lệ")
-    public boolean isValidPersonalId(){
-        if ( personalId == null || personalId.isEmpty() ) {
+    public boolean isValidPersonalId() {
+        if (personalId == null || personalId.isEmpty()) {
             return true;
         } else {
-            if(personalId.length() > 7 && personalId.length() < 16) {
+            if (personalId.length() > 7 && personalId.length() < 16) {
                 java.util.regex.Pattern pattern = java.util.regex.Pattern.compile("[0-9]+");
                 return pattern.matcher(personalId).matches();
             }
             return false;
         }
     }
+
     @AssertTrue(message = "Email đã được đăng ký bởi người dùng khác")
-    public boolean isValidEmail(){
+    public boolean isValidEmail() {
         CustomerDao customerDao = new CustomerDao();
         return !customerDao.isExistByEmail(email);
+    }
+
+    @AssertTrue(message = "Trả lời câu hỏi bảo mật không chính xác")
+    public boolean isCaptchaValid() {
+        return captchaFirstNumber != null
+                && captchaSecondNumber != null
+                && captchaTotalNumber != null
+                && captchaFirstNumber + captchaSecondNumber == captchaTotalNumber;
     }
 
     private String plate;
@@ -178,7 +192,29 @@ public class PublicHomeFormDto {
         this.seatCapacity = seatCapacity;
     }
 
+    public Integer getCaptchaFirstNumber() {
+        return captchaFirstNumber;
+    }
 
+    public void setCaptchaFirstNumber(Integer captchaFirstNumber) {
+        this.captchaFirstNumber = captchaFirstNumber;
+    }
+
+    public Integer getCaptchaSecondNumber() {
+        return captchaSecondNumber;
+    }
+
+    public void setCaptchaSecondNumber(Integer captchaSecondNumber) {
+        this.captchaSecondNumber = captchaSecondNumber;
+    }
+
+    public Integer getCaptchaTotalNumber() {
+        return captchaTotalNumber;
+    }
+
+    public void setCaptchaTotalNumber(Integer captchaTotalNumber) {
+        this.captchaTotalNumber = captchaTotalNumber;
+    }
 
     public PublicHomeFormDto() {
     }
