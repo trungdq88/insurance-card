@@ -42,7 +42,7 @@
                                             <input type="hidden" id="amount"
                                                    value="${requestScope.result['PAYMENTREQUEST_0_AMT']}">
 
-                                            <p class="text-center"><b>Tổng tiền phải trả: </b><span id="amount1"></span> (VND)
+                                            <p class="text-center"><b>Tổng tiền phải trả: </b><span id="amount1"></span> VNĐ
                                             </p>
                                             <p class="lead">Xin lựa chọn phương thức thanh toán sau:</p>
                                         </div>
