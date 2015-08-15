@@ -299,7 +299,8 @@ public class ContractController extends AuthController {
                     ":" + r.equest.getServerPort() +
                     r.equest.getContextPath() +
                     "/customer/contract?action=detail&code="+activeContractCode;
-            r.equest.setAttribute("result", "Đang có hợp đồng hiệu lực với biển số này: <a href=\"" + activeContractLink + "\">"+activeContractCode+" </a>. Không thể thanh toán!");
+            r.equest.setAttribute("result", "Không thể thanh toán! Hợp đồng "+activeContractCode+" đang có hiệu lực với biển số này. " +
+                    "Vui lòng liên hệ nhân viên để biết thêm chi tiết.");
             r.equest.setAttribute("contractCode", contractCode);
             return new JspPage("customer/message.jsp");
         }
@@ -339,7 +340,8 @@ public class ContractController extends AuthController {
                         ":" + r.equest.getServerPort() +
                         r.equest.getContextPath() +
                         "/customer/contract?action=detail&code="+activeContractCode;
-                r.equest.setAttribute("result", "Đang có hợp đồng hiệu lực với biển số này: <a href=\"" + activeContractLink + "\">"+activeContractCode+" </a>. Không thể gia hạn!");
+                r.equest.setAttribute("result", "Không thể gia hạn! Hợp đồng "+activeContractCode+" đang có hiệu lực với biển số này. " +
+                        "Vui lòng liên hệ nhân viên để biết thêm chi tiết.");
                 r.equest.setAttribute("contractCode", contractCode);
                 return new JspPage("customer/message.jsp");
             }
