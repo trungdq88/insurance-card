@@ -25,6 +25,10 @@ public class EmailUtils {
     private static final String EMAIL_FROM = "no-reply@mic.vn";
     private static final String EMAIL_MAILER = "Công ty bảo hiểm MIC";
     public static boolean sendMail(String to, String subject, String content) {
+        // If this is a test mail, do not call send mail API.
+        if (to.contains("@test.vn")) {
+            return true;
+        }
         boolean response = false;
         try {
             Properties props = System.getProperties();
