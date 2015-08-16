@@ -354,9 +354,6 @@
 <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places"></script>
 
 <script type="text/javascript">
-    initialize1();
-    initialize2();
-    initialize3();
     $(document).ready(function () {
         $('#pickAttachment').click(function () {
             $('.filePicker').trigger("click");
@@ -390,6 +387,11 @@
                 $(this).removeClass('textColor');
             }
         });
+    });
+    $(document).ready(function () {
+        initialize1();
+        initialize2();
+        initialize3();
     });
 </script>
 <style type="text/css">
