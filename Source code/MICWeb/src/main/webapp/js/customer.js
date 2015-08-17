@@ -10,8 +10,14 @@ $(document).ready(function () {
 
 
     $('[data-toggle="tooltip"]').tooltip();
-    if ($('#isFirstLogin').val() == 0) {
-        $('#changePass').trigger("click");
+
+    if (window.name && window.name == "shown") {
+        // Already shown
+    } else {
+        if ($('#isFirstLogin').val() == 0) {
+            window.name = "shown";
+            $('#changePass').trigger("click");
+        }
     }
 
     $('.tranformCost').removeClass('hide');
@@ -181,6 +187,7 @@ $(document).ready(function () {
         var expiredDate = new Date(date);
         return Math.round((expiredDate.getTime() - refreshDate) / (oneDay));
     }
+
     //
     //
     ////DayDiff($('#expiredDate').val()) > 0 ? $('#dateAvailable').val("Còn hạn: " + Math.abs(DayDiff($('#expiredDate').val())) + ' ngày')
@@ -199,11 +206,11 @@ $(document).ready(function () {
     //    }
     //
     //}
-    $('#renewDefault').click(function(){
+    $('#renewDefault').click(function () {
         var contractTypeStatus = $('#contractTypeStatus').val();
-        if(contractTypeStatus != 1){
+        if (contractTypeStatus != 1) {
             $('#renewNotify').trigger("click");
-        }else {
+        } else {
             $('#renew').trigger("click");
         }
 
@@ -284,6 +291,7 @@ $(document).ready(function () {
         day = day.length > 1 ? day : '0' + day;
         return day + '/' + month + '/' + year;
     }
+
     function conertDate(date) {
         var myDate = new Date(date);
         var year = myDate.getFullYear();

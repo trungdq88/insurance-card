@@ -246,7 +246,6 @@
 <script type="text/javascript">
 
     $(document).ready(function () {
-        initialize();
         $('#cancel').click(function () {
             var cutomerCode = $('#customerCode').val();
             $.ajax({
@@ -300,6 +299,8 @@
             }
             $('#personalid').removeClass('hide');
         });
+
+        initialize();
     });
 </script>
 
