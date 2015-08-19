@@ -53,28 +53,32 @@
             </div>
         </div>
     </div>
-    <!-- Start date -->
-    <div class="form-group">
-        <label class="col-sm-4 control-label">Bắt đầu có hiệu lực từ</label>
 
-        <div class="col-sm-5">
-            <div class="text-value">
+    <c:if test="${!(contract.status eq 'Pending') or !(empty listPayment)}">
+        <!-- Start date -->
+        <div class="form-group">
+            <label class="col-sm-4 control-label">Bắt đầu có hiệu lực từ</label>
+
+            <div class="col-sm-5">
+                <div class="text-value">
                 ngày <fmt:formatDate value="${contract.startDate}" pattern="dd"/>
                 tháng <fmt:formatDate value="${contract.startDate}" pattern="MM"/>
                 năm <fmt:formatDate value="${contract.startDate}" pattern="yyyy"/>
+                </div>
             </div>
         </div>
-    </div>
-    <!-- Expired date -->
-    <div class="form-group">
-        <label class="col-sm-4 control-label">Thời điểm hết hiệu lực</label>
+        <!-- Expired date -->
+        <div class="form-group">
+            <label class="col-sm-4 control-label">Thời điểm hết hiệu lực</label>
 
-        <div class="col-sm-5">
-            <div class="text-value">
-                ngày <fmt:formatDate value="${contract.expiredDate}" pattern="dd"/>
-                tháng <fmt:formatDate value="${contract.expiredDate}" pattern="MM"/>
-                năm <fmt:formatDate value="${contract.expiredDate}" pattern="yyyy"/>
+            <div class="col-sm-5">
+                <div class="text-value">
+                    ngày <fmt:formatDate value="${contract.expiredDate}" pattern="dd"/>
+                    tháng <fmt:formatDate value="${contract.expiredDate}" pattern="MM"/>
+                    năm <fmt:formatDate value="${contract.expiredDate}" pattern="yyyy"/>
+                </div>
             </div>
         </div>
-    </div>
+
+    </c:if>
 </fieldset>

@@ -226,7 +226,6 @@
                                             <input type="hidden" name="txtNewStartDate" id="newStartDate"
                                                    value="${contract.expiredDate}"/>
 
-                                            <fmt:formatDate value="${contract.startDate}" pattern="dd/MM/yyyy"/>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -641,10 +640,18 @@
                                             </tr>
                                             <tr>
                                                 <td class="col-md-5">
-                                                    <label class="text-center">Ngày tham gia lúc</label>
+                                                    <label class="text-center">Ngày bắt đầu</label>
                                                 </td>
                                                 <td class="col-md-5 ">
-                                                    <fmt:formatDate value="${contract.startDate}" pattern="dd/MM/yyyy"/>
+
+                                                    <c:choose>
+                                                        <c:when test ="${contract.status.equalsIgnoreCase('Pending') && contract.startDate == contract.expiredDate}">
+                                                            (Chưa thanh toán)
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            <fmt:formatDate value="${contract.startDate}" pattern="dd/MM/yyyy"/>
+                                                        </c:otherwise>
+                                                    </c:choose>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -652,8 +659,15 @@
                                                     <label>Ngày hết hạn</label>
                                                 </td>
                                                 <td class="col-md-5 ">
-                                                    <fmt:formatDate value="${contract.expiredDate}"
-                                                                    pattern="dd/MM/yyyy"/>
+
+                                                    <c:choose>
+                                                        <c:when test ="${contract.status.equalsIgnoreCase('Pending') && contract.startDate == contract.expiredDate}">
+                                                            (Chưa thanh toán)
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            <fmt:formatDate value="${contract.expiredDate}" pattern="dd/MM/yyyy"/>
+                                                        </c:otherwise>
+                                                    </c:choose>
                                                 </td>
                                             </tr>
                                         </table>
