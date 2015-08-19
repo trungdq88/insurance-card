@@ -482,4 +482,14 @@ public class CustomerBusiness {
 
         return realFee;
     }
+
+    public List<PaymentEntity> getPaymentByContractCode(String contractCode) {
+        PaymentDao paymentDao = new PaymentDao();
+        return paymentDao.getPaymentByContractCode(contractCode);
+    }
+
+    public List<PaymentEntity> getRenewsByContractCode(String contractCode) {
+        PaymentDao paymentDao = new PaymentDao();
+        return paymentDao.getRenewsByContractCode(contractCode);
+    }
 }

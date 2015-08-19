@@ -184,9 +184,13 @@ public class ContractController extends AuthController {
         final String code = r.equest.getParameter("code");
         ContractEntity contract = customerBusiness.getContractDetail(code);
 
+
         if (contract == null || contract.getCustomerCode().compareToIgnoreCase(customerCode) != 0) {
             return new RedirectTo("/error/404");
         } else {
+            // Get contract payment
+            List<PaymentEntity> listRenew = customerBusiness.getRenewsByContractCode(contract.getContractCode());
+
             // Save last_modified value for concurrency check
             r.equest.getSession(true).setAttribute(
                     Constants.Session.CONCURRENCY + contract.getContractCode(),
@@ -235,6 +239,7 @@ public class ContractController extends AuthController {
             });
 
             r.equest.setAttribute("contract", contract);
+            r.equest.setAttribute("listRenew", listRenew);
             r.equest.setAttribute("newDate", customerBusiness.newDate(contract.getContractCode()));
             r.equest.setAttribute("countDateRemain", customerBusiness.countDateRemain(contract.getExpiredDate()));
             r.equest.setAttribute("messageContract", customerBusiness.messageContract(contract.getExpiredDate(), code));

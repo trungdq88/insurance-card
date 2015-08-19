@@ -635,7 +635,7 @@
                                                     <label>Mã hợp đồng</label>
                                                 </td>
                                                 <td class="col-md-5 ">
-                                                    ${contract.contractCode}
+                                                    <b>${contract.contractCode}</b>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -649,7 +649,9 @@
                                                             (Chưa thanh toán)
                                                         </c:when>
                                                         <c:otherwise>
-                                                            <fmt:formatDate value="${contract.startDate}" pattern="dd/MM/yyyy"/>
+                                                            ngày <fmt:formatDate value="${contract.startDate}" pattern="dd"/>
+                                                            tháng <fmt:formatDate value="${contract.startDate}" pattern="MM"/>
+                                                            năm <fmt:formatDate value="${contract.startDate}" pattern="yyyy"/>
                                                         </c:otherwise>
                                                     </c:choose>
                                                 </td>
@@ -665,11 +667,22 @@
                                                             (Chưa thanh toán)
                                                         </c:when>
                                                         <c:otherwise>
-                                                            <fmt:formatDate value="${contract.expiredDate}" pattern="dd/MM/yyyy"/>
+                                                            ngày <fmt:formatDate value="${contract.expiredDate}" pattern="dd"/>
+                                                            tháng <fmt:formatDate value="${contract.expiredDate}" pattern="MM"/>
+                                                            năm <fmt:formatDate value="${contract.expiredDate}" pattern="yyyy"/>
                                                         </c:otherwise>
+
                                                     </c:choose>
                                                 </td>
                                             </tr>
+                                            <c:if test="${listRenew.size() > 0}">
+                                                <tr>
+                                                    <td colspan="2">
+                                                <c:set var="lastDate" value="${listRenew.get(listRenew.size()-1).paidDate}"/>
+                                                (Đã gia hạn ${listRenew.size()} lần, lần cuối lúc <fmt:formatDate value="${lastDate}" pattern="dd/MM/yyyy"/> )
+                                                    </td>
+                                                </tr>
+                                            </c:if>
                                         </table>
                                     </td>
                                     <td class="col-md-5">

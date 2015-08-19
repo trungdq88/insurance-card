@@ -119,6 +119,7 @@ public class ContractController extends AuthController {
         CustomerEntity customerDetail = staffBus.getCustomerDetail(contractDetail.getCustomerCode());
         // Get contract payment
         List<PaymentEntity> listPayment = staffBus.getPaymentByContractCode(contractDetail.getContractCode());
+        List<PaymentEntity> listRenew = staffBus.getRenewsByContractCode(contractDetail.getContractCode());
 
         // Get contract card instance
         CardBusiness cardBusiness = new CardBusiness();
@@ -171,6 +172,7 @@ public class ContractController extends AuthController {
         r.equest.setAttribute("CUSTOMER", customerDetail);
         r.equest.setAttribute("CONTRACT", contractDetail);
         r.equest.setAttribute("PAYMENT", listPayment);
+        r.equest.setAttribute("listRenew", listRenew);
 
         r.equest.setAttribute("compensationPaginator", compensationPaginator);
         r.equest.setAttribute("punishmentPaginator", punishmentPaginator);

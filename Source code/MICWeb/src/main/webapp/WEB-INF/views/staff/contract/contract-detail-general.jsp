@@ -76,6 +76,11 @@
                     ngày <fmt:formatDate value="${contract.expiredDate}" pattern="dd"/>
                     tháng <fmt:formatDate value="${contract.expiredDate}" pattern="MM"/>
                     năm <fmt:formatDate value="${contract.expiredDate}" pattern="yyyy"/>
+
+                    <c:if test="${listRenew.size() > 0}">
+                        <c:set var="lastDate" value="${listRenew.get(listRenew.size()-1).paidDate}"/>
+                        <p>(Đã gia hạn ${listRenew.size()} lần, lần cuối lúc <fmt:formatDate value="${lastDate}" pattern="dd/MM/yyyy"/> )</p>
+                    </c:if>
                 </div>
             </div>
         </div>
