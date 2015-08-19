@@ -678,7 +678,7 @@
                                             <c:if test="${listRenew.size() > 0}">
                                                 <tr>
                                                     <td colspan="2">
-                                                <c:set var="lastDate" value="${listRenew.get(listRenew.size()-1).paidDate}"/>
+                                                <c:set var="lastDate" value="${listRenew.get(listRenew.size()-1).startDate}"/>
                                                 (Đã gia hạn ${listRenew.size()} lần, lần cuối lúc <fmt:formatDate value="${lastDate}" pattern="dd/MM/yyyy"/> )
                                                     </td>
                                                 </tr>
