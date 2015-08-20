@@ -42,6 +42,7 @@ public class CardAccessLogDao extends GenericDaoJpaImpl<CardAccessLogEntity, Int
                                  Date filterBegin,
                                  Date filterEnd,
                                  int offset, int count) {
+        Date newEnd = new Date(filterEnd.getTime() + 86400 * 1000);
         EntityManager entityManager = factory.createEntityManager();
         String hql = "SELECT cal FROM CardAccessLogEntity AS cal " +
                 "WHERE cal.cardInstanceId = :id " +
@@ -50,7 +51,7 @@ public class CardAccessLogDao extends GenericDaoJpaImpl<CardAccessLogEntity, Int
         Query query = entityManager.createQuery(hql);
         query.setParameter("id", cardInstanceId);
         query.setParameter("filter_begin", filterBegin);
-        query.setParameter("filter_end", filterEnd);
+        query.setParameter("filter_end", newEnd);
         query.setFirstResult(offset);
         query.setMaxResults(count);
         List resultList = query.getResultList();
@@ -61,6 +62,7 @@ public class CardAccessLogDao extends GenericDaoJpaImpl<CardAccessLogEntity, Int
     public Long getCardAccessLogCount(int cardInstanceId,
                                       Date filterBegin,
                                       Date filterEnd) {
+        Date newEnd = new Date(filterEnd.getTime() + 86400 * 1000);
         EntityManager entityManager = factory.createEntityManager();
         String hql = "SELECT COUNT(cal) FROM CardAccessLogEntity AS cal " +
                 "WHERE cal.cardInstanceId = :id " +
@@ -69,7 +71,7 @@ public class CardAccessLogDao extends GenericDaoJpaImpl<CardAccessLogEntity, Int
         Query query = entityManager.createQuery(hql);
         query.setParameter("id", cardInstanceId);
         query.setParameter("filter_begin", filterBegin);
-        query.setParameter("filter_end", filterEnd);
+        query.setParameter("filter_end", newEnd);
         Long result = (Long) query.getSingleResult();
         entityManager.close();
         return result;
