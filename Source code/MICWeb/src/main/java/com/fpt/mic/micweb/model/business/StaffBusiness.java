@@ -210,9 +210,15 @@ public class StaffBusiness {
             }
             if (contractDao.update(contractEntity) != null) {
 
+                // Calculate renew fee
+                float pricePerYear = contractEntity.getMicContractTypeByContractTypeId()
+                        .getPricePerYear();
+                int months = configUtils.getContractDefaultTerm();
+                float renewFee = pricePerYear / 12 * months;
+
                 // Phí gia hạn
                 addPayment(dto.getPaidDate(),
-                        dto.getAmount(),
+                        renewFee,
                         startDate,
                         dto.getExpiredDate(),
                         receiver.getStaffCode(),
