@@ -631,18 +631,18 @@
                                     <td class="col-md-5">
                                         <table class="table table-bordered">
                                             <tr>
-                                                <td class="col-md-5">
+                                                <td class="col-md-4">
                                                     <label>Mã hợp đồng</label>
                                                 </td>
-                                                <td class="col-md-5 ">
+                                                <td class="col-md-6 ">
                                                     <b>${contract.contractCode}</b>
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td class="col-md-5">
+                                                <td class="col-md-4">
                                                     <label class="text-center">Ngày bắt đầu</label>
                                                 </td>
-                                                <td class="col-md-5 ">
+                                                <td class="col-md-6 ">
 
                                                     <c:choose>
                                                         <c:when test ="${contract.status.equalsIgnoreCase('Pending') && contract.startDate == contract.expiredDate}">
@@ -657,10 +657,10 @@
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td class="col-md-5">
+                                                <td class="col-md-4">
                                                     <label>Ngày hết hạn</label>
                                                 </td>
-                                                <td class="col-md-5 ">
+                                                <td class="col-md-6 ">
 
                                                     <c:choose>
                                                         <c:when test ="${contract.status.equalsIgnoreCase('Pending') && contract.startDate == contract.expiredDate}">
