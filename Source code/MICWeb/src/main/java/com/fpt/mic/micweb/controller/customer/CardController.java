@@ -291,9 +291,20 @@ public class CardController extends AuthController {
 
         PaymentBusiness paymentBusiness = new PaymentBusiness();
         Float amount = Float.parseFloat((String) session.getAttribute("amountVND"));
+
+        ConfigUtils configUtils = new ConfigUtils();
         // create payment record
-        paymentBusiness.updateNewCardRequestPayment(contractCode, paymentMethod, paymentContent, amount, paypalTransId);
+        paymentBusiness.updateNewCardRequestPayment(contractCode,
+                paymentMethod, paymentContent, configUtils.getNewCardFee(), paypalTransId);
         NewCardRequestDto newCardRequestDto = (NewCardRequestDto) session.getAttribute("NEW_CARD_DTO");
+
+        if (newCardRequestDto.isDeliveryRequested()) {
+            // Create payment for delivery
+            paymentBusiness.updateNewCardRequestPayment(contractCode,
+                    paymentMethod, "Vận chuyển thẻ cho " + contractCode,
+                    configUtils.getDeliveryFee(), paypalTransId);
+        }
+
         CardBusiness cardBusiness = new CardBusiness();
         String message;
         // create new card request

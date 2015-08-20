@@ -185,11 +185,10 @@ public class StaffBusiness {
     }
 
     public boolean renewContract(RenewContractDto dto, StaffEntity receiver) {
+        ConfigUtils configUtils = new ConfigUtils();
         ContractDao contractDao = new ContractDao();
-        PaymentDao paymentDao = new PaymentDao();
         CardInstanceDao cardInstanceDao = new CardInstanceDao();
         ContractEntity contractEntity = contractDao.read(dto.getContractCode());
-        PaymentEntity paymentEntity = new PaymentEntity();
         CardInstanceEntity cardEntity = cardInstanceDao.getActiveCardInstanceByContract(dto.getContractCode());
         Timestamp startDate = dto.getStartDate();
 
@@ -210,33 +209,63 @@ public class StaffBusiness {
                 contractEntity.setStatus(Constants.ContractStatus.READY);
             }
             if (contractDao.update(contractEntity) != null) {
-                // Add payment information
-                Timestamp currentDate = DateUtils.currentDateWithoutTime();
-                if (currentDate.equals(dto.getPaidDate())) {
-                    paymentEntity.setPaidDate(DateUtils.currentTimeWithoutNanos());
-                } else {
-                    paymentEntity.setPaidDate(dto.getPaidDate());
-                }
-                paymentEntity.setAmount(dto.getAmount());
-                paymentEntity.setStartDate(startDate);
-                paymentEntity.setExpiredDate(dto.getExpiredDate());
-                paymentEntity.setReceiver(receiver.getStaffCode());
-                paymentEntity.setContractCode(dto.getContractCode());
-                // Set payment information when renew
-                paymentEntity.setPaymentMethod("Trực tiếp");
+
+                // Phí gia hạn
+                addPayment(dto.getPaidDate(),
+                        dto.getAmount(),
+                        startDate,
+                        dto.getExpiredDate(),
+                        receiver.getStaffCode(),
+                        dto.getContractCode(),
+                        "Gia hạn hợp đồng");
+
                 if (dto.isNewCard()) {
-                    paymentEntity.setContent("Gia hạn hợp đồng, đổi thẻ mới");
-                } else if (dto.isDeliveryNewCard()) {
-                    paymentEntity.setContent("Gia hạn hợp đồng, đổi thẻ mới, vận chuyển thẻ");
-                } else {
-                    paymentEntity.setContent("Gia hạn hợp đồng");
+                    // "đổi thẻ mới"
+                    addPayment(dto.getPaidDate(),
+                            configUtils.getNewCardFee(),
+                            null,
+                            null,
+                            receiver.getStaffCode(),
+                            dto.getContractCode(),
+                            "Đổi thẻ mới");
                 }
-                if (paymentDao.create(paymentEntity) != null) {
-                    return true;
+                if (dto.isDeliveryNewCard()) {
+                    // "vận chuyển thẻ"
+                    addPayment(dto.getPaidDate(),
+                            configUtils.getDeliveryFee(),
+                            null,
+                            null,
+                            receiver.getStaffCode(),
+                            dto.getContractCode(),
+                            "Vận chuyển thẻ mới");
                 }
+
+                return true;
             }
         }
         return false;
+    }
+
+    private boolean addPayment(Timestamp paidDate, float amount, Timestamp startDate,
+                               Timestamp expiredDate, String receiver, String contractCode,
+                               String content) {
+        PaymentDao paymentDao = new PaymentDao();
+        PaymentEntity paymentEntity = new PaymentEntity();
+        Timestamp currentDate = DateUtils.currentDateWithoutTime();
+        if (currentDate.equals(paidDate)) {
+            paymentEntity.setPaidDate(DateUtils.currentTimeWithoutNanos());
+        } else {
+            paymentEntity.setPaidDate(paidDate);
+        }
+        paymentEntity.setAmount(amount);
+        paymentEntity.setStartDate(startDate);
+        paymentEntity.setExpiredDate(expiredDate);
+        paymentEntity.setReceiver(receiver);
+        paymentEntity.setContractCode(contractCode);
+        // Set payment information when renew
+        paymentEntity.setPaymentMethod("Trực tiếp");
+        paymentEntity.setContent(content);
+        return paymentDao.create(paymentEntity) != null;
     }
 
     public boolean rejectCancelContract(String contractCode) {
