@@ -53,28 +53,37 @@
             </div>
         </div>
     </div>
-    <!-- Start date -->
-    <div class="form-group">
-        <label class="col-sm-4 control-label">Bắt đầu có hiệu lực từ</label>
 
-        <div class="col-sm-5">
-            <div class="text-value">
+    <c:if test="${!(contract.status eq 'Pending') or !(empty listPayment)}">
+        <!-- Start date -->
+        <div class="form-group">
+            <label class="col-sm-4 control-label">Bắt đầu có hiệu lực từ</label>
+
+            <div class="col-sm-5">
+                <div class="text-value">
                 ngày <fmt:formatDate value="${contract.startDate}" pattern="dd"/>
                 tháng <fmt:formatDate value="${contract.startDate}" pattern="MM"/>
                 năm <fmt:formatDate value="${contract.startDate}" pattern="yyyy"/>
+                </div>
             </div>
         </div>
-    </div>
-    <!-- Expired date -->
-    <div class="form-group">
-        <label class="col-sm-4 control-label">Thời điểm hết hiệu lực</label>
+        <!-- Expired date -->
+        <div class="form-group">
+            <label class="col-sm-4 control-label">Thời điểm hết hiệu lực</label>
 
-        <div class="col-sm-5">
-            <div class="text-value">
-                ngày <fmt:formatDate value="${contract.expiredDate}" pattern="dd"/>
-                tháng <fmt:formatDate value="${contract.expiredDate}" pattern="MM"/>
-                năm <fmt:formatDate value="${contract.expiredDate}" pattern="yyyy"/>
+            <div class="col-sm-5">
+                <div class="text-value">
+                    ngày <fmt:formatDate value="${contract.expiredDate}" pattern="dd"/>
+                    tháng <fmt:formatDate value="${contract.expiredDate}" pattern="MM"/>
+                    năm <fmt:formatDate value="${contract.expiredDate}" pattern="yyyy"/>
+
+                    <c:if test="${listRenew.size() > 0}">
+                        <c:set var="lastDate" value="${listRenew.get(listRenew.size()-1).startDate}"/>
+                        <p>(Đã gia hạn ${listRenew.size()} lần, lần cuối lúc <fmt:formatDate value="${lastDate}" pattern="dd/MM/yyyy"/>)</p>
+                    </c:if>
+                </div>
             </div>
         </div>
-    </div>
+
+    </c:if>
 </fieldset>

@@ -517,4 +517,9 @@ public class StaffBusiness {
         ContractDao contractDao = new ContractDao();
         return contractDao.getAllContractCount(status);
     }
+
+    public List<PaymentEntity> getRenewsByContractCode(String contractCode) {
+        PaymentDao paymentDao = new PaymentDao();
+        return paymentDao.getRenewsByContractCode(contractCode);
+    }
 }

@@ -84,4 +84,16 @@ public class PaymentDao extends GenericDaoJpaImpl<PaymentEntity, Integer> {
         entityManager.close();
         return resultList;
     }
+
+    public List<PaymentEntity> getRenewsByContractCode(String contractCode) {
+        EntityManager entity = factory.createEntityManager();
+        String hql = "SELECT pm FROM PaymentEntity AS pm " +
+                "WHERE pm.contractCode = :code " +
+                "AND pm.startDate != null";
+        Query query = entity.createQuery(hql);
+        query.setParameter("code", contractCode);
+        List<PaymentEntity> resultList = query.getResultList();
+        entity.close();
+        return resultList;
+    }
 }
