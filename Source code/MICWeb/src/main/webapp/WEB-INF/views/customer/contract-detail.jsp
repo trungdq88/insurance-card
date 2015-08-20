@@ -225,7 +225,7 @@
                                                    value="${contract.startDate}"/>
                                             <input type="hidden" name="txtNewStartDate" id="newStartDate"
                                                    value="${contract.expiredDate}"/>
-
+                                            <fmt:formatDate value="${contract.startDate}" pattern="dd/MM/yyyy"/>
                                         </div>
                                     </div>
                                     <div class="form-group">
