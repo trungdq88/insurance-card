@@ -150,7 +150,7 @@
                     <c:otherwise>
                       <c:forEach var="log" items="${calPaginator.getItemsOnCurrentPage(param.page)}" varStatus="counter">
                         <tr>
-                          <td class="text-center">${log.id}</td>
+                          <td class="text-center">${counter.count}</td>
                           <td>
                             <fmt:formatDate value="${log.accessDate}" pattern="dd/MM/yyyy"/>
 
