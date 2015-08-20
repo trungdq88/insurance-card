@@ -37,7 +37,7 @@ public class PaymentBusiness {
             paymentEntity.setAmount(configUtils.getNewCardFee() + configUtils.getDeliveryFee());
         }
         else {
-            paymentEntity.setContent("Đăng ký thẻ mới "+createNewCardPaymentDto.getContractCode());
+            paymentEntity.setContent("Đổi thẻ mới");
             paymentEntity.setAmount(configUtils.getNewCardFee());
         }
         paymentEntity.setPaidDate(createNewCardPaymentDto.getPaidDate());
