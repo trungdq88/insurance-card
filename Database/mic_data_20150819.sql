@@ -328,7 +328,7 @@ CREATE TABLE `mic_contract_type` (
 
 LOCK TABLES `mic_contract_type` WRITE;
 /*!40000 ALTER TABLE `mic_contract_type` DISABLE KEYS */;
-INSERT INTO `mic_contract_type` VALUES (1,'Xe trên 50cc có BH cho người trên xe','Xe trên 50cc có BH cho người trên xe',86000,1),(2,'Xe trên 50cc không có BH cho người trên xe','Xe trên 50cc không có BH cho người trên xe',66000,1),(3,'Xe từ 50cc trở xuống có BH cho người trên xe','Xe dưới 50cc có BH cho người trên xe',80500,1),(4,'Xe từ 50cc trở xuống không có BH cho người trên xe','Xe dưới 50cc không có BH cho người trên xe',60500,1),(5,'Xe mô tô ba bánh, xe gắn máy và các loại xe tương tự','Bảo hiểm dành cho xe ba bánh, xe gắn máy v.v',319000,1);
+INSERT INTO `mic_contract_type` VALUES (1,'Xe trên 50cc có BH cho người trên xe','Xe trên 50cc có BH cho người trên xe',86000,1),(2,'Xe trên 50cc không có BH cho người trên xe','Xe trên 50cc không có BH cho người trên xe',66000,1),(3,'Xe từ 50cc trở xuống có BH cho người trên xe','Xe dưới 50cc có BH cho người trên xe',81000,1),(4,'Xe từ 50cc trở xuống không có BH cho người trên xe','Xe dưới 50cc không có BH cho người trên xe',61000,1),(5,'Xe mô tô ba bánh, xe gắn máy và các loại xe tương tự','Bảo hiểm dành cho xe ba bánh, xe gắn máy v.v',319000,1);
 /*!40000 ALTER TABLE `mic_contract_type` ENABLE KEYS */;
 UNLOCK TABLES;
 
