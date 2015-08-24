@@ -1,0 +1,2 @@
+Activity Diagram: http://www.uml-diagrams.org/activity-diagrams.html
+UML Sequence Diagrams Parallel: http://www.uml-diagrams.org/sequence-diagrams-combined-fragment.html#operator-par
