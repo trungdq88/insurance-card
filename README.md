@@ -94,3 +94,7 @@ MIC system includes a web application and two mobile applications with following
 
 - Check card: traffic police and Police Department can check specified motor insurance card expired or not.
 - Update the punishment of violator: traffic police and Police Department can update the punishment of violator to the card information.
+
+# Complete documentation
+
+See `Document` directory.
