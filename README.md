@@ -1,7 +1,47 @@
 # Insurance Card
 Motorbike Insurance Card using NFC technology (Capstone Project Summer 2015)
 
-# Introduction
+# Team
+- Đinh Quang Trung
+- Nguyễn Hữu Phúc
+- Phùng Quang Minh Trí
+- Nguyễn Chí Kha
+
+# What it looks like
+
+<img src="Document/Images/Card.jpg"/>
+
+<img src="Document/Images/mobile-1.png"/>
+
+<img src="Document/Images/mobile-2.png"/>
+
+<img src="Document/Images/web-1.png"/>
+
+<img src="Document/Images/web-2.png"/>
+
+# System Overview
+
+<img src="Document/Images/SystemOverview.jpg"/>
+
+# Entity Relationship Diagram
+
+<img src="Document/Images/ERD.jpg"/>
+
+# Database Diagram
+
+<img src="Document/Images/Database.jpg"/>
+
+# Technologies
+- Java Servlet
+- Hibernate
+- MySQL
+- Android (with NFC)
+
+# Presentation
+
+https://www.youtube.com/watch?v=xnE0tYBCJ1w
+
+# Documentation
 
 ## Project Information
 
