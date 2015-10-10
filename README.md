@@ -59,12 +59,12 @@ When participating in traffic, vehicle owners are required to have compulsory in
 
 Below are disadvantages of current situation:
 
-- Forget insurance’s expired date: Vehicle owners usually keeps their insurance certificate in wallet or somewhere on their vehicle. However, except in cases of necessity, people are not often check their insurance so they could forget its expired date. An expired insurance is not good while it be revealed by traffic officers and could get worse in case of traffic accident.
-- Hard for traffic officers to check and verify insurance: Traffic officers must read insurance certificate to check and verify vehicle owner’s information. It can be difficult and hinder their work in some cases as at dark or handwriting illegible on insurance certificate.
-- No mechanism to renew old contract:customers have to handy register new contract when the old one is expired, this is inconvenient for customers.
-- Insurance certificate made of paper: It could be torn, wet, smudged and especially is counterfeited.
-- Claim/compensation process is ineffective between customer and insurance company.
-- Difficult to track and manage number of traffic violations and collisions: In current scenario, insurance companies almost impossible knows vehicle owner’s history to adjust their insurance policy.
+- **Forget insurance’s expired date**: Vehicle owners usually keeps their insurance certificate in wallet or somewhere on their vehicle. However, except in cases of necessity, people are not often check their insurance so they could forget its expired date. An expired insurance is not good while it be revealed by traffic officers and could get worse in case of traffic accident.
+- **Hard for traffic officers to check and verify insurance**: Traffic officers must read insurance certificate to check and verify vehicle owner’s information. It can be difficult and hinder their work in some cases as at dark or handwriting illegible on insurance certificate.
+- **No mechanism to renew old contract**: customers have to handy register new contract when the old one is expired, this is inconvenient for customers.
+- **Insurance certificate made of paper**: It could be torn, wet, smudged and especially is counterfeited.
+- **Claim/compensation process is ineffective** between customer and insurance company.
+- **Difficult to track and manage number of traffic violations and collisions**: In current scenario, insurance companies almost impossible knows vehicle owner’s history to adjust their insurance policy.
 
 According to Vietnam’s laws, motor vehicle owners must have insurance contract with fixed term and fixed fee for each type of vehicle.
 
@@ -78,13 +78,13 @@ MIC system includes a web application and two mobile applications with following
 
 #### Web application: 
 
-- Register insurance: user can register a new insurance card with on website using online payment. A staff will contact the user to create contract and sends an insurance NFC card to him/her. If users already have a NFC card, they can use the website to renew current contract.
-- Check card information: user can login into the website and check for their card’s information.
-- Request compensation: user can fill data into the sample fields and sends compensation request to the company.
-- Make/manage contracts: staff can make and manage contracts.
-- Resolve compensation: staff can receive and resolve compensation requests.
-- Notify contract state: system will sendan email to notify the insured one when their insurance is expired.
-- Notify compensation state: system will sendan email to info the insured one when their compensation were accepted or rejected.
+- **Register insurance contract**: user can register a new insurance card with on website using online payment. A staff will contact the user to create contract and sends an insurance NFC card to him/her. If users already have a NFC card, they can use the website to renew current contract.
+- **Check card information**: user can login into the website and check for their card’s information.
+- **Request compensation**: user can fill data into the sample fields and sends compensation request to the company.
+- **Make/manage contracts**: staff can make and manage contracts.
+- **Resolve compensation**: staff can receive and resolve compensation requests.
+- **Notify contract state**: system will sendan email to notify the insured one when their insurance is expired.
+- **Notify compensation state**: system will sendan email to info the insured one when their compensation were accepted or rejected.
 
 #### Insurance card printer (mobile app):
 
